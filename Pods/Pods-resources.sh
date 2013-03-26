@@ -25,3 +25,8 @@ install_resource()
       ;;
   esac
 }
+install_resource 'MWPhotoBrowser/MWPhotoBrowser/MWPhotoBrowser.bundle'
+install_resource 'VPPDropDown/VPPDropDown/UITableContract.png'
+install_resource 'VPPDropDown/VPPDropDown/UITableContract@2x.png'
+install_resource 'VPPDropDown/VPPDropDown/UITableExpand.png'
+install_resource 'VPPDropDown/VPPDropDown/UITableExpand@2x.png'
