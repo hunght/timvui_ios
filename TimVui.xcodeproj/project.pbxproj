@@ -21,8 +21,8 @@
 		5562B1AA16FC50F300E21A82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5562B18B16FC50F300E21A82 /* Foundation.framework */; };
 		5562B1B216FC50F300E21A82 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5562B1B016FC50F300E21A82 /* InfoPlist.strings */; };
 		5562B1B516FC50F300E21A82 /* TimVuiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562B1B416FC50F300E21A82 /* TimVuiTests.m */; };
-		55640A6F16FD53CB003E4362 /* LeftMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55640A6D16FD53CB003E4362 /* LeftMenuVC.m */; };
-		55640A7016FD53CB003E4362 /* LeftMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55640A6E16FD53CB003E4362 /* LeftMenuVC.xib */; };
+		55C7B8AA1704274D008AB5BB /* LeftMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C7B8A81704274D008AB5BB /* LeftMenuVC.m */; };
+		55C7B8AB1704274D008AB5BB /* LeftMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C7B8A91704274D008AB5BB /* LeftMenuVC.xib */; };
 		B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A89DFA4254249D091202191 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -57,9 +57,9 @@
 		5562B1B116FC50F300E21A82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5562B1B316FC50F300E21A82 /* TimVuiTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimVuiTests.h; sourceTree = "<group>"; };
 		5562B1B416FC50F300E21A82 /* TimVuiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimVuiTests.m; sourceTree = "<group>"; };
-		55640A6C16FD53CB003E4362 /* LeftMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftMenuVC.h; path = LeftMenuVC/LeftMenuVC.h; sourceTree = "<group>"; };
-		55640A6D16FD53CB003E4362 /* LeftMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftMenuVC.m; path = LeftMenuVC/LeftMenuVC.m; sourceTree = "<group>"; };
-		55640A6E16FD53CB003E4362 /* LeftMenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeftMenuVC.xib; path = LeftMenuVC/LeftMenuVC.xib; sourceTree = "<group>"; };
+		55C7B8A71704274D008AB5BB /* LeftMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftMenuVC.h; path = LeftMenuVC/LeftMenuVC.h; sourceTree = "<group>"; };
+		55C7B8A81704274D008AB5BB /* LeftMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftMenuVC.m; path = LeftMenuVC/LeftMenuVC.m; sourceTree = "<group>"; };
+		55C7B8A91704274D008AB5BB /* LeftMenuVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeftMenuVC.xib; path = LeftMenuVC/LeftMenuVC.xib; sourceTree = "<group>"; };
 		EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -167,9 +167,9 @@
 		55640A6B16FD531A003E4362 /* LeftMenuVC */ = {
 			isa = PBXGroup;
 			children = (
-				55640A6C16FD53CB003E4362 /* LeftMenuVC.h */,
-				55640A6D16FD53CB003E4362 /* LeftMenuVC.m */,
-				55640A6E16FD53CB003E4362 /* LeftMenuVC.xib */,
+				55C7B8A71704274D008AB5BB /* LeftMenuVC.h */,
+				55C7B8A81704274D008AB5BB /* LeftMenuVC.m */,
+				55C7B8A91704274D008AB5BB /* LeftMenuVC.xib */,
 			);
 			name = LeftMenuVC;
 			sourceTree = "<group>";
@@ -250,7 +250,7 @@
 				5562B19C16FC50F300E21A82 /* Default.png in Resources */,
 				5562B19E16FC50F300E21A82 /* Default@2x.png in Resources */,
 				5562B1A016FC50F300E21A82 /* Default-568h@2x.png in Resources */,
-				55640A7016FD53CB003E4362 /* LeftMenuVC.xib in Resources */,
+				55C7B8AB1704274D008AB5BB /* LeftMenuVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +301,7 @@
 			files = (
 				5562B19616FC50F300E21A82 /* main.m in Sources */,
 				5562B19A16FC50F300E21A82 /* AppDelegate.m in Sources */,
-				55640A6F16FD53CB003E4362 /* LeftMenuVC.m in Sources */,
+				55C7B8AA1704274D008AB5BB /* LeftMenuVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +406,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
 				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -420,7 +420,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
 				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

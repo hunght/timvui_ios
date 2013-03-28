@@ -2,7 +2,7 @@
 //  LeftMenuVC.m
 //  TimVui
 //
-//  Created by Hoang The Hung on 3/23/13.
+//  Created by Hoang The Hung on 3/28/13.
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
 
