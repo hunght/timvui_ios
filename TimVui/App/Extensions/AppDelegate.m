@@ -7,14 +7,40 @@
 //
 
 #import "AppDelegate.h"
+#import "MainVC.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "IIViewDeckController.h"
+#import "LeftMenuVC.h"
 @implementation AppDelegate
-
+@synthesize window = _window;
+@synthesize centerController = _viewController;
+@synthesize leftController = _leftController;
+@synthesize imageController = _imageController;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
+    [NSURLCache setSharedURLCache:URLCache];
+    
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    self.leftController = [[LeftMenuVC alloc] initWithNibName:@"LeftMenuVC" bundle:nil];
+
+    
+    MainVC *centerController = [[MainVC alloc] initWithStyle:UITableViewStylePlain];
+    self.centerController = [[UINavigationController alloc] initWithRootViewController:centerController];
+    IIViewDeckController* deckController =  [[IIViewDeckController alloc] initWithCenterViewController:self.centerController
+                                                                                    leftViewController:self.leftController];
+    deckController.rightSize = 100;
+    
+    /* To adjust speed of open/close animations, set either of these two properties. */
+    // deckController.openSlideAnimationDuration = 0.15f;
+    // deckController.closeSlideAnimationDuration = 0.5f;
+    
+    self.window.rootViewController = deckController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
