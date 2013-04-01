@@ -15,7 +15,6 @@
 @synthesize window = _window;
 @synthesize centerController = _viewController;
 @synthesize leftController = _leftController;
-@synthesize imageController = _imageController;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 

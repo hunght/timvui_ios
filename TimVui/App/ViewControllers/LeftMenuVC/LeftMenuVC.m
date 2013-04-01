@@ -1,124 +1,95 @@
 //
-//  LeftMenuVC.m
-//  TimVui
+//  ExampleNestedTablesViewController.m
+//  SDNestedTablesExample
 //
-//  Created by Hoang The Hung on 3/28/13.
-//  Copyright (c) 2013 Hoang The Hung. All rights reserved.
+//  Created by Daniele De Matteis on 27/06/2012.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "LeftMenuVC.h"
-#import "IIViewDeckController.h"
+
 @interface LeftMenuVC ()
 
 @end
 
 @implementation LeftMenuVC
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id) init
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    if (self = [super initWithNibName:@"SDNestedTableView" bundle:nil])
+    {
+        // do init stuff
     }
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+#pragma mark - Nested Tables methods
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (NSInteger)mainTable:(UITableView *)mainTable numberOfItemsInSection:(NSInteger)section
+{
+    return 8;
 }
 
-- (void)didReceiveMemoryWarning
+- (NSInteger)mainTable:(UITableView *)mainTable numberOfSubItemsforItem:(SDGroupCell *)item atIndexPath:(NSIndexPath *)indexPath
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    return 3; 
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (SDGroupCell *)mainTable:(UITableView *)mainTable setItem:(SDGroupCell *)item forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    #warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    item.itemText.text = [NSString stringWithFormat:@"My Main Item %u", indexPath.row +1];
+    return item;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (SDSubCell *)item:(SDGroupCell *)item setSubItem:(SDSubCell *)subItem forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    #warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    subItem.itemText.text = [NSString stringWithFormat:@"My Sub Item %u", indexPath.row +1];
+    return subItem;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) mainTable:(UITableView *)mainTable itemDidChange:(SDGroupCell *)item
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    SelectableCellState state = item.selectableCellState;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:item];
+    switch (state) {
+        case Checked:
+            NSLog(@"Changed Item at indexPath:%@ to state \"Checked\"", indexPath);
+            break;
+        case Unchecked:
+            NSLog(@"Changed Item at indexPath:%@ to state \"Unchecked\"", indexPath);
+            break;
+        case Halfchecked:
+            NSLog(@"Changed Item at indexPath:%@ to state \"Halfchecked\"", indexPath);
+            break;
+        default:
+            break;
     }
-    
-    // Configure the cell...
-    
-    return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void) item:(SDGroupCell *)item subItemDidChange:(SDSelectableCell *)subItem
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    SelectableCellState state = subItem.selectableCellState;
+    NSIndexPath *indexPath = [item.subTable indexPathForCell:subItem];
+    switch (state) {
+        case Checked:
+            NSLog(@"Changed Sub Item at indexPath:%@ to state \"Checked\"", indexPath);
+            break;
+        case Unchecked:
+            NSLog(@"Changed Sub Item at indexPath:%@ to state \"Unchecked\"", indexPath);
+            break;
+        default:
+            break;
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)expandingItem:(SDGroupCell *)item withIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    NSLog(@"Expanded Item at indexPath: %@", indexPath);
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+- (void)collapsingItem:(SDGroupCell *)item withIndexPath:(NSIndexPath *)indexPath 
 {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSLog(@"Collapsed Item at indexPath: %@", indexPath);
 }
 
 @end

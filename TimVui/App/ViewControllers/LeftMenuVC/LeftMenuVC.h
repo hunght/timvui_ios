@@ -1,13 +1,13 @@
 //
-//  LeftMenuVC.h
-//  TimVui
+//  ExampleNestedTablesViewController.h
+//  SDNestedTablesExample
 //
-//  Created by Hoang The Hung on 3/28/13.
-//  Copyright (c) 2013 Hoang The Hung. All rights reserved.
+//  Created by Daniele De Matteis on 27/06/2012.
+//  Copyright (c) 2012 Daniele De Matteis. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SDNestedTableViewController.h"
 
-@interface LeftMenuVC : UITableViewController
+@interface LeftMenuVC : SDNestedTableViewController
 
 @end

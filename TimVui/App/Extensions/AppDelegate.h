@@ -13,5 +13,4 @@
 @property (nonatomic, strong) UIWindow *window;
 @property (retain, nonatomic) UIViewController *centerController;
 @property (retain, nonatomic) UIViewController *leftController;
-@property (retain, nonatomic) UIViewController *imageController;
 @end
