@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-
-@interface MainVC : UITableViewController
+#import "PullToRevealMapVC.h"
+@interface MainVC : PullToRevealMapVC
 
 @end
