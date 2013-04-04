@@ -126,6 +126,9 @@ extern IIViewDeckOffsetOrientation IIViewDeckOffsetOrientationFromIIViewDeckSide
     UIInterfaceOrientation _willAppearShouldArrangeViewsAfterRotation;
     CGPoint _willAppearOffset;
     NSMutableArray* _finishTransitionBlocks;
+    
+    BOOL _isTouchDownYES;
+    BOOL _isWantToToggleYES;
 }
 
 typedef void (^IIViewDeckControllerBlock) (IIViewDeckController *controller, BOOL success);
@@ -187,7 +190,7 @@ typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controlle
 - (void)setTopSize:(CGFloat)leftSize completion:(void(^)(BOOL finished))completion;
 - (void)setBottomSize:(CGFloat)rightSize completion:(void(^)(BOOL finished))completion;
 - (void)setMaxSize:(CGFloat)maxSize completion:(void(^)(BOOL finished))completion;
-
+- (void)toggleDownLeftView;
 - (BOOL)toggleLeftView;
 - (BOOL)openLeftView;
 - (BOOL)closeLeftView;

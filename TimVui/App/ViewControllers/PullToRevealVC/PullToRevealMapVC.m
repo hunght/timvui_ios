@@ -81,7 +81,7 @@
 {
     toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -50, self.tableView.bounds.size.width, 50)];
     [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [toolbar setBackgroundColor:[UIColor clearColor]];
+    [toolbar setBackgroundColor:[UIColor redColor]];
     [toolbar setAlpha:0.2];
     
     [self.tableView insertSubview:toolbar aboveSubview:self.tableView];

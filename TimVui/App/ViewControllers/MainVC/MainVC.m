@@ -36,7 +36,7 @@
     
     __strong UIActivityIndicatorView *_activityIndicatorView;
 }
-
+#warning Potentially useless method implementation.
 - (void)reload:(id)sender {
     [_activityIndicatorView startAnimating];
     self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -66,29 +66,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
     
-    self.title = NSLocalizedString(@"AFNetworking", nil);
-    
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"left" style:UIBarButtonItemStyleBordered target:self.viewDeckController action:@selector(toggleLeftView)];
-    
-    if ([self.navigationItem respondsToSelector:@selector(leftBarButtonItems)]) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"left" style:UIBarButtonItemStyleBordered target:self.viewDeckController action:@selector(toggleLeftView)];
-    } else {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"left" style:UIBarButtonItemStyleBordered target:self.viewDeckController action:@selector(toggleLeftView)];
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
+    {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_bar.png"]
+                                                                       forBarMetrics:UIBarMetricsDefault];
     }
-    
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
-    
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    [backButton setImage:[UIImage imageNamed:@"leftMenuBtn.png"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"leftMenuCoverBtn.png"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
+    [backButton addTarget:self.viewDeckController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
     self.tableView.rowHeight = 70.0f;
     
     [self reload:nil];
 }
-
+- (void)previewBounceLeftView {
+    [self.viewDeckController previewBounceView:IIViewDeckLeftSide];
+}
 - (void)viewDidUnload {
     _activityIndicatorView = nil;
-    
     [super viewDidUnload];
 }
 
@@ -106,7 +106,6 @@
     if (!cell) {
         cell = [[PostTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    
     cell.post = [_posts objectAtIndex:indexPath.row];
     
     return cell;

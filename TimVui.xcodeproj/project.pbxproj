@@ -48,6 +48,13 @@
 		55CD6D52170A8501002B0CF7 /* PullToRevealMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CD6D4F170A8501002B0CF7 /* PullToRevealMapVC.m */; };
 		55CD6D54170A85AB002B0CF7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CD6D53170A85AB002B0CF7 /* CoreLocation.framework */; };
 		55CD6D56170A85BD002B0CF7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CD6D55170A85BD002B0CF7 /* MapKit.framework */; };
+		55ED8484170D3D0A00344215 /* leftMenuBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 55ED8480170D3D0A00344215 /* leftMenuBtn.png */; };
+		55ED8485170D3D0A00344215 /* leftMenuBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55ED8481170D3D0A00344215 /* leftMenuBtn@2x.png */; };
+		55ED8486170D3D0A00344215 /* navigation_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 55ED8482170D3D0A00344215 /* navigation_bar.png */; };
+		55ED8487170D3D0A00344215 /* navigation_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55ED8483170D3D0A00344215 /* navigation_bar@2x.png */; };
+		55ED848A170D3F3400344215 /* UINavigationBar+CustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ED8489170D3F3400344215 /* UINavigationBar+CustomImage.m */; };
+		55ED848E170D5A0300344215 /* SearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ED848C170D5A0300344215 /* SearchVC.m */; };
+		55ED848F170D5A0300344215 /* SearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ED848D170D5A0300344215 /* SearchVC.xib */; };
 		B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A89DFA4254249D091202191 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +127,15 @@
 		55CD6D4F170A8501002B0CF7 /* PullToRevealMapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRevealMapVC.m; sourceTree = "<group>"; };
 		55CD6D53170A85AB002B0CF7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		55CD6D55170A85BD002B0CF7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		55ED8480170D3D0A00344215 /* leftMenuBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftMenuBtn.png; sourceTree = "<group>"; };
+		55ED8481170D3D0A00344215 /* leftMenuBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftMenuBtn@2x.png"; sourceTree = "<group>"; };
+		55ED8482170D3D0A00344215 /* navigation_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_bar.png; sourceTree = "<group>"; };
+		55ED8483170D3D0A00344215 /* navigation_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_bar@2x.png"; sourceTree = "<group>"; };
+		55ED8488170D3F3400344215 /* UINavigationBar+CustomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+CustomImage.h"; path = "Extensions/UINavigationBar+CustomImage.h"; sourceTree = "<group>"; };
+		55ED8489170D3F3400344215 /* UINavigationBar+CustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+CustomImage.m"; path = "Extensions/UINavigationBar+CustomImage.m"; sourceTree = "<group>"; };
+		55ED848B170D5A0300344215 /* SearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchVC.h; path = SearchVC/SearchVC.h; sourceTree = "<group>"; };
+		55ED848C170D5A0300344215 /* SearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchVC.m; path = SearchVC/SearchVC.m; sourceTree = "<group>"; };
+		55ED848D170D5A0300344215 /* SearchVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchVC.xib; path = SearchVC/SearchVC.xib; sourceTree = "<group>"; };
 		EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -289,6 +305,8 @@
 		55C8C0EE17052E4C007D8E78 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				55ED8488170D3F3400344215 /* UINavigationBar+CustomImage.h */,
+				55ED8489170D3F3400344215 /* UINavigationBar+CustomImage.m */,
 				55C8C0F217052E4C007D8E78 /* AppDelegate.h */,
 				55C8C0F317052E4C007D8E78 /* AppDelegate.m */,
 				55BAED3B1709726300CF3171 /* Libs */,
@@ -321,6 +339,7 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				55ED8490170D5A0E00344215 /* SearchVC */,
 				55BAED621709784F00CF3171 /* LeftMenuVC */,
 				55C8C0FE17052E4C007D8E78 /* MainVC */,
 			);
@@ -349,6 +368,10 @@
 		55C8C10417052E4C007D8E78 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				55ED8480170D3D0A00344215 /* leftMenuBtn.png */,
+				55ED8481170D3D0A00344215 /* leftMenuBtn@2x.png */,
+				55ED8482170D3D0A00344215 /* navigation_bar.png */,
+				55ED8483170D3D0A00344215 /* navigation_bar@2x.png */,
 				55C8C10517052E4C007D8E78 /* Images */,
 			);
 			path = Resourses;
@@ -374,6 +397,16 @@
 			);
 			name = PullToRevealMapVC;
 			path = ../PullToRevealVC;
+			sourceTree = "<group>";
+		};
+		55ED8490170D5A0E00344215 /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				55ED848B170D5A0300344215 /* SearchVC.h */,
+				55ED848C170D5A0300344215 /* SearchVC.m */,
+				55ED848D170D5A0300344215 /* SearchVC.xib */,
+			);
+			name = SearchVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,6 +499,11 @@
 				55BAED5F170977B200CF3171 /* blueLedSmallOff@2x.png in Resources */,
 				55BAED60170977B200CF3171 /* disclosure.png in Resources */,
 				55BAED61170977B200CF3171 /* disclosure@2x.png in Resources */,
+				55ED8484170D3D0A00344215 /* leftMenuBtn.png in Resources */,
+				55ED8485170D3D0A00344215 /* leftMenuBtn@2x.png in Resources */,
+				55ED8486170D3D0A00344215 /* navigation_bar.png in Resources */,
+				55ED8487170D3D0A00344215 /* navigation_bar@2x.png in Resources */,
+				55ED848F170D5A0300344215 /* SearchVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +565,8 @@
 				55BAED4D1709726300CF3171 /* SDSubCell.m in Sources */,
 				55BAED651709784F00CF3171 /* LeftMenuVC.m in Sources */,
 				55CD6D52170A8501002B0CF7 /* PullToRevealMapVC.m in Sources */,
+				55ED848A170D3F3400344215 /* UINavigationBar+CustomImage.m in Sources */,
+				55ED848E170D5A0300344215 /* SearchVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

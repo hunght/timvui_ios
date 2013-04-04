@@ -11,6 +11,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "IIViewDeckController.h"
 #import "LeftMenuVC.h"
+
 @implementation AppDelegate
 @synthesize window = _window;
 @synthesize centerController = _viewController;
@@ -25,15 +26,14 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.leftController = [[LeftMenuVC alloc] initWithNibName:@"LeftMenuVC" bundle:nil];
+    self.leftController = [[LeftMenuVC alloc] init];
 
     
     MainVC *centerController = [[MainVC alloc] initWithStyle:UITableViewStylePlain];
     self.centerController = [[UINavigationController alloc] initWithRootViewController:centerController];
     IIViewDeckController* deckController =  [[IIViewDeckController alloc] initWithCenterViewController:self.centerController
                                                                                     leftViewController:self.leftController];
-    deckController.rightSize = 100;
-    
+
     /* To adjust speed of open/close animations, set either of these two properties. */
     // deckController.openSlideAnimationDuration = 0.15f;
     // deckController.closeSlideAnimationDuration = 0.5f;

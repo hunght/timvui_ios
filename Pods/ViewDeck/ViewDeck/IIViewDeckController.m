@@ -1384,7 +1384,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
             [self setSlidingFrameForOffset:[self ledgeOffsetForSide:side] forOrientation:IIViewDeckOffsetOrientationFromIIViewDeckSide(side)];
             [self centerViewHidden];
         } completion:^(BOOL finished) {
-            self.view.userInteractionEnabled = wasEnabled;
+            self.view.userInteractionEnabled = YES;
             if (completed) completed(self, YES);
             [self notifyDidOpenSide:side animated:animated];
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
@@ -1485,7 +1485,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         [self centerViewVisible];
     } completion:^(BOOL finished) {
         [self hideAppropriateSideViews];
-        self.view.userInteractionEnabled = wasEnabled;
+        self.view.userInteractionEnabled = YES;
         if (completed) completed(self, YES);
         [self notifyDidCloseSide:side animated:animated];
         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
@@ -1551,9 +1551,16 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 
 
 #pragma mark - Left Side
-
+- (void)toggleDownLeftView {
+    _isTouchDownYES=YES;
+    _isWantToToggleYES=YES;
+}
 - (BOOL)toggleLeftView {
-    return [self toggleLeftViewAnimated:YES];
+    _isTouchDownYES=NO;
+    if (_isWantToToggleYES) {
+        return [self toggleLeftViewAnimated:YES];
+    }
+    return NO;
 }
 
 - (BOOL)openLeftView {
@@ -2170,7 +2177,9 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         BOOL result = [self.panningGestureDelegate gestureRecognizerShouldBegin:panner];
         if (!result) return result;
     }
-    
+    if (_isTouchDownYES) {
+        _isWantToToggleYES=NO;
+    }
     IIViewDeckOffsetOrientation orientation;
     CGPoint velocity = [panner velocityInView:self.referenceView];
     if (ABS(velocity.x) >= ABS(velocity.y))

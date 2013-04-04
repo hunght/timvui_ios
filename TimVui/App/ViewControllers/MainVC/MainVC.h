@@ -22,6 +22,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PullToRevealMapVC.h"
+#import "UINavigationBar+CustomImage.h"
 @interface MainVC : PullToRevealMapVC
 
 @end
