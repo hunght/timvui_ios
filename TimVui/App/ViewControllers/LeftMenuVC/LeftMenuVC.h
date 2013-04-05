@@ -10,7 +10,7 @@
 #import "VPPDropDown.h"
 #import "VPPDropDownDelegate.h"
 
-@interface DropDownExample : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate> {
+@interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate> {
 @private
     NSArray *_headers;
     VPPDropDown *_dropDownCustom;

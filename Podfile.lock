@@ -10,6 +10,7 @@ PODS:
 - SDWebImage (2.7.4):
   - SDWebImage/Main (= 2.7.4)
 - SDWebImage/Main (2.7.4)
+- VPPDropDown (0.3.0)
 - ViewDeck (2.2.5)
 
 DEPENDENCIES:
@@ -18,6 +19,7 @@ DEPENDENCIES:
 - MWPhotoBrowser (~> 1.0.1)
 - Reachability (~> 3.0.0)
 - SDWebImage (~> 2.7.4)
+- VPPDropDown (~> 0.3.0)
 - ViewDeck (~> 2.2.5)
 
 SPEC CHECKSUMS:
@@ -28,6 +30,7 @@ SPEC CHECKSUMS:
   Reachability: 500bd76bf6cd8ff2c6fb715fc5f44ef6e4c024f2
   SDWebImage: 06f076026fe7867ab0100fce95d943f7bff981eb
   SDWebImage/Main: 06f076026fe7867ab0100fce95d943f7bff981eb
+  VPPDropDown: 64bc8e77659d1fd7f3e692a6513247837edc675e
   ViewDeck: 9e7d97b9e2b0fa553b51e6cd84bdde3ab87ba3ab
 
 COCOAPODS: 0.16.4

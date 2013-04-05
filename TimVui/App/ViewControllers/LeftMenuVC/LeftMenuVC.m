@@ -6,7 +6,7 @@
 //  Copyright (c) 2011 Víctor Pena Placer. All rights reserved.
 //
 
-#import "DropDownExample.h"
+#import "LeftMenuVC.h"
 #import "GHMenuCell.h"
 #import <QuartzCore/QuartzCore.h>
 #define kNumberOfSections 3
@@ -48,7 +48,7 @@ enum {
     kS3Row1,
     kS3Row2
 };
-@implementation DropDownExample
+@implementation LeftMenuVC
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -61,7 +61,6 @@ enum {
             // just some mock elements
             VPPDropDownElement *e = [[VPPDropDownElement alloc] initWithTitle:[NSString stringWithFormat:@"Element %d",i] andObject:[NSNumber numberWithInt:i]];
             [elts addObject:e];
-            [e release];
         }
         
         _dropDownCustom = [[VPPDropDown alloc] initWithTitle:@"Custom Combo" 
@@ -81,19 +80,7 @@ enum {
     return self;
 }
 
-- (void) dealloc {
-    
-    if (_ipToDeselect != nil) {
-        [_ipToDeselect release];
-        _ipToDeselect  = nil;
-    }
-    if (_dropDownCustom != nil) {
-        [_dropDownCustom release];
-        _dropDownCustom = nil;
-    }
-    
-    [super dealloc];
-}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -188,7 +175,7 @@ enum {
     
     GHMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[GHMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
     }
     
     
@@ -325,7 +312,6 @@ enum {
                 case kS1Row1:
                     av = [[UIAlertView alloc] initWithTitle:@"Cell selected" message:@"The independent cell 1 has been selected" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [av show];
-                    [av release];
                     //[tableView deselectRowAtIndexPath:indexPath animated:YES];
                     break;
                     
@@ -339,7 +325,6 @@ enum {
                 case kS2Row1:
                     av = [[UIAlertView alloc] initWithTitle:@"Cell selected" message:@"The independent cell 2 has been selected" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [av show];
-                    [av release];
                     //[tableView deselectRowAtIndexPath:indexPath animated:YES];
                     break;
                     
@@ -367,7 +352,7 @@ enum {
     
     GHMenuCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] autorelease];
+        cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
     }
     
     cell.textLabel.text = @"Đăng nhập";
@@ -380,11 +365,10 @@ enum {
 
     GHMenuCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
-        cell = [[[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] autorelease];
+        cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
     }
     
     cell.textLabel.text = @"Custom cell";
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"row %d",globalIndexPath.row];
     
     return cell;
 }
@@ -401,7 +385,6 @@ enum {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (_ipToDeselect != nil) {
         [self.tableView deselectRowAtIndexPath:_ipToDeselect animated:YES];
-        [_ipToDeselect release];
         _ipToDeselect = nil;
     }
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5554483B170EBC2D00965E1E /* LeftMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55544838170EBC2D00965E1E /* LeftMenuVC.m */; };
+		5554483C170EBC2D00965E1E /* GHMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5554483A170EBC2D00965E1E /* GHMenuCell.m */; };
+		5554483E170EBD0800965E1E /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 5554483D170EBD0800965E1E /* user.png */; };
 		5562B18A16FC50F300E21A82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5562B18916FC50F300E21A82 /* UIKit.framework */; };
 		5562B18C16FC50F300E21A82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5562B18B16FC50F300E21A82 /* Foundation.framework */; };
 		5562B18E16FC50F300E21A82 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5562B18D16FC50F300E21A82 /* CoreGraphics.framework */; };
@@ -18,23 +21,6 @@
 		5562B1B216FC50F300E21A82 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5562B1B016FC50F300E21A82 /* InfoPlist.strings */; };
 		5562B1B516FC50F300E21A82 /* TimVuiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562B1B416FC50F300E21A82 /* TimVuiTests.m */; };
 		55BAED3A1709725600CF3171 /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED391709725600CF3171 /* AFAppDotNetAPIClient.m */; };
-		55BAED481709726300CF3171 /* SDGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED3E1709726300CF3171 /* SDGroupCell.m */; };
-		55BAED491709726300CF3171 /* SDGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED3F1709726300CF3171 /* SDGroupCell.xib */; };
-		55BAED4A1709726300CF3171 /* SDNestedTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED401709726300CF3171 /* SDNestedTableView.xib */; };
-		55BAED4B1709726300CF3171 /* SDNestedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED421709726300CF3171 /* SDNestedTableViewController.m */; };
-		55BAED4C1709726300CF3171 /* SDSelectableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED441709726300CF3171 /* SDSelectableCell.m */; };
-		55BAED4D1709726300CF3171 /* SDSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED461709726300CF3171 /* SDSubCell.m */; };
-		55BAED4E1709726300CF3171 /* SDSubCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED471709726300CF3171 /* SDSubCell.xib */; };
-		55BAED59170977B200CF3171 /* blueLedBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED50170977B200CF3171 /* blueLedBig.png */; };
-		55BAED5A170977B200CF3171 /* blueLedBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED51170977B200CF3171 /* blueLedBig@2x.png */; };
-		55BAED5B170977B200CF3171 /* blueLedBigOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED52170977B200CF3171 /* blueLedBigOff.png */; };
-		55BAED5C170977B200CF3171 /* blueLedSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED53170977B200CF3171 /* blueLedSmall.png */; };
-		55BAED5D170977B200CF3171 /* blueLedSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED54170977B200CF3171 /* blueLedSmall@2x.png */; };
-		55BAED5E170977B200CF3171 /* blueLedSmallOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED55170977B200CF3171 /* blueLedSmallOff.png */; };
-		55BAED5F170977B200CF3171 /* blueLedSmallOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED56170977B200CF3171 /* blueLedSmallOff@2x.png */; };
-		55BAED60170977B200CF3171 /* disclosure.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED57170977B200CF3171 /* disclosure.png */; };
-		55BAED61170977B200CF3171 /* disclosure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55BAED58170977B200CF3171 /* disclosure@2x.png */; };
-		55BAED651709784F00CF3171 /* LeftMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED641709784F00CF3171 /* LeftMenuVC.m */; };
 		55C8C10A17052E4C007D8E78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F317052E4C007D8E78 /* AppDelegate.m */; };
 		55C8C10B17052E4C007D8E78 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F617052E4C007D8E78 /* Post.m */; };
 		55C8C10C17052E4C007D8E78 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F817052E4C007D8E78 /* User.m */; };
@@ -70,6 +56,11 @@
 
 /* Begin PBXFileReference section */
 		2A89DFA4254249D091202191 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		55544837170EBC2D00965E1E /* LeftMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuVC.h; sourceTree = "<group>"; };
+		55544838170EBC2D00965E1E /* LeftMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuVC.m; sourceTree = "<group>"; };
+		55544839170EBC2D00965E1E /* GHMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHMenuCell.h; sourceTree = "<group>"; };
+		5554483A170EBC2D00965E1E /* GHMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHMenuCell.m; sourceTree = "<group>"; };
+		5554483D170EBD0800965E1E /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		5562B18616FC50F300E21A82 /* TimVui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimVui.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5562B18916FC50F300E21A82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5562B18B16FC50F300E21A82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -86,28 +77,6 @@
 		5562B1B416FC50F300E21A82 /* TimVuiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimVuiTests.m; sourceTree = "<group>"; };
 		55BAED381709725600CF3171 /* AFAppDotNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppDotNetAPIClient.h; sourceTree = "<group>"; };
 		55BAED391709725600CF3171 /* AFAppDotNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppDotNetAPIClient.m; sourceTree = "<group>"; };
-		55BAED3D1709726300CF3171 /* SDGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGroupCell.h; sourceTree = "<group>"; };
-		55BAED3E1709726300CF3171 /* SDGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGroupCell.m; sourceTree = "<group>"; };
-		55BAED3F1709726300CF3171 /* SDGroupCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDGroupCell.xib; sourceTree = "<group>"; };
-		55BAED401709726300CF3171 /* SDNestedTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDNestedTableView.xib; sourceTree = "<group>"; };
-		55BAED411709726300CF3171 /* SDNestedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDNestedTableViewController.h; sourceTree = "<group>"; };
-		55BAED421709726300CF3171 /* SDNestedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDNestedTableViewController.m; sourceTree = "<group>"; };
-		55BAED431709726300CF3171 /* SDSelectableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSelectableCell.h; sourceTree = "<group>"; };
-		55BAED441709726300CF3171 /* SDSelectableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSelectableCell.m; sourceTree = "<group>"; };
-		55BAED451709726300CF3171 /* SDSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDSubCell.h; sourceTree = "<group>"; };
-		55BAED461709726300CF3171 /* SDSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDSubCell.m; sourceTree = "<group>"; };
-		55BAED471709726300CF3171 /* SDSubCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDSubCell.xib; sourceTree = "<group>"; };
-		55BAED50170977B200CF3171 /* blueLedBig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueLedBig.png; sourceTree = "<group>"; };
-		55BAED51170977B200CF3171 /* blueLedBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueLedBig@2x.png"; sourceTree = "<group>"; };
-		55BAED52170977B200CF3171 /* blueLedBigOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueLedBigOff.png; sourceTree = "<group>"; };
-		55BAED53170977B200CF3171 /* blueLedSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueLedSmall.png; sourceTree = "<group>"; };
-		55BAED54170977B200CF3171 /* blueLedSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueLedSmall@2x.png"; sourceTree = "<group>"; };
-		55BAED55170977B200CF3171 /* blueLedSmallOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueLedSmallOff.png; sourceTree = "<group>"; };
-		55BAED56170977B200CF3171 /* blueLedSmallOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueLedSmallOff@2x.png"; sourceTree = "<group>"; };
-		55BAED57170977B200CF3171 /* disclosure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disclosure.png; sourceTree = "<group>"; };
-		55BAED58170977B200CF3171 /* disclosure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "disclosure@2x.png"; sourceTree = "<group>"; };
-		55BAED631709784F00CF3171 /* LeftMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftMenuVC.h; sourceTree = "<group>"; };
-		55BAED641709784F00CF3171 /* LeftMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftMenuVC.m; sourceTree = "<group>"; };
 		55C8C0F217052E4C007D8E78 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Extensions/AppDelegate.h; sourceTree = "<group>"; };
 		55C8C0F317052E4C007D8E78 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Extensions/AppDelegate.m; sourceTree = "<group>"; };
 		55C8C0F517052E4C007D8E78 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
@@ -253,51 +222,17 @@
 		55BAED3B1709726300CF3171 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				55BAED3C1709726300CF3171 /* SDNestedTable */,
 			);
 			path = Libs;
-			sourceTree = "<group>";
-		};
-		55BAED3C1709726300CF3171 /* SDNestedTable */ = {
-			isa = PBXGroup;
-			children = (
-				55BAED4F170977B200CF3171 /* Default Images */,
-				55BAED3D1709726300CF3171 /* SDGroupCell.h */,
-				55BAED3E1709726300CF3171 /* SDGroupCell.m */,
-				55BAED3F1709726300CF3171 /* SDGroupCell.xib */,
-				55BAED411709726300CF3171 /* SDNestedTableViewController.h */,
-				55BAED421709726300CF3171 /* SDNestedTableViewController.m */,
-				55BAED401709726300CF3171 /* SDNestedTableView.xib */,
-				55BAED431709726300CF3171 /* SDSelectableCell.h */,
-				55BAED441709726300CF3171 /* SDSelectableCell.m */,
-				55BAED451709726300CF3171 /* SDSubCell.h */,
-				55BAED461709726300CF3171 /* SDSubCell.m */,
-				55BAED471709726300CF3171 /* SDSubCell.xib */,
-			);
-			path = SDNestedTable;
-			sourceTree = "<group>";
-		};
-		55BAED4F170977B200CF3171 /* Default Images */ = {
-			isa = PBXGroup;
-			children = (
-				55BAED50170977B200CF3171 /* blueLedBig.png */,
-				55BAED51170977B200CF3171 /* blueLedBig@2x.png */,
-				55BAED52170977B200CF3171 /* blueLedBigOff.png */,
-				55BAED53170977B200CF3171 /* blueLedSmall.png */,
-				55BAED54170977B200CF3171 /* blueLedSmall@2x.png */,
-				55BAED55170977B200CF3171 /* blueLedSmallOff.png */,
-				55BAED56170977B200CF3171 /* blueLedSmallOff@2x.png */,
-				55BAED57170977B200CF3171 /* disclosure.png */,
-				55BAED58170977B200CF3171 /* disclosure@2x.png */,
-			);
-			path = "Default Images";
 			sourceTree = "<group>";
 		};
 		55BAED621709784F00CF3171 /* LeftMenuVC */ = {
 			isa = PBXGroup;
 			children = (
-				55BAED631709784F00CF3171 /* LeftMenuVC.h */,
-				55BAED641709784F00CF3171 /* LeftMenuVC.m */,
+				55544837170EBC2D00965E1E /* LeftMenuVC.h */,
+				55544838170EBC2D00965E1E /* LeftMenuVC.m */,
+				55544839170EBC2D00965E1E /* GHMenuCell.h */,
+				5554483A170EBC2D00965E1E /* GHMenuCell.m */,
 			);
 			path = LeftMenuVC;
 			sourceTree = "<group>";
@@ -368,6 +303,7 @@
 		55C8C10417052E4C007D8E78 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				5554483D170EBD0800965E1E /* user.png */,
 				55ED8480170D3D0A00344215 /* leftMenuBtn.png */,
 				55ED8481170D3D0A00344215 /* leftMenuBtn@2x.png */,
 				55ED8482170D3D0A00344215 /* navigation_bar.png */,
@@ -487,23 +423,12 @@
 				55C8C11317052E4C007D8E78 /* Default@2x.png in Resources */,
 				55C8C11617052EC6007D8E78 /* profile-image-placeholder.png in Resources */,
 				55C8C11717052EC6007D8E78 /* profile-image-placeholder@2x.png in Resources */,
-				55BAED491709726300CF3171 /* SDGroupCell.xib in Resources */,
-				55BAED4A1709726300CF3171 /* SDNestedTableView.xib in Resources */,
-				55BAED4E1709726300CF3171 /* SDSubCell.xib in Resources */,
-				55BAED59170977B200CF3171 /* blueLedBig.png in Resources */,
-				55BAED5A170977B200CF3171 /* blueLedBig@2x.png in Resources */,
-				55BAED5B170977B200CF3171 /* blueLedBigOff.png in Resources */,
-				55BAED5C170977B200CF3171 /* blueLedSmall.png in Resources */,
-				55BAED5D170977B200CF3171 /* blueLedSmall@2x.png in Resources */,
-				55BAED5E170977B200CF3171 /* blueLedSmallOff.png in Resources */,
-				55BAED5F170977B200CF3171 /* blueLedSmallOff@2x.png in Resources */,
-				55BAED60170977B200CF3171 /* disclosure.png in Resources */,
-				55BAED61170977B200CF3171 /* disclosure@2x.png in Resources */,
 				55ED8484170D3D0A00344215 /* leftMenuBtn.png in Resources */,
 				55ED8485170D3D0A00344215 /* leftMenuBtn@2x.png in Resources */,
 				55ED8486170D3D0A00344215 /* navigation_bar.png in Resources */,
 				55ED8487170D3D0A00344215 /* navigation_bar@2x.png in Resources */,
 				55ED848F170D5A0300344215 /* SearchVC.xib in Resources */,
+				5554483E170EBD0800965E1E /* user.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,14 +484,11 @@
 				55C8C10F17052E4C007D8E78 /* MainVC.m in Sources */,
 				55C8C11017052E4C007D8E78 /* PostTableViewCell.m in Sources */,
 				55BAED3A1709725600CF3171 /* AFAppDotNetAPIClient.m in Sources */,
-				55BAED481709726300CF3171 /* SDGroupCell.m in Sources */,
-				55BAED4B1709726300CF3171 /* SDNestedTableViewController.m in Sources */,
-				55BAED4C1709726300CF3171 /* SDSelectableCell.m in Sources */,
-				55BAED4D1709726300CF3171 /* SDSubCell.m in Sources */,
-				55BAED651709784F00CF3171 /* LeftMenuVC.m in Sources */,
 				55CD6D52170A8501002B0CF7 /* PullToRevealMapVC.m in Sources */,
 				55ED848A170D3F3400344215 /* UINavigationBar+CustomImage.m in Sources */,
 				55ED848E170D5A0300344215 /* SearchVC.m in Sources */,
+				5554483B170EBC2D00965E1E /* LeftMenuVC.m in Sources */,
+				5554483C170EBC2D00965E1E /* GHMenuCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
