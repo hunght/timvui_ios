@@ -34,6 +34,14 @@
 		55CD6D52170A8501002B0CF7 /* PullToRevealMapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CD6D4F170A8501002B0CF7 /* PullToRevealMapVC.m */; };
 		55CD6D54170A85AB002B0CF7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CD6D53170A85AB002B0CF7 /* CoreLocation.framework */; };
 		55CD6D56170A85BD002B0CF7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CD6D55170A85BD002B0CF7 /* MapKit.framework */; };
+		55D5A8BE171E7BC90027BBFE /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8BD171E7BC90027BBFE /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		55D5A8C1171E7BCF0027BBFE /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8BF171E7BCF0027BBFE /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		55D5A8C2171E7BCF0027BBFE /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		55D5A8C6171E7C7B0027BBFE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8C5171E7C7B0027BBFE /* FacebookSDK.framework */; };
+		55D5A8D0171E7EA70027BBFE /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5A8CD171E7EA70027BBFE /* LoginVC.m */; };
+		55D5A8D1171E7EA70027BBFE /* LoginVC_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D5A8CE171E7EA70027BBFE /* LoginVC_iPad.xib */; };
+		55D5A8D2171E7EA70027BBFE /* LoginVC_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55D5A8CF171E7EA70027BBFE /* LoginVC_iPhone.xib */; };
+		55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5A8D4171E88220027BBFE /* GlobalDataUser.m */; };
 		55ED8484170D3D0A00344215 /* leftMenuBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 55ED8480170D3D0A00344215 /* leftMenuBtn.png */; };
 		55ED8485170D3D0A00344215 /* leftMenuBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55ED8481170D3D0A00344215 /* leftMenuBtn@2x.png */; };
 		55ED8486170D3D0A00344215 /* navigation_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 55ED8482170D3D0A00344215 /* navigation_bar.png */; };
@@ -96,6 +104,16 @@
 		55CD6D4F170A8501002B0CF7 /* PullToRevealMapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullToRevealMapVC.m; sourceTree = "<group>"; };
 		55CD6D53170A85AB002B0CF7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		55CD6D55170A85BD002B0CF7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		55D5A8BD171E7BC90027BBFE /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		55D5A8BF171E7BCF0027BBFE /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		55D5A8C5171E7C7B0027BBFE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		55D5A8CC171E7EA70027BBFE /* LoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginVC.h; sourceTree = "<group>"; };
+		55D5A8CD171E7EA70027BBFE /* LoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginVC.m; sourceTree = "<group>"; };
+		55D5A8CE171E7EA70027BBFE /* LoginVC_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginVC_iPad.xib; sourceTree = "<group>"; };
+		55D5A8CF171E7EA70027BBFE /* LoginVC_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginVC_iPhone.xib; sourceTree = "<group>"; };
+		55D5A8D3171E88220027BBFE /* GlobalDataUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDataUser.h; sourceTree = "<group>"; };
+		55D5A8D4171E88220027BBFE /* GlobalDataUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataUser.m; sourceTree = "<group>"; };
 		55ED8480170D3D0A00344215 /* leftMenuBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftMenuBtn.png; sourceTree = "<group>"; };
 		55ED8481170D3D0A00344215 /* leftMenuBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftMenuBtn@2x.png"; sourceTree = "<group>"; };
 		55ED8482170D3D0A00344215 /* navigation_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_bar.png; sourceTree = "<group>"; };
@@ -113,12 +131,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D5A8C1171E7BCF0027BBFE /* Accounts.framework in Frameworks */,
+				55D5A8C2171E7BCF0027BBFE /* AdSupport.framework in Frameworks */,
+				55D5A8BE171E7BC90027BBFE /* Social.framework in Frameworks */,
 				55CD6D56170A85BD002B0CF7 /* MapKit.framework in Frameworks */,
 				55CD6D54170A85AB002B0CF7 /* CoreLocation.framework in Frameworks */,
 				5562B18A16FC50F300E21A82 /* UIKit.framework in Frameworks */,
 				5562B18C16FC50F300E21A82 /* Foundation.framework in Frameworks */,
 				5562B18E16FC50F300E21A82 /* CoreGraphics.framework in Frameworks */,
 				B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */,
+				55D5A8C6171E7C7B0027BBFE /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +180,10 @@
 		5562B18816FC50F300E21A82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55D5A8C5171E7C7B0027BBFE /* FacebookSDK.framework */,
+				55D5A8BF171E7BCF0027BBFE /* Accounts.framework */,
+				55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */,
+				55D5A8BD171E7BC90027BBFE /* Social.framework */,
 				55CD6D55170A85BD002B0CF7 /* MapKit.framework */,
 				55CD6D53170A85AB002B0CF7 /* CoreLocation.framework */,
 				5562B18916FC50F300E21A82 /* UIKit.framework */,
@@ -267,6 +293,8 @@
 				55C8C0F617052E4C007D8E78 /* Post.m */,
 				55C8C0F717052E4C007D8E78 /* User.h */,
 				55C8C0F817052E4C007D8E78 /* User.m */,
+				55D5A8D3171E88220027BBFE /* GlobalDataUser.h */,
+				55D5A8D4171E88220027BBFE /* GlobalDataUser.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -274,6 +302,7 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				55D5A8CB171E7EA70027BBFE /* LoginVC */,
 				55ED8490170D5A0E00344215 /* SearchVC */,
 				55BAED621709784F00CF3171 /* LeftMenuVC */,
 				55C8C0FE17052E4C007D8E78 /* MainVC */,
@@ -333,6 +362,17 @@
 			);
 			name = PullToRevealMapVC;
 			path = ../PullToRevealVC;
+			sourceTree = "<group>";
+		};
+		55D5A8CB171E7EA70027BBFE /* LoginVC */ = {
+			isa = PBXGroup;
+			children = (
+				55D5A8CC171E7EA70027BBFE /* LoginVC.h */,
+				55D5A8CD171E7EA70027BBFE /* LoginVC.m */,
+				55D5A8CE171E7EA70027BBFE /* LoginVC_iPad.xib */,
+				55D5A8CF171E7EA70027BBFE /* LoginVC_iPhone.xib */,
+			);
+			path = LoginVC;
 			sourceTree = "<group>";
 		};
 		55ED8490170D5A0E00344215 /* SearchVC */ = {
@@ -429,6 +469,8 @@
 				55ED8487170D3D0A00344215 /* navigation_bar@2x.png in Resources */,
 				55ED848F170D5A0300344215 /* SearchVC.xib in Resources */,
 				5554483E170EBD0800965E1E /* user.png in Resources */,
+				55D5A8D1171E7EA70027BBFE /* LoginVC_iPad.xib in Resources */,
+				55D5A8D2171E7EA70027BBFE /* LoginVC_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +531,8 @@
 				55ED848E170D5A0300344215 /* SearchVC.m in Sources */,
 				5554483B170EBC2D00965E1E /* LeftMenuVC.m in Sources */,
 				5554483C170EBC2D00965E1E /* GHMenuCell.m in Sources */,
+				55D5A8D0171E7EA70027BBFE /* LoginVC.m in Sources */,
+				55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,10 +634,28 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
 				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					ImageIO,
+					"-framework",
+					MessageUI,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -604,10 +666,28 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
 				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					ImageIO,
+					"-framework",
+					MessageUI,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					SystemConfiguration,
+					"-lsqlite3.0",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

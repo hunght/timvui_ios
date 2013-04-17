@@ -38,7 +38,6 @@
     
     _postID = [[attributes valueForKeyPath:@"id"] integerValue];
     _text = [attributes valueForKeyPath:@"text"];
-    
     _user = [[User alloc] initWithAttributes:[attributes valueForKeyPath:@"user"]];
     
     return self;

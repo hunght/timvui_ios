@@ -9,6 +9,7 @@
 #import "LeftMenuVC.h"
 #import "GHMenuCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GlobalDataUser.h"
 #define kNumberOfSections 3
 
 enum {
@@ -50,25 +51,31 @@ enum {
 };
 @implementation LeftMenuVC
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)checkAndRefreshTableviewWhenUserLoginOrLogout
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-
-        NSMutableArray *elts = [NSMutableArray array];
+    // Custom initialization
+    NSMutableArray *elts=nil;
+    if ([GlobalDataUser sharedClient].isLogin) {
+        elts = [NSMutableArray array];
         for (int i = 1; i <= 4; i++) {
             // just some mock elements
             VPPDropDownElement *e = [[VPPDropDownElement alloc] initWithTitle:[NSString stringWithFormat:@"Element %d",i] andObject:[NSNumber numberWithInt:i]];
             [elts addObject:e];
         }
-        
-        _dropDownCustom = [[VPPDropDown alloc] initWithTitle:@"Custom Combo" 
-                                                       type:VPPDropDownTypeCustom 
-                                                  tableView:self.tableView 
-                                                  indexPath:[NSIndexPath indexPathForRow:kS1Row0 inSection:kSection1UserAccount]
-                                                   elements:elts 
-                                                   delegate:self];
+    }
+    _dropDownCustom = [[VPPDropDown alloc] initWithTitle:@"Custom Combo" 
+                                                    type:VPPDropDownTypeCustom 
+                                               tableView:self.tableView 
+                                               indexPath:[NSIndexPath indexPathForRow:kS1Row0 inSection:kSection1UserAccount]
+                                                elements:elts
+                                                delegate:self];
+}
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        [self checkAndRefreshTableviewWhenUserLoginOrLogout];
         _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ Anuong.net",@"Cài đặt", nil];
         [self.tableView setBackgroundColor:[UIColor clearColor]];
         [self.view setBackgroundColor:[UIColor clearColor]];
@@ -287,17 +294,7 @@ enum {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-
-    
+{    
     // first check if any dropdown contains the requested cell
     if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
         [VPPDropDown tableView:tableView didSelectRowAtIndexPath:indexPath];
