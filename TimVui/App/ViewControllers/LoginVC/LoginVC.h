@@ -15,8 +15,19 @@
  */
 
 #import <UIKit/UIKit.h>
+@protocol LoginVCDelegate
 
+@optional
+
+/**
+ * Sent to the delegate when sign up has completed successfully. Immediately
+ * followed by an invocation of userDidLogin:
+ */
+- (void)userFacebookDidLogin;
+- (void)userFacebookDidLogout;
+
+@end
 @interface LoginVC : UIViewController
-
+@property (nonatomic, retain) NSObject<LoginVCDelegate>* delegate;
 @end
 

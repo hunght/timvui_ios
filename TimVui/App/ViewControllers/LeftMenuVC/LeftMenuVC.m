@@ -10,6 +10,8 @@
 #import "GHMenuCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "GlobalDataUser.h"
+#import "LoginVC.h"
+#import "AppDelegate.h"
 #define kNumberOfSections 3
 
 enum {
@@ -29,7 +31,13 @@ enum {
     kS1Row0 = 0,
     kS1Row1
 };
-
+enum {
+    kS1AccountRecentlyAction = 0,
+    kS1AccountInfoUser,
+    kS1AccountReceivedCoupon,
+    kS1AccountInteresting,
+    kS1AccountRecentlyView
+};
 
 /* set to 2 if you want to see how it behaves 
  when having more cells in the same section 
@@ -37,10 +45,10 @@ enum {
 
 #define kNumberOfRowsInSection2 4
 enum {
-    kS2Row0 = 0,
-    kS2Row1,
-    kS2Row2,
-    kS2Row3
+    kS2Home = 0,
+    kS2Promotion,
+    kS2Handbook,
+    kS2GoingEven
 };
 
 #define kNumberOfRowsInSection3 3
@@ -198,8 +206,12 @@ enum {
     switch (indexPath.section) {
         case kSection1UserAccount:
             switch (row) {
-                case kS2Row1:
-                    cell.textLabel.text = @"This is an independent cell";
+                case kS1Row1:
+                    if ([GlobalDataUser sharedClient].isLogin) 
+                        cell.textLabel.text = @"Cài đặt tài khoản";
+                    else
+                        cell.textLabel.text = @"Xem gần đây";
+                    
                     break;
             }
             break;
@@ -298,6 +310,19 @@ enum {
     // first check if any dropdown contains the requested cell
     if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
         [VPPDropDown tableView:tableView didSelectRowAtIndexPath:indexPath];
+        if ([GlobalDataUser sharedClient].isLogin==NO&&indexPath.section==kSection1UserAccount && indexPath.row==kS1Row0) {
+            LoginVC* loginVC=nil;
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+            } else {
+                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+            }
+            
+            AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+            [appDelegate.centerController presentModalViewController:loginVC animated:YES];
+            [loginVC setDelegate:self];
+            _globalIndexPath=indexPath;
+        }
         return;
     }
     
@@ -319,7 +344,7 @@ enum {
             
         case kSection1UserAccount:
             switch (row) {
-                case kS2Row1:
+                case kS1Row1:
                     av = [[UIAlertView alloc] initWithTitle:@"Cell selected" message:@"The independent cell 2 has been selected" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [av show];
                     //[tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -333,7 +358,14 @@ enum {
     }
     
 }
-
+#pragma mark - LoginVCDelegate
+-(void)userFacebookDidLogin{
+    [self checkAndRefreshTableviewWhenUserLoginOrLogout];
+    [self.tableView reloadData];
+    if ([VPPDropDown tableView:self.tableView dropdownsContainIndexPath:_globalIndexPath]) {
+        [VPPDropDown tableView:self.tableView didSelectRowAtIndexPath:_globalIndexPath];
+    }
+}
 
 #pragma mark - VPPDropDownDelegate
 
@@ -364,8 +396,27 @@ enum {
     if (!cell) {
         cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
     }
+    int row=globalIndexPath.row;
+    switch (row) {
+        case kS1AccountRecentlyAction:
+            cell.textLabel.text = @"Hoạt động gần đây";
+            break;
+        case kS1AccountInfoUser:
+            cell.textLabel.text = @"Thông tin cá nhân";
+            break;
+        case kS1AccountReceivedCoupon:
+            cell.textLabel.text = @"Coupon đã nhận";
+            break;
+        case kS1AccountInteresting:
+            cell.textLabel.text = @"Đang quan tâm";
+            break;
+        case kS1AccountRecentlyView:
+            cell.textLabel.text = @"Xem gần đây";
+            break;
+        default:
+            break;
+    }
     
-    cell.textLabel.text = @"Custom cell";
     
     return cell;
 }
@@ -380,9 +431,9 @@ enum {
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (_ipToDeselect != nil) {
-        [self.tableView deselectRowAtIndexPath:_ipToDeselect animated:YES];
-        _ipToDeselect = nil;
+    if (_globalIndexPath != nil) {
+        [self.tableView deselectRowAtIndexPath:_globalIndexPath animated:YES];
+        _globalIndexPath = nil;
     }
 }
 

@@ -9,13 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "VPPDropDown.h"
 #import "VPPDropDownDelegate.h"
-
-@interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate> {
+#import "LoginVC.h"
+@interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate, LoginVCDelegate> {
 @private
     NSArray *_headers;
     VPPDropDown *_dropDownCustom;
     
-    NSIndexPath *_ipToDeselect;
+    NSIndexPath *_globalIndexPath;
 }
 
 @end
