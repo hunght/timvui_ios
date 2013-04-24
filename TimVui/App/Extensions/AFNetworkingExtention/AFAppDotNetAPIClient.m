@@ -24,7 +24,9 @@
 
 #import "AFJSONRequestOperation.h"
 
-static NSString * const kAFAppDotNetAPIBaseURLString = @"https://alpha-api.app.net/";
+//static NSString * const kAFAppDotNetAPIBaseURLString = @"https://alpha-api.app.net/";
+static NSString * const kAFAppDotNetAPIBaseURLString = @"http://anuong.hehe.vn/api/";
+
 
 @implementation AFAppDotNetAPIClient
 
@@ -48,8 +50,15 @@ static NSString * const kAFAppDotNetAPIBaseURLString = @"https://alpha-api.app.n
     
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
 	[self setDefaultHeader:@"Accept" value:@"application/json"];
-    
+    [self setUsername:@"ios" andPassword:@"ios"];
     return self;
 }
+
+- (void)setUsername:(NSString *)username andPassword:(NSString *)password;
+{
+    [self clearAuthorizationHeader];
+    [self setAuthorizationHeaderWithUsername:username password:password];
+}
+
 
 @end

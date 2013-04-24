@@ -26,5 +26,6 @@
 @interface AFAppDotNetAPIClient : AFHTTPClient
 
 + (AFAppDotNetAPIClient *)sharedClient;
+- (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 
 @end

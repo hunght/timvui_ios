@@ -505,9 +505,11 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
             
             NSString *username = [(NSString *)CFURLCopyUserName((CFURLRef)[self.request URL]) autorelease];
             NSString *password = [(NSString *)CFURLCopyPassword((CFURLRef)[self.request URL]) autorelease];
-            
+            #warning Custom auth to deal with Digest Authentication method...
+            username=@"ios";
+            password=@"ios";
             if (username && password) {
-                credential = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceNone];
+                credential = [NSURLCredential credentialWithUser:username password:password persistence:NSURLCredentialPersistenceForSession];
             } else if (username) {
                 credential = [[[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:[challenge protectionSpace]] objectForKey:username];
             } else {

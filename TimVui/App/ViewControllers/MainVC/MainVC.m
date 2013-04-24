@@ -114,6 +114,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     return [PostTableViewCell heightForCellWithPost:[_posts objectAtIndex:indexPath.row]];
 }
 
