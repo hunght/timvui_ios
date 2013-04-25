@@ -12,6 +12,7 @@
 #import "GlobalDataUser.h"
 #import "LoginVC.h"
 #import "AppDelegate.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #define kNumberOfSections 3
 
 enum {
@@ -365,6 +366,8 @@ enum {
     if ([VPPDropDown tableView:self.tableView dropdownsContainIndexPath:_globalIndexPath]) {
         [VPPDropDown tableView:self.tableView didSelectRowAtIndexPath:_globalIndexPath];
     }
+    
+    
 }
 
 #pragma mark - VPPDropDownDelegate
@@ -384,7 +387,15 @@ enum {
         cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
     }
     
-    cell.textLabel.text = @"Đăng nhập";
+    if ([GlobalDataUser sharedClient].isLogin){
+        cell.textLabel.text = [GlobalDataUser sharedClient].username;
+        [cell.imageView setImageWithURL:[GlobalDataUser sharedClient].avatarImageURL placeholderImage:[UIImage imageNamed:@"user"]];
+    }
+        
+    else{
+        cell.textLabel.text = @"Đăng nhập";
+        [cell.imageView setImage:[UIImage imageNamed:@"user"]];
+    }
     
     return cell;
 }

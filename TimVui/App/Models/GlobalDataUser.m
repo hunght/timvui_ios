@@ -12,6 +12,7 @@
 
 @synthesize userID = _userID;
 @synthesize username = _username;
+@synthesize facebookID = _facebookID;
 @synthesize avatarImageURL=_avatarImageURL;
 @synthesize isLogin=_isLogin;
 

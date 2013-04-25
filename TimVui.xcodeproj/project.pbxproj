@@ -20,6 +20,10 @@
 		5562B1AA16FC50F300E21A82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5562B18B16FC50F300E21A82 /* Foundation.framework */; };
 		5562B1B216FC50F300E21A82 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5562B1B016FC50F300E21A82 /* InfoPlist.strings */; };
 		5562B1B516FC50F300E21A82 /* TimVuiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5562B1B416FC50F300E21A82 /* TimVuiTests.m */; };
+		55A25F4F1728C56A00D5E29F /* Ultilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A25F4E1728C56A00D5E29F /* Ultilities.m */; };
+		55A25F521728C8AB00D5E29F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A25F511728C8AB00D5E29F /* QuartzCore.framework */; };
+		55A25F581728CCD700D5E29F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A25F541728CCD700D5E29F /* Localizable.strings */; };
+		55A25F591728CCD700D5E29F /* Localizable_vn.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A25F561728CCD700D5E29F /* Localizable_vn.strings */; };
 		55BAED3A1709725600CF3171 /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED391709725600CF3171 /* AFAppDotNetAPIClient.m */; };
 		55C8C10A17052E4C007D8E78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F317052E4C007D8E78 /* AppDelegate.m */; };
 		55C8C10B17052E4C007D8E78 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F617052E4C007D8E78 /* Post.m */; };
@@ -83,6 +87,12 @@
 		5562B1B116FC50F300E21A82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5562B1B316FC50F300E21A82 /* TimVuiTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimVuiTests.h; sourceTree = "<group>"; };
 		5562B1B416FC50F300E21A82 /* TimVuiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimVuiTests.m; sourceTree = "<group>"; };
+		55A25F4D1728C56A00D5E29F /* Ultilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ultilities.h; sourceTree = "<group>"; };
+		55A25F4E1728C56A00D5E29F /* Ultilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ultilities.m; sourceTree = "<group>"; };
+		55A25F501728C5C900D5E29F /* MacroCityOffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacroCityOffers.h; sourceTree = "<group>"; };
+		55A25F511728C8AB00D5E29F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		55A25F551728CCD700D5E29F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		55A25F571728CCD700D5E29F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable_vn.strings; sourceTree = "<group>"; };
 		55BAED381709725600CF3171 /* AFAppDotNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppDotNetAPIClient.h; sourceTree = "<group>"; };
 		55BAED391709725600CF3171 /* AFAppDotNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppDotNetAPIClient.m; sourceTree = "<group>"; };
 		55C8C0F217052E4C007D8E78 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Extensions/AppDelegate.h; sourceTree = "<group>"; };
@@ -131,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A25F521728C8AB00D5E29F /* QuartzCore.framework in Frameworks */,
 				55D5A8C1171E7BCF0027BBFE /* Accounts.framework in Frameworks */,
 				55D5A8C2171E7BCF0027BBFE /* AdSupport.framework in Frameworks */,
 				55D5A8BE171E7BC90027BBFE /* Social.framework in Frameworks */,
@@ -180,6 +191,7 @@
 		5562B18816FC50F300E21A82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55A25F511728C8AB00D5E29F /* QuartzCore.framework */,
 				55D5A8C5171E7C7B0027BBFE /* FacebookSDK.framework */,
 				55D5A8BF171E7BCF0027BBFE /* Accounts.framework */,
 				55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */,
@@ -236,6 +248,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		55A25F531728CCD700D5E29F /* localizable */ = {
+			isa = PBXGroup;
+			children = (
+				55A25F541728CCD700D5E29F /* Localizable.strings */,
+				55A25F561728CCD700D5E29F /* Localizable_vn.strings */,
+			);
+			name = localizable;
+			path = TimVui/localizable;
+			sourceTree = SOURCE_ROOT;
+		};
 		55BAED371709725600CF3171 /* AFNetworkingExtention */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +270,9 @@
 		55BAED3B1709726300CF3171 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				55A25F4D1728C56A00D5E29F /* Ultilities.h */,
+				55A25F4E1728C56A00D5E29F /* Ultilities.m */,
+				55A25F501728C5C900D5E29F /* MacroCityOffers.h */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -325,6 +350,7 @@
 		55C8C10317052E4C007D8E78 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				55A25F531728CCD700D5E29F /* localizable */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -471,6 +497,8 @@
 				5554483E170EBD0800965E1E /* user.png in Resources */,
 				55D5A8D1171E7EA70027BBFE /* LoginVC_iPad.xib in Resources */,
 				55D5A8D2171E7EA70027BBFE /* LoginVC_iPhone.xib in Resources */,
+				55A25F581728CCD700D5E29F /* Localizable.strings in Resources */,
+				55A25F591728CCD700D5E29F /* Localizable_vn.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +561,7 @@
 				5554483C170EBC2D00965E1E /* GHMenuCell.m in Sources */,
 				55D5A8D0171E7EA70027BBFE /* LoginVC.m in Sources */,
 				55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */,
+				55A25F4F1728C56A00D5E29F /* Ultilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +598,22 @@
 				5562B1B116FC50F300E21A82 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		55A25F541728CCD700D5E29F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55A25F551728CCD700D5E29F /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		55A25F561728CCD700D5E29F /* Localizable_vn.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55A25F571728CCD700D5E29F /* en */,
+			);
+			name = Localizable_vn.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

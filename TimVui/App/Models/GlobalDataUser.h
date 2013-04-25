@@ -10,6 +10,7 @@
 
 @property (assign, nonatomic) NSUInteger userID;
 @property (retain, nonatomic) NSString *username;
+@property (retain, nonatomic) NSString *facebookID;
 @property (nonatomic, retain) NSURL *avatarImageURL;
 @property (assign, nonatomic) BOOL isLogin;
 + (GlobalDataUser *)sharedClient;

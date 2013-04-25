@@ -17,22 +17,24 @@
 #import "LoginVC.h"
 #import "AppDelegate.h"
 #import "GlobalDataUser.h"
+#import "AFAppDotNetAPIClient.h"
+#import "Ultilities.h"
+#import "AFHTTPRequestOperation.h"
 @interface LoginVC ()
 
-@property (strong, nonatomic) IBOutlet UIButton *buttonLoginLogout;
+@property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
 
-- (IBAction)buttonClickHandler:(id)sender;
-- (void)updateView;
 
 @end
 
 @implementation LoginVC
-@synthesize buttonLoginLogout = _buttonLoginLogout;
+@synthesize buttonLogin = _buttonLoginLogout;
 @synthesize delegate=_delegate;
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _svos = _scrollView.contentOffset;
     AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     if (!appDelegate.session.isOpen) {
         // create a fresh session object
@@ -47,53 +49,54 @@
                                                              FBSessionState status,
                                                              NSError *error) {
                 // we recurse here, in order to update buttons and labels
-                [self updateView];
+                if (appDelegate.session.isOpen) {
+                    // if a user logs out explicitly, we delete any cached token information, and next
+                    // time they run the applicaiton they will be presented with log in UX again; most
+                    // users will simply close the app or switch away, without logging out; this will
+                    // cause the implicit cached-token login to occur on next launch of the application
+                    [appDelegate.session closeAndClearTokenInformation];
+                    
+                }
             }];
         }
     }
+    
 }
 
-// FBSample logic
-// main helper method to update the UI to reflect the current state of the session.
-- (void)updateView {
-    // get the app delegate, so that we can reference the session property
-    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-    if (appDelegate.session.isOpen) {
-        if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]) {
-            [GlobalDataUser sharedClient].isLogin=YES;
-            [_delegate userFacebookDidLogin];
-        }
-        [self dismissModalViewControllerAnimated:YES];
+
+
+#pragma mark UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    _btnBackground.enabled=YES;
+    if ([textField isEqual:_tfdUsername]) {
+        [_tfdUsername setKeyboardType:UIKeyboardTypeEmailAddress];
     }
+    [_scrollView setContentSize:self.view.frame.size];
+    CGPoint pt;
+    CGRect rc = [textField bounds];
+    rc = [textField convertRect:rc toView:_scrollView];
+    pt = rc.origin;
+    pt.x = 0;
+    pt.y -= 90;
+    [_scrollView setContentOffset:pt animated:YES];
 }
 
-// FBSample logic
-// handler for button click, logs sessions in or out
-- (IBAction)buttonClickHandler:(id)sender {
-    // get the app delegate so that we can access the session property
-    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-    
-    
-    if (appDelegate.session.state != FBSessionStateCreated) {
-        // Create a new, logged out session.
-        appDelegate.session = [[FBSession alloc] init];
-    }
-    
-    // if the session isn't open, let's open it now and present the login UX to the user
-    [appDelegate.session openWithCompletionHandler:^(FBSession *session,
-                                                     FBSessionState status,
-                                                     NSError *error) {
-        // and here we make sure to update our UX according to the new session state
-        [self updateView];
-    }];
-    
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    _btnBackground.enabled=NO;
+    [_scrollView setContentSize:self.view.frame.size];
+    [_scrollView setContentOffset:_svos animated:YES];
+    [textField resignFirstResponder];
+    return YES;
 }
-
 #pragma mark Template generated code
 
 - (void)viewDidUnload
 {
-    self.buttonLoginLogout = nil;
+    self.buttonLogin = nil;
+    [self setTfdUsername:nil];
+    [self setTfdPassword:nil];
+    [self setScrollView:nil];
+    [self setBtnBackground:nil];
     [super viewDidUnload];
 }
 
@@ -106,7 +109,114 @@
         return YES;
     }
 }
+// Displays the user's name and profile picture so they are aware of the Facebook
+// identity they are logged in as.
+- (void)getInfoAccountFacebook{
+    [[FBRequest requestForMe] startWithCompletionHandler:
+     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+         if (!error) {
+             if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]) {
+                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         user.id,@"openid_id" ,
+                                         @"FACEBOOK",@"openid_service",
+                                         @"email",@"email",
+                                         user.name,@"name",
+                                         user.birthday,@"dob",
+//                                         user.,@"gender",
+                                         nil];
+                 
+                 [[AFAppDotNetAPIClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                     NSLog(@"%@",JSON);
+                     NSLog(@"%ld",(long)operation.response.statusCode);
+                     [GlobalDataUser sharedClient].isLogin=YES;
+                     [GlobalDataUser sharedClient].username=user.name;
+                     [GlobalDataUser sharedClient].facebookID=user.id;
+                     [GlobalDataUser sharedClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
+                     NSLog(@"image link: %@",[GlobalDataUser sharedClient].avatarImageURL);
+                     [_delegate userFacebookDidLogin];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     NSLog(@"%@",error);
+                     NSLog(@"%ld",(long)operation.response.statusCode);
+                 }];
+             }
+             [self dismissModalViewControllerAnimated:YES];
+         }else{
+             //Todo
+             NSLog(@"%@",error);
+         }
+     }];
+}
 
-#pragma mark -
+- (void)postAPIUserLogin {
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            _tfdUsername.text,@"username" ,
+                            _tfdPassword.text,@"password",
+                            nil];
+    
+    [[AFAppDotNetAPIClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
+        NSLog(@"%ld",(long)operation.response.statusCode);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%ld",(long)operation.response.statusCode);
+    }];
+}
+
+#pragma mark - IBAction
+
+- (IBAction)facebookLoginButtonClicked:(id)sender {
+    // get the app delegate so that we can access the session property
+    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+    
+    if (appDelegate.session.state != FBSessionStateCreated) {
+        // Create a new, logged out session.
+        appDelegate.session = [[FBSession alloc] init];
+    }
+    
+    // if the session isn't open, let's open it now and present the login UX to the user
+    [appDelegate.session openWithCompletionHandler:^(FBSession *session,
+                                                     FBSessionState status,
+                                                     NSError *error) {
+        // and here we make sure to update our UX according to the new session state
+        if (appDelegate.session.isOpen) {
+            [FBSession setActiveSession:appDelegate.session];
+
+            [self getInfoAccountFacebook];
+        }
+    }];
+}
+
+- (IBAction)googleLoginButtonClicked:(id)sender {
+}
+
+
+
+- (IBAction)userLoginButtonClicked:(id)sender {
+    if ([Ultilities validatePassword:_tfdPassword.text]) {
+        
+        if ([Ultilities validateEmail:_tfdUsername.text]) {
+            //
+            [self postAPIUserLogin];
+        }else if ([Ultilities validatePhone:_tfdUsername.text]){
+
+            [self postAPIUserLogin];
+        }else
+            [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
+    }    
+}
+
+- (IBAction)yahooLoginButtonClicked:(id)sender {
+}
+
+- (IBAction)cancelButtonClicked:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (IBAction)backgroundButtonClicked:(id)sender {
+    [self.view endEditing:TRUE];
+    [_scrollView setContentOffset:_svos animated:YES];
+    [_scrollView setContentSize:self.view.frame.size];
+    _btnBackground.enabled=NO;
+}
+
 
 @end

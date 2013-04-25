@@ -27,7 +27,22 @@
 - (void)userFacebookDidLogout;
 
 @end
-@interface LoginVC : UIViewController
+@interface LoginVC : UIViewController<UITextFieldDelegate>{
+    CGPoint _svos;
+}
+
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;
 @property (nonatomic, retain) NSObject<LoginVCDelegate>* delegate;
+@property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnBackground;
+
+//Action
+- (IBAction)facebookLoginButtonClicked:(id)sender;
+- (IBAction)googleLoginButtonClicked:(id)sender;
+- (IBAction)userLoginButtonClicked:(id)sender;
+- (IBAction)cancelButtonClicked:(id)sender;
+- (IBAction)backgroundButtonClicked:(id)sender;
+
 @end
 

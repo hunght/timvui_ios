@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "MainVC.h"
-
+#import "LoginVC.h"
 #import "Post.h"
 
 #import "PostTableViewCell.h"
@@ -81,12 +81,13 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     self.tableView.rowHeight = 70.0f;
-    
-    [self reload:nil];
+    [self reload:nil];   
 }
+
 - (void)previewBounceLeftView {
     [self.viewDeckController previewBounceView:IIViewDeckLeftSide];
 }
+
 - (void)viewDidUnload {
     _activityIndicatorView = nil;
     [super viewDidUnload];

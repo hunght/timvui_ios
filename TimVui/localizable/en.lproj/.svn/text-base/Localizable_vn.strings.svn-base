@@ -1,0 +1,260 @@
+"Loading" = "Đang tải...";
+"Enter mail invalid!"="Email không hợp lệ";
+"OK"="OK";
+"Text must not null"="Bạn chưa nhập đủ thông tin đăng ký";
+"Enter phone number invalid!"="SĐT không hợp lệ";
+"Password and Confirm Password don't have same value"="Password xác thực không giống";
+"Entre liked"="Đã like doanh nghiệp này"; //khong can thong bao//
+"Offer received"=""; //case nay theo luong thong bao bang SMS // 
+"Login success"="Đăng nhập thành công";
+"Logout success"="Đăng xuất thành công";
+"User not login"="Vui lòng đăng nhập";
+"User not facebook"="Vui lòng đăng nhập tài khoản Facebook";
+"Unliked Entre"=""; //khong can thong bao// 
+"User have used this offer"=""; //disable nut Nhan offer nen user khong bam duoc nen khong can thong bao//
+
+"Singup success"="Đăng ký thành công";
+"Update success"="Cập nhật thành công";
+"Entrepreneur Singup success"="Đăng ký thành công";
+"Entrepreneur Update success"="Cập nhật thành công";
+
+"Choice category"="Vui lòng chọn ngành hàng";//phai chon category de dang ky entre
+"Choice address"="Vui lòng chọn ít nhất một địa chỉ cung cấp dịch vụ";
+"Fb did not login"="Không đăng nhập được Facebook";
+"Hasn't address data"="Bạn chưa chọn địa chỉ";
+"Registing offer success"="Đăng ưu đãi thành công";
+"Email or password invalid"="Email hoặc Mật khẩu không đúng";
+"Do you want to delete this address"="Bạn muốn xoá địa điểm này";
+"Want to logout"="Bạn có muốn thoát tài khoản facebook?";
+"Not has phone number"="Vui lòng cập nhật SĐT để nhận ưu đãi này";
+
+//DataController.m
+"Going Near Biz Show Offer Order To Seller"="Bạn đang sắp đến %@, vui lòng mở Ưu đãi bạn đã nhận trên CityOffer và xuất trình cho Người bán để sử dụng";
+
+"Offer Is Running On"="%@ (cách %@) đang có Ưu đãi dành cho thành viên CityOffers";
+"View Detail"="Xem chi tiết";
+
+//SMSMessageVC.m
+"Manual"="Hướng dẫn";
+"Click send to accept this offer"="Nhấn Gửi (Send) để xác nhận sử dụng ưu đãi này";
+"Update"="Cập nhật";
+"You've bought this offer, pls wailt"="Bạn đã đặt mua ưu đãi này! Vui lòng đợi..";
+"Alert Notice"="Thông báo";
+"Do you want to take this offer"="Bạn muốn nhận ưu đãi này?";
+"Error while order offer"="Có lỗi trong quá trình đặt mua offer. Xin vui lòng thử lại.";
+"Successful get offer"="Nhận ưu đãi thành công";
+
+"Please, used this offer when come to bussiness place"="Vui lòng sử dụng ưu đãi này khi đến cửa hàng để được phục vụ";
+"User have used this offer"="%@ đã sử dụng ưu đãi này.";
+"Order this offer"="Nhận ưu đãi này";
+"You have taken this offer"="Bạn đã nhận ưu đãi này";
+"Number user have used this offer"="%d người sử dụng ưu đãi này.";
+"Have taken offer"="Đã nhận ưu đãi";
+"Get offer"="Nhận ưu đãi";
+
+//CityOffersViewController.m
+"Nearly"="Gần đây";
+"Map"="Bản đồ";
+"Category"="Danh mục";
+"Network Connecting Fail Error Title"="Có lỗi kết nối Internet";
+"Network Connecting Fail Error Detail"="Vui lòng kiểm tra và kết nối internet để sử dụng các nội dung và tiện ích của ứng dụng!";
+"View Detail"="Xem chi tiết";
+"All Offers"="       Tất cả";
+//OfferRegisterViewController.m
+"Entre created this offer"="%@ đã tạo ưu đãi này.";
+"Success to login FB, You can share now"="Đăng nhập facebook thành công, bạn có thể chia sẻ với bạn bè ngay bây giờ";
+"Content of offer must have more than 10 characters"="Nội dung ưu đãi phải nhiều hơn 10 ký tự";
+"You haven't choose image yet"="Bạn chưa chọn ảnh";
+
+//OfferRegisterViewController.xib
+"Create Offer"="TẠO ƯU ĐÃI, GIẢM GIÁ";
+"Content Insert Here"="Nhập nội dung ở đây";
+"Apply To"="Áp dụng đến";
+"Address Apply"="Địa điểm áp dụng";
+"Notice"="Lưu ý";
+"Another note for using this offer"="Các lưu ý khác về sử dụng ưu đãi này nếu có";
+"Sharing on FB"="Chia sẻ lên facebook";
+"Exit"="Thoát";
+"Done"="Xong";
+"Post now"="Đăng ngay";
+
+//AccountViewController.m
+"Regist Entre Account"="Đăng ký Tài khoản Doanh nghiệp";
+"Invite Friend SMS Message"="Hey, thu dung Ung dung iPhone CityOffers de nhan cac uu dai that quanh ban nhe. Rat huu ich! Link tai http://appstore.vn/i/15930";
+"Content Email Feedback"="Bạn có ý tưởng, đề xuất giúp CityOffers cải tiến chất lượng sản phẩm và dịch vụ? Hãy cho chúng tôi biết. Chúng tôi luôn lắng nghe và trân trọng mọi góp ý dù nhỏ nhất từ bạn.\n\n\n\n\n\n----------------------------\nGửi từ: %@\niOS:%@\nModel:%@\nNetwork:%@";
+"You want to share FB automaticly"="Bạn có muốn tự động chia sẽ các ưu đãi giảm giá lên Facebook?";
+"You want to stop sharing on FB"="Bạn muốn ngưng chia sẽ các các ưu đãi giảm giá lên Facebook?";
+
+//AccountViewController.xib
+"Used Offer Number"="Ưu đãi đã dùng";
+"Liked Entre Number"="Doanh nghiệp đã thích";
+"Sharing On FB"="Chia sẻ lên Facebook";
+"Intro App To Friends"="Giới thiệu App với bạn bè";
+"CityOffer Facebook"="CityOffer Facebook";
+"Feedback Send"="Gửi phản hồi, góp ý";
+"Tern Of User"="Thoả thuận sử dụng";
+"Log out"="Đăng xuất";
+
+//FBSharingPostingVC.m
+"Sharing Fail Alert"="Chia sẻ thất bại. ";
+"Sharing Success Alert"="Bạn đã chia sẻ thành công. ";
+
+//FBSharingPostingVC.xib
+"Sharing On FB Label"="CHIA SẺ LÊN FACEBOOK";
+"Destroy"="Huỷ";
+"Sharing"="Chia sẻ";
+
+//UserLoginViewController.m
+"Login"="Đăng nhập";
+"NoticeAboutCategory"="Lưu ý: chỉ DN trong các lĩnh vực trên mới có thể đăng ký tài khoản và tạo ưu đãi, giảm giá trên ứng dụng.";
+
+//EntreRegisterViewController.m
+"Update Entre Account"="Cập nhật tài khoản DN";
+"Wish you have more custome Alert"="Chúc Quý doanh nghiệp có thêm nhiều khách hàng qua CityOffers. Xin cảm ơn";
+
+"Call to Hotline number Alert"="Gọi đến số Hotline hỗ trợ của CityOffers";
+//EntreRegisterViewController.xib
+"Entre Name"="Tên";
+"Entre Category"="Danh mục";
+"Logo Image"="Ảnh/logo";
+"Address Apply Service"="Địa chỉ cung cấp dịch vụ";
+"Add"="Thêm";
+"Creating Account Entre"="Tạo tài khoản doanh nghiệp";
+"Clicked To call Hotline"="Bấm để gọi đến số Hotline hỗ trợ";
+
+//FirstViewController.xib
+"Copy Right"="© 2012 CityOffers - Ưu đãi thật quanh bạn";
+
+//UserRegisterViewController.m
+
+"Update User Account"="Cập nhật tài khoản";
+"Regist via FB Account"="Đăng ký bằng TK Facebook";
+"Use FB Account To Auto Created"="Sử dụng tài khoản Facebook để tự động tạo tài khoản trên Ứng dụng";
+
+"Mobile is registed before Alert"="Số điện thoại này đã được đăng ký. Vui lòng kiểm tra lại thông tin đăng ký của bạn.";
+"Email is registed before Alert"="Email này đã được đăng ký. Vui lòng kiểm tra lại thông tin đăng ký của bạn.";
+
+"Enter fully info FirstName and LastName"="Vui lòng nhập đủ thông tin Họ Tên";
+//UserRegisterViewController.xib
+"User FirstName"="Họ Tên";
+"User LastName"="Họ";
+"Reenter Pass"="Nhập lại Password";
+"Phone Number"="ĐTDĐ";
+"Regist User Account"="Đăng ký tài khoản cá nhân";
+
+//MapViewController.m
+"Touch Map to choose Address"="Bấm vào bản đồ để chọn địa điểm";
+"Enter Your Current Address"="Nhập địa điểm hiện tại của bạn";
+"Entre Address To Add"="Nhập địa điểm để thêm";
+
+"Choose your address Alert"="Vui lòng chọn địa chỉ hiện tại của bạn";
+
+"Choose Address Alert"="Chọn địa chỉ";
+"Address not found Alert"="Không tìm thấy địa chỉ.";
+"No result Alert"="Không có kết quả. Vui lòng thử lại";
+
+//MyOffersViewController.m
+
+"Acitve Offer"="CÒN HẠN (%d)";
+"Experied Offer"="HẾT HẠN (%d)";
+
+"No Offer Yet"="Chưa có ưu đãi nào";
+
+//AdminDetailViewController.m
+
+"End This Offer"="Kết thúc ưu đãi này.";
+"To Date"="Đến %@";
+"End Offer Successfully"="Kết thúc ưu đãi thành công";
+"End Offer not Success Alert"="Kết thúc ưu đãi không thành công. Vui lòng liên lạc với CityOffers.";
+
+"Are you want to stop this offer Alert"="Bạn muốn Kết thúc ưu đãi này ?";
+
+
+//AdminDetailViewController.xib
+"Info Offer"="THÔNG TIN ƯU ĐÃI";
+"Date Apply"="Thời gian áp dụng";
+"Address Apply Admin"="Địa điểm áp dụng";
+"Notice Orther"="Lưu ý khác";
+"Have seen"="Đã xem";
+"Have bought"="Đã mua";
+
+//ProfileEntreViewController.m
+"Fail to update Alert"="Cập nhật bị lỗi. Vui lòng thử lại.";
+"Update Image"="Cập nhật ảnh";
+
+"User and other have liked this"="Bạn và %d người khác đã thích";
+"Number peoples have liked this"="%d người đã thích";
+
+"Offer X have experied"="%@ * Đã hết hạn";
+"Offer X is active"="%@ * Còn hạn";
+
+"Upload photo success Alert"="Đăng ảnh thành công.";
+
+"Update error ProfileEntreAlert"="Cập nhật bị lỗi! Vui lòng thử lại";
+
+"Login to use this feature Alert"="Vui lòng đăng nhập để sử dụng tính năng này.";
+//ProfileEntreHeaderTableView.xib
+"Touch to Update cover image"="Bấm vào đây để cập nhật ảnh đại diện";
+
+"Newleast Offer Profile"="ƯU ĐÃI MỚI NHẤT";
+"Photo Entre Profile"="ẢNH";
+"Comment Profile Entre"="ĐÁNH GIÁ";
+"Not have Comment Yet"="Chưa có đánh giá nào";
+"Not have Photo Yet"="Chưa có ảnh nào";
+
+//CommentForBussinessViewController.m
+"Content Comment must have more than 10 charecters"="Nội dung đánh giá phải nhiều hơn 10 ký tự";
+"Post success Comment Alert"="Đăng thành công.";
+"Write comment not success Alert"="Viết đánh giá không thành công";
+
+"Post Comment"="Đăng";
+
+//ProfileUserViewController.xib
+"Never used offer"="Chưa dùng ưu đãi nào";
+"Offer receive early"="ƯU ĐÃI NHẬN GẦN ĐÂY";
+"Action early"="HOẠT ĐỘNG GẦN ĐÂY";
+"Not have action yet"="Chưa có hoạt động nào";
+//DetailOfferViewController.xib
+"Apply to date"="Giá trị đến";
+"Address"="Địa chỉ";
+
+//EntreManaViewController.m
+"Have offer running"="Có ưu đãi đang chạy!";
+"Have offer running Alert"="Mỗi thời điểm chỉ được có tối đa một ưu đãi. Vui lòng kết thúc ưu đãi hiện tại để có thể tạo ưu đãi mới";
+"Call to hotline Alert"="Gọi đến số Hotline hỗ trợ của CityOffers";
+
+//EntreManaViewController.xib
+
+"Intro Title EntreManagement"="CityOffers giúp doanh nghiệp dễ dàng tạo khuyến mãi và quảng bá ngay tức thời đến hàng nghìn khách hàng chỉ trong một phút!";
+"Main features"="Các tiện ích chính";
+
+"Creating offer fastest"="Tạo khuyến mãi cực nhanh và dễ";
+
+"Not have sell down much"="Không bắt buộc tạo giảm giá quá sâu";
+"Advertisement Broadcast"="Quảng bá rộng khắp và ngay tức thời ";
+"Monotoring Easyly"="Dễ dàng theo dõi kết quả";
+
+//NSDate+Helper.m
+"X hours ago"="%d giờ trước";
+
+"X minutes ago"="%d phút trước";
+"X dates ago"="%d ngày trước";
+
+"Today"="Hôm nay";
+"Tomorrow"="Hôm qua";
+
+//CameraActionSheet.m
+"Choose photo"="Chọn ảnh";
+
+
+
+//CityOffersAppDelegate.m
+"Notice User Turn On GPS Alert"="Bạn nên bật \"Dịch vụ Định vị (Location Services)\" để tự động hiển thị các ưu đãi gần bạn";
+
+
+
+"Write your review"="Viết đánh giá của bạn";
+"Close"="Đóng";
+"Select a category"="Chọn danh mục";
+"Please fill your phone number"="Vui lòng nhập SĐT";
+"Not have offer message alert"="Hiện tại không có Ưu đãi nào gần địa điểm hiện tại của bạn. Xin vui lòng quay lại sau.";

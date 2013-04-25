@@ -1,0 +1,271 @@
+"Loading" = "Loading...";
+"Enter mail invalid!"="Email is not valid!";
+"OK"="OK";
+"Text must not null"="You must fill in all of the fields.";
+"Enter phone number invalid!"="Mobile number is not valid";
+"Password and Confirm Password don't have same value"="These passwords don't match";
+"Entre liked"="Đã like doanh nghiệp này"; //khong can thong bao//
+"Offer received"=""; //case nay theo luong thong bao bang SMS // 
+"Login success"="Đăng nhập thành công"; //==> khong can thong bao//
+"Logout success"="Đăng xuất thành công"; //==> khong can thong bao//
+"User not login"="Please login to continue"; //se chon loc bo bot nhung thong bao nhu nay//
+"User not facebook"="Please connect to Facebook account";
+"Unliked Entre"=""; //khong can thong bao// 
+"User have used this offer"=""; //disable nut Nhan offer nen user khong bam duoc nen khong can thong bao//
+
+"Singup success"="Signup successful";
+"Update success"="Update successful";
+"Entrepreneur Singup success"="Signup successful";
+"Entrepreneur Update success"="Update successful";
+
+"Choice category"="Please choose a category";//phai chon category de dang ky entre
+"Choice address"="Please choose an address";
+"Fb did not login"="Không đăng nhập được Facebook";
+"Hasn't address data"="Please choose an address";
+"Registing offer success"="Create offer successful!";
+"Email or password invalid"="Email or Password is not correct";
+"Do you want to delete this address"="Do you want to delete this address";
+"Want to logout"="Stop connecting and sharing on Facebook?";
+"Not has phone number"="Vui lòng cập nhật SĐT để nhận ưu đãi này"; //==> bo vi ban nay khong dung SDT nhan offer//
+
+//CityOffersAppDelegate.m
+"Notice User Turn On GPS Alert"="You should turn on Location Services to see nearby offers easily";
+
+//DataController.m
+"Going Near Biz Show Offer Order To Seller"="You are near to %@, please show your offer to staff for using";
+
+"Offer Is Running On"="%@ (%@ away) has an offer for CityOffers members";
+"View Detail"="View detail";
+
+//SMSMessageVC.m 
+"Manual"="Hướng dẫn"; //==> bo vi phien ban nay khong dung SDT nhan offer//
+"Click send to accept this offer"="Nhấn Gửi (Send) để xác nhận sử dụng ưu đãi này"; //==> bo vi phien ban nay khong dung SDT nhan offer//
+"Update"="Cập nhật"; //==> bo vi phien ban nay khong dung SDT nhan offer//
+"You've bought this offer, pls wailt"="You have used this offer! Please wait..."; 
+"Alert Notice"="Get Offer";
+"Do you want to take this offer"="You want to get this offer?";
+"Error while order offer"="Error! Please try again";  //==> error boi dam, doan con lai xuong dong//
+"Successful get offer"="Nhận ưu đãi thành công"; //==> bo thong bao nay vi confirm xong la thanh cong luon//
+
+"Please, used this offer when come to bussiness place"="Bring this offer to the business and show it to the staff for using";
+"User have used this offer"="%@ used this offer";
+"Order this offer"="Get Offer";
+"You have taken this offer"="You have used this offer";
+"Number user have used this offer"="%d people used this offer.";
+"Have taken offer"="Used";
+"Get offer"="Get Offer";
+
+//CityOffersViewController.m
+"Nearly"="Nearby";
+"Map"="Map";
+"Category"="Browse";
+"Network Connecting Fail Error Title"="Error";
+"Network Connecting Fail Error Detail"="The internet connection seems to be offline. Please check and try again";
+"View Detail"="View Detail";
+"All Offers"="       All Offers";
+//OfferRegisterViewController.m
+"Entre created this offer"="%@ has created this offer";
+"Success to login FB, You can share now"="Connect Facebook successful";
+"Content of offer must have more than 10 characters"="Offer content must have at least 10 characters";
+"You haven't choose image yet"="Please choose a offer photo";
+
+//OfferRegisterViewController.xib
+"Create Offer"="CREATE AN OFFER";
+"Content Insert Here"="Add your offer";
+"Apply To"="Expire on";
+"Address Apply"="Locations";
+"Notice"="Notice";
+"Another note for using this offer"="Add terms and conditions...";
+"Sharing on FB"="Share on Facebook";
+"Exit"="Exit";
+"Done"="Done";
+"Post now"="Create Your Offer";
+
+//AccountViewController.m
+"Regist Entre Account"="Create a Merchant account";
+"Invite Friend SMS Message"="Hi, Find nearby offers with CityOffers. Saving money has never been so easy. Try it now http://appstore.vn/i/15930";
+"Content Email Feedback"="Have an idea to help us make CityOffers better? Please share it with us.\n\n\n\n\n\n----------------------------\nSent from: %@\niOS:%@\nModel:%@\nNetwork:%@";
+"You want to share FB automaticly"="Connect and share offers on Facebook account?";
+"You want to stop sharing on FB"="Stop connecting and sharing offers on Facebook account?";
+
+//AccountViewController.xib
+"Used Offer Number"="Used offers";
+"Liked Entre Number"="Liked merchants";
+"Sharing On FB"="Share on Facebook";
+"Intro App To Friends"="Suggest to Friends";
+"CityOffer Facebook"="CityOffer Facebook"; 
+"Feedback Send"="Feedback";
+"Tern Of User"="Terms of service";
+"Log out"="Log Out";
+
+//FBSharingPostingVC.m
+"Sharing Fail Alert"="Sharing failed! Please try again";
+"Sharing Success Alert"="Share successful";
+
+//FBSharingPostingVC.xib
+"Sharing On FB Label"="Share on Facebook";
+"Destroy"="Cancel";
+"Sharing"="Share";
+
+//UserLoginViewController.m
+"Login Title"="LOGIN";
+"Login"="Login";
+"NoticeAboutCategory"="Notice: Only merchants in above categories have permission to create account.";
+
+//EntreRegisterViewController.m
+"Update Entre Account"="Update";
+"Wish you have more custome Alert"="";
+
+"Call to Hotline number Alert"="Call CityOffers's Hotline";
+//EntreRegisterViewController.xib
+"Entre Name"="Biz Name";
+"Entre Category"="Category";
+"Logo Image"="Logo";
+"Address Apply Service"="Locations";
+"Add"="Add";
+"Creating Account Entre"="Create an Business account";
+"Clicked To call Hotline"="Bấm để gọi đến số Hotline hỗ trợ"; //==> Bo dong nay, bao gom ca background //
+
+//UserRegisterViewController.m
+
+"Update User Account"="Update";
+"Regist via FB Account"="Use Facebook account";  //==> boi dam dang title//
+"Use FB Account To Auto Created"="Sử dụng tài khoản Facebook để tự động tạo tài khoản trên Ứng dụng"; //==> bo noi dung thong bao nay //
+
+"Mobile is registed before Alert"="This number has been used. Please use another one";
+"Email is registed before Alert"="This Email has been used. Please use another one.";
+
+"Enter fully info FirstName and LastName"="Please fill both Firtname and Lastname";
+
+//FirstViewController.xib
+"Copy Right"="©2012 CityOffers- Real-time Location based Offers";
+
+//UserRegisterViewController.xib
+"User FirstName"="Name";
+"User LastName"="Lastname";
+"Reenter Pass"="Confirm Password";
+"Phone Number"="Phone";
+"Regist User Account"="Signup";
+
+//MapViewController.m
+"Touch Map to choose Address"="Tap to choose an current location";
+"Enter Your Current Address"="Search or Address";
+"Entre Address To Add"="Add an address";
+
+"Choose your address Alert"="Please choose your current location";
+
+"Choose Address Alert"="Choose location";
+"Address not found Alert"="No results found";
+"No result Alert"="No results found. Please try again";
+
+//MyOffersViewController.m
+
+"Acitve Offer"="NEW (%d)";
+"Experied Offer"="EXPIRED (%d)";
+
+"No Offer Yet"="You haven't used any offer yet";
+
+//AdminDetailViewController.m
+
+"End This Offer"="End now";
+"To Date"="Đến %@";
+"End Offer Successfully"="End successful";
+"End Offer not Success Alert"="End failed. Please try again";
+
+"Are you want to stop this offer Alert"="You want to end this offer?";
+"Share with friend"="Share with yours friends";
+
+//AdminDetailViewController.xib
+"Info Offer"="OFFERS";
+"Date Apply"="Expire on";
+"Address Apply Admin"="Locations";
+"Notice Orther"="Terms and Conditions";
+"Have seen"="Seen";
+"Have bought"="Used";
+
+//DetailOfferViewController.xib
+"Apply to date"="Expire on";
+"Address"="Address";
+
+//ProfileEntreViewController.m
+"Fail to update Alert"="Update failed! Please try again";
+"Update Image"="Change cover photo";
+
+"User and other have liked this"="You and %d people liked";
+"Number peoples have liked this"="%d people liked";
+
+"Offer X have experied"="%@ * Ended";
+"Offer X is active"="%@ * Active";
+
+"Upload photo success Alert"="Đăng ảnh thành công."; //==> khong can bat thong bao nay //
+
+"Update error ProfileEntreAlert"="Update failed! Please try again";
+
+"Login to use this feature Alert"="Please login to continue";
+
+//ProfileEntreHeaderTableView.xib
+"Touch to Update cover image"="Tap to change cover photo";
+"Newleast Offer Profile"="NEWEST OFFER";
+"Photo Entre Profile"="PHOTOS";
+"Comment Profile Entre"="REVIEWS";
+"Not have Comment Yet"="No reviews yet";
+"Not have Photo Yet"="No photos yet";
+//CommentForBussinessViewController.m
+"Content Comment must have more than 10 charecters"="Your review must have at least 10 characters";
+"Post success Comment Alert"="Đăng thành công.";  //==> khong can bat alert nay //
+"Write comment not success Alert"="Post failed! Please try again"; 
+
+"Post Comment"="Post";
+
+//ProfileUserViewController.xib
+"Never used offer"="No offers";
+"Offer receive early"="RECENTLY USED OFFER";
+"Action early"="RECENTLY ACTIVITIES";
+"Not have action yet"="No activities yet";
+
+//EntreManaViewController.m
+"Have offer running"="There is an active offer";
+"Have offer running Alert"="Please end the active offer to create a new one";
+"Call to hotline Alert"="Call CityOffers's Hotline"; //==> can nhac thay the tinh nang nay//
+
+//EntreManaViewController.xib
+
+"Intro Title EntreManagement"="CityOffers helps local merchants create offers just in a minute and reach instantly to nearby customers.";
+"Main features"="Key benefits";
+
+"Creating offer fastest"="Fast & Easy";
+"Not have sell down much"="Immediate response";
+"Advertisement Broadcast"="Target nearby customers";
+"Monotoring Easyly"="Build customer loyalty";
+
+"Create Offer"="Create Offer";
+"Manage Offers"="Manage Offers";
+"Edit Info"="Edit Info";
+"Profile"="Profile";
+"Feedback"="Feedback";
+
+//NSDate+Helper.m
+"X hours ago"="%d hours ago";
+
+"X minutes ago"="%d munites ago"; 
+"X dates ago"="%d days ago";
+
+"Today"="Today";
+"Tomorrow"="Tomorrow";
+
+//CameraActionSheet.m
+"Choose photo"="Choose photo";
+
+
+
+
+"Write your review"="Write your review";
+"Close"="Close";
+"Select a category"="Select a category";
+"Please fill your phone number"="Please fill your phone number";
+
+
+
+
+
+

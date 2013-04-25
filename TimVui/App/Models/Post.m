@@ -44,38 +44,24 @@
     return self;
 }
 
-    #pragma mark -
-
+#pragma mark -
 + (void)globalTimelinePostsWithBlock:(void (^)(NSArray *posts, NSError *error))block {
-    
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"hunght",@"name" ,
-                             @"0982366155", @"phone",
-                            @"123456",@"password" ,
-                            nil];
-    
-    [[AFAppDotNetAPIClient sharedClient] postPath:@"user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@----------",[[operation response] allHeaderFields]);
-        NSLog(@"%@",JSON);
-//        NSArray *postsFromResponse = [JSON valueForKeyPath:@"data"];
-//        NSMutableArray *mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
-//        for (NSDictionary *attributes in postsFromResponse) {
-//            Post *post = [[Post alloc] initWithAttributes:attributes];
-//            [mutablePosts addObject:post];
-//        }
-//        if (block) {
-//            block([NSArray arrayWithArray:mutablePosts], nil);
-//        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+    [[AFAppDotNetAPIClient sharedClient] getPath:@"stream/0/posts/stream/global" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSArray *postsFromResponse = [JSON valueForKeyPath:@"data"];
+        NSMutableArray *mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
+        for (NSDictionary *attributes in postsFromResponse) {
+            Post *post = [[Post alloc] initWithAttributes:attributes];
+            [mutablePosts addObject:post];
+        }
         if (block) {
-            NSLog(@"%@----------",[[operation response] allHeaderFields]);
+            block([NSArray arrayWithArray:mutablePosts], nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (block) {
             block([NSArray array], error);
-            
-            NSLog(@"%@",error);
         }
     }];
-    
 }
+
 
 @end
