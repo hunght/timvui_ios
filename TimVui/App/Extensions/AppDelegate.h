@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-
+#import "MacroApp.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 @property (retain, nonatomic) UIViewController *centerController;
 @property (retain, nonatomic) UIViewController *leftController;
-
+@property (nonatomic, strong)id<GAITracker> tracker;
 // FBSample logic
 // In this sample the app delegate maintains a property for the current
 // active session, and the view controllers reference the session via

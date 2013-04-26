@@ -7,7 +7,7 @@
 //
 
 #import "Ultilities.h"
-#import "MacroCityOffers.h"
+#import "MacroApp.h"
 #import <mach/mach.h>
 #import <mach/mach_host.h>
 #import <QuartzCore/QuartzCore.h>
@@ -158,7 +158,6 @@ static bool isRetinaYES =NO;
 }
 + (BOOL)validateString:(NSString*)string {
     if (!string) {
-        [Ultilities showAlertWithMessage:NSLocalizedString(@"Text must not null",@"")];
         return NO;
     }
     
@@ -169,7 +168,6 @@ static bool isRetinaYES =NO;
         return YES;
         
     }
-    [Ultilities showAlertWithMessage:NSLocalizedString(@"Text must not null",@"")];
     return NO;
 }
 + (BOOL)validatePassword:(NSString*)pass withConfirmPass:(NSString*)confirmPass {

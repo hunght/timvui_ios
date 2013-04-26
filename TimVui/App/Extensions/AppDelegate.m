@@ -17,6 +17,7 @@
 @synthesize centerController = _viewController;
 @synthesize leftController = _leftController;
 @synthesize session = _session;
+@synthesize tracker=_tracker;
 
 // FBSample logic
 // The native facebook application transitions back to an authenticating application when the user
@@ -40,7 +41,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
+    // Optional: automatically track uncaught exceptions with Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = NO;
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 120;
+    // Optional: set debug to YES for extra debugging information.
+    [GAI sharedInstance].debug = NO;
+    // Create tracker instance.
+    _tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
+    [GAI sharedInstance].defaultTracker = _tracker;
+    
+    
     NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
     [NSURLCache setSharedURLCache:URLCache];
     

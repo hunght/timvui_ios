@@ -20,6 +20,7 @@
 #import "AFAppDotNetAPIClient.h"
 #import "Ultilities.h"
 #import "AFHTTPRequestOperation.h"
+#import "UserRegisterVC.h"
 @interface LoginVC ()
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
@@ -31,30 +32,49 @@
 @synthesize buttonLogin = _buttonLoginLogout;
 @synthesize delegate=_delegate;
 
+-(void)backButtonClicked:(id)sender{
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _svos = _scrollView.contentOffset;
-    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-    if (!appDelegate.session.isOpen) {
+    
+    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+    
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
+    {
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_bar.png"]
+                                                      forBarMetrics:UIBarMetricsDefault];
+    }
+    // Setup View and Table View
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"back_OFF"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"back_OFF_hover"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+    if (!SharedAppDelegate.session.isOpen) {
         // create a fresh session object
-        appDelegate.session = [[FBSession alloc] init];
+        SharedAppDelegate.session = [[FBSession alloc] init];
         
         // if we don't have a cached token, a call to open here would cause UX for login to
         // occur; we don't want that to happen unless the user clicks the login button, and so
         // we check here to make sure we have a token before calling open
-        if (appDelegate.session.state == FBSessionStateCreatedTokenLoaded) {
+        if (SharedAppDelegate.session.state == FBSessionStateCreatedTokenLoaded) {
             // even though we had a cached token, we need to login to make the session usable
-            [appDelegate.session openWithCompletionHandler:^(FBSession *session,
+            [SharedAppDelegate.session openWithCompletionHandler:^(FBSession *session,
                                                              FBSessionState status,
                                                              NSError *error) {
                 // we recurse here, in order to update buttons and labels
-                if (appDelegate.session.isOpen) {
+                if (SharedAppDelegate.session.isOpen) {
                     // if a user logs out explicitly, we delete any cached token information, and next
                     // time they run the applicaiton they will be presented with log in UX again; most
                     // users will simply close the app or switch away, without logging out; this will
                     // cause the implicit cached-token login to occur on next launch of the application
-                    [appDelegate.session closeAndClearTokenInformation];
+                    [SharedAppDelegate.session closeAndClearTokenInformation];
                     
                 }
             }];
@@ -88,6 +108,7 @@
     [textField resignFirstResponder];
     return YES;
 }
+
 #pragma mark Template generated code
 
 - (void)viewDidUnload
@@ -109,6 +130,7 @@
         return YES;
     }
 }
+
 // Displays the user's name and profile picture so they are aware of the Facebook
 // identity they are logged in as.
 - (void)getInfoAccountFacebook{
@@ -165,20 +187,19 @@
 
 - (IBAction)facebookLoginButtonClicked:(id)sender {
     // get the app delegate so that we can access the session property
-    AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     
-    if (appDelegate.session.state != FBSessionStateCreated) {
+    if (SharedAppDelegate.session.state != FBSessionStateCreated) {
         // Create a new, logged out session.
-        appDelegate.session = [[FBSession alloc] init];
+        SharedAppDelegate.session = [[FBSession alloc] init];
     }
     
     // if the session isn't open, let's open it now and present the login UX to the user
-    [appDelegate.session openWithCompletionHandler:^(FBSession *session,
+    [SharedAppDelegate.session openWithCompletionHandler:^(FBSession *session,
                                                      FBSessionState status,
                                                      NSError *error) {
         // and here we make sure to update our UX according to the new session state
-        if (appDelegate.session.isOpen) {
-            [FBSession setActiveSession:appDelegate.session];
+        if (SharedAppDelegate.session.isOpen) {
+            [FBSession setActiveSession:SharedAppDelegate.session];
 
             [self getInfoAccountFacebook];
         }
@@ -186,6 +207,7 @@
 }
 
 - (IBAction)googleLoginButtonClicked:(id)sender {
+    
 }
 
 
@@ -205,10 +227,13 @@
 }
 
 - (IBAction)yahooLoginButtonClicked:(id)sender {
+    
 }
 
-- (IBAction)cancelButtonClicked:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+- (IBAction)signupButtonClicked:(id)sender {
+    UserRegisterVC *viewController=[[UserRegisterVC alloc] initWithNibName:@"UserRegisterVC" bundle:nil];
+    viewController.isUpdateProfileYES=NO;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)backgroundButtonClicked:(id)sender {

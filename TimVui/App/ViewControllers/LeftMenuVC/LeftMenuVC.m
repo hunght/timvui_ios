@@ -318,9 +318,9 @@ enum {
             } else {
                 loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
             }
+            UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
             
-            AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-            [appDelegate.centerController presentModalViewController:loginVC animated:YES];
+            [SharedAppDelegate.centerController presentModalViewController:navController animated:YES];
             [loginVC setDelegate:self];
             _globalIndexPath=indexPath;
         }

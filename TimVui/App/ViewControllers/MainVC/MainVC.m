@@ -80,6 +80,7 @@
     [backButton addTarget:self.viewDeckController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
+    
     self.tableView.rowHeight = 70.0f;
     [self reload:nil];   
 }
