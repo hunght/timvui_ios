@@ -95,7 +95,7 @@ static bool isRetinaYES =NO;
     NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getEntreUploadImage/%@",BASE_URL_STR,usrAvatar]];
     return url;
 }
-+ (NSURL *)getImageOfReview:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType
++ (NSURL *) getImageOfReview:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType
 {
     [self settingURLString:&usrAvatar sizeType:sizeType];
     NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getReviewsImage/%@",BASE_URL_STR,usrAvatar]];

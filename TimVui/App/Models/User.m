@@ -42,7 +42,6 @@
     _userID = [[attributes valueForKeyPath:@"id"] integerValue];
     _username = [attributes valueForKeyPath:@"username"];
     _avatarImageURLString = [attributes valueForKeyPath:@"avatar_image.url"];
-    
     return self;
 }
 

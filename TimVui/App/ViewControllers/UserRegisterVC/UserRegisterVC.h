@@ -12,9 +12,9 @@
 #import "Ultilities.h"
 
 #import "GAITrackedViewController.h"
+@class TPKeyboardAvoidingScrollView;
 
 @interface UserRegisterVC : GAITrackedViewController<UITextFieldDelegate,UIAlertViewDelegate>{
-	CGPoint _svos;
     NSString*   user_email;
     NSString*  user_firstName;
     NSString*  user_lastName;
@@ -27,7 +27,7 @@
 
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRegister;
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imgViewAvatar;
-@property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollview;
+@property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollview;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *txfName;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *txfPassword;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *txfPhone;
@@ -35,7 +35,6 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *labelFirstName;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *labelReentrePassword;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *labelPhoneNumber;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnBackground;
 
 @property (strong, nonatomic) UIImage* imageAvatar;
 @property (assign, nonatomic) BOOL isUpdateProfileYES;

@@ -70,7 +70,7 @@
     
     [btnRegister setBackgroundImage:[UIImage imageNamed:@"btn_xem-chi-tiet_on.png"] forState:UIControlStateHighlighted];
     [btnRegister setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    _svos = scrollview.contentOffset;
+    
     // Do any additional setup after loading the view from its nib.
     if (isUpdateProfileYES) {
         
@@ -112,7 +112,6 @@
     [self setLabelFirstName:nil];
     [self setLabelReentrePassword:nil];
     [self setLabelPhoneNumber:nil];
-    [self setBtnBackground:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -129,24 +128,8 @@
     if ([textField isEqual:txfPhone]) {
         [txfPhone setKeyboardType:UIKeyboardTypePhonePad];
     }
-    [scrollview setContentSize:self.view.frame.size];
-    CGPoint pt;
-    CGRect rc = [textField bounds];
-    rc = [textField convertRect:rc toView:scrollview];
-    pt = rc.origin;
-    pt.x = 0;
-    pt.y -= 15;
-    [scrollview setContentOffset:pt animated:YES];
-    _btnBackground.enabled=YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [scrollview setContentSize:self.view.frame.size];
-    [scrollview setContentOffset:_svos animated:YES];
-    [textField resignFirstResponder];
-    _btnBackground.enabled=NO;
-    return YES;
-}
 
 
 #pragma mark UIAlertViewDelegate
@@ -180,8 +163,6 @@
 }
 
 - (IBAction)userRegisterClicked:(id)sender {
-    [scrollview setContentSize:self.view.frame.size];
-    [scrollview setContentOffset:_svos animated:YES];
     [self.view endEditing:YES];
     if ([Ultilities validateString:txfName.text]) {
         if ([Ultilities validatePhone:txfPhone.text]) {
@@ -202,11 +183,5 @@
 
 }
 
-- (IBAction)backgroundButtonClicked:(id)sender {
-    [scrollview setContentSize:self.view.frame.size];
-    [scrollview setContentOffset:_svos animated:YES];
-    _btnBackground.enabled=NO;
-    [self.view endEditing:TRUE];
-}
 
 @end

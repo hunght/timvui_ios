@@ -25,7 +25,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
 
-
 @end
 
 @implementation LoginVC
@@ -38,7 +37,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _svos = _scrollView.contentOffset;
     
     self.navigationController.navigationBar.tintColor = [UIColor clearColor];
     
@@ -87,27 +85,12 @@
 
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    _btnBackground.enabled=YES;
     if ([textField isEqual:_tfdUsername]) {
         [_tfdUsername setKeyboardType:UIKeyboardTypeEmailAddress];
     }
-    [_scrollView setContentSize:self.view.frame.size];
-    CGPoint pt;
-    CGRect rc = [textField bounds];
-    rc = [textField convertRect:rc toView:_scrollView];
-    pt = rc.origin;
-    pt.x = 0;
-    pt.y -= 90;
-    [_scrollView setContentOffset:pt animated:YES];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    _btnBackground.enabled=NO;
-    [_scrollView setContentSize:self.view.frame.size];
-    [_scrollView setContentOffset:_svos animated:YES];
-    [textField resignFirstResponder];
-    return YES;
-}
+
 
 #pragma mark Template generated code
 
@@ -117,7 +100,6 @@
     [self setTfdUsername:nil];
     [self setTfdPassword:nil];
     [self setScrollView:nil];
-    [self setBtnBackground:nil];
     [super viewDidUnload];
 }
 
@@ -144,7 +126,6 @@
                                          @"email",@"email",
                                          user.name,@"name",
                                          user.birthday,@"dob",
-//                                         user.,@"gender",
                                          nil];
                  
                  [[AFAppDotNetAPIClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -206,10 +187,6 @@
     }];
 }
 
-- (IBAction)googleLoginButtonClicked:(id)sender {
-    
-}
-
 
 
 - (IBAction)userLoginButtonClicked:(id)sender {
@@ -226,9 +203,6 @@
     }    
 }
 
-- (IBAction)yahooLoginButtonClicked:(id)sender {
-    
-}
 
 - (IBAction)signupButtonClicked:(id)sender {
     UserRegisterVC *viewController=[[UserRegisterVC alloc] initWithNibName:@"UserRegisterVC" bundle:nil];
@@ -236,12 +210,7 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)backgroundButtonClicked:(id)sender {
-    [self.view endEditing:TRUE];
-    [_scrollView setContentOffset:_svos animated:YES];
-    [_scrollView setContentSize:self.view.frame.size];
-    _btnBackground.enabled=NO;
-}
+
 
 
 @end

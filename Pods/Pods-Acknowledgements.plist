@@ -139,6 +139,18 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Free for commercial use and redistribution in any form. Credit is appreciated but not essential. Oh, and there aint no warranty!
+
+Michael Tyson, A Tasty Pixel  
+michael@atastypixel.com
+</string>
+			<key>Title</key>
+			<string>TPKeyboardAvoiding</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Copyright (c) 2012 Víctor Pena Placer (@vicpenap)
 http://www.victorpena.es/
 

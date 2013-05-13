@@ -25,7 +25,7 @@
 
 #import "AFAppDotNetAPIClient.h"
 #import "AFHTTPRequestOperation.h"
-#import "AFJSONRequestOperation.h"
+
 @implementation Post
 @synthesize postID = _postID;
 @synthesize text = _text;
@@ -37,10 +37,9 @@
         return nil;
     }
     
-    _postID = [[attributes valueForKeyPath:@"id"] integerValue];
+    _postID = (NSUInteger) [[attributes valueForKeyPath:@"id"] integerValue];
     _text = [attributes valueForKeyPath:@"text"];
     _user = [[User alloc] initWithAttributes:[attributes valueForKeyPath:@"user"]];
-    
     return self;
 }
 
