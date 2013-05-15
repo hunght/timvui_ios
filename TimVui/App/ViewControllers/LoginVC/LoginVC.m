@@ -17,7 +17,7 @@
 #import "LoginVC.h"
 #import "AppDelegate.h"
 #import "GlobalDataUser.h"
-#import "AFAppDotNetAPIClient.h"
+#import "TVNetworkingClient.h"
 #import "Ultilities.h"
 #import "AFHTTPRequestOperation.h"
 #import "UserRegisterVC.h"
@@ -73,7 +73,6 @@
                     // users will simply close the app or switch away, without logging out; this will
                     // cause the implicit cached-token login to occur on next launch of the application
                     [SharedAppDelegate.session closeAndClearTokenInformation];
-                    
                 }
             }];
         }
@@ -128,7 +127,7 @@
                                          user.birthday,@"dob",
                                          nil];
                  
-                 [[AFAppDotNetAPIClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                 [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                      NSLog(@"%@",JSON);
                      NSLog(@"%ld",(long)operation.response.statusCode);
                      [GlobalDataUser sharedClient].isLogin=YES;
@@ -156,7 +155,7 @@
                             _tfdPassword.text,@"password",
                             nil];
     
-    [[AFAppDotNetAPIClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
         NSLog(@"%ld",(long)operation.response.statusCode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -173,7 +172,6 @@
         // Create a new, logged out session.
         SharedAppDelegate.session = [[FBSession alloc] init];
     }
-    
     // if the session isn't open, let's open it now and present the login UX to the user
     [SharedAppDelegate.session openWithCompletionHandler:^(FBSession *session,
                                                      FBSessionState status,

@@ -20,45 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "AFAppDotNetAPIClient.h"
+#import <Foundation/Foundation.h>
+#import "AFHTTPClient.h"
 
-#import "AFJSONRequestOperation.h"
+@interface TVNetworkingClient : AFHTTPClient
 
-static NSString * const kAFAppDotNetAPIBaseURLString = @"https://alpha-api.app.net/";
-//static NSString * const kAFAppDotNetAPIBaseURLString = @"http://anuong.hehe.vn/api/";
-
-
-@implementation AFAppDotNetAPIClient
-
-+ (AFAppDotNetAPIClient *)sharedClient {
-    static AFAppDotNetAPIClient *_sharedClient = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _sharedClient = [[AFAppDotNetAPIClient alloc] initWithBaseURL:[NSURL URLWithString:kAFAppDotNetAPIBaseURLString]];
-    });
-    
-    return _sharedClient;
-}
-
-- (id)initWithBaseURL:(NSURL *)url {
-    self = [super initWithBaseURL:url];
-    if (!self) {
-        return nil;
-    }
-    
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    
-    // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-	[self setDefaultHeader:@"Accept" value:@"application/json"];
-    [self setUsername:@"ios" andPassword:@"ios"];
-    return self;
-}
-
++ (TVNetworkingClient *)sharedClient;
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
-{
-    [self clearAuthorizationHeader];
-    [self setAuthorizationHeaderWithUsername:username password:password];
-}
-
 
 @end

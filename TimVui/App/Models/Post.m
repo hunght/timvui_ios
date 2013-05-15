@@ -23,7 +23,7 @@
 #import "Post.h"
 #import "User.h"
 
-#import "AFAppDotNetAPIClient.h"
+#import "TVNetworkingClient.h"
 #import "AFHTTPRequestOperation.h"
 
 @implementation Post
@@ -45,7 +45,7 @@
 
 #pragma mark -
 + (void)globalTimelinePostsWithBlock:(void (^)(NSArray *posts, NSError *error))block {
-    [[AFAppDotNetAPIClient sharedClient] getPath:@"stream/0/posts/stream/global" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[TVNetworkingClient sharedClient] getPath:@"stream/0/posts/stream/global" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSArray *postsFromResponse = [JSON valueForKeyPath:@"data"];
         NSMutableArray *mutablePosts = [NSMutableArray arrayWithCapacity:[postsFromResponse count]];
         for (NSDictionary *attributes in postsFromResponse) {

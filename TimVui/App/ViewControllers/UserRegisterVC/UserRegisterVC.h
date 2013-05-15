@@ -41,6 +41,5 @@
 
 //IBAction
 - (IBAction)userRegisterClicked:(id)sender;
-- (IBAction)backgroundButtonClicked:(id)sender;
 
 @end
