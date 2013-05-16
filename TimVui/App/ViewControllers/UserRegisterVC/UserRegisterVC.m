@@ -20,9 +20,7 @@
 
 @implementation UserRegisterVC
 @synthesize btnRegister;
-@synthesize imgViewAvatar;
 @synthesize scrollview;
-@synthesize txfName;
 @synthesize txfPassword;
 @synthesize txfPhone;
 @synthesize txfConfirmPassword;
@@ -51,9 +49,6 @@
 
 - (void)viewDidLoad
 {
-    [_labelFirstName setText:NSLocalizedString(@"User FirstName", nil)];
-    [_labelReentrePassword setText:NSLocalizedString(@"Reenter Pass", nil)];
-    [_labelPhoneNumber setText:NSLocalizedString(@"Phone Number", nil)];
     [btnRegister setTitle:NSLocalizedString(@"Regist User Account", nil) forState:UIControlStateNormal];
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
@@ -68,7 +63,14 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
-    [btnRegister setBackgroundImage:[UIImage imageNamed:@"btn_xem-chi-tiet_on.png"] forState:UIControlStateHighlighted];
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
+    
+    
+    [btnRegister setBackgroundImage:[UIImage imageNamed:@"img_button_large_off"] forState:UIControlStateNormal];
+    [btnRegister setBackgroundImage:[UIImage imageNamed:@"img_button_large_on"] forState:UIControlStateHighlighted];
+    [_btn_Cancel setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_off"] forState:UIControlStateNormal];
+    [_btn_Cancel setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_on"] forState:UIControlStateHighlighted];
     [btnRegister setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     
     // Do any additional setup after loading the view from its nib.
@@ -83,8 +85,6 @@
         self.trackedViewName=@"Me_UpdateInfo";
     else
         self.trackedViewName=@"Signup";
-    
-    imgViewAvatar.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 -(void)didReceiveMemoryWarning{
@@ -92,7 +92,6 @@
     [super didReceiveMemoryWarning];
 }
 -(void)viewWillUnload{
-    user_firstName=txfName.text;
     user_password=txfPassword.text;
     user_confirm_password=txfConfirmPassword.text;
     user_phone=txfPhone.text;
@@ -102,16 +101,12 @@
 - (void)viewDidUnload
 {
 
-    [self setTxfName:nil];
     [self setTxfPassword:nil];
     [self setTxfPhone:nil];
     [self setTxfConfirmPassword:nil];
     [self setScrollview:nil];
-    [self setImgViewAvatar:nil];
     [self setBtnRegister:nil];
-    [self setLabelFirstName:nil];
-    [self setLabelReentrePassword:nil];
-    [self setLabelPhoneNumber:nil];
+    [self setBtn_Cancel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -146,7 +141,6 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             txfPhone.text,@"phone" ,
                             txfPassword.text,@"password",
-                            txfName.text,@"name",
                             nil];
     NSLog(@"%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -164,7 +158,6 @@
 
 - (IBAction)userRegisterClicked:(id)sender {
     [self.view endEditing:YES];
-    if ([Ultilities validateString:txfName.text]) {
         if ([Ultilities validatePhone:txfPhone.text]) {
             if ([Ultilities validatePassword:txfPassword.text withConfirmPass:txfConfirmPassword.text]){
                 [self postAPIUserCreatePhone];
@@ -172,8 +165,10 @@
         }else
             [Ultilities showAlertWithMessage:@"Xin dien sdt chinh xac"];
         
-    }else
-        [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin ho ten"];
+}
+
+- (IBAction)cancelButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

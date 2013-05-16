@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 @class TPKeyboardAvoidingScrollView;
-@protocol LoginVCDelegate
+@protocol ForgetPassVCDelegate
 
 @optional
 
@@ -28,22 +28,16 @@
 - (void)userFacebookDidLogout;
 
 @end
-@interface LoginVC : UIViewController<UITextFieldDelegate>
+@interface ForgetPassVC : UIViewController<UITextFieldDelegate>
 
-@property (nonatomic, retain) NSObject<LoginVCDelegate>* delegate;
-@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
-@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnFBRegistering;
+@property (nonatomic, retain) NSObject<ForgetPassVCDelegate>* delegate;
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPhoneNumber;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnLogin;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRegistering;
 
 @property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
 
 //Action
-- (IBAction)facebookLoginButtonClicked:(id)sender;
-- (IBAction)userLoginButtonClicked:(id)sender;
-- (IBAction)signupButtonClicked:(id)sender;
-- (IBAction)forgetPasswordButtonClicked:(id)sender;
+- (IBAction)contiuneButtonClicked:(id)sender;
 
 @end
 

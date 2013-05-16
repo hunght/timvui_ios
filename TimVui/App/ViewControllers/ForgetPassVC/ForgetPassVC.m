@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "LoginVC.h"
+#import "ForgetPassVC.h"
 #import "AppDelegate.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
@@ -22,14 +22,13 @@
 #import "AFHTTPRequestOperation.h"
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"
-#import "ForgetPassVC.h"
-@interface LoginVC ()
+@interface ForgetPassVC ()
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
 
 @end
 
-@implementation LoginVC
+@implementation ForgetPassVC
 @synthesize buttonLogin = _buttonLoginLogout;
 @synthesize delegate=_delegate;
 
@@ -45,8 +44,7 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
     
     
-    [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-off"] forState:UIControlStateNormal];
-    [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-on"] forState:UIControlStateHighlighted];
+
     [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
     [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     
@@ -89,9 +87,7 @@
 
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:_tfdUsername]) {
-        [_tfdUsername setKeyboardType:UIKeyboardTypeEmailAddress];
-    }
+
 }
 
 
@@ -101,12 +97,9 @@
 - (void)viewDidUnload
 {
     self.buttonLogin = nil;
-    [self setTfdUsername:nil];
-    [self setTfdPassword:nil];
+    [self setTfdPhoneNumber:nil];
     [self setScrollView:nil];
-    [self setBtnFBRegistering:nil];
     [self setBtnLogin:nil];
-    [self setBtnRegistering:nil];
     [super viewDidUnload];
 }
 
@@ -159,8 +152,7 @@
 
 - (void)postAPIUserLogin {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            _tfdUsername.text,@"username" ,
-                            _tfdPassword.text,@"password",
+                            _tfdPhoneNumber.text,@"password",
                             nil];
     
     [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -195,18 +187,13 @@
 
 
 
-- (IBAction)userLoginButtonClicked:(id)sender {
-    if ([Ultilities validatePassword:_tfdPassword.text]) {
+- (IBAction)contiuneButtonClicked:(id)sender {
         
-        if ([Ultilities validateEmail:_tfdUsername.text]) {
-            //
-            [self postAPIUserLogin];
-        }else if ([Ultilities validatePhone:_tfdUsername.text]){
+        if ([Ultilities validatePhone:_tfdPhoneNumber.text]){
 
             [self postAPIUserLogin];
         }else
             [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
-    }    
 }
 
 
@@ -217,13 +204,6 @@
 }
 
 - (IBAction)forgetPasswordButtonClicked:(id)sender {
-    ForgetPassVC* viewController=nil;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        viewController = [[ForgetPassVC alloc] initWithNibName:@"ForgetPassVC_iPhone" bundle:nil];
-    } else {
-        viewController = [[ForgetPassVC alloc] initWithNibName:@"ForgetPassVC_iPad" bundle:nil];
-    }
-    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 
