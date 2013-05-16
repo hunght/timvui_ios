@@ -25,7 +25,8 @@
 #import "Post.h"
 
 #import "PostTableViewCell.h"
-#import "IIViewDeckController.h"
+
+#import "ECSlidingViewController.h"
 @interface MainVC ()
 - (void)reload:(id)sender;
 @end
@@ -36,6 +37,7 @@
     
     __strong UIActivityIndicatorView *_activityIndicatorView;
 }
+
 #warning Potentially useless method implementation.
 - (void)reload:(id)sender {
     [_activityIndicatorView startAnimating];
@@ -66,18 +68,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
     
-    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_bar.png"]
-                                                                       forBarMetrics:UIBarMetricsDefault];
-    }
+//    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
+//    {
+//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_bar.png"]
+//                                                                       forBarMetrics:UIBarMetricsDefault];
+//    }
+    
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"leftMenuBtn.png"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"leftMenuCoverBtn.png"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
-    [backButton addTarget:self.viewDeckController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchUpInside];
+    [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateHighlighted];
+//    [backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
+    [backButton addTarget:self action:@selector(toggleTopUpInsideLeftView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
@@ -85,9 +87,17 @@
     [self reload:nil];   
 }
 
-- (void)previewBounceLeftView {
-    [self.viewDeckController previewBounceView:IIViewDeckLeftSide];
+- (void)toggleTopUpInsideLeftView {
+    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
+    if (self.slidingViewController.underLeftShowing) {
+        // actually this does not get called when the top view screenshot is enabled
+        // because the screenshot intercepts the touches on the toggle button
+        [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
+    } else {
+        [self.slidingViewController anchorTopViewTo:ECRight animations:nil onComplete:nil];
+    }
 }
+
 
 - (void)viewDidUnload {
     _activityIndicatorView = nil;

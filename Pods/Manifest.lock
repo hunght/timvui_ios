@@ -1,5 +1,6 @@
 PODS:
   - AFNetworking (0.10.1)
+  - ECSlidingViewController (0.10.0)
   - JSONKit (1.5pre)
   - MBProgressHUD (0.6)
   - MWPhotoBrowser (1.0.1):
@@ -10,28 +11,27 @@ PODS:
     - SDWebImage/Main
   - SDWebImage/Main (2.7.4)
   - TPKeyboardAvoiding (0.0.1)
-  - ViewDeck (2.2.5)
   - VPPDropDown (0.3.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 0.10.x)
+  - ECSlidingViewController
   - JSONKit (~> 1.4)
   - MWPhotoBrowser (~> 1.0.1)
   - Reachability (~> 3.0.0)
   - SDWebImage (~> 2.7.4)
   - TPKeyboardAvoiding
-  - ViewDeck (~> 2.2.5)
   - VPPDropDown (~> 0.3.0)
 
 SPEC CHECKSUMS:
   AFNetworking: df1042246c17373b96f12f04bf5c6e1c25992cd4
+  ECSlidingViewController: fc9a9a6564d4a64c0d8c7cf5583d2b9a469ecd04
   JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
   MWPhotoBrowser: e54233d4c88e951a3b6b8f136393614cf319ac47
   Reachability: 500bd76bf6cd8ff2c6fb715fc5f44ef6e4c024f2
   SDWebImage: 06f076026fe7867ab0100fce95d943f7bff981eb
   TPKeyboardAvoiding: 7289409b17dc2193a3f324672283c542f17c1bb1
-  ViewDeck: 9e7d97b9e2b0fa553b51e6cd84bdde3ab87ba3ab
   VPPDropDown: 64bc8e77659d1fd7f3e692a6513247837edc675e
 
 COCOAPODS: 0.19.1

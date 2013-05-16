@@ -21,6 +21,7 @@
 #import "Ultilities.h"
 #import "AFHTTPRequestOperation.h"
 #import "UserRegisterVC.h"
+#import "UINavigationBar+JTDropShadow.h"
 @interface LoginVC ()
 
 @property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
@@ -37,18 +38,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
+    [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
     
-    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+    [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-off"] forState:UIControlStateNormal];
+    [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-on"] forState:UIControlStateHighlighted];
+    [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
+    [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     
-    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
-    {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_bar.png"]
-                                                      forBarMetrics:UIBarMetricsDefault];
-    }
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
-    [backButton setImage:[UIImage imageNamed:@"back_OFF"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"back_OFF_hover"] forState:UIControlStateHighlighted];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -99,6 +100,9 @@
     [self setTfdUsername:nil];
     [self setTfdPassword:nil];
     [self setScrollView:nil];
+    [self setBtnFBRegistering:nil];
+    [self setBtnLogin:nil];
+    [self setBtnRegistering:nil];
     [super viewDidUnload];
 }
 

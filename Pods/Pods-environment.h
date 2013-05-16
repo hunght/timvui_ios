@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking 10
 #define COCOAPODS_VERSION_PATCH_AFNetworking 1
 
+// ECSlidingViewController
+#define COCOAPODS_POD_AVAILABLE_ECSlidingViewController
+#define COCOAPODS_VERSION_MAJOR_ECSlidingViewController 0
+#define COCOAPODS_VERSION_MINOR_ECSlidingViewController 10
+#define COCOAPODS_VERSION_PATCH_ECSlidingViewController 0
+
 // JSONKit
 #define COCOAPODS_POD_AVAILABLE_JSONKit
 // This library does not follow semantic-versioning,
@@ -60,10 +66,4 @@
 #define COCOAPODS_VERSION_MAJOR_VPPDropDown 0
 #define COCOAPODS_VERSION_MINOR_VPPDropDown 3
 #define COCOAPODS_VERSION_PATCH_VPPDropDown 0
-
-// ViewDeck
-#define COCOAPODS_POD_AVAILABLE_ViewDeck
-#define COCOAPODS_VERSION_MAJOR_ViewDeck 2
-#define COCOAPODS_VERSION_MINOR_ViewDeck 2
-#define COCOAPODS_VERSION_PATCH_ViewDeck 5
 

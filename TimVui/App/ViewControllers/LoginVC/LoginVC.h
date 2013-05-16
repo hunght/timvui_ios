@@ -33,6 +33,9 @@
 @property (nonatomic, retain) NSObject<LoginVCDelegate>* delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnFBRegistering;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnLogin;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRegistering;
 
 @property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
 

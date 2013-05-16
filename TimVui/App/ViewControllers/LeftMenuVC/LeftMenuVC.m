@@ -320,7 +320,7 @@ enum {
             }
             UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
             
-            [SharedAppDelegate.centerController presentModalViewController:navController animated:YES];
+            [self presentModalViewController:navController animated:YES];
             [loginVC setDelegate:self];
             _globalIndexPath=indexPath;
         }

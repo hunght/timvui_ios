@@ -9,9 +9,9 @@
 #import "AppDelegate.h"
 #import "MainVC.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "IIViewDeckController.h"
 #import "LeftMenuVC.h"
-
+#import "ECSlidingViewController.h"
+#import "UINavigationBar+JTDropShadow.h"
 @implementation AppDelegate
 @synthesize window = _window;
 @synthesize centerController = _viewController;
@@ -39,7 +39,7 @@
 
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (void)setupGoogleAnalytics
 {
     // Optional: automatically track uncaught exceptions with Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = NO;
@@ -50,29 +50,37 @@
     // Create tracker instance.
     _tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
     [GAI sharedInstance].defaultTracker = _tracker;
-    
-    
+}
+
+- (void)setupAFNetworking
+{
     NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:nil];
     [NSURLCache setSharedURLCache:URLCache];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [self setupGoogleAnalytics];
+    [self setupAFNetworking];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.leftController = [[LeftMenuVC alloc] init];
 
-    
     MainVC *centerController = [[MainVC alloc] initWithStyle:UITableViewStylePlain];
     self.centerController = [[UINavigationController alloc] initWithRootViewController:centerController];
-    IIViewDeckController* deckController =  [[IIViewDeckController alloc] initWithCenterViewController:self.centerController
-                                                                                    leftViewController:self.leftController];
-
-    /* To adjust speed of open/close animations, set either of these two properties. */
-    // deckController.openSlideAnimationDuration = 0.15f;
-    // deckController.closeSlideAnimationDuration = 0.5f;
-    self.window.rootViewController = deckController;
-    [self.window makeKeyAndVisible];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:centerController];
+    [navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
     
+    ECSlidingViewController *slidingViewController = [[ECSlidingViewController alloc] init];
+    slidingViewController.topViewController = navigationController;
+    slidingViewController.underLeftViewController = self.leftController;
+    slidingViewController.anchorRightRevealAmount = 230;
+    [navigationController.view addGestureRecognizer:slidingViewController.panGesture];
+    self.window.rootViewController = slidingViewController;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
