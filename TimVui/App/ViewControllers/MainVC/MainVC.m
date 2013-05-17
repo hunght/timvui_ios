@@ -69,12 +69,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
-//    {
-//        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation_bar.png"]
-//                                                                       forBarMetrics:UIBarMetricsDefault];
-//    }
-    
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateHighlighted];
@@ -84,7 +78,7 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
     self.tableView.rowHeight = 70.0f;
-    [self reload:nil];   
+    //[self reload:nil];
 }
 
 - (void)toggleTopUpInsideLeftView {
@@ -119,7 +113,6 @@
         cell = [[PostTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     cell.post = [_posts objectAtIndex:indexPath.row];
-    
     return cell;
 }
 

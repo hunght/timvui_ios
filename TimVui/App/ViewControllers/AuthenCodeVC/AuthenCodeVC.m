@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "ForgetPassVC.h"
+#import "AuthenCodeVC.h"
 #import "AppDelegate.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
@@ -22,12 +22,12 @@
 #import "AFHTTPRequestOperation.h"
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"
-@interface ForgetPassVC ()
+@interface AuthenCodeVC ()
 
 
 @end
 
-@implementation ForgetPassVC
+@implementation AuthenCodeVC
 @synthesize delegate=_delegate;
 
 -(void)backButtonClicked:(id)sender{

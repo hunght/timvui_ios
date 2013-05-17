@@ -24,10 +24,12 @@
 #import "UINavigationBar+JTDropShadow.h"
 @interface ForgetPassVC ()
 
+@property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
 
 @end
 
 @implementation ForgetPassVC
+@synthesize buttonLogin = _buttonLoginLogout;
 @synthesize delegate=_delegate;
 
 -(void)backButtonClicked:(id)sender{
@@ -37,15 +39,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
-    _lblNoticeText.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
     
     
 
-    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
-    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    _btnContinue.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+    [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
+    [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
@@ -95,10 +96,10 @@
 
 - (void)viewDidUnload
 {
+    self.buttonLogin = nil;
     [self setTfdPhoneNumber:nil];
     [self setScrollView:nil];
-    [self setBtnContinue:nil];
-    [self setLblNoticeText:nil];
+    [self setBtnLogin:nil];
     [super viewDidUnload];
 }
 
@@ -198,6 +199,7 @@
 
 - (IBAction)signupButtonClicked:(id)sender {
     UserRegisterVC *viewController=[[UserRegisterVC alloc] initWithNibName:@"UserRegisterVC" bundle:nil];
+    viewController.isUpdateProfileYES=NO;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

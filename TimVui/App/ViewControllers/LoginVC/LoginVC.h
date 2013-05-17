@@ -36,8 +36,10 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnFBRegistering;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnLogin;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRegistering;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblOr;
 
 @property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblLostPass;
 
 //Action
 - (IBAction)facebookLoginButtonClicked:(id)sender;

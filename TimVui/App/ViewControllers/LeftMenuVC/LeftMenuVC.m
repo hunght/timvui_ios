@@ -88,10 +88,9 @@ enum {
         _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ Anuong.net",@"Cài đặt", nil];
         [self.tableView setBackgroundColor:[UIColor clearColor]];
         [self.view setBackgroundColor:[UIColor clearColor]];
-        UIColor *bgColor = [UIColor colorWithRed:(50.0f/255.0f) green:(57.0f/255.0f) blue:(74.0f/255.0f) alpha:1.0f];
+        UIColor *bgColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_table_menu_bg"]];
         self.tableView.backgroundColor = bgColor;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.view.backgroundColor = bgColor;
     }
     return self;
 }
@@ -110,12 +109,11 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSArray *fonts = [UIFont fontNamesForFamilyName:@"UVN Van"];
+    
+    for(NSString *string in fonts){
+        NSLog(@"%@", string);
+    }
 }
 
 - (void)viewDidUnload
@@ -270,38 +268,30 @@ enum {
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return (_headers[section] == [NSNull null]) ? 0.0f : 21.0f;
+	return (_headers[section] == [NSNull null]) ? 0.0f : 44.0f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSObject *headerText = _headers[section];
 	UIView *headerView = nil;
 	if (headerText != [NSNull null]) {
-		headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 21.0f)];
-		CAGradientLayer *gradient = [CAGradientLayer layer];
-		gradient.frame = headerView.bounds;
-		gradient.colors = @[
-                      (id)[UIColor colorWithRed:(67.0f/255.0f) green:(74.0f/255.0f) blue:(94.0f/255.0f) alpha:1.0f].CGColor,
-                      (id)[UIColor colorWithRed:(57.0f/255.0f) green:(64.0f/255.0f) blue:(82.0f/255.0f) alpha:1.0f].CGColor,
-                      ];
-		[headerView.layer insertSublayer:gradient atIndex:0];
-		
-		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 12.0f, 5.0f)];
+		headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 44.0f)];
+		headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_header_session"]];
+		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 3.0f, 5.0f)];
 		textLabel.text = (NSString *) headerText;
-		textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:([UIFont systemFontSize] * 0.8f)];
+		textLabel.font = [UIFont fontWithName:@"UVN-Van-Bold" size:(35)];
 		textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-		textLabel.textColor = [UIColor colorWithRed:(125.0f/255.0f) green:(129.0f/255.0f) blue:(146.0f/255.0f) alpha:1.0f];
+		textLabel.textColor = [UIColor colorWithRed:(236.0f/255.0f) green:(234.0f/255.0f) blue:(235.0f/255.0f) alpha:1.0f];
 		textLabel.backgroundColor = [UIColor clearColor];
+        UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
+		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:1.0f];
+		[textLabel.superview addSubview:topLine];
+		
+		UIView *topLine2 = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 1.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
+		topLine2.backgroundColor = [UIColor whiteColor];
+		[textLabel.superview addSubview:topLine2];
 		[headerView addSubview:textLabel];
-		
-		UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-		topLine.backgroundColor = [UIColor colorWithRed:(78.0f/255.0f) green:(86.0f/255.0f) blue:(103.0f/255.0f) alpha:1.0f];
-		[headerView addSubview:topLine];
-		
-		UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 21.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-		bottomLine.backgroundColor = [UIColor colorWithRed:(36.0f/255.0f) green:(42.0f/255.0f) blue:(5.0f/255.0f) alpha:1.0f];
-		[headerView addSubview:bottomLine];
 	}
 	return headerView;
 }

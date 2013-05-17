@@ -47,8 +47,13 @@
     
     [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-off"] forState:UIControlStateNormal];
     [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-on"] forState:UIControlStateHighlighted];
+    [_btnFBRegistering.titleLabel setTextColor:[UIColor colorWithRed:(59.0f/255.0f) green:(89.0f/255.0f) blue:(152.0f/255.0f) alpha:1.0f]];
+    
     [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
     [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    [_btnLogin.titleLabel setFont:[UIFont fontWithName:@"UVNVanBold" size:(17)]];
+    
+    _lblOr.textColor = [UIColor colorWithRed:(253.0f/255.0f) green:(83/255.0f) blue:(83/255.0f) alpha:1.0f];
     
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
@@ -107,6 +112,8 @@
     [self setBtnFBRegistering:nil];
     [self setBtnLogin:nil];
     [self setBtnRegistering:nil];
+    [self setLblOr:nil];
+    [self setLblLostPass:nil];
     [super viewDidUnload];
 }
 
@@ -212,7 +219,6 @@
 
 - (IBAction)signupButtonClicked:(id)sender {
     UserRegisterVC *viewController=[[UserRegisterVC alloc] initWithNibName:@"UserRegisterVC" bundle:nil];
-    viewController.isUpdateProfileYES=NO;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

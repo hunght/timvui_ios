@@ -24,32 +24,24 @@
 @synthesize txfPassword;
 @synthesize txfPhone;
 @synthesize txfConfirmPassword;
-@synthesize isUpdateProfileYES;
-@synthesize imageAvatar;
 
 
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    if (isUpdateProfileYES) {
-        [btnRegister setTitle:NSLocalizedString(@"Update User Account", nil) forState:UIControlStateNormal];
-    }
     
 }
+
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-
 }
-
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
-
 }
 
 - (void)viewDidLoad
 {
-    [btnRegister setTitle:NSLocalizedString(@"Regist User Account", nil) forState:UIControlStateNormal];
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
@@ -63,34 +55,20 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
-    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
-    
-    
     [btnRegister setBackgroundImage:[UIImage imageNamed:@"img_button_large_off"] forState:UIControlStateNormal];
     [btnRegister setBackgroundImage:[UIImage imageNamed:@"img_button_large_on"] forState:UIControlStateHighlighted];
     [_btn_Cancel setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_off"] forState:UIControlStateNormal];
     [_btn_Cancel setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_on"] forState:UIControlStateHighlighted];
-    [btnRegister setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    
-    // Do any additional setup after loading the view from its nib.
-    if (isUpdateProfileYES) {
-        
-    }else{
-
-
-    }
-
-    if (isUpdateProfileYES) 
-        self.trackedViewName=@"Me_UpdateInfo";
-    else
-        self.trackedViewName=@"Signup";
+    btnRegister.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+    _btn_Cancel.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
 }
 
 -(void)didReceiveMemoryWarning{
     [[SDImageCache sharedImageCache] clearMemory];
     [super didReceiveMemoryWarning];
 }
+
 -(void)viewWillUnload{
     user_password=txfPassword.text;
     user_confirm_password=txfConfirmPassword.text;
@@ -98,6 +76,7 @@
     [super viewWillUnload];
     
 }
+
 - (void)viewDidUnload
 {
 

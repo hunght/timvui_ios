@@ -32,10 +32,9 @@
 
 @property (nonatomic, retain) NSObject<ForgetPassVCDelegate>* delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPhoneNumber;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnContinue;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnLogin;
 
 @property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
-@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblNoticeText;
 
 //Action
 - (IBAction)contiuneButtonClicked:(id)sender;

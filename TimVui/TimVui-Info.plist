@@ -39,6 +39,13 @@
 			</array>
 		</dict>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>UVNVan_R.TTF</string>
+		<string>Arial.ttf</string>
+		<string>UVNVan.TTF</string>
+		<string>Arial Bold.ttf</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
