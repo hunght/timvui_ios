@@ -22,6 +22,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"
+#import "AuthenCodeVC.h"
 @interface ForgetPassVC ()
 
 
@@ -190,19 +191,21 @@
         
         if ([Ultilities validatePhone:_tfdPhoneNumber.text]){
 
-            [self postAPIUserLogin];
+//            [self postAPIUserLogin];
         }else
             [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
-}
-
-
-- (IBAction)signupButtonClicked:(id)sender {
-    UserRegisterVC *viewController=[[UserRegisterVC alloc] initWithNibName:@"UserRegisterVC" bundle:nil];
+    
+    
+    AuthenCodeVC* viewController=nil;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        viewController = [[AuthenCodeVC alloc] initWithNibName:@"AuthenCodeVC_iPhone" bundle:nil];
+    } else {
+        viewController = [[AuthenCodeVC alloc] initWithNibName:@"AuthenCodeVC_iPad" bundle:nil];
+    }
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)forgetPasswordButtonClicked:(id)sender {
-}
+
 
 
 

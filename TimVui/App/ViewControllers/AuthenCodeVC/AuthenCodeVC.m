@@ -43,9 +43,9 @@
     
     
 
-    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
-    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    _btnContinue.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+    [_btnDone setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
+    [_btnDone setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    _btnDone.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
     
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
@@ -95,9 +95,9 @@
 
 - (void)viewDidUnload
 {
-    [self setTfdPhoneNumber:nil];
+    [self setTfdAuthenCode:nil];
     [self setScrollView:nil];
-    [self setBtnContinue:nil];
+    [self setBtnDone:nil];
     [self setLblNoticeText:nil];
     [super viewDidUnload];
 }
@@ -151,7 +151,7 @@
 
 - (void)postAPIUserLogin {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            _tfdPhoneNumber.text,@"password",
+                            _tfdAuthenCode.text,@"password",
                             nil];
     
     [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -188,7 +188,7 @@
 
 - (IBAction)contiuneButtonClicked:(id)sender {
         
-        if ([Ultilities validatePhone:_tfdPhoneNumber.text]){
+        if ([Ultilities validatePhone:_tfdAuthenCode.text]){
 
             [self postAPIUserLogin];
         }else

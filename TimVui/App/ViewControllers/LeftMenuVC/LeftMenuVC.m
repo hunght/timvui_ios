@@ -109,7 +109,7 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSArray *fonts = [UIFont fontNamesForFamilyName:@"UVN Van"];
+    NSArray *fonts = [UIFont fontNamesForFamilyName:@"Arial"];
     
     for(NSString *string in fonts){
         NSLog(@"%@", string);
@@ -279,7 +279,7 @@ enum {
 		headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_header_session"]];
 		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 3.0f, 5.0f)];
 		textLabel.text = (NSString *) headerText;
-		textLabel.font = [UIFont fontWithName:@"UVN-Van-Bold" size:(35)];
+		textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(17)];
 		textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
 		textLabel.textColor = [UIColor colorWithRed:(236.0f/255.0f) green:(234.0f/255.0f) blue:(235.0f/255.0f) alpha:1.0f];

@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 @class TPKeyboardAvoidingScrollView;
-@protocol ForgetPassVCDelegate
+@protocol AuthenCodeVCDelegate
 
 @optional
 
@@ -29,12 +29,12 @@
 
 @end
 @interface AuthenCodeVC : UIViewController<UITextFieldDelegate>
-
-@property (nonatomic, retain) NSObject<ForgetPassVCDelegate>* delegate;
-@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPhoneNumber;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnContinue;
-
 @property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
+@property (nonatomic, retain) NSObject<AuthenCodeVCDelegate>* delegate;
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdAuthenCode;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnDone;
+
+
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblNoticeText;
 
 //Action

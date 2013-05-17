@@ -27,7 +27,7 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 		
 		self.imageView.contentMode = UIViewContentModeScaleAspectFill;
 		
-		self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(23)];
+		self.textLabel.font = [UIFont fontWithName:@"ArialMT" size:(17)];
 		self.textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		self.textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
 		self.textLabel.textColor = [UIColor colorWithRed:(101.0f/255.0f) green:(96.0f/255.0f) blue:(100.0f/255.0f) alpha:1.0f];
