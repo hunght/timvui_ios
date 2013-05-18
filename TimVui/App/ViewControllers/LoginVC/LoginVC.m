@@ -23,31 +23,61 @@
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import "ForgetPassVC.h"
-@interface LoginVC ()
-
-@property (strong, nonatomic) IBOutlet UIButton *buttonLogin;
-
-@end
 
 @implementation LoginVC
-@synthesize buttonLogin = _buttonLoginLogout;
 @synthesize delegate=_delegate;
 
--(void)backButtonClicked:(id)sender{
-    [self dismissModalViewControllerAnimated:YES];
+
+#pragma mark UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:_tfdUsername]) {
+        [_tfdUsername setKeyboardType:UIKeyboardTypeEmailAddress];
+    }
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+#pragma mark Setup Methods
+
+- (void)setupFBLoginView {
+    if ([FBSession activeSession].isOpen) {
+        NSLog(@"INFO: Ignoring app link because current session is open.");
+        
+    }else{
+        FBLoginView *loginview =    [[FBLoginView alloc] init];
+        
+        loginview.frame = CGRectMake(10, 35, 299, 42);
+        for (id obj in loginview.subviews)
+        {
+            if ([obj isKindOfClass:[UIButton class]])
+            {
+                UIButton * loginButton =  obj;
+                UIImage *loginImage = [UIImage imageNamed:@"img_button-face-off"];
+                [loginButton setBackgroundImage:loginImage forState:UIControlStateNormal];
+                [loginButton setBackgroundImage:[UIImage imageNamed:@"img_button-face-on"] forState:UIControlStateHighlighted];
+                [loginButton sizeToFit];
+            }
+            if ([obj isKindOfClass:[UILabel class]])
+            {
+                UILabel * loginLabel =  obj;
+                loginLabel.text = @"Đăng nhập với Facebook";
+                loginLabel.textColor=[UIColor colorWithRed:(59.0f/255.0f) green:(89.0f/255.0f) blue:(152.0f/255.0f) alpha:1.0f];
+                loginLabel.textAlignment = UITextAlignmentCenter;
+                loginLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(17)];
+                loginLabel.frame = CGRectMake(0, 0, 299, 42);
+            }
+        }
+        
+        loginview.delegate = self;
+        
+        [self.view addSubview:loginview];
+    }
+    
+}
+
+- (void)setupViewLayout {
     [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
     
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
-    
-    
-    [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-off"] forState:UIControlStateNormal];
-    [_btnFBRegistering setBackgroundImage:[UIImage imageNamed:@"img_button-face-on"] forState:UIControlStateHighlighted];
-    [_btnFBRegistering.titleLabel setTextColor:[UIColor colorWithRed:(59.0f/255.0f) green:(89.0f/255.0f) blue:(152.0f/255.0f) alpha:1.0f]];
     
     [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
     [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
@@ -65,31 +95,23 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
 }
 
-
-
-#pragma mark UITextFieldDelegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:_tfdUsername]) {
-        [_tfdUsername setKeyboardType:UIKeyboardTypeEmailAddress];
-    }
+#pragma mark ViewControllerDelegate
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupViewLayout];
+    
+    [self setupFBLoginView];
+    
 }
-
-
-
-#pragma mark Template generated code
-
 - (void)viewDidUnload
 {
-    self.buttonLogin = nil;
     [self setTfdUsername:nil];
     [self setTfdPassword:nil];
     [self setScrollView:nil];
-    [self setBtnFBRegistering:nil];
     [self setBtnLogin:nil];
     [self setBtnRegistering:nil];
     [self setLblOr:nil];
     [self setLblLostPass:nil];
-    [self setFBLoginView:nil];
     [super viewDidUnload];
 }
 
@@ -103,7 +125,58 @@
     }
 }
 
+#pragma mark Private Methods
+// Displays the user's name and profile picture so they are aware of the Facebook
+// identity they are logged in as.
+- (void)getInfoAccountFacebook{
+    [[FBRequest requestForMe] startWithCompletionHandler:
+     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+         if (!error) {
+             if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]) {
+                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         user.id,@"openid_id" ,
+                                         @"FACEBOOK",@"openid_service",
+                                         @"email",@"email",
+                                         user.name,@"name",
+                                         user.birthday,@"dob",
+                                         nil];
+                 [GlobalDataUser sharedClient].isLogin=YES;
+                 [GlobalDataUser sharedClient].username=user.name;
+                 [GlobalDataUser sharedClient].facebookID=user.id;
+                 [GlobalDataUser sharedClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
+                 NSLog(@"image link: %@",[GlobalDataUser sharedClient].avatarImageURL);
+                 [_delegate userFacebookDidLogin];
+                 [self dismissModalViewControllerAnimated:YES];
+                 // TODO turn on login via openid
+                 /*
+                 [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                     NSLog(@"%@",JSON);
+                     NSLog(@"%ld",(long)operation.response.statusCode);
+                     [GlobalDataUser sharedClient].isLogin=YES;
+                     [GlobalDataUser sharedClient].username=user.name;
+                     [GlobalDataUser sharedClient].facebookID=user.id;
+                     [GlobalDataUser sharedClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
+                     NSLog(@"image link: %@",[GlobalDataUser sharedClient].avatarImageURL);
+                     [_delegate userFacebookDidLogin];
+                     [self dismissModalViewControllerAnimated:YES];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     // TODO with error
+                     NSLog(@"%@",error);
+                     NSLog(@"%ld",(long)operation.response.statusCode);
+                 }];
+                  */
+             }
+             
+         }else{
+             // TODO with error
+             NSLog(@"%@",error);
+         }
+     }];
+}
 
+-(void)backButtonClicked:(id)sender{
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 - (void)postAPIUserLogin {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -118,10 +191,12 @@
         NSLog(@"%ld",(long)operation.response.statusCode);
     }];
 }
+
 #pragma mark - FBLoginView delegate
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     // Upon login, transition to the main UI by pushing it onto the navigation stack.
+    [self getInfoAccountFacebook];
 }
 
 - (void)loginView:(FBLoginView *)loginView
@@ -178,16 +253,11 @@
 }
 
 - (void)logOut {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    // TODO  
 }
+
+
 #pragma mark - IBAction
-
-- (IBAction)facebookLoginButtonClicked:(id)sender {
-    // get the app delegate so that we can access the session property
-    
-}
-
-
 
 - (IBAction)userLoginButtonClicked:(id)sender {
     if ([Ultilities validatePassword:_tfdPassword.text]) {

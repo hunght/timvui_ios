@@ -34,11 +34,9 @@
 
 @interface LoginVC : UIViewController<UITextFieldDelegate,FBLoginViewDelegate>
 
-@property (unsafe_unretained, nonatomic) IBOutlet FBLoginView *FBLoginView;
 @property (nonatomic, retain) NSObject<LoginVCDelegate>* delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnFBRegistering;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnLogin;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRegistering;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblOr;
@@ -47,7 +45,6 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblLostPass;
 
 //Action
-- (IBAction)facebookLoginButtonClicked:(id)sender;
 - (IBAction)userLoginButtonClicked:(id)sender;
 - (IBAction)signupButtonClicked:(id)sender;
 - (IBAction)forgetPasswordButtonClicked:(id)sender;
