@@ -15,21 +15,26 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 @class TPKeyboardAvoidingScrollView;
-@protocol LoginVCDelegate
 
-@optional
 
 /**
  * Sent to the delegate when sign up has completed successfully. Immediately
  * followed by an invocation of userDidLogin:
  */
+@protocol LoginVCDelegate
+
+@optional
+
 - (void)userFacebookDidLogin;
 - (void)userFacebookDidLogout;
 
 @end
-@interface LoginVC : UIViewController<UITextFieldDelegate>
 
+@interface LoginVC : UIViewController<UITextFieldDelegate,FBLoginViewDelegate>
+
+@property (unsafe_unretained, nonatomic) IBOutlet FBLoginView *FBLoginView;
 @property (nonatomic, retain) NSObject<LoginVCDelegate>* delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;

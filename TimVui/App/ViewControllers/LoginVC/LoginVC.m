@@ -63,31 +63,6 @@
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
-    
-    if (!SharedAppDelegate.session.isOpen) {
-        // create a fresh session object
-        SharedAppDelegate.session = [[FBSession alloc] init];
-        
-        // if we don't have a cached token, a call to open here would cause UX for login to
-        // occur; we don't want that to happen unless the user clicks the login button, and so
-        // we check here to make sure we have a token before calling open
-        if (SharedAppDelegate.session.state == FBSessionStateCreatedTokenLoaded) {
-            // even though we had a cached token, we need to login to make the session usable
-            [SharedAppDelegate.session openWithCompletionHandler:^(FBSession *session,
-                                                             FBSessionState status,
-                                                             NSError *error) {
-                // we recurse here, in order to update buttons and labels
-                if (SharedAppDelegate.session.isOpen) {
-                    // if a user logs out explicitly, we delete any cached token information, and next
-                    // time they run the applicaiton they will be presented with log in UX again; most
-                    // users will simply close the app or switch away, without logging out; this will
-                    // cause the implicit cached-token login to occur on next launch of the application
-                    [SharedAppDelegate.session closeAndClearTokenInformation];
-                }
-            }];
-        }
-    }
-    
 }
 
 
@@ -114,6 +89,7 @@
     [self setBtnRegistering:nil];
     [self setLblOr:nil];
     [self setLblLostPass:nil];
+    [self setFBLoginView:nil];
     [super viewDidUnload];
 }
 
@@ -127,42 +103,7 @@
     }
 }
 
-// Displays the user's name and profile picture so they are aware of the Facebook
-// identity they are logged in as.
-- (void)getInfoAccountFacebook{
-    [[FBRequest requestForMe] startWithCompletionHandler:
-     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-         if (!error) {
-             if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]) {
-                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         user.id,@"openid_id" ,
-                                         @"FACEBOOK",@"openid_service",
-                                         @"email",@"email",
-                                         user.name,@"name",
-                                         user.birthday,@"dob",
-                                         nil];
-                 
-                 [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                     NSLog(@"%@",JSON);
-                     NSLog(@"%ld",(long)operation.response.statusCode);
-                     [GlobalDataUser sharedClient].isLogin=YES;
-                     [GlobalDataUser sharedClient].username=user.name;
-                     [GlobalDataUser sharedClient].facebookID=user.id;
-                     [GlobalDataUser sharedClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
-                     NSLog(@"image link: %@",[GlobalDataUser sharedClient].avatarImageURL);
-                     [_delegate userFacebookDidLogin];
-                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     NSLog(@"%@",error);
-                     NSLog(@"%ld",(long)operation.response.statusCode);
-                 }];
-             }
-             [self dismissModalViewControllerAnimated:YES];
-         }else{
-             //Todo
-             NSLog(@"%@",error);
-         }
-     }];
-}
+
 
 - (void)postAPIUserLogin {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -177,27 +118,73 @@
         NSLog(@"%ld",(long)operation.response.statusCode);
     }];
 }
+#pragma mark - FBLoginView delegate
 
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
+    // Upon login, transition to the main UI by pushing it onto the navigation stack.
+}
+
+- (void)loginView:(FBLoginView *)loginView
+      handleError:(NSError *)error{
+    NSString *alertMessage, *alertTitle;
+    
+    // Facebook SDK * error handling *
+    // Error handling is an important part of providing a good user experience.
+    // Since this sample uses the FBLoginView, this delegate will respond to
+    // login failures, or other failures that have closed the session (such
+    // as a token becoming invalid). Please see the [- postOpenGraphAction:]
+    // and [- requestPermissionAndPost] on `SCViewController` for further
+    // error handling on other operations.
+    
+    if (error.fberrorShouldNotifyUser) {
+        // If the SDK has a message for the user, surface it. This conveniently
+        // handles cases like password change or iOS6 app slider state.
+        alertTitle = @"Something Went Wrong";
+        alertMessage = error.fberrorUserMessage;
+    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        // It is important to handle session closures as mentioned. You can inspect
+        // the error for more context but this sample generically notifies the user.
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
+        // The user has cancelled a login. You can inspect the error
+        // for more context. For this sample, we will simply ignore it.
+        NSLog(@"user cancelled login");
+    } else {
+        // For simplicity, this sample treats other errors blindly, but you should
+        // refer to https://developers.facebook.com/docs/technical-guides/iossdk/errors/ for more information.
+        alertTitle  = @"Unknown Error";
+        alertMessage = @"Error. Please try again later.";
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
+}
+
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
+    // Facebook SDK * login flow *
+    // It is important to always handle session closure because it can happen
+    // externally; for example, if the current session's access token becomes
+    // invalid. For this sample, we simply pop back to the landing page.
+        // The delay is for the edge case where a session is immediately closed after
+        // logging in and our navigation controller is still animating a push.
+        [self performSelector:@selector(logOut) withObject:nil afterDelay:.5];
+}
+
+- (void)logOut {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 #pragma mark - IBAction
 
 - (IBAction)facebookLoginButtonClicked:(id)sender {
     // get the app delegate so that we can access the session property
     
-    if (SharedAppDelegate.session.state != FBSessionStateCreated) {
-        // Create a new, logged out session.
-        SharedAppDelegate.session = [[FBSession alloc] init];
-    }
-    // if the session isn't open, let's open it now and present the login UX to the user
-    [SharedAppDelegate.session openWithCompletionHandler:^(FBSession *session,
-                                                     FBSessionState status,
-                                                     NSError *error) {
-        // and here we make sure to update our UX according to the new session state
-        if (SharedAppDelegate.session.isOpen) {
-            [FBSession setActiveSession:SharedAppDelegate.session];
-
-            [self getInfoAccountFacebook];
-        }
-    }];
 }
 
 
