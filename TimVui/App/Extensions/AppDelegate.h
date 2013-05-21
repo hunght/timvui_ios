@@ -13,7 +13,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
-@property (retain, nonatomic) UIViewController *centerController;
+
 @property (retain, nonatomic) UIViewController *leftController;
 @property (nonatomic, strong)id<GAITracker> tracker;
 

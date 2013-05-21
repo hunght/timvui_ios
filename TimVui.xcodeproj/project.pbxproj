@@ -436,6 +436,17 @@
 			path = GoogleAnalytics;
 			sourceTree = "<group>";
 		};
+		559DD410174B0C14009E7344 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				55D5A8CB171E7EA70027BBFE /* LoginVC */,
+				55954F49172A132F00A8A351 /* UserRegisterVC */,
+				554CF4B01744D2F7008207E9 /* ForgetPassVC */,
+				55ECBD331745EBF1005F8FB9 /* AuthenCodeVC */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
 		55A25F531728CCD700D5E29F /* localizable */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,10 +535,7 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				55ECBD331745EBF1005F8FB9 /* AuthenCodeVC */,
-				554CF4B01744D2F7008207E9 /* ForgetPassVC */,
-				55954F49172A132F00A8A351 /* UserRegisterVC */,
-				55D5A8CB171E7EA70027BBFE /* LoginVC */,
+				559DD410174B0C14009E7344 /* Account */,
 				55ED8490170D5A0E00344215 /* SearchVC */,
 				55BAED621709784F00CF3171 /* LeftMenuVC */,
 				55C8C0FE17052E4C007D8E78 /* MainVC */,

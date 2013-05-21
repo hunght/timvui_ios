@@ -140,11 +140,11 @@
                                          user.name,@"name",
                                          user.birthday,@"dob",
                                          nil];
-                 [GlobalDataUser sharedClient].isLogin=YES;
-                 [GlobalDataUser sharedClient].username=user.name;
-                 [GlobalDataUser sharedClient].facebookID=user.id;
-                 [GlobalDataUser sharedClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
-                 NSLog(@"image link: %@",[GlobalDataUser sharedClient].avatarImageURL);
+                 [GlobalDataUser sharedAccountClient].isLogin=YES;
+                 [GlobalDataUser sharedAccountClient].username=user.name;
+                 [GlobalDataUser sharedAccountClient].facebookID=user.id;
+                 [GlobalDataUser sharedAccountClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
+                 NSLog(@"image link: %@",[GlobalDataUser sharedAccountClient].avatarImageURL);
                  [_delegate userFacebookDidLogin];
                  [self dismissModalViewControllerAnimated:YES];
                  // TODO turn on login via openid
@@ -185,9 +185,11 @@
                             nil];
     
     [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
+        NSLog(@"%@",operation.request.allHTTPHeaderFields);
+        
         NSLog(@"%ld",(long)operation.response.statusCode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",operation.request.allHTTPHeaderFields);
         NSLog(@"%ld",(long)operation.response.statusCode);
     }];
 }
@@ -196,7 +198,7 @@
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     // Upon login, transition to the main UI by pushing it onto the navigation stack.
-    [self getInfoAccountFacebook];
+//    [self getInfoAccountFacebook];
 }
 
 - (void)loginView:(FBLoginView *)loginView

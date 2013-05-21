@@ -13,10 +13,15 @@
 #import "ECSlidingViewController.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
+#import "GlobalDataUser.h"
+
+@interface AppDelegate () <UIApplicationDelegate>
+@property(nonatomic,strong)ECSlidingViewController *slidingViewController;
+@end
+
 
 @implementation AppDelegate
 @synthesize window = _window;
-@synthesize centerController = _viewController;
 @synthesize leftController = _leftController;
 @synthesize tracker=_tracker;
 
@@ -95,26 +100,41 @@
                           }];
 }
 
+#pragma mark Helpers
+
+
+// NSURLCache seems to have a problem with Cache-Control="private" headers.
+// Most resources of GitHubs API use this header and the response gets cached
+// longer than the interval given by GitHub (in most cases 60 seconds).
+// This way we lose caching, but its still better than unexpected results.
+- (void)deactivateURLCache {
+	[[NSURLCache sharedURLCache] removeAllCachedResponses];
+	[[NSURLCache sharedURLCache] setMemoryCapacity:0];
+	[[NSURLCache sharedURLCache] setDiskCapacity:0];
+}
+
+- (void)setupSlidingViewController {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.leftController = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
+    
+    
+    _slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.underLeftViewController = self.leftController;
+    _slidingViewController.anchorRightRevealAmount = 230;
+    self.window.rootViewController = _slidingViewController;
+}
+
+
+#pragma mark Application Events
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self setupGoogleAnalytics];
     [self setupAFNetworking];
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    self.leftController = [[LeftMenuVC alloc] init];
-
-    MainVC *centerController = [[MainVC alloc] initWithStyle:UITableViewStylePlain];
-    self.centerController = [[UINavigationController alloc] initWithRootViewController:centerController];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:centerController];
-    [navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
-    
-    ECSlidingViewController *slidingViewController = [[ECSlidingViewController alloc] init];
-    slidingViewController.topViewController = navigationController;
-    slidingViewController.underLeftViewController = self.leftController;
-    slidingViewController.anchorRightRevealAmount = 230;
-    [navigationController.view addGestureRecognizer:slidingViewController.panGesture];
-    self.window.rootViewController = slidingViewController;
+    [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    [self deactivateURLCache];
+    [self setupSlidingViewController];
     [self.window makeKeyAndVisible];
     return YES;
 }

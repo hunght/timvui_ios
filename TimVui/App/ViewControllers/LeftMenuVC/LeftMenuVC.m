@@ -13,6 +13,8 @@
 #import "LoginVC.h"
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "ECSlidingViewController.h"
+#import "MainVC.h"
 #define kNumberOfSections 3
 
 enum {
@@ -64,7 +66,7 @@ enum {
 {
     // Custom initialization
     NSMutableArray *elts=nil;
-    if ([GlobalDataUser sharedClient].isLogin) {
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
         elts = [NSMutableArray array];
         for (int i = 1; i <= 4; i++) {
             // just some mock elements
@@ -109,6 +111,7 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:.0];
     NSArray *fonts = [UIFont fontNamesForFamilyName:@"Arial"];
     
     for(NSString *string in fonts){
@@ -131,6 +134,7 @@ enum {
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -152,7 +156,6 @@ enum {
 #pragma mark - Table view data source
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     
     return 44;
 }
@@ -206,7 +209,7 @@ enum {
         case kSection1UserAccount:
             switch (row) {
                 case kS1Row1:
-                    if ([GlobalDataUser sharedClient].isLogin) 
+                    if ([GlobalDataUser sharedAccountClient].isLogin) 
                         cell.textLabel.text = @"Cài đặt tài khoản";
                     else
                         cell.textLabel.text = @"Xem gần đây";
@@ -297,11 +300,13 @@ enum {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
+	UIViewController *viewController = nil;
+    
     // first check if any dropdown contains the requested cell
     if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
         [VPPDropDown tableView:tableView didSelectRowAtIndexPath:indexPath];
-        if ([GlobalDataUser sharedClient].isLogin==NO&&indexPath.section==kSection1UserAccount && indexPath.row==kS1Row0) {
+        if ([GlobalDataUser sharedAccountClient].isLogin==NO&&indexPath.section==kSection1UserAccount && indexPath.row==kS1Row0) {
             LoginVC* loginVC=nil;
             if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                 loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
@@ -314,41 +319,101 @@ enum {
             [loginVC setDelegate:self];
             _globalIndexPath=indexPath;
         }
-        return;
+    }else{
+        
+        int row = indexPath.row - [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:indexPath.section];
+        UIAlertView *av;
+        switch (indexPath.section) {
+            case kSection2Services:
+                switch (row) {
+                    case kS1Row0:
+                        viewController = [[MainVC alloc] initWithStyle:UITableViewStylePlain];
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+                
+            case kSection1UserAccount:
+                switch (row) {
+                    case kS1Row1:
+                        av = [[UIAlertView alloc] initWithTitle:@"Cell selected" message:@"The independent cell 2 has been selected" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                        [av show];
+                        //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
+                break;
+        }
+        // Maybe push a controller
+        if (viewController) {
+            [self openViewController:viewController];
+        }
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
-    
-    int row = indexPath.row - [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:indexPath.section];
-    UIAlertView *av;
-    switch (indexPath.section) {
-        case kSection2Services:
-            switch (row) {
-                case kS1Row1:
-                    av = [[UIAlertView alloc] initWithTitle:@"Cell selected" message:@"The independent cell 1 has been selected" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [av show];
-                    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-            
-        case kSection1UserAccount:
-            switch (row) {
-                case kS1Row1:
-                    av = [[UIAlertView alloc] initWithTitle:@"Cell selected" message:@"The independent cell 2 has been selected" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [av show];
-                    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    break;
-                    
-                default:
-                    break;
-            }
-            
-            break;
-    }
-    
 }
+
+
+#pragma mark Helper
+
+- (void)toggleTopView {
+    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
+    if (self.slidingViewController.underLeftShowing) {
+        // actually this does not get called when the top view screenshot is enabled
+        // because the screenshot intercepts the touches on the toggle button
+        [self.slidingViewController resetTopView];
+    } else {
+        [self.slidingViewController anchorTopViewTo:ECRight];
+    }
+}
+
+
+
+- (UIBarButtonItem *)toggleBarButtonItem {
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateHighlighted];
+    //    [backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
+    [backButton addTarget:self action:@selector(toggleTopView) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    item.accessibilityLabel = NSLocalizedString(@"Menu", nil);
+    item.accessibilityHint = NSLocalizedString(@"Double-tap to reveal menu on the left. If you need to close the menu without choosing its item, find the menu button in top-right corner (slightly to the left) and double-tap it again.", nil);
+    return item;
+}
+
+
+// clean up the old state and push the given controller wrapped in a navigation controller.
+// in case the given view controller is already a navigation controller it used it directly.
+- (void)openViewController:(UIViewController *)viewController {
+    // unset the current navigation controller
+	UINavigationController *currentController = (UINavigationController *)self.slidingViewController.topViewController;
+	[currentController popToRootViewControllerAnimated:NO];
+	// prepare the new navigation controller
+    UINavigationController *navController = nil;
+    if ([viewController isKindOfClass:UINavigationController.class]) {
+        navController = (UINavigationController *)viewController;
+    } else {
+        navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    }
+    [navController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+	navController.view.layer.shadowOpacity = 0.8f;
+	navController.view.layer.shadowRadius = 5;
+	navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+	// give the root view controller the toggle bar button item
+    [(UIViewController *)navController.viewControllers[0] navigationItem].leftBarButtonItem = self.toggleBarButtonItem;
+	// set the navigation controller as the new top view and bring it on
+    [self.slidingViewController setTopViewController:navController];
+	self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
+    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+    [navController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+    [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
+}
+
+
 #pragma mark - FBLoginView delegate
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
@@ -438,9 +503,9 @@ enum {
         cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
     }
     
-    if ([GlobalDataUser sharedClient].isLogin){
-        cell.textLabel.text = [GlobalDataUser sharedClient].username;
-        [cell.imageView setImageWithURL:[GlobalDataUser sharedClient].avatarImageURL placeholderImage:[UIImage imageNamed:@"user"]];
+    if ([GlobalDataUser sharedAccountClient].isLogin){
+        cell.textLabel.text = [GlobalDataUser sharedAccountClient].username;
+        [cell.imageView setImageWithURL:[GlobalDataUser sharedAccountClient].avatarImageURL placeholderImage:[UIImage imageNamed:@"user"]];
     }
         
     else{

@@ -67,29 +67,9 @@
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateHighlighted];
-//    [backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
-    [backButton addTarget:self action:@selector(toggleTopUpInsideLeftView) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-    
+    [super viewDidLoad];    
     self.tableView.rowHeight = 70.0f;
     //[self reload:nil];
-}
-
-- (void)toggleTopUpInsideLeftView {
-    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
-    if (self.slidingViewController.underLeftShowing) {
-        // actually this does not get called when the top view screenshot is enabled
-        // because the screenshot intercepts the touches on the toggle button
-        [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
-    } else {
-        [self.slidingViewController anchorTopViewTo:ECRight animations:nil onComplete:nil];
-    }
 }
 
 

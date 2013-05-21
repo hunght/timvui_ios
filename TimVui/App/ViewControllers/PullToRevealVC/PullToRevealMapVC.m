@@ -200,9 +200,6 @@
 #pragma mark - MapView
 - (void) displayMapViewAnnotationsForTableViewCells
 {
-    //NSLog(@"displayMapViewAnnotationsForTableViewCells");
-    // ATM this is only working for one section !!!
-    NSLog(@"self.tableView numberOfRowsInSection:0] = %d", [self.tableView numberOfRowsInSection:0]);
     [mapView removeAnnotations:mapView.annotations];
     for (int i = 0; i < [self.tableView numberOfRowsInSection:0]; i++)
     {

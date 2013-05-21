@@ -192,6 +192,7 @@ static bool isRetinaYES =NO;
     }
     return YES;
 }
+
 +(BOOL)validateEmail:(NSString*)email{
     NSString *trimmedString = [email stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     

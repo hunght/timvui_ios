@@ -1,13 +1,9 @@
 // Settings
-#define kLoginDefaultsKey               @"username"
-#define kAuthTokenDefaultsKey           @"authToken"
-#define kEndpointDefaultsKey            @"endpoint"
-#define kPushTokenDefaultsKey           @"pushToken"
-#define kAccountsDefaultsKey            @"accounts"
-#define kLastActivatedDateDefaultsKey   @"lastActivatedDate"
-#define kLineNumbersDefaultsKey         @"lineNumbers"
-#define kThemeDefaultsKey               @"theme"
-#define kUnreadBadgeDefaultsKey         @"unreadBadge"
+#define kAccountUserID               @"accountUserID"
+#define kAccountUserName           @"accountUserName"
+#define kAccountFacebookID           @"accountFacebookID"
+#define kAccountAvatarImageURL           @"accountAvatarImageURL"
+#define kAccountIsLogin           @"accountIsLogin"
 
 // API
 #define kRequestMethodGet               @"GET"
