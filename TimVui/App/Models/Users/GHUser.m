@@ -31,7 +31,6 @@
 
 - (void)setGravatarURL:(NSURL *)url {
 	_gravatarURL = url;
-
 }
 
 - (void)setValues:(id)dict {

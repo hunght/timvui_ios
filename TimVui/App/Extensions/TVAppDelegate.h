@@ -10,7 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "MacroApp.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface TVAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 

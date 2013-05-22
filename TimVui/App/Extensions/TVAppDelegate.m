@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "TVAppDelegate.h"
 #import "MainVC.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "LeftMenuVC.h"
@@ -15,12 +15,12 @@
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
 #import "GlobalDataUser.h"
 
-@interface AppDelegate () <UIApplicationDelegate>
+@interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
 
 
-@implementation AppDelegate
+@implementation TVAppDelegate
 @synthesize window = _window;
 @synthesize leftController = _leftController;
 @synthesize tracker=_tracker;

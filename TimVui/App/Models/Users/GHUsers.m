@@ -1,6 +1,6 @@
 #import "GHUsers.h"
 #import "GHUser.h"
-#import "AppDelegate.h"
+#import "TVAppDelegate.h"
 #import "NSDictionary+Extensions.h"
 
 

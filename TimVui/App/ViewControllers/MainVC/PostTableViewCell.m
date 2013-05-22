@@ -21,10 +21,6 @@
 // THE SOFTWARE.
 
 #import "PostTableViewCell.h"
-
-#import "Post.h"
-#import "User.h"
-
 #import "UIImageView+AFNetworking.h"
 
 @implementation PostTableViewCell {
@@ -51,16 +47,12 @@
 
 - (void)setPost:(Post *)post {
     _post = post;
-
-    self.textLabel.text = _post.user.username;
-    self.detailTextLabel.text = _post.text;
-    [self.imageView setImageWithURL:_post.user.avatarImageURL placeholderImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     
     [self setNeedsLayout];
 }
 
-+ (CGFloat)heightForCellWithPost:(Post *)post {
-    CGSize sizeToFit = [post.text sizeWithFont:[UIFont systemFontOfSize:12.0f] constrainedToSize:CGSizeMake(220.0f, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
++ (CGFloat)heightForCellWithPost:(NSString *)post {
+    CGSize sizeToFit = [post sizeWithFont:[UIFont systemFontOfSize:12.0f] constrainedToSize:CGSizeMake(220.0f, CGFLOAT_MAX) lineBreakMode:UILineBreakModeWordWrap];
     
     return fmaxf(70.0f, sizeToFit.height + 45.0f);
 }

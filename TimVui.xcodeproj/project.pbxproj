@@ -43,14 +43,16 @@
 		55954F57172A141100A8A351 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55954F55172A141100A8A351 /* libGoogleAnalytics.a */; };
 		55954F5A172A159A00A8A351 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55954F59172A159A00A8A351 /* SystemConfiguration.framework */; };
 		55954F5C172A15A900A8A351 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55954F5B172A15A800A8A351 /* CoreData.framework */; };
+		559F402A174B6D7900E30BFF /* TVBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 559F4023174B6D7500E30BFF /* TVBranch.m */; };
+		559F402B174B6D7900E30BFF /* TVBranches.m in Sources */ = {isa = PBXBuildFile; fileRef = 559F4025174B6D7700E30BFF /* TVBranches.m */; };
 		55A25F4F1728C56A00D5E29F /* Ultilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A25F4E1728C56A00D5E29F /* Ultilities.m */; };
 		55A25F521728C8AB00D5E29F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A25F511728C8AB00D5E29F /* QuartzCore.framework */; };
 		55A25F581728CCD700D5E29F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A25F541728CCD700D5E29F /* Localizable.strings */; };
 		55A25F591728CCD700D5E29F /* Localizable_vn.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A25F561728CCD700D5E29F /* Localizable_vn.strings */; };
+		55ABD3E7174C54F100FA6799 /* TVCoupons.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ABD3E4174C54F000FA6799 /* TVCoupons.m */; };
+		55ABD3E8174C54F100FA6799 /* TVCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ABD3E6174C54F100FA6799 /* TVCoupon.m */; };
 		55BAED3A1709725600CF3171 /* TVNetworkingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED391709725600CF3171 /* TVNetworkingClient.m */; };
-		55C8C10A17052E4C007D8E78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F317052E4C007D8E78 /* AppDelegate.m */; };
-		55C8C10B17052E4C007D8E78 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F617052E4C007D8E78 /* Post.m */; };
-		55C8C10C17052E4C007D8E78 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F817052E4C007D8E78 /* User.m */; };
+		55C8C10A17052E4C007D8E78 /* TVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C0F317052E4C007D8E78 /* TVAppDelegate.m */; };
 		55C8C10F17052E4C007D8E78 /* MainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C10017052E4C007D8E78 /* MainVC.m */; };
 		55C8C11017052E4C007D8E78 /* PostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C8C10217052E4C007D8E78 /* PostTableViewCell.m */; };
 		55C8C11117052E4C007D8E78 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55C8C10617052E4C007D8E78 /* Default-568h@2x.png */; };
@@ -182,19 +184,23 @@
 		55954F59172A159A00A8A351 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		55954F5B172A15A800A8A351 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		55954F5E172A2A7100A8A351 /* MacroApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacroApp.h; path = Extensions/MacroApp.h; sourceTree = "<group>"; };
+		559F4022174B6D7500E30BFF /* TVBranch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVBranch.h; sourceTree = "<group>"; };
+		559F4023174B6D7500E30BFF /* TVBranch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVBranch.m; sourceTree = "<group>"; };
+		559F4024174B6D7600E30BFF /* TVBranches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVBranches.h; sourceTree = "<group>"; };
+		559F4025174B6D7700E30BFF /* TVBranches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVBranches.m; sourceTree = "<group>"; };
 		55A25F4D1728C56A00D5E29F /* Ultilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ultilities.h; sourceTree = "<group>"; };
 		55A25F4E1728C56A00D5E29F /* Ultilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ultilities.m; sourceTree = "<group>"; };
 		55A25F511728C8AB00D5E29F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		55A25F551728CCD700D5E29F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55A25F571728CCD700D5E29F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable_vn.strings; sourceTree = "<group>"; };
+		55ABD3E3174C54EF00FA6799 /* TVCoupons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCoupons.h; sourceTree = "<group>"; };
+		55ABD3E4174C54F000FA6799 /* TVCoupons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCoupons.m; sourceTree = "<group>"; };
+		55ABD3E5174C54F000FA6799 /* TVCoupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCoupon.h; sourceTree = "<group>"; };
+		55ABD3E6174C54F100FA6799 /* TVCoupon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCoupon.m; sourceTree = "<group>"; };
 		55BAED381709725600CF3171 /* TVNetworkingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVNetworkingClient.h; sourceTree = "<group>"; };
 		55BAED391709725600CF3171 /* TVNetworkingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVNetworkingClient.m; sourceTree = "<group>"; };
-		55C8C0F217052E4C007D8E78 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Extensions/AppDelegate.h; sourceTree = "<group>"; };
-		55C8C0F317052E4C007D8E78 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Extensions/AppDelegate.m; sourceTree = "<group>"; };
-		55C8C0F517052E4C007D8E78 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
-		55C8C0F617052E4C007D8E78 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
-		55C8C0F717052E4C007D8E78 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		55C8C0F817052E4C007D8E78 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		55C8C0F217052E4C007D8E78 /* TVAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVAppDelegate.h; path = Extensions/TVAppDelegate.h; sourceTree = "<group>"; };
+		55C8C0F317052E4C007D8E78 /* TVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVAppDelegate.m; path = Extensions/TVAppDelegate.m; sourceTree = "<group>"; };
 		55C8C0FF17052E4C007D8E78 /* MainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainVC.h; sourceTree = "<group>"; };
 		55C8C10017052E4C007D8E78 /* MainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainVC.m; sourceTree = "<group>"; };
 		55C8C10117052E4C007D8E78 /* PostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableViewCell.h; sourceTree = "<group>"; };
@@ -447,6 +453,17 @@
 			name = Account;
 			sourceTree = "<group>";
 		};
+		559F4021174B6D7500E30BFF /* Branches */ = {
+			isa = PBXGroup;
+			children = (
+				559F4022174B6D7500E30BFF /* TVBranch.h */,
+				559F4023174B6D7500E30BFF /* TVBranch.m */,
+				559F4024174B6D7600E30BFF /* TVBranches.h */,
+				559F4025174B6D7700E30BFF /* TVBranches.m */,
+			);
+			path = Branches;
+			sourceTree = "<group>";
+		};
 		55A25F531728CCD700D5E29F /* localizable */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +473,17 @@
 			name = localizable;
 			path = TimVui/localizable;
 			sourceTree = SOURCE_ROOT;
+		};
+		55ABD3E2174C54EF00FA6799 /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+				55ABD3E5174C54F000FA6799 /* TVCoupon.h */,
+				55ABD3E6174C54F100FA6799 /* TVCoupon.m */,
+				55ABD3E3174C54EF00FA6799 /* TVCoupons.h */,
+				55ABD3E4174C54F000FA6799 /* TVCoupons.m */,
+			);
+			path = Coupons;
+			sourceTree = "<group>";
 		};
 		55BAED371709725600CF3171 /* AFNetworkingExtention */ = {
 			isa = PBXGroup;
@@ -492,8 +520,8 @@
 			isa = PBXGroup;
 			children = (
 				55954F5E172A2A7100A8A351 /* MacroApp.h */,
-				55C8C0F217052E4C007D8E78 /* AppDelegate.h */,
-				55C8C0F317052E4C007D8E78 /* AppDelegate.m */,
+				55C8C0F217052E4C007D8E78 /* TVAppDelegate.h */,
+				55C8C0F317052E4C007D8E78 /* TVAppDelegate.m */,
 				55BAED3B1709726300CF3171 /* Libs */,
 				55C8C0EF17052E4C007D8E78 /* Extensions */,
 				55C8C0F417052E4C007D8E78 /* Models */,
@@ -517,15 +545,13 @@
 		55C8C0F417052E4C007D8E78 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				55ABD3E2174C54EF00FA6799 /* Coupons */,
+				559F4021174B6D7500E30BFF /* Branches */,
 				55F25E03174238BB003EB902 /* Users */,
 				55F25DF817423260003EB902 /* GHCollection.h */,
 				55F25DF917423261003EB902 /* GHCollection.m */,
 				55F25DFA17423261003EB902 /* GHResource.h */,
 				55F25DFB17423262003EB902 /* GHResource.m */,
-				55C8C0F517052E4C007D8E78 /* Post.h */,
-				55C8C0F617052E4C007D8E78 /* Post.m */,
-				55C8C0F717052E4C007D8E78 /* User.h */,
-				55C8C0F817052E4C007D8E78 /* User.m */,
 				55D5A8D3171E88220027BBFE /* GlobalDataUser.h */,
 				55D5A8D4171E88220027BBFE /* GlobalDataUser.m */,
 			);
@@ -897,9 +923,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5562B19616FC50F300E21A82 /* main.m in Sources */,
-				55C8C10A17052E4C007D8E78 /* AppDelegate.m in Sources */,
-				55C8C10B17052E4C007D8E78 /* Post.m in Sources */,
-				55C8C10C17052E4C007D8E78 /* User.m in Sources */,
+				55C8C10A17052E4C007D8E78 /* TVAppDelegate.m in Sources */,
 				55C8C10F17052E4C007D8E78 /* MainVC.m in Sources */,
 				55C8C11017052E4C007D8E78 /* PostTableViewCell.m in Sources */,
 				55BAED3A1709725600CF3171 /* TVNetworkingClient.m in Sources */,
@@ -925,6 +949,10 @@
 				554CF4AF1744D2EC008207E9 /* LoginVC.m in Sources */,
 				55ECBD321745EBE5005F8FB9 /* ForgetPassVC.m in Sources */,
 				55ECBD381745EBF4005F8FB9 /* AuthenCodeVC.m in Sources */,
+				559F402A174B6D7900E30BFF /* TVBranch.m in Sources */,
+				559F402B174B6D7900E30BFF /* TVBranches.m in Sources */,
+				55ABD3E7174C54F100FA6799 /* TVCoupons.m in Sources */,
+				55ABD3E8174C54F100FA6799 /* TVCoupon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

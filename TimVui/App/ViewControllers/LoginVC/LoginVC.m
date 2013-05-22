@@ -15,7 +15,7 @@
  */
 
 #import "LoginVC.h"
-#import "AppDelegate.h"
+#import "TVAppDelegate.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
 #import "Ultilities.h"
@@ -148,15 +148,15 @@
                  [_delegate userFacebookDidLogin];
                  [self dismissModalViewControllerAnimated:YES];
                  // TODO turn on login via openid
-                 /*
+                 
                  [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                      NSLog(@"%@",JSON);
                      NSLog(@"%ld",(long)operation.response.statusCode);
-                     [GlobalDataUser sharedClient].isLogin=YES;
-                     [GlobalDataUser sharedClient].username=user.name;
-                     [GlobalDataUser sharedClient].facebookID=user.id;
-                     [GlobalDataUser sharedClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
-                     NSLog(@"image link: %@",[GlobalDataUser sharedClient].avatarImageURL);
+                     [GlobalDataUser sharedAccountClient].isLogin=YES;
+                     [GlobalDataUser sharedAccountClient].username=user.name;
+                     [GlobalDataUser sharedAccountClient].facebookID=user.id;
+                     [GlobalDataUser sharedAccountClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
+                     NSLog(@"image link: %@",[GlobalDataUser sharedAccountClient].avatarImageURL);
                      [_delegate userFacebookDidLogin];
                      [self dismissModalViewControllerAnimated:YES];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -164,7 +164,7 @@
                      NSLog(@"%@",error);
                      NSLog(@"%ld",(long)operation.response.statusCode);
                  }];
-                  */
+                  
              }
              
          }else{

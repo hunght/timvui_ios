@@ -11,7 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GlobalDataUser.h"
 #import "LoginVC.h"
-#import "AppDelegate.h"
+#import "TVAppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ECSlidingViewController.h"
 #import "MainVC.h"

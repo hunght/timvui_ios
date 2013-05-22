@@ -15,7 +15,7 @@
  */
 
 #import "AuthenCodeVC.h"
-#import "AppDelegate.h"
+#import "TVAppDelegate.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
 #import "Ultilities.h"

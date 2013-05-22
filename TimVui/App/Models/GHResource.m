@@ -1,6 +1,6 @@
 #import "GHResource.h"
 #import "TVNetworkingClient.h"
-#import "AppDelegate.h"
+#import "TVAppDelegate.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
 @interface GHResource ()
@@ -62,9 +62,8 @@
 }
 
 - (void)loadWithParams:(NSDictionary *)params start:(resourceStart)start success:(resourceSuccess)success failure:(resourceFailure)failure {
-	[self loadWithParams:params path:self.resourcePath method:kRequestMethodGet start:start success:success failure:failure];
+	[self loadWithParams:params path:self.resourcePath method:kRequestMethodPost start:start success:success failure:failure];
 }
-
 - (void)loadWithParams:(NSDictionary *)params path:(NSString *)path method:(NSString *)method start:(resourceStart)start success:(resourceSuccess)success failure:(resourceFailure)failure {
     if (self.isLoading) {
         if (success) [self.successBlocks addObject:[success copy]];
@@ -74,13 +73,13 @@
     }
 	self.error = nil;
 	self.resourceStatus = GHResourceStatusLoading;
-	[self.apiClient setDefaultHeader:@"Accept" value:self.resourceContentType];
 	NSMutableURLRequest *request = [self.apiClient requestWithMethod:method path:path parameters:params];
+    
 	request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
-    D3JLog(@"\n%@: Loading %@ started.\n\nHeaders:\n%@\n", self.class, path, request.allHTTPHeaderFields);
+
 	void (^onSuccess)() = (void (^)()) ^(AFHTTPRequestOperation *operation, id data) {
             NSDictionary *headers = operation.response.allHeaderFields;
-            D3JLog(@"\n%@: Loading %@ finished.\n\nHeaders:\n%@\n\nData:\n%@\n", self.class, path, headers, data);
+            //D3JLog(@"\n%@: Loading %@ finished.\n\n\nData:\n%@\n", self.class, path, data);
             [self setHeaderValues:headers];
             [self setValues:data];
             self.resourceStatus = GHResourceStatusLoaded;
@@ -92,7 +91,7 @@
         };
 	void (^onFailure)() = (void (^)()) ^(AFHTTPRequestOperation *operation, NSError *error) {
             NSDictionary *headers = operation.response.allHeaderFields;
-            DJLog(@"\n%@: Loading %@ failed.\n\nHeaders:\n%@\n\nError:\n%@\n", self.class, path, headers, error);
+            DJLog(@"\n%@: Loading %@ failed.\n\nparams:\n%@\n\nError:\n%@\n", self.class, path, params, error);
             [self setHeaderValues:headers];
             self.error = error;
             self.resourceStatus = GHResourceStatusFailed;

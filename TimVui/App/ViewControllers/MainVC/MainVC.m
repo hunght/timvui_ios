@@ -22,38 +22,14 @@
 
 #import "MainVC.h"
 #import "LoginVC.h"
-#import "Post.h"
-
 #import "PostTableViewCell.h"
-
 #import "ECSlidingViewController.h"
-@interface MainVC ()
-- (void)reload:(id)sender;
-@end
+#import "TVNetworkingClient.h"
 
 @implementation MainVC {
 @private
     NSArray *_posts;
-    
     __strong UIActivityIndicatorView *_activityIndicatorView;
-}
-
-#warning Potentially useless method implementation.
-- (void)reload:(id)sender {
-    [_activityIndicatorView startAnimating];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
-    
-    [Post globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
-        if (error) {
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-        } else {
-            _posts = posts;
-            [self.tableView reloadData];
-        }
-        
-        [_activityIndicatorView stopAnimating];
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }];
 }
 
 
@@ -61,13 +37,24 @@
 
 - (void)loadView {
     [super loadView];
-    
+    self.events=[[TVBranches alloc] initWithPath:@"http://anuong.hehe.vn/api/search/branch"];
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
+    NSDictionary *params = @{@"city_id": @2};
+    
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
+    [weakSelf.events loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView reloadData];
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+        });
+    }];    
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];    
+    [super viewDidLoad];
     self.tableView.rowHeight = 70.0f;
     //[self reload:nil];
 }
