@@ -46,7 +46,7 @@
 	self.name = [dict safeStringForKey:@"name"];
 	self.arrURLImages = [dict safeDictForKey:@"image"];
 	self.price_avg = [dict safeStringForKey:@"price_avg"];
-    self.coupon_count=[dict safeStringForKey:@"coupon_count"];
+    self.coupon_count=[dict safeIntegerForKey:@"coupon_count"];
     
     self.coupons = [[TVCoupons alloc] init];
 	[self.coupons   setValues:[[dict safeDictForKey:@"coupons"] allValues]];

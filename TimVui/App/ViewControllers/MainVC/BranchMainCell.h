@@ -22,12 +22,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class Post;
+@class TVBranch;
 
-@interface PostTableViewCell : UITableViewCell
+@interface BranchMainCell : UITableViewCell
 
-@property (nonatomic, strong) Post *post;
+@property (nonatomic, strong) TVBranch *branch;
+@property(nonatomic,strong)UIView *whiteView;
+@property (nonatomic,strong) UILabel *price_avg;
 
-+ (CGFloat)heightForCellWithPost:(Post *)post;
++ (CGFloat)heightForCellWithPost:(TVBranch *)branch;
 
 @end

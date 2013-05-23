@@ -22,13 +22,12 @@
 
 #import "MainVC.h"
 #import "LoginVC.h"
-#import "PostTableViewCell.h"
+#import "BranchMainCell.h"
 #import "ECSlidingViewController.h"
 #import "TVNetworkingClient.h"
 
 @implementation MainVC {
 @private
-    NSArray *_posts;
     __strong UIActivityIndicatorView *_activityIndicatorView;
 }
 
@@ -41,7 +40,7 @@
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
     NSDictionary *params = @{@"city_id": @2};
-    
+
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.events loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
@@ -50,13 +49,14 @@
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
         });
-    }];    
+    }];
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.rowHeight = 70.0f;
-    //[self reload:nil];
+    [self.tableView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
 }
 
 
@@ -69,17 +69,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [_posts count];
+    return [_events count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
-    PostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    BranchMainCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        cell = [[PostTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    cell.post = [_posts objectAtIndex:indexPath.row];
+    cell.branch = _events[indexPath.row];
     return cell;
 }
 
@@ -87,7 +87,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return [PostTableViewCell heightForCellWithPost:[_posts objectAtIndex:indexPath.row]];
+    return [BranchMainCell heightForCellWithPost:_events[indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
