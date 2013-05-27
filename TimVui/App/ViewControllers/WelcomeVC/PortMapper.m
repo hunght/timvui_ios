@@ -238,7 +238,7 @@ static void serviceCallback(CFSocketRef s,
                                          &portMapCallback, 
                                          self);
     if( _error ) {
-        Log(@"Error %i creating port mapping",_error);
+        Log(@"Error %i creating port mapping",(int)_error);
         return NO;
     }
     
