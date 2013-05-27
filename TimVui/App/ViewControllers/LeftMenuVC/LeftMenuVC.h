@@ -18,5 +18,5 @@
     
     NSIndexPath *_globalIndexPath;
 }
-
+- (void)openViewController:(UIViewController *)viewController;
 @end

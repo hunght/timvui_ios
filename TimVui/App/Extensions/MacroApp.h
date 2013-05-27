@@ -13,7 +13,7 @@ green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define   CITYOFFERS_DEBUG          0
-#define SharedAppDelegate ((AppDelegate*)[[UIApplication sharedApplication] delegate])
+#define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-37079754-1"
 
 //#define BASE_URL_STR @"http://cityoffers.vn:3001"

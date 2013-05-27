@@ -9,12 +9,12 @@
 #import "TVAppDelegate.h"
 #import "MainVC.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "LeftMenuVC.h"
+
 #import "ECSlidingViewController.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
 #import "GlobalDataUser.h"
-
+#import "WelcomeVC.h"
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -22,7 +22,7 @@
 
 @implementation TVAppDelegate
 @synthesize window = _window;
-@synthesize leftController = _leftController;
+@synthesize menuVC = _leftController;
 @synthesize tracker=_tracker;
 
 
@@ -116,11 +116,12 @@
 - (void)setupSlidingViewController {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.leftController = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
-    
+    self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
+    WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
     
     _slidingViewController=[[ECSlidingViewController alloc] init];
-    _slidingViewController.underLeftViewController = self.leftController;
+    _slidingViewController.topViewController=welcomeVC;
+    _slidingViewController.underLeftViewController = self.menuVC;
     _slidingViewController.anchorRightRevealAmount = 230;
     self.window.rootViewController = _slidingViewController;
 }

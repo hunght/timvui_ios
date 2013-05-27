@@ -143,7 +143,6 @@
             }
         }else
             [Ultilities showAlertWithMessage:@"Xin dien sdt chinh xac"];
-        
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {

@@ -17,11 +17,12 @@
 
 @end
 
-@interface PullToRevealMapVC : UITableViewController
+@interface PullToRevealMapVC : UITableViewController<UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) id <PullToRevealDelegate> pullToRevealDelegate;
 @property (nonatomic, assign) BOOL centerUserLocation;
 @property (nonatomic, retain) MKMapView *mapView;
+@property (nonatomic, retain) UIButton *btnSearchBar;
 
 @end
 

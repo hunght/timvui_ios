@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Marcus Kida. All rights reserved.
 //
 
-#define kTableViewContentInsetX     200.0f
+#define kTableViewContentInsetX     133.0f
 #define kAnimationDuration          0.5f
 
 #import "PullToRevealMapVC.h"
@@ -58,16 +58,48 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - Helper
 
-#pragma mark - Private methods
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    // test if our control subview is on-screen
+        if ([touch.view isEqual:_btnSearchBar]) {
+            // we touched our control surface
+            return NO; // ignore the touch
+        }
+
+    return YES; // handle the touch
+}
+
+//The event handling method
+- (void)handleSingleTapMapView:(UITapGestureRecognizer *)recognizer {
+//    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+    // Resize map to viewable size
+    if (mapView.frame.size.height==self.tableView.bounds.size.height)
+        return;
+    
+    [mapView setFrame:
+     CGRectMake(0, self.tableView.bounds.origin.y, self.tableView.bounds.size.width, self.tableView.bounds.size.height)
+     ];
+    [self.tableView setContentInset:UIEdgeInsetsMake(self.tableView.bounds.size.height,0,0,0)];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+}
+
+
+#pragma mark - Init methods
 - (void) initializeMapView
 {
+
     [self.tableView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetX,0,0,0)];
     mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, self.tableView.contentInset.top*-1, self.tableView.bounds.size.width, self.tableView.contentInset.top)];
     [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [mapView setShowsUserLocation:YES];
-    [mapView setUserInteractionEnabled:NO];
-    
+    [mapView setUserInteractionEnabled:YES];
+    //The setup code (in viewDidLoad in your view controller)
+    UITapGestureRecognizer *singleFingerTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(handleSingleTapMapView:)];
+    [singleFingerTap setDelegate:self];
+    [self.mapView addGestureRecognizer:singleFingerTap];
     if(centerUserLocation)
     {
         [self centerToUserLocation];
@@ -79,12 +111,17 @@
 
 - (void) initalizeToolbar
 {
-    toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -50, self.tableView.bounds.size.width, 50)];
-    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [toolbar setBackgroundColor:[UIColor redColor]];
-    [toolbar setAlpha:0.2];
+    _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(15, 9, 301, 42)];
+    [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];
+    [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
+    [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.mapView addSubview:_btnSearchBar];
     
-    [self.tableView insertSubview:toolbar aboveSubview:self.tableView];
+    toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -20, self.tableView.bounds.size.width, 20)];
+    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [toolbar setBackgroundColor:[UIColor clearColor]];
+    
+    //[self.tableView insertSubview:toolbar aboveSubview:self.tableView];
 }
 
 - (void) centerToUserLocation
@@ -110,7 +147,7 @@
     if(contentOffset < kTableViewContentInsetX*-1)
     {
         [self zoomMapToFitAnnotations];
-        [mapView setUserInteractionEnabled:YES];
+        //[mapView setUserInteractionEnabled:YES];
         
         [UIView animateWithDuration:kAnimationDuration
                          animations:^()
@@ -121,7 +158,7 @@
     }
     else if (contentOffset >= kTableViewContentInsetX*-1)
     {
-        [mapView setUserInteractionEnabled:NO];
+        //[mapView setUserInteractionEnabled:NO];
         
         [UIView animateWithDuration:kAnimationDuration
                          animations:^()
@@ -138,6 +175,7 @@
         
         [self.tableView scrollsToTop];
     }
+    NSLog(@"contentOffset:%f",contentOffset);
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
@@ -154,7 +192,7 @@
         [mapView setFrame:
          CGRectMake(0, self.tableView.contentInset.top*-1, self.tableView.bounds.size.width, self.tableView.contentInset.top)
          ];
-        [mapView setUserInteractionEnabled:NO];
+        //[mapView setUserInteractionEnabled:NO];
 
         [self.tableView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetX,0,0,0)];
         

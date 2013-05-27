@@ -41,8 +41,6 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
     
-    
-
     [_btnDone setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
     [_btnDone setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     _btnDone.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];

@@ -111,7 +111,7 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:.0];
+
     NSArray *fonts = [UIFont fontNamesForFamilyName:@"Arial"];
     
     for(NSString *string in fonts){

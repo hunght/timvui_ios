@@ -55,7 +55,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.rowHeight = 70.0f;
     [self.tableView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
 }
 
@@ -63,6 +62,11 @@
 - (void)viewDidUnload {
     _activityIndicatorView = nil;
     [super viewDidUnload];
+}
+
+#pragma mark - Actions
+-(void)searchBarButtonClicked{
+    
 }
 
 #pragma mark - UITableViewDataSource
