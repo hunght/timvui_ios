@@ -391,7 +391,8 @@ enum {
 - (void)openViewController:(UIViewController *)viewController {
     // unset the current navigation controller
 	UINavigationController *currentController = (UINavigationController *)self.slidingViewController.topViewController;
-	[currentController popToRootViewControllerAnimated:NO];
+    if ([currentController isKindOfClass:UINavigationController.class])
+        [currentController popToRootViewControllerAnimated:NO];
 	// prepare the new navigation controller
     UINavigationController *navController = nil;
     if ([viewController isKindOfClass:UINavigationController.class]) {

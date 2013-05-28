@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface WelcomeVC : UIViewController
-
+#import <CoreLocation/CoreLocation.h>
+@interface WelcomeVC : UIViewController<CLLocationManagerDelegate>
+@property (retain, nonatomic) CLLocationManager *locationManager;
 @end

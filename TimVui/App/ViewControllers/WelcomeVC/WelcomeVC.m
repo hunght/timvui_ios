@@ -11,14 +11,14 @@
 #import "TVAppDelegate.h"
 #import "MainVC.h"
 #import "TVNetworkingClient.h"
-#import "PortMapper.h"
+//#import "PortMapper.h"
 @interface WelcomeVC ()
 
 @end
 
 @implementation WelcomeVC
 
-
+#pragma mark Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,26 +29,42 @@
     return self;
 }
 
+
+#pragma mark CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [_locationManager stopMonitoringSignificantLocationChanges];
+    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:0.0];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [_locationManager stopMonitoringSignificantLocationChanges];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"",@"decimal_ip",
+                            nil];
+    [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:0.0];
+}
+
+
+#pragma mark ViewControllerDelegate
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    if([CLLocationManager locationServicesEnabled] &&
-       [CLLocationManager authorizationStatus] != kCLAuthorizationStatusDenied)
-    {
-        [SharedAppDelegate.menuVC openViewController:[[MainVC alloc] initWithStyle:UITableViewStylePlain]];
-    }else{
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [PortMapper findPublicAddress],@"decimal_ip",
-                                nil];
-        NSLog(@"%@",params);
-        [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-            NSLog(@"%@",JSON);
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-        }];
-    }
+    self.locationManager = [[CLLocationManager alloc] init];
+    [self.locationManager setDelegate:self];
+    [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+    [self.locationManager startMonitoringSignificantLocationChanges];
 }
 
 - (void)didReceiveMemoryWarning

@@ -25,7 +25,7 @@
 #import "BranchMainCell.h"
 #import "ECSlidingViewController.h"
 #import "TVNetworkingClient.h"
-
+#import "SearchVC.h"
 @implementation MainVC {
 @private
     __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -50,7 +50,6 @@
         dispatch_async(dispatch_get_main_queue(),^ {
         });
     }];
-    
 }
 
 - (void)viewDidLoad {
@@ -66,7 +65,8 @@
 
 #pragma mark - Actions
 -(void)searchBarButtonClicked{
-    
+    SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
