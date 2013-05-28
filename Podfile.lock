@@ -15,7 +15,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 0.10.x)
-  - ECSlidingViewController
+  - ECSlidingViewController (~> 0.10.0)
   - JSONKit (~> 1.4)
   - MWPhotoBrowser (~> 1.0.1)
   - Reachability (~> 3.0.0)
@@ -34,4 +34,4 @@ SPEC CHECKSUMS:
   TPKeyboardAvoiding: 7289409b17dc2193a3f324672283c542f17c1bb1
   VPPDropDown: 64bc8e77659d1fd7f3e692a6513247837edc675e
 
-COCOAPODS: 0.19.1
+COCOAPODS: 0.20.2
