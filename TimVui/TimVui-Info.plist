@@ -60,5 +60,9 @@
 	</array>
 	<key>UIDeviceCapabilities</key>
 	<string>location-services</string>
+	<key>UISupportedInterfaceOrientations - 2</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
 </dict>
 </plist>

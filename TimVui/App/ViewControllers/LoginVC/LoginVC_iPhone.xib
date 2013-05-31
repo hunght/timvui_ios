@@ -79,6 +79,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{11, 370}, {299, 30}}</string>
 								<reference key="NSSuperview" ref="1063690249"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:225</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -181,7 +182,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<string key="IBUIText"/>
-								<string key="IBUIPlaceholder">Số điện thoại/Email</string>
+								<string key="IBUIPlaceholder">Số điện thoại</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>

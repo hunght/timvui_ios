@@ -23,7 +23,8 @@
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import "ForgetPassVC.h"
-
+#import "TPKeyboardAvoidingScrollView.h"
+#import "GlobalDataUser.h"
 @implementation LoginVC
 @synthesize delegate=_delegate;
 
@@ -31,13 +32,14 @@
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if ([textField isEqual:_tfdUsername]) {
-        [_tfdUsername setKeyboardType:UIKeyboardTypeEmailAddress];
+        [_tfdUsername setKeyboardType:UIKeyboardTypePhonePad];
     }
 }
 
 #pragma mark Setup Methods
 
 - (void)setupFBLoginView {
+    
     if ([FBSession activeSession].isOpen) {
         NSLog(@"INFO: Ignoring app link because current session is open.");
         
@@ -68,7 +70,7 @@
         
         loginview.delegate = self;
         
-        [self.view addSubview:loginview];
+        [self.scrollView addSubview:loginview];
     }
     
 }
@@ -101,6 +103,7 @@
     [self setupViewLayout];
     
     [self setupFBLoginView];
+     [[FBSession activeSession] closeAndClearTokenInformation];
     
 }
 - (void)viewDidUnload
@@ -125,58 +128,66 @@
     }
 }
 
-#pragma mark Private Methods
+#pragma mark Helper
+
+-(void)hasPermissionAndGoGetThing{
+    if (FBSession.activeSession.isOpen) {
+        [[FBRequest requestForMe] startWithCompletionHandler:
+         ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
+             if (!error) {
+                 if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]) {
+                     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                             user.id,@"openid_id" ,
+                                             @"FACEBOOK",@"openid_service",
+                                             [user objectForKey:@"email"],@"email",
+                                             user.name,@"name",
+                                             user.birthday,@"dob",
+                                             nil];
+                     NSLog(@"%@",params	);
+                     // TODO turn on login via openid
+                     
+                     [[TVNetworkingClient sharedClient] postPath:@"user/loginOpenid" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                         NSLog(@"%@",JSON);
+                         NSLog(@"%ld",(long)operation.response.statusCode);
+                         [GlobalDataUser sharedAccountClient].isLogin=YES;
+                         [[GlobalDataUser sharedAccountClient].user setValues:JSON];
+                         [_delegate userFacebookDidLogin];
+                         [self dismissModalViewControllerAnimated:YES];
+                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                         // TODO with error
+                         NSLog(@"%@",error);
+                         NSLog(@"%ld",(long)operation.response.statusCode);
+                     }];
+                     
+                 }
+                 
+             }else{
+                 // TODO with error
+                 NSLog(@"%@",error);
+             }
+         }];
+    }
+}
 // Displays the user's name and profile picture so they are aware of the Facebook
 // identity they are logged in as.
 - (void)getInfoAccountFacebook{
-    [[FBRequest requestForMe] startWithCompletionHandler:
-     ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
-         if (!error) {
-             if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]) {
-                 NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         user.id,@"openid_id" ,
-                                         @"FACEBOOK",@"openid_service",
-                                         @"email",@"email",
-                                         user.name,@"name",
-                                         user.birthday,@"dob",
-                                         nil];
-                 [GlobalDataUser sharedAccountClient].isLogin=YES;
-                 [GlobalDataUser sharedAccountClient].username=user.name;
-                 [GlobalDataUser sharedAccountClient].facebookID=user.id;
-                 [GlobalDataUser sharedAccountClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
-                 NSLog(@"image link: %@",[GlobalDataUser sharedAccountClient].avatarImageURL);
-                 [_delegate userFacebookDidLogin];
-                 [self dismissModalViewControllerAnimated:YES];
-                 // TODO turn on login via openid
-                 
-                 [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/openidLogin" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                     NSLog(@"%@",JSON);
-                     NSLog(@"%ld",(long)operation.response.statusCode);
-                     [GlobalDataUser sharedAccountClient].isLogin=YES;
-                     [GlobalDataUser sharedAccountClient].username=user.name;
-                     [GlobalDataUser sharedAccountClient].facebookID=user.id;
-                     [GlobalDataUser sharedAccountClient].avatarImageURL = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", user.id];
-                     NSLog(@"image link: %@",[GlobalDataUser sharedAccountClient].avatarImageURL);
-                     [_delegate userFacebookDidLogin];
-                     [self dismissModalViewControllerAnimated:YES];
-                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     // TODO with error
-                     NSLog(@"%@",error);
-                     NSLog(@"%ld",(long)operation.response.statusCode);
-                 }];
-                  
-             }
-             
-         }else{
-             // TODO with error
-             NSLog(@"%@",error);
-         }
-     }];
+    [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"email"]
+                                          defaultAudience:FBSessionDefaultAudienceEveryone
+                                        completionHandler:^(FBSession *session, NSError *error) {
+                                            if (!error) {
+                                                // Now have the permission
+                                                [self hasPermissionAndGoGetThing];
+                                            } else {
+                                                // Facebook SDK * error handling *
+                                                // if the operation is not user cancelled
+                                                if (error.fberrorCategory != FBErrorCategoryUserCancelled) {
+                                                    NSLog(@"%@",error);
+                                                }
+                                            }                                        }];
+   
 }
 
--(void)backButtonClicked:(id)sender{
-    [self dismissModalViewControllerAnimated:YES];
-}
+
 
 - (void)postAPIUserLogin {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -184,10 +195,15 @@
                             _tfdPassword.text,@"password",
                             nil];
     
-    [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",operation.request.allHTTPHeaderFields);
+    [[TVNetworkingClient sharedClient] postPath:@"user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [GlobalDataUser sharedAccountClient].isLogin=YES;
+        [[GlobalDataUser sharedAccountClient].user setValues:[JSON valueForKey:@"data"]];
+        [GlobalDataUser sharedAccountClient].facebookID=[JSON valueForKey:@""];
+        if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]){
+            [_delegate userFacebookDidLogin];
+            [self dismissModalViewControllerAnimated:YES];
+        }
         
-        NSLog(@"%ld",(long)operation.response.statusCode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",operation.request.allHTTPHeaderFields);
         NSLog(@"%ld",(long)operation.response.statusCode);
@@ -198,7 +214,7 @@
 
 - (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
     // Upon login, transition to the main UI by pushing it onto the navigation stack.
-//    [self getInfoAccountFacebook];
+    [self getInfoAccountFacebook];
 }
 
 - (void)loginView:(FBLoginView *)loginView
@@ -249,18 +265,20 @@
     // It is important to always handle session closure because it can happen
     // externally; for example, if the current session's access token becomes
     // invalid. For this sample, we simply pop back to the landing page.
-        // The delay is for the edge case where a session is immediately closed after
-        // logging in and our navigation controller is still animating a push.
-        [self performSelector:@selector(logOut) withObject:nil afterDelay:.5];
+    // The delay is for the edge case where a session is immediately closed after
+    // logging in and our navigation controller is still animating a push.
+    [self performSelector:@selector(logOut) withObject:nil afterDelay:.5];
 }
 
 - (void)logOut {
-    // TODO  
+    // TODO
 }
 
 
 #pragma mark - IBAction
-
+-(void)backButtonClicked:(id)sender{
+    [self dismissModalViewControllerAnimated:YES];
+}
 - (IBAction)userLoginButtonClicked:(id)sender {
     if ([Ultilities validatePassword:_tfdPassword.text]) {
         
@@ -268,11 +286,11 @@
             //
             [self postAPIUserLogin];
         }else if ([Ultilities validatePhone:_tfdUsername.text]){
-
+            
             [self postAPIUserLogin];
         }else
-            [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
-    }    
+            [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin SĐT"];
+    }
 }
 
 

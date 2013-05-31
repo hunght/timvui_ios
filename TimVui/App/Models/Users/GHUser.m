@@ -29,9 +29,6 @@
 	self.resourcePath = [NSString stringWithFormat:kUserFormat, self.login];
 }
 
-- (void)setGravatarURL:(NSURL *)url {
-	_gravatarURL = url;
-}
 
 - (void)setValues:(id)dict {
 	NSString *login = [dict safeStringForKey:@"login"];
@@ -46,17 +43,16 @@
 	}
 	self.name = [dict safeStringForKey:@"name"];
 	self.email = email;
-	self.company = [dict safeStringForKey:@"company"];
-	self.location = [dict safeStringForKey:@"location"];
-	self.blogURL = [dict safeURLForKey:@"blog"];
-	self.htmlURL = [dict safeURLForKey:@"html_url"];
-	self.gravatarURL = [dict safeURLForKey:@"avatar_url"];
-	self.publicGistCount = (NSUInteger) [dict safeIntegerForKey:@"public_gists"];
-	self.privateGistCount = (NSUInteger) [dict safeIntegerForKey:@"private_gists"];
-	self.publicRepoCount = (NSUInteger) [dict safeIntegerForKey:@"public_repos"];
-	self.privateRepoCount = (NSUInteger) [dict safeIntegerForKey:@"total_private_repos"];
-	self.followersCount = (NSUInteger) [dict safeIntegerForKey:@"followers"];
-	self.followingCount = (NSUInteger) [dict safeIntegerForKey:@"following"];
+	self.userId = [dict safeStringForKey:@"id"];
+	self.dob = [dict safeStringForKey:@"dob"];
+	self.gender = [dict safeStringForKey:@"gender"];
+	self.avatar = [dict safeDictForKey:@"avatar"];
+	self.city_id = [dict safeStringForKey:@"avatar_url"];
+	self.district_id = [dict safeStringForKey:@"district_id"];
+	self.address = [dict safeStringForKey:@"address"];
+	self.addressFull = [dict safeStringForKey:@"public_repos"];
+	self.created = [dict safeDateForKey:@"created"];
+    
 }
 
 #pragma mark Associations
@@ -79,7 +75,6 @@
 
 
 #pragma mark User Following
-
 - (void)checkUserFollowing:(GHUser *)user success:(resourceSuccess)success failure:(resourceFailure)failure {
 	NSString *path = [NSString stringWithFormat:kUserFollowFormat, user.login];
 	GHResource *resource = [[GHResource alloc] initWithPath:path];
@@ -106,7 +101,4 @@
 		if (failure) failure(self, error);
 	}];
 }
-
-
-
 @end

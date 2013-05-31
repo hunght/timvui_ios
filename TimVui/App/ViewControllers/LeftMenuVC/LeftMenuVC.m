@@ -505,8 +505,8 @@ enum {
     }
     
     if ([GlobalDataUser sharedAccountClient].isLogin){
-        cell.textLabel.text = [GlobalDataUser sharedAccountClient].username;
-        [cell.imageView setImageWithURL:[GlobalDataUser sharedAccountClient].avatarImageURL placeholderImage:[UIImage imageNamed:@"user"]];
+        cell.textLabel.text = [GlobalDataUser sharedAccountClient].user.name;
+        [cell.imageView setImageWithURL:[[GlobalDataUser sharedAccountClient].user.avatar valueForKey:@"40"] placeholderImage:[UIImage imageNamed:@"user"]];
     }
         
     else{

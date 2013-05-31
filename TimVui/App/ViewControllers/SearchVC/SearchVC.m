@@ -24,14 +24,27 @@
 }
 
 #pragma mark IBAction
+- (IBAction)buttonBackgroundClicked:(id)sender {
+    [self.tfdSearch resignFirstResponder];
+}
+
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark UITextFieldDelegate
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    [self.btnBackgournd setEnabled:YES];
+    
 }
 
 #pragma mark ViewControllerDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tfdSearch setDelegate:self];
+    [self.btnBackgournd setEnabled:NO];
+    
     // Do any additional setup after loading the view from its nib.
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
@@ -50,6 +63,40 @@
     [_viewNavigation addSubview:imgView];
     [_viewNavigation addSubview:_tfdSearch];
     [self.navigationController.navigationBar  addSubview:_viewNavigation];
+    
+    //
+    self.view.backgroundColor = [UIColor colorWithRed:(236/255.0f) green:(236/255.0f) blue:(236/255.0f) alpha:1.0f];
+    
+    [_btnCity setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateHighlighted];
+    [_btnDistrict setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateHighlighted];
+    
+    [_btnPrice100 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
+    [_btnPrice100_200 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
+    [_btnPrice200_500 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
+    [_btnPrice500_1000 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
+    [_btnPrice1000 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
+    
+    [_btnSearch setBackgroundImage:[UIImage imageNamed:@"img_button_large_on"] forState:UIControlStateHighlighted];
+    [_btnReset setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_on"] forState:UIControlStateHighlighted];
+    
+    [_btnRestaurant setImage:[UIImage imageNamed:@"img_search_restaurant_off"] forState:UIControlStateHighlighted];
+    [_btnCafe setImage:[UIImage imageNamed:@"img_search_cafe_on"] forState:UIControlStateHighlighted];
+    [_btnCakeShop setImage:[UIImage imageNamed:@"img_search_cake_shop_on"] forState:UIControlStateHighlighted];
+    [_btnEatingShop setImage:[UIImage imageNamed:@"img_search_eating_shop_on"] forState:UIControlStateHighlighted];
+    [_btnKaraoke setImage:[UIImage imageNamed:@"img_search_karaoke_on"] forState:UIControlStateHighlighted];
+    [_btnBar setImage:[UIImage imageNamed:@"img_search_club_on"] forState:UIControlStateHighlighted];
+    
+    [_btnCity setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [_btnCity setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_btnDistrict setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [_btnDistrict setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    
+    [_btnPrice100 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [_btnPrice1000 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [_btnPrice100_200 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [_btnPrice200_500 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [_btnPrice500_1000 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -65,6 +112,27 @@
 
 - (void)viewDidUnload {
     
+    [self setBtnCity:nil];
+    [self setBtnDistrict:nil];
+    [self setBtnZone:nil];
+    [self setBtnCuisine:nil];
+    [self setBtnPurpose:nil];
+    [self setBtnUlitility:nil];
+    [self setBtnPrice100:nil];
+    [self setBtnPrice100_200:nil];
+    [self setBtnPrice200_500:nil];
+    [self setBtnPrice500_1000:nil];
+    [self setBtnPrice1000:nil];
+    [self setBtnRestaurant:nil];
+    [self setBtnCafe:nil];
+    [self setBtnKaraoke:nil];
+    [self setBtnEatingShop:nil];
+    [self setBtnCakeShop:nil];
+    [self setBtnBar:nil];
+    [self setBtnSearch:nil];
+    [self setBtnReset:nil];
+    [self setBtnBackgournd:nil];
     [super viewDidUnload];
 }
+
 @end

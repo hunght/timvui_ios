@@ -92,7 +92,7 @@
                             _tfdAuthenCode.text,@"password",
                             nil];
     
-    [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[TVNetworkingClient sharedClient] postPath:@"user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
         NSLog(@"%ld",(long)operation.response.statusCode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

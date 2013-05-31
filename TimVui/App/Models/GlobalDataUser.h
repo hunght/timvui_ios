@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
 #import <CoreLocation/CoreLocation.h>
+#import "GHUser.h"
 @interface GlobalDataUser : NSObject<CLLocationManagerDelegate>
 
 @property (retain, nonatomic) CLLocationManager *locationManager;
 @property (retain, nonatomic) CLLocation *userLocation;
 
 @property (assign, nonatomic) NSNumber *userID;
-@property (retain, nonatomic) NSString *username;
+@property (retain, nonatomic) GHUser *user;
 @property (retain, nonatomic) NSString *facebookID;
-@property (nonatomic, retain) NSURL *avatarImageURL;
 @property (assign, nonatomic) BOOL isLogin;
 + (GlobalDataUser *)sharedAccountClient;
 +(void)setGlocalDataUser:(NSDictionary *)attributes;

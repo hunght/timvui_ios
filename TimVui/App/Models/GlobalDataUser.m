@@ -11,9 +11,8 @@
 @implementation GlobalDataUser
 
 @synthesize userID = _userID;
-@synthesize username = _username;
+@synthesize user = _username;
 @synthesize facebookID = _facebookID;
-@synthesize avatarImageURL=_avatarImageURL;
 @synthesize isLogin=_isLogin;
 
 static GlobalDataUser *_sharedClient = nil;
@@ -36,9 +35,9 @@ static GlobalDataUser *_sharedClient = nil;
 -(void)savePersistenceAccount{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:self.userID forKey:kAccountUserID];
-	[defaults setValue:self.username forKey:kAccountUserName];
+	[defaults setValue:self.user forKey:kAccountUserName];
 	[defaults setValue:self.facebookID forKey:kAccountFacebookID];
-	[defaults setValue:self.avatarImageURL forKey:kAccountAvatarImageURL];
+	[defaults setValue:self.user.avatar forKey:kAccountAvatarImageURL];
     [defaults setValue:[NSNumber numberWithBool:self.isLogin] forKey:kAccountAvatarImageURL];
     [defaults synchronize];
 }
@@ -46,16 +45,16 @@ static GlobalDataUser *_sharedClient = nil;
 - (void)getPersistenceAccount {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.userID=[defaults valueForKey:kAccountUserID];
-	self.username=[defaults valueForKey:kAccountUserName];
+	self.user=[defaults valueForKey:kAccountUserName];
 	self.facebookID=[defaults valueForKey:kAccountFacebookID];
-	self.avatarImageURL=[defaults valueForKey:kAccountAvatarImageURL];
+	self.user.avatar=[defaults valueForKey:kAccountAvatarImageURL];
     self.isLogin=[[defaults valueForKey:kAccountAvatarImageURL] boolValue];
 }
 
 +(void)setGlocalDataUser:(NSDictionary *)attributes{
     _sharedClient.userID = [attributes valueForKeyPath:@"id"] ;
-    _sharedClient.username = [attributes valueForKeyPath:@"username"];
-    _sharedClient.avatarImageURL = [attributes valueForKeyPath:@"avatar_image.url"];
+    _sharedClient.user = [attributes valueForKeyPath:@"username"];
+    _sharedClient.user.avatar= [attributes valueForKeyPath:@"avatar_image.url"];
 }
 
 - (void)sendBackgroundLocationToServer:(CLLocation *)location {
@@ -82,7 +81,6 @@ static GlobalDataUser *_sharedClient = nil;
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
         isInBackground = YES;
     }
-    
     
     if(isInBackground) {
         [_locationManager startMonitoringSignificantLocationChanges];

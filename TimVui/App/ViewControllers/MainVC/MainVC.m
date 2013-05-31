@@ -36,7 +36,7 @@
 
 - (void)loadView {
     [super loadView];
-    self.events=[[TVBranches alloc] initWithPath:@"http://anuong.hehe.vn/api/search/branch"];
+    self.events=[[TVBranches alloc] initWithPath:@"search/branch"];
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
     NSDictionary *params = @{@"city_id": @2};

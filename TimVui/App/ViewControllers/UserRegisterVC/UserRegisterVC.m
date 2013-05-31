@@ -122,7 +122,7 @@
                             txfPassword.text,@"password",
                             nil];
     NSLog(@"%@",params);
-    [[TVNetworkingClient sharedClient] postPath:@"http://anuong.hehe.vn/api/user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[TVNetworkingClient sharedClient] postPath:@"user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
         NSLog(@"%ld",(long)operation.response.statusCode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
