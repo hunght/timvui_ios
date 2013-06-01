@@ -11,26 +11,77 @@
 
 #import "PullToRevealMapVC.h"
 #import "GlobalDataUser.h"
-@interface PullToRevealMapVC () <UIScrollViewDelegate, UITextFieldDelegate, MKMapViewDelegate>
+
+
+@interface PullToRevealMapVC () <UIScrollViewDelegate, UITextFieldDelegate>
 {
     @private
     UIView *toolbar;
     BOOL scrollViewIsDraggedDownwards;
     double lastDragOffset;
-    
+    BOOL firstLocationUpdate_;
     @public
-    MKMapView *mapView;
-    BOOL centerUserLocation;
 }
 @end
 
 @implementation PullToRevealMapVC
-
 @synthesize pullToRevealDelegate;
-@synthesize centerUserLocation;
-@synthesize mapView;
+@synthesize mapView=mapView_;
 
+#pragma mark - Init methods
+- (void) initializeMapView
+{
+    // Create a GMSCameraPosition that tells the map to display the
+    // coordinate -33.86,151.20 at zoom level 6.
+    CLLocationCoordinate2D userLocation=[GlobalDataUser sharedAccountClient].userLocation.coordinate;
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:userLocation.latitude
+                                                            longitude:userLocation.longitude
+                                                                 zoom:6];
+    mapView_ = [GMSMapView mapWithFrame:CGRectMake(0, self.tableView.contentInset.top*-1, self.tableView.bounds.size.width, self.tableView.contentInset.top) camera:camera];
+    mapView_.myLocationEnabled = YES;
+    
+    mapView_.settings.compassButton = YES;
+    mapView_.settings.myLocationButton = YES;
+    
+    // Listen to the myLocation property of GMSMapView.
+    [mapView_ addObserver:self
+               forKeyPath:@"myLocation"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+    
+    // Ask for My Location data after the map has already been added to the UI.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        mapView_.myLocationEnabled = YES;
+    });
+    
+    
+    [self.tableView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetX,0,0,0)];
+    [mapView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    
+    //The setup code (in viewDidLoad in your view controller)
+    UITapGestureRecognizer *singleFingerTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(handleSingleTapMapView:)];
+    [singleFingerTap setDelegate:self];
+    [self.mapView addGestureRecognizer:singleFingerTap];
+    
+    [self.tableView insertSubview:mapView_ aboveSubview:self.tableView];
+}
 
+- (void) initalizeToolbar
+{
+    _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(15, 9, 301, 42)];
+    [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];
+    [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
+    [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.mapView addSubview:_btnSearchBar];
+    
+    toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -20, self.tableView.bounds.size.width, 20)];
+    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [toolbar setBackgroundColor:[UIColor clearColor]];
+    
+    //[self.tableView insertSubview:toolbar aboveSubview:self.tableView];
+}
 #pragma mark - ViewControllerDelegate
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -53,7 +104,6 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self displayMapViewAnnotationsForTableViewCells];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,8 +111,29 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark - Helper
+- (void)dealloc {
+    [mapView_ removeObserver:self
+                  forKeyPath:@"myLocation"
+                     context:NULL];
+}
 
+#pragma mark - KVO updates
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    if (!firstLocationUpdate_) {
+        // If the first location update has not yet been recieved, then jump to that
+        // location.
+        firstLocationUpdate_ = YES;
+        CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
+        mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                         zoom:14];
+    }
+}
+
+#pragma mark - Helper
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     // test if our control subview is on-screen
         if ([touch.view isEqual:_btnSearchBar]) {
@@ -75,79 +146,17 @@
 
 //The event handling method
 - (void)handleSingleTapMapView:(UITapGestureRecognizer *)recognizer {
-//    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
+    //    CGPoint location = [recognizer locationInView:[recognizer.view superview]];
     // Resize map to viewable size
-    if (mapView.frame.size.height==self.tableView.bounds.size.height)
+    if (mapView_.frame.size.height==self.tableView.bounds.size.height)
         return;
     
-    [mapView setFrame:
+    [mapView_ setFrame:
      CGRectMake(0, self.tableView.bounds.origin.y, self.tableView.bounds.size.width, self.tableView.bounds.size.height)
      ];
     [self.tableView setContentInset:UIEdgeInsetsMake(self.tableView.bounds.size.height,0,0,0)];
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
-
-- (void) centerToUserLocation
-{
-    [mapView setCenterCoordinate:mapView.userLocation.coordinate animated:YES];
-}
-
-- (void) zoomToUserLocation
-{
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = 21.009550;
-    newRegion.center.longitude = 105.802727;
-    //  newRegion.center=[GlobalDataUser sharedAccountClient].userLocation.coordinate;
-    //    mapView.userLocation.coordinate=newRegion.center;
-    
-    
-    newRegion.span.latitudeDelta = 0.012872*7;
-    newRegion.span.longitudeDelta = 0.009863*7;
-    [self.mapView setRegion:newRegion animated:NO];
-}
-
-#pragma mark - Init methods
-- (void) initializeMapView
-{
-
-    [self.tableView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetX,0,0,0)];
-    mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, self.tableView.contentInset.top*-1, self.tableView.bounds.size.width, self.tableView.contentInset.top)];
-    [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [mapView setShowsUserLocation:YES];
-    self.mapView.showsUserLocation = YES;
-    [mapView setUserInteractionEnabled:YES];
-    [mapView setDelegate:self];
-    //The setup code (in viewDidLoad in your view controller)
-    UITapGestureRecognizer *singleFingerTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(handleSingleTapMapView:)];
-    [singleFingerTap setDelegate:self];
-    [self.mapView addGestureRecognizer:singleFingerTap];
-    
-    centerUserLocation=YES;
-    if(centerUserLocation)
-    {
-        [self centerToUserLocation];
-        [self zoomToUserLocation];
-    }
-    [self.tableView insertSubview:mapView aboveSubview:self.tableView];
-}
-
-- (void) initalizeToolbar
-{
-    _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(15, 9, 301, 42)];
-    [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];
-    [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
-    [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.mapView addSubview:_btnSearchBar];
-    
-    toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -20, self.tableView.bounds.size.width, 20)];
-    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [toolbar setBackgroundColor:[UIColor clearColor]];
-    
-    //[self.tableView insertSubview:toolbar aboveSubview:self.tableView];
-}
-
 
 
 
@@ -180,15 +189,9 @@
 
          }];
         
-        if(centerUserLocation)
-        {
-            [self centerToUserLocation];
-            [self zoomToUserLocation];
-        }
-        
+
         [self.tableView scrollsToTop];
     }
-    NSLog(@"contentOffset:%f",contentOffset);
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
@@ -202,18 +205,13 @@
 
     if (!scrollViewIsDraggedDownwards)
     {
-        [mapView setFrame:
+        [mapView_ setFrame:
          CGRectMake(0, self.tableView.contentInset.top*-1, self.tableView.bounds.size.width, self.tableView.contentInset.top)
          ];
         //[mapView setUserInteractionEnabled:NO];
 
         [self.tableView setContentInset:UIEdgeInsetsMake(kTableViewContentInsetX,0,0,0)];
-        
-        if(centerUserLocation)
-        {
-            [self centerToUserLocation];
-            [self zoomToUserLocation];
-        }
+
         
         [self.tableView scrollsToTop];
     }
@@ -231,56 +229,21 @@
         [self.tableView insertSubview:toolbar aboveSubview:self.tableView];
         
         // Resize map to viewable size
-        [mapView setFrame:
+        [mapView_ setFrame:
          CGRectMake(0, self.tableView.bounds.origin.y, self.tableView.bounds.size.width, contentOffset*-1)
          ];
         [self zoomMapToFitAnnotations];
     }
     
-    if(centerUserLocation)
-    {
-        [self centerToUserLocation];
-        [self zoomToUserLocation];
-        [self displayMapViewAnnotationsForTableViewCells];
-    }
+
 }
 
 
 
-
-#pragma mark - MKMapview Delegate
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    [self centerUserLocation];
-}
-
-- (void) displayMapViewAnnotationsForTableViewCells
-{
-    [mapView removeAnnotations:mapView.annotations];
-    for (int i = 0; i < [self.tableView numberOfRowsInSection:0]; i++)
-    {
-        
-    }
-}
 
 - (void) zoomMapToFitAnnotations
 {
-    MKMapRect zoomRect = MKMapRectNull;
-    for (id <MKAnnotation> annotation in mapView.annotations)
-    {
-        MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
-        MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0.1, 0.1);
-        if (MKMapRectIsNull(zoomRect)) {
-            zoomRect = pointRect;
-        } else {
-            zoomRect = MKMapRectUnion(zoomRect, pointRect);
-        }
-    }
-    [mapView setVisibleMapRect:zoomRect animated:NO];
+
 }
 
-- (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView
-{
-    [self displayMapViewAnnotationsForTableViewCells];
-}
 @end

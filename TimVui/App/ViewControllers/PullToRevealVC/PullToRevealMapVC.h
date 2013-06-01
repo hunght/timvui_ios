@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MapKit/MapKit.h>
-
+#import <GoogleMaps/GoogleMaps.h>
 
 @protocol PullToRevealDelegate <NSObject>
 
@@ -17,11 +16,10 @@
 
 @end
 
-@interface PullToRevealMapVC : UITableViewController<UIGestureRecognizerDelegate,MKMapViewDelegate>
+@interface PullToRevealMapVC : UITableViewController<UIGestureRecognizerDelegate>
 
 @property (nonatomic, assign) id <PullToRevealDelegate> pullToRevealDelegate;
-@property (nonatomic, assign) BOOL centerUserLocation;
-@property (nonatomic, retain) MKMapView *mapView;
+@property (nonatomic, retain) GMSMapView *mapView;
 @property (nonatomic, retain) UIButton *btnSearchBar;
 
 @end

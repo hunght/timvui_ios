@@ -11,9 +11,8 @@
 #import "AFNetworkActivityIndicatorManager.h"
 
 #import "ECSlidingViewController.h"
-#import "UINavigationBar+JTDropShadow.h"
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
-#import "GlobalDataUser.h"
+#import <GoogleMaps/GoogleMaps.h>
 #import "WelcomeVC.h"
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
@@ -131,6 +130,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
+
     [self setupGoogleAnalytics];
     [self setupAFNetworking];
     [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];

@@ -33,6 +33,8 @@
 #pragma mark CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    [GlobalDataUser sharedAccountClient].userLocation=newLocation;
+    //NSLog(@"%f",newLocation.coordinate.latitude);
     [_locationManager stopMonitoringSignificantLocationChanges];
     [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:0.0];
 }

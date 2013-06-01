@@ -1,4 +1,5 @@
 PODS:
+  - ADClusterMapView (0.0.1)
   - AFNetworking (0.10.1)
   - ECSlidingViewController (0.10.0)
   - JSONKit (1.5pre)
@@ -14,6 +15,7 @@ PODS:
   - VPPDropDown (0.3.0)
 
 DEPENDENCIES:
+  - ADClusterMapView (~> 0.0.1)
   - AFNetworking (~> 0.10.x)
   - ECSlidingViewController (~> 0.10.0)
   - JSONKit (~> 1.4)
@@ -24,6 +26,7 @@ DEPENDENCIES:
   - VPPDropDown (~> 0.3.0)
 
 SPEC CHECKSUMS:
+  ADClusterMapView: 77b052dcae47ee8ffd4ae337e2e298fbb5d0fb0a
   AFNetworking: df1042246c17373b96f12f04bf5c6e1c25992cd4
   ECSlidingViewController: fc9a9a6564d4a64c0d8c7cf5583d2b9a469ecd04
   JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
