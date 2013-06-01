@@ -10,7 +10,7 @@
 #define kAnimationDuration          0.5f
 
 #import "PullToRevealMapVC.h"
-
+#import "GlobalDataUser.h"
 @interface PullToRevealMapVC () <UIScrollViewDelegate, UITextFieldDelegate, MKMapViewDelegate>
 {
     @private
@@ -30,6 +30,8 @@
 @synthesize centerUserLocation;
 @synthesize mapView;
 
+
+#pragma mark - ViewControllerDelegate
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -45,6 +47,7 @@
 
     [self initializeMapView];
     [self initalizeToolbar];
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -84,6 +87,24 @@
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
+- (void) centerToUserLocation
+{
+    [mapView setCenterCoordinate:mapView.userLocation.coordinate animated:YES];
+}
+
+- (void) zoomToUserLocation
+{
+    MKCoordinateRegion newRegion;
+    newRegion.center.latitude = 21.009550;
+    newRegion.center.longitude = 105.802727;
+    //  newRegion.center=[GlobalDataUser sharedAccountClient].userLocation.coordinate;
+    //    mapView.userLocation.coordinate=newRegion.center;
+    
+    
+    newRegion.span.latitudeDelta = 0.012872*7;
+    newRegion.span.longitudeDelta = 0.009863*7;
+    [self.mapView setRegion:newRegion animated:NO];
+}
 
 #pragma mark - Init methods
 - (void) initializeMapView
@@ -93,19 +114,22 @@
     mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, self.tableView.contentInset.top*-1, self.tableView.bounds.size.width, self.tableView.contentInset.top)];
     [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [mapView setShowsUserLocation:YES];
+    self.mapView.showsUserLocation = YES;
     [mapView setUserInteractionEnabled:YES];
+    [mapView setDelegate:self];
     //The setup code (in viewDidLoad in your view controller)
     UITapGestureRecognizer *singleFingerTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(handleSingleTapMapView:)];
     [singleFingerTap setDelegate:self];
     [self.mapView addGestureRecognizer:singleFingerTap];
+    
+    centerUserLocation=YES;
     if(centerUserLocation)
     {
         [self centerToUserLocation];
         [self zoomToUserLocation];
     }
-        
     [self.tableView insertSubview:mapView aboveSubview:self.tableView];
 }
 
@@ -124,19 +148,8 @@
     //[self.tableView insertSubview:toolbar aboveSubview:self.tableView];
 }
 
-- (void) centerToUserLocation
-{
-    [mapView setCenterCoordinate:mapView.userLocation.coordinate animated:YES];
-}
 
-- (void) zoomToUserLocation
-{
-    MKCoordinateRegion mapRegion;
-    mapRegion.center = mapView.userLocation.coordinate;
-    mapRegion.span.latitudeDelta = 0.2;
-    mapRegion.span.longitudeDelta = 0.2;
-    [mapView setRegion:mapRegion animated: YES];
-}
+
 
 #pragma mark - ScrollView Delegate
 - (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -235,7 +248,12 @@
 
 
 
-#pragma mark - MapView
+#pragma mark - MKMapview Delegate
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    [self centerUserLocation];
+}
+
 - (void) displayMapViewAnnotationsForTableViewCells
 {
     [mapView removeAnnotations:mapView.annotations];

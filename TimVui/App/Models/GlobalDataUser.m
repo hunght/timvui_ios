@@ -27,6 +27,7 @@ static GlobalDataUser *_sharedClient = nil;
         [_sharedClient.locationManager setDelegate:_sharedClient];
         [_sharedClient.locationManager setDistanceFilter:kCLDistanceFilterNone];
         [_sharedClient.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        _sharedClient.user=[[GHUser alloc] init];
     });
     
     return _sharedClient;

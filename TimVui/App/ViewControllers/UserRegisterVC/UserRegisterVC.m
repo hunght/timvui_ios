@@ -124,9 +124,8 @@
     NSLog(@"%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
-        NSLog(@"%ld",(long)operation.response.statusCode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%ld",(long)operation.response.statusCode);
+        NSLog(@"%@",operation.responseString);
     }];
 }
 

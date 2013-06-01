@@ -150,7 +150,7 @@
                          NSLog(@"%@",JSON);
                          NSLog(@"%ld",(long)operation.response.statusCode);
                          [GlobalDataUser sharedAccountClient].isLogin=YES;
-                         [[GlobalDataUser sharedAccountClient].user setValues:JSON];
+                         [[GlobalDataUser sharedAccountClient].user setValues:[JSON valueForKey:@"data"]];
                          [_delegate userFacebookDidLogin];
                          [self dismissModalViewControllerAnimated:YES];
                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -205,7 +205,6 @@
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",operation.request.allHTTPHeaderFields);
         NSLog(@"%ld",(long)operation.response.statusCode);
     }];
 }

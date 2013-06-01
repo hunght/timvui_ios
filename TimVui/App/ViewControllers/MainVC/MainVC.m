@@ -26,24 +26,26 @@
 #import "ECSlidingViewController.h"
 #import "TVNetworkingClient.h"
 #import "SearchVC.h"
+
 @implementation MainVC {
 @private
     __strong UIActivityIndicatorView *_activityIndicatorView;
 }
 
 
-#pragma mark - UIViewController
+#pragma mark - ViewControllerDelegate
 
 - (void)loadView {
     [super loadView];
     self.events=[[TVBranches alloc] initWithPath:@"search/branch"];
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
-    NSDictionary *params = @{@"city_id": @2};
+    NSDictionary *params = @{@"city_alias": @"ha-noi"};
 
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.events loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            
             [weakSelf.tableView reloadData];
         });
     } failure:^(GHResource *instance, NSError *error) {
@@ -62,6 +64,8 @@
     _activityIndicatorView = nil;
     [super viewDidUnload];
 }
+#pragma mark - Helper
+
 
 #pragma mark - Actions
 -(void)searchBarButtonClicked{

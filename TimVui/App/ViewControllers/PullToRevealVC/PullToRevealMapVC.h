@@ -17,7 +17,7 @@
 
 @end
 
-@interface PullToRevealMapVC : UITableViewController<UIGestureRecognizerDelegate>
+@interface PullToRevealMapVC : UITableViewController<UIGestureRecognizerDelegate,MKMapViewDelegate>
 
 @property (nonatomic, assign) id <PullToRevealDelegate> pullToRevealDelegate;
 @property (nonatomic, assign) BOOL centerUserLocation;

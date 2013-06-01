@@ -79,9 +79,9 @@
 
 	void (^onSuccess)() = (void (^)()) ^(AFHTTPRequestOperation *operation, id data) {
             NSDictionary *headers = operation.response.allHeaderFields;
-            //D3JLog(@"\n%@: Loading %@ finished.\n\n\nData:\n%@\n", self.class, path, data);
+            DJLog(@"\n%@: Loading %@ finished.\n\n\n", self.class, path);
             [self setHeaderValues:headers];
-            [self setValues:data];
+            [self setValues:[data valueForKey:@"data"]];
             self.resourceStatus = GHResourceStatusLoaded;
             if (success) success(self, data);
             for (void (^block)() in self.successBlocks) {

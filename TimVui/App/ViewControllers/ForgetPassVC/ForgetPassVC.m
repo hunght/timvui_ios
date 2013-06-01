@@ -34,47 +34,7 @@
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
-    _lblNoticeText.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
-    
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
-    
-    
-
-    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
-    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    _btnContinue.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
-    
-    // Setup View and Table View
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-    
-    
-}
-
-
-
-#pragma mark UITextFieldDelegate
-//implementation
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:_tfdPhoneNumber]) {
-        [_tfdPhoneNumber setKeyboardType:UIKeyboardTypePhonePad];
-    }
-}
-
-
-
-
-#pragma mark Template generated code
+#pragma mark ViewControllerDelegaet
 
 - (void)viewDidUnload
 {
@@ -95,8 +55,42 @@
     }
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+    _lblNoticeText.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
+    
+    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
+    [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    _btnContinue.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+    
+    // Setup View and Table View
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+}
 
 
+
+#pragma mark UITextFieldDelegate
+//implementation
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:_tfdPhoneNumber]) {
+        [_tfdPhoneNumber setKeyboardType:UIKeyboardTypePhonePad];
+    }
+}
+
+
+
+
+#pragma mark Helper
 - (void)postAPIUserLogin {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _tfdPhoneNumber.text,@"password",
@@ -111,9 +105,6 @@
 }
 
 #pragma mark - IBAction
-
-
-
 
 - (IBAction)contiuneButtonClicked:(id)sender {
         
@@ -132,10 +123,5 @@
     }
     [self.navigationController pushViewController:viewController animated:YES];
 }
-
-
-
-
-
 
 @end

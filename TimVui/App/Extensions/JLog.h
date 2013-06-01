@@ -35,6 +35,7 @@ A = MAX;				\
 #define JLog(firstarg, ...)				NSLog(@"%@",JLine(firstarg , ##__VA_ARGS__ ))
 #define JLogC(firstarg, ...)			NSLog(@"%@",JLineC(firstarg ,  ##__VA_ARGS__ ))
 
+#define DEBUG 1
 #define DJLog		if(DEBUG)JLog
 #define DJLogC		if(DEBUG)JLogC
 
