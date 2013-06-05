@@ -26,12 +26,13 @@
 #import "ECSlidingViewController.h"
 #import "TVNetworkingClient.h"
 #import "SearchVC.h"
-
+#import "BranchProfileVC.h"
 
 @implementation MainVC {
 @private
     __strong UIActivityIndicatorView *_activityIndicatorView;
 }
+
 
 
 #pragma mark - ViewControllerDelegate
@@ -48,6 +49,7 @@
         dispatch_async(dispatch_get_main_queue(),^ {
             
             [weakSelf.tableView reloadData];
+            [weakSelf showBranchOnMap];
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
@@ -65,10 +67,17 @@
     _activityIndicatorView = nil;
     [super viewDidUnload];
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
 #pragma mark - Helper
 
 
 #pragma mark - Actions
+
 -(void)searchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [self.navigationController pushViewController:searchVC animated:YES];
@@ -77,8 +86,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return [_events count];
+    return [self.events count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -88,7 +96,7 @@
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    cell.branch = _events[indexPath.row];
+    cell.branch = self.events[indexPath.row];
     return cell;
 }
 
@@ -96,10 +104,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return [BranchMainCell heightForCellWithPost:_events[indexPath.row]];
+    return [BranchMainCell heightForCellWithPost:self.events[indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BranchProfileVC* brachProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+    [self.navigationController pushViewController:brachProfileVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-
+#import <CoreLocation/CoreLocation.h>
 
 @class GHUser, GHOrganization,TVCoupons;
 
@@ -12,7 +12,7 @@
 @property(nonatomic,strong)TVCoupons *coupons;
 @property(nonatomic,strong)NSString *special_content;
 @property(nonatomic,strong)NSString *address_full;
-@property(nonatomic,strong)NSString *latlng;
+@property(nonatomic,assign)CLLocationCoordinate2D latlng;
 
 
 @property(nonatomic,readonly)BOOL isCommentEvent;

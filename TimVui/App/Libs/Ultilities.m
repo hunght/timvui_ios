@@ -82,6 +82,17 @@ static bool isRetinaYES =NO;
     }
 }
 
+
++ (NSURL *)getThumbImageOfCoverBranch:(NSDictionary *)arrURLs
+{
+    if (!isRetinaYES)
+        return [NSURL URLWithString:[arrURLs valueForKey:@"40"]];
+    else
+        return [NSURL URLWithString:[arrURLs valueForKey:@"80"]];
+}
+
+
+
 + (NSURL *)getImageOfCoverEntre:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType
 {
     [self settingURLString:&usrAvatar sizeType:sizeType];

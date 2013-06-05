@@ -21,9 +21,9 @@
 // THE SOFTWARE.
 
 #import "BranchMainCell.h"
-#import "UIImageView+AFNetworking.h"
 #import "TVBranch.h"
 #import <QuartzCore/QuartzCore.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 @implementation BranchMainCell {
 @private
     __strong TVBranch *_branch;

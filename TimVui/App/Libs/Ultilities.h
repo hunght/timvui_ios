@@ -34,4 +34,7 @@ typedef enum
 + (BOOL)validatePassword:(NSString*)pass withConfirmPass:(NSString*)confirmPass;
 +(BOOL)checkPhoneNumber:(NSString *)aString;
 +(BOOL)validateInputString:(NSString*)string withMessage:(NSString*)strMess;
+
+
++ (NSURL *)getThumbImageOfCoverBranch:(NSDictionary *)arrURLs;
 @end

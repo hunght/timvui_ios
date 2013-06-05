@@ -15,6 +15,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ECSlidingViewController.h"
 #import "MainVC.h"
+#import "MyNavigationController.h"
 #define kNumberOfSections 3
 
 enum {
@@ -313,7 +314,7 @@ enum {
             } else {
                 loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
             }
-            UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+            UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:loginVC];
             
             [self presentModalViewController:navController animated:YES];
             [loginVC setDelegate:self];
@@ -398,7 +399,7 @@ enum {
     if ([viewController isKindOfClass:UINavigationController.class]) {
         navController = (UINavigationController *)viewController;
     } else {
-        navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        navController = [[MyNavigationController alloc] initWithRootViewController:viewController];
     }
     [navController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
 	navController.view.layer.shadowOpacity = 0.8f;

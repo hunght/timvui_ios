@@ -43,6 +43,23 @@
 	id value = [self valueForKey:key defaultsTo:@""];
 	return ([value isKindOfClass:NSString.class]) ? value : @"";
 }
+- (CLLocationCoordinate2D )safeLocaitonForKey:(NSString *)key {
+    CLLocationCoordinate2D location;
+	id value = [self valueForKey:key defaultsTo:@""];
+	NSString*latlng= ([value isKindOfClass:NSString.class]) ? value : @"";
+    if ([value isKindOfClass:NSString.class]) {
+        NSArray *listItems = [latlng componentsSeparatedByString:@","];
+        if (listItems.count==2) {
+            NSString* lat= listItems[0];
+            NSString*lng= listItems[1];
+            
+            location.latitude=lat.doubleValue;
+            location.longitude=lng.doubleValue;
+            
+        }
+    }
+    return location;
+}
 
 - (NSString *)safeStringForKeyPath:(NSString *)keyPath {
 	id value = [self valueForKeyPath:keyPath defaultsTo:@""];

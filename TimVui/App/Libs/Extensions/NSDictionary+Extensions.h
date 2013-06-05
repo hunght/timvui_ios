@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-
+#import <CoreLocation/CoreLocation.h>
 
 @interface NSDictionary (Extensions)
 - (id)valueForKey:(NSString *)key defaultsTo:(id)defaultValue;
@@ -19,4 +19,5 @@
 - (NSDate *)safeDateForKeyPath:(NSString *)keyPath;
 - (NSURL *)safeURLForKey:(NSString *)key;
 - (NSURL *)safeURLForKeyPath:(NSString *)keyPath;
+- (CLLocationCoordinate2D )safeLocaitonForKey:(NSString *)key;
 @end

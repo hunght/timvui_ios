@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
-
+#import "TVBranch.h"
+#import "TVBranches.h"
 @protocol PullToRevealDelegate <NSObject>
 
 @optional
@@ -16,12 +17,13 @@
 
 @end
 
-@interface PullToRevealMapVC : UITableViewController<UIGestureRecognizerDelegate>
+@interface PullToRevealMapVC : UITableViewController<UIGestureRecognizerDelegate,GMSMapViewDelegate>
 
 @property (nonatomic, assign) id <PullToRevealDelegate> pullToRevealDelegate;
 @property (nonatomic, retain) GMSMapView *mapView;
 @property (nonatomic, retain) UIButton *btnSearchBar;
-
+@property(nonatomic,strong)TVBranches *events;
+-(void)showBranchOnMap;
 @end
 
 
