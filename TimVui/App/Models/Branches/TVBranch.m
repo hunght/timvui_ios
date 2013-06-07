@@ -55,6 +55,33 @@
 	self.special_content = [dict safeStringForKey:@"special_content"];
 	self.address_full = [dict safeStringForKey:@"address_full"];
 	self.latlng = [dict safeLocaitonForKey:@"latlng"];
+    
+    self.image_count=[dict safeIntegerForKey:@"image_count"];
+    self.images = [dict safeArrayForKey:@"images"];
+    self.phone = [dict safeStringForKey:@"phone"];
+    self.cats = [dict safeDictForKey:@"cats"];
+    self.district = [dict safeDictForKey:@"district"];
+        
+    self.space = [dict safeStringForKey:@"space"];
+    self.time_open = [dict safeStringForKey:@"time_open"];
+    
+    self.waiting_start = [dict safeStringForKey:@"waiting_start"];
+    self.waiting_end = [dict safeStringForKey:@"waiting_end"];
+    self.holiday = [dict safeStringForKey:@"holiday"];
+    self.year = [dict safeStringForKey:@"year"];
+    
+    self.adaptive = [[[dict valueForKey:@"params"] valueForKey:@"thich-hop"] safeDictForKey:@"params"];
+    self.styleFoody = [[[dict valueForKey:@"params"] valueForKey:@"am-thuc"] safeDictForKey:@"params"];
+    self.services = [[[dict valueForKey:@"params"] valueForKey:@"tien-ich"] safeDictForKey:@"params"];
+    self.purpose = [[[dict valueForKey:@"params"] valueForKey:@"muc-dich"] safeDictForKey:@"params"];
+    self.decoration = [[[dict valueForKey:@"params"] valueForKey:@"khong-gian"] safeDictForKey:@"params"];
+    self.cuisine = [[[dict valueForKey:@"params"] valueForKey:@"mon-an"] safeDictForKey:@"params"];
+    
+    self.space = [dict safeStringForKey:@"space"];
+    self.direction = [dict safeStringForKey:@"direction"];
+    self.public_locations = [dict safeDictForKey:@"public_locations"];
+    
+    self.time_close =[dict safeStringForKey:@"time_close"];
 }
 
 

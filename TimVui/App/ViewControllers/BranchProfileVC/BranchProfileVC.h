@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TVBranch.h"
 @interface BranchProfileVC : UIViewController
+@property (retain, nonatomic) TVBranch *branch;
+@property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imgBranchCover;
 
 @end

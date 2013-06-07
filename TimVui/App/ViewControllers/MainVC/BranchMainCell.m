@@ -24,6 +24,7 @@
 #import "TVBranch.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "Ultilities.h"
 @implementation BranchMainCell {
 @private
     __strong TVBranch *_branch;
@@ -101,8 +102,7 @@
     self.textLabel.text=_branch.name;
     self.detailTextLabel.text=_branch.address_full;
     self.price_avg.text=_branch.price_avg;
-    [self.imageView setImageWithURL:[NSURL URLWithString:[_branch.arrURLImages valueForKey:@"80"]]
-                   placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     [self setNeedsLayout];
 }
 

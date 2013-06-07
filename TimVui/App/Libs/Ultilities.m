@@ -90,6 +90,13 @@ static bool isRetinaYES =NO;
     else
         return [NSURL URLWithString:[arrURLs valueForKey:@"80"]];
 }
++ (NSURL *)getLargeImageOfCoverBranch:(NSDictionary *)arrURLs
+{
+    if (!isRetinaYES)
+        return [NSURL URLWithString:[arrURLs valueForKey:@"300"]];
+    else
+        return [NSURL URLWithString:[arrURLs valueForKey:@"480"]];
+}
 
 
 

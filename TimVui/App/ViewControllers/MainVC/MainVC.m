@@ -27,7 +27,7 @@
 #import "TVNetworkingClient.h"
 #import "SearchVC.h"
 #import "BranchProfileVC.h"
-
+#import "TVAppDelegate.h"
 @implementation MainVC {
 @private
     __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -39,13 +39,13 @@
 
 - (void)loadView {
     [super loadView];
-    self.events=[[TVBranches alloc] initWithPath:@"search/branch"];
+    self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
     NSDictionary *params = @{@"city_alias": @"ha-noi"};
 
     __unsafe_unretained __typeof(&*self)weakSelf = self;
-    [weakSelf.events loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             
             [weakSelf.tableView reloadData];
@@ -60,6 +60,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+    
 }
 
 
@@ -86,7 +87,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.events count];
+    return [self.branches count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -96,7 +97,7 @@
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
-    cell.branch = self.events[indexPath.row];
+    cell.branch = self.branches[indexPath.row];
     return cell;
 }
 
@@ -104,13 +105,30 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return [BranchMainCell heightForCellWithPost:self.events[indexPath.row]];
+    return [BranchMainCell heightForCellWithPost:self.branches[indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BranchProfileVC* brachProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
-    [self.navigationController pushViewController:brachProfileVC animated:YES];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+    branchProfileVC.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    _activityIndicatorView.hidesWhenStopped = YES;
+//    NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
+    NSDictionary *params = @{@"id": @1};
+    [branchProfileVC.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            [self.navigationController pushViewController:branchProfileVC animated:YES];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        });
+    }];
+    
+    
 }
 
 @end

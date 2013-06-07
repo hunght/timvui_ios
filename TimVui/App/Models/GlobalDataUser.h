@@ -18,4 +18,5 @@
 @property (assign, nonatomic) BOOL isLogin;
 + (GlobalDataUser *)sharedAccountClient;
 +(void)setGlocalDataUser:(NSDictionary *)attributes;
+-(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd;
 @end

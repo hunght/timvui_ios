@@ -28,7 +28,7 @@
 @implementation PullToRevealMapVC
 @synthesize pullToRevealDelegate;
 @synthesize mapView=mapView_;
-@synthesize events=_events;
+@synthesize branches=_events;
 
 #pragma mark - Init methods
 - (void) initializeMapView

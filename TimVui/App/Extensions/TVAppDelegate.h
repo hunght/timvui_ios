@@ -10,11 +10,14 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "MacroApp.h"
 #import "LeftMenuVC.h"
+#import "TVBranch.h"
+#import "Ultilities.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 @interface TVAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 
 @property (retain, nonatomic) LeftMenuVC *menuVC;
 @property (nonatomic, strong)id<GAITracker> tracker;
-
+-(void)showNotificationAboutSomething:(TVBranch*)branch;
 @end

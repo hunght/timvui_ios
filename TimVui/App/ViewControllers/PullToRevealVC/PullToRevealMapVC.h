@@ -22,7 +22,7 @@
 @property (nonatomic, assign) id <PullToRevealDelegate> pullToRevealDelegate;
 @property (nonatomic, retain) GMSMapView *mapView;
 @property (nonatomic, retain) UIButton *btnSearchBar;
-@property(nonatomic,strong)TVBranches *events;
+@property(nonatomic,strong)TVBranches *branches;
 -(void)showBranchOnMap;
 @end
 

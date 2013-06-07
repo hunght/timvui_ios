@@ -14,6 +14,8 @@
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import "WelcomeVC.h"
+#import "TSMessage.h"
+
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -99,6 +101,31 @@
                           }];
 }
 
+-(void)showNotificationAboutSomething:(TVBranch*)_branch
+{
+    NSString *notificationTitle = _branch.branchID;
+    NSString *notificationDescription = @"what";
+    
+    CGFloat duration = 2.0f;
+    
+    [TSMessage showNotificationInViewController:_slidingViewController.topViewController
+                                      withTitle:notificationTitle
+                                    withMessage:notificationDescription
+                                       withType:TSMessageNotificationTypeMessage
+                                   withDuration:duration
+                                   withCallback:nil
+                                withButtonTitle:@"Update" 
+                             withButtonCallback:^{
+                                 [TSMessage showNotificationInViewController:_slidingViewController.topViewController
+                                                                   withTitle:@"what"
+                                                                 withMessage:nil
+                                                                    withType:TSMessageNotificationTypeSuccess];
+                             }
+                                     atPosition:TSMessageNotificationPositionBottom
+                            canBeDismisedByUser:YES];
+
+}
+
 #pragma mark Helpers
 
 
@@ -131,7 +158,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
-
     [self setupGoogleAnalytics];
     [self setupAFNetworking];
     [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];

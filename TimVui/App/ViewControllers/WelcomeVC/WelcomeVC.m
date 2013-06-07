@@ -11,6 +11,7 @@
 #import "TVAppDelegate.h"
 #import "MainVC.h"
 #import "TVNetworkingClient.h"
+#import "TSMessage.h"
 //#import "PortMapper.h"
 @interface WelcomeVC ()
 

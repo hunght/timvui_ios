@@ -37,4 +37,5 @@ typedef enum
 
 
 + (NSURL *)getThumbImageOfCoverBranch:(NSDictionary *)arrURLs;
++ (NSURL *)getLargeImageOfCoverBranch:(NSDictionary *)arrURLs;
 @end

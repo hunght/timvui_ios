@@ -58,6 +58,7 @@ static GlobalDataUser *_sharedClient = nil;
     _sharedClient.user.avatar= [attributes valueForKeyPath:@"avatar_image.url"];
 }
 
+
 - (void)sendBackgroundLocationToServer:(CLLocation *)location {
     UIBackgroundTaskIdentifier bgTask = 0;
     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:
@@ -74,7 +75,15 @@ static GlobalDataUser *_sharedClient = nil;
     }
 }
 
+#pragma mark Helper
+
+-(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
+    CLLocation* current=[[CLLocation alloc] initWithLatitude:fromAdd.latitude longitude:fromAdd.longitude];
+    return [current distanceFromLocation:_userLocation];
+}
+
 #pragma mark CLLocationManagerDelegate
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     _userLocation = newLocation;
