@@ -49,10 +49,10 @@
 	self.price_avg = [dict safeStringForKey:@"price_avg"];
     self.coupon_count=[dict safeIntegerForKey:@"coupon_count"];
     
-    self.coupons = [[TVCoupons alloc] init];
-	[self.coupons   setValues:[[dict safeDictForKey:@"coupons"] allValues]];
+//    self.coupons = [[TVCoupons alloc] init];
+//	[self.coupons   setValues:[[dict safeDictForKey:@"coupons"] allValues]];
     
-	self.special_content = [dict safeStringForKey:@"special_content"];
+	self.special_content = [dict safeArrayForKey:@"special_content"];
 	self.address_full = [dict safeStringForKey:@"address_full"];
 	self.latlng = [dict safeLocaitonForKey:@"latlng"];
     

@@ -38,4 +38,6 @@ typedef enum
 
 + (NSURL *)getThumbImageOfCoverBranch:(NSDictionary *)arrURLs;
 + (NSURL *)getLargeImageOfCoverBranch:(NSDictionary *)arrURLs;
++(void) writeToTextFile:(NSString*)name withContent:(NSString*)content;
++(NSDictionary*) displayContentOfFile:(NSString*)name;
 @end

@@ -24,10 +24,6 @@
 	return [self.login localizedCaseInsensitiveCompare:otherUser.login];
 }
 
-- (void)setLogin:(NSString *)login {
-	_login = login;
-	self.resourcePath = [NSString stringWithFormat:kUserFormat, self.login];
-}
 
 
 - (void)setValues:(id)dict {
@@ -55,50 +51,5 @@
     
 }
 
-#pragma mark Associations
 
-- (GHUsers *)following {
-	if (!_following) {
-		NSString *followingPath = [NSString stringWithFormat:kUserFollowingFormat, self.login];
-		_following = [[GHUsers alloc] initWithPath:followingPath];
-	}
-	return _following;
-}
-
-- (GHUsers *)followers {
-	if (!_followers) {
-		NSString *followersPath = [NSString stringWithFormat:kUserFollowersFormat, self.login];
-		_followers = [[GHUsers alloc] initWithPath:followersPath];
-	}
-	return _followers;
-}
-
-
-#pragma mark User Following
-- (void)checkUserFollowing:(GHUser *)user success:(resourceSuccess)success failure:(resourceFailure)failure {
-	NSString *path = [NSString stringWithFormat:kUserFollowFormat, user.login];
-	GHResource *resource = [[GHResource alloc] initWithPath:path];
-	[resource loadWithParams:nil start:nil success:^(GHResource *instance, id data) {
-		if (success) success(self, data);
-	} failure:^(GHResource *instance, NSError *error) {
-		if (failure) failure(self, error);
-	}];
-}
-
-- (void)setFollowing:(BOOL)follow forUser:(GHUser *)user success:(resourceSuccess)success failure:(resourceFailure)failure {
-	NSString *path = [NSString stringWithFormat:kUserFollowFormat, user.login];
-	NSString *method = follow ? kRequestMethodPut : kRequestMethodDelete;
-	GHResource *resource = [[GHResource alloc] initWithPath:path];
-	[resource saveWithParams:nil path:path method:method start:nil success:^(GHResource *instance, id data) {
-		if (follow) {
-			[self.following addObject:user];
-		} else {
-			[self.following removeObject:user];
-		}
-		[self.following markAsChanged];
-		if (success) success(self, data);
-	} failure:^(GHResource *instance, NSError *error) {
-		if (failure) failure(self, error);
-	}];
-}
 @end

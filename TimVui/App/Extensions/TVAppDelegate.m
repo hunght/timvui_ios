@@ -9,12 +9,13 @@
 #import "TVAppDelegate.h"
 #import "MainVC.h"
 #import "AFNetworkActivityIndicatorManager.h"
-
+#import "TVNetworkingClient.h"
 #import "ECSlidingViewController.h"
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import "WelcomeVC.h"
 #import "TSMessage.h"
+#import "NSDate+Helper.h"
 
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
@@ -155,14 +156,43 @@
 
 #pragma mark Application Events
 
+- (void)getNewDataParamsFromServer
+{
+    [[TVNetworkingClient sharedClient] getPath:@"data/getParamData" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:JSON] ;
+        [dic setValue:[NSDate stringFromDate:[NSDate date]] forKey:@"lastUpdated"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setValue:dic forKey:kDataGetParamData];
+        [defaults synchronize];
+        NSLog(@"%@",dic);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Get Params info from server
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _getParamData=[defaults valueForKey:kDataGetParamData];
+    if (_getParamData) {
+        NSDate* date=[NSDate dateFromString:[_getParamData valueForKey:@"lastUpdated"]];
+        NSLog(@"date=%@",date);
+        if ([date isLaterThan:7]) {
+            [self getNewDataParamsFromServer];
+        }
+    }else{
+        [self getNewDataParamsFromServer];
+    }
+    
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
     [self setupGoogleAnalytics];
     [self setupAFNetworking];
     [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     [self deactivateURLCache];
     [self setupSlidingViewController];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

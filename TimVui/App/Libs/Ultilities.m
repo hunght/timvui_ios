@@ -11,6 +11,8 @@
 #import <mach/mach.h>
 #import <mach/mach_host.h>
 #import <QuartzCore/QuartzCore.h>
+#import "JSONKit.h"
+
 @implementation Ultilities
 static bool isRetinaYES =NO;
 +(BOOL)isRetinaYES{
@@ -288,5 +290,30 @@ static bool isRetinaYES =NO;
     return numberOfMatches > 0;
     
 }
+
+//Method writes a string to a text file
++(void) writeToTextFile:(NSString*)name withContent:(NSDictionary*)content{
+    
+}
+
+
+//Method retrieves content from documents directory and
+//displays it in an alert
++(NSDictionary*) displayContentOfFile:(NSString*)name{
+    //get the documents directory:
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    //make a file name to write the data to using the documents directory:
+    NSString *fileName = [NSString stringWithFormat:@"%@/%@.json",
+                          documentsDirectory,name];
+    NSLog(@"%@",fileName);
+    NSString *content = [[NSString alloc] initWithContentsOfFile:fileName
+                                                    usedEncoding:nil
+                                                           error:nil];
+    return [content objectFromJSONString];
+}
+
 @end
 

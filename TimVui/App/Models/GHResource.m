@@ -31,9 +31,6 @@
 #pragma mark API
 
 
-- (NSString *)resourceContentType {
-	return kResourceContentTypeDefault;
-}
 
 - (TVNetworkingClient *)apiClient {
     return [TVNetworkingClient sharedClient];
@@ -58,11 +55,11 @@
 }
 
 - (void)loadWithSuccess:(resourceSuccess)success {
-	[self loadWithParams:nil path:self.resourcePath method:kRequestMethodGet start:nil success:success failure:nil];
+	[self loadWithParams:nil path:self.resourcePath method:@"GET" start:nil success:success failure:nil];
 }
 
 - (void)loadWithParams:(NSDictionary *)params start:(resourceStart)start success:(resourceSuccess)success failure:(resourceFailure)failure {
-	[self loadWithParams:params path:self.resourcePath method:kRequestMethodPost start:start success:success failure:failure];
+	[self loadWithParams:params path:self.resourcePath method:@"POST" start:start success:success failure:failure];
 }
 - (void)loadWithParams:(NSDictionary *)params path:(NSString *)path method:(NSString *)method start:(resourceStart)start success:(resourceSuccess)success failure:(resourceFailure)failure {
     if (self.isLoading) {

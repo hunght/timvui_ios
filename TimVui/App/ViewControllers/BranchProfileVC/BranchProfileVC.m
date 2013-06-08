@@ -30,56 +30,6 @@
     return self;
 }
 
-- (void)setRowWithHeight:(int *)heightDetailInfo_p detailInfoBranch:(UIView *)detailInfoBranch strDetail:(NSString *)strDetail strTiltle:(NSString *)strTiltle
-{
-    if (strDetail) {
-        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, *heightDetailInfo_p, detailInfoBranch.frame.size.width, 1.0f)];
-        grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
-        [detailInfoBranch addSubview:grayLine];
-        
-        UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(8, grayLine.frame.origin.y+grayLine.frame.size.height+5.0, 150, 23)];
-        lblTitleRow.backgroundColor = [UIColor clearColor];
-        lblTitleRow.textColor = [UIColor grayColor];
-        lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-        lblTitleRow.text =strTiltle;
-        [detailInfoBranch addSubview:lblTitleRow];
-        
-        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(138, grayLine.frame.origin.y+grayLine.frame.size.height+ 5.0, 165, 23)];
-        
-        
-        lblDetailRow.backgroundColor = [UIColor clearColor];
-        lblDetailRow.textColor = [UIColor blackColor];
-        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-        lblDetailRow.text = strDetail;
-        lblDetailRow.numberOfLines = 0;
-        lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
-        [lblDetailRow sizeToFit];
-        [detailInfoBranch addSubview:lblDetailRow];
-        *heightDetailInfo_p+=14+lblDetailRow.frame.size.height;
-    }
-}
-
-- (NSString*)getDetailStringFrom:(NSDictionary *)dic
-{
-    NSString* strStyleFoody;
-    if ([[dic allValues] count]>0) {
-        strStyleFoody=@"";
-        BOOL isFistTime=YES;
-        for (NSDictionary* dicStyle in [dic allValues]) {
-//            NSLog(@"dicStyle = %@",dicStyle);
-            NSString* strStyleFoodyRow=@"";
-            strStyleFoodyRow=[dicStyle valueForKey:@"name"];
-            
-            if (isFistTime) {
-                isFistTime=NO;
-                strStyleFoody=[strStyleFoody stringByAppendingFormat:@"%@",strStyleFoodyRow];
-            }else
-                strStyleFoody=[strStyleFoody stringByAppendingFormat:@", %@",strStyleFoodyRow];
-        }
-    }
-    NSLog(@"%@\n",strStyleFoody);
-    return strStyleFoody;
-}
 
 - (void)viewDidLoad
 {
@@ -332,12 +282,104 @@
     strTiltle=@"Phù hợp các món";
     strDetail=[self getDetailStringFrom:_branch.cuisine];
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
-
+    
     CGRect frame=detailInfoBranch.frame;
     frame.size.height=heightDetailInfo + 0;
     [detailInfoBranch setFrame:frame];
-    [_scrollView setContentSize:CGSizeMake(320, detailInfoBranch.frame.origin.y +detailInfoBranch.frame.size.height+40)];
+    
+    // Utilities
+    UIView* utilitiesView=[[UIView alloc] initWithFrame:CGRectMake(6, detailInfoBranch.frame.origin.y+detailInfoBranch.frame.size.height+10, 320-6*2, 45)];
+    [utilitiesView setBackgroundColor:[UIColor whiteColor]];
+    l=utilitiesView.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:5.0];
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    [_scrollView addSubview:utilitiesView];
+    
+    lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
+    lblTitle.backgroundColor = [UIColor clearColor];
+    lblTitle.textColor = [UIColor redColor];
+    lblTitle.font = [UIFont fontWithName:@"UVNVanBold" size:(20)];
+    lblTitle.text=@"TIỆN ÍCH";
+    [utilitiesView addSubview:lblTitle];
+    int heightUtilities=lblTitle.frame.origin.y+lblTitle.frame.size.height +27;
+    int rowCount=0;
+    
+    NSDictionary* params=[SharedAppDelegate getParamData];
+    NSDictionary* dicUtilities=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
+//    NSDictionary*dicUtilities=_branch.services;
+    int heightPreRow=0;
+    for (NSDictionary* dic in [dicUtilities allValues]) {
+        UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake((rowCount%2) ?165:8,heightUtilities, 18, 18)];
+        BOOL isServiceOnYES=NO;
+        for (NSDictionary *dicOn in [_branch.services allValues]) {
+            NSString* strOne=[dicOn valueForKey:@"id"];
+            NSString* strTwo=[dic valueForKey:@"id"];
+            if ([strOne isEqualToString:strTwo]){
+                isServiceOnYES=YES;
+                break;
+            }
+            
+        }
 
+        [utilitiesView addSubview:iconIView];
+        
+        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 130, 23)];
+        
+        lblDetailRow.backgroundColor = [UIColor clearColor];
+        lblDetailRow.textColor = [UIColor blackColor];
+        lblDetailRow.numberOfLines = 0;
+        lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
+        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblDetailRow.text =[dic valueForKey:@"name"];
+        [lblDetailRow sizeToFit];
+        [utilitiesView addSubview:lblDetailRow];
+        
+
+        NSString * strImageName;
+        if (isServiceOnYES){
+            strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
+            lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
+        }
+        else{
+            lblDetailRow.textColor = [UIColor grayColor];
+            strImageName=[dic valueForKey:@"id"];
+        }
+        
+        [iconIView setImage:[UIImage imageNamed:strImageName]];
+        
+        rowCount++;
+        if (rowCount>1&& !(rowCount%2)) {
+            int padRow=(lblDetailRow.frame.size.height>heightPreRow)?lblDetailRow.frame.size.height:heightPreRow;
+            heightUtilities+=padRow+ 10;
+            heightPreRow=0;
+        }else
+            heightPreRow=lblDetailRow.frame.size.height;
+    }
+    frame=utilitiesView.frame;
+    if (rowCount%2)
+        frame.size.height=heightUtilities +26+ 10;
+    else
+        frame.size.height=heightUtilities + 10;
+    
+    [utilitiesView setFrame:frame];
+    height =utilitiesView.frame.origin.y +utilitiesView.frame.size.height+40;
+    if(_branch.special_content)
+    {
+        UIButton* specialContentButton = [[UIButton alloc] initWithFrame:CGRectMake(10, utilitiesView.frame.origin.y+utilitiesView.frame.size.height+10, 301, 45)];
+        [specialContentButton addTarget:self action:@selector(specialContentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        specialContentButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [specialContentButton setTitle:@"    Điểm nổi bật" forState:UIControlStateNormal];
+        specialContentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
+        [specialContentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [specialContentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_button_addition"] forState:UIControlStateNormal];
+        [specialContentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_button_addition_on"] forState:UIControlStateHighlighted];
+        [_scrollView addSubview:specialContentButton];
+        height+=45;
+    }
+    
+    [_scrollView setContentSize:CGSizeMake(320, height)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -346,7 +388,62 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Helper
+
+- (void)setRowWithHeight:(int *)heightDetailInfo_p detailInfoBranch:(UIView *)detailInfoBranch strDetail:(NSString *)strDetail strTiltle:(NSString *)strTiltle
+{
+    if (strDetail) {
+        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, *heightDetailInfo_p, detailInfoBranch.frame.size.width, 1.0f)];
+        grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+        [detailInfoBranch addSubview:grayLine];
+        
+        UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(8, grayLine.frame.origin.y+grayLine.frame.size.height+5.0, 150, 23)];
+        lblTitleRow.backgroundColor = [UIColor clearColor];
+        lblTitleRow.textColor = [UIColor grayColor];
+        lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblTitleRow.text =strTiltle;
+        [detailInfoBranch addSubview:lblTitleRow];
+        
+        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(138, grayLine.frame.origin.y+grayLine.frame.size.height+ 5.0, 165, 23)];
+        
+        
+        lblDetailRow.backgroundColor = [UIColor clearColor];
+        lblDetailRow.textColor = [UIColor blackColor];
+        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblDetailRow.text = strDetail;
+        lblDetailRow.numberOfLines = 0;
+        lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
+        [lblDetailRow sizeToFit];
+        [detailInfoBranch addSubview:lblDetailRow];
+        *heightDetailInfo_p+=14+lblDetailRow.frame.size.height;
+    }
+}
+
+- (NSString*)getDetailStringFrom:(NSDictionary *)dic
+{
+    NSString* strStyleFoody;
+    if ([[dic allValues] count]>0) {
+        strStyleFoody=@"";
+        BOOL isFistTime=YES;
+        for (NSDictionary* dicStyle in [dic allValues]) {
+            //            NSLog(@"dicStyle = %@",dicStyle);
+            NSString* strStyleFoodyRow=@"";
+            strStyleFoodyRow=[dicStyle valueForKey:@"name"];
+            
+            if (isFistTime) {
+                isFistTime=NO;
+                strStyleFoody=[strStyleFoody stringByAppendingFormat:@"%@",strStyleFoodyRow];
+            }else
+                strStyleFoody=[strStyleFoody stringByAppendingFormat:@", %@",strStyleFoodyRow];
+        }
+    }
+    NSLog(@"%@\n",strStyleFoody);
+    return strStyleFoody;
+}
 #pragma mark - IBAction
+-(void)specialContentButtonClicked:(id)sender{
+    
+}
 -(void)likeButtonClicked:(id)sender{
     
 }

@@ -11,7 +11,7 @@
 @property(nonatomic,strong)NSDictionary *arrURLImages;
 @property(nonatomic,assign)int coupon_count;
 @property(nonatomic,strong)TVCoupons *coupons;
-@property(nonatomic,strong)NSString *special_content;
+@property(nonatomic,strong)NSArray *special_content;
 @property(nonatomic,strong)NSString *address_full;
 @property(nonatomic,assign)CLLocationCoordinate2D latlng;
 

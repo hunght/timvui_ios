@@ -23,5 +23,5 @@
 @property(nonatomic,strong)NSDate *created;
 
 - (id)initWithLogin:(NSString *)login;
-- (void)setFollowing:(BOOL)follow forUser:(GHUser *)user success:(resourceSuccess)success failure:(resourceFailure)failure;
+
 @end

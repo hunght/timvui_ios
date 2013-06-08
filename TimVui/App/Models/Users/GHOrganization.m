@@ -26,7 +26,7 @@
 - (void)setLogin:(NSString *)login {
 	_login = login;
 
-	self.resourcePath = [NSString stringWithFormat:kOrganizationFormat, self.login];
+	self.resourcePath = @"";
 }
 
 - (void)setGravatarURL:(NSURL *)url {
@@ -72,7 +72,7 @@
 
 - (GHUsers *)publicMembers {
 	if (!_publicMembers) {
-		NSString *membersPath = [NSString stringWithFormat:kOrganizationMembersFormat, self.login];
+		NSString *membersPath = @"";
 		_publicMembers = [[GHUsers alloc] initWithPath:membersPath];
 	}
 	return _publicMembers;
