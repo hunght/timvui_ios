@@ -67,6 +67,9 @@
 		5588C2491758B4C5001B624A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5588C2481758B48C001B624A /* libz.dylib */; };
 		5588C24B1758B621001B624A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5588C24A1758B5E8001B624A /* OpenGLES.framework */; };
 		558F0FE4175CA2A9005F66DF /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 558F0FE3175CA2A9005F66DF /* UIImage+Crop.m */; };
+		55914BA51762F0EB00A9C63D /* FKRSearchBarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55914BA31762F0EB00A9C63D /* FKRSearchBarTableViewController.m */; };
+		55914BA61762F0EB00A9C63D /* Top100FamousPersons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 55914BA41762F0EB00A9C63D /* Top100FamousPersons.plist */; };
+		55914BAE1762F49500A9C63D /* FKRHeaderSearchBarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55914BAD1762F49500A9C63D /* FKRHeaderSearchBarTableViewController.m */; };
 		55954F4D172A132F00A8A351 /* UserRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55954F4B172A132F00A8A351 /* UserRegisterVC.m */; };
 		55954F4E172A132F00A8A351 /* UserRegisterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55954F4C172A132F00A8A351 /* UserRegisterVC.xib */; };
 		55954F57172A141100A8A351 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55954F55172A141100A8A351 /* libGoogleAnalytics.a */; };
@@ -408,6 +411,11 @@
 		5588C24A1758B5E8001B624A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		558F0FE2175CA2A9005F66DF /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
 		558F0FE3175CA2A9005F66DF /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
+		55914BA21762F0EB00A9C63D /* FKRSearchBarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKRSearchBarTableViewController.h; sourceTree = "<group>"; };
+		55914BA31762F0EB00A9C63D /* FKRSearchBarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKRSearchBarTableViewController.m; sourceTree = "<group>"; };
+		55914BA41762F0EB00A9C63D /* Top100FamousPersons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Top100FamousPersons.plist; sourceTree = "<group>"; };
+		55914BAC1762F49500A9C63D /* FKRHeaderSearchBarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKRHeaderSearchBarTableViewController.h; sourceTree = "<group>"; };
+		55914BAD1762F49500A9C63D /* FKRHeaderSearchBarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKRHeaderSearchBarTableViewController.m; sourceTree = "<group>"; };
 		55954F4A172A132F00A8A351 /* UserRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRegisterVC.h; sourceTree = "<group>"; };
 		55954F4B172A132F00A8A351 /* UserRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRegisterVC.m; sourceTree = "<group>"; };
 		55954F4C172A132F00A8A351 /* UserRegisterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserRegisterVC.xib; sourceTree = "<group>"; };
@@ -670,7 +678,6 @@
 		55F25DF917423261003EB902 /* GHCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHCollection.m; sourceTree = "<group>"; };
 		55F25DFA17423261003EB902 /* GHResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHResource.h; sourceTree = "<group>"; };
 		55F25DFB17423262003EB902 /* GHResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHResource.m; sourceTree = "<group>"; };
-		55F25E0117423403003EB902 /* IOCAppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IOCAppConstants.h; path = AFNetworkingExtention/IOCAppConstants.h; sourceTree = "<group>"; };
 		55F25E0217423492003EB902 /* JLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLog.h; sourceTree = "<group>"; };
 		55F25E04174238BB003EB902 /* GHOrganization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHOrganization.h; sourceTree = "<group>"; };
 		55F25E05174238BC003EB902 /* GHOrganization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHOrganization.m; sourceTree = "<group>"; };
@@ -983,6 +990,25 @@
 			path = NSDateHelper;
 			sourceTree = "<group>";
 		};
+		55914BA11762F0EB00A9C63D /* FKRSearchBarTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				55914BA21762F0EB00A9C63D /* FKRSearchBarTableViewController.h */,
+				55914BA31762F0EB00A9C63D /* FKRSearchBarTableViewController.m */,
+				55914BA41762F0EB00A9C63D /* Top100FamousPersons.plist */,
+			);
+			path = FKRSearchBarTableViewController;
+			sourceTree = "<group>";
+		};
+		55914BAB1762F49500A9C63D /* SearchCitysVC */ = {
+			isa = PBXGroup;
+			children = (
+				55914BAC1762F49500A9C63D /* FKRHeaderSearchBarTableViewController.h */,
+				55914BAD1762F49500A9C63D /* FKRHeaderSearchBarTableViewController.m */,
+			);
+			path = SearchCitysVC;
+			sourceTree = "<group>";
+		};
 		55954F49172A132F00A8A351 /* UserRegisterVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1271,6 +1297,7 @@
 		55BAED3B1709726300CF3171 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				55914BA11762F0EB00A9C63D /* FKRSearchBarTableViewController */,
 				55C30FBE1761E61800D04744 /* NSDate-Extensions */,
 				557328911761E1A900765988 /* NSDateHelper */,
 				5506B0A8175EF6590054D606 /* TSMessage */,
@@ -1324,7 +1351,6 @@
 			isa = PBXGroup;
 			children = (
 				55F25E0217423492003EB902 /* JLog.h */,
-				55F25E0117423403003EB902 /* IOCAppConstants.h */,
 				554A3408175DAA1300EF2538 /* MyNavigationController.h */,
 				554A3409175DAA1300EF2538 /* MyNavigationController.m */,
 				55F5F5161743A10000A0C243 /* UINavigationBar+JTDropShadow.h */,
@@ -1353,6 +1379,7 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				55914BAB1762F49500A9C63D /* SearchCitysVC */,
 				55657A49174F0D62002E83EC /* WelcomeVC */,
 				559DD410174B0C14009E7344 /* Account */,
 				55ED8490170D5A0E00344215 /* SearchVC */,
@@ -1791,6 +1818,7 @@
 				55977D421762DBF100D2CE2D /* img_profile_branch_button_addition_on@2x.png in Resources */,
 				55977D431762DBF100D2CE2D /* img_profile_branch_button_addition.png in Resources */,
 				55977D441762DBF100D2CE2D /* img_profile_branch_button_addition@2x.png in Resources */,
+				55914BA61762F0EB00A9C63D /* Top100FamousPersons.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1879,6 +1907,8 @@
 				5506B0B6175EF65A0054D606 /* UIColor+MLColorAdditions.m in Sources */,
 				557328941761E1A900765988 /* NSDate+Helper.m in Sources */,
 				55C30FC21761E61800D04744 /* NSDate-Utilities.m in Sources */,
+				55914BA51762F0EB00A9C63D /* FKRSearchBarTableViewController.m in Sources */,
+				55914BAE1762F49500A9C63D /* FKRHeaderSearchBarTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

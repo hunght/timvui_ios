@@ -156,9 +156,9 @@
 
 #pragma mark Application Events
 
-- (void)getNewDataParamsFromServer
+- (void)getNewDataParamsFromServer:(NSString*)strPath
 {
-    [[TVNetworkingClient sharedClient] getPath:@"data/getParamData" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[TVNetworkingClient sharedClient] getPath:strPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:JSON] ;
         [dic setValue:[NSDate stringFromDate:[NSDate date]] forKey:@"lastUpdated"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -170,21 +170,33 @@
     }];
 }
 
+- (void)getDataParamsPath:(NSString *)strPath laterThanDays:(int)days checkDictionary:(NSDictionary *)dic
+{
+    if (dic) {
+        NSDate* date=[NSDate dateFromString:[_getParamData valueForKey:@"lastUpdated"]];
+        NSLog(@"date=%@",date);
+        if ([date isLaterThan:days]) {
+            [self getNewDataParamsFromServer:strPath];
+        }
+    }else{
+        [self getNewDataParamsFromServer:strPath];
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Get Params info from server
-    
+//    ;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     _getParamData=[defaults valueForKey:kDataGetParamData];
-    if (_getParamData) {
-        NSDate* date=[NSDate dateFromString:[_getParamData valueForKey:@"lastUpdated"]];
-        NSLog(@"date=%@",date);
-        if ([date isLaterThan:7]) {
-            [self getNewDataParamsFromServer];
-        }
-    }else{
-        [self getNewDataParamsFromServer];
-    }
+    NSString* strPath=@"data/getParamData";
+    int days=7;
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getParamData];
+    
+    _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
+    strPath=@"data/getCityDistrictData";
+    days=7;
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getParamData];
     
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
     [self setupGoogleAnalytics];

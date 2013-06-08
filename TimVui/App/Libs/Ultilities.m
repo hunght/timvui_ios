@@ -102,42 +102,6 @@ static bool isRetinaYES =NO;
 
 
 
-+ (NSURL *)getImageOfCoverEntre:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType
-{
-    [self settingURLString:&usrAvatar sizeType:sizeType];
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getEntreCoverImage/%@",BASE_URL_STR,usrAvatar]];
-    return url;
-}
-
-+ (NSURL *)getImageOfPhotoEntre:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType
-{
-    [self settingURLString:&usrAvatar sizeType:sizeType];
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getEntreUploadImage/%@",BASE_URL_STR,usrAvatar]];
-    return url;
-}
-+ (NSURL *) getImageOfReview:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType
-{
-    [self settingURLString:&usrAvatar sizeType:sizeType];
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getReviewsImage/%@",BASE_URL_STR,usrAvatar]];
-    return url;
-}
-+ (NSURL *)getImageOfUser:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType
-{
-    [self settingURLString:&usrAvatar sizeType:sizeType];
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getUserImage/%@",BASE_URL_STR,usrAvatar]];
-    return url;
-}
-+ (NSURL *)getImageOfEntre:(NSString *)logoImgPath withSizeType:(ImageSizeType)sizeType
-{
-    [self settingURLString:&logoImgPath sizeType:sizeType];
-    NSURL* url=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getImageEntre/%@",BASE_URL_STR,logoImgPath]];
-    return url;
-}
-+ (NSURL *)getImageOfOffer:(NSString *)imgURL withSizeType:(ImageSizeType)sizeType{
-    [self settingURLString:&imgURL sizeType:sizeType];
-    NSURL* urlImage=[NSURL URLWithString:[NSString stringWithFormat:@"%@/getImageOffer/%@",BASE_URL_STR,imgURL]];
-    return urlImage;
-}
 +(void)iPhoneRetina{
     isRetinaYES= ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0))?1:0;
 }

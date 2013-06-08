@@ -32,4 +32,6 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnReset;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnBackgournd;
 - (IBAction)buttonBackgroundClicked:(id)sender;
+- (IBAction)buttonCityClicked:(id)sender;
+- (IBAction)buttonDistrictClicked:(id)sender;
 @end

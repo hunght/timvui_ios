@@ -10,8 +10,6 @@
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
-    #import <Foundation/Foundation.h>
-    #import "IOCAppConstants.h"
     #import "JLog.h"
     #import "MacroApp.h"
 #endif

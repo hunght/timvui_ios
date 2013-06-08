@@ -1,5 +1,4 @@
 #import "GHResource.h"
-#import "IOCAppConstants.h"
 
 @class GHUsers, GHOrganizations;
 

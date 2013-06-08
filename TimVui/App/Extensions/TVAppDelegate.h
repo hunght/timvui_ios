@@ -20,5 +20,6 @@
 @property (retain, nonatomic) LeftMenuVC *menuVC;
 @property (nonatomic, strong)id<GAITracker> tracker;
 @property (retain, nonatomic) NSDictionary *getParamData;
+@property (retain, nonatomic) NSDictionary *getCityDistrictData;
 -(void)showNotificationAboutSomething:(TVBranch*)branch;
 @end

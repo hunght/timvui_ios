@@ -20,12 +20,6 @@ typedef enum
 +(BOOL)isRetinaYES;
 +(void)iPhoneRetina;
 + (void)roundCornerUIImageView:(UIImageView *)img;
-+ (NSURL *)getImageOfPhotoEntre:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType;
-+ (NSURL *)getImageOfReview:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType;
-+ (NSURL *)getImageOfUser:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType;
-+ (NSURL *)getImageOfEntre:(NSString *)logoImgPath withSizeType:(ImageSizeType)sizeType;
-+ (NSURL *)getImageOfOffer:(NSString *)imgURL withSizeType:(ImageSizeType)sizeType;
-+ (NSURL *)getImageOfCoverEntre:(NSString *)usrAvatar withSizeType:(ImageSizeType)sizeType;
 +(void)showAlertWithMessage:(NSString*)strMessage;
 + (BOOL)validateString:(NSString*)string;
 +(BOOL)validateEmail:(NSString*)email;

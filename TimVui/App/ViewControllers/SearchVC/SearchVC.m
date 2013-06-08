@@ -7,7 +7,7 @@
 //
 
 #import "SearchVC.h"
-
+#import "FKRHeaderSearchBarTableViewController.h"
 @interface SearchVC ()
 
 @end
@@ -26,6 +26,14 @@
 #pragma mark IBAction
 - (IBAction)buttonBackgroundClicked:(id)sender {
     [self.tfdSearch resignFirstResponder];
+}
+
+- (IBAction)buttonCityClicked:(id)sender {
+    UIViewController *viewController = [[FKRHeaderSearchBarTableViewController alloc] initWithSectionIndexes:0];
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)buttonDistrictClicked:(id)sender {
 }
 
 -(void)backButtonClicked:(id)sender{
@@ -96,6 +104,7 @@
     [_btnPrice100_200 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     [_btnPrice200_500 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     [_btnPrice500_1000 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    
     
 }
 
