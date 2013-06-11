@@ -23,6 +23,6 @@
 @property(nonatomic, copy) NSArray *famousPersons;
 @property(nonatomic, copy) NSArray *sections;
 @property(nonatomic, copy) NSArray *filteredPersons;
--(void)setDataForSearchTable;
+-(void)setDataForSearchTable:(NSArray*)arr;
 
 @end

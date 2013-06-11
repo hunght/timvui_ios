@@ -153,7 +153,6 @@
     self.window.rootViewController = _slidingViewController;
 }
 
-
 #pragma mark Application Events
 -(void)setData:(NSString*)key{
     if ([key isEqualToString:kGetCityDistrictData]) {
@@ -161,6 +160,7 @@
         _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
     }
 }
+
 - (void)getNewDataParamsFromServer:(NSString*)strPath withDic:(NSDictionary*)myDic forKey:(NSString*)key
 {
     [[TVNetworkingClient sharedClient] getPath:strPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -170,10 +170,15 @@
         [defaults setValue:dic forKey:key];
         [defaults synchronize];
         if ([key isEqualToString:kGetCityDistrictData]) {
-            _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
+            _getCityDistrictData=dic;
         }else if ([key isEqualToString:kDataGetParamData]) {
-            _getParamData=[defaults valueForKey:kDataGetParamData];
+            _getParamData=dic;
+        }else if ([key isEqualToString:kGetDistrictHasPublicLocationData]) {
+            _getDistrictHasPublicLocationData=dic;
+        }else if ([key isEqualToString:kGetPublicLocationData]) {
+            _getPublicLocationData=dic;
         }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
     }];
@@ -197,6 +202,7 @@
     // Get Params info from server
 //    ;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     _getParamData=[defaults valueForKey:kDataGetParamData];
     NSString* strPath=@"data/getParamData";
     int days=7;
@@ -206,7 +212,18 @@
     strPath=@"data/getCityDistrictData";
     days=7;
     [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getCityDistrictData forKey:kGetCityDistrictData];
-     NSLog(@"dic=%@",_getCityDistrictData);
+    
+    _getDistrictHasPublicLocationData=[defaults valueForKey:kGetPublicLocationData];
+    strPath=@"data/getDistrictHasPublicLocationData";
+    days=7;
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getDistrictHasPublicLocationData forKey:kGetPublicLocationData];
+
+    
+    _getPublicLocationData=[defaults valueForKey:kGetDistrictHasPublicLocationData];
+    strPath=@"data/getPublicLocationData";
+    days=7;
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getPublicLocationData forKey:kGetDistrictHasPublicLocationData];
+    
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
     [self setupGoogleAnalytics];
     [self setupAFNetworking];

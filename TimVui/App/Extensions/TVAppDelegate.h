@@ -21,5 +21,7 @@
 @property (nonatomic, strong)id<GAITracker> tracker;
 @property (retain, nonatomic) NSDictionary *getParamData;
 @property (retain, nonatomic) NSDictionary *getCityDistrictData;
+@property (retain, nonatomic) NSDictionary *getDistrictHasPublicLocationData;
+@property (retain, nonatomic) NSDictionary *getPublicLocationData;
 -(void)showNotificationAboutSomething:(TVBranch*)branch;
 @end

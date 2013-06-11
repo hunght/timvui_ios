@@ -34,8 +34,31 @@
 
 @property (retain, nonatomic) NSDictionary *dicCitySearchParam;
 @property (retain, nonatomic) NSDictionary *dicDistrictSearchParam;
+@property (retain, nonatomic) NSDictionary *dicPublicLocation;
+@property (retain, nonatomic) NSDictionary *dicCuisineSearchParam;
+@property (retain, nonatomic) NSDictionary *dicPurposeSearchParam;
+@property (retain, nonatomic) NSDictionary *dicUtilitiesSearchParam;
+
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblZone;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblCuisine;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblPurpose;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblUtilities;
 
 - (IBAction)buttonBackgroundClicked:(id)sender;
 - (IBAction)buttonCityClicked:(id)sender;
 - (IBAction)buttonDistrictClicked:(id)sender;
+- (IBAction)buttonZoneClicked:(id)sender;
+- (IBAction)buttonCuisineClicked:(id)sender;
+- (IBAction)buttonPurposeClicked:(id)sender;
+- (IBAction)buttonUtilityClicked:(id)sender;
+
+@property (assign, nonatomic) int currentSearchParam;
+enum {
+    kSearchParamCity = 0,
+    kSearchParamDistrict,
+    kSearchParamCuisine,
+    kSearchParamPurpose,
+    kSearchParamUtilities,
+    kSearchParamZone
+};
 @end

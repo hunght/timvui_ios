@@ -28,7 +28,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 #pragma mark - Initializer
 
--(void)setDataForSearchTable
+-(void)setDataForSearchTable:(NSArray*)arr
 {
 }
 
@@ -39,7 +39,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         
         _showSectionIndexes = showSectionIndexes;
         
-        [self setDataForSearchTable];
+        [self setDataForSearchTable:nil];
         
         if (showSectionIndexes) {
             UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];

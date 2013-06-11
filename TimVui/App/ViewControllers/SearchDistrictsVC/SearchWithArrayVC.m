@@ -6,18 +6,19 @@
 //  Copyright (c) 2013 Fabian Kreiser. All rights reserved.
 //
 
-#import "SearchDistrictsVC.h"
+#import "SearchWithArrayVC.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/message.h>
 #import "UINavigationBar+JTDropShadow.h"
 #import "TVAppDelegate.h"
-@interface SearchDistrictsVC () {
+
+@interface SearchWithArrayVC () {
     BOOL _mayUsePrivateAPI;
 }
 
 @end
 
-@implementation SearchDistrictsVC
+@implementation SearchWithArrayVC
 
 #pragma mark - IBAction
 
@@ -142,11 +143,37 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //_searchVC.dicCitySearchParam=[self.famousPersons objectAtIndex:indexPath.row];
+    NSDictionary* arrResult=nil;
     if (tableView != self.tableView){
-        _searchVC.dicDistrictSearchParam=  [self.filteredPersons objectAtIndex:indexPath.row];
+       arrResult =  [self.filteredPersons objectAtIndex:indexPath.row];
     }else{
-        _searchVC.dicDistrictSearchParam=  [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        arrResult=  [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
+    
+    switch (_searchVC.currentSearchParam) {
+        case kSearchParamCity:
+            _searchVC.dicCitySearchParam=arrResult;
+            _searchVC.dicDistrictSearchParam=nil;
+            break;
+        case kSearchParamCuisine:
+            _searchVC.dicCuisineSearchParam=arrResult;
+            break;
+        case kSearchParamDistrict:
+            _searchVC.dicDistrictSearchParam=arrResult;
+            break;
+        case kSearchParamPurpose:
+            _searchVC.dicPurposeSearchParam=arrResult;
+            break;
+        case kSearchParamZone:
+            _searchVC.dicPublicLocation=arrResult;
+            break;
+        case kSearchParamUtilities:
+            _searchVC.dicUtilitiesSearchParam=arrResult;
+            break;
+        default:
+            break;
+    }
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }

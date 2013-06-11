@@ -7,8 +7,8 @@
 //
 
 #import "SearchVC.h"
-#import "SearchDistrictsVC.h"
-#import "SearchCitiesVC.h"
+#import "SearchWithArrayVC.h"
+#import "TVAppDelegate.h"
 @interface SearchVC ()
 
 @end
@@ -30,14 +30,68 @@
 }
 
 - (IBAction)buttonCityClicked:(id)sender {
-    SearchCitiesVC *viewController = [[SearchCitiesVC alloc] initWithSectionIndexes:YES];
+    
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[SharedAppDelegate.getCityDistrictData valueForKey:@"data"]];
     viewController.searchVC=self;
+    self.currentSearchParam=kSearchParamCity;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)buttonDistrictClicked:(id)sender {
-    SearchDistrictsVC *viewController = [[SearchDistrictsVC alloc] initWithSectionIndexes:YES withParam:[_dicCitySearchParam valueForKey:@"districts"]];
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[_dicCitySearchParam valueForKey:@"districts"]];
     viewController.searchVC=self;
+    _currentSearchParam=kSearchParamDistrict;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)buttonZoneClicked:(id)sender {
+    NSPredicate *filter =nil;
+    if (_dicCitySearchParam && _dicDistrictSearchParam) {
+        filter = [NSPredicate predicateWithFormat:@"(city_id == %@) AND (district_id == %@)",[_dicCitySearchParam valueForKey:@"id"],[_dicDistrictSearchParam valueForKey:@"id"]];
+    }else if (_dicCitySearchParam){
+        filter = [NSPredicate predicateWithFormat:@"(city_id == %@)",[_dicCitySearchParam valueForKey:@"id"]];
+    }
+    NSArray* myFilter=nil;
+    if (filter) {
+        NSArray* idPublicArr = [[SharedAppDelegate.getDistrictHasPublicLocationData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
+        NSLog(@"%@",idPublicArr);
+        NSMutableArray*arrIdStr=[[NSMutableArray alloc] init];
+        for (NSDictionary*dic in idPublicArr) {
+            [arrIdStr addObject:[dic valueForKey:@"public_location_id"]];
+        }
+        myFilter=[[SharedAppDelegate.getPublicLocationData valueForKey:@"data"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"id IN %@",arrIdStr]];
+    }
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:myFilter];
+    viewController.searchVC=self;
+    _currentSearchParam=kSearchParamZone;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)buttonCuisineClicked:(id)sender {
+    NSDictionary* params=[SharedAppDelegate getParamData];
+    NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"mon-an"] valueForKey:@"params"];
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[dicCuisines allValues]];
+    viewController.searchVC=self;
+    _currentSearchParam=kSearchParamCuisine;
+    [self.navigationController pushViewController:viewController animated:YES];
+    
+}
+
+- (IBAction)buttonPurposeClicked:(id)sender {
+    NSDictionary* params=[SharedAppDelegate getParamData];
+    NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"muc-dich"] valueForKey:@"params"];
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[dicCuisines allValues]];
+    viewController.searchVC=self;
+    _currentSearchParam=kSearchParamPurpose;
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)buttonUtilityClicked:(id)sender {
+    NSDictionary* params=[SharedAppDelegate getParamData];
+    NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[dicCuisines allValues]];
+    viewController.searchVC=self;
+    _currentSearchParam=kSearchParamUtilities;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -123,6 +177,27 @@
         [_btnDistrict setTitle:[_dicDistrictSearchParam valueForKey:@"name"] forState:UIControlStateNormal];
     else
         [_btnDistrict setTitle:@"Quận/Huyện" forState:UIControlStateNormal];
+    
+    if (_dicPublicLocation)
+        _lblZone.text=[NSString stringWithFormat:@"Khu vực (%@)",[_dicPublicLocation valueForKey:@"name"]];
+    else
+        _lblZone.text=@"Khu vực";
+    
+    if (_dicCuisineSearchParam)
+        _lblCuisine.text=[NSString stringWithFormat:@"Món ăn (%@)",[_dicCuisineSearchParam valueForKey:@"name"]];
+    else
+        _lblCuisine.text=@"Món ăn";
+    
+    if (_dicPurposeSearchParam)
+        _lblPurpose.text=[NSString stringWithFormat:@"Mục đích (%@)",[_dicPurposeSearchParam valueForKey:@"name"]];
+    else
+        _lblPurpose.text=@"Mục đích";
+    
+    if (_dicUtilitiesSearchParam)
+        _lblUtilities.text=[NSString stringWithFormat:@"Tiện ích (%@)",[_dicUtilitiesSearchParam valueForKey:@"name"]];
+    else
+        _lblUtilities.text=@"Tiện ích";
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -158,6 +233,10 @@
     [self setBtnSearch:nil];
     [self setBtnReset:nil];
     [self setBtnBackgournd:nil];
+    [self setLblZone:nil];
+    [self setLblCuisine:nil];
+    [self setLblPurpose:nil];
+    [self setLblUtilities:nil];
     [super viewDidUnload];
 }
 
