@@ -15,7 +15,7 @@
                       radius:(CGFloat)radius
                        color:(UIColor*)color
                      opacity:(CGFloat)opacity;
-
+-(void)setNavigationBarWithoutIcon:(BOOL)isYES;
 @end
 
 #endif

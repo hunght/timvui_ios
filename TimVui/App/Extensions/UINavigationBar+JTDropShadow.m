@@ -42,6 +42,30 @@
     self.clipsToBounds = NO;
 }
 
+-(void)setNavigationBarWithoutIcon:(BOOL)isYES{
+    if (isYES) {
+        if ([self respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
+        {
+            [self setBackgroundImage:[UIImage imageNamed:@"img_navigation"] forBarMetrics:UIBarMetricsDefault];
+        }
+        else
+        {
+            NSString *barBgPath = [[NSBundle mainBundle] pathForResource:@"img_navigation" ofType:@"png"];
+            [self.layer setContents:(id)[UIImage imageWithContentsOfFile: barBgPath].CGImage];
+        }
+    }else{
+        if ([self respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
+        {
+            [self setBackgroundImage:[UIImage imageNamed:@"img_navigation_with_icon"] forBarMetrics:UIBarMetricsDefault];
+        }
+        else
+        {
+            NSString *barBgPath = [[NSBundle mainBundle] pathForResource:@"img_navigation_with_icon" ofType:@"png"];
+            [self.layer setContents:(id)[UIImage imageWithContentsOfFile: barBgPath].CGImage];
+        }
+    }
+}
+
 @end
 
 #endif

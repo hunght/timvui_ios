@@ -31,6 +31,10 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnSearch;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnReset;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnBackgournd;
+
+@property (retain, nonatomic) NSDictionary *dicCitySearchParam;
+@property (retain, nonatomic) NSDictionary *dicDistrictSearchParam;
+
 - (IBAction)buttonBackgroundClicked:(id)sender;
 - (IBAction)buttonCityClicked:(id)sender;
 - (IBAction)buttonDistrictClicked:(id)sender;

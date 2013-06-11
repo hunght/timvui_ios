@@ -6,31 +6,48 @@
 //  Copyright (c) 2013 Fabian Kreiser. All rights reserved.
 //
 
-#import "FKRHeaderSearchBarTableViewController.h"
+#import "SearchDistrictsVC.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/message.h>
-
-@interface FKRHeaderSearchBarTableViewController () {
+#import "UINavigationBar+JTDropShadow.h"
+#import "TVAppDelegate.h"
+@interface SearchDistrictsVC () {
     BOOL _mayUsePrivateAPI;
 }
 
 @end
 
-@implementation FKRHeaderSearchBarTableViewController
+@implementation SearchDistrictsVC
+
+#pragma mark - IBAction
+
+-(void)doneButtonClicked:(id)sender{
+    [self.navigationController.navigationBar setNavigationBarWithoutIcon:NO];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)backButtonClicked:(id)sender{
+    [self.navigationController.navigationBar setNavigationBarWithoutIcon:NO];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Helper
+
 
 #pragma mark - Initializer
 
-- (id)initWithSectionIndexes:(BOOL)showSectionIndexes
+- (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic
+
 {
+    self.famousPersons=dic;
     if ((self = [super initWithSectionIndexes:showSectionIndexes])) {
-        self.title = @"Header Search Bar";
-        
         /*
          The exact same behavior as the contacts app is only possible with using private API. Without using private API the section index control on the right of the table won't overlap the search bar.
          Note: You shouldn't use private API in an App Store app, this is just for demo purposes.
         */
         
         //_mayUsePrivateAPI = YES;
+        
     }
     
     return self;
@@ -38,6 +55,23 @@
 
 - (void)viewDidLoad
 {
+    [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 56, 29)];
+    [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button"] forState:UIControlStateNormal];
+    [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button_on"] forState:UIControlStateHighlighted];
+    [doneButton setTitle:@"Xong" forState:UIControlStateNormal];
+    [doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
+    self.navigationItem.rightBarButtonItem=doneButtonItem;
     [super viewDidLoad];
     
     /*
@@ -87,7 +121,6 @@
 }
 
 #pragma mark - Overrides
-
 /*
  Override these methods so that the search symbol isn't shown in the section index titles control. 
 */
@@ -104,6 +137,18 @@
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
     return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //_searchVC.dicCitySearchParam=[self.famousPersons objectAtIndex:indexPath.row];
+    if (tableView != self.tableView){
+        _searchVC.dicDistrictSearchParam=  [self.filteredPersons objectAtIndex:indexPath.row];
+    }else{
+        _searchVC.dicDistrictSearchParam=  [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

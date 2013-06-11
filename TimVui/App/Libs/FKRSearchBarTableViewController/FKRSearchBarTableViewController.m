@@ -14,10 +14,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     
 }
 
-@property(nonatomic, copy) NSArray *famousPersons;
-@property(nonatomic, copy) NSArray *sections;
 
-@property(nonatomic, copy) NSArray *filteredPersons;
 @property(nonatomic, copy) NSString *currentSearchString;
 
 @property(nonatomic, strong, readwrite) UITableView *tableView;
@@ -31,6 +28,10 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 #pragma mark - Initializer
 
+-(void)setDataForSearchTable
+{
+}
+
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes
 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
@@ -38,8 +39,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         
         _showSectionIndexes = showSectionIndexes;
         
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"Top100FamousPersons" ofType:@"plist"];
-        _famousPersons = [[NSArray alloc] initWithContentsOfFile:path];
+        [self setDataForSearchTable];
         
         if (showSectionIndexes) {
             UILocalizedIndexedCollation *collation = [UILocalizedIndexedCollation currentCollation];
@@ -49,8 +49,9 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
                 [unsortedSections addObject:[NSMutableArray array]];
             }
             
-            for (NSString *personName in self.famousPersons) {
-                NSInteger index = [collation sectionForObject:personName collationStringSelector:@selector(description)];
+            for (NSDictionary *personName in self.famousPersons) {
+                NSString* personNameStr=[personName valueForKey:@"name"];
+                NSInteger index = [collation sectionForObject:personNameStr collationStringSelector:@selector(description)];
                 [[unsortedSections objectAtIndex:index] addObject:personName];
             }
             
@@ -58,7 +59,6 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
             for (NSMutableArray *section in unsortedSections) {
                 [sortedSections addObject:[collation sortedArrayFromArray:section collationStringSelector:@selector(description)]];
             }
-            
             self.sections = sortedSections;
         }
     }
@@ -171,12 +171,12 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     
     if (tableView == self.tableView) {
         if (self.showSectionIndexes) {
-            cell.textLabel.text = [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+            cell.textLabel.text = [[[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"name"] ;
         } else {
-            cell.textLabel.text = [self.famousPersons objectAtIndex:indexPath.row];
+            cell.textLabel.text = [[self.famousPersons objectAtIndex:indexPath.row] valueForKey:@"name"];
         }
     } else {
-        cell.textLabel.text = [self.filteredPersons objectAtIndex:indexPath.row];
+        cell.textLabel.text = [[self.filteredPersons objectAtIndex:indexPath.row] valueForKey:@"name"];
     }
     
     return cell;
@@ -208,8 +208,8 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         if (self.currentSearchString.length > 0 && [searchString rangeOfString:self.currentSearchString].location == 0) { // If the new search string starts with the last search string, reuse the already filtered array so searching is faster
             personsToSearch = self.filteredPersons;
         }
-        
-        self.filteredPersons = [personsToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchString]];
+        NSPredicate *filter = [NSPredicate predicateWithFormat:@"(name contains[cd] %@)",searchString];
+        self.filteredPersons = [personsToSearch filteredArrayUsingPredicate:filter];
     } else {
         self.filteredPersons = self.famousPersons;
     }

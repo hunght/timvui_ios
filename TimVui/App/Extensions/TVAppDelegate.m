@@ -155,31 +155,40 @@
 
 
 #pragma mark Application Events
-
-- (void)getNewDataParamsFromServer:(NSString*)strPath
+-(void)setData:(NSString*)key{
+    if ([key isEqualToString:kGetCityDistrictData]) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
+    }
+}
+- (void)getNewDataParamsFromServer:(NSString*)strPath withDic:(NSDictionary*)myDic forKey:(NSString*)key
 {
     [[TVNetworkingClient sharedClient] getPath:strPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:JSON] ;
         [dic setValue:[NSDate stringFromDate:[NSDate date]] forKey:@"lastUpdated"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setValue:dic forKey:kDataGetParamData];
+        [defaults setValue:dic forKey:key];
         [defaults synchronize];
-        NSLog(@"%@",dic);
+        if ([key isEqualToString:kGetCityDistrictData]) {
+            _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
+        }else if ([key isEqualToString:kDataGetParamData]) {
+            _getParamData=[defaults valueForKey:kDataGetParamData];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+
     }];
 }
 
-- (void)getDataParamsPath:(NSString *)strPath laterThanDays:(int)days checkDictionary:(NSDictionary *)dic
+- (void)getDataParamsPath:(NSString *)strPath laterThanDays:(int)days checkDictionary:(NSDictionary *)dic forKey:(NSString*)key
 {
     if (dic) {
-        NSDate* date=[NSDate dateFromString:[_getParamData valueForKey:@"lastUpdated"]];
+        NSDate* date=[NSDate dateFromString:[dic valueForKey:@"lastUpdated"]];
         NSLog(@"date=%@",date);
         if ([date isLaterThan:days]) {
-            [self getNewDataParamsFromServer:strPath];
+            [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
         }
     }else{
-        [self getNewDataParamsFromServer:strPath];
+        [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
     }
 }
 
@@ -191,13 +200,13 @@
     _getParamData=[defaults valueForKey:kDataGetParamData];
     NSString* strPath=@"data/getParamData";
     int days=7;
-    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getParamData];
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getParamData forKey:kDataGetParamData];
     
     _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
     strPath=@"data/getCityDistrictData";
     days=7;
-    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getParamData];
-    
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getCityDistrictData forKey:kGetCityDistrictData];
+     NSLog(@"dic=%@",_getCityDistrictData);
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
     [self setupGoogleAnalytics];
     [self setupAFNetworking];

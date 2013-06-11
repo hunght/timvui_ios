@@ -7,7 +7,8 @@
 //
 
 #import "SearchVC.h"
-#import "FKRHeaderSearchBarTableViewController.h"
+#import "SearchDistrictsVC.h"
+#import "SearchCitiesVC.h"
 @interface SearchVC ()
 
 @end
@@ -29,11 +30,15 @@
 }
 
 - (IBAction)buttonCityClicked:(id)sender {
-    UIViewController *viewController = [[FKRHeaderSearchBarTableViewController alloc] initWithSectionIndexes:0];
+    SearchCitiesVC *viewController = [[SearchCitiesVC alloc] initWithSectionIndexes:YES];
+    viewController.searchVC=self;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)buttonDistrictClicked:(id)sender {
+    SearchDistrictsVC *viewController = [[SearchDistrictsVC alloc] initWithSectionIndexes:YES withParam:[_dicCitySearchParam valueForKey:@"districts"]];
+    viewController.searchVC=self;
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 -(void)backButtonClicked:(id)sender{
@@ -106,6 +111,18 @@
     [_btnPrice500_1000 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     
     
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    if (_dicCitySearchParam)
+        [_btnCity setTitle:[_dicCitySearchParam valueForKey:@"name"] forState:UIControlStateNormal];
+    else
+        [_btnCity setTitle:@"Tỉnh/TP" forState:UIControlStateNormal];
+    
+    if (_dicDistrictSearchParam) 
+        [_btnDistrict setTitle:[_dicDistrictSearchParam valueForKey:@"name"] forState:UIControlStateNormal];
+    else
+        [_btnDistrict setTitle:@"Quận/Huyện" forState:UIControlStateNormal];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

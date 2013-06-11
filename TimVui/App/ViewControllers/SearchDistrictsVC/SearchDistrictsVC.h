@@ -7,9 +7,10 @@
 //
 
 #import "FKRSearchBarTableViewController.h"
-
-@interface FKRHeaderSearchBarTableViewController : FKRSearchBarTableViewController {
+#import "SearchVC.h"
+@interface SearchDistrictsVC : FKRSearchBarTableViewController {
     
 }
-
+@property (retain, nonatomic) SearchVC  *searchVC;
+- (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic;
 @end

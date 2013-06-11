@@ -20,5 +20,9 @@
 
 @property(nonatomic, strong, readonly) UITableView *tableView;
 @property(nonatomic, strong, readonly) UISearchBar *searchBar;
+@property(nonatomic, copy) NSArray *famousPersons;
+@property(nonatomic, copy) NSArray *sections;
+@property(nonatomic, copy) NSArray *filteredPersons;
+-(void)setDataForSearchTable;
 
 @end
