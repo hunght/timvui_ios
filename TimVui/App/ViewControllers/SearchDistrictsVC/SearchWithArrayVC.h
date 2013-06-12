@@ -12,7 +12,7 @@
 @interface SearchWithArrayVC : FKRSearchBarTableViewController {
     
 }
-@property (retain, nonatomic) SearchVC  *searchVC;
+@property (assign, nonatomic) SearchVC  *searchVC;
 
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic;
 @end

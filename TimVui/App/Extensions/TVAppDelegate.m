@@ -177,6 +177,10 @@
             _getDistrictHasPublicLocationData=dic;
         }else if ([key isEqualToString:kGetPublicLocationData]) {
             _getPublicLocationData=dic;
+        }else if ([key isEqualToString:kGetPriceAvgData]) {
+            _getPriceAvgData=dic;
+        }else if ([key isEqualToString:kGetCatData]) {
+            _getCatData=dic;
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -223,6 +227,16 @@
     strPath=@"data/getPublicLocationData";
     days=7;
     [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getPublicLocationData forKey:kGetDistrictHasPublicLocationData];
+
+    _getPriceAvgData=[defaults valueForKey:kGetPriceAvgData];
+    strPath=@"data/getPriceAvgData";
+    days=7;
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getPriceAvgData forKey:kGetPriceAvgData];
+    
+    _getCatData=[defaults valueForKey:kGetCatData];
+    strPath=@"data/getCatData";
+    days=7;
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getCatData forKey:kGetCatData];
     
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
     [self setupGoogleAnalytics];

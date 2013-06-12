@@ -19,5 +19,5 @@
 - (NSDate *)safeDateForKeyPath:(NSString *)keyPath;
 - (NSURL *)safeURLForKey:(NSString *)key;
 - (NSURL *)safeURLForKeyPath:(NSString *)keyPath;
-- (CLLocationCoordinate2D )safeLocaitonForKey:(NSString *)key;
+- (CLLocationCoordinate2D )safeLocationForKey:(NSString *)key;
 @end

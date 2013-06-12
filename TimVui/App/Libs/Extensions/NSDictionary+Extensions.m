@@ -43,7 +43,7 @@
 	id value = [self valueForKey:key defaultsTo:@""];
 	return ([value isKindOfClass:NSString.class]) ? value : @"";
 }
-- (CLLocationCoordinate2D )safeLocaitonForKey:(NSString *)key {
+- (CLLocationCoordinate2D )safeLocationForKey:(NSString *)key {
     CLLocationCoordinate2D location;
 	id value = [self valueForKey:key defaultsTo:@""];
 	NSString*latlng= ([value isKindOfClass:NSString.class]) ? value : @"";

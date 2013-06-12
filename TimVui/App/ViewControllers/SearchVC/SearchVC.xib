@@ -357,7 +357,7 @@
 					<object class="IBUIButton" id="224279619">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{51, 196}, {64, 27}}</string>
+						<string key="NSFrame">{{47, 196}, {64, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="557978940"/>
@@ -377,7 +377,7 @@
 					<object class="IBUIButton" id="557978940">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{120, 196}, {64, 27}}</string>
+						<string key="NSFrame">{{115, 196}, {64, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1002502212"/>
@@ -397,7 +397,7 @@
 					<object class="IBUIButton" id="1002502212">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{191, 196}, {74, 27}}</string>
+						<string key="NSFrame">{{183, 196}, {74, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="176199922"/>
@@ -417,7 +417,7 @@
 					<object class="IBUIButton" id="176199922">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{267, 196}, {50, 27}}</string>
+						<string key="NSFrame">{{260, 196}, {55, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="385207097"/>
@@ -1080,6 +1080,15 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">buttonSearchClicked:</string>
+						<reference key="source" ref="124494219"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">78</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">buttonBackgroundClicked:</string>
 						<reference key="source" ref="1001854961"/>
 						<reference key="destination" ref="372490531"/>
@@ -1184,31 +1193,31 @@
 						<int key="objectID">19</int>
 						<reference key="object" ref="204862774"/>
 						<reference key="parent" ref="191373211"/>
-						<string key="objectName">Button- restaurant</string>
+						<string key="objectName">Button- cafe</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">20</int>
 						<reference key="object" ref="907928766"/>
 						<reference key="parent" ref="191373211"/>
-						<string key="objectName">Button- restaurant</string>
+						<string key="objectName">Button- karaoke</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">21</int>
 						<reference key="object" ref="445546699"/>
 						<reference key="parent" ref="191373211"/>
-						<string key="objectName">Button- restaurant</string>
+						<string key="objectName">Button- quan an</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">22</int>
 						<reference key="object" ref="860240156"/>
 						<reference key="parent" ref="191373211"/>
-						<string key="objectName">Button- restaurant</string>
+						<string key="objectName">Button- tien banh</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">23</int>
 						<reference key="object" ref="953856876"/>
 						<reference key="parent" ref="191373211"/>
-						<string key="objectName">Button- restaurant</string>
+						<string key="objectName">Button- bar pub</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">24</int>
@@ -1355,7 +1364,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">77</int>
+			<int key="maxID">78</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -37,17 +37,15 @@
 
 #pragma mark - ViewControllerDelegate
 
-- (void)loadView {
-    [super loadView];
+- (void)postSearchBranch:(NSDictionary*)params {
+    NSLog(@"%@",params);
     self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
-    NSDictionary *params = @{@"city_alias": @"ha-noi"};
-
+    
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            
             [weakSelf.tableView reloadData];
             [weakSelf showBranchOnMap];
         });
@@ -57,10 +55,16 @@
     }];
 }
 
+- (void)loadView {
+    [super loadView];
+    NSDictionary *params = @{@"city_alias": @"ha-noi"};
+    [self postSearchBranch:params];
+}
+
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self.tableView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
-    
 }
 
 
@@ -74,13 +78,17 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Helper
+#pragma mark - SearchVCDelegate
+-(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
+    self.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:14];
+    [self postSearchBranch:params];
+}
 
-
-#pragma mark - Actions
+#pragma mark - IBActions
 
 -(void)searchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
+    [searchVC setDelegate:self];
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 

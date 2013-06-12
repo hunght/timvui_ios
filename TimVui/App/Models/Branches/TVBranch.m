@@ -54,7 +54,7 @@
     
 	self.special_content = [dict safeArrayForKey:@"special_content"];
 	self.address_full = [dict safeStringForKey:@"address_full"];
-	self.latlng = [dict safeLocaitonForKey:@"latlng"];
+	self.latlng = [dict safeLocationForKey:@"latlng"];
     
     self.image_count=[dict safeIntegerForKey:@"image_count"];
     self.images = [dict safeArrayForKey:@"images"];

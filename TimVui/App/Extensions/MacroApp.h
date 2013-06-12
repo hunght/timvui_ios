@@ -24,3 +24,9 @@
 #define kGetCityDistrictData                    @"kGetCityDistrictData"
 #define kGetDistrictHasPublicLocationData   @"kGetDistrictHasPublicLocationData"
 #define kGetPublicLocationData   @"kGetPublicLocationData"
+#define kGetPriceAvgData   @"kGetPriceAvgData"
+#define kGetCatData   @"kGetCatData"
+
+
+
+

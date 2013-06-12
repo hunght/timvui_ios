@@ -23,5 +23,7 @@
 @property (retain, nonatomic) NSDictionary *getCityDistrictData;
 @property (retain, nonatomic) NSDictionary *getDistrictHasPublicLocationData;
 @property (retain, nonatomic) NSDictionary *getPublicLocationData;
+@property (retain, nonatomic) NSDictionary *getPriceAvgData;
+@property (retain, nonatomic) NSDictionary *getCatData;
 -(void)showNotificationAboutSomething:(TVBranch*)branch;
 @end

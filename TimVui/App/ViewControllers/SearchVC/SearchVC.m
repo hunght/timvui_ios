@@ -8,9 +8,11 @@
 
 #import "SearchVC.h"
 #import "SearchWithArrayVC.h"
+#import "NSDictionary+Extensions.h"
 #import "TVAppDelegate.h"
 @interface SearchVC ()
-
+@property (retain,nonatomic) NSArray* priceArr;
+@property (retain,nonatomic) NSArray* catArr;
 @end
 
 @implementation SearchVC
@@ -25,6 +27,14 @@
 }
 
 #pragma mark IBAction
+-(void)categoryButtonClicked:(UIButton*)sender{
+    [sender setSelected:YES];
+    _dicCatSearchParam=[_catArr objectAtIndex:sender.tag];
+}
+-(void)priceButtonClicked:(UIButton*)sender{
+    [sender setSelected:YES];
+    _dicPriceSearchParam=[_priceArr objectAtIndex:sender.tag];
+}
 - (IBAction)buttonBackgroundClicked:(id)sender {
     [self.tfdSearch resignFirstResponder];
 }
@@ -95,6 +105,20 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
+- (IBAction)buttonSearchClicked:(id)sender {
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    CLLocationCoordinate2D location;
+    if (_dicCitySearchParam) {
+        [params setValue:[_dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
+        location=[_dicCitySearchParam safeLocationForKey:@"latlng"];
+    }
+    
+    if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
+        [_delegate didClickedOnButtonSearch:params withLatlng:location];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -134,37 +158,69 @@
     //
     self.view.backgroundColor = [UIColor colorWithRed:(236/255.0f) green:(236/255.0f) blue:(236/255.0f) alpha:1.0f];
     
-    [_btnCity setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateHighlighted];
-    [_btnDistrict setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateHighlighted];
+    [_btnCity setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateSelected];
+    [_btnDistrict setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateSelected];
     
-    [_btnPrice100 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
-    [_btnPrice100_200 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
-    [_btnPrice200_500 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
-    [_btnPrice500_1000 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
-    [_btnPrice1000 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateHighlighted];
+    [_btnPrice100 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateSelected];
+    [_btnPrice100_200 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateSelected];
+    [_btnPrice200_500 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateSelected];
+    [_btnPrice500_1000 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateSelected];
+    [_btnPrice1000 setBackgroundImage:[UIImage imageNamed:@"img_search_price_on"] forState:UIControlStateSelected];
     
     [_btnSearch setBackgroundImage:[UIImage imageNamed:@"img_button_large_on"] forState:UIControlStateHighlighted];
     [_btnReset setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_on"] forState:UIControlStateHighlighted];
     
-    [_btnRestaurant setImage:[UIImage imageNamed:@"img_search_restaurant_off"] forState:UIControlStateHighlighted];
-    [_btnCafe setImage:[UIImage imageNamed:@"img_search_cafe_on"] forState:UIControlStateHighlighted];
-    [_btnCakeShop setImage:[UIImage imageNamed:@"img_search_cake_shop_on"] forState:UIControlStateHighlighted];
-    [_btnEatingShop setImage:[UIImage imageNamed:@"img_search_eating_shop_on"] forState:UIControlStateHighlighted];
-    [_btnKaraoke setImage:[UIImage imageNamed:@"img_search_karaoke_on"] forState:UIControlStateHighlighted];
-    [_btnBar setImage:[UIImage imageNamed:@"img_search_club_on"] forState:UIControlStateHighlighted];
+    [_btnRestaurant setImage:[UIImage imageNamed:@"img_search_restaurant_off"] forState:UIControlStateSelected];
+    [_btnCafe setImage:[UIImage imageNamed:@"img_search_cafe_on"] forState:UIControlStateSelected];
+    [_btnCakeShop setImage:[UIImage imageNamed:@"img_search_cake_shop_on"] forState:UIControlStateSelected];
+    [_btnEatingShop setImage:[UIImage imageNamed:@"img_search_eating_shop_on"] forState:UIControlStateSelected];
+    [_btnKaraoke setImage:[UIImage imageNamed:@"img_search_karaoke_on"] forState:UIControlStateSelected];
+    [_btnBar setImage:[UIImage imageNamed:@"img_search_club_on"] forState:UIControlStateSelected];
     
     [_btnCity setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     [_btnCity setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [_btnDistrict setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     [_btnDistrict setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
-    [_btnPrice100 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-    [_btnPrice1000 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-    [_btnPrice100_200 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-    [_btnPrice200_500 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-    [_btnPrice500_1000 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [_btnPrice100 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [_btnPrice1000 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [_btnPrice100_200 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [_btnPrice200_500 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [_btnPrice500_1000 setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     
+    [_btnPrice100 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_btnPrice100_200 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_btnPrice200_500 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_btnPrice500_1000 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_btnPrice1000 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    //Set title for button Prices
+    _priceArr=[[SharedAppDelegate.getPriceAvgData valueForKey:@"data"] allValues];
+    [_btnPrice100 setTitle:[[_priceArr objectAtIndex:1] valueForKey:@"name"] forState:UIControlStateNormal];
+    _btnPrice100.tag=1;
+    [_btnPrice100_200 setTitle:[[_priceArr objectAtIndex:3] valueForKey:@"name"] forState:UIControlStateNormal];
+    _btnPrice100.tag=3;
+    [_btnPrice200_500 setTitle:[[_priceArr objectAtIndex:4] valueForKey:@"name"] forState:UIControlStateNormal];
+    _btnPrice100.tag=4;
+    [_btnPrice500_1000 setTitle:[[_priceArr objectAtIndex:2] valueForKey:@"name"] forState:UIControlStateNormal];
+    _btnPrice100.tag=2;
+    [_btnPrice1000 setTitle:[[_priceArr objectAtIndex:0] valueForKey:@"name"] forState:UIControlStateNormal];
+    _btnPrice100.tag=0;
     
+    //Set value for button category
+    _catArr=[SharedAppDelegate.getCatData valueForKey:@"data"] ;
+    NSLog(@"%@",_catArr);
+    [_btnRestaurant addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _btnRestaurant.tag=0;
+    [_btnCafe addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _btnCafe.tag=2;
+    [_btnCakeShop addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _btnCakeShop.tag=3;
+    [_btnEatingShop addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _btnEatingShop.tag  =1;
+    [_btnKaraoke addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _btnKaraoke.tag=5;
+    [_btnBar addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _btnBar.tag=4;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

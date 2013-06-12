@@ -178,7 +178,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     } else {
         cell.textLabel.text = [[self.filteredPersons objectAtIndex:indexPath.row] valueForKey:@"name"];
     }
-    
+
     return cell;
 }
 

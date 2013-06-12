@@ -23,6 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "PullToRevealMapVC.h"
 #import "UINavigationBar+JTDropShadow.h"
-@interface MainVC : PullToRevealMapVC
+#import "SearchVC.h"
+@interface MainVC : PullToRevealMapVC<SearchVCDelegate>
 
 @end

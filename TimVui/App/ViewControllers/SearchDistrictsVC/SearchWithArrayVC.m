@@ -146,10 +146,12 @@
     NSDictionary* arrResult=nil;
     if (tableView != self.tableView){
        arrResult =  [self.filteredPersons objectAtIndex:indexPath.row];
+        
     }else{
         arrResult=  [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     }
-    
+    UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     switch (_searchVC.currentSearchParam) {
         case kSearchParamCity:
             _searchVC.dicCitySearchParam=arrResult;
@@ -173,9 +175,8 @@
         default:
             break;
     }
-
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

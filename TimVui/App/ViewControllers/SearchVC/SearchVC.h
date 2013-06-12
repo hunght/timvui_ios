@@ -7,8 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+@protocol SearchVCDelegate
+/**
+ * Sent to the delegate when sign up has completed successfully. Immediately
+ * followed by an invocation of userDidLogin:
+ */
+-(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng;
 
+@end
 @interface SearchVC : UIViewController<UITextFieldDelegate>
+@property (nonatomic, retain) NSObject<SearchVCDelegate>* delegate;
 @property (retain, nonatomic) UITextField *tfdSearch;
 @property (retain, nonatomic) UIView *viewNavigation;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCity;
@@ -38,6 +47,8 @@
 @property (retain, nonatomic) NSDictionary *dicCuisineSearchParam;
 @property (retain, nonatomic) NSDictionary *dicPurposeSearchParam;
 @property (retain, nonatomic) NSDictionary *dicUtilitiesSearchParam;
+@property (retain, nonatomic) NSDictionary *dicPriceSearchParam;
+@property (retain, nonatomic) NSDictionary *dicCatSearchParam;
 
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblZone;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblCuisine;
@@ -51,6 +62,7 @@
 - (IBAction)buttonCuisineClicked:(id)sender;
 - (IBAction)buttonPurposeClicked:(id)sender;
 - (IBAction)buttonUtilityClicked:(id)sender;
+- (IBAction)buttonSearchClicked:(id)sender;
 
 @property (assign, nonatomic) int currentSearchParam;
 enum {
