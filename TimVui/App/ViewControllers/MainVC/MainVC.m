@@ -42,7 +42,6 @@
     self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
-    
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {

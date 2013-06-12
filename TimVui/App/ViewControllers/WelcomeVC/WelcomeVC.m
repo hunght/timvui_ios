@@ -12,6 +12,7 @@
 #import "MainVC.h"
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
+#import "NSDictionary+Extensions.h"
 //#import "PortMapper.h"
 @interface WelcomeVC ()
 
@@ -30,6 +31,29 @@
     return self;
 }
 
+-(void)getPublicIPFromSomewhere{
+    GCDAsyncUdpSocket *udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    STUNClient *stunClient = [[STUNClient alloc] init];
+    [stunClient requestPublicIPandPortWithUDPSocket:udpSocket delegate:self];
+}
+#pragma mark -
+#pragma mark STUNClientDelegate
+
+-(void)didReceivePublicIPandPort:(NSDictionary *) data{
+//    NSLog(@"Public IP=%@, public Port=%@, NAT is Symmetric: %@", [data objectForKey:publicIPKey],[data objectForKey:publicPortKey], [data objectForKey:isPortRandomization]);
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [data objectForKey:publicIPKey],@"decimal_ip",
+                            nil];
+    [[TVNetworkingClient sharedClient] postPath:@"data/getCityByIp" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
+        [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:0.0];
+}
 
 #pragma mark CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -43,17 +67,6 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     [_locationManager stopMonitoringSignificantLocationChanges];
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"",@"decimal_ip",
-                            nil];
-    [[TVNetworkingClient sharedClient] postPath:@"user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    
-    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:0.0];
 }
 
 
@@ -62,12 +75,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    self.locationManager = [[CLLocationManager alloc] init];
-    [self.locationManager setDelegate:self];
-    [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-    [self.locationManager startMonitoringSignificantLocationChanges];
+    if ([CLLocationManager locationServicesEnabled]==NO) {
+        [self getPublicIPFromSomewhere];
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Location Service Disabled"
+                                        withMessage:@"To re-enable, please go to Settings and turn on Location Service for this app."
+                                           withType:TSMessageNotificationTypeError
+                                       withDuration:10.0
+                                       withCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop];
+    }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        [self getPublicIPFromSomewhere];
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Location Service Disabled"
+                                        withMessage:@"To re-enable, please go to Settings and turn on Location Service for this app."
+                                           withType:TSMessageNotificationTypeError
+                                       withDuration:10.0
+                                       withCallback:nil
+                                         atPosition:TSMessageNotificationPositionTop];
+    }else{
+        // Do any additional setup after loading the view from its nib.
+        self.locationManager = [[CLLocationManager alloc] init];
+        [self.locationManager setDelegate:self];
+        [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        [self.locationManager startMonitoringSignificantLocationChanges];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning

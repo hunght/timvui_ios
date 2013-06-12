@@ -27,6 +27,7 @@
 #define kGetPriceAvgData   @"kGetPriceAvgData"
 #define kGetCatData   @"kGetCatData"
 
+#define kDistanceSearchMapDefault   @"1"//km
 
 
 

@@ -321,6 +321,8 @@
 		55F25E1D17423969003EB902 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E1617423966003EB902 /* NSMutableArray+Extensions.m */; };
 		55F25E1E17423969003EB902 /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E1817423967003EB902 /* NSString+Extensions.m */; };
 		55F25E1F17423969003EB902 /* NSURL+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E1A17423968003EB902 /* NSURL+Extensions.m */; };
+		55F2741017682BC90078C7F1 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F2740D17682BC90078C7F1 /* GCDAsyncUdpSocket.m */; };
+		55F2741117682BC90078C7F1 /* STUNClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F2740F17682BC90078C7F1 /* STUNClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		55F5F5181743A10100A0C243 /* UINavigationBar+JTDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F5F5171743A10000A0C243 /* UINavigationBar+JTDropShadow.m */; };
 		55F6275817533D3700E8F8F7 /* SearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F6275617533D3500E8F8F7 /* SearchVC.m */; };
 		55F6275917533D3700E8F8F7 /* SearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F6275717533D3600E8F8F7 /* SearchVC.xib */; };
@@ -703,6 +705,10 @@
 		55F25E1817423967003EB902 /* NSString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extensions.m"; path = "Extensions/NSString+Extensions.m"; sourceTree = "<group>"; };
 		55F25E1917423968003EB902 /* NSURL+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+Extensions.h"; path = "Extensions/NSURL+Extensions.h"; sourceTree = "<group>"; };
 		55F25E1A17423968003EB902 /* NSURL+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+Extensions.m"; path = "Extensions/NSURL+Extensions.m"; sourceTree = "<group>"; };
+		55F2740C17682BC90078C7F1 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		55F2740D17682BC90078C7F1 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		55F2740E17682BC90078C7F1 /* STUNClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STUNClient.h; sourceTree = "<group>"; };
+		55F2740F17682BC90078C7F1 /* STUNClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STUNClient.m; sourceTree = "<group>"; };
 		55F5F5161743A10000A0C243 /* UINavigationBar+JTDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+JTDropShadow.h"; sourceTree = "<group>"; };
 		55F5F5171743A10000A0C243 /* UINavigationBar+JTDropShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+JTDropShadow.m"; sourceTree = "<group>"; };
 		55F6275517533D3500E8F8F7 /* SearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchVC.h; path = SearchVC/SearchVC.h; sourceTree = "<group>"; };
@@ -1306,6 +1312,7 @@
 		55BAED3B1709726300CF3171 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				55F2740B17682BC90078C7F1 /* STUNClient */,
 				55914BA11762F0EB00A9C63D /* FKRSearchBarTableViewController */,
 				55C30FBE1761E61800D04744 /* NSDate-Extensions */,
 				557328911761E1A900765988 /* NSDateHelper */,
@@ -1508,6 +1515,17 @@
 			);
 			name = NSDate;
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		55F2740B17682BC90078C7F1 /* STUNClient */ = {
+			isa = PBXGroup;
+			children = (
+				55F2740C17682BC90078C7F1 /* GCDAsyncUdpSocket.h */,
+				55F2740D17682BC90078C7F1 /* GCDAsyncUdpSocket.m */,
+				55F2740E17682BC90078C7F1 /* STUNClient.h */,
+				55F2740F17682BC90078C7F1 /* STUNClient.m */,
+			);
+			path = STUNClient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1921,6 +1939,8 @@
 				55C30FC21761E61800D04744 /* NSDate-Utilities.m in Sources */,
 				55914BA51762F0EB00A9C63D /* FKRSearchBarTableViewController.m in Sources */,
 				55AF6DF01766D6E90008D3F0 /* SearchWithArrayVC.m in Sources */,
+				55F2741017682BC90078C7F1 /* GCDAsyncUdpSocket.m in Sources */,
+				55F2741117682BC90078C7F1 /* STUNClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

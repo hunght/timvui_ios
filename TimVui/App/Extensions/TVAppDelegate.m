@@ -127,6 +127,7 @@
 
 }
 
+
 #pragma mark Helpers
 
 
@@ -203,8 +204,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Get Params info from server
-//    ;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     _getParamData=[defaults valueForKey:kDataGetParamData];

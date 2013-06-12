@@ -25,6 +25,7 @@
 #import "ForgetPassVC.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "GlobalDataUser.h"
+#import "TSMessage.h"
 @implementation LoginVC
 @synthesize delegate=_delegate;
 
@@ -246,11 +247,19 @@
     }
     
     if (alertMessage) {
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertMessage
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
+//        [[[UIAlertView alloc] initWithTitle:alertTitle
+//                                    message:alertMessage
+//                                   delegate:nil
+//                          cancelButtonTitle:@"OK"
+//                          otherButtonTitles:nil] show];
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:alertTitle
+                                        withMessage:alertMessage
+                                           withType:TSMessageNotificationTypeWarning
+                                       withDuration:0.0
+                                       withCallback:nil
+                                         atPosition:TSMessageNotificationPositionBottom];
+        
     }
 }
 

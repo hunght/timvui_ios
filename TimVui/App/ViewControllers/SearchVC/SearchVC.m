@@ -10,6 +10,7 @@
 #import "SearchWithArrayVC.h"
 #import "NSDictionary+Extensions.h"
 #import "TVAppDelegate.h"
+#import "GlobalDataUser.h"
 @interface SearchVC ()
 @property (retain,nonatomic) NSArray* priceArr;
 @property (retain,nonatomic) NSArray* catArr;
@@ -22,6 +23,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _dicCatSearchParam=[[NSMutableArray alloc] init];
+        //_dicPriceSearchParam=[[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -29,10 +32,12 @@
 #pragma mark IBAction
 -(void)categoryButtonClicked:(UIButton*)sender{
     [sender setSelected:YES];
-    _dicCatSearchParam=[_catArr objectAtIndex:sender.tag];
+    NSLog(@"%d",sender.tag);
+    [_dicCatSearchParam addObject:[[_catArr objectAtIndex:sender.tag] valueForKey:@"alias"]];
 }
 -(void)priceButtonClicked:(UIButton*)sender{
     [sender setSelected:YES];
+//    [_dicPriceSearchParam addObject:[[_priceArr objectAtIndex:sender.tag] allValues]];
     _dicPriceSearchParam=[_priceArr objectAtIndex:sender.tag];
 }
 - (IBAction)buttonBackgroundClicked:(id)sender {
@@ -108,9 +113,25 @@
 - (IBAction)buttonSearchClicked:(id)sender {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     CLLocationCoordinate2D location;
+    
+    [params setValue:kDistanceSearchMapDefault forKey:@"distance"];
+    
     if (_dicCitySearchParam) {
         [params setValue:[_dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
         location=[_dicCitySearchParam safeLocationForKey:@"latlng"];
+    }else{
+        location=[GlobalDataUser sharedAccountClient].userLocation.coordinate;
+        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+        [params setValue:strLatLng forKey:@"latlng"];
+        [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
+    }
+    
+    if (_dicCatSearchParam) {
+        [params setValue:_dicCatSearchParam  forKey:@"cat_aliases"];
+    }
+    
+    if (_dicPriceSearchParam) {
+        [params setValue:_dicPriceSearchParam  forKey:@"prices"];
     }
     
     if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
@@ -196,16 +217,19 @@
     //Set title for button Prices
     _priceArr=[[SharedAppDelegate.getPriceAvgData valueForKey:@"data"] allValues];
     [_btnPrice100 setTitle:[[_priceArr objectAtIndex:1] valueForKey:@"name"] forState:UIControlStateNormal];
-    _btnPrice100.tag=1;
-    [_btnPrice100_200 setTitle:[[_priceArr objectAtIndex:3] valueForKey:@"name"] forState:UIControlStateNormal];
-    _btnPrice100.tag=3;
-    [_btnPrice200_500 setTitle:[[_priceArr objectAtIndex:4] valueForKey:@"name"] forState:UIControlStateNormal];
-    _btnPrice100.tag=4;
-    [_btnPrice500_1000 setTitle:[[_priceArr objectAtIndex:2] valueForKey:@"name"] forState:UIControlStateNormal];
-    _btnPrice100.tag=2;
-    [_btnPrice1000 setTitle:[[_priceArr objectAtIndex:0] valueForKey:@"name"] forState:UIControlStateNormal];
-    _btnPrice100.tag=0;
     
+    [_btnPrice100_200 setTitle:[[_priceArr objectAtIndex:3] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice200_500 setTitle:[[_priceArr objectAtIndex:4] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice500_1000 setTitle:[[_priceArr objectAtIndex:2] valueForKey:@"name"] forState:UIControlStateNormal];
+   
+    [_btnPrice1000 setTitle:[[_priceArr objectAtIndex:0] valueForKey:@"name"] forState:UIControlStateNormal];
+    _btnPrice1000.tag=0;
+    [_btnPrice100 setTag:1];
+    _btnPrice100_200.tag=3;
+    _btnPrice200_500.tag=4;
+    _btnPrice500_1000.tag=2;
     //Set value for button category
     _catArr=[SharedAppDelegate.getCatData valueForKey:@"data"] ;
     NSLog(@"%@",_catArr);
@@ -224,6 +248,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [_btnPrice100 setTag:1];
     if (_dicCitySearchParam)
         [_btnCity setTitle:[_dicCitySearchParam valueForKey:@"name"] forState:UIControlStateNormal];
     else

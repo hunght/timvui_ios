@@ -7,6 +7,7 @@
 //
 #import <CoreLocation/CoreLocation.h>
 #import "GHUser.h"
+
 @interface GlobalDataUser : NSObject<CLLocationManagerDelegate>
 
 @property (retain, nonatomic) CLLocationManager *locationManager;
@@ -15,7 +16,9 @@
 @property (assign, nonatomic) NSNumber *userID;
 @property (retain, nonatomic) GHUser *user;
 @property (retain, nonatomic) NSString *facebookID;
+@property (retain, nonatomic) NSDictionary *dicCity;
 @property (assign, nonatomic) BOOL isLogin;
+-(NSDictionary *)dicCity;
 + (GlobalDataUser *)sharedAccountClient;
 +(void)setGlocalDataUser:(NSDictionary *)attributes;
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd;

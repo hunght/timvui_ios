@@ -48,7 +48,7 @@
 @property (retain, nonatomic) NSDictionary *dicPurposeSearchParam;
 @property (retain, nonatomic) NSDictionary *dicUtilitiesSearchParam;
 @property (retain, nonatomic) NSDictionary *dicPriceSearchParam;
-@property (retain, nonatomic) NSDictionary *dicCatSearchParam;
+@property (retain, nonatomic) NSMutableArray *dicCatSearchParam;
 
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblZone;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblCuisine;

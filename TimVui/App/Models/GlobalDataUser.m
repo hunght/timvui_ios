@@ -7,13 +7,9 @@
 //
 
 #import "GlobalDataUser.h"
-
+#import "TVAppDelegate.h"
 @implementation GlobalDataUser
 
-@synthesize userID = _userID;
-@synthesize user = _username;
-@synthesize facebookID = _facebookID;
-@synthesize isLogin=_isLogin;
 
 static GlobalDataUser *_sharedClient = nil;
 
@@ -29,7 +25,6 @@ static GlobalDataUser *_sharedClient = nil;
         [_sharedClient.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         _sharedClient.user=[[GHUser alloc] init];
     });
-    
     return _sharedClient;
 }
 
@@ -74,8 +69,19 @@ static GlobalDataUser *_sharedClient = nil;
         bgTask = UIBackgroundTaskInvalid;
     }
 }
+-(NSDictionary *)dicCity{
+    if (_dicCity) {
+        return _dicCity;
+    }else if (_user.city_id) {
+        NSPredicate* filter = [NSPredicate predicateWithFormat:@"(city_id == %@)",_user.city_id];
+        NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
+        _dicCity=[idPublicArr lastObject];
+    }
+    return _dicCity;
+}
 
 #pragma mark Helper
+
 
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
     CLLocation* current=[[CLLocation alloc] initWithLatitude:fromAdd.latitude longitude:fromAdd.longitude];
@@ -103,6 +109,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
+    
     NSLog(@"%@",error);
 }
 
