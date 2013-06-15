@@ -20,18 +20,7 @@
 	return self;
 }
 
-- (NSString *)extendedEventType {
-	NSString *action = [self.arrURLImages safeStringForKey:@"action"];
-	if ([self.name isEqualToString:@"IssuesEvent"]) {
-		return [action isEqualToString:@"closed"] ? @"IssuesClosedEvent" : @"IssuesOpenedEvent";
-	} else if ([self.name isEqualToString:@"PullRequestEvent"]) {
-		if ([action isEqualToString:@"synchronize"]) {
-			return @"PullRequestSynchronizeEvent";
-		}
-		return [action isEqualToString:@"closed"] ? @"PullRequestClosedEvent" : @"PullRequestOpenedEvent";
-	}
-	return self.name;
-}
+
 
 - (void)markAsRead {
 	self.read = YES;
@@ -69,7 +58,8 @@
     self.waiting_end = [dict safeStringForKey:@"waiting_end"];
     self.holiday = [dict safeStringForKey:@"holiday"];
     self.year = [dict safeStringForKey:@"year"];
-    
+    self.utilities = [dict safeArrayForKey:@"utilities"];
+//    NSLog(@"%@",_utilities);
     self.adaptive = [[[dict valueForKey:@"params"] valueForKey:@"thich-hop"] safeDictForKey:@"params"];
     self.styleFoody = [[[dict valueForKey:@"params"] valueForKey:@"am-thuc"] safeDictForKey:@"params"];
     self.services = [[[dict valueForKey:@"params"] valueForKey:@"tien-ich"] safeDictForKey:@"params"];

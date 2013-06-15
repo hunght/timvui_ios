@@ -11,7 +11,7 @@
 @interface GlobalDataUser : NSObject<CLLocationManagerDelegate>
 
 @property (retain, nonatomic) CLLocationManager *locationManager;
-@property (retain, nonatomic) CLLocation *userLocation;
+@property (assign, nonatomic) CLLocationCoordinate2D userLocation;
 
 @property (assign, nonatomic) NSNumber *userID;
 @property (retain, nonatomic) GHUser *user;

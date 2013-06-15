@@ -28,7 +28,7 @@ typedef enum
 + (BOOL)validatePassword:(NSString*)pass withConfirmPass:(NSString*)confirmPass;
 +(BOOL)checkPhoneNumber:(NSString *)aString;
 +(BOOL)validateInputString:(NSString*)string withMessage:(NSString*)strMess;
-
++ (void)setBorderForLayer:(CALayer *)l radius:(float)radius;
 
 + (NSURL *)getThumbImageOfCoverBranch:(NSDictionary *)arrURLs;
 + (NSURL *)getLargeImageOfCoverBranch:(NSDictionary *)arrURLs;

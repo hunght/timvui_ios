@@ -54,7 +54,7 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 
-- (void)sendBackgroundLocationToServer:(CLLocation *)location {
+- (void)sendBackgroundLocationToServer:(CLLocationCoordinate2D )location {
     UIBackgroundTaskIdentifier bgTask = 0;
     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:
               ^{
@@ -85,14 +85,15 @@ static GlobalDataUser *_sharedClient = nil;
 
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
     CLLocation* current=[[CLLocation alloc] initWithLatitude:fromAdd.latitude longitude:fromAdd.longitude];
-    return [current distanceFromLocation:_userLocation];
+    CLLocation*userLocal=[[CLLocation alloc] initWithLatitude:_userLocation.latitude longitude:_userLocation.longitude];
+    return [current distanceFromLocation:userLocal];
 }
 
 #pragma mark CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    _userLocation = newLocation;
+    _userLocation = newLocation.coordinate;
     BOOL isInBackground = NO;
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
         isInBackground = YES;
@@ -100,7 +101,7 @@ static GlobalDataUser *_sharedClient = nil;
     
     if(isInBackground) {
         [_locationManager startMonitoringSignificantLocationChanges];
-        [self sendBackgroundLocationToServer:_userLocation];
+        [self sendBackgroundLocationToServer:(_userLocation)];
     }else{
         //
         

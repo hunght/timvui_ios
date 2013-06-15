@@ -37,6 +37,8 @@
 @property(nonatomic,strong)NSDictionary *decoration;
 @property(nonatomic,strong)NSDictionary *cuisine;
 
+@property(nonatomic,strong)NSArray *utilities;
+
 @property(nonatomic,strong)NSDictionary *public_locations;
 @property(nonatomic,strong)NSString *direction;
 @property(nonatomic,readonly)BOOL isCommentEvent;

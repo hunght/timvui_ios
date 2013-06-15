@@ -85,7 +85,6 @@
     
     UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 66.0f, 234.0f, 1.0f)];
     grayLine.backgroundColor = [UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f];
-    
     [_whiteView addSubview:grayLine];
     [_whiteView addSubview:self.textLabel];
     [_whiteView addSubview:self.detailTextLabel];
@@ -94,6 +93,7 @@
     [_whiteView addSubview:price_avgIcon];
     
     [self.contentView addSubview:_whiteView];
+    [self.contentView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
     return self;
 }
 

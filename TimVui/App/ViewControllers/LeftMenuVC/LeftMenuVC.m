@@ -14,7 +14,7 @@
 #import "TVAppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "ECSlidingViewController.h"
-#import "MainVC.h"
+#import "MapTableViewController.h"
 #import "MyNavigationController.h"
 #define kNumberOfSections 3
 
@@ -328,7 +328,7 @@ enum {
             case kSection2Services:
                 switch (row) {
                     case kS1Row0:
-                        viewController = [[MainVC alloc] initWithStyle:UITableViewStylePlain];
+                        viewController = [[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil];
                         break;
                         
                     default:
@@ -343,7 +343,6 @@ enum {
                         [av show];
                         //[tableView deselectRowAtIndexPath:indexPath animated:YES];
                         break;
-                        
                     default:
                         break;
                 }

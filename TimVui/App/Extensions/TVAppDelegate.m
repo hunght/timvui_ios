@@ -7,7 +7,7 @@
 //
 
 #import "TVAppDelegate.h"
-#import "MainVC.h"
+#import "ViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "TVNetworkingClient.h"
 #import "ECSlidingViewController.h"

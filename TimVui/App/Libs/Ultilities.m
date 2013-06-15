@@ -106,6 +106,15 @@ static bool isRetinaYES =NO;
     isRetinaYES= ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)] && ([UIScreen mainScreen].scale == 2.0))?1:0;
 }
 
+#pragma mark - CALayer
++ (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:radius];
+    // You can even add a border
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+}
+
 #pragma mark - Validate TextField
 +(BOOL)validateInputString:(NSString*)string withMessage:(NSString*)strMess {
     if (!string) {

@@ -28,14 +28,14 @@
 @implementation PullToRevealMapVC
 @synthesize pullToRevealDelegate;
 @synthesize mapView=mapView_;
-@synthesize branches=_events;
+
 
 #pragma mark - Init methods
 - (void) initializeMapView
 {
     // Create a GMSCameraPosition that tells the map to display the
     // coordinate -33.86,151.20 at zoom level 6.
-    CLLocationCoordinate2D userLocation=[GlobalDataUser sharedAccountClient].userLocation.coordinate;
+    CLLocationCoordinate2D userLocation=[GlobalDataUser sharedAccountClient].userLocation;
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:userLocation.latitude
                                                             longitude:userLocation.longitude
                                                                  zoom:6];
@@ -59,11 +59,11 @@
     [mapView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
     //The setup code (in viewDidLoad in your view controller)
-//    UITapGestureRecognizer *singleFingerTap =
-//    [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                            action:@selector(handleSingleTapMapView:)];
-//    [singleFingerTap setDelegate:self];
-//    [self.mapView addGestureRecognizer:singleFingerTap];
+    UITapGestureRecognizer *singleFingerTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(handleSingleTapMapView:)];
+    [singleFingerTap setDelegate:self];
+    [self.mapView addGestureRecognizer:singleFingerTap];
     
     [self.tableView insertSubview:mapView_ aboveSubview:self.tableView];
 }
@@ -75,13 +75,32 @@
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
     [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.mapView addSubview:_btnSearchBar];
-    
-    toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -20, self.tableView.bounds.size.width, 20)];
+
+    toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -50, self.tableView.bounds.size.width, 50)];
     [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [toolbar setBackgroundColor:[UIColor clearColor]];
+
+    UIButton*menu_icon = [[UIButton alloc] initWithFrame:CGRectMake(8, -50, 40, 40)];
+    [menu_icon setImage:[UIImage imageNamed:@"img_map_view_menu_icon"] forState:UIControlStateNormal];
+    [menu_icon addTarget:self action:@selector(menuLocationBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [menu_icon setBackgroundColor:[UIColor whiteColor]];
+    CALayer *l=menu_icon.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:2.0];
+    [self.tableView addSubview:menu_icon];
     
-    //[self.tableView insertSubview:toolbar aboveSubview:self.tableView];
+    UIButton*user_current_location = [[UIButton alloc] initWithFrame:CGRectMake(272, -50, 40, 40)];
+    [user_current_location setImage:[UIImage imageNamed:@"img_map_view_user_current_location"] forState:UIControlStateNormal];
+    [user_current_location addTarget:self action:@selector(currentLocationBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [user_current_location setBackgroundColor:[UIColor whiteColor]];
+    l=user_current_location.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:2.0];
+    [self.tableView addSubview:user_current_location];
+    
+    [self.tableView insertSubview:toolbar aboveSubview:self.tableView];
 }
+
 #pragma mark - ViewControllerDelegate
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -151,9 +170,9 @@
 }
 
 -(void)showBranchOnMap{
-    NSLog(@"%d",_events.count);
+    NSLog(@"%d",_branches.count);
     
-    for (TVBranch* branch in _events.items) {
+    for (TVBranch* branch in _branches.items) {
         
         // Add a custom 'arrow' marker pointing to Melbourne.
         GMSMarker *melbourneMarker = [[GMSMarker alloc] init];
@@ -212,16 +231,18 @@
 
 
 
-#pragma mark - ScrollView Delegate
+#pragma mark - UIScrollViewDelegate
 - (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    
     double contentOffset = scrollView.contentOffset.y;
+    
     lastDragOffset = contentOffset;
 
     if(contentOffset < kTableViewContentInsetX*-1)
     {
         [self zoomMapToFitAnnotations];
-        //[mapView setUserInteractionEnabled:YES];
+//        [mapView_ setUserInteractionEnabled:YES];
         
         [UIView animateWithDuration:kAnimationDuration
                          animations:^()
@@ -232,7 +253,7 @@
     }
     else if (contentOffset >= kTableViewContentInsetX*-1)
     {
-        //[mapView setUserInteractionEnabled:NO];
+//        [mapView_ setUserInteractionEnabled:NO];
         
         [UIView animateWithDuration:kAnimationDuration
                          animations:^()
@@ -246,13 +267,14 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    double contentOffset = scrollView.contentOffset.y;
     
+    double contentOffset = scrollView.contentOffset.y;
+    NSLog(@"contentOffset=%f",contentOffset);
     if (contentOffset < lastDragOffset)
         scrollViewIsDraggedDownwards = YES;
     else
         scrollViewIsDraggedDownwards = NO;
-
+    
     if (!scrollViewIsDraggedDownwards)
     {
         [mapView_ setFrame:

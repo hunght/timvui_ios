@@ -9,7 +9,7 @@
 #import "WelcomeVC.h"
 #import "GlobalDataUser.h"
 #import "TVAppDelegate.h"
-#import "MainVC.h"
+#import "MapTableViewController.h"
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
 #import "NSDictionary+Extensions.h"
@@ -48,20 +48,20 @@
     [[TVNetworkingClient sharedClient] postPath:@"data/getCityByIp" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
         [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
+        [GlobalDataUser sharedAccountClient].userLocation=[[JSON valueForKey:@"data"] safeLocationForKey:@"latlng"];
+        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     }];
-    
-    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:0.0];
 }
 
 #pragma mark CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    [GlobalDataUser sharedAccountClient].userLocation=newLocation;
+    [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
     //NSLog(@"%f",newLocation.coordinate.latitude);
     [_locationManager stopMonitoringSignificantLocationChanges];
-    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MainVC alloc] initWithStyle:UITableViewStylePlain] afterDelay:0.0];
+    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
