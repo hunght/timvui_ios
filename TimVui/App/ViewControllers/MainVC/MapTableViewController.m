@@ -74,7 +74,17 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 - (void)loadView {
     [super loadView];
-    NSDictionary *params = @{@"city_alias": @"ha-noi"};
+    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
+    NSDictionary *params = nil;
+    CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
+
+    if (location.latitude) {
+        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"],
+                   @"latlng": strLatLng};
+    }else
+        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"]};
+    
     [self postSearchBranch:params];
 }
 
@@ -122,6 +132,15 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.locationPickerView addSubview:_btnSearchBar];
     // Do any additional setup after loading the view from its nib.
+
+        
+        CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
+        if (location.latitude) {
+            [_locationPickerView.mapView animateToLocation:location];
+            
+        }else{
+            
+        }
     
 }
 
@@ -181,6 +200,20 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
 }
 
+#pragma mark - Helper
+-(double) getDistanceMetresFrom:(CLLocationCoordinate2D)coord1 toLocation:(CLLocationCoordinate2D) coord2
+{
+    CLLocation* location1 =
+    [[CLLocation alloc]
+     initWithLatitude: coord1.latitude
+     longitude: coord1.longitude];
+    CLLocation* location2 =
+    [[CLLocation alloc]
+     initWithLatitude: coord2.latitude
+     longitude: coord2.longitude];
+    
+    return [location1 distanceFromLocation: location2];
+}
 #pragma mark - SearchVCDelegate
 -(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
     _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:14];
@@ -189,7 +222,14 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 #pragma mark - GMSMapViewDelegate
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position{
-    
+    if (_lastPosition) {
+        double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition.target];
+        NSLog(@"distance===%f",distance);
+        if (distance>kTVDistanceMovingMap) {
+            
+        }
+    }
+    _lastPosition=position;
 }
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
@@ -256,7 +296,21 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     textLabel.text=branch.name;
     detailTextLabel.text=branch.address_full;
     price_avg.text=branch.price_avg;
-    NSLog(@"%@",branch.utilities);
+//    NSLog(@"%@",branch.utilities);
+    int countUtilities=0;
+    for (NSString* strAlias in branch.utilities) {
+        NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",strAlias];
+        NSDictionary* params=[SharedAppDelegate getParamData];
+        NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
+        NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
+        NSDictionary* utilityDic=[idPublicArr lastObject];
+        
+        UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(8+countUtilities*(8+18),73, 18, 18)];
+        
+        [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
+        [_whiteView addSubview:iconIView];
+        countUtilities++;
+    }
     return view;
 }
 

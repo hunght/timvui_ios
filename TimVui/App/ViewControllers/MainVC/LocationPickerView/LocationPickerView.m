@@ -469,7 +469,7 @@
     if ((self.isMapFullScreen == NO) &&
         (self.isMapAnimating == NO)) {
         CGFloat mapFrameYAdjustment = 0.0;
-        NSLog(@"scrollOffset = %f",scrollOffset);
+//        NSLog(@"scrollOf fset = %f",scrollOffset);
         // If the user is pulling down
         if (scrollOffset < -30) {
             // Pull to expand map?

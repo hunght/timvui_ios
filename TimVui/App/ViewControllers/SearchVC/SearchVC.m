@@ -120,9 +120,13 @@
         [params setValue:[_dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
         location=[_dicCitySearchParam safeLocationForKey:@"latlng"];
     }else{
+
         location=[GlobalDataUser sharedAccountClient].userLocation;
-        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-        [params setValue:strLatLng forKey:@"latlng"];
+        if (location.latitude) {
+            NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+            [params setValue:strLatLng forKey:@"latlng"];
+        }
+        
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
     }
     

@@ -32,26 +32,45 @@
 }
 
 -(void)getPublicIPFromSomewhere{
-    GCDAsyncUdpSocket *udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+
     
-    STUNClient *stunClient = [[STUNClient alloc] init];
-    [stunClient requestPublicIPandPortWithUDPSocket:udpSocket delegate:self];
+    NSURL *iPURL = [NSURL URLWithString:@"http://api.externalip.net/ip/"];
+    
+    if (iPURL) {
+        NSError *error = nil;
+        NSString *theIpHtml = [NSString stringWithContentsOfURL:iPURL
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&error];
+        if (!error) {
+            [self didReceivePublicIPandPort:theIpHtml];
+            
+            NSLog(@"%@",theIpHtml);
+        } else {
+            NSLog(@"Oops... g %d, %@", 
+                  [error code], 
+                  [error localizedDescription]);
+        }
+    }
+
 }
 #pragma mark -
 #pragma mark STUNClientDelegate
 
--(void)didReceivePublicIPandPort:(NSDictionary *) data{
+-(void)didReceivePublicIPandPort:(NSString *) data{
 //    NSLog(@"Public IP=%@, public Port=%@, NAT is Symmetric: %@", [data objectForKey:publicIPKey],[data objectForKey:publicPortKey], [data objectForKey:isPortRandomization]);
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [data objectForKey:publicIPKey],@"decimal_ip",
+                            data,@"decimal_ip",
                             nil];
     [[TVNetworkingClient sharedClient] postPath:@"data/getCityByIp" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
+//        NSLog(@"%@",JSON);
         [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
         [GlobalDataUser sharedAccountClient].userLocation=[[JSON valueForKey:@"data"] safeLocationForKey:@"latlng"];
-        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
+
+        [self checkLocationServiceAvaible];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
+
+        [self checkLocationServiceAvaible];
     }];
 }
 
@@ -72,11 +91,11 @@
 
 #pragma mark ViewControllerDelegate
 
-- (void)viewDidLoad
+- (void)checkLocationServiceAvaible
 {
-    [super viewDidLoad];
+
     if ([CLLocationManager locationServicesEnabled]==NO) {
-        [self getPublicIPFromSomewhere];
+        
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Location Service Disabled"
                                         withMessage:@"To re-enable, please go to Settings and turn on Location Service for this app."
@@ -85,7 +104,7 @@
                                        withCallback:nil
                                          atPosition:TSMessageNotificationPositionTop];
     }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
-        [self getPublicIPFromSomewhere];
+        
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Location Service Disabled"
                                         withMessage:@"To re-enable, please go to Settings and turn on Location Service for this app."
@@ -101,6 +120,16 @@
         [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         [self.locationManager startMonitoringSignificantLocationChanges];
     }
+    if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
+        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
+    }
+}
+
+- (void)viewDidLoad
+{
+    [self getPublicIPFromSomewhere];
+    [super viewDidLoad];
+    
     
 }
 

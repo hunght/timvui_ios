@@ -28,6 +28,6 @@
 #define kGetCatData   @"kGetCatData"
 
 #define kDistanceSearchMapDefault   @"1"//km
-
+#define kTVDistanceMovingMap   5000 //m
 
 

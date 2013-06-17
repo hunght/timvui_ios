@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GCDAsyncUdpSocket.h"
-#import "STUNClient.h"
 #import <CoreLocation/CoreLocation.h>
-@interface WelcomeVC : UIViewController<CLLocationManagerDelegate,STUNClientDelegate>
+@interface WelcomeVC : UIViewController<CLLocationManagerDelegate>
 @property (retain, nonatomic) CLLocationManager *locationManager;
 @end

@@ -25,6 +25,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Ultilities.h"
+#import "TVAppDelegate.h"
 @implementation BranchMainCell {
 @private
     __strong TVBranch *_branch;
@@ -103,6 +104,22 @@
     self.detailTextLabel.text=_branch.address_full;
     self.price_avg.text=_branch.price_avg;
     [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    int countUtilities=0;
+    NSLog(@"----------------- %@/n -----------------",branch.name);
+    for (NSString* strAlias in branch.utilities) {
+        NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",strAlias];
+        NSDictionary* params=[SharedAppDelegate getParamData];
+        NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
+        NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
+        NSDictionary* utilityDic=[idPublicArr lastObject];
+        
+        UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(8+countUtilities*(8+18),73, 18, 18)];
+        NSLog(@"utilityDic=== %@",utilityDic);
+        [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
+        [_whiteView addSubview:iconIView];
+        countUtilities++;
+    }
+    NSLog(@"----------------- %@/n -----------------",branch.name);
     [self setNeedsLayout];
 }
 
