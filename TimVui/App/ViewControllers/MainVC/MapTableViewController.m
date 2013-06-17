@@ -16,7 +16,8 @@
 #import "BranchMainCell.h"
 #import "TVAppDelegate.h"
 #import "Ultilities.h"
-
+#import "NSDate+Helper.h"
+#import "NSDictionary+Extensions.h"
 @interface MapTableViewController (){
 @private
 __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -26,51 +27,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 @implementation MapTableViewController
 
-#pragma mark - Helper
--(void)showBranchOnMap{
-    NSLog(@"_branches.count = %d",_branches.count);
-    int i=0;
-    for (TVBranch* branch in _branches.items) {
-        GMSMarker *melbourneMarker = [[GMSMarker alloc] init];
-        melbourneMarker.title = [NSString stringWithFormat:@"%d",i];
-        melbourneMarker.position =  branch.latlng;
-        SDWebImageManager *manager = [SDWebImageManager sharedManager];
-        [manager downloadWithURL:[Ultilities getThumbImageOfCoverBranch:branch.arrURLImages]
-                        delegate:self
-                         options:0
-                         success:^(UIImage *image, BOOL cached)
-         {
-             UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
-             image=[image imageByScalingAndCroppingForSize:CGSizeMake(30, 30)];
-             UIGraphicsBeginImageContext( bottomImage.size );
-             [bottomImage drawAtPoint:CGPointZero];
-             [image drawInRect:CGRectMake(6.0f,5.0f,30.0f,30.0f) blendMode:kCGBlendModeNormal alpha:1];
-             UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-             UIGraphicsEndImageContext();
-             melbourneMarker.icon = newImage;
-             melbourneMarker.map = _locationPickerView.mapView;
-         }
-            failure:nil];
-        i++;
-    }
-}
 
-- (void)postSearchBranch:(NSDictionary*)params {
-    NSLog(@"%@",params);
-    self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
-    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    _activityIndicatorView.hidesWhenStopped = YES;
-    __unsafe_unretained __typeof(&*self)weakSelf = self;
-    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            [_locationPickerView.tableView reloadData];
-            [weakSelf showBranchOnMap];
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-        });
-    }];
-}
 
 - (void)loadView {
     [super loadView];
@@ -80,7 +37,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"],
+        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
                    @"latlng": strLatLng};
     }else
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"]};
@@ -132,15 +89,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.locationPickerView addSubview:_btnSearchBar];
     // Do any additional setup after loading the view from its nib.
-
-        
-        CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
-        if (location.latitude) {
-            [_locationPickerView.mapView animateToLocation:location];
-            
-        }else{
-            
-        }
+    
     
 }
 
@@ -192,7 +141,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 - (void)locationPicker:(LocationPickerView *)locationPicker mapViewDidLoad:(GMSMapView *)mapView
 {
-    
+    _lastPosition=mapView.camera.target;
 }
 
 - (void)locationPicker:(LocationPickerView *)locationPicker tableViewDidLoad:(UITableView *)tableView
@@ -201,6 +150,55 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 }
 
 #pragma mark - Helper
+
+-(void)showBranchOnMap{
+    [_locationPickerView.mapView clear];
+    NSLog(@"_branches.count = %d",_branches.count);
+    int i=0;
+    for (TVBranch* branch in _branches.items) {
+        GMSMarker *melbourneMarker = [[GMSMarker alloc] init];
+        melbourneMarker.title = [NSString stringWithFormat:@"%d",i];
+        melbourneMarker.position =  branch.latlng;
+        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+        [manager downloadWithURL:[Ultilities getThumbImageOfCoverBranch:branch.arrURLImages]
+                        delegate:self
+                         options:0
+                         success:^(UIImage *image, BOOL cached)
+         {
+             UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
+             image=[image imageByScalingAndCroppingForSize:CGSizeMake(30, 30)];
+             UIGraphicsBeginImageContext( bottomImage.size );
+             [bottomImage drawAtPoint:CGPointZero];
+             [image drawInRect:CGRectMake(6.0f,5.0f,30.0f,30.0f) blendMode:kCGBlendModeNormal alpha:1];
+             UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+             UIGraphicsEndImageContext();
+             melbourneMarker.icon = newImage;
+             melbourneMarker.map = _locationPickerView.mapView;
+         }
+                         failure:nil];
+        i++;
+    }
+}
+
+- (void)postSearchBranch:(NSDictionary*)params {
+    NSLog(@"%@",params);
+    _lastPosition=_currentCameraPosition;
+    self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    _activityIndicatorView.hidesWhenStopped = YES;
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
+    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            _lastUpdate=[NSDate date];
+            [_locationPickerView.tableView reloadData];
+            [weakSelf showBranchOnMap];
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+        });
+    }];
+}
+
 -(double) getDistanceMetresFrom:(CLLocationCoordinate2D)coord1 toLocation:(CLLocationCoordinate2D) coord2
 {
     CLLocation* location1 =
@@ -214,6 +212,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
     return [location1 distanceFromLocation: location2];
 }
+
 #pragma mark - SearchVCDelegate
 -(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
     _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:14];
@@ -222,14 +221,32 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 #pragma mark - GMSMapViewDelegate
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position{
-    if (_lastPosition) {
-        double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition.target];
-        NSLog(@"distance===%f",distance);
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    if (_lastPosition.latitude) {
+        
+        double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition];
+        NSLog(@"distance ==== %f",distance);
         if (distance>kTVDistanceMovingMap) {
-            
+            if ([_lastUpdate isLaterThanSeconds:2]) {
+                CLLocationCoordinate2D bottomLeftCoord =
+                mapView.projection.visibleRegion.nearLeft;
+                double distanceMetres=[self getDistanceMetresFrom:position.target toLocation:bottomLeftCoord];
+                int radiusKm=distanceMetres/1000;
+                NSDictionary *params = nil;
+                CLLocationCoordinate2D location=position.target;
+                
+                if (location.latitude) {
+                    NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+                    params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"],@"latlng": strLatLng
+                               ,@"distance": [NSString stringWithFormat:@"%d",(radiusKm)?radiusKm:1]
+                               };
+                }
+                [self performSelector:@selector(postSearchBranch:) withObject:params afterDelay:2];
+                _currentCameraPosition=position.target;
+            }
         }
     }
-    _lastPosition=position;
+    
 }
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
@@ -360,12 +377,11 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
     NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
-    
+//    NSDictionary *params = @{@"id": @"1"};
     [branchProfileVC.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             [self.navigationController pushViewController:branchProfileVC animated:YES];
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {

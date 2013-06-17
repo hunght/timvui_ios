@@ -13,87 +13,40 @@
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
 #import "NSDictionary+Extensions.h"
-//#import "PortMapper.h"
-@interface WelcomeVC ()
 
+@interface WelcomeVC ()
 @end
 
 @implementation WelcomeVC
 
-#pragma mark Init
+#pragma mark ViewController
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
     }
     return self;
 }
 
--(void)getPublicIPFromSomewhere{
-
-    
-    NSURL *iPURL = [NSURL URLWithString:@"http://api.externalip.net/ip/"];
-    
-    if (iPURL) {
-        NSError *error = nil;
-        NSString *theIpHtml = [NSString stringWithContentsOfURL:iPURL
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
-        if (!error) {
-            [self didReceivePublicIPandPort:theIpHtml];
-            
-            NSLog(@"%@",theIpHtml);
-        } else {
-            NSLog(@"Oops... g %d, %@", 
-                  [error code], 
-                  [error localizedDescription]);
-        }
-    }
-
+- (void)viewDidLoad
+{
+    [self getPublicIPFromSomewhere];
+    [super viewDidLoad];
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 #pragma mark -
-#pragma mark STUNClientDelegate
-
--(void)didReceivePublicIPandPort:(NSString *) data{
-//    NSLog(@"Public IP=%@, public Port=%@, NAT is Symmetric: %@", [data objectForKey:publicIPKey],[data objectForKey:publicPortKey], [data objectForKey:isPortRandomization]);
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            data,@"decimal_ip",
-                            nil];
-    [[TVNetworkingClient sharedClient] postPath:@"data/getCityByIp" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        NSLog(@"%@",JSON);
-        [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
-        [GlobalDataUser sharedAccountClient].userLocation=[[JSON valueForKey:@"data"] safeLocationForKey:@"latlng"];
-
-        [self checkLocationServiceAvaible];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-        [self checkLocationServiceAvaible];
-    }];
-}
-
-#pragma mark CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
-    //NSLog(@"%f",newLocation.coordinate.latitude);
-    [_locationManager stopMonitoringSignificantLocationChanges];
-    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    [_locationManager stopMonitoringSignificantLocationChanges];
-}
-
-
-#pragma mark ViewControllerDelegate
+#pragma mark Helper
 
 - (void)checkLocationServiceAvaible
 {
-
+    
     if ([CLLocationManager locationServicesEnabled]==NO) {
         
         [TSMessage showNotificationInViewController:self
@@ -125,18 +78,50 @@
     }
 }
 
-- (void)viewDidLoad
-{
-    [self getPublicIPFromSomewhere];
-    [super viewDidLoad];
-    
-    
+-(void)getPublicIPFromSomewhere{
+    NSURL *iPURL = [NSURL URLWithString:@"http://api.externalip.net/ip/"];
+    if (iPURL) {
+        NSError *error = nil;
+        NSString *theIpHtml = [NSString stringWithContentsOfURL:iPURL
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:&error];
+        if (!error) {
+            [self didReceivePublicIPandPort:theIpHtml];
+            NSLog(@"%@",theIpHtml);
+        } else {
+            [self didReceivePublicIPandPort:@"118.70.176.113"];
+            NSLog(@"Oops... g %d, %@", [error code], [error localizedDescription]);
+        }
+    }
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)didReceivePublicIPandPort:(NSString *) data{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            data,@"decimal_ip",
+                            nil];
+    [[TVNetworkingClient sharedClient] postPath:@"data/getCityByIp" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
+        [GlobalDataUser sharedAccountClient].userLocation=[[JSON valueForKey:@"data"] safeLocationForKey:@"latlng"];
+        [self checkLocationServiceAvaible];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self checkLocationServiceAvaible];
+    }];
 }
+
+#pragma mark CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
+    //NSLog(@"%f",newLocation.coordinate.latitude);
+    [_locationManager stopMonitoringSignificantLocationChanges];
+    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [_locationManager stopMonitoringSignificantLocationChanges];
+}
+
+
 
 @end

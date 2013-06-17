@@ -33,6 +33,7 @@
 @interface NSDate (Helper)
 
 - (BOOL) isLaterThan:(int)days;
+- (BOOL) isLaterThanSeconds:(int)min;
 - (NSUInteger)daysAgo;
 - (NSUInteger)daysAgoAgainstMidnight;
 - (NSString*) stringMinutesFromNowAgo;

@@ -7,7 +7,6 @@
 
 #import <MapKit/MapKit.h>
 #import "LocationPickerView.h"
-#import "UIImage+Icons.h"
 #import "GlobalDataUser.h"
 @interface LocationPickerView ()
 {
@@ -115,6 +114,12 @@
                                               self.tableView.frame.size.width,
                                               self.defaultMapHeight + (self.defaultMapHeight * self.parallaxScrollFactor * 4));
         _mapView = [[GMSMapView alloc] initWithFrame:self.defaultMapViewFrame];
+        GMSCameraPosition *camera =
+        [[GMSCameraPosition alloc] initWithTarget:[GlobalDataUser sharedAccountClient].userLocation
+                                             zoom:14
+                                          bearing:0
+                                     viewingAngle:0];
+        [_mapView setCamera:camera];
         self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.mapView.delegate = self.mapViewDelegate;
         [self insertSubview:self.mapView belowSubview:self.tableView];
@@ -147,7 +152,6 @@
         [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_btnSearchBar];
     }
-    
 }
 
 -(void)searchBarButtonClicked{

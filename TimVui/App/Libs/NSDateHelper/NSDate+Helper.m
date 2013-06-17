@@ -57,6 +57,16 @@
     return daysAway>days;
 }
 
+- (BOOL) isLaterThanSeconds:(int)min
+{
+    //    NSLog(@"date==%@",[NSDate date]);
+    
+	NSTimeInterval ti = -[self timeIntervalSinceDate:[NSDate date]];
+    int minsAway=ti ;
+    //    NSLog(@"hours==%d",hours);
+    return minsAway>min;
+}
+
 /*
  * This guy can be a little unreliable and produce unexpected results,
  * you're better off using daysAgoAgainstMidnight

@@ -16,5 +16,7 @@
 @property (nonatomic, strong) LocationPickerView *locationPickerView;
 @property (nonatomic, retain) UIButton *btnSearchBar;
 @property(nonatomic,strong)TVBranches *branches;
-@property(nonatomic,strong)GMSCameraPosition *lastPosition;
+@property(nonatomic,assign)CLLocationCoordinate2D lastPosition;
+@property(nonatomic,assign)CLLocationCoordinate2D currentCameraPosition;
+@property(nonatomic,strong)NSDate* lastUpdate;
 @end

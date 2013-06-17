@@ -13,6 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "TVCoupons.h"
 #import "TVCoupon.h"
+#import "MHFacebookImageViewer.h"
 @interface BranchProfileVC ()
 
 @end
@@ -43,14 +44,20 @@
     [SharedAppDelegate showNotificationAboutSomething:_branch];
     // Do any additional setup after loading the view from its nib.
     [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]];
-    
     //Show Ablum images
     int i=0;
     for (NSDictionary* images in _branch.images) {
-        UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
+        UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         [imageButton setImageWithURL:[Ultilities getThumbImageOfCoverBranch:images]];
-        [imageButton addTarget:self action:@selector(imageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        imageButton.tag=i;
+//        [imageButton addTarget:self action:@selector(imageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:imageButton];
+        [imageButton setupImageViewerWithImageURL:[Ultilities getLargeImageOfCoverBranch:images] onOpen:^{
+            NSLog(@"OPEN!");
+        } onClose:^{
+            NSLog(@"CLOSE!");
+        }];
+        
         i++;
     }
     if (_branch.image_count>=4) {
@@ -79,7 +86,6 @@
     [l setBorderWidth:1.0];
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     [_scrollView addSubview:genarateInfoView];
-    
     
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
@@ -113,8 +119,6 @@
     lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     lblAddress.text=_branch.address_full;
     [genarateInfoView addSubview:lblAddress];
-    
-    
     
     UILabel *lblPrice = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 53.0, 210, 12)];
     lblPrice.backgroundColor = [UIColor clearColor];
@@ -406,7 +410,6 @@
         
         UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(138, grayLine.frame.origin.y+grayLine.frame.size.height+ 5.0, 165, 23)];
         
-        
         lblDetailRow.backgroundColor = [UIColor clearColor];
         lblDetailRow.textColor = [UIColor blackColor];
         lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
@@ -459,9 +462,8 @@
 -(void)mapViewButtonClicked:(id)sender{
 
 }
--(void)imageButtonClicked:(id)sender{
-    
-}
+
+
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
