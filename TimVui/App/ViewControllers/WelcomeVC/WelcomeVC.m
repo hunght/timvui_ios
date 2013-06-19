@@ -87,10 +87,8 @@
                                                           error:&error];
         if (!error) {
             [self didReceivePublicIPandPort:theIpHtml];
-            NSLog(@"%@",theIpHtml);
         } else {
             [self didReceivePublicIPandPort:@"118.70.176.113"];
-            NSLog(@"Oops... g %d, %@", [error code], [error localizedDescription]);
         }
     }
 }

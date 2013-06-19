@@ -230,10 +230,8 @@
         transformed.size.width = rect.size.height;
         transformed.size.height = rect.size.width;
     }
-    
     CGImageRef cr = CGImageCreateWithImageInRect(self.CGImage, transformed);
     UIImage* cropped = [UIImage imageWithCGImage:cr scale:self.scale orientation:self.imageOrientation];
-    
     CGImageRelease(cr);
     return cropped;
 }

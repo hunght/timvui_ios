@@ -18,6 +18,8 @@
 #import "Ultilities.h"
 #import "NSDate+Helper.h"
 #import "NSDictionary+Extensions.h"
+#import "TVNotification.h"
+#import "TVCameraVC.h"
 @interface MapTableViewController (){
 @private
 __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -90,7 +92,13 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     [self.locationPickerView addSubview:_btnSearchBar];
     // Do any additional setup after loading the view from its nib.
     
-    
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
+        TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
+        [self presentModalViewController:tvCameraVC animated:YES];
+    } withComment:^{
+        
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning
