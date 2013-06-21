@@ -1,17 +1,6 @@
 
 #import "MHPagingScrollView.h"
 
-@interface MHPage : NSObject
-
-@property (nonatomic, strong) UIView *view;
-@property (nonatomic, assign) NSUInteger index;
-
-@end
-
-@implementation MHPage
-
-@end
-
 @implementation MHPagingScrollView
 {
 	NSMutableSet *_recycledPages;
@@ -99,7 +88,7 @@
 
 - (BOOL)isDisplayingPageForIndex:(NSUInteger)index
 {
-	for (MHPage *page in _visiblePages)
+	for (PageView *page in _visiblePages)
 	{
 		if (page.index == index)
 			return YES;
@@ -107,12 +96,22 @@
 	return NO;
 }
 
+- (PageView*)getPageForIndex:(NSUInteger)index
+{
+	for (PageView *page in _visiblePages)
+	{
+		if (page.index == index)
+			return (PageView*)page;
+	}
+	return nil;
+}
+
 - (UIView *)dequeueReusablePage
 {
-	MHPage *page = [_recycledPages anyObject];
+	PageView *page = [_recycledPages anyObject];
 	if (page != nil)
 	{
-		UIView *view = page.view;
+		UIView *view = page;
 		[_recycledPages removeObject:page];
 		return view;
 	}
@@ -138,12 +137,12 @@
 	firstNeededPageIndex = MAX(firstNeededPageIndex, 0);
 	lastNeededPageIndex = MIN(lastNeededPageIndex, (int)[self numberOfPages] - 1);
 
-	for (MHPage *page in _visiblePages)
+	for (PageView *page in _visiblePages)
 	{
 		if ((int)page.index < firstNeededPageIndex || (int)page.index > lastNeededPageIndex)
 		{
 			[_recycledPages addObject:page];
-			[page.view removeFromSuperview];
+			[page removeFromSuperview];
 		}
 	}
 
@@ -153,15 +152,16 @@
 	{
 		if (![self isDisplayingPageForIndex:i])
 		{
-			UIView *pageView = [_pagingDelegate pagingScrollView:self pageForIndex:i];
+			PageView *pageView = [_pagingDelegate pagingScrollView:self pageForIndex:i];
 			pageView.frame = [self frameForPageAtIndex:i];
 			pageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 			[self addSubview:pageView];
 
-			MHPage *page = [[MHPage alloc] init];
-			page.index = i;
-			page.view = pageView;
-			[_visiblePages addObject:page];
+//			MHPage *page = [[MHPage alloc] init];
+//			page.index = i;
+//			page.view = pageView;
+            pageView.index = i;
+			[_visiblePages addObject:pageView];
 		}
 	}
 }
@@ -194,8 +194,8 @@
 {
 	self.contentSize = [self contentSizeForPagingScrollView];
 
-	for (MHPage *page in _visiblePages)
-		page.view.frame = [self frameForPageAtIndex:page.index];
+	for (PageView *page in _visiblePages)
+		page.frame = [self frameForPageAtIndex:page.index];
 
 	CGFloat pageWidth = self.bounds.size.width;
 	CGFloat newOffset = (_firstVisiblePageIndexBeforeRotation + _percentScrolledIntoFirstVisiblePage) * pageWidth;

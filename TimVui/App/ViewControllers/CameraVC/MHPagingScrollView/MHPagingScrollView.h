@@ -1,4 +1,4 @@
-
+#import "PageView.h"
 @class MHPagingScrollView;
 
 /*
@@ -15,7 +15,7 @@
  * Asks the delegate for a page to insert. The delegate should ask for a
  * reusable view using dequeueReusablePageView.
  */
-- (UIView *)pagingScrollView:(MHPagingScrollView *)pagingScrollView pageForIndex:(NSUInteger)index;
+- (PageView *)pagingScrollView:(MHPagingScrollView *)pagingScrollView pageForIndex:(NSUInteger)index;
 
 @end
 
@@ -78,4 +78,5 @@
  */
 - (void)didReceiveMemoryWarning;
 
+- (PageView*)getPageForIndex:(NSUInteger)index;
 @end

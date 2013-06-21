@@ -216,11 +216,10 @@
     
     return newImage;
 }
-
-- (UIImage *)cropImageInstagramStyle{
+- (UIImage *)cropImageInstagramStyleWithBottomBar:(int)heightBar{
     CGRect rect;
     rect.origin.x=0;
-    rect.origin.y=(self.size.height-self.size.width)/2;
+    rect.origin.y=(self.size.height-self.size.width-heightBar)/2;
     rect.size.height=self.size.width;
     rect.size.width=self.size.width;
     CGRect transformed=rect;
@@ -236,6 +235,9 @@
     
     CGImageRelease(cr);
     return cropped;
+}
+- (UIImage *)cropImageInstagramStyle{
+    return [self cropImageInstagramStyleWithBottomBar:0];
 }
 
 - (UIImage *)cropInRect:(CGRect)rect

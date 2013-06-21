@@ -3,6 +3,7 @@
 #import "PageView.h"
 #import "CameraBranchCell.h"
 #import "MacroApp.h"
+#import "UIImage+Crop.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -26,9 +27,11 @@
 
 	self.pageControl.currentPage = 0;
 	self.pageControl.numberOfPages = _numPages;
+    
     // Add scroll view KVO
     void *context = (__bridge void *)self;
     [self.pagingScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
+    
     
     [self setCaptureManager:[[CaptureSessionManager alloc] init] ];
     
@@ -46,11 +49,19 @@
 	[[[self view] layer] insertSublayer:[[self captureManager] previewLayer] below:_pageControl.layer];
 	
     self.imgStillCamera=[[UIImageView alloc] initWithFrame:layerRect];
-    _imgStillCamera.contentMode = UIViewContentModeScaleAspectFill;
-    [self.view insertSubview:_imgStillCamera aboveSubview:_pageControl];
+    _imgStillCamera.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view insertSubview:_imgStillCamera aboveSubview:_pagingScrollView];
     [self.imgStillCamera setHidden:YES];
     
     [[_captureManager captureSession] startRunning];
+}
+- (void)viewDidUnload {
+    [self setBtnStoreImage:nil];
+    [self setViewBottomBar:nil];
+    [self setBtnAlbumPicker:nil];
+    [self setBtnLocationPicker:nil];
+    [self setBtnClose:nil];
+    [super viewDidUnload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,16 +70,37 @@
 }
 
 #pragma mark - Helper
+-(void)showAnimationWhenDidTakeImage{
+    
+}
 
 -(void)getImageToAddSkin{
-    [_imgStillCamera setHidden:NO];
-    [_imgStillCamera setImage:self.captureManager.stillImage];
-
+    if (self.captureManager.stillImage) {
+        PageView* pageView=[_pagingScrollView getPageForIndex:self.pageControl.currentPage];
+        
+        UIImage *bottomImage = [self.captureManager.stillImage cropImageInstagramStyleWithBottomBar:44+20]; //background image
+        UIImage *image       = [self imageWithView:pageView.viewSkin]; //foreground image
+        
+        CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.width);
+        UIGraphicsBeginImageContext( newSize );
+        
+        // Use existing opacity as is
+        [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+        
+        // Apply supplied opacity if applicable
+        [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeNormal alpha:1];
+        
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [_arrImages addObject:newImage];
+        self.captureManager.stillImage=nil;
+    }
+    
 }
 
 - (UIImage *) imageWithView:(UIView *)view
 {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -79,6 +111,7 @@
 {
     UIImageWriteToSavedPhotosAlbum([[self captureManager] stillImage], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
 }
+
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (error != NULL) {
@@ -89,6 +122,7 @@
         
     }
 }
+
 #pragma mark - IBActions
 - (IBAction)pageTurn
 {
@@ -101,7 +135,6 @@
 }
 
 - (IBAction)closeButtonClicked:(id)sender {
-    [[_captureManager captureSession] stopRunning];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -115,7 +148,6 @@
 }
 
 - (IBAction)locationPickerButtonClicked:(id)sender {
-
         self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
         if (self.slidingViewController.underLeftShowing) {
             // actually this does not get called when the top view screenshot is enabled
@@ -136,6 +168,8 @@
         [self.slidingViewController anchorTopViewTo:ECLeft];
     }
 }
+
+
 #pragma mark Imagepickerdelegate methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)selectedImage editingInfo:(NSDictionary *)editingInfo {
@@ -254,6 +288,7 @@
 
 - (UIView *)pagingScrollView:(MHPagingScrollView *)thePagingScrollView pageForIndex:(NSUInteger)index
 {	PageView *pageView = (PageView *)[thePagingScrollView dequeueReusablePage];
+    pageView.index=index;
 	if (pageView == nil){
         switch (index) {
 
@@ -277,12 +312,5 @@
 
 
 
-- (void)viewDidUnload {
-    [self setBtnStoreImage:nil];
-    [self setViewBottomBar:nil];
-    [self setBtnAlbumPicker:nil];
-    [self setBtnLocationPicker:nil];
-    [self setBtnClose:nil];
-    [super viewDidUnload];
-}
+
 @end

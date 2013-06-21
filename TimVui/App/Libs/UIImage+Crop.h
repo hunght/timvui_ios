@@ -10,6 +10,7 @@
 #import "Ultilities.h"
 @interface UIImage (Crop)
 - (UIImage *)cropImageInstagramStyle;
+- (UIImage *)cropImageInstagramStyleWithBottomBar:(int)heightBar;
 - (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize;
 -(UIImage*)resizedImageToFitInSize:(CGSize)boundingSize scaleIfSmaller:(BOOL)scale;
 @end

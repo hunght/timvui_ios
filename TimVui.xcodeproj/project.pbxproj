@@ -235,7 +235,6 @@
 		55AD02AD17703E7D00A84ED6 /* MHPagingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AD02A817703E7D00A84ED6 /* MHPagingScrollView.m */; };
 		55AD02AE17703E7D00A84ED6 /* PageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AD02AA17703E7D00A84ED6 /* PageView.m */; };
 		55AD02B21770437200A84ED6 /* CaptureSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AD02B11770437200A84ED6 /* CaptureSessionManager.m */; };
-		55AD02CA177055A100A84ED6 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AD02C9177055A100A84ED6 /* UIImage+Crop.m */; };
 		55AD02D117706F2B00A84ED6 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AD02D017706F2B00A84ED6 /* CoreMedia.framework */; };
 		55AF6DF01766D6E90008D3F0 /* SearchWithArrayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AF6DEC1766D6E80008D3F0 /* SearchWithArrayVC.m */; };
 		55B908C717543B130061AC33 /* img_address_branch_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B9083F17543AC90061AC33 /* img_address_branch_icon.png */; };
@@ -636,8 +635,6 @@
 		55AD02AA17703E7D00A84ED6 /* PageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageView.m; path = ../PageView.m; sourceTree = "<group>"; };
 		55AD02B01770437200A84ED6 /* CaptureSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaptureSessionManager.h; sourceTree = "<group>"; };
 		55AD02B11770437200A84ED6 /* CaptureSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaptureSessionManager.m; sourceTree = "<group>"; };
-		55AD02C8177055A100A84ED6 /* UIImage+Crop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Crop.h"; sourceTree = "<group>"; };
-		55AD02C9177055A100A84ED6 /* UIImage+Crop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Crop.m"; sourceTree = "<group>"; };
 		55AD02D017706F2B00A84ED6 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		55AF6DEB1766D6E80008D3F0 /* SearchWithArrayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithArrayVC.h; sourceTree = "<group>"; };
 		55AF6DEC1766D6E80008D3F0 /* SearchWithArrayVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithArrayVC.m; sourceTree = "<group>"; };
@@ -1211,8 +1208,6 @@
 				55CACFDA1772EE8500EA0685 /* LocationTableVC */,
 				5566A32D17718F8C0025E79C /* CameraBranchCell */,
 				55928C3D1771403800BD0803 /* PagesView */,
-				55AD02C8177055A100A84ED6 /* UIImage+Crop.h */,
-				55AD02C9177055A100A84ED6 /* UIImage+Crop.m */,
 				55AD02B01770437200A84ED6 /* CaptureSessionManager.h */,
 				55AD02B11770437200A84ED6 /* CaptureSessionManager.m */,
 				55AD02A617703E7D00A84ED6 /* MHPagingScrollView */,
@@ -2143,7 +2138,6 @@
 				55AD02AD17703E7D00A84ED6 /* MHPagingScrollView.m in Sources */,
 				55AD02AE17703E7D00A84ED6 /* PageView.m in Sources */,
 				55AD02B21770437200A84ED6 /* CaptureSessionManager.m in Sources */,
-				55AD02CA177055A100A84ED6 /* UIImage+Crop.m in Sources */,
 				5566A33017718F8C0025E79C /* CameraBranchCell.m in Sources */,
 				5566A33317718F9A0025E79C /* BranchMainCell.m in Sources */,
 				55CACFD91772EE7C00EA0685 /* LocationTableVC.m in Sources */,
