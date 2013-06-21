@@ -13,6 +13,7 @@
 - (id)init {
 	if ((self = [super init])) {
 		[self setCaptureSession:[[AVCaptureSession alloc] init]];
+        [captureSession setSessionPreset: AVCaptureSessionPresetHigh];
 	}
 	return self;
 }

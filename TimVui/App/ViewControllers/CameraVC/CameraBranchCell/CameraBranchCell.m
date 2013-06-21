@@ -20,13 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "BranchMainCell.h"
+#import "CameraBranchCell.h"
 #import "TVBranch.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Ultilities.h"
 #import "TVAppDelegate.h"
-@implementation BranchMainCell {
+int cellPad=44;
+@implementation CameraBranchCell {
 @private
     __strong TVBranch *_branch;
 }
@@ -46,36 +47,23 @@
     if (!self) {
         return nil;
     }
-    
+    _lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(25.0f, 30.0f, 210.0f-cellPad, 20.0f)];
     self.textLabel.adjustsFontSizeToFitWidth = YES;
     self.textLabel.textColor = [UIColor redColor];
 
-    self.detailTextLabel.numberOfLines = 1;
     self.textLabel.backgroundColor=[UIColor clearColor];
-    self.detailTextLabel.backgroundColor=[UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleGray;
-    
-    self.price_avg = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.price_avg.backgroundColor = [UIColor clearColor];
-    
-    self.price_avg.textColor = [UIColor grayColor];
-    self.price_avg.highlightedTextColor = [UIColor whiteColor];
     
     
     self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
-    self.price_avg.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+
     
     
     UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 35.0, 11, 12)];
     homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];
     
-    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(10.0, 53.0, 8, 11)];
-    price_avgIcon.image=[UIImage imageNamed:@"img_price_range_branch_icon"];
-    
-    
-    
-    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(80.0, 8.0, 234, 96)];
+
+    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(80.0, 8.0, 234-cellPad, 96)];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
     // Get the Layer of any view
     CALayer * l = [_whiteView layer];
@@ -83,20 +71,10 @@
     
     l = [self.imageView layer];
     [self setBorderForLayer:l radius:1];
-    
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 66.0f, 234.0f, 1.0f)];
-    grayLine.backgroundColor = [UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f];
-    [_whiteView addSubview:grayLine];
     [_whiteView addSubview:self.textLabel];
-    [_whiteView addSubview:self.detailTextLabel];
-    [_whiteView addSubview:_price_avg];
     [_whiteView addSubview:homeIcon];
-    [_whiteView addSubview:price_avgIcon];
     
     [self.contentView addSubview:_whiteView];
-    
-    _utility=[[UIView alloc] initWithFrame:CGRectMake(8,73, 320, 18)];
-    [self.whiteView addSubview:_utility];
     [self.contentView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
     return self;
 }
@@ -104,25 +82,43 @@
 - (void)setBranch:(TVBranch *)branch {
     _branch = branch;
     self.textLabel.text=_branch.name;
-    self.detailTextLabel.text=_branch.address_full;
-    self.price_avg.text=_branch.price_avg;
-    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     
+    
+    _lblDetailRow.backgroundColor = [UIColor clearColor];
+    _lblDetailRow.textColor = [UIColor blackColor];
+    _lblDetailRow.numberOfLines = 0;
+    _lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
+    _lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    _lblDetailRow.text =_branch.address_full;
+    [_lblDetailRow sizeToFit];
+    [self.whiteView addSubview:_lblDetailRow];
+
+    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     [self setNeedsLayout];
 }
 
 + (CGFloat)heightForCellWithPost:(TVBranch *)branch {
-    return (8+96+8+branch.coupon_count*2);
+    CGSize maximumLabelSize = CGSizeMake(210.0f-cellPad,9999);
+    UIFont *cellFont = [UIFont fontWithName:@"ArialMT" size:(13)];
+    CGSize expectedLabelSize = [branch.address_full sizeWithFont:cellFont
+                                           constrainedToSize:maximumLabelSize
+                                               lineBreakMode:NSLineBreakByWordWrapping];
+    return expectedLabelSize.height+ 8+96+8;
 }
 
 #pragma mark - UIView
-
+-(void)setFrame:(CGRect)frame {
+    frame.size.width -=44;
+    [super setFrame:frame];
+}
 - (void)layoutSubviews {
+    CGRect b = [self bounds];
+    b.size.width -= 30; // allow extra width to slide for editing
+    b.origin.x = 0; // start 30px left unless editing
+    [self.contentView setFrame:b];
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(5.0f, 8.0f, 70.0f, 70.0f);
-    self.textLabel.frame = CGRectMake(10.0f, 8.0f, 222.0f, 20.0f);
-    self.detailTextLabel.frame = CGRectMake(25.0f, 30.0f, 210.0f, 20.0f);
-    self.price_avg.frame = CGRectMake(25.0f, 48.0f, 210.0f, 20.0f);
+    self.textLabel.frame = CGRectMake(10.0f, 8.0f, 222.0f-cellPad, 20.0f);
     
 }
 

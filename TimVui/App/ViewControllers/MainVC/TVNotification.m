@@ -24,7 +24,6 @@
         [lblDetailRow sizeToFit];
         [self addSubview:lblDetailRow];
         
-        
         UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(7, lblDetailRow.frame.size.height+ 3, 101, 38)];
         [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera"] forState:UIControlStateNormal];
         [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera_on"] forState:UIControlStateHighlighted];
@@ -54,6 +53,7 @@
     }
     return self;
 }
+
 -(void)cameraButtonClicked:(id)sender{
     if (self.btnCameraCallback)
     {

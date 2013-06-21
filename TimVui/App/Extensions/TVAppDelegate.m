@@ -145,7 +145,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
     WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
-    
     _slidingViewController=[[ECSlidingViewController alloc] init];
     _slidingViewController.topViewController=welcomeVC;
     _slidingViewController.underLeftViewController = self.menuVC;

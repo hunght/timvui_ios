@@ -20,6 +20,9 @@
 #import "NSDictionary+Extensions.h"
 #import "TVNotification.h"
 #import "TVCameraVC.h"
+#import "ECSlidingViewController.h"
+#import "LocationTableVC.h"
+#import "SkinPickerTableVC.h"
 @interface MapTableViewController (){
 @private
 __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -94,7 +97,17 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
     TVNotification* notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
         TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
-        [self presentModalViewController:tvCameraVC animated:YES];
+        LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+        SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+        ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+        _slidingViewController.topViewController=tvCameraVC;
+        _slidingViewController.underLeftViewController = tableVC;
+        _slidingViewController.anchorRightRevealAmount = 320-44;
+        _slidingViewController.underRightViewController = skinVC;
+        _slidingViewController.anchorLeftRevealAmount = 320-44;
+        [tvCameraVC.view addGestureRecognizer:_slidingViewController.panGesture];
+        [self presentModalViewController:_slidingViewController animated:YES];
+        tvCameraVC.slidingViewController=_slidingViewController;
     } withComment:^{
         
     }];
@@ -366,6 +379,37 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     BranchMainCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        int countUtilities=0;
+        for (NSString* strAlias in [self.branches[indexPath.row] utilities]) {
+            
+            NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",strAlias];
+            NSDictionary* params=[SharedAppDelegate getParamData];
+            NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
+            NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
+            NSDictionary* utilityDic=[idPublicArr lastObject];
+            UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(countUtilities*(8+18),0, 18, 18)];
+            [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
+            
+            [cell.utility addSubview:iconIView];
+            countUtilities++;
+        }
+    }
+    else{
+        [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        int countUtilities=0;
+        for (NSString* strAlias in [self.branches[indexPath.row] utilities]) {
+            NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",strAlias];
+            NSDictionary* params=[SharedAppDelegate getParamData];
+            NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
+            NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
+            NSDictionary* utilityDic=[idPublicArr lastObject];
+            
+            UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(countUtilities*(8+18),0, 18, 18)];
+            [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
+            
+            [cell.utility addSubview:iconIView];
+            countUtilities++;
+        }
     }
     cell.branch = self.branches[indexPath.row];
     return cell;
@@ -385,6 +429,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
     NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
+    NSLog(@"%@",params);
 //    NSDictionary *params = @{@"id": @"1"};
     [branchProfileVC.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {

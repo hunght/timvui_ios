@@ -4,10 +4,7 @@
 @implementation PageView
 
 
--(id)initFromNib:(NSString*)str withIndex:(int)index{
-    _pageIndex=index;
-    return[[[NSBundle mainBundle] loadNibNamed:str owner:self options:nil] objectAtIndex:0];
-}
+
 - (id)init
 {
 	if ((self = [super init]))
@@ -24,4 +21,7 @@
 	return self;
 }
 
+-(void)setContentWithName:(NSString*)name{
+    _lblBranchName.text=name;
+}
 @end
