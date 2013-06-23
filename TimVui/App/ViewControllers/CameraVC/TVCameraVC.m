@@ -4,6 +4,9 @@
 #import "CameraBranchCell.h"
 #import "MacroApp.h"
 #import "UIImage+Crop.h"
+#import "UIView+Genie.h"
+#import "TVAppDelegate.h"
+#import "PhotoBrowseTableVC.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -15,24 +18,10 @@
     double lastDragOffset;
 }
 
-- (void)viewDidLoad
+#pragma mark - Init
+
+- (void)initCameraCapture
 {
-	[super viewDidLoad];
-
-	_numPages = kNumberOfSkinsCamera;
-
-	self.pagingScrollView.previewInsets = UIEdgeInsetsMake(0.0f, 50.0f, 0.0f, 50.0f);
-    [self.pagingScrollView selectPageAtIndex:0 animated:NO];
-	[self.pagingScrollView reloadPages];
-
-	self.pageControl.currentPage = 0;
-	self.pageControl.numberOfPages = _numPages;
-    
-    // Add scroll view KVO
-    void *context = (__bridge void *)self;
-    [self.pagingScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
-    
-    
     [self setCaptureManager:[[CaptureSessionManager alloc] init] ];
     
 	[[self captureManager] addVideoInputFrontCamera:NO]; // set to YES for Front Camera, No for Back camera
@@ -46,21 +35,75 @@
 	[[[self view] layer] addSublayer:[[self captureManager] previewLayer]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getImageToAddSkin) name:kImageCapturedSuccessfully object:nil];
     
-	[[[self view] layer] insertSublayer:[[self captureManager] previewLayer] below:_pageControl.layer];
-	
-    self.imgStillCamera=[[UIImageView alloc] initWithFrame:layerRect];
+	[[[self view] layer] insertSublayer:[[self captureManager] previewLayer] below:_imgImagePicked.layer];
+    self.imgStillCamera=[[UIImageView alloc] initWithFrame:CGRectMake(0, 48, 320, 320)];
     _imgStillCamera.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view insertSubview:_imgStillCamera aboveSubview:_pagingScrollView];
-    [self.imgStillCamera setHidden:YES];
-    
+    [self.view insertSubview:_imgStillCamera belowSubview:_pagingScrollView];
+    [self.imgStillCamera setHidden:NO];
+    [self.imgStillCamera setUserInteractionEnabled:NO];
     [[_captureManager captureSession] startRunning];
+    _imgImagePicked.hidden=YES;
 }
+
+- (void)initScrollPagingView
+{
+    self.pagingScrollView.previewInsets = UIEdgeInsetsMake(0.0f, 50.0f, 0.0f, 50.0f);
+    [self.pagingScrollView selectPageAtIndex:0 animated:NO];
+	[self.pagingScrollView reloadPages];
+    
+	self.pageControl.currentPage = 0;
+	self.pageControl.numberOfPages = _numPages;
+    
+    // Add scroll view KVO
+    void *context = (__bridge void *)self;
+    [self.pagingScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
+}
+
+
+#pragma mark - ViewController
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden=YES;
+}
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+
+	_numPages = kNumberOfSkinsCamera;
+    _arrImages=[[NSMutableArray alloc] init];
+    _lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 20, 20)];
+    _lblPhone.backgroundColor = [UIColor whiteColor];
+    _lblPhone.textColor = [UIColor redColor];
+    _lblPhone.textAlignment=UITextAlignmentCenter;
+    _lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(15)];
+    
+    CALayer* l=_lblPhone.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:10];
+    
+    // You can even add a border
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    [_lblPhone setHidden:YES];
+    [_btnStoreImage addSubview:_lblPhone];
+    
+    
+	[self initScrollPagingView];
+    [self initCameraCapture];
+    
+    [_btnStoreImage setImage:[UIImage imageNamed:@"img_camera_store_photos"] forState:UIControlStateNormal];
+    [_btnAlbumPicker setImage:[UIImage imageNamed:@"img_camera_album_picker"] forState:UIControlStateNormal];
+    [_btnCameraSkin setBackgroundImage:[UIImage imageNamed:@"img_camera_camera_skin"] forState:UIControlStateNormal];
+    
+}
+
 - (void)viewDidUnload {
     [self setBtnStoreImage:nil];
-    [self setViewBottomBar:nil];
     [self setBtnAlbumPicker:nil];
     [self setBtnLocationPicker:nil];
     [self setBtnClose:nil];
+    [self setImgImagePicked:nil];
+    [self setBtnCameraSkin:nil];
     [super viewDidUnload];
 }
 
@@ -70,32 +113,74 @@
 }
 
 #pragma mark - Helper
+
 -(void)showAnimationWhenDidTakeImage{
+    CGRect rect= _btnStoreImage.frame;
+    CGRect endRect = CGRectInset(rect, 5.0, 5.0);
+    NSTimeInterval duration = 0.5;
+    if (self.imgStillCamera.image) {
+        [self.imgStillCamera genieInTransitionWithDuration:duration destinationRect:endRect destinationEdge:BCRectEdgeTop completion:
+         ^{
+             self.imgStillCamera.image=nil;
+             self.imgImagePicked.image=nil;
+             _lblPhone.text=[NSString stringWithFormat:@"%d",[_arrImages count]];
+             // instantaneously make the image view small (scaled to 1% of its actual size)
+             _lblPhone.transform = CGAffineTransformMakeScale(0.5, 0.5);
+             [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                 // animate it to the identity transform (100% scale)
+                 _lblPhone.transform = CGAffineTransformIdentity;
+             } completion:^(BOOL finished){
+                 // if you want to do something once the animation finishes, put it here
+                 
+                 [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                     // animate it to the identity transform (100% scale)
+                     _lblPhone.transform = CGAffineTransformMakeScale(0.6, 0.6);
+                 } completion:^(BOOL finished){
+                     // if you want to do something once the animation finishes, put it here
+                     [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                         // animate it to the identity transform (100% scale)
+                         _lblPhone.transform = CGAffineTransformIdentity;
+                     } completion:^(BOOL finished){
+                         // if you want to do something once the animation finishes, put it here
+                         _imgStillCamera.transform = CGAffineTransformIdentity;
+                         _imgImagePicked.hidden=YES;
+                         [self.captureManager.captureSession startRunning];
+                     }];
+                 }];
+             }];
+         }];
+    }
+}
+
+- (void)mergeSkinWithImage:(UIImage *)bottomImage {
+    PageView* pageView=[_pagingScrollView getPageForIndex:self.pageControl.currentPage];
+    UIImage *image       = [self imageWithView:pageView.viewSkin]; //foreground image
     
+    CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.width);
+    UIGraphicsBeginImageContext( newSize );
+    
+    // Use existing opacity as is
+    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Apply supplied opacity if applicable
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeNormal alpha:1];
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [_arrImages addObject:newImage];
+    
+    if (_lblPhone.isHidden)
+        _lblPhone.hidden=NO;
+    
+    self.imgStillCamera.image=newImage;
+    [self showAnimationWhenDidTakeImage];
 }
 
 -(void)getImageToAddSkin{
     if (self.captureManager.stillImage) {
-        PageView* pageView=[_pagingScrollView getPageForIndex:self.pageControl.currentPage];
-        
         UIImage *bottomImage = [self.captureManager.stillImage cropImageInstagramStyleWithBottomBar:44+20]; //background image
-        UIImage *image       = [self imageWithView:pageView.viewSkin]; //foreground image
-        
-        CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.width);
-        UIGraphicsBeginImageContext( newSize );
-        
-        // Use existing opacity as is
-        [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-        
-        // Apply supplied opacity if applicable
-        [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeNormal alpha:1];
-        
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        [_arrImages addObject:newImage];
-        self.captureManager.stillImage=nil;
+        [self mergeSkinWithImage:bottomImage];
     }
-    
 }
 
 - (UIImage *) imageWithView:(UIView *)view
@@ -123,6 +208,7 @@
     }
 }
 
+
 #pragma mark - IBActions
 - (IBAction)pageTurn
 {
@@ -131,7 +217,10 @@
 
 - (IBAction)cameraButtonClicked:(id)sender {
     //[[_captureManager captureSession] stopRunning];
-    [[self captureManager] captureStillImage];
+    if (self.imgImagePicked.image) {
+        [self mergeSkinWithImage:self.imgImagePicked.image];
+    }else
+        [[self captureManager] captureStillImage];
 }
 
 - (IBAction)closeButtonClicked:(id)sender {
@@ -143,6 +232,7 @@
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.delegate = self;
+        [self.captureManager.captureSession stopRunning];
         [self presentModalViewController:imagePicker animated:YES];
     }
 }
@@ -169,19 +259,47 @@
     }
 }
 
+- (IBAction)photoBrowseButtonClicked:(id)sender {
+    PhotoBrowseTableVC *photoBrowseTableVC=[[PhotoBrowseTableVC alloc] initWithNibName:@"PhotoBrowseTableVC" bundle:nil];
+    photoBrowseTableVC.arrPhotos=[[NSMutableArray alloc] initWithArray:_arrImages];
+    [self.navigationController pushViewController:photoBrowseTableVC animated:YES];
+}
+
+#pragma mark SSPhotoCropperDelegate
+
+- (void) photoCropper:(SSPhotoCropperViewController *)photoCropper
+         didCropPhoto:(UIImage *)image
+{
+    if (image!=nil) {
+        self.imgImagePicked.image=image;
+        _imgImagePicked.hidden=NO;
+    }
+}
+
+- (void) photoCropperDidCancel:(SSPhotoCropperViewController *)photoCropper
+{
+    //[self.navigationController popViewControllerAnimated:NO];
+}
 
 #pragma mark Imagepickerdelegate methods
 
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)selectedImage editingInfo:(NSDictionary *)editingInfo {
-    [[_captureManager captureSession] startRunning];
+    
     [picker dismissModalViewControllerAnimated:YES];
-    //    CGSize size=selectedImage.size;
+    SSPhotoCropperViewController *photoCropper =
+    [[SSPhotoCropperViewController alloc] initWithPhoto:selectedImage
+                                               delegate:self
+                                                 uiMode:SSPCUIModePushedOnToANavigationController
+                                        showsInfoButton:YES];
+    photoCropper.isNotWantToCropImageYES=NO;
+    [(UINavigationController*)self.slidingViewController.topViewController pushViewController:photoCropper animated:YES];
 }
 
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 	// The user canceled -- simply dismiss the image picker.
-    [[_captureManager captureSession] startRunning];
+
 	[picker dismissModalViewControllerAnimated:YES];
 }
 #pragma mark - View Controller Rotation
@@ -231,7 +349,7 @@
 
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
-    NSLog(@"theScrollView.contentOffset.x==%d",(int)scrollOffset);
+//    NSLog(@"theScrollView.contentOffset.x==%d",(int)scrollOffset);
     BOOL isScrollViewIsDraggedLeft;
     if (scrollOffset < lastDragOffset)
         isScrollViewIsDraggedLeft = YES;

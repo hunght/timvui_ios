@@ -99,12 +99,15 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
         TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
         LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
         SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+        UINavigationController* navController =[[UINavigationController alloc] initWithRootViewController:tvCameraVC];
+        
         ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
-        _slidingViewController.topViewController=tvCameraVC;
+        _slidingViewController.topViewController=navController;
         _slidingViewController.underLeftViewController = tableVC;
         _slidingViewController.anchorRightRevealAmount = 320-44;
         _slidingViewController.underRightViewController = skinVC;
         _slidingViewController.anchorLeftRevealAmount = 320-44;
+        
         [tvCameraVC.view addGestureRecognizer:_slidingViewController.panGesture];
         [self presentModalViewController:_slidingViewController animated:YES];
         tvCameraVC.slidingViewController=_slidingViewController;
