@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol PhotoBrowseCellDelegate<NSObject>
+- (void)pickerButtonClicked:(UIButton*)sender;
+@end
 
 @interface PhotoBrowseCell : UITableViewCell
 @property(nonatomic,strong)UIButton *btnPicked;
+@property (nonatomic, unsafe_unretained) id<PhotoBrowseCellDelegate> delegate;
 @end

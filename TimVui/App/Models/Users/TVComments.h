@@ -4,8 +4,7 @@
 
 @class GHUser;
 
-@interface GHOrganizations : GHCollection
+@interface TVComments : GHCollection
 @property(nonatomic,strong)GHUser *user;
-
-- (id)initWithUser:(GHUser *)user andPath:(NSString *)path;
+@property(nonatomic,strong)NSString *last_id;
 @end

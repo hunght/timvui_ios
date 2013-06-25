@@ -2,7 +2,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GHResource.h"
 
-@class GHUser, GHOrganization,TVCoupons;
+@class GHUser, TVComment,TVCoupons;
 
 @interface TVBranch : GHResource
 @property(nonatomic,strong)NSString *branchID;

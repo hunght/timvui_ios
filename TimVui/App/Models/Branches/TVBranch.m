@@ -1,6 +1,6 @@
 #import "TVBranch.h"
 #import "GHUser.h"
-#import "GHOrganization.h"
+#import "TVComment.h"
 #import "NSString+Extensions.h"
 #import "NSDictionary+Extensions.h"
 #import "TVCoupons.h"

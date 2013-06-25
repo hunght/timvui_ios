@@ -15,7 +15,10 @@
 #import "TVCoupon.h"
 #import "MHFacebookImageViewer.h"
 @interface BranchProfileVC ()
-
+{
+@private
+    double lastDragOffset;
+}
 @end
 
 @implementation BranchProfileVC
@@ -32,7 +35,7 @@
 }
 
 
-- (void)viewDidLoad
+- (void)showInfoView
 {
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
@@ -50,7 +53,6 @@
         UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         [imageButton setImageWithURL:[Ultilities getThumbImageOfCoverBranch:images]];
         imageButton.tag=i;
-//        [imageButton addTarget:self action:@selector(imageButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:imageButton];
         [imageButton setupImageViewerWithImageURL:[Ultilities getLargeImageOfCoverBranch:images] onOpen:^{
             NSLog(@"OPEN!");
@@ -312,7 +314,7 @@
     
     NSDictionary* params=[SharedAppDelegate getParamData];
     NSDictionary* dicUtilities=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
-//    NSDictionary*dicUtilities=_branch.services;
+    //    NSDictionary*dicUtilities=_branch.services;
     int heightPreRow=0;
     for (NSDictionary* dic in [dicUtilities allValues]) {
         UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake((rowCount%2) ?165:8,heightUtilities, 18, 18)];
@@ -326,7 +328,7 @@
             }
             
         }
-
+        
         [utilitiesView addSubview:iconIView];
         
         UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 130, 23)];
@@ -340,7 +342,7 @@
         [lblDetailRow sizeToFit];
         [utilitiesView addSubview:lblDetailRow];
         
-
+        
         NSString * strImageName;
         if (isServiceOnYES){
             strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
@@ -384,6 +386,16 @@
     }
     
     [_scrollView setContentSize:CGSizeMake(320, height)];
+}
+
+- (void)viewDidLoad
+{
+    [self showInfoView];
+    _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
+    _extraBranchView.scrollView=_scrollView;
+    _extraBranchView.branchID=_branch.branchID;
+    [self.view addSubview:_extraBranchView];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -443,6 +455,38 @@
     NSLog(@"%@\n",strStyleFoody);
     return strStyleFoody;
 }
+
+#pragma mark - UIScrollViewDelegate
+
+- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    double contentOffset = self.scrollView.contentOffset.y;
+    lastDragOffset = contentOffset;
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    BOOL isScrollViewIsDraggedDownwards;
+    NSLog(@"self.scrollView.contentOffset.y==== %f",self.scrollView.contentOffset.y);
+    if (self.scrollView.contentOffset.y < lastDragOffset){
+        if (_extraBranchView.isHiddenYES&&!_extraBranchView.isAnimating) {
+            _extraBranchView.isAnimating=YES;
+            _extraBranchView.transform = CGAffineTransformIdentity;
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                // animate it to the identity transform (100% scale)
+                _extraBranchView.transform = CGAffineTransformMakeTranslation(0, -46);;
+            } completion:^(BOOL finished){
+                _extraBranchView.isAnimating=NO;
+                _extraBranchView.isHiddenYES=NO;
+            }];
+        }
+
+    }
+    else
+        isScrollViewIsDraggedDownwards = NO;
+    
+//    _extraBranchView.transform = CGAffineTransformIdentity;
+    
+}
+
 #pragma mark - IBAction
 -(void)specialContentButtonClicked:(id)sender{
     
@@ -469,6 +513,7 @@
 }
 
 - (void)viewDidUnload {
+    [self setExtraBranchView:nil];
     [self setScrollView:nil];
     [self setImgBranchCover:nil];
     [super viewDidUnload];

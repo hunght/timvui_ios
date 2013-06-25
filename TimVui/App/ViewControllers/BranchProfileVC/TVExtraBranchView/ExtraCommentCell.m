@@ -20,18 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "BranchMainCell.h"
-#import "TVBranch.h"
+#import "ExtraCommentCell.h"
+#import "TVComment.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Ultilities.h"
 #import "TVAppDelegate.h"
-@implementation BranchMainCell {
+@implementation ExtraCommentCell {
 @private
-    __strong TVBranch *_branch;
+    double lastDragOffset;
 }
 
-@synthesize branch = _branch;
+@synthesize comment = _comment;
 
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
     [l setMasksToBounds:YES];
@@ -55,15 +55,15 @@
     self.detailTextLabel.backgroundColor=[UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleGray;
     
-    self.price_avg = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.price_avg.backgroundColor = [UIColor clearColor];
+    self.date = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.date.backgroundColor = [UIColor clearColor];
     
-    self.price_avg.textColor = [UIColor grayColor];
-    self.price_avg.highlightedTextColor = [UIColor whiteColor];
+    self.date.textColor = [UIColor grayColor];
+    self.date.highlightedTextColor = [UIColor whiteColor];
     
     
     self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
-    self.price_avg.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    self.date.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     
     
@@ -88,7 +88,7 @@
     [_whiteView addSubview:grayLine];
     [_whiteView addSubview:self.textLabel];
     [_whiteView addSubview:self.detailTextLabel];
-    [_whiteView addSubview:_price_avg];
+    [_whiteView addSubview:_date];
     [_whiteView addSubview:homeIcon];
     [_whiteView addSubview:price_avgIcon];
     
@@ -97,21 +97,23 @@
     _utility=[[UIView alloc] initWithFrame:CGRectMake(8,73, 320, 18)];
     [self.whiteView addSubview:_utility];
     [self.contentView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+    
+    
     return self;
 }
 
-- (void)setBranch:(TVBranch *)branch {
-    _branch = branch;
-    self.textLabel.text=_branch.name;
-    self.detailTextLabel.text=_branch.address_full;
-    self.price_avg.text=_branch.price_avg;
-    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+- (void)setComment:(TVComment*)branch {
+    _comment = branch;
+    self.textLabel.text=_comment.user_name;
+    self.detailTextLabel.text=_comment.content;
+    self.date.text=_comment.content;
+    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_comment.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     
     [self setNeedsLayout];
 }
 
-+ (CGFloat)heightForCellWithPost:(TVBranch *)branch {
-    return (8+96+8+branch.coupon_count*2);
++ (CGFloat)heightForCellWithPost:(TVComment *)branch {
+    return (8+96+8+2);
 }
 
 #pragma mark - UIView
@@ -121,7 +123,7 @@
     self.imageView.frame = CGRectMake(5.0f, 8.0f, 70.0f, 70.0f);
     self.textLabel.frame = CGRectMake(10.0f, 8.0f, 222.0f, 20.0f);
     self.detailTextLabel.frame = CGRectMake(25.0f, 30.0f, 210.0f, 20.0f);
-    self.price_avg.frame = CGRectMake(25.0f, 48.0f, 210.0f, 20.0f);
+    self.date.frame = CGRectMake(25.0f, 48.0f, 210.0f, 20.0f);
     
 }
 

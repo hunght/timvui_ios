@@ -1,6 +1,6 @@
 #import "GHResource.h"
 
-@class GHUsers, GHOrganizations;
+@class GHUsers, TVComments;
 
 @interface GHUser : GHResource
 @property(nonatomic,strong)NSString *name;

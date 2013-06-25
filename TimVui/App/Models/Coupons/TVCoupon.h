@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 
-@class GHUser, GHOrganization;
+@class GHUser, TVComment;
 
 @interface TVCoupon : NSObject
 @property(nonatomic,strong)NSString *branchID;
@@ -12,7 +12,7 @@
 @property(nonatomic,strong)NSMutableArray *pages;
 @property(nonatomic,strong)GHUser *user;
 @property(nonatomic,strong)GHUser *otherUser;
-@property(nonatomic,strong)GHOrganization *organization;
+@property(nonatomic,strong)TVComment *organization;
 @property(nonatomic,strong)NSString *title;
 @property(nonatomic,strong)NSString *content;
 @property(nonatomic,readonly)NSString *extendedEventType;

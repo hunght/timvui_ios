@@ -32,3 +32,6 @@
 
 #define kNumberOfSkinsCamera   2
 
+#define kNumberLimitRefresh   @"10"
+
+

@@ -6,7 +6,8 @@
 #import "UIImage+Crop.h"
 #import "UIView+Genie.h"
 #import "TVAppDelegate.h"
-#import "PhotoBrowseTableVC.h"
+#import "PhotoBrowseVC.h"
+#import "UINavigationBar+JTDropShadow.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -64,6 +65,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=YES;
+    [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
 }
 - (void)viewDidLoad
 {
@@ -232,7 +234,7 @@
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.delegate = self;
-        [self.captureManager.captureSession stopRunning];
+//        [self.captureManager.captureSession stopRunning];
         [self presentModalViewController:imagePicker animated:YES];
     }
 }
@@ -260,7 +262,7 @@
 }
 
 - (IBAction)photoBrowseButtonClicked:(id)sender {
-    PhotoBrowseTableVC *photoBrowseTableVC=[[PhotoBrowseTableVC alloc] initWithNibName:@"PhotoBrowseTableVC" bundle:nil];
+    PhotoBrowseVC *photoBrowseTableVC=[[PhotoBrowseVC alloc] initWithNibName:@"PhotoBrowseVC" bundle:nil];
     photoBrowseTableVC.arrPhotos=[[NSMutableArray alloc] initWithArray:_arrImages];
     [self.navigationController pushViewController:photoBrowseTableVC animated:YES];
 }
@@ -278,6 +280,7 @@
 
 - (void) photoCropperDidCancel:(SSPhotoCropperViewController *)photoCropper
 {
+    
     //[self.navigationController popViewControllerAnimated:NO];
 }
 

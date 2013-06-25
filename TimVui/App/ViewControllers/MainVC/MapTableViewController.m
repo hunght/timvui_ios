@@ -23,6 +23,7 @@
 #import "ECSlidingViewController.h"
 #import "LocationTableVC.h"
 #import "SkinPickerTableVC.h"
+#import "MyNavigationController.h"
 @interface MapTableViewController (){
 @private
 __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -63,6 +64,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 
     // The LocationPickerView can be created programmatically (see below) or
     // using Storyboards/XIBs (see Storyboard file).
@@ -75,9 +77,6 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     self.locationPickerView.delegate = self;
     self.locationPickerView.shouldCreateHideMapButton = YES;
     self.locationPickerView.pullToExpandMapEnabled = YES;
-    
-    //self.locationPickerView.defaultMapHeight = 220.0; // larger than normal
-    //self.locationPickerView.parallaxScrollFactor = 0.3; // little slower than normal.
     
     // Optional setup
     self.locationPickerView.mapViewDidLoadBlock = ^(LocationPickerView *locationPicker) {
@@ -99,7 +98,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
         TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
         LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
         SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
-        UINavigationController* navController =[[UINavigationController alloc] initWithRootViewController:tvCameraVC];
+        UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
         
         ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
         _slidingViewController.topViewController=navController;
@@ -206,8 +205,12 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 - (void)postSearchBranch:(NSDictionary*)params {
     NSLog(@"%@",params);
+    
+    if (!self.branches) {
+        self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+    }
     _lastPosition=_currentCameraPosition;
-    self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+    
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
     __unsafe_unretained __typeof(&*self)weakSelf = self;

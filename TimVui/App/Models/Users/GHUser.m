@@ -1,6 +1,5 @@
 #import "GHUser.h"
 #import "GHUsers.h"
-#import "GHOrganizations.h"
 
 #import "NSString+Extensions.h"
 #import "NSDictionary+Extensions.h"
