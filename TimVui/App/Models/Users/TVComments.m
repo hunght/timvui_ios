@@ -7,7 +7,8 @@
 
 - (void)setValues:(id)values {
 	self.items = [NSMutableArray array];
-	for (NSDictionary *dict in [values valueForKey:@"data"]) {
+    NSLog(@"%@",values);
+	for (NSDictionary *dict in values ) {
 		TVComment *branch = [[TVComment alloc] initWithDict:dict];
 		[self addObject:branch];
 	}

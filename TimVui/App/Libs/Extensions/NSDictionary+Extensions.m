@@ -110,7 +110,7 @@
 	if ([string isKindOfClass:NSNull.class] || string == nil || [string isEqualToString:@""]) return nil;
 	static NSDateFormatter *dateFormatter;
 	if (dateFormatter == nil) dateFormatter = [[NSDateFormatter alloc] init];
-	dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssz";
+	dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
 	// Fix for timezone format
 	if ([string hasSuffix:@"Z"]) {
 		string = [[string substringToIndex:[string length]-1] stringByAppendingString:@"+0000"];

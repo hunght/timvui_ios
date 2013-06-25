@@ -27,9 +27,12 @@
 @interface ExtraCommentCell : UITableViewCell
 
 @property (nonatomic, strong) TVComment *comment;
-@property(nonatomic,strong)UIView *whiteView;
-@property(nonatomic,strong)UIView *utility;
 @property (nonatomic,strong) UILabel *date;
+@property (nonatomic, strong)     UIImageView* firstStar;
+@property (nonatomic, strong)     UIImageView* secondStar;
+@property (nonatomic, strong)     UIImageView* thirdStar;
+@property (nonatomic, strong)     UIImageView* fourthStar;
+@property (nonatomic, strong)     UIImageView* fifthStar;
 
 + (CGFloat)heightForCellWithPost:(TVComment *)branch;
 

@@ -91,7 +91,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
     
-    self.branches[indexPath.row] ;
+//    self.branches[indexPath.row] ;
     
     
 }

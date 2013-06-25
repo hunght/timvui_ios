@@ -218,6 +218,7 @@
 
 - (NSString *)stringWithFormat:(NSString *)format {
 	NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setTimeZone:[NSTimeZone systemTimeZone]];
 	[outputFormatter setDateFormat:format];
 	NSString *timestamp_str = [outputFormatter stringFromDate:self];
 	return timestamp_str;

@@ -26,6 +26,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Ultilities.h"
 #import "TVAppDelegate.h"
+#import "NSDate+Helper.h"
 @implementation ExtraCommentCell {
 @private
     double lastDragOffset;
@@ -61,43 +62,28 @@
     self.date.textColor = [UIColor grayColor];
     self.date.highlightedTextColor = [UIColor whiteColor];
     
+    _firstStar=[[UIImageView alloc] initWithFrame:CGRectMake(230, 8, 12, 12)];
+    _secondStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15, 8, 12, 12)];
+    _thirdStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15*2, 8, 12, 12)];
+    _fourthStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15*3, 8, 12, 12)];
+    _fifthStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15*4, 8, 12, 12)];
+    [self.contentView addSubview:_firstStar];
+    [self.contentView addSubview:_secondStar];
+    [self.contentView addSubview:_thirdStar];
+    [self.contentView addSubview:_fourthStar];
+    [self.contentView addSubview:_fifthStar];
+    
     
     self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
     self.date.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    
-    
-    UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 35.0, 11, 12)];
-    homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];
-    
-    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(10.0, 53.0, 8, 11)];
-    price_avgIcon.image=[UIImage imageNamed:@"img_price_range_branch_icon"];
-    
-    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(80.0, 8.0, 234, 96)];
-    [_whiteView setBackgroundColor:[UIColor whiteColor]];
-    
-    // Get the Layer of any view
-    CALayer * l = [_whiteView layer];
-    [self setBorderForLayer:l radius:3];
-    
-    l = [self.imageView layer];
+
+    CALayer* l = [self.imageView layer];
     [self setBorderForLayer:l radius:1];
     
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 66.0f, 234.0f, 1.0f)];
-    grayLine.backgroundColor = [UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f];
-    [_whiteView addSubview:grayLine];
-    [_whiteView addSubview:self.textLabel];
-    [_whiteView addSubview:self.detailTextLabel];
-    [_whiteView addSubview:_date];
-    [_whiteView addSubview:homeIcon];
-    [_whiteView addSubview:price_avgIcon];
-    
-    [self.contentView addSubview:_whiteView];
-    
-    _utility=[[UIView alloc] initWithFrame:CGRectMake(8,73, 320, 18)];
-    [self.whiteView addSubview:_utility];
+    [self.contentView addSubview:_date];
+
     [self.contentView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
-    
     
     return self;
 }
@@ -106,25 +92,32 @@
     _comment = branch;
     self.textLabel.text=_comment.user_name;
     self.detailTextLabel.text=_comment.content;
-    self.date.text=_comment.content;
+    self.date.text=[_comment.created stringWithFormat:@"dd/mm/yy"];
     [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_comment.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
-    
+    _firstStar.image=[UIImage imageNamed:(_comment.rating>=1)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
+    _secondStar.image=[UIImage imageNamed:(_comment.rating>=2)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
+    _thirdStar.image=[UIImage imageNamed:(_comment.rating>=3)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
+    _fourthStar.image=[UIImage imageNamed:(_comment.rating>=4)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
+    _fifthStar.image=[UIImage imageNamed:(_comment.rating>=5)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     [self setNeedsLayout];
 }
 
 + (CGFloat)heightForCellWithPost:(TVComment *)branch {
-    return (8+96+8+2);
+    CGSize maximumLabelSize = CGSizeMake(245.0f,9999);
+    UIFont *cellFont = [UIFont fontWithName:@"ArialMT" size:(13)];
+    CGSize expectedLabelSize = [branch.content sizeWithFont:cellFont
+                                               constrainedToSize:maximumLabelSize
+                                                   lineBreakMode:NSLineBreakByWordWrapping];
+    return expectedLabelSize.height+ 8+96+8;
 }
 
 #pragma mark - UIView
-
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(5.0f, 8.0f, 70.0f, 70.0f);
-    self.textLabel.frame = CGRectMake(10.0f, 8.0f, 222.0f, 20.0f);
-    self.detailTextLabel.frame = CGRectMake(25.0f, 30.0f, 210.0f, 20.0f);
-    self.date.frame = CGRectMake(25.0f, 48.0f, 210.0f, 20.0f);
-    
+    self.imageView.frame = CGRectMake(7.0f, 8.0f, 50.0f, 50.0f);
+    self.textLabel.frame = CGRectMake(67.0f, 8.0f, 222.0f, 15.0f);
+    self.detailTextLabel.frame = CGRectMake(67.0f, 45.0f, 245.0f, 20.0f);
+    self.date.frame = CGRectMake(67.0f, 30.0f, 210.0f, 15.0f);
 }
 
 @end

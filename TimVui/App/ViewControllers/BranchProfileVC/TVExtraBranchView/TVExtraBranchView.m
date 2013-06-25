@@ -8,7 +8,7 @@
 
 #import "TVExtraBranchView.h"
 #import "ExtraCommentCell.h"
-#define kTableViewHeightOffset 290
+#define kTableViewHeightOffset 150
 @interface TVExtraBranchView() {
 @private
     double lastDragOffset;
@@ -89,7 +89,7 @@
         self.frame=frame;
     }
     if (!_btnBackground) {
-        _btnBackground = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, kTableViewHeightOffset)];
+        _btnBackground = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, kTableViewHeightOffset-46)];
         
         [_btnBackground addTarget:self action:@selector(backgroundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.superview addSubview:_btnBackground];
@@ -122,7 +122,7 @@
         if (!self.isAnimating) {
             self.isAnimating=YES;
             [_btnBackground setHidden:NO];
-            [self.scrollView setDelegate:nil];
+            [self.scrollView setContentOffset:CGPointMake(0, kTableViewHeightOffset+28) animated:YES];
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // animate it to the identity transform (100% scale)
                 self.transform = CGAffineTransformMakeTranslation(0, -46-(self.superview.bounds.size.height- kTableViewHeightOffset));
@@ -167,11 +167,8 @@
     _currentTableType=kTVComment;
 }
 
-
-
 -(void)layoutSubviews{
     [super layoutSubviews];
-
 }
 
 -(void)backgroundButtonClicked:(id)sender{
@@ -179,23 +176,20 @@
 }
 
 #pragma mark - UIScrollViewDelegate
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if ([scrollView isKindOfClass:[UITableView class]])
         return;
     lastDragOffset = scrollView.contentOffset.y;
 }
 
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if ([scrollView isKindOfClass:[UITableView class]]) 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if ([scrollView isKindOfClass:[UITableView class]])
         return;
-    
-    NSLog(@"%f",scrollView.contentOffset.y);
+//    NSLog(@"%f",scrollView.contentOffset.y);
     if ((int)scrollView.contentOffset.y < lastDragOffset){
         if (self.isHiddenYES&&!self.isAnimating) {
             self.isAnimating=YES;
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                // animate it to the identity transform (100% scale)
                 self.transform = CGAffineTransformMakeTranslation(0, -46);
             } completion:^(BOOL finished){
                 self.isAnimating=NO;
@@ -239,9 +233,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return [_comments count];
+    return [ExtraCommentCell heightForCellWithPost:self.comments[indexPath.row]];
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
 
