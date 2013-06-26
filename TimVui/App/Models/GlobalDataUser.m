@@ -69,6 +69,7 @@ static GlobalDataUser *_sharedClient = nil;
         bgTask = UIBackgroundTaskInvalid;
     }
 }
+
 -(NSDictionary *)dicCity{
     if (_dicCity) {
         return _dicCity;

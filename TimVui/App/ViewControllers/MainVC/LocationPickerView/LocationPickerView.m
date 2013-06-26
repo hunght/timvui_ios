@@ -217,6 +217,7 @@
     lastDragOffset = contentOffset;
 }
 
+
 #pragma mark - Internal Methods
 -(void)zoomInMapView:(id)sender{
     [self.mapView animateToZoom:self.mapView.camera.zoom+2];
@@ -465,21 +466,18 @@
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
     BOOL isScrollViewIsDraggedDownwards;
-    if (scrollOffset < lastDragOffset)
+    if (scrollOffset < lastDragOffset){
         isScrollViewIsDraggedDownwards = YES;
+        
+    }
     else
         isScrollViewIsDraggedDownwards = NO;
     
     if ((self.isMapFullScreen == NO) &&
         (self.isMapAnimating == NO)) {
         CGFloat mapFrameYAdjustment = 0.0;
-//        NSLog(@"scrollOf fset = %f",scrollOffset);
-        // If the user is pulling down
         if (scrollOffset < -30) {
-            // Pull to expand map?
             if (self.pullToExpandMapEnabled
-                //&&(self.isMapAnimating == NO) &&
-                //(scrollOffset <= -self.amountToScrollToFullScreenMap )
                 ){
                 [self expandMapView:self];
             }

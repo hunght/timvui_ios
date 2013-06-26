@@ -28,8 +28,6 @@
 #import "TVAppDelegate.h"
 #import "NSDate+Helper.h"
 @implementation ExtraCommentCell {
-@private
-    double lastDragOffset;
 }
 
 @synthesize comment = _comment;

@@ -94,7 +94,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     [self.locationPickerView addSubview:_btnSearchBar];
     // Do any additional setup after loading the view from its nib.
     
-    TVNotification* notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
+    self.notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
         TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
         LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
         SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
@@ -107,13 +107,16 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
         _slidingViewController.underRightViewController = skinVC;
         _slidingViewController.anchorLeftRevealAmount = 320-44;
         
-        [tvCameraVC.view addGestureRecognizer:_slidingViewController.panGesture];
+        [navController.view addGestureRecognizer:_slidingViewController.panGesture];
         [self presentModalViewController:_slidingViewController animated:YES];
         tvCameraVC.slidingViewController=_slidingViewController;
     } withComment:^{
         
     }];
-
+}
+-(void)viewDidUnload{
+    [super viewDidUnload];
+    [self setNotificationView:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -239,6 +242,11 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
     return [location1 distanceFromLocation: location2];
 }
+#pragma mark - SearchVCDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [_notificationView closeButtonClicked:nil];
+}
+
 
 #pragma mark - SearchVCDelegate
 -(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{

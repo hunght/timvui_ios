@@ -54,11 +54,8 @@ int cellPad=44;
     self.textLabel.backgroundColor=[UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleGray;
     
-    
     self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
 
-    
-    
     UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 35.0, 11, 12)];
     homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];
     
@@ -112,10 +109,6 @@ int cellPad=44;
     [super setFrame:frame];
 }
 - (void)layoutSubviews {
-    CGRect b = [self bounds];
-    b.size.width -= 30; // allow extra width to slide for editing
-    b.origin.x = 0; // start 30px left unless editing
-    [self.contentView setFrame:b];
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(5.0f, 8.0f, 70.0f, 70.0f);
     self.textLabel.frame = CGRectMake(10.0f, 8.0f, 222.0f-cellPad, 20.0f);

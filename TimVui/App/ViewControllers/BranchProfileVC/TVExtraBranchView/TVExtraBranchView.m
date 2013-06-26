@@ -8,6 +8,7 @@
 
 #import "TVExtraBranchView.h"
 #import "ExtraCommentCell.h"
+#import "SVPullToRefresh.h"
 #define kTableViewHeightOffset 150
 @interface TVExtraBranchView() {
 @private
@@ -60,10 +61,12 @@
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.comments loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
             [self.tableView reloadData];
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
         });
     }];
 }
@@ -146,29 +149,47 @@
     }
 }
 
+- (void)getCommentRefresh {
+    NSDictionary* params;
+    if (_comments.last_id) 
+        params = @{@"branch_id": _branchID,
+                   @"limit": kNumberLimitRefresh
+                   ,@"last_id": _comments.last_id
+                   };
+    else
+        params = @{@"branch_id": _branchID,
+                   @"limit": kNumberLimitRefresh
+                   };
+    [self postCommentBranch:params];
+}
+
 -(void)commentButtonClicked:(id)sender{
     [self initTableView];
     if (_currentTableType!=kTVComment)
     {
-        NSDictionary* params;
-        if (_comments.last_id) 
-            params = @{@"branch_id": _branchID,
-                                     @"limit": kNumberLimitRefresh
-                                     ,@"last_id": _comments.last_id
-                                     };
-        else
-            params = @{@"branch_id": _branchID,
-                                 @"limit": kNumberLimitRefresh
-                                 };
-        [self postCommentBranch:params];
+        [self getCommentRefresh];
         
     }
-    
     _currentTableType=kTVComment;
 }
 
 -(void)layoutSubviews{
     [super layoutSubviews];
+    __unsafe_unretained TVExtraBranchView *weakSelf = self;
+    __block NSString*branchID=_branchID;
+    // setup pull-to-refresh
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        weakSelf.comments.items=nil;
+        NSDictionary* params = @{@"branch_id": branchID,
+                  @"limit": kNumberLimitRefresh
+                  };
+        [weakSelf postCommentBranch:params];
+    }];
+    
+    // setup infinite scrolling
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf getCommentRefresh];
+    }];
 }
 
 -(void)backgroundButtonClicked:(id)sender{

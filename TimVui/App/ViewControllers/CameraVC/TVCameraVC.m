@@ -240,18 +240,18 @@
 }
 
 - (IBAction)locationPickerButtonClicked:(id)sender {
-        self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
-        if (self.slidingViewController.underLeftShowing) {
-            // actually this does not get called when the top view screenshot is enabled
-            // because the screenshot intercepts the touches on the toggle button
-            [self.slidingViewController resetTopView];
-        } else {
-            [self.slidingViewController anchorTopViewTo:ECRight];
-        }
+    [self.pagingScrollView selectPageAtIndex:0 animated:NO];
+    if (self.slidingViewController.underLeftShowing) {
+        // actually this does not get called when the top view screenshot is enabled
+        // because the screenshot intercepts the touches on the toggle button
+        [self.slidingViewController resetTopView];
+    } else {
+        [self.slidingViewController anchorTopViewTo:ECRight];
+    }
 }
 
 - (IBAction)skinPickerButtonClicked:(id)sender {
-    self.slidingViewController.underRightWidthLayout = ECFixedRevealWidth;
+    [self.pagingScrollView selectPageAtIndex:_numPages-1 animated:NO];
     if (self.slidingViewController.underRightShowing) {
         // actually this does not get called when the top view screenshot is enabled
         // because the screenshot intercepts the touches on the toggle button
@@ -369,7 +369,6 @@
 }
 
 - (void)toggleTopView {
-    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
     if (self.slidingViewController.underLeftShowing) {
         // actually this does not get called when the top view screenshot is enabled
         // because the screenshot intercepts the touches on the toggle button

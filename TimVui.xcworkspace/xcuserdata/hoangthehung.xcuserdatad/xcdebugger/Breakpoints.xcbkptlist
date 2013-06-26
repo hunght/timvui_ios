@@ -4,16 +4,16 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseCell/PhotoBrowseCell.m"
-         timestampString = "393740611.529023"
+         filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
+         timestampString = "393913771.988281"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "43"
-         endingLineNumber = "43"
-         landmarkName = "-pickButtonClicked:"
+         startingLineNumber = "364"
+         endingLineNumber = "364"
+         landmarkName = "-scrollViewDidScrollWithOffset:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
