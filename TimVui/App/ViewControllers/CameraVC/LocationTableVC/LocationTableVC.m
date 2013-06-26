@@ -90,9 +90,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
-    
-//    self.branches[indexPath.row] ;
-    
+    if ([_delegate respondsToSelector:@selector(didPickWithLoation:)]) {
+        [_delegate didPickWithLoation:self.branches[indexPath.row]];
+    }
     
 }
 

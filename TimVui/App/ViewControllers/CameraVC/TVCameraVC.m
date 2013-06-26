@@ -209,7 +209,10 @@
         
     }
 }
-
+#pragma mark - LocationTableVCDelegate
+-(void)didPickWithLoation:(TVBranch *)branch{
+    
+}
 
 #pragma mark - IBActions
 - (IBAction)pageTurn

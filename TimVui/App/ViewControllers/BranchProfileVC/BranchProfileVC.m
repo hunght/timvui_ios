@@ -43,8 +43,11 @@
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
+    
     [super viewDidLoad];
-    [SharedAppDelegate showNotificationAboutSomething:_branch];
+    
+//    [SharedAppDelegate showNotificationAboutSomething:_branch];
+    
     // Do any additional setup after loading the view from its nib.
     [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]];
     //Show Ablum images
@@ -442,10 +445,8 @@
         strStyleFoody=@"";
         BOOL isFistTime=YES;
         for (NSDictionary* dicStyle in [dic allValues]) {
-            //            NSLog(@"dicStyle = %@",dicStyle);
             NSString* strStyleFoodyRow=@"";
             strStyleFoodyRow=[dicStyle valueForKey:@"name"];
-            
             if (isFistTime) {
                 isFistTime=NO;
                 strStyleFoody=[strStyleFoody stringByAppendingFormat:@"%@",strStyleFoodyRow];
@@ -453,7 +454,6 @@
                 strStyleFoody=[strStyleFoody stringByAppendingFormat:@", %@",strStyleFoodyRow];
         }
     }
-    NSLog(@"%@\n",strStyleFoody);
     return strStyleFoody;
 }
 
@@ -464,6 +464,7 @@
     double contentOffset = self.scrollView.contentOffset.y;
     lastDragOffset = contentOffset;
 }
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     BOOL isScrollViewIsDraggedDownwards;
     NSLog(@"self.scrollView.contentOffset.y==== %f",self.scrollView.contentOffset.y);

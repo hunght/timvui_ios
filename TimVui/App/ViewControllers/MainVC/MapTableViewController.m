@@ -24,6 +24,7 @@
 #import "LocationTableVC.h"
 #import "SkinPickerTableVC.h"
 #import "MyNavigationController.h"
+#import "CommentVC.h"
 @interface MapTableViewController (){
 @private
 __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -33,14 +34,61 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 @implementation MapTableViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
+- (void)initNotificationView
+{
+    // Do any additional setup after loading the view from its nib.
+    self.notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
+        TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
+        LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+        [tableVC setDelegate:tvCameraVC];
+        SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+        UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
+        
+        ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+        _slidingViewController.topViewController=navController;
+        _slidingViewController.underLeftViewController = tableVC;
+        _slidingViewController.anchorRightRevealAmount = 320-44;
+        _slidingViewController.underRightViewController = skinVC;
+        _slidingViewController.anchorLeftRevealAmount = 320-44;
+        
+        [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+        [self presentModalViewController:_slidingViewController animated:YES];
+        tvCameraVC.slidingViewController=_slidingViewController;
+    } withComment:^{
+        CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
+        LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+        [tableVC setDelegate:commentVC];
+        UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:commentVC];
+        
+        ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+        _slidingViewController.topViewController=navController;
+        _slidingViewController.underLeftViewController = tableVC;
+        _slidingViewController.anchorRightRevealAmount = 320-44;
+        
+        [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+        [self presentModalViewController:_slidingViewController animated:YES];
+        commentVC.slidingViewController=_slidingViewController;
+    }];
+}
+
+
+#pragma mark - ViewController
 
 - (void)loadView {
     [super loadView];
     NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
     NSDictionary *params = nil;
     CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
-
+    
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
@@ -51,15 +99,6 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     [self postSearchBranch:params];
 }
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -92,27 +131,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
     [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [self.locationPickerView addSubview:_btnSearchBar];
-    // Do any additional setup after loading the view from its nib.
-    
-    self.notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
-        TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
-        LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
-        SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
-        UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
-        
-        ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
-        _slidingViewController.topViewController=navController;
-        _slidingViewController.underLeftViewController = tableVC;
-        _slidingViewController.anchorRightRevealAmount = 320-44;
-        _slidingViewController.underRightViewController = skinVC;
-        _slidingViewController.anchorLeftRevealAmount = 320-44;
-        
-        [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-        [self presentModalViewController:_slidingViewController animated:YES];
-        tvCameraVC.slidingViewController=_slidingViewController;
-    } withComment:^{
-        
-    }];
+    [self initNotificationView];
 }
 -(void)viewDidUnload{
     [super viewDidUnload];
@@ -242,6 +261,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
     return [location1 distanceFromLocation: location2];
 }
+
 #pragma mark - SearchVCDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [_notificationView closeButtonClicked:nil];

@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "TVBranches.h"
+#import "TVBranch.h"
+@protocol LocationTableVCDelegate;
+
+
 @interface LocationTableVC : UITableViewController
+@property (nonatomic, unsafe_unretained) id<LocationTableVCDelegate> delegate;
 @property(nonatomic,strong)TVBranches *branches;
+@end
+@protocol LocationTableVCDelegate<NSObject>
+-(void)didPickWithLoation:(TVBranch *)branch;
 @end

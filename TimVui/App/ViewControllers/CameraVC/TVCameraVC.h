@@ -3,7 +3,8 @@
 #import "CaptureSessionManager.h"
 #import "ECSlidingViewController.h"
 #import "SSPhotoCropperViewController.h"
-@interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate>
+#import "LocationTableVC.h"
+@interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate>
 
 @property (nonatomic, unsafe_unretained) IBOutlet MHPagingScrollView *pagingScrollView;
 @property (nonatomic, unsafe_unretained) IBOutlet UIPageControl *pageControl;
@@ -18,7 +19,7 @@
 @property (nonatomic, retain) CaptureSessionManager *captureManager;
 @property (nonatomic, retain) UITableView *tblBranches;
 @property (nonatomic, retain) UITableView *tblSkinStyle;
-@property(nonatomic,strong)ECSlidingViewController *slidingViewController;
+@property(nonatomic, assign)ECSlidingViewController *slidingViewController;
 @property (nonatomic, retain) NSMutableArray *arrImages;
 @property (nonatomic, retain) UILabel *lblPhone;
 - (IBAction)skinPickerButtonClicked:(id)sender;
