@@ -13,6 +13,7 @@
 #import "TVNetworkingClient.h"
 #import "Ultilities.h"
 #import "AFHTTPRequestOperation.h"
+#import "AuthenCodeVC.h"
 
 @interface UserRegisterVC ()
 
@@ -86,6 +87,7 @@
     [self setScrollview:nil];
     [self setBtnRegister:nil];
     [self setBtn_Cancel:nil];
+    [self setTxfName:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -106,24 +108,21 @@
 
 
 
-#pragma mark UIAlertViewDelegate
--(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
-    switch (alertView.tag) {
-
-        default:
-            break;
-    }
-}
-
-
 - (void)postAPIUserCreatePhone {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             txfPhone.text,@"phone" ,
                             txfPassword.text,@"password",
+                            _txfName.text,@"name",
                             nil];
     NSLog(@"%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
+        AuthenCodeVC* viewController=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            viewController = [[AuthenCodeVC alloc] initWithNibName:@"AuthenCodeVC_iPhone" bundle:nil];
+        } else {
+            viewController = [[AuthenCodeVC alloc] initWithNibName:@"AuthenCodeVC_iPad" bundle:nil];
+        }
+        [self.navigationController pushViewController:viewController animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",operation.responseString);
     }];
@@ -138,10 +137,11 @@
     [self.view endEditing:YES];
         if ([Ultilities validatePhone:txfPhone.text]) {
             if ([Ultilities validatePassword:txfPassword.text withConfirmPass:txfConfirmPassword.text]){
-                [self postAPIUserCreatePhone];
+                if ([Ultilities validateString:_txfName.text])
+                    [self postAPIUserCreatePhone];
             }
         }else
-            [Ultilities showAlertWithMessage:@"Xin dien sdt chinh xac"];
+            [Ultilities showAlertWithMessage:@"Xin dien thong tin day du"];
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {

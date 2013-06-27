@@ -80,14 +80,12 @@
 }
 
 
-- (void)postAPIUserLogin {
+- (void)postCreatePhoneVerify {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _tfdAuthenCode.text,@"password",
                             nil];
-    
-    [[TVNetworkingClient sharedClient] postPath:@"user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
-        NSLog(@"%ld",(long)operation.response.statusCode);
+    [[TVNetworkingClient sharedClient] postPath:@"user/createPhoneVerify" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [[GlobalDataUser sharedAccountClient] setGlocalDataUser:JSON];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%ld",(long)operation.response.statusCode);
     }];
@@ -101,7 +99,7 @@
         
         if ([Ultilities validatePhone:_tfdAuthenCode.text]){
 
-            [self postAPIUserLogin];
+            [self postCreatePhoneVerify];
         }else
             [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
 }

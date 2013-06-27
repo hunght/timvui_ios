@@ -43,40 +43,83 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     return self;
 }
 
+- (void)showCameraAction
+{
+    TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
+    LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    [tableVC setDelegate:tvCameraVC];
+    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
+    
+    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.topViewController=navController;
+    _slidingViewController.underLeftViewController = tableVC;
+    _slidingViewController.anchorRightRevealAmount = 320-44;
+    _slidingViewController.underRightViewController = skinVC;
+    _slidingViewController.anchorLeftRevealAmount = 320-44;
+    
+    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+    [self presentModalViewController:_slidingViewController animated:YES];
+    tvCameraVC.slidingViewController=_slidingViewController;
+}
+
+- (void)showCommentAction
+{
+    CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
+    LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    [tableVC setDelegate:commentVC];
+    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:commentVC];
+    
+    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.topViewController=navController;
+    _slidingViewController.underLeftViewController = tableVC;
+    _slidingViewController.anchorRightRevealAmount = 320-44;
+    
+    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+    [self presentModalViewController:_slidingViewController animated:YES];
+    commentVC.slidingViewController=_slidingViewController;
+}
+
 - (void)initNotificationView
 {
     // Do any additional setup after loading the view from its nib.
     self.notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
-        TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
-        LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
-        [tableVC setDelegate:tvCameraVC];
-        SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
-        UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
+        if ([GlobalDataUser sharedAccountClient].isLogin)
+            [self showCameraAction];
+        else{
+            LoginVC* loginVC=nil;
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+            } else {
+                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+            }
+            loginVC.isPushNaviYES=YES;	
+            [self.navigationController pushViewController:loginVC animated:YES];
+            [loginVC goWithDidLogin:^{
+                [self showCameraAction];
+            } thenLoginFail:^{
+                
+            }];
+        }
         
-        ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
-        _slidingViewController.topViewController=navController;
-        _slidingViewController.underLeftViewController = tableVC;
-        _slidingViewController.anchorRightRevealAmount = 320-44;
-        _slidingViewController.underRightViewController = skinVC;
-        _slidingViewController.anchorLeftRevealAmount = 320-44;
-        
-        [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-        [self presentModalViewController:_slidingViewController animated:YES];
-        tvCameraVC.slidingViewController=_slidingViewController;
     } withComment:^{
-        CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
-        LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
-        [tableVC setDelegate:commentVC];
-        UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:commentVC];
-        
-        ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
-        _slidingViewController.topViewController=navController;
-        _slidingViewController.underLeftViewController = tableVC;
-        _slidingViewController.anchorRightRevealAmount = 320-44;
-        
-        [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-        [self presentModalViewController:_slidingViewController animated:YES];
-        commentVC.slidingViewController=_slidingViewController;
+        if ([GlobalDataUser sharedAccountClient].isLogin)
+            [self showCommentAction];
+        else{
+            LoginVC* loginVC=nil;
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+            } else {
+                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+            }
+            loginVC.isPushNaviYES=YES;	
+            [self.navigationController pushViewController:loginVC animated:YES];
+            [loginVC goWithDidLogin:^{
+                [self showCommentAction];
+            } thenLoginFail:^{
+                
+            }];
+        }
     }];
 }
 

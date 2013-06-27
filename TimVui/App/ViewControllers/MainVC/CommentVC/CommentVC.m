@@ -134,7 +134,7 @@
     UIView* view=(UIView*)_scrollView;
     view.transform=CGAffineTransformIdentity;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        view.transform=CGAffineTransformMakeTranslation(0, 100);
+        view.transform=CGAffineTransformMakeTranslation(0, 85);
     } completion:^(BOOL finished){
         
     }];

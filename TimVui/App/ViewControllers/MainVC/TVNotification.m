@@ -53,8 +53,7 @@
         CGRect _frame= CGRectMake(0, _view.frame.size.height, 320,_height );
         self.frame=_frame;
         [self setBackgroundColor:[UIColor colorWithRed:(101.0f/255.0f) green:(111.0f/255.0f) blue:(85.0f/255.0f) alpha:1.0f]];
-        self.btnCameraCallback =cameraCall;
-        self.btnCommentCallback=commentCall;
+        
         [_view addSubview:self];
         
         //Add open button
@@ -64,6 +63,9 @@
         [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_view addSubview:_btnOpen];
         _isHiddenYES=YES;
+        
+        self.btnCameraCallback =cameraCall;
+        self.btnCommentCallback=commentCall;
     }
     return self;
 }

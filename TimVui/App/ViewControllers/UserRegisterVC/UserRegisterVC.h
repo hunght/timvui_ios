@@ -13,7 +13,7 @@
 #import "GAITrackedViewController.h"
 @class TPKeyboardAvoidingScrollView;
 
-@interface UserRegisterVC : GAITrackedViewController<UITextFieldDelegate,UIAlertViewDelegate>{
+@interface UserRegisterVC : GAITrackedViewController<UITextFieldDelegate>{
     NSString*   user_email;
     NSString*  user_firstName;
     NSString*  user_lastName;
@@ -30,6 +30,7 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *txfPhone;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *txfConfirmPassword;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btn_Cancel;
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *txfName;
 
 
 //IBAction

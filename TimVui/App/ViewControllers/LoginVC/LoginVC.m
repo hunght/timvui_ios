@@ -27,7 +27,6 @@
 #import "GlobalDataUser.h"
 #import "TSMessage.h"
 @implementation LoginVC
-@synthesize delegate=_delegate;
 
 
 #pragma mark UITextFieldDelegate
@@ -126,12 +125,19 @@
 
 #pragma mark Helper
 
+- (void)closeViewController {
+    if (_isPushNaviYES )
+        [self.navigationController popViewControllerAnimated:NO];
+    else
+        [self dismissModalViewControllerAnimated:YES];
+}
+
 -(void)hasPermissionAndGoGetThing{
     if (FBSession.activeSession.isOpen) {
         [[FBRequest requestForMe] startWithCompletionHandler:
          ^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user, NSError *error) {
              if (!error) {
-                 if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]) {
+                 if (self.userDidLogin) {
                      NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                              user.id,@"openid_id" ,
                                              @"FACEBOOK",@"openid_service",
@@ -147,12 +153,15 @@
                          NSLog(@"%ld",(long)operation.response.statusCode);
                          [GlobalDataUser sharedAccountClient].isLogin=YES;
                          [[GlobalDataUser sharedAccountClient].user setValues:[JSON valueForKey:@"data"]];
-                         [_delegate userFacebookDidLogin];
-                         [self dismissModalViewControllerAnimated:YES];
+                         self.userDidLogin();
+                         [self closeViewController];
                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                          // TODO with error
                          NSLog(@"%@",error);
-                         NSLog(@"%ld",(long)operation.response.statusCode);
+                         if (self.userLoginFail)
+                         {
+                             self.userLoginFail();
+                         }
                      }];
                      
                  }
@@ -184,7 +193,6 @@
 }
 
 
-
 - (void)postAPIUserLogin {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _tfdUsername.text,@"username" ,
@@ -192,17 +200,23 @@
                             nil];
     
     [[TVNetworkingClient sharedClient] postPath:@"user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [GlobalDataUser sharedAccountClient].isLogin=YES;
-        [[GlobalDataUser sharedAccountClient].user setValues:[JSON valueForKey:@"data"]];
-        [GlobalDataUser sharedAccountClient].facebookID=[JSON valueForKey:@""];
-        if ([_delegate respondsToSelector:@selector(userFacebookDidLogin)]){
-            [_delegate userFacebookDidLogin];
-            [self dismissModalViewControllerAnimated:YES];
+        [[GlobalDataUser sharedAccountClient] setGlocalDataUser:JSON];
+        if (self.userDidLogin)
+        {
+            
+            [self closeViewController];
+            self.userDidLogin();
         }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%ld",(long)operation.response.statusCode);
+        if (self.userLoginFail)
+        {
+            self.userLoginFail();
+        }
     }];
+}
+-(void)goWithDidLogin:(void (^)())userDidLogin thenLoginFail:(void (^)())userLoginFail{
+    self.userDidLogin =userDidLogin;
+    self.userLoginFail=userLoginFail;
 }
 
 #pragma mark - FBLoginView delegate
@@ -280,7 +294,7 @@
 
 #pragma mark - IBAction
 -(void)backButtonClicked:(id)sender{
-    [self dismissModalViewControllerAnimated:YES];
+    [self closeViewController];
 }
 - (IBAction)userLoginButtonClicked:(id)sender {
     if ([Ultilities validatePassword:_tfdPassword.text]) {

@@ -18,7 +18,7 @@ static GlobalDataUser *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[GlobalDataUser alloc] init];
-        [_sharedClient getPersistenceAccount];
+        [_sharedClient checkAndGetPersistenceAccount];
         _sharedClient.locationManager = [[CLLocationManager alloc] init];
         [_sharedClient.locationManager setDelegate:_sharedClient];
         [_sharedClient.locationManager setDistanceFilter:kCLDistanceFilterNone];
@@ -28,31 +28,28 @@ static GlobalDataUser *_sharedClient = nil;
     return _sharedClient;
 }
 
--(void)savePersistenceAccount{
+-(void)savePersistenceAccountWithData:(NSDictionary*)JSON{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:self.userID forKey:kAccountUserID];
-	[defaults setValue:self.user forKey:kAccountUserName];
-	[defaults setValue:self.facebookID forKey:kAccountFacebookID];
-	[defaults setValue:self.user.avatar forKey:kAccountAvatarImageURL];
-    [defaults setValue:[NSNumber numberWithBool:self.isLogin] forKey:kAccountAvatarImageURL];
+    [defaults setValue:JSON forKey:kAccountUserJSON];
     [defaults synchronize];
 }
 
-- (void)getPersistenceAccount {
+- (void)checkAndGetPersistenceAccount {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.userID=[defaults valueForKey:kAccountUserID];
-	self.user=[defaults valueForKey:kAccountUserName];
-	self.facebookID=[defaults valueForKey:kAccountFacebookID];
-	self.user.avatar=[defaults valueForKey:kAccountAvatarImageURL];
-    self.isLogin=[[defaults valueForKey:kAccountAvatarImageURL] boolValue];
+    NSDictionary* JSON=[defaults valueForKey:kAccountUserJSON];
+    if (JSON) [self setUserWithDic:JSON];
 }
 
-+(void)setGlocalDataUser:(NSDictionary *)attributes{
-    _sharedClient.userID = [attributes valueForKeyPath:@"id"] ;
-    _sharedClient.user = [attributes valueForKeyPath:@"username"];
-    _sharedClient.user.avatar= [attributes valueForKeyPath:@"avatar_image.url"];
+- (void)setUserWithDic:(NSDictionary *)JSON {
+    self.isLogin=YES;
+    [self.user setValues:[JSON valueForKey:@"data"]];
+    self.facebookID=[JSON valueForKey:@""];
 }
 
+-(void)setGlocalDataUser:(NSDictionary *)JSON{
+    [self setUserWithDic:JSON];
+    [self savePersistenceAccountWithData:JSON];
+}
 
 - (void)sendBackgroundLocationToServer:(CLLocationCoordinate2D )location {
     UIBackgroundTaskIdentifier bgTask = 0;
@@ -61,7 +58,6 @@ static GlobalDataUser *_sharedClient = nil;
                   [[UIApplication sharedApplication] endBackgroundTask:bgTask];
               }];
     
-    // Send position to server synchronously since we won't block any UI in the background...
     DJLog(@"Background mode");
     
     if(bgTask != UIBackgroundTaskInvalid) {

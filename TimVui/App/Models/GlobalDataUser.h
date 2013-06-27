@@ -20,6 +20,6 @@
 @property (assign, nonatomic) BOOL isLogin;
 -(NSDictionary *)dicCity;
 + (GlobalDataUser *)sharedAccountClient;
-+(void)setGlocalDataUser:(NSDictionary *)attributes;
+-(void)setGlocalDataUser:(NSDictionary *)attributes;
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd;
 @end

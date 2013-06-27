@@ -105,10 +105,9 @@
         
         if ([Ultilities validatePhone:_tfdPhoneNumber.text]){
 
-//            [self postAPIUserLogin];
+            [self postAPIUserLogin];
         }else
             [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
-    
     
     AuthenCodeVC* viewController=nil;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {

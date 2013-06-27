@@ -12,11 +12,7 @@
 #define  kTrackingId @"UA-37079754-1"
 
 // Settings
-#define kAccountUserID               @"accountUserID"
-#define kAccountUserName           @"accountUserName"
-#define kAccountFacebookID           @"accountFacebookID"
-#define kAccountAvatarImageURL           @"accountAvatarImageURL"
-#define kAccountIsLogin           @"accountIsLogin"
+#define kAccountUserJSON               @"accountUserJSON"
 
 
 // get params from server

@@ -19,22 +19,12 @@
 @class TPKeyboardAvoidingScrollView;
 
 
-/**
- * Sent to the delegate when sign up has completed successfully. Immediately
- * followed by an invocation of userDidLogin:
- */
-@protocol LoginVCDelegate
-
-@optional
-
-- (void)userFacebookDidLogin;
-- (void)userFacebookDidLogout;
-
-@end
-
 @interface LoginVC : UIViewController<UITextFieldDelegate,FBLoginViewDelegate>
 
-@property (nonatomic, retain) NSObject<LoginVCDelegate>* delegate;
+@property (copy) void (^userLoginFail)();
+@property (copy) void (^userDidLogin)();
+@property (nonatomic, assign)BOOL isPushNaviYES;
+
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnLogin;
@@ -49,5 +39,6 @@
 - (IBAction)signupButtonClicked:(id)sender;
 - (IBAction)forgetPasswordButtonClicked:(id)sender;
 
+-(void)goWithDidLogin:(void (^)())userDidLogin thenLoginFail:(void (^)())userLoginFail;
 @end
 

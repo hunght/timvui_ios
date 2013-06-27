@@ -63,11 +63,12 @@ enum {
 };
 @implementation LeftMenuVC
 
-- (void)checkAndRefreshTableviewWhenUserLoginOrLogout
+- (void)showTableDropDown
 {
-    // Custom initialization
     NSMutableArray *elts=nil;
+    _lastStatusLogin=NO;
     if ([GlobalDataUser sharedAccountClient].isLogin) {
+        _lastStatusLogin=YES;
         elts = [NSMutableArray array];
         for (int i = 1; i <= 4; i++) {
             // just some mock elements
@@ -75,12 +76,21 @@ enum {
             [elts addObject:e];
         }
     }
+    
     _dropDownCustom = [[VPPDropDown alloc] initWithTitle:@"Custom Combo" 
                                                     type:VPPDropDownTypeCustom 
                                                tableView:self.tableView 
                                                indexPath:[NSIndexPath indexPathForRow:kS1Row0 inSection:kSection1UserAccount]
                                                 elements:elts
                                                 delegate:self];
+}
+
+- (void)checkAndRefreshTableviewWhenUserLoginOrLogout
+{
+    if (_lastStatusLogin==[GlobalDataUser sharedAccountClient].isLogin) {
+        return;
+    }
+    [self showTableDropDown];
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -114,7 +124,7 @@ enum {
     [super viewDidLoad];
 
     NSArray *fonts = [UIFont fontNamesForFamilyName:@"Arial"];
-    
+    [self showTableDropDown];
     for(NSString *string in fonts){
         NSLog(@"%@", string);
     }
@@ -130,6 +140,7 @@ enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self refreshTableViewDropdown];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -300,6 +311,34 @@ enum {
 	return headerView;
 }
 
+- (void)refreshTableViewDropdown
+{
+    [self checkAndRefreshTableviewWhenUserLoginOrLogout];
+
+}
+
+- (void)showLoginViewController
+{
+    LoginVC* loginVC=nil;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+    } else {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+    }
+    
+    UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:loginVC];
+    [self presentModalViewController:navController animated:YES];
+    [loginVC goWithDidLogin:^{
+        [self refreshTableViewDropdown];
+        [self.tableView reloadData];
+        if ([VPPDropDown tableView:self.tableView dropdownsContainIndexPath:_globalIndexPath]) {
+            [VPPDropDown tableView:self.tableView didSelectRowAtIndexPath:_globalIndexPath];
+        }
+    } thenLoginFail:^{
+        
+    }];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UIViewController *viewController = nil;
@@ -308,16 +347,7 @@ enum {
     if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
         [VPPDropDown tableView:tableView didSelectRowAtIndexPath:indexPath];
         if ([GlobalDataUser sharedAccountClient].isLogin==NO&&indexPath.section==kSection1UserAccount && indexPath.row==kS1Row0) {
-            LoginVC* loginVC=nil;
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-            } else {
-                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
-            }
-            UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:loginVC];
-            
-            [self presentModalViewController:navController animated:YES];
-            [loginVC setDelegate:self];
+            [self showLoginViewController];
             _globalIndexPath=indexPath;
         }
     }else{
@@ -476,15 +506,6 @@ enum {
 
 - (void)logOut {
     // TODO
-}
-
-#pragma mark - LoginVCDelegate
--(void)userFacebookDidLogin{
-    [self checkAndRefreshTableviewWhenUserLoginOrLogout];
-    [self.tableView reloadData];
-    if ([VPPDropDown tableView:self.tableView dropdownsContainIndexPath:_globalIndexPath]) {
-        [VPPDropDown tableView:self.tableView didSelectRowAtIndexPath:_globalIndexPath];
-    }
 }
 
 #pragma mark - VPPDropDownDelegate
