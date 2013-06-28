@@ -99,7 +99,17 @@ static bool isRetinaYES =NO;
     else
         return [NSURL URLWithString:[arrURLs valueForKey:@"480"]];
 }
-
++ (NSURL *)getLargeAlbumPhoto:(NSDictionary *)arrURLs
+{
+    if (!isRetinaYES)
+        return [NSURL URLWithString:[arrURLs valueForKey:@"160"]];
+    else
+        return [NSURL URLWithString:[arrURLs valueForKey:@"300"]];
+}
++ (NSURL *)getOriginalAlbumPhoto:(NSDictionary *)arrURLs
+{
+        return [NSURL URLWithString:[arrURLs valueForKey:@"900"]];
+}
 
 
 +(void)iPhoneRetina{

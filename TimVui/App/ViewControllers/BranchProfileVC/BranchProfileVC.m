@@ -9,15 +9,19 @@
 #import "BranchProfileVC.h"
 #import "TVAppDelegate.h"
 #import <SDWebImage/UIButton+WebCache.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "GlobalDataUser.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TVCoupons.h"
 #import "TVCoupon.h"
+#import "TVExtraBranchView.h"
 #import "MHFacebookImageViewer.h"
+#import "SpecBranchProfileVC.h"
+#import "TVPhotoBrowserVC.h"
 @interface BranchProfileVC ()
 {
-@private
-    double lastDragOffset;
+    @private
+        double lastDragOffset;
 }
 @end
 
@@ -34,54 +38,8 @@
     return self;
 }
 
-
-- (void)showInfoView
+- (UIView *)addGenerationInfoView
 {
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-    
-    [super viewDidLoad];
-    
-//    [SharedAppDelegate showNotificationAboutSomething:_branch];
-    
-    // Do any additional setup after loading the view from its nib.
-    [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]];
-    //Show Ablum images
-    int i=0;
-    for (NSDictionary* images in _branch.images) {
-        UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-        [imageButton setImageWithURL:[Ultilities getThumbImageOfCoverBranch:images]];
-        imageButton.tag=i;
-        [_scrollView addSubview:imageButton];
-        [imageButton setupImageViewerWithImageURL:[Ultilities getLargeImageOfCoverBranch:images] onOpen:^{
-            NSLog(@"OPEN!");
-        } onClose:^{
-            NSLog(@"CLOSE!");
-        }];
-        
-        i++;
-    }
-    if (_branch.image_count>=4) {
-        UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-        [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
-        [_scrollView addSubview:imageButton];
-    }
-    
-    //Show mapView button
-    NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
-    NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=160x160&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
-    NSLog(@"strURL = %@",strURL);
-    NSURL* url=[NSURL URLWithString:strURL];
-    UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
-    [mapViewButton setImageWithURL:url];
-    [mapViewButton addTarget:self action:@selector(mapViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:mapViewButton];
-    
-    // Generate Infomation Of Branch
     UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7, 186, 310, 90)];
     [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=genarateInfoView.layer;
@@ -90,7 +48,6 @@
     // You can even add a border
     [l setBorderWidth:1.0];
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
-    [_scrollView addSubview:genarateInfoView];
     
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
@@ -110,7 +67,7 @@
     lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(15)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
     if (distance>1000.0) {
-        NSLog(@"%f",distance/1000.0);
+//        NSLog(@"%f",distance/1000.0);
         lblDistance.text=[NSString stringWithFormat:@"%.2f km",distance/1000];
     }
     else
@@ -150,7 +107,56 @@
     lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     lblPhone.text=_branch.phone;
     [genarateInfoView addSubview:lblPhone];
+    return genarateInfoView;
+}
+
+- (void)showInfoView
+{
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
     
+    // Do any additional setup after loading the view from its nib.
+    [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]placeholderImage:nil];
+    //Show Ablum images
+    int i=0;
+    for (NSDictionary* images in _branch.images) {
+        UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
+        [imageButton setImageWithURL:[Ultilities getThumbImageOfCoverBranch:images]];
+        imageButton.tag=i;
+        [_scrollView addSubview:imageButton];
+        [imageButton setupImageViewerWithImageURL:[Ultilities getLargeImageOfCoverBranch:images] onOpen:^{
+            NSLog(@"OPEN!");
+        } onClose:^{
+            NSLog(@"CLOSE!");
+        }];
+        
+        i++;
+    }
+    if (_branch.image_count>=4) {
+        UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
+        [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
+        [imageButton addTarget:self action:@selector(albumButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_scrollView addSubview:imageButton];
+    }
+    
+    //Show mapView button
+    NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
+    NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=160x160&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
+    NSLog(@"strURL = %@",strURL);
+    NSURL* url=[NSURL URLWithString:strURL];
+    UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
+    [mapViewButton setImageWithURL:url];
+    [mapViewButton addTarget:self action:@selector(mapViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:mapViewButton];
+    
+    // Generate Infomation Of Branch
+    UIView *genarateInfoView = [self addGenerationInfoView];
+    [_scrollView addSubview:genarateInfoView];
+    CALayer *l;
     
     //Button Camera, Comment, Follow
     UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(7, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 101, 38)];
@@ -329,11 +335,9 @@
                 isServiceOnYES=YES;
                 break;
             }
-            
         }
-        
+
         [utilitiesView addSubview:iconIView];
-        
         UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 130, 23)];
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
@@ -345,13 +349,11 @@
         [lblDetailRow sizeToFit];
         [utilitiesView addSubview:lblDetailRow];
         
-        
         NSString * strImageName;
         if (isServiceOnYES){
             strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
             lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
-        }
-        else{
+        }else{
             lblDetailRow.textColor = [UIColor grayColor];
             strImageName=[dic valueForKey:@"id"];
         }
@@ -387,19 +389,18 @@
         [_scrollView addSubview:specialContentButton];
         height+=45;
     }
-    
     [_scrollView setContentSize:CGSizeMake(320, height)];
 }
 
 - (void)viewDidLoad
 {
     [self showInfoView];
-    _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
+    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
     _extraBranchView.scrollView=_scrollView;
-//    _extraBranchView.branchID=_branch.branchID;
     _extraBranchView.branchID=@"1";
     [self.view addSubview:_extraBranchView];
-    
+    [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning
@@ -457,67 +458,33 @@
     return strStyleFoody;
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    double contentOffset = self.scrollView.contentOffset.y;
-    lastDragOffset = contentOffset;
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    BOOL isScrollViewIsDraggedDownwards;
-    NSLog(@"self.scrollView.contentOffset.y==== %f",self.scrollView.contentOffset.y);
-    if (self.scrollView.contentOffset.y < lastDragOffset){
-        if (_extraBranchView.isHiddenYES&&!_extraBranchView.isAnimating) {
-            _extraBranchView.isAnimating=YES;
-            _extraBranchView.transform = CGAffineTransformIdentity;
-            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                // animate it to the identity transform (100% scale)
-                _extraBranchView.transform = CGAffineTransformMakeTranslation(0, -46);;
-            } completion:^(BOOL finished){
-                _extraBranchView.isAnimating=NO;
-                _extraBranchView.isHiddenYES=NO;
-            }];
-        }
-
-    }
-    else
-        isScrollViewIsDraggedDownwards = NO;
-    
-//    _extraBranchView.transform = CGAffineTransformIdentity;
-    
-}
-
 #pragma mark - IBAction
+
+-(void)albumButtonClicked:(id)sender{
+    TVPhotoBrowserVC* mbImagesVC;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TMViewController_iPhone" bundle:nil] ;
+    } else {
+        mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TMViewController_iPad" bundle:nil] ;
+    }
+    mbImagesVC.brandID=_branch.branchID;
+    [self.navigationController pushViewController:mbImagesVC animated:YES];
+}
+
 -(void)specialContentButtonClicked:(id)sender{
-    
+    SpecBranchProfileVC* specBranchVC=[[SpecBranchProfileVC alloc] initWithNibName:@"SpecBranchProfileVC" bundle:nil];
+    specBranchVC.branch=_branch;
+    [self.navigationController pushViewController:specBranchVC animated:YES];
 }
--(void)likeButtonClicked:(id)sender{
-    
-}
-
--(void)commentButtonClicked:(id)sender{
-    
-}
-
--(void)cameraButtonClicked:(id)sender{
-    
-}
-
--(void)mapViewButtonClicked:(id)sender{
-
-}
-
 
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload {
-    [self setExtraBranchView:nil];
     [self setScrollView:nil];
     [self setImgBranchCover:nil];
     [super viewDidUnload];
 }
+
 @end

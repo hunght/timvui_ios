@@ -19,4 +19,7 @@
     NSIndexPath *_globalIndexPath;
 }
 - (void)openViewController:(UIViewController *)viewController;
+
+- (void)commentButtonClickedWithNav:(UINavigationController*)nav;
+- (void)cameraButtonClickedWithNav:(UINavigationController*)nav;
 @end

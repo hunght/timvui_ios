@@ -127,7 +127,7 @@
 
 - (void)closeViewController {
     if (_isPushNaviYES )
-        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController popViewControllerAnimated:YES];
     else
         [self dismissModalViewControllerAnimated:YES];
 }

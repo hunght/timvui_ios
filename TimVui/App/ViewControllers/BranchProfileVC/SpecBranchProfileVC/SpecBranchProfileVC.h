@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TVBranch.h"
-
-@interface BranchProfileVC : UIViewController
+@interface SpecBranchProfileVC : UIViewController
 @property (retain, nonatomic) TVBranch *branch;
 
 

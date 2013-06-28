@@ -79,8 +79,6 @@ int cellPad=44;
 - (void)setBranch:(TVBranch *)branch {
     _branch = branch;
     self.textLabel.text=_branch.name;
-    
-    
     _lblDetailRow.backgroundColor = [UIColor clearColor];
     _lblDetailRow.textColor = [UIColor blackColor];
     _lblDetailRow.numberOfLines = 0;

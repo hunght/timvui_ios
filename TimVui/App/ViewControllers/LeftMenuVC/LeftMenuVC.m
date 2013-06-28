@@ -16,6 +16,10 @@
 #import "ECSlidingViewController.h"
 #import "MapTableViewController.h"
 #import "MyNavigationController.h"
+#import "TVCameraVC.h"
+#import "SkinPickerTableVC.h"
+#import "CommentVC.h"
+
 #define kNumberOfSections 3
 
 enum {
@@ -50,9 +54,9 @@ enum {
 #define kNumberOfRowsInSection2 4
 enum {
     kS2Home = 0,
-    kS2Promotion,
     kS2Handbook,
-    kS2GoingEven
+    kS2GoingEven,
+    kS2Promotion
 };
 
 #define kNumberOfRowsInSection3 3
@@ -231,8 +235,11 @@ enum {
             break;
         case kSection2Services:
             switch (row) {
-                case kS1Row0:
-                    cell.textLabel.text = @"This is an independent cell";
+                case kS2Home:
+                    cell.textLabel.text = @"Trang chủ";
+                    break;
+                case kS2Handbook:
+                    cell.textLabel.text = @"Cẩm nang";
                     break;
             }
             break;
@@ -242,44 +249,85 @@ enum {
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - Camera Comment Action
+- (void)showCameraAction
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
+    LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    [tableVC setDelegate:tvCameraVC];
+    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
+    
+    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.topViewController=navController;
+    _slidingViewController.underLeftViewController = tableVC;
+    _slidingViewController.anchorRightRevealAmount = 320-44;
+    _slidingViewController.underRightViewController = skinVC;
+    _slidingViewController.anchorLeftRevealAmount = 320-44;
+    
+    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+    [self presentModalViewController:_slidingViewController animated:YES];
+    tvCameraVC.slidingViewController=_slidingViewController;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)showCommentAction
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
+    LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    [tableVC setDelegate:commentVC];
+    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:commentVC];
+    
+    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.topViewController=navController;
+    _slidingViewController.underLeftViewController = tableVC;
+    _slidingViewController.anchorRightRevealAmount = 320-44;
+    
+    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+    [self presentModalViewController:_slidingViewController animated:YES];
+    commentVC.slidingViewController=_slidingViewController;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+- (void)cameraButtonClickedWithNav:(UINavigationController*)nav
 {
+    if ([GlobalDataUser sharedAccountClient].isLogin)
+        [self showCameraAction];
+    else{
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        loginVC.isPushNaviYES=YES;
+        [nav pushViewController:loginVC animated:YES];
+        [loginVC goWithDidLogin:^{
+            [self showCameraAction];
+        } thenLoginFail:^{
+            
+        }];
+    }
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)commentButtonClickedWithNav:(UINavigationController*)nav
 {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+    if ([GlobalDataUser sharedAccountClient].isLogin)
+        [self showCommentAction];
+    else{
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        loginVC.isPushNaviYES=YES;
+        [nav pushViewController:loginVC animated:YES];
+        [loginVC goWithDidLogin:^{
+            [self showCommentAction];
+        } thenLoginFail:^{
+            
+        }];
+    }
 }
-*/
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -351,9 +399,7 @@ enum {
             _globalIndexPath=indexPath;
         }
     }else{
-        
         int row = indexPath.row - [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:indexPath.section];
-        UIAlertView *av;
         switch (indexPath.section) {
             case kSection2Services:
                 switch (row) {
@@ -369,14 +415,11 @@ enum {
             case kSection1UserAccount:
                 switch (row) {
                     case kS1Row1:
-                        av = [[UIAlertView alloc] initWithTitle:@"Cell selected" message:@"The independent cell 2 has been selected" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                        [av show];
-                        //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
                         break;
                     default:
                         break;
                 }
-                
                 break;
         }
         // Maybe push a controller

@@ -34,4 +34,7 @@ typedef enum
 + (NSURL *)getLargeImageOfCoverBranch:(NSDictionary *)arrURLs;
 +(void) writeToTextFile:(NSString*)name withContent:(NSString*)content;
 +(NSDictionary*) displayContentOfFile:(NSString*)name;
+
++ (NSURL *)getLargeAlbumPhoto:(NSDictionary *)arrURLs;
++ (NSURL *)getOriginalAlbumPhoto:(NSDictionary *)arrURLs;
 @end

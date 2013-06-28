@@ -19,12 +19,12 @@
 #import "NSDate+Helper.h"
 #import "NSDictionary+Extensions.h"
 #import "TVNotification.h"
-#import "TVCameraVC.h"
+
 #import "ECSlidingViewController.h"
 #import "LocationTableVC.h"
-#import "SkinPickerTableVC.h"
+
 #import "MyNavigationController.h"
-#import "CommentVC.h"
+
 @interface MapTableViewController (){
 @private
 __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -39,87 +39,20 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
 
-- (void)showCameraAction
-{
-    TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
-    LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
-    [tableVC setDelegate:tvCameraVC];
-    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
-    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
-    
-    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
-    _slidingViewController.topViewController=navController;
-    _slidingViewController.underLeftViewController = tableVC;
-    _slidingViewController.anchorRightRevealAmount = 320-44;
-    _slidingViewController.underRightViewController = skinVC;
-    _slidingViewController.anchorLeftRevealAmount = 320-44;
-    
-    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-    [self presentModalViewController:_slidingViewController animated:YES];
-    tvCameraVC.slidingViewController=_slidingViewController;
-}
 
-- (void)showCommentAction
-{
-    CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
-    LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
-    [tableVC setDelegate:commentVC];
-    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:commentVC];
-    
-    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
-    _slidingViewController.topViewController=navController;
-    _slidingViewController.underLeftViewController = tableVC;
-    _slidingViewController.anchorRightRevealAmount = 320-44;
-    
-    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-    [self presentModalViewController:_slidingViewController animated:YES];
-    commentVC.slidingViewController=_slidingViewController;
-}
 
 - (void)initNotificationView
 {
     // Do any additional setup after loading the view from its nib.
     self.notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
-        if ([GlobalDataUser sharedAccountClient].isLogin)
-            [self showCameraAction];
-        else{
-            LoginVC* loginVC=nil;
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-            } else {
-                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
-            }
-            loginVC.isPushNaviYES=YES;	
-            [self.navigationController pushViewController:loginVC animated:YES];
-            [loginVC goWithDidLogin:^{
-                [self showCameraAction];
-            } thenLoginFail:^{
-                
-            }];
-        }
-        
+        [SharedAppDelegate.menuVC cameraButtonClickedWithNav:self.navigationController];
     } withComment:^{
-        if ([GlobalDataUser sharedAccountClient].isLogin)
-            [self showCommentAction];
-        else{
-            LoginVC* loginVC=nil;
-            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-            } else {
-                loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
-            }
-            loginVC.isPushNaviYES=YES;	
-            [self.navigationController pushViewController:loginVC animated:YES];
-            [loginVC goWithDidLogin:^{
-                [self showCommentAction];
-            } thenLoginFail:^{
-                
-            }];
-        }
+        [SharedAppDelegate.menuVC commentButtonClickedWithNav:self.navigationController];
     }];
 }
 
@@ -495,7 +428,6 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return [BranchMainCell heightForCellWithPost:self.branches[indexPath.row]];
 }
 
@@ -505,16 +437,15 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     branchProfileVC.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
-    NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
-    NSLog(@"%@",params);
-//    NSDictionary *params = @{@"id": @"1"};
+//    NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
+    NSDictionary *params = @{@"id": @"1"};
     [branchProfileVC.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async(dispatch_get_main_queue(),^ {
+        dispatch_async( dispatch_get_main_queue(),^ {
             [self.navigationController pushViewController:branchProfileVC animated:YES];
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         });
     } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(),^ {
+        dispatch_async( dispatch_get_main_queue(),^ {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         });
     }];

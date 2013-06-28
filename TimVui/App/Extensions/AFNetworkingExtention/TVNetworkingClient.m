@@ -25,7 +25,7 @@
 #import "AFJSONRequestOperation.h"
 
 //static NSString * const kAFAppDotNetAPIBaseURLString = @"https://alpha-api.app.net/";
-static NSString * const kAFAppDotNetAPIBaseURLString = @"http://cuathan.co/api/";
+static NSString * const kAFAppDotNetAPIBaseURLString = @"http://anuong.net/api/";
 
 
 @implementation TVNetworkingClient

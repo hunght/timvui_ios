@@ -152,7 +152,7 @@
     self.window.rootViewController = _slidingViewController;
 }
 
-#pragma mark Application Events
+
 -(void)setData:(NSString*)key{
     if ([key isEqualToString:kGetCityDistrictData]) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -183,7 +183,7 @@
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+        
     }];
 }
 
@@ -199,6 +199,8 @@
         [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
     }
 }
+
+#pragma mark Application Events
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -277,5 +279,7 @@
 {
 
 }
+
+
 
 @end
