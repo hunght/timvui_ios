@@ -112,12 +112,7 @@
 
 - (void)showInfoView
 {
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
     
     // Do any additional setup after loading the view from its nib.
     [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]placeholderImage:nil];
@@ -394,12 +389,31 @@
 
 - (void)viewDidLoad
 {
-    [self showInfoView];
-    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
-    _extraBranchView.scrollView=_scrollView;
-    _extraBranchView.branchID=@"1";
-    [self.view addSubview:_extraBranchView];
-    [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+    self.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
+    //    NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
+    NSDictionary *params = @{@"id": @"1"};
+    [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async( dispatch_get_main_queue(),^ {
+            [self showInfoView];
+            TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
+            _extraBranchView.scrollView=_scrollView;
+            _extraBranchView.branchID=@"1";
+            [self.view addSubview:_extraBranchView];
+            [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+            
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async( dispatch_get_main_queue(),^ {
+            
+        });
+    }];
     [super viewDidLoad];
 }
 

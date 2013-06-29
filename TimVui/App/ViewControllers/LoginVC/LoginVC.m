@@ -29,12 +29,7 @@
 @implementation LoginVC
 
 
-#pragma mark UITextFieldDelegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:_tfdUsername]) {
-        [_tfdUsername setKeyboardType:UIKeyboardTypePhonePad];
-    }
-}
+
 
 #pragma mark Setup Methods
 
@@ -98,14 +93,18 @@
 }
 
 #pragma mark ViewControllerDelegate
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupViewLayout];
-    
     [self setupFBLoginView];
-     [[FBSession activeSession] closeAndClearTokenInformation];
+    [[FBSession activeSession] closeAndClearTokenInformation];
     
+    NSArray *fields = @[ self.tfdUsername,self.tfdPassword];
+    [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:fields]];
+    [self.keyboardControls setDelegate:self];
 }
+
 - (void)viewDidUnload
 {
     [self setTfdUsername:nil];
@@ -326,7 +325,22 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
+#pragma mark UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:_tfdUsername]) {
+        [_tfdUsername setKeyboardType:UIKeyboardTypePhonePad];
+    }
+    [self.keyboardControls setActiveField:textField];
+}
 
+#pragma mark -
+#pragma mark Keyboard Controls Delegate
+
+
+- (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls
+{
+    [self.view endEditing:NO];
+}
 
 
 @end

@@ -368,6 +368,8 @@
 		55D6B305176043B100260C09 /* img_direction_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B303176043B000260C09 /* img_direction_icon.png */; };
 		55D6B306176043B100260C09 /* img_direction_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B304176043B100260C09 /* img_direction_icon@2x.png */; };
 		55DDC88E174722740017B264 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55DDC88D174722730017B264 /* FacebookSDKResources.bundle */; };
+		55E4193D177E749400822763 /* BSKeyboardControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E41939177E749400822763 /* BSKeyboardControls.m */; };
+		55E4193E177E749400822763 /* BSKeyboardControls.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55E4193A177E749400822763 /* BSKeyboardControls.strings */; };
 		55E654911779387100779B7D /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E654901779387100779B7D /* ExtraCommentCell.m */; };
 		55ECBD301745EBE5005F8FB9 /* ForgetPassVC_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ECBD2C1745EBE3005F8FB9 /* ForgetPassVC_iPad.xib */; };
 		55ECBD311745EBE5005F8FB9 /* ForgetPassVC_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ECBD2D1745EBE4005F8FB9 /* ForgetPassVC_iPhone.xib */; };
@@ -830,6 +832,10 @@
 		55D6B303176043B000260C09 /* img_direction_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_direction_icon.png; sourceTree = "<group>"; };
 		55D6B304176043B100260C09 /* img_direction_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_direction_icon@2x.png"; sourceTree = "<group>"; };
 		55DDC88D174722730017B264 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = TimVui/Resourses/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		55E41938177E749400822763 /* BSKeyboardControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSKeyboardControls.h; sourceTree = "<group>"; };
+		55E41939177E749400822763 /* BSKeyboardControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSKeyboardControls.m; sourceTree = "<group>"; };
+		55E4193B177E749400822763 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/BSKeyboardControls.strings; sourceTree = "<group>"; };
+		55E4193C177E749400822763 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BSKeyboardControls.strings; sourceTree = "<group>"; };
 		55E6548F1779387100779B7D /* ExtraCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraCommentCell.h; sourceTree = "<group>"; };
 		55E654901779387100779B7D /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
 		55ECBD2C1745EBE3005F8FB9 /* ForgetPassVC_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPassVC_iPad.xib; sourceTree = "<group>"; };
@@ -1662,6 +1668,7 @@
 		55BAED3B1709726300CF3171 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				55E41937177E749400822763 /* BSKeyboardControls */,
 				55D391DF177D767300BE41B7 /* TMQuiltView */,
 				55AEAD031779A4FF0010638F /* SVPullToRefresh */,
 				5591DB7B176EE6B70064B611 /* MHFBImageViewController */,
@@ -1879,6 +1886,16 @@
 			path = LoginVC;
 			sourceTree = "<group>";
 		};
+		55E41937177E749400822763 /* BSKeyboardControls */ = {
+			isa = PBXGroup;
+			children = (
+				55E41938177E749400822763 /* BSKeyboardControls.h */,
+				55E41939177E749400822763 /* BSKeyboardControls.m */,
+				55E4193A177E749400822763 /* BSKeyboardControls.strings */,
+			);
+			path = BSKeyboardControls;
+			sourceTree = "<group>";
+		};
 		55ECBD331745EBF1005F8FB9 /* AuthenCodeVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1980,6 +1997,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				da,
 			);
 			mainGroup = 5562B17D16FC50F300E21A82;
 			productRefGroup = 5562B18716FC50F300E21A82 /* Products */;
@@ -2290,6 +2308,7 @@
 				55C1803B177C414800A57233 /* SpecBranchProfileVC.xib in Resources */,
 				55D391F1177D77F200BE41B7 /* TVPhotoBrowserVC_iPad.xib in Resources */,
 				55D391F2177D77F200BE41B7 /* TVPhotoBrowserVC_iPhone.xib in Resources */,
+				55E4193E177E749400822763 /* BSKeyboardControls.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2404,6 +2423,7 @@
 				55D391E9177D767300BE41B7 /* TMQuiltViewController.m in Sources */,
 				55D391F3177D77F200BE41B7 /* TVPhotoBrowserVC.m in Sources */,
 				55D391F4177D77F200BE41B7 /* TMPhotoQuiltViewCell.m in Sources */,
+				55E4193D177E749400822763 /* BSKeyboardControls.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2456,6 +2476,15 @@
 				55A25F571728CCD700D5E29F /* en */,
 			);
 			name = Localizable_vn.strings;
+			sourceTree = "<group>";
+		};
+		55E4193A177E749400822763 /* BSKeyboardControls.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55E4193B177E749400822763 /* da */,
+				55E4193C177E749400822763 /* en */,
+			);
+			name = BSKeyboardControls.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

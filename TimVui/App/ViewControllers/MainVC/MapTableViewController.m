@@ -434,21 +434,9 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
     BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
-    branchProfileVC.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
-    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    _activityIndicatorView.hidesWhenStopped = YES;
-//    NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
-    NSDictionary *params = @{@"id": @"1"};
-    [branchProfileVC.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async( dispatch_get_main_queue(),^ {
-            [self.navigationController pushViewController:branchProfileVC animated:YES];
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async( dispatch_get_main_queue(),^ {
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        });
-    }];
+     [self.navigationController pushViewController:branchProfileVC animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
 }
 
 @end

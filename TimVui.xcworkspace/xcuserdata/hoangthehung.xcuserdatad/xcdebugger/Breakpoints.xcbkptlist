@@ -7,25 +7,12 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
-         timestampString = "393927509.580962"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "367"
-         endingLineNumber = "367"
-         landmarkName = "-scrollViewDidScrollWithOffset:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/UserRegisterVC/UserRegisterVC.m"
-         timestampString = "393992561.151322"
+         timestampString = "394167426.116231"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "119"
-         endingLineNumber = "119"
+         startingLineNumber = "117"
+         endingLineNumber = "117"
          landmarkName = "-postAPIUserCreatePhone"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/UserRegisterVC/UserRegisterVC.m"
-         timestampString = "393992561.151322"
+         timestampString = "394167426.116231"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "127"
-         endingLineNumber = "127"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
          landmarkName = "-postAPIUserCreatePhone"
          landmarkType = "5">
       </FileBreakpoint>

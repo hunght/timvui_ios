@@ -108,6 +108,11 @@
     [self setBtnCameraSkin:nil];
     [super viewDidUnload];
 }
+- (void)dealloc
+{
+    void *context = (__bridge void *)self;
+    [self.pagingScrollView removeObserver:self forKeyPath:@"contentOffset" context:context];
+}
 
 - (void)didReceiveMemoryWarning
 {

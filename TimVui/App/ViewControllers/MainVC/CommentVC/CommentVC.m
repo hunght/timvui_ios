@@ -11,7 +11,7 @@
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
 @interface CommentVC ()
-
+@property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 @end
 
 @implementation CommentVC
@@ -25,9 +25,21 @@
     return self;
 }
 
+- (void)initKeyboardControls
+{
+    NSArray *fields = @[ self.txvContent];
+    
+    [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:fields]];
+    [self.keyboardControls setDelegate:self];
+    [self.keyboardControls setVisibleControls:BSKeyboardControlDone];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self initKeyboardControls];
+    
     // Do any additional setup after loading the view from its nib.
     [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
     self.navigationItem.leftBarButtonItem = self.toggleBarButtonItem;
@@ -203,9 +215,20 @@
                                 nil];
         NSLog(@"%@",params);
         [[TVNetworkingClient sharedClient] postPath:@"user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-            NSLog(@"%@",JSON);
+            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
     }
 }
+
+
+#pragma mark -
+#pragma mark Keyboard Controls Delegate
+
+- (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls
+{
+    [self.view endEditing:NO];
+}
+
+
 @end

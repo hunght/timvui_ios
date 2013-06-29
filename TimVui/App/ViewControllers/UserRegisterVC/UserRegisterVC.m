@@ -16,7 +16,7 @@
 #import "AuthenCodeVC.h"
 
 @interface UserRegisterVC ()
-
+@property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 @end
 
 @implementation UserRegisterVC
@@ -44,6 +44,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSArray *fields = @[ self.txfName,self.txfPhone,txfPassword,txfConfirmPassword];
+    [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:fields]];
+    [self.keyboardControls setDelegate:self];
+    
+    
+    
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
     // Setup View and Table View
@@ -97,14 +103,6 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-#pragma mark UITextFieldDelegate
-//implementation
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:txfPhone]) {
-        [txfPhone setKeyboardType:UIKeyboardTypePhonePad];
-    }
-}
 
 
 
@@ -153,6 +151,26 @@
 - (IBAction)getPhotoUserButtonClicked:(id)sender {
     [[SDImageCache sharedImageCache] clearMemory];
 
+}
+#pragma mark UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:txfPhone]) {
+        [txfPhone setKeyboardType:UIKeyboardTypePhonePad];
+    }
+    [self.keyboardControls setActiveField:textField];
+}
+
+#pragma mark -
+#pragma mark Keyboard Controls Delegate
+
+- (void)keyboardControls:(BSKeyboardControls *)keyboardControls selectedField:(UIView *)field inDirection:(BSKeyboardControlsDirection)direction
+{
+    UIView *view = keyboardControls.activeField;
+    [self.scrollview scrollRectToVisible:view.frame animated:YES];
+}
+- (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls
+{
+    [self.view endEditing:NO];
 }
 
 

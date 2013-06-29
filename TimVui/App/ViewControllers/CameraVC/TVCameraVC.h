@@ -19,7 +19,7 @@
 @property (nonatomic, retain) CaptureSessionManager *captureManager;
 @property (nonatomic, retain) UITableView *tblBranches;
 @property (nonatomic, retain) UITableView *tblSkinStyle;
-@property(nonatomic, assign)ECSlidingViewController *slidingViewController;
+@property(nonatomic, unsafe_unretained)ECSlidingViewController *slidingViewController;
 @property (nonatomic, retain) NSMutableArray *arrImages;
 @property (nonatomic, retain) UILabel *lblPhone;
 - (IBAction)skinPickerButtonClicked:(id)sender;

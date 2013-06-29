@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ECSlidingViewController.h"
 #import "LocationTableVC.h"
+#import "BSKeyboardControls.h"
 @class TPKeyboardAvoidingScrollView;
-@interface CommentVC : UIViewController<LocationTableVCDelegate>
+@interface CommentVC : UIViewController<UITextFieldDelegate, UITextViewDelegate,LocationTableVCDelegate,BSKeyboardControlsDelegate>
 @property(nonatomic, assign)ECSlidingViewController *slidingViewController;
 @property (nonatomic, strong)UILabel *lblBranchName;
 @property (nonatomic, strong)UILabel *lblDistance;
@@ -20,7 +21,7 @@
 @property (nonatomic, strong)NSNumber * rating;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextView *txvContent;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCommentPost;
-@property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *firstStar;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *secondStar;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *thirdStar;

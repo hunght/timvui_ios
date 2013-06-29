@@ -15,15 +15,17 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "BSKeyboardControls.h"
 #import <FacebookSDK/FacebookSDK.h>
 @class TPKeyboardAvoidingScrollView;
 
 
-@interface LoginVC : UIViewController<UITextFieldDelegate,FBLoginViewDelegate>
+@interface LoginVC : UIViewController<UITextFieldDelegate,FBLoginViewDelegate,BSKeyboardControlsDelegate>
 
 @property (copy) void (^userLoginFail)();
 @property (copy) void (^userDidLogin)();
 @property (nonatomic, assign)BOOL isPushNaviYES;
+@property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;

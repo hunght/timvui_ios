@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "MacroApp.h"
 #import "Ultilities.h"
-
+#import "BSKeyboardControls.h"
 #import "GAITrackedViewController.h"
 @class TPKeyboardAvoidingScrollView;
 
-@interface UserRegisterVC : GAITrackedViewController<UITextFieldDelegate>{
+@interface UserRegisterVC : GAITrackedViewController<UITextFieldDelegate,BSKeyboardControlsDelegate>{
     NSString*   user_email;
     NSString*  user_firstName;
     NSString*  user_lastName;
@@ -23,7 +23,7 @@
     BOOL _isTakenPhotoYES;
     NSURL* urlImage;
 }
-@property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollview;
+@property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollview;
 
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRegister;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *txfPassword;
