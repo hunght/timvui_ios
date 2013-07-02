@@ -21,18 +21,7 @@
 	return self;
 }
 
-- (NSString *)extendedEventType {
-	NSString *action = [self.arrURLImages safeStringForKey:@"action"];
-	if ([self.name isEqualToString:@"IssuesEvent"]) {
-		return [action isEqualToString:@"closed"] ? @"IssuesClosedEvent" : @"IssuesOpenedEvent";
-	} else if ([self.name isEqualToString:@"PullRequestEvent"]) {
-		if ([action isEqualToString:@"synchronize"]) {
-			return @"PullRequestSynchronizeEvent";
-		}
-		return [action isEqualToString:@"closed"] ? @"PullRequestClosedEvent" : @"PullRequestOpenedEvent";
-	}
-	return self.name;
-}
+
 
 - (void)markAsRead {
 	self.read = YES;
@@ -43,17 +32,15 @@
 }
 
 - (void)setValues:(id)dict {
-	self.branchID = [dict safeStringForKey:@"id"];
+	self.couponID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
-	self.arrURLImages = [dict safeDictForKey:@"image"];
-	self.price_avg = [dict safeStringForKey:@"price_avg"];
-    self.coupon_count=[dict safeStringForKey:@"coupon_count"];
+	self.view   = [dict safeIntegerForKey:@"view"];
+	self.used = [dict safeStringForKey:@"used"];
+    self.code  =[dict safeStringForKey:@"code"];
     
-    self.branchID = [dict safeStringForKey:@"id"];
-	self.name = [dict safeStringForKey:@"name"];
-	self.arrURLImages = [dict safeDictForKey:@"image"];
-	self.price_avg = [dict safeStringForKey:@"price_avg"];
-    self.coupon_count=[dict safeStringForKey:@"coupon_count"];
+    self.start = [dict safeDateForKey:@"start"];
+	self.end = [dict safeDateForKey:@"end"];
+
     
 }
 

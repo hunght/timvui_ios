@@ -104,8 +104,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
-
 - (void)postAPIUserCreatePhone {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             txfPhone.text,@"phone" ,

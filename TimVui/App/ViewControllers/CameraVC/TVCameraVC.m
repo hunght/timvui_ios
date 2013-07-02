@@ -209,12 +209,13 @@
     if (error != NULL) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"Image couldn't be saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
-    }
-    else {
+    }else {
         
     }
 }
+
 #pragma mark - LocationTableVCDelegate
+
 -(void)didPickWithLoation:(TVBranch *)branch{
     
 }

@@ -22,7 +22,8 @@
 
 #import "ECSlidingViewController.h"
 #import "LocationTableVC.h"
-
+#import "TVCoupon.h"
+#import "TVCoupons.h"
 #import "MyNavigationController.h"
 
 @interface MapTableViewController (){
@@ -43,8 +44,6 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     }
     return self;
 }
-
-
 
 - (void)initNotificationView
 {
@@ -80,7 +79,6 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 {
     [super viewDidLoad];
     
-
     // The LocationPickerView can be created programmatically (see below) or
     // using Storyboards/XIBs (see Storyboard file).
     self.locationPickerView = [[LocationPickerView alloc] initWithFrame:self.view.bounds];
@@ -196,14 +194,13 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
              melbourneMarker.icon = newImage;
              melbourneMarker.map = _locationPickerView.mapView;
          }
-                         failure:nil];
+        failure:nil];
         i++;
     }
 }
 
 - (void)postSearchBranch:(NSDictionary*)params {
     NSLog(@"%@",params);
-    
     if (!self.branches) {
         self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     }
@@ -383,43 +380,60 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     return [self.branches count];
 }
 
+- (void)settingForCell:(BranchMainCell *)cell indexPath:(NSIndexPath *)indexPath {
+    int countUtilities=0;
+    TVBranch* branch=self.branches[indexPath.row];
+    
+    for (NSString* strAlias in [branch utilities]) {
+        NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",strAlias];
+        NSDictionary* params=[SharedAppDelegate getParamData];
+        NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
+        NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
+        NSDictionary* utilityDic=[idPublicArr lastObject];
+        
+        UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(countUtilities*(8+18),0, 18, 18)];
+        [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
+        
+        [cell.utility addSubview:iconIView];
+        countUtilities++;
+    }
+    
+    int lineHeight=25;
+    
+    for (TVCoupon* coupon in branch.coupons.items) {
+        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+25, lineHeight, 265, 25)];
+        lblAddress.backgroundColor = [UIColor clearColor];
+        lblAddress.textColor = [UIColor grayColor];
+        lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(15)];
+        lblAddress.numberOfLines = 0;
+        lblAddress.lineBreakMode = UILineBreakModeWordWrap;
+        lblAddress.text=coupon.name;
+        [lblAddress sizeToFit];
+        [cell.utility addSubview:lblAddress];
+        
+        UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, lineHeight, 25, 25)];
+        homeIcon.image=[UIImage imageNamed:@"img_camera_cell_button"];
+        [cell.utility addSubview:homeIcon];
+        lineHeight+=lblAddress.frame.size.height+5;
+    }
+    
+    CGRect frame=cell.utility.frame;
+    frame.size.height+=branch.coupons.items.count*30;
+    [cell.utility setFrame:frame];
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
     BranchMainCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        int countUtilities=0;
-        for (NSString* strAlias in [self.branches[indexPath.row] utilities]) {
-            
-            NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",strAlias];
-            NSDictionary* params=[SharedAppDelegate getParamData];
-            NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
-            NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
-            NSDictionary* utilityDic=[idPublicArr lastObject];
-            UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(countUtilities*(8+18),0, 18, 18)];
-            [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
-            
-            [cell.utility addSubview:iconIView];
-            countUtilities++;
-        }
+        [self settingForCell:cell indexPath:indexPath];
     }
     else{
         [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        int countUtilities=0;
-        for (NSString* strAlias in [self.branches[indexPath.row] utilities]) {
-            NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",strAlias];
-            NSDictionary* params=[SharedAppDelegate getParamData];
-            NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
-            NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
-            NSDictionary* utilityDic=[idPublicArr lastObject];
-            
-            UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(countUtilities*(8+18),0, 18, 18)];
-            [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
-            
-            [cell.utility addSubview:iconIView];
-            countUtilities++;
-        }
+        [self settingForCell:cell indexPath:indexPath];
     }
     cell.branch = self.branches[indexPath.row];
     return cell;

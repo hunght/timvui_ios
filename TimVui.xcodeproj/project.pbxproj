@@ -395,6 +395,8 @@
 		55F5F5181743A10100A0C243 /* UINavigationBar+JTDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F5F5171743A10000A0C243 /* UINavigationBar+JTDropShadow.m */; };
 		55F6275817533D3700E8F8F7 /* SearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F6275617533D3500E8F8F7 /* SearchVC.m */; };
 		55F6275917533D3700E8F8F7 /* SearchVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F6275717533D3600E8F8F7 /* SearchVC.xib */; };
+		55F753C917815DC300555FCF /* img_map_coupon_event_icon_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = 55F753C717815DC300555FCF /* img_map_coupon_event_icon_cell.png */; };
+		55F753CA17815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55F753C817815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png */; };
 		B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A89DFA4254249D091202191 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -878,6 +880,8 @@
 		55F6275517533D3500E8F8F7 /* SearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchVC.h; path = SearchVC/SearchVC.h; sourceTree = "<group>"; };
 		55F6275617533D3500E8F8F7 /* SearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchVC.m; path = SearchVC/SearchVC.m; sourceTree = "<group>"; };
 		55F6275717533D3600E8F8F7 /* SearchVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SearchVC.xib; path = SearchVC/SearchVC.xib; sourceTree = "<group>"; };
+		55F753C717815DC300555FCF /* img_map_coupon_event_icon_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_map_coupon_event_icon_cell.png; sourceTree = "<group>"; };
+		55F753C817815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_map_coupon_event_icon_cell@2x.png"; sourceTree = "<group>"; };
 		EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -1403,6 +1407,8 @@
 		55B9083E17543AC90061AC33 /* ResourcesImages */ = {
 			isa = PBXGroup;
 			children = (
+				55F753C717815DC300555FCF /* img_map_coupon_event_icon_cell.png */,
+				55F753C817815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png */,
 				55479288177AEB24004FE268 /* img_comment_star_off.png */,
 				55479289177AEB24004FE268 /* img_comment_star_off@2x.png */,
 				5547928A177AEB24004FE268 /* img_comment_star_on.png */,
@@ -2309,6 +2315,8 @@
 				55D391F1177D77F200BE41B7 /* TVPhotoBrowserVC_iPad.xib in Resources */,
 				55D391F2177D77F200BE41B7 /* TVPhotoBrowserVC_iPhone.xib in Resources */,
 				55E4193E177E749400822763 /* BSKeyboardControls.strings in Resources */,
+				55F753C917815DC300555FCF /* img_map_coupon_event_icon_cell.png in Resources */,
+				55F753CA17815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

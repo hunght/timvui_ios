@@ -7,26 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/UserRegisterVC/UserRegisterVC.m"
-         timestampString = "394167426.116231"
+         filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
+         timestampString = "394421031.807863"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
-         landmarkName = "-postAPIUserCreatePhone"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/UserRegisterVC/UserRegisterVC.m"
-         timestampString = "394167426.116231"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "125"
-         endingLineNumber = "125"
-         landmarkName = "-postAPIUserCreatePhone"
+         startingLineNumber = "219"
+         endingLineNumber = "219"
+         landmarkName = "-didPickWithLoation:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

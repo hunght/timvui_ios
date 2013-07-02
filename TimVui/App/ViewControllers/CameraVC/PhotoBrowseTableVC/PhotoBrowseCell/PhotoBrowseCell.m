@@ -28,12 +28,14 @@
     }
     return self;
 }
+
 #pragma mark - UIView
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.imageView.frame=CGRectMake(7, 7, 306, 120);
 }
+
 -(void)pickButtonClicked:(UIButton*)s{
     if (s.isSelected) 
         [s setSelected:NO];

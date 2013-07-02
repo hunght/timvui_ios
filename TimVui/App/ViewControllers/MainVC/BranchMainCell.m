@@ -106,12 +106,11 @@
     self.detailTextLabel.text=_branch.address_full;
     self.price_avg.text=_branch.price_avg;
     [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
-    
     [self setNeedsLayout];
 }
 
 + (CGFloat)heightForCellWithPost:(TVBranch *)branch {
-    return (8+96+8+branch.coupon_count*30);
+    return (8+ 96+ 8+ branch.coupon_count* 30);
 }
 
 #pragma mark - UIView

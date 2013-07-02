@@ -106,6 +106,8 @@
     [l setMasksToBounds:YES];
     [l setCornerRadius:5];
     [_btnCommentPost setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    
+    
 }
 - (void)viewDidUnload {
     [self setScrollView:nil];
@@ -214,9 +216,10 @@
                                 [_rating stringValue],@"rating" ,
                                 nil];
         NSLog(@"%@",params);
-        [[TVNetworkingClient sharedClient] postPath:@"user/createPhone" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-            
+        [[TVNetworkingClient sharedClient] postPath:@"branch/postComment" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+            NSLog(@"%@",JSON);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
         }];
     }
 }

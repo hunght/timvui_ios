@@ -3,6 +3,7 @@
 #import "TVAppDelegate.h"
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
+#import "SVProgressHUD.h"
 @interface GHResource ()
 @property(nonatomic,strong)NSDictionary *data;
 @property(nonatomic,strong)NSMutableArray *successBlocks;
@@ -14,8 +15,13 @@
 @implementation GHResource
 
 - (id)initWithPath:(NSString *)path {
+	return [self initWithPath:path withShowLoading:YES];
+}
+
+- (id)initWithPath:(NSString *)path withShowLoading:(BOOL)isShow{
 	self = [super init];
 	if (self) {
+        self.isShowLoading=isShow;
 		self.resourcePath = path;
 		self.resourceStatus = GHResourceStatusUnloaded;
 	}
@@ -61,6 +67,7 @@
 - (void)loadWithParams:(NSDictionary *)params start:(resourceStart)start success:(resourceSuccess)success failure:(resourceFailure)failure {
 	[self loadWithParams:params path:self.resourcePath method:@"POST" start:start success:success failure:failure];
 }
+
 - (void)loadWithParams:(NSDictionary *)params path:(NSString *)path method:(NSString *)method start:(resourceStart)start success:(resourceSuccess)success failure:(resourceFailure)failure {
     if (self.isLoading) {
         if (success) [self.successBlocks addObject:[success copy]];
@@ -68,6 +75,8 @@
         if (start) start(self);
         return;
     }
+    if(_isShowLoading)[SVProgressHUD show];
+    
 	self.error = nil;
 	self.resourceStatus = GHResourceStatusLoading;
 	NSMutableURLRequest *request = [self.apiClient requestWithMethod:method path:path parameters:params];
@@ -75,6 +84,7 @@
 	request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 
 	void (^onSuccess)() = (void (^)()) ^(AFHTTPRequestOperation *operation, id data) {
+        if(_isShowLoading)[SVProgressHUD dismiss];
             NSDictionary *headers = operation.response.allHeaderFields;
             DJLog(@"\n%@: Loading %@ finished.\n\n\n", self.class, path);
             [self setHeaderValues:headers];
@@ -87,6 +97,7 @@
             [self.successBlocks removeAllObjects];
         };
 	void (^onFailure)() = (void (^)()) ^(AFHTTPRequestOperation *operation, NSError *error) {
+        if(_isShowLoading)[SVProgressHUD dismiss];
             NSDictionary *headers = operation.response.allHeaderFields;
             DJLog(@"\n%@: Loading %@ failed.\n\nparams:\n%@\n\nError:\n%@\n", self.class, path, params, error);
             [self setHeaderValues:headers];

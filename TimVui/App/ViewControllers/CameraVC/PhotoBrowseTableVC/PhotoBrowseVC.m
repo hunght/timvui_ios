@@ -8,6 +8,8 @@
 
 #import "PhotoBrowseVC.h"
 #import "UIImage+Crop.h"
+#import "GlobalDataUser.h"
+#import "TVNetworkingClient.h"
 @interface PhotoBrowseVC ()
 
 @end
@@ -22,6 +24,7 @@
     }
     return self;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,19 +52,21 @@
     [btnPostPhoto addTarget:self action:@selector(postPhotoButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_bottomView addSubview:btnPostPhoto];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationController.navigationBarHidden=NO;
 }
+
 - (void)viewDidUnload {
     [self setTableView:nil];
     [self setBottomView:nil];
     [super viewDidUnload];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 #pragma mark IBAction
 - (IBAction)switchChangedValue:(id)sender {
@@ -70,7 +75,18 @@
 }
 
 -(void)postPhotoButtonClicked:(id)s{
-    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            _album,@"album" ,
+                            _branch_id,@"branch_id",
+                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                            
+                            nil];
+    NSLog(@"%@",params);
+    [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+    }];
 }
 
 #pragma mark PhotoBrowseCellDelegate
@@ -78,10 +94,8 @@
 -(void)pickerButtonClicked:(UIButton *)sender{
     if (sender.isSelected)
         [_arrPhotosPick replaceObjectAtIndex:sender.tag withObject:[NSNumber numberWithBool:NO]];
-    
     else
         [_arrPhotosPick replaceObjectAtIndex:sender.tag withObject:[NSNumber numberWithBool:YES]];
-
 }
 
 #pragma mark - Table view data source
@@ -124,6 +138,7 @@
         [_arrPhotosPick replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
         [cell.btnPicked setSelected:YES];
     }
+    
 }
 
 

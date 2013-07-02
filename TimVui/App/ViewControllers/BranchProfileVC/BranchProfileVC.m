@@ -18,6 +18,7 @@
 #import "MHFacebookImageViewer.h"
 #import "SpecBranchProfileVC.h"
 #import "TVPhotoBrowserVC.h"
+
 @interface BranchProfileVC ()
 {
     @private
@@ -113,9 +114,9 @@
 - (void)showInfoView
 {
     
-    
     // Do any additional setup after loading the view from its nib.
     [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]placeholderImage:nil];
+    
     //Show Ablum images
     int i=0;
     for (NSDictionary* images in _branch.images) {
@@ -131,6 +132,7 @@
         
         i++;
     }
+    
     if (_branch.image_count>=4) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
@@ -473,6 +475,21 @@
 }
 
 #pragma mark - IBAction
+-(void)likeButtonClicked:(id)sender{
+    
+}
+
+-(void)commentButtonClicked:(id)sender{
+    [SharedAppDelegate.menuVC commentButtonClickedWithNav:self.navigationController];
+}
+
+-(void)cameraButtonClicked:(id)sender{
+    [SharedAppDelegate.menuVC cameraButtonClickedWithNav:self.navigationController];
+}
+
+-(void)mapViewButtonClicked:(id)sender{
+    
+}
 
 -(void)albumButtonClicked:(id)sender{
     TVPhotoBrowserVC* mbImagesVC;

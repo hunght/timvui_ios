@@ -128,9 +128,9 @@
     lblBranchName.text=@"ĐIỂM NỔI BẬT";
     [genarateInfoView addSubview:lblBranchName];
     int lineHeight=50;
-//    NSLog(@"%@",_branch.special_content);
+    
     for (NSString* str in _branch.special_content) {
-        
+    
         UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+25, lineHeight, 265, 25)];
         lblAddress.backgroundColor = [UIColor clearColor];
         lblAddress.textColor = [UIColor grayColor];
@@ -146,6 +146,7 @@
         [genarateInfoView addSubview:homeIcon];
         lineHeight+=lblAddress.frame.size.height+5;
     }
+    
     CGRect frame=genarateInfoView.frame;
     frame.size.height+=lineHeight;
     genarateInfoView.frame=frame;

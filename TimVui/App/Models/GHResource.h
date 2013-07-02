@@ -25,8 +25,9 @@ typedef void (^resourceFailure)(GHResource *instance, NSError *error);
 @property(nonatomic,readonly)BOOL isLoaded;
 @property(nonatomic,readonly)BOOL isLoading;
 @property(nonatomic,readonly)BOOL isChanged;
-
+@property(nonatomic, assign)BOOL isShowLoading;
 - (id)initWithPath:(NSString *)path;
+- (id)initWithPath:(NSString *)path withShowLoading:(BOOL)isShow;
 - (void)markAsUnloaded;
 - (void)markAsLoaded;
 - (void)markAsChanged;
