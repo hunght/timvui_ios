@@ -12,12 +12,17 @@
 #import "TVNetworkingClient.h"
 #import "AFHTTPRequestOperation.h"
 #import "BlockAlertView.h"
+#import "Base64.h"
+
 @interface PhotoBrowseVC ()
 
 @end
 
 @implementation PhotoBrowseVC
-
+-(void)backButtonClicked:(id)sender{
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,6 +35,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+
+    
     _arrPhotosPick=[[NSMutableArray alloc] init];
     for (int i=0; i<_arrPhotos.count; i++) {
         [_arrPhotosPick addObject:[NSNumber numberWithBool:YES]];
@@ -99,13 +112,29 @@
         [alert show];
         return;
     }
+    int i=0;
+    NSMutableArray* arrImageStr=[[NSMutableArray alloc] init];
+    for (UIImage* image in _arrPhotos) {
+        NSNumber* isPicked=[_arrPhotosPick objectAtIndex:i];
+        if ([isPicked boolValue]) {
+            NSData *imageToUpload = UIImageJPEGRepresentation(image, 1.00);
+            [arrImageStr addObject:[imageToUpload base64EncodedString]];
+        }
+        i++;
+    }
+
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _album,@"album" ,
                             _branch_id,@"branch_id",
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
-                            
+                            arrImageStr,@"image_arr",
                             nil];
-    NSLog(@"%@",params);
+    [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"response: [%@]",JSON);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [operation error]);
+    }];
+    /*
     NSURLRequest* request = [[TVNetworkingClient sharedClient] multipartFormRequestWithMethod:@"POST"
             path:@"branch/postImages"  parameters:params
             constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -134,13 +163,9 @@
     }];
     
     [operation start];
-    
-//    NSLog(@"%@",params);
-//    [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//
-//    }];
+     */
+
+
 }
 
 #pragma mark PhotoBrowseCellDelegate

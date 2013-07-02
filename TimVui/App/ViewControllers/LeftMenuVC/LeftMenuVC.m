@@ -483,6 +483,7 @@ enum {
                         [alert setCancelButtonWithTitle:@"Cancel" block:nil];
                         [alert setDestructiveButtonWithTitle:@"Logout!" block:^{
                             if ([GlobalDataUser sharedAccountClient].isLogin) {
+                                [[FBSession activeSession] closeAndClearTokenInformation];
                                 [[GlobalDataUser sharedAccountClient] userLogout];
                                 [self showTableDropDown];
                                 [tableView reloadData];

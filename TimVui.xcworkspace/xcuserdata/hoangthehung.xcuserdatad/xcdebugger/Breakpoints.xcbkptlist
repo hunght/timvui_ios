@@ -20,38 +20,12 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/LoginVC/LoginVC.m"
-         timestampString = "394447336.910656"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "228"
-         endingLineNumber = "228"
-         landmarkName = "-loginViewShowingLoggedInUser:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/LoginVC/LoginVC.m"
-         timestampString = "394447336.910656"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "233"
-         endingLineNumber = "233"
-         landmarkName = "-loginView:handleError:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseVC.m"
-         timestampString = "394451121.839497"
+         timestampString = "394455295.696058"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "130"
-         endingLineNumber = "130"
+         startingLineNumber = "135"
+         endingLineNumber = "135"
          landmarkName = "-postPhotoButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,12 +34,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseVC.m"
-         timestampString = "394451121.839497"
+         timestampString = "394455295.696058"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "132"
-         endingLineNumber = "132"
+         startingLineNumber = "133"
+         endingLineNumber = "133"
          landmarkName = "-postPhotoButtonClicked:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
+         timestampString = "394454888.288568"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "509"
+         endingLineNumber = "509"
+         landmarkName = "-toggleTopView"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

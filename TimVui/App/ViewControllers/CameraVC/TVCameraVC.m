@@ -70,7 +70,6 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-
 	_numPages = kNumberOfSkinsCamera;
     _arrImages=[[NSMutableArray alloc] init];
     _lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 20, 20)];

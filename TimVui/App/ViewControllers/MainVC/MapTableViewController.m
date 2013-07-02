@@ -448,7 +448,8 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
     BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
-     [self.navigationController pushViewController:branchProfileVC animated:YES];
+    branchProfileVC.branchID=[_branches[indexPath.row] branchID];
+    [self.navigationController pushViewController:branchProfileVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 }

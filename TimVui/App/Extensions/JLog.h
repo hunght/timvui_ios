@@ -2,7 +2,6 @@
 
 
 #ifndef DEBUG
-#define DEBUG 0
 #endif
 
 #define FIXRANGE(A,MIN,MAX)		\

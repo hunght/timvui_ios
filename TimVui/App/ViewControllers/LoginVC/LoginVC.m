@@ -150,8 +150,7 @@
                      [[TVNetworkingClient sharedClient] postPath:@"user/loginOpenid" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                          NSLog(@"%@",JSON);
                          NSLog(@"%ld",(long)operation.response.statusCode);
-                         [GlobalDataUser sharedAccountClient].isLogin=YES;
-                         [[GlobalDataUser sharedAccountClient].user setValues:[JSON valueForKey:@"data"]];
+                         [[GlobalDataUser sharedAccountClient] setGlocalDataUser:JSON];
                          self.userDidLogin();
                          [SVProgressHUD dismiss];
                          [self closeViewController];

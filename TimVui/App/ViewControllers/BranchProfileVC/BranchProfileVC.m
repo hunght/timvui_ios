@@ -399,8 +399,8 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
     self.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
-    //    NSDictionary *params = @{@"id": [self.branches[indexPath.row] branchID]};
-    NSDictionary *params = @{@"id": @"1"};
+     NSDictionary *params = @{@"id": _branchID};
+//    NSDictionary *params = @{@"id": @"1"};
     [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async( dispatch_get_main_queue(),^ {
             [self showInfoView];

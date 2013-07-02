@@ -17,4 +17,5 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imgBranchCover;
 
+@property(nonatomic, strong)NSString* branchID;
 @end
