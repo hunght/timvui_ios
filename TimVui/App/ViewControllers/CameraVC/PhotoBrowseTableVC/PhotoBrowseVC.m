@@ -11,6 +11,7 @@
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
 #import "AFHTTPRequestOperation.h"
+#import "BlockAlertView.h"
 @interface PhotoBrowseVC ()
 
 @end
@@ -76,12 +77,35 @@
 }
 
 -(void)postPhotoButtonClicked:(id)s{
+    if (!_album) {
+        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Vui lòng chọn tên album trước khí đăng ảnh"];
+        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
+        [alert setDestructiveButtonWithTitle:@"Chọn Ablum!" block:^{
+            if ([_delegate respondsToSelector:@selector(wantToShowLeft:)]) {
+                [_delegate wantToShowLeft:YES];
+            }
+        }];
+        [alert show];
+        return;
+    }
+    if (!_branch_id) {
+        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Vui lòng chọn nhà hàng trước khí đăng ảnh"];
+        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
+        [alert setDestructiveButtonWithTitle:@"Chọn Nhà hàng" block:^{
+            if ([_delegate respondsToSelector:@selector(wantToShowLeft:)]) {
+                [_delegate wantToShowLeft:NO];
+            }
+        }];
+        [alert show];
+        return;
+    }
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _album,@"album" ,
                             _branch_id,@"branch_id",
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                             
                             nil];
+    NSLog(@"%@",params);
     NSURLRequest* request = [[TVNetworkingClient sharedClient] multipartFormRequestWithMethod:@"POST"
             path:@"branch/postImages"  parameters:params
             constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {

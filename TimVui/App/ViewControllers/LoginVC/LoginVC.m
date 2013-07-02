@@ -26,6 +26,7 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "GlobalDataUser.h"
 #import "TSMessage.h"
+#import "SVProgressHUD.h"
 @implementation LoginVC
 
 
@@ -37,7 +38,7 @@
     
     if ([FBSession activeSession].isOpen) {
         NSLog(@"INFO: Ignoring app link because current session is open.");
-        
+        [[FBSession activeSession] closeAndClearTokenInformation];
     }else{
         FBLoginView *loginview =    [[FBLoginView alloc] init];
         
@@ -98,7 +99,6 @@
     [super viewDidLoad];
     [self setupViewLayout];
     [self setupFBLoginView];
-    [[FBSession activeSession] closeAndClearTokenInformation];
     
     NSArray *fields = @[ self.tfdUsername,self.tfdPassword];
     [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:fields]];
@@ -153,8 +153,10 @@
                          [GlobalDataUser sharedAccountClient].isLogin=YES;
                          [[GlobalDataUser sharedAccountClient].user setValues:[JSON valueForKey:@"data"]];
                          self.userDidLogin();
+                         [SVProgressHUD dismiss];
                          [self closeViewController];
                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                         [SVProgressHUD dismiss];
                          // TODO with error
                          NSLog(@"%@",error);
                          if (self.userLoginFail)
@@ -172,9 +174,11 @@
          }];
     }
 }
+
 // Displays the user's name and profile picture so they are aware of the Facebook
 // identity they are logged in as.
 - (void)getInfoAccountFacebook{
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"email"]
                                           defaultAudience:FBSessionDefaultAudienceEveryone
                                         completionHandler:^(FBSession *session, NSError *error) {
@@ -182,6 +186,7 @@
                                                 // Now have the permission
                                                 [self hasPermissionAndGoGetThing];
                                             } else {
+                                                [SVProgressHUD dismiss];
                                                 // Facebook SDK * error handling *
                                                 // if the operation is not user cancelled
                                                 if (error.fberrorCategory != FBErrorCategoryUserCancelled) {

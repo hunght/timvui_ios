@@ -25,4 +25,5 @@
 @end
 @protocol PhotoBrowseVCDelegate<NSObject>
 -(void)didPickWithImages:(NSArray*)images;
+-(void)wantToShowLeft:(BOOL)isLeft;
 @end

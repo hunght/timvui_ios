@@ -94,8 +94,10 @@
             NSDictionary* dicPhoto=[[dic allValues] lastObject];
             [photos addObject:[MWPhoto photoWithURL:[Ultilities getOriginalAlbumPhoto:dicPhoto]]];
         }
+    
         _photos=photos;
     }
+    
     [browser setInitialPageIndex:indexPath.row];
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:browser];
     nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

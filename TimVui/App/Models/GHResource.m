@@ -75,7 +75,7 @@
         if (start) start(self);
         return;
     }
-    if(_isShowLoading)[SVProgressHUD show];
+    if(_isShowLoading)[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     
 	self.error = nil;
 	self.resourceStatus = GHResourceStatusLoading;

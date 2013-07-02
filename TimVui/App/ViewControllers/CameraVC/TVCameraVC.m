@@ -213,18 +213,31 @@
         
     }
 }
+#pragma mark - PhotoBrowseVCDelegate
+-(void)didPickWithImages:(NSArray*)images{
+    
+}
 
+-(void)wantToShowLeft:(BOOL)isLeft{
+    if (isLeft) {
+        [self.slidingViewController anchorTopViewTo:ECLeft];
+    }else
+        [self.slidingViewController anchorTopViewTo:ECRight];
+}
 #pragma mark - LocationTableVCDelegate
 
 -(void)didPickWithLoation:(TVBranch *)branch{
     [self.slidingViewController resetTopView];
     _branch=branch;
+    _photoBrowseTableVC.branch_id=_branch.branchID;
+    
 }
 #pragma mark - SkinPickerTableVCDelegate
 
 -(void)didPickWithAlbum:(NSString *)strAlbum{
     [self.slidingViewController resetTopView];
     _strAlbum=strAlbum;
+    _photoBrowseTableVC.album=_strAlbum;
 }
 
 #pragma mark - IBActions
@@ -279,11 +292,12 @@
 }
 
 - (IBAction)photoBrowseButtonClicked:(id)sender {
-    PhotoBrowseVC *photoBrowseTableVC=[[PhotoBrowseVC alloc] initWithNibName:@"PhotoBrowseVC" bundle:nil];
-    photoBrowseTableVC.arrPhotos=[[NSMutableArray alloc] initWithArray:_arrImages];
-    photoBrowseTableVC.branch_id=_branch.branchID;
-    photoBrowseTableVC.album=_strAlbum;
-    [self.navigationController pushViewController:photoBrowseTableVC animated:YES];
+    _photoBrowseTableVC=[[PhotoBrowseVC alloc] initWithNibName:@"PhotoBrowseVC" bundle:nil];
+    _photoBrowseTableVC.arrPhotos=[[NSMutableArray alloc] initWithArray:_arrImages];
+    _photoBrowseTableVC.branch_id=_branch.branchID;
+    _photoBrowseTableVC.album=_strAlbum;
+    [_photoBrowseTableVC setDelegate:self];
+    [self.navigationController pushViewController:_photoBrowseTableVC animated:YES];
 }
 
 #pragma mark SSPhotoCropperDelegate

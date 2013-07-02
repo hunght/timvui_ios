@@ -19,7 +19,7 @@
 #import "TVCameraVC.h"
 #import "SkinPickerTableVC.h"
 #import "CommentVC.h"
-
+#import "BlockAlertView.h"
 #define kNumberOfSections 3
 
 enum {
@@ -135,6 +135,7 @@ enum {
     for(NSString *string in fonts){
         NSLog(@"%@", string);
     }
+
 }
 
 - (void)viewDidUnload
@@ -477,12 +478,19 @@ enum {
 
                         break;
                     case kS3Row5:
-                        if ([GlobalDataUser sharedAccountClient].isLogin) {
-                            [[GlobalDataUser sharedAccountClient] userLogout];
-                            [self showTableDropDown];
-                            [tableView reloadData];
-                        }
+                    {
+                        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Bạn muốn đăng xuất ?"];
+                        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
+                        [alert setDestructiveButtonWithTitle:@"Logout!" block:^{
+                            if ([GlobalDataUser sharedAccountClient].isLogin) {
+                                [[GlobalDataUser sharedAccountClient] userLogout];
+                                [self showTableDropDown];
+                                [tableView reloadData];
+                            }
+                        }];
+                        [alert show];
                         break;
+                    }
                 }
                 break;
         }

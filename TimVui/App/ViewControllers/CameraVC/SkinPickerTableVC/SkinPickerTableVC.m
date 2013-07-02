@@ -75,7 +75,7 @@
         default:
             break;
     }
-    
+    cell.textLabel.text=strAlbum;
     return cell;
 }
 
@@ -84,7 +84,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if ([_delegate respondsToSelector:@selector(didPickWithAlbum:)]) {
         UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
         [_delegate didPickWithAlbum:cell.textLabel.text];

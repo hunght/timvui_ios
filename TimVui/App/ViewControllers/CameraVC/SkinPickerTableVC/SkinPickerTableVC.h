@@ -15,4 +15,5 @@
 @end
 @protocol SkinPickerTableVCDelegate<NSObject>
 -(void)didPickWithAlbum:(NSString *)strAlbum;
+
 @end
