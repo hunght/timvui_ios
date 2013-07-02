@@ -7,13 +7,39 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
-         timestampString = "394421031.807863"
+         filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseVC.m"
+         timestampString = "394426360.687399"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "219"
-         endingLineNumber = "219"
-         landmarkName = "-didPickWithLoation:"
+         startingLineNumber = "90"
+         endingLineNumber = "90"
+         landmarkName = "-postPhotoButtonClicked:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseVC.m"
+         timestampString = "394426366.311217"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "93"
+         endingLineNumber = "93"
+         landmarkName = "-postPhotoButtonClicked:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/Models/GlobalDataUser.m"
+         timestampString = "394440189.017575"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "53"
+         endingLineNumber = "53"
+         landmarkName = "-setUserWithDic:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

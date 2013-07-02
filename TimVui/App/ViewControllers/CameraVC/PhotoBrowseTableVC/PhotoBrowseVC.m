@@ -10,6 +10,7 @@
 #import "UIImage+Crop.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
+#import "AFHTTPRequestOperation.h"
 @interface PhotoBrowseVC ()
 
 @end
@@ -81,12 +82,41 @@
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                             
                             nil];
-    NSLog(@"%@",params);
-    [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+    NSURLRequest* request = [[TVNetworkingClient sharedClient] multipartFormRequestWithMethod:@"POST"
+            path:@"branch/postImages"  parameters:params
+            constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                int i=0;
+                for (UIImage* image in _arrPhotos) {
+                    NSNumber* isPicked=[_arrPhotosPick objectAtIndex:i];
+                    if ([isPicked boolValue]) {
+                        NSData *imageToUpload = UIImageJPEGRepresentation(image, .80);
+                        [formData appendPartWithFileData:imageToUpload
+                                                    name:[NSString stringWithFormat:@"%d",i]
+                                                fileName:[NSString stringWithFormat:@"%d.jpg",i]
+                                                mimeType:@"image/jpeg"];
+                    }
+                    i++;
+                }
     }];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *response = [operation responseString];
+        NSLog(@"response: [%@]",response);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", [operation error]);
+        
+    }];
+    
+    [operation start];
+    
+//    NSLog(@"%@",params);
+//    [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//
+//    }];
 }
 
 #pragma mark PhotoBrowseCellDelegate

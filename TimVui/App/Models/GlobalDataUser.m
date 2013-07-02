@@ -8,6 +8,7 @@
 
 #import "GlobalDataUser.h"
 #import "TVAppDelegate.h"
+#import <JSONKit.h>
 @implementation GlobalDataUser
 
 
@@ -18,30 +19,37 @@ static GlobalDataUser *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[GlobalDataUser alloc] init];
-        [_sharedClient checkAndGetPersistenceAccount];
+        _sharedClient.user=[[GHUser alloc] init];
+        
         _sharedClient.locationManager = [[CLLocationManager alloc] init];
         [_sharedClient.locationManager setDelegate:_sharedClient];
         [_sharedClient.locationManager setDistanceFilter:kCLDistanceFilterNone];
         [_sharedClient.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-        _sharedClient.user=[[GHUser alloc] init];
+        
+        [_sharedClient checkAndGetPersistenceAccount];
     });
     return _sharedClient;
 }
 
 -(void)savePersistenceAccountWithData:(NSDictionary*)JSON{
+    NSLog(@"%@",[JSON description]);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:JSON forKey:kAccountUserJSON];
+    [defaults setValue:[JSON JSONString] forKey:kAccountUserJSON];
     [defaults synchronize];
 }
 
 - (void)checkAndGetPersistenceAccount {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary* JSON=[defaults valueForKey:kAccountUserJSON];
-    if (JSON) [self setUserWithDic:JSON];
+    NSString* JSON=[defaults valueForKey:kAccountUserJSON];
+    NSLog(@"%@",[JSON objectFromJSONString]);
+    if (JSON)
+        [self setUserWithDic:[JSON objectFromJSONString]];
+    NSLog(@"%@",self.user);
 }
 
 - (void)setUserWithDic:(NSDictionary *)JSON {
-    self.isLogin=YES;
+    self.isLogin = YES;
+    NSLog(@"%@",JSON);
     [self.user setValues:[JSON valueForKey:@"data"]];
     self.facebookID=[JSON valueForKey:@""];
 }
@@ -49,6 +57,13 @@ static GlobalDataUser *_sharedClient = nil;
 -(void)setGlocalDataUser:(NSDictionary *)JSON{
     [self setUserWithDic:JSON];
     [self savePersistenceAccountWithData:JSON];
+}
+
+-(void)userLogout{
+    self.isLogin = NO;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:nil forKey:kAccountUserJSON];
+    [defaults synchronize];
 }
 
 - (void)sendBackgroundLocationToServer:(CLLocationCoordinate2D )location {

@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol SkinPickerTableVCDelegate;
+
 
 @interface SkinPickerTableVC : UITableViewController
-
+@property (nonatomic, unsafe_unretained) id<SkinPickerTableVCDelegate> delegate;
+@end
+@protocol SkinPickerTableVCDelegate<NSObject>
+-(void)didPickWithAlbum:(NSString *)strAlbum;
 @end

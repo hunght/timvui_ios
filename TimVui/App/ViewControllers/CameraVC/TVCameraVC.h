@@ -4,7 +4,8 @@
 #import "ECSlidingViewController.h"
 #import "SSPhotoCropperViewController.h"
 #import "LocationTableVC.h"
-@interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate>
+#import "SkinPickerTableVC.h"
+@interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate,SkinPickerTableVCDelegate>
 
 @property (nonatomic, unsafe_unretained) IBOutlet MHPagingScrollView *pagingScrollView;
 @property (nonatomic, unsafe_unretained) IBOutlet UIPageControl *pageControl;
@@ -22,6 +23,9 @@
 @property(nonatomic, unsafe_unretained)ECSlidingViewController *slidingViewController;
 @property (nonatomic, retain) NSMutableArray *arrImages;
 @property (nonatomic, retain) UILabel *lblPhone;
+
+@property (nonatomic, retain) TVBranch *branch;
+@property (nonatomic, retain) NSString* strAlbum;
 - (IBAction)skinPickerButtonClicked:(id)sender;
 - (IBAction)photoBrowseButtonClicked:(id)sender;
 

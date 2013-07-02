@@ -11,6 +11,7 @@
 #import "VPPDropDownDelegate.h"
 #import "LoginVC.h"
 #import <FacebookSDK/FacebookSDK.h>
+
 @interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate,FBLoginViewDelegate> {
 @private
     NSArray *_headers;
@@ -18,8 +19,9 @@
     BOOL _lastStatusLogin;
     NSIndexPath *_globalIndexPath;
 }
-- (void)openViewController:(UIViewController *)viewController;
 
+- (void)openViewController:(UIViewController *)viewController;
 - (void)commentButtonClickedWithNav:(UINavigationController*)nav;
 - (void)cameraButtonClickedWithNav:(UINavigationController*)nav;
+
 @end

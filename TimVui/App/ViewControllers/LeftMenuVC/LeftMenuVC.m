@@ -59,11 +59,14 @@ enum {
     kS2Promotion
 };
 
-#define kNumberOfRowsInSection3 3
+#define kNumberOfRowsInSection3 6
 enum {
     kS3Row0 = 0,
     kS3Row1,
-    kS3Row2
+    kS3Row2,
+    kS3Row3,
+    kS3Row4,
+    kS3Row5
 };
 @implementation LeftMenuVC
 
@@ -195,7 +198,11 @@ enum {
             rows += kNumberOfRowsInSection2;
             break;
         case kSection3Setting:
-            rows += kNumberOfRowsInSection3;
+            if ([GlobalDataUser sharedAccountClient].isLogin)
+                rows += kNumberOfRowsInSection3;
+            else
+                rows += kNumberOfRowsInSection3 -1;
+            
             break;
             
     }
@@ -241,11 +248,41 @@ enum {
                 case kS2Handbook:
                     cell.textLabel.text = @"Cẩm nang";
                     break;
+                case kS2GoingEven:
+                    cell.textLabel.text = @"Sưu tập";
+                    break;
+                case kS2Promotion:
+                    cell.textLabel.text = @"Blog";
+                    break;
+            }
+            break;
+        case kSection3Setting:
+            switch (row) {
+                case kS3Row0:
+                    cell.textLabel.text = @"Giới thiệu";
+                    break;
+                case kS3Row1:
+                    cell.textLabel.text = @"Điều khoản sử dụng";
+                    break;
+                case kS3Row2:
+                    cell.textLabel.text = @"Facebook Page";
+                    break;
+                case kS3Row3:
+                    cell.textLabel.text = @"Góp ý- Báo lỗi";
+                    break;
+                case kS3Row4:
+                    cell.textLabel.text = @"Mời bạn bè";
+                    break;
+                case kS3Row5:
+                    if ([GlobalDataUser sharedAccountClient].isLogin) {
+                        cell.textLabel.text = @"Đăng suất";
+                    }
+                    break;
             }
             break;
 
     }
-        
+    
     return cell;
 }
 
@@ -256,6 +293,7 @@ enum {
     LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
     [tableVC setDelegate:tvCameraVC];
     SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    [skinVC setDelegate:tvCameraVC];
     UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
     
     ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
@@ -421,6 +459,32 @@ enum {
                         break;
                 }
                 break;
+            case kSection3Setting:
+                switch (row) {
+                    case kS3Row0:
+
+                        break;
+                    case kS3Row1:
+
+                        break;
+                    case kS3Row2:
+
+                        break;
+                    case kS3Row3:
+
+                        break;
+                    case kS3Row4:
+
+                        break;
+                    case kS3Row5:
+                        if ([GlobalDataUser sharedAccountClient].isLogin) {
+                            [[GlobalDataUser sharedAccountClient] userLogout];
+                            [self showTableDropDown];
+                            [tableView reloadData];
+                        }
+                        break;
+                }
+                break;
         }
         // Maybe push a controller
         if (viewController) {
@@ -571,9 +635,7 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin){
         cell.textLabel.text = [GlobalDataUser sharedAccountClient].user.name;
         [cell.imageView setImageWithURL:[[GlobalDataUser sharedAccountClient].user.avatar valueForKey:@"50"] placeholderImage:[UIImage imageNamed:@"user"]];
-    }
-        
-    else{
+    }else{
         cell.textLabel.text = @"Đăng nhập";
         [cell.imageView setImage:[UIImage imageNamed:@"user"]];
     }

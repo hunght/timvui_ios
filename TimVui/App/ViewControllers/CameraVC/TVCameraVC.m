@@ -217,17 +217,25 @@
 #pragma mark - LocationTableVCDelegate
 
 -(void)didPickWithLoation:(TVBranch *)branch{
-    
+    [self.slidingViewController resetTopView];
+    _branch=branch;
+}
+#pragma mark - SkinPickerTableVCDelegate
+
+-(void)didPickWithAlbum:(NSString *)strAlbum{
+    [self.slidingViewController resetTopView];
+    _strAlbum=strAlbum;
 }
 
 #pragma mark - IBActions
+
 - (IBAction)pageTurn
 {
 	[self.pagingScrollView selectPageAtIndex:self.pageControl.currentPage animated:YES];
 }
 
 - (IBAction)cameraButtonClicked:(id)sender {
-    //[[_captureManager captureSession] stopRunning];
+    
     if (self.imgImagePicked.image) {
         [self mergeSkinWithImage:self.imgImagePicked.image];
     }else
@@ -273,6 +281,8 @@
 - (IBAction)photoBrowseButtonClicked:(id)sender {
     PhotoBrowseVC *photoBrowseTableVC=[[PhotoBrowseVC alloc] initWithNibName:@"PhotoBrowseVC" bundle:nil];
     photoBrowseTableVC.arrPhotos=[[NSMutableArray alloc] initWithArray:_arrImages];
+    photoBrowseTableVC.branch_id=_branch.branchID;
+    photoBrowseTableVC.album=_strAlbum;
     [self.navigationController pushViewController:photoBrowseTableVC animated:YES];
 }
 

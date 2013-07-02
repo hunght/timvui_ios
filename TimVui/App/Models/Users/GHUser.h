@@ -4,7 +4,6 @@
 
 @interface GHUser : GHResource
 @property(nonatomic,strong)NSString *name;
-@property(nonatomic,strong)NSString *login;
 @property(nonatomic,strong)NSString *email;
 @property(nonatomic,strong)NSString *userId;
 @property(nonatomic,strong)NSString *dob;
@@ -20,7 +19,5 @@
 @property(nonatomic,strong)NSString  *address;
 @property(nonatomic,strong)NSString *addressFull;
 @property(nonatomic,strong)NSDate *created;
-
-- (id)initWithLogin:(NSString *)login;
 
 @end
