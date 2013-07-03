@@ -28,6 +28,9 @@
 
 @property (nonatomic, strong) TVComment *comment;
 @property (nonatomic,strong) UILabel *date;
+@property (nonatomic,strong) UIButton *btnLike;
+@property (nonatomic,strong) UIImageView *imgLike;
+@property (nonatomic,strong) UILabel *lblLike;
 @property (nonatomic, strong)     UIImageView* firstStar;
 @property (nonatomic, strong)     UIImageView* secondStar;
 @property (nonatomic, strong)     UIImageView* thirdStar;

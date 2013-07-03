@@ -70,8 +70,7 @@
     if (distance>1000.0) {
 //        NSLog(@"%f",distance/1000.0);
         lblDistance.text=[NSString stringWithFormat:@"%.2f km",distance/1000];
-    }
-    else
+    }else
         lblDistance.text=[NSString stringWithFormat:@"%f m",distance];
     
     [genarateInfoView addSubview:lblDistance];
@@ -143,7 +142,7 @@
     //Show mapView button
     NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
     NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=160x160&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
-    NSLog(@"strURL = %@",strURL);
+//    NSLog(@"strURL = %@",strURL);
     NSURL* url=[NSURL URLWithString:strURL];
     UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
     [mapViewButton setImageWithURL:url];
@@ -324,6 +323,7 @@
     int heightPreRow=0;
     for (NSDictionary* dic in [dicUtilities allValues]) {
         UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake((rowCount%2) ?165:8,heightUtilities, 18, 18)];
+        
         BOOL isServiceOnYES=NO;
         for (NSDictionary *dicOn in [_branch.services allValues]) {
             NSString* strOne=[dicOn valueForKey:@"id"];
@@ -333,8 +333,8 @@
                 break;
             }
         }
-
         [utilitiesView addSubview:iconIView];
+        
         UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 130, 23)];
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
@@ -365,6 +365,7 @@
         }else
             heightPreRow=lblDetailRow.frame.size.height;
     }
+    
     frame=utilitiesView.frame;
     if (rowCount%2)
         frame.size.height=heightUtilities +26+ 10;
@@ -400,16 +401,14 @@
     
     self.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
      NSDictionary *params = @{@"id": _branchID};
-//    NSDictionary *params = @{@"id": @"1"};
     [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async( dispatch_get_main_queue(),^ {
             [self showInfoView];
             TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
             _extraBranchView.scrollView=_scrollView;
-            _extraBranchView.branchID=@"1";
+            _extraBranchView.branchID=_branch.branchID;
             [self.view addSubview:_extraBranchView];
             [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
-            
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async( dispatch_get_main_queue(),^ {

@@ -49,9 +49,12 @@
     self.textLabel.adjustsFontSizeToFitWidth = YES;
     self.textLabel.textColor = [UIColor redColor];
 
-    self.detailTextLabel.numberOfLines = 1;
     self.textLabel.backgroundColor=[UIColor clearColor];
     self.detailTextLabel.backgroundColor=[UIColor clearColor];
+    self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    self.detailTextLabel.numberOfLines = 0;
+    self.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
+    
     self.selectionStyle = UITableViewCellSelectionStyleGray;
     
     self.date = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -65,12 +68,31 @@
     _thirdStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15*2, 8, 12, 12)];
     _fourthStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15*3, 8, 12, 12)];
     _fifthStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15*4, 8, 12, 12)];
+    
+    _btnLike=[[UIButton alloc] initWithFrame:CGRectZero];
+    [_btnLike setBackgroundImage:[UIImage imageNamed:@"imgTVExtraBranchViewLikeButton_off"] forState:UIControlStateNormal];
+    [_btnLike setBackgroundImage:[UIImage imageNamed:@"imgTVExtraBranchViewLikeButton_on"] forState:UIControlStateHighlighted];
+    _btnLike.titleLabel.font=[UIFont fontWithName:@"ArialMT" size:(13)];
+    [_btnLike setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_btnLike setTitle:@"Hữu ích" forState:UIControlStateNormal];
+    _imgLike=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"imgTVExtraBranchViewLike"]];
+    
+    
+    _lblLike=[[UILabel alloc] initWithFrame:CGRectZero];
+    [_lblLike setFont:[UIFont fontWithName:@"ArialMT" size:(15)]];
+    [_lblLike setTextColor:[UIColor whiteColor]];
+    [_lblLike setBackgroundColor:[UIColor clearColor]];
+    _lblLike.textAlignment = UITextAlignmentCenter;
+    
     [self.contentView addSubview:_firstStar];
     [self.contentView addSubview:_secondStar];
     [self.contentView addSubview:_thirdStar];
     [self.contentView addSubview:_fourthStar];
     [self.contentView addSubview:_fifthStar];
     
+    [self.contentView addSubview:_btnLike];
+    [self.contentView addSubview:_imgLike];
+    [self.contentView addSubview:_lblLike];
     
     self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
     self.date.font = [UIFont fontWithName:@"ArialMT" size:(13)];
@@ -78,11 +100,8 @@
 
     CALayer* l = [self.imageView layer];
     [self setBorderForLayer:l radius:1];
-    
     [self.contentView addSubview:_date];
-
-    [self.contentView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
-    
+    [self.contentView setBackgroundColor:[UIColor whiteColor]];
     return self;
 }
 
@@ -90,6 +109,9 @@
     _comment = branch;
     self.textLabel.text=_comment.user_name;
     self.detailTextLabel.text=_comment.content;
+
+    [self.detailTextLabel sizeToFit];
+
     self.date.text=[_comment.created stringWithFormat:@"dd/mm/yy"];
     [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_comment.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     _firstStar.image=[UIImage imageNamed:(_comment.rating>=1)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
@@ -97,6 +119,13 @@
     _thirdStar.image=[UIImage imageNamed:(_comment.rating>=3)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _fourthStar.image=[UIImage imageNamed:(_comment.rating>=4)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _fifthStar.image=[UIImage imageNamed:(_comment.rating>=5)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
+    
+    int height=self.detailTextLabel.frame.size.height+44;
+    _btnLike.frame=CGRectMake(216, height-3 , 56, 22);
+    _lblLike.frame=CGRectMake(280, height , 28, 17);
+    _imgLike.frame=CGRectMake(280, height , 28, 17);
+    
+    [_lblLike setText:[NSString stringWithFormat:@"%d", _comment.like_count]];
     [self setNeedsLayout];
 }
 
@@ -106,7 +135,7 @@
     CGSize expectedLabelSize = [branch.content sizeWithFont:cellFont
                                                constrainedToSize:maximumLabelSize
                                                    lineBreakMode:NSLineBreakByWordWrapping];
-    return expectedLabelSize.height+ 8+96+8;
+    return expectedLabelSize.height+ 8+44+8+10;
 }
 
 #pragma mark - UIView

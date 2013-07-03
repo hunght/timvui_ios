@@ -28,14 +28,18 @@
         UIButton* similarButton = [[UIButton alloc] initWithFrame:CGRectMake(214,0, 106, 56)];
         [similarButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
         [similarButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
-        
+        [similarButton setTitle:@"             SIMILAR" forState:UIControlStateNormal];
         [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [similarButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        similarButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
         [self addSubview:similarButton];
         
         UIButton* menuButton = [[UIButton alloc] initWithFrame:CGRectMake(107, 0, 106, 56)];
         [menuButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
         [menuButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
-        
+        [menuButton setTitle:@"             MENU" forState:UIControlStateNormal];
+        [menuButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        menuButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
         [menuButton addTarget:self action:@selector(menuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:menuButton];
         
@@ -177,7 +181,8 @@
     [super layoutSubviews];
     __unsafe_unretained TVExtraBranchView *weakSelf = self;
     __block NSString*branchID=_branchID;
-    // setup pull-to-refresh
+    
+    //
     [self.tableView addPullToRefreshWithActionHandler:^{
         weakSelf.comments.items=nil;
         NSDictionary* params = @{@"branch_id": branchID,
@@ -186,10 +191,10 @@
         [weakSelf postCommentBranch:params];
     }];
     
-    // setup infinite scrolling
-    [self.tableView addInfiniteScrollingWithActionHandler:^{
-        [weakSelf getCommentRefresh];
-    }];
+#warning this is what todo when get total comments
+//    [self.tableView addInfiniteScrollingWithActionHandler:^{
+//        [weakSelf getCommentRefresh];
+//    }];
 }
 
 -(void)backgroundButtonClicked:(id)sender{

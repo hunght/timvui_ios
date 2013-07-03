@@ -51,7 +51,7 @@
                 UIImage *loginImage = [UIImage imageNamed:@"img_button-face-off"];
                 [loginButton setBackgroundImage:loginImage forState:UIControlStateNormal];
                 [loginButton setBackgroundImage:[UIImage imageNamed:@"img_button-face-on"] forState:UIControlStateHighlighted];
-                [loginButton sizeToFit];
+//                [loginButton sizeToFit];
             }
             if ([obj isKindOfClass:[UILabel class]])
             {

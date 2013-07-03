@@ -272,6 +272,10 @@
 		55AEAD0A1779A4FF0010638F /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AEAD051779A4FF0010638F /* UIScrollView+SVInfiniteScrolling.m */; };
 		55AEAD0B1779A4FF0010638F /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AEAD071779A4FF0010638F /* UIScrollView+SVPullToRefresh.m */; };
 		55AF6DF01766D6E90008D3F0 /* SearchWithArrayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AF6DEC1766D6E80008D3F0 /* SearchWithArrayVC.m */; };
+		55B8B8761784164D00DD32CE /* imgTVExtraBranchViewLike.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B8B8741784164D00DD32CE /* imgTVExtraBranchViewLike.png */; };
+		55B8B8771784164D00DD32CE /* imgTVExtraBranchViewLike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B8B8751784164D00DD32CE /* imgTVExtraBranchViewLike@2x.png */; };
+		55B8B87A178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B8B878178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off.png */; };
+		55B8B87B178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B8B879178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off@2x.png */; };
 		55B908C717543B130061AC33 /* img_address_branch_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B9083F17543AC90061AC33 /* img_address_branch_icon.png */; };
 		55B908C817543B130061AC33 /* img_address_branch_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B9084017543AC90061AC33 /* img_address_branch_icon@2x.png */; };
 		55B908C917543B130061AC33 /* img_back-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B9084117543ACA0061AC33 /* img_back-off.png */; };
@@ -744,6 +748,10 @@
 		55AEAD0C1779A63B0010638F /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
 		55AF6DEB1766D6E80008D3F0 /* SearchWithArrayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWithArrayVC.h; sourceTree = "<group>"; };
 		55AF6DEC1766D6E80008D3F0 /* SearchWithArrayVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithArrayVC.m; sourceTree = "<group>"; };
+		55B8B8741784164D00DD32CE /* imgTVExtraBranchViewLike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgTVExtraBranchViewLike.png; sourceTree = "<group>"; };
+		55B8B8751784164D00DD32CE /* imgTVExtraBranchViewLike@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgTVExtraBranchViewLike@2x.png"; sourceTree = "<group>"; };
+		55B8B878178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgTVExtraBranchViewLikeButton_off.png; sourceTree = "<group>"; };
+		55B8B879178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgTVExtraBranchViewLikeButton_off@2x.png"; sourceTree = "<group>"; };
 		55B9083F17543AC90061AC33 /* img_address_branch_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_address_branch_icon.png; sourceTree = "<group>"; };
 		55B9084017543AC90061AC33 /* img_address_branch_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_address_branch_icon@2x.png"; sourceTree = "<group>"; };
 		55B9084117543ACA0061AC33 /* img_back-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_back-off.png"; sourceTree = "<group>"; };
@@ -1493,6 +1501,10 @@
 		55B9083E17543AC90061AC33 /* ResourcesImages */ = {
 			isa = PBXGroup;
 			children = (
+				55B8B878178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off.png */,
+				55B8B879178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off@2x.png */,
+				55B8B8741784164D00DD32CE /* imgTVExtraBranchViewLike.png */,
+				55B8B8751784164D00DD32CE /* imgTVExtraBranchViewLike@2x.png */,
 				55F753C717815DC300555FCF /* img_map_coupon_event_icon_cell.png */,
 				55F753C817815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png */,
 				55479288177AEB24004FE268 /* img_comment_star_off.png */,
@@ -2444,6 +2456,10 @@
 				554085571782C13900E07988 /* alert-window@2x.png in Resources */,
 				554085581782C13900E07988 /* alert-yellow-button.png in Resources */,
 				554085591782C13900E07988 /* alert-yellow-button@2x.png in Resources */,
+				55B8B8761784164D00DD32CE /* imgTVExtraBranchViewLike.png in Resources */,
+				55B8B8771784164D00DD32CE /* imgTVExtraBranchViewLike@2x.png in Resources */,
+				55B8B87A178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off.png in Resources */,
+				55B8B87B178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2647,7 +2663,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -2671,7 +2687,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -2690,7 +2706,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
 				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TimVui/App/Libs/GoogleAnalytics\"",
@@ -2711,6 +2727,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2727,7 +2744,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
 				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TimVui/App/Libs/GoogleAnalytics\"",
@@ -2748,6 +2765,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
