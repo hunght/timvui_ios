@@ -22,7 +22,7 @@
 @class TPKeyboardAvoidingScrollView;
 
 
-@interface LoginVC : UIViewController<UITextFieldDelegate,FBLoginViewDelegate,BSKeyboardControlsDelegate>
+@interface LoginVC : UIViewController<UITextFieldDelegate,BSKeyboardControlsDelegate>
 
 @property (copy) void (^userLoginFail)();
 @property (copy) void (^userDidLogin)();
@@ -42,6 +42,7 @@
 - (IBAction)userLoginButtonClicked:(id)sender;
 - (IBAction)signupButtonClicked:(id)sender;
 - (IBAction)forgetPasswordButtonClicked:(id)sender;
+- (IBAction)fbLoginBtnClicked:(id)sender;
 
 -(void)goWithDidLogin:(void (^)())userDidLogin thenLoginFail:(void (^)())userLoginFail;
 @end

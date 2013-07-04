@@ -33,13 +33,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
-         timestampString = "394454888.288568"
+         filePath = "TimVui/App/ViewControllers/LoginVC/LoginVC.m"
+         timestampString = "394618785.757885"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "509"
-         endingLineNumber = "509"
-         landmarkName = "-toggleTopView"
+         startingLineNumber = "226"
+         endingLineNumber = "226"
+         landmarkName = "-fbLoginBtnClicked:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/LoginVC/LoginVC.m"
+         timestampString = "394618785.757885"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "228"
+         endingLineNumber = "228"
+         landmarkName = "-fbLoginBtnClicked:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

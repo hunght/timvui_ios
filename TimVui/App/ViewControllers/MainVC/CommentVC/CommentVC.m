@@ -10,6 +10,7 @@
 #import "UINavigationBar+JTDropShadow.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
+#import "TSMessage.h"
 @interface CommentVC ()
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 @end
@@ -154,6 +155,14 @@
     }];
 
 }
+#pragma mark UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    if (_branch)
+        return YES;
+    else{
+        return NO;
+    }
+}
 
 #pragma mark IBAction
 - (void)toggleTopView {
@@ -217,9 +226,17 @@
                                 nil];
         NSLog(@"%@",params);
         [[TVNetworkingClient sharedClient] postPath:@"branch/postComment" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Đăng comment thành công"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeSuccess];
+            [self dismissModalViewControllerAnimated:YES];
             NSLog(@"%@",JSON);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Đăng comment thất bại"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeWarning];
         }];
     }
 }

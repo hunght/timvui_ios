@@ -26,10 +26,6 @@
 @synthesize menuVC = _leftController;
 @synthesize tracker=_tracker;
 
-
-
-
-
 - (void)setupGoogleAnalytics
 {
     // Optional: automatically track uncaught exceptions with Google Analytics.
@@ -125,8 +121,22 @@
                             canBeDismisedByUser:YES];
 
 }
+-(void)showSuccessAboutSomething:(NSString*)mess{
+   [TSMessage showNotificationInViewController:_slidingViewController.topViewController
+                                                                   withTitle:mess
+                                                                 withMessage:nil
+                                                                    withType:TSMessageNotificationTypeSuccess];
 
-
+    
+}
+-(void)showAlertAboutSomething:(NSString*)mess{
+    [TSMessage showNotificationInViewController:_slidingViewController.topViewController
+                                      withTitle:mess
+                                    withMessage:nil
+                                       withType:TSMessageNotificationTypeWarning];
+    
+    
+}
 #pragma mark Helpers
 
 
@@ -272,7 +282,7 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     
-
+//    [FBSession.activeSession handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

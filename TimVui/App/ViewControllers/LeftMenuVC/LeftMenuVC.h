@@ -10,9 +10,8 @@
 #import "VPPDropDown.h"
 #import "VPPDropDownDelegate.h"
 #import "LoginVC.h"
-#import <FacebookSDK/FacebookSDK.h>
 
-@interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate,FBLoginViewDelegate> {
+@interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate> {
 @private
     NSArray *_headers;
     VPPDropDown *_dropDownCustom;

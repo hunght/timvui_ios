@@ -140,6 +140,7 @@
 						<string key="NSFrame">{{278, 420}, {29, 29}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -192,7 +193,6 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">Đóng</string>
 						<reference key="IBUIHighlightedTitleColor" ref="368645977"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
@@ -222,7 +222,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
+						<string key="IBUINormalTitle">Ảnh</string>
 						<reference key="IBUIHighlightedTitleColor" ref="368645977"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -575,6 +575,7 @@
 						<string key="closeButtonClicked:">id</string>
 						<string key="locationPickerButtonClicked:">id</string>
 						<string key="pageTurn">id</string>
+						<string key="photoBrowseButtonClicked:">id</string>
 						<string key="skinPickerButtonClicked:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -596,6 +597,10 @@
 						</object>
 						<object class="IBActionInfo" key="pageTurn">
 							<string key="name">pageTurn</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="photoBrowseButtonClicked:">
+							<string key="name">photoBrowseButtonClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="skinPickerButtonClicked:">

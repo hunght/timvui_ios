@@ -11,7 +11,7 @@
 #import "LocationTableVC.h"
 #import "BSKeyboardControls.h"
 @class TPKeyboardAvoidingScrollView;
-@interface CommentVC : UIViewController<UITextFieldDelegate, UITextViewDelegate,LocationTableVCDelegate,BSKeyboardControlsDelegate>
+@interface CommentVC : UIViewController<UITextViewDelegate,LocationTableVCDelegate,BSKeyboardControlsDelegate>
 @property(nonatomic, assign)ECSlidingViewController *slidingViewController;
 @property (nonatomic, strong)UILabel *lblBranchName;
 @property (nonatomic, strong)UILabel *lblDistance;

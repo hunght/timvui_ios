@@ -34,46 +34,8 @@
 
 #pragma mark Setup Methods
 
-- (void)setupFBLoginView {
-    
-    if ([FBSession activeSession].isOpen) {
-        NSLog(@"INFO: Ignoring app link because current session is open.");
-        [[FBSession activeSession] closeAndClearTokenInformation];
-    }else{
-        FBLoginView *loginview =    [[FBLoginView alloc] init];
-        
-        loginview.frame = CGRectMake(10, 35, 299, 42);
-        for (id obj in loginview.subviews)
-        {
-            if ([obj isKindOfClass:[UIButton class]])
-            {
-                UIButton * loginButton =  obj;
-                UIImage *loginImage = [UIImage imageNamed:@"img_button-face-off"];
-                [loginButton setBackgroundImage:loginImage forState:UIControlStateNormal];
-                [loginButton setBackgroundImage:[UIImage imageNamed:@"img_button-face-on"] forState:UIControlStateHighlighted];
-//                [loginButton sizeToFit];
-            }
-            if ([obj isKindOfClass:[UILabel class]])
-            {
-                UILabel * loginLabel =  obj;
-                loginLabel.text = @"Đăng nhập với Facebook";
-                loginLabel.textColor=[UIColor colorWithRed:(59.0f/255.0f) green:(89.0f/255.0f) blue:(152.0f/255.0f) alpha:1.0f];
-                loginLabel.textAlignment = UITextAlignmentCenter;
-                loginLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(17)];
-                loginLabel.frame = CGRectMake(0, 0, 299, 42);
-            }
-        }
-        
-        loginview.delegate = self;
-        
-        [self.scrollView addSubview:loginview];
-    }
-    
-}
-
 - (void)setupViewLayout {
     [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
-    
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
     
@@ -98,7 +60,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupViewLayout];
-    [self setupFBLoginView];
     
     NSArray *fields = @[ self.tfdUsername,self.tfdPassword];
     [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:fields]];
@@ -183,7 +144,7 @@
                                         completionHandler:^(FBSession *session, NSError *error) {
                                             if (!error) {
                                                 // Now have the permission
-                                                [self hasPermissionAndGoGetThing];
+                                                
                                             } else {
                                                 [SVProgressHUD dismiss];
                                                 // Facebook SDK * error handling *
@@ -222,78 +183,6 @@
     self.userLoginFail=userLoginFail;
 }
 
-#pragma mark - FBLoginView delegate
-
-- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView {
-    // Upon login, transition to the main UI by pushing it onto the navigation stack.
-    [self getInfoAccountFacebook];
-}
-
-- (void)loginView:(FBLoginView *)loginView
-      handleError:(NSError *)error{
-    NSString *alertMessage, *alertTitle;
-    
-    // Facebook SDK * error handling *
-    // Error handling is an important part of providing a good user experience.
-    // Since this sample uses the FBLoginView, this delegate will respond to
-    // login failures, or other failures that have closed the session (such
-    // as a token becoming invalid). Please see the [- postOpenGraphAction:]
-    // and [- requestPermissionAndPost] on `SCViewController` for further
-    // error handling on other operations.
-    
-    if (error.fberrorShouldNotifyUser) {
-        // If the SDK has a message for the user, surface it. This conveniently
-        // handles cases like password change or iOS6 app slider state.
-        alertTitle = @"Something Went Wrong";
-        alertMessage = error.fberrorUserMessage;
-    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
-        // It is important to handle session closures as mentioned. You can inspect
-        // the error for more context but this sample generically notifies the user.
-        alertTitle = @"Session Error";
-        alertMessage = @"Your current session is no longer valid. Please log in again.";
-    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
-        // The user has cancelled a login. You can inspect the error
-        // for more context. For this sample, we will simply ignore it.
-        NSLog(@"user cancelled login");
-    } else {
-        // For simplicity, this sample treats other errors blindly, but you should
-        // refer to https://developers.facebook.com/docs/technical-guides/iossdk/errors/ for more information.
-        alertTitle  = @"Unknown Error";
-        alertMessage = @"Error. Please try again later.";
-        NSLog(@"Unexpected error:%@", error);
-    }
-    
-    if (alertMessage) {
-//        [[[UIAlertView alloc] initWithTitle:alertTitle
-//                                    message:alertMessage
-//                                   delegate:nil
-//                          cancelButtonTitle:@"OK"
-//                          otherButtonTitles:nil] show];
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:alertTitle
-                                        withMessage:alertMessage
-                                           withType:TSMessageNotificationTypeWarning
-                                       withDuration:0.0
-                                       withCallback:nil
-                                         atPosition:TSMessageNotificationPositionBottom];
-        
-    }
-}
-
-- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
-    // Facebook SDK * login flow *
-    // It is important to always handle session closure because it can happen
-    // externally; for example, if the current session's access token becomes
-    // invalid. For this sample, we simply pop back to the landing page.
-    // The delay is for the edge case where a session is immediately closed after
-    // logging in and our navigation controller is still animating a push.
-    [self performSelector:@selector(logOut) withObject:nil afterDelay:.5];
-}
-
-- (void)logOut {
-    // TODO
-}
-
 
 #pragma mark - IBAction
 -(void)backButtonClicked:(id)sender{
@@ -327,6 +216,19 @@
         viewController = [[ForgetPassVC alloc] initWithNibName:@"ForgetPassVC_iPad" bundle:nil];
     }
     [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)fbLoginBtnClicked:(id)sender {
+    [FBSession openActiveSessionWithReadPermissions:[NSArray arrayWithObject:@"email"]
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                          if (session.isOpen) {
+                                              [self hasPermissionAndGoGetThing];
+                                          } else {
+                                              [SharedAppDelegate showAlertAboutSomething:@"Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại hoặc sử dụng tài khoản khác"];
+                        ;                 }
+    
+                                  }];
 }
 
 #pragma mark UITextFieldDelegate

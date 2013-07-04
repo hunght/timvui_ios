@@ -39,6 +39,9 @@
 		5516D1A31758AA7D00A0C6CE /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5516D1A21758AA7C00A0C6CE /* GoogleMaps.bundle */; };
 		5516D1A51758AB3D00A0C6CE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A41758AB0100A0C6CE /* AVFoundation.framework */; };
 		5516D1A71758AC6B00A0C6CE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A61758AC2F00A0C6CE /* CoreText.framework */; };
+		552072D6178559C700DC5E68 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D5178559C700DC5E68 /* FacebookSDK.framework */; };
+		552072D8178559DB00DC5E68 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */; };
+		552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D917855A2D00DC5E68 /* Security.framework */; };
 		5540853B1782BC7400E07988 /* BSKeyboardControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 554085391782BC7400E07988 /* BSKeyboardControls.m */; };
 		5540853C1782BC7400E07988 /* BSKeyboardControls.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5540853A1782BC7400E07988 /* BSKeyboardControls.strings */; };
 		5540854C1782C13900E07988 /* alert-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5540853E1782C13900E07988 /* alert-black-button.png */; };
@@ -384,11 +387,9 @@
 		55D5A8BE171E7BC90027BBFE /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8BD171E7BC90027BBFE /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		55D5A8C1171E7BCF0027BBFE /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8BF171E7BCF0027BBFE /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		55D5A8C2171E7BCF0027BBFE /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		55D5A8C6171E7C7B0027BBFE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5A8C5171E7C7B0027BBFE /* FacebookSDK.framework */; };
 		55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5A8D4171E88220027BBFE /* GlobalDataUser.m */; };
 		55D6B305176043B100260C09 /* img_direction_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B303176043B000260C09 /* img_direction_icon.png */; };
 		55D6B306176043B100260C09 /* img_direction_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B304176043B100260C09 /* img_direction_icon@2x.png */; };
-		55DDC88E174722740017B264 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55DDC88D174722730017B264 /* FacebookSDKResources.bundle */; };
 		55E654911779387100779B7D /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E654901779387100779B7D /* ExtraCommentCell.m */; };
 		55ECBD301745EBE5005F8FB9 /* ForgetPassVC_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ECBD2C1745EBE3005F8FB9 /* ForgetPassVC_iPad.xib */; };
 		55ECBD311745EBE5005F8FB9 /* ForgetPassVC_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ECBD2D1745EBE4005F8FB9 /* ForgetPassVC_iPhone.xib */; };
@@ -472,6 +473,9 @@
 		5516D1A21758AA7C00A0C6CE /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = TimVui/Resourses/GoogleMaps.bundle; sourceTree = "<group>"; };
 		5516D1A41758AB0100A0C6CE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5516D1A61758AC2F00A0C6CE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		552072D5178559C700DC5E68 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		552072D917855A2D00DC5E68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		554085381782BC7400E07988 /* BSKeyboardControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSKeyboardControls.h; sourceTree = "<group>"; };
 		554085391782BC7400E07988 /* BSKeyboardControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSKeyboardControls.m; sourceTree = "<group>"; };
 		5540853A1782BC7400E07988 /* BSKeyboardControls.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BSKeyboardControls.strings; sourceTree = "<group>"; };
@@ -519,17 +523,17 @@
 		555D6DC5176581230014871B /* img_search_view_done_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_search_view_done_button@2x.png"; sourceTree = "<group>"; };
 		55605DCC1776F83400F0F1CA /* img_camera_cell_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_camera_cell_button.png; sourceTree = "<group>"; };
 		55605DCD1776F83400F0F1CA /* img_camera_cell_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_camera_cell_button@2x.png"; sourceTree = "<group>"; };
-		5562B18616FC50F300E21A82 /* TimVui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimVui.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5562B18616FC50F300E21A82 /* Anuong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Anuong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5562B18916FC50F300E21A82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5562B18B16FC50F300E21A82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5562B18D16FC50F300E21A82 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		5562B19116FC50F300E21A82 /* TimVui-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimVui-Info.plist"; sourceTree = "<group>"; };
+		5562B19116FC50F300E21A82 /* Anuong-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Anuong-Info.plist"; sourceTree = "<group>"; };
 		5562B19316FC50F300E21A82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5562B19516FC50F300E21A82 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5562B19716FC50F300E21A82 /* TimVui-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TimVui-Prefix.pch"; sourceTree = "<group>"; };
-		5562B1A616FC50F300E21A82 /* TimVuiTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimVuiTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5562B19716FC50F300E21A82 /* Anuong-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Anuong-Prefix.pch"; sourceTree = "<group>"; };
+		5562B1A616FC50F300E21A82 /* AnuongTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnuongTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5562B1A716FC50F300E21A82 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		5562B1AF16FC50F300E21A82 /* TimVuiTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimVuiTests-Info.plist"; sourceTree = "<group>"; };
+		5562B1AF16FC50F300E21A82 /* AnuongTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AnuongTests-Info.plist"; sourceTree = "<group>"; };
 		5562B1B116FC50F300E21A82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5562B1B316FC50F300E21A82 /* TimVuiTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimVuiTests.h; sourceTree = "<group>"; };
 		5562B1B416FC50F300E21A82 /* TimVuiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimVuiTests.m; sourceTree = "<group>"; };
@@ -875,12 +879,10 @@
 		55D5A8BD171E7BC90027BBFE /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		55D5A8BF171E7BCF0027BBFE /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		55D5A8C5171E7C7B0027BBFE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		55D5A8D3171E88220027BBFE /* GlobalDataUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalDataUser.h; sourceTree = "<group>"; };
 		55D5A8D4171E88220027BBFE /* GlobalDataUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataUser.m; sourceTree = "<group>"; };
 		55D6B303176043B000260C09 /* img_direction_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_direction_icon.png; sourceTree = "<group>"; };
 		55D6B304176043B100260C09 /* img_direction_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_direction_icon@2x.png"; sourceTree = "<group>"; };
-		55DDC88D174722730017B264 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = TimVui/Resourses/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		55E6548F1779387100779B7D /* ExtraCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraCommentCell.h; sourceTree = "<group>"; };
 		55E654901779387100779B7D /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
 		55ECBD2C1745EBE3005F8FB9 /* ForgetPassVC_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPassVC_iPad.xib; sourceTree = "<group>"; };
@@ -944,6 +946,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */,
 				55AD02D117706F2B00A84ED6 /* CoreMedia.framework in Frameworks */,
 				5588C24B1758B621001B624A /* OpenGLES.framework in Frameworks */,
 				5588C2491758B4C5001B624A /* libz.dylib in Frameworks */,
@@ -964,9 +967,9 @@
 				5562B18C16FC50F300E21A82 /* Foundation.framework in Frameworks */,
 				5562B18E16FC50F300E21A82 /* CoreGraphics.framework in Frameworks */,
 				B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */,
-				55D5A8C6171E7C7B0027BBFE /* FacebookSDK.framework in Frameworks */,
 				55954F57172A141100A8A351 /* libGoogleAnalytics.a in Frameworks */,
 				5516D1A11758AA1D00A0C6CE /* GoogleMaps.framework in Frameworks */,
+				552072D6178559C700DC5E68 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1193,6 +1196,7 @@
 		5562B17D16FC50F300E21A82 = {
 			isa = PBXGroup;
 			children = (
+				552072D917855A2D00DC5E68 /* Security.framework */,
 				5562B18F16FC50F300E21A82 /* TimVui */,
 				5562B1AD16FC50F300E21A82 /* TimVuiTests */,
 				5562B18816FC50F300E21A82 /* Frameworks */,
@@ -1204,8 +1208,8 @@
 		5562B18716FC50F300E21A82 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5562B18616FC50F300E21A82 /* TimVui.app */,
-				5562B1A616FC50F300E21A82 /* TimVuiTests.octest */,
+				5562B18616FC50F300E21A82 /* Anuong.app */,
+				5562B1A616FC50F300E21A82 /* AnuongTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1213,6 +1217,8 @@
 		5562B18816FC50F300E21A82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */,
+				552072D5178559C700DC5E68 /* FacebookSDK.framework */,
 				55AD02D017706F2B00A84ED6 /* CoreMedia.framework */,
 				5588C24A1758B5E8001B624A /* OpenGLES.framework */,
 				5588C2481758B48C001B624A /* libz.dylib */,
@@ -1223,11 +1229,9 @@
 				5516D1A41758AB0100A0C6CE /* AVFoundation.framework */,
 				5516D1A21758AA7C00A0C6CE /* GoogleMaps.bundle */,
 				5516D1A01758AA1D00A0C6CE /* GoogleMaps.framework */,
-				55DDC88D174722730017B264 /* FacebookSDKResources.bundle */,
 				55954F5B172A15A800A8A351 /* CoreData.framework */,
 				55954F59172A159A00A8A351 /* SystemConfiguration.framework */,
 				55A25F511728C8AB00D5E29F /* QuartzCore.framework */,
-				55D5A8C5171E7C7B0027BBFE /* FacebookSDK.framework */,
 				55D5A8BF171E7BCF0027BBFE /* Accounts.framework */,
 				55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */,
 				55D5A8BD171E7BC90027BBFE /* Social.framework */,
@@ -1256,10 +1260,10 @@
 		5562B19016FC50F300E21A82 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5562B19116FC50F300E21A82 /* TimVui-Info.plist */,
+				5562B19116FC50F300E21A82 /* Anuong-Info.plist */,
 				5562B19216FC50F300E21A82 /* InfoPlist.strings */,
 				5562B19516FC50F300E21A82 /* main.m */,
-				5562B19716FC50F300E21A82 /* TimVui-Prefix.pch */,
+				5562B19716FC50F300E21A82 /* Anuong-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1277,7 +1281,7 @@
 		5562B1AE16FC50F300E21A82 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5562B1AF16FC50F300E21A82 /* TimVuiTests-Info.plist */,
+				5562B1AF16FC50F300E21A82 /* AnuongTests-Info.plist */,
 				5562B1B016FC50F300E21A82 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -2076,9 +2080,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5562B18516FC50F300E21A82 /* TimVui */ = {
+		5562B18516FC50F300E21A82 /* Anuong */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5562B1B816FC50F300E21A82 /* Build configuration list for PBXNativeTarget "TimVui" */;
+			buildConfigurationList = 5562B1B816FC50F300E21A82 /* Build configuration list for PBXNativeTarget "Anuong" */;
 			buildPhases = (
 				5562B18216FC50F300E21A82 /* Sources */,
 				5562B18316FC50F300E21A82 /* Frameworks */,
@@ -2089,14 +2093,14 @@
 			);
 			dependencies = (
 			);
-			name = TimVui;
+			name = Anuong;
 			productName = TimVui;
-			productReference = 5562B18616FC50F300E21A82 /* TimVui.app */;
+			productReference = 5562B18616FC50F300E21A82 /* Anuong.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5562B1A516FC50F300E21A82 /* TimVuiTests */ = {
+		5562B1A516FC50F300E21A82 /* AnuongTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5562B1BB16FC50F300E21A82 /* Build configuration list for PBXNativeTarget "TimVuiTests" */;
+			buildConfigurationList = 5562B1BB16FC50F300E21A82 /* Build configuration list for PBXNativeTarget "AnuongTests" */;
 			buildPhases = (
 				5562B1A116FC50F300E21A82 /* Sources */,
 				5562B1A216FC50F300E21A82 /* Frameworks */,
@@ -2108,9 +2112,9 @@
 			dependencies = (
 				5562B1AC16FC50F300E21A82 /* PBXTargetDependency */,
 			);
-			name = TimVuiTests;
+			name = AnuongTests;
 			productName = TimVuiTests;
-			productReference = 5562B1A616FC50F300E21A82 /* TimVuiTests.octest */;
+			productReference = 5562B1A616FC50F300E21A82 /* AnuongTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -2122,7 +2126,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Hoang The Hung";
 			};
-			buildConfigurationList = 5562B18116FC50F300E21A82 /* Build configuration list for PBXProject "TimVui" */;
+			buildConfigurationList = 5562B18116FC50F300E21A82 /* Build configuration list for PBXProject "Anuong" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2135,8 +2139,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5562B18516FC50F300E21A82 /* TimVui */,
-				5562B1A516FC50F300E21A82 /* TimVuiTests */,
+				5562B18516FC50F300E21A82 /* Anuong */,
+				5562B1A516FC50F300E21A82 /* AnuongTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2146,7 +2150,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55DDC88E174722740017B264 /* FacebookSDKResources.bundle in Resources */,
 				5562B19416FC50F300E21A82 /* InfoPlist.strings in Resources */,
 				55C8C11117052E4C007D8E78 /* Default-568h@2x.png in Resources */,
 				55C8C11217052E4C007D8E78 /* Default.png in Resources */,
@@ -2460,6 +2463,7 @@
 				55B8B8771784164D00DD32CE /* imgTVExtraBranchViewLike@2x.png in Resources */,
 				55B8B87A178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off.png in Resources */,
 				55B8B87B178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off@2x.png in Resources */,
+				552072D8178559DB00DC5E68 /* FacebookSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2597,7 +2601,7 @@
 /* Begin PBXTargetDependency section */
 		5562B1AC16FC50F300E21A82 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5562B18516FC50F300E21A82 /* TimVui */;
+			target = 5562B18516FC50F300E21A82 /* Anuong */;
 			targetProxy = 5562B1AB16FC50F300E21A82 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2704,8 +2708,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
-				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
+				GCC_PREFIX_HEADER = "TimVui/Anuong-Prefix.pch";
+				INFOPLIST_FILE = "TimVui/Anuong-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2725,7 +2729,7 @@
 					SystemConfiguration,
 					"-lsqlite3.0",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Anuong;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -2742,8 +2746,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
-				INFOPLIST_FILE = "TimVui/TimVui-Info.plist";
+				GCC_PREFIX_HEADER = "TimVui/Anuong-Prefix.pch";
+				INFOPLIST_FILE = "TimVui/Anuong-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2763,7 +2767,7 @@
 					SystemConfiguration,
 					"-lsqlite3.0",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Anuong;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -2780,8 +2784,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
-				INFOPLIST_FILE = "TimVuiTests/TimVuiTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "TimVuiTests/AnuongTests-Info.plist";
+				PRODUCT_NAME = AnuongTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -2797,8 +2801,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/TimVui-Prefix.pch";
-				INFOPLIST_FILE = "TimVuiTests/TimVuiTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "TimVuiTests/AnuongTests-Info.plist";
+				PRODUCT_NAME = AnuongTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -2807,7 +2811,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5562B18116FC50F300E21A82 /* Build configuration list for PBXProject "TimVui" */ = {
+		5562B18116FC50F300E21A82 /* Build configuration list for PBXProject "Anuong" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5562B1B616FC50F300E21A82 /* Debug */,
@@ -2816,7 +2820,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5562B1B816FC50F300E21A82 /* Build configuration list for PBXNativeTarget "TimVui" */ = {
+		5562B1B816FC50F300E21A82 /* Build configuration list for PBXNativeTarget "Anuong" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5562B1B916FC50F300E21A82 /* Debug */,
@@ -2825,7 +2829,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5562B1BB16FC50F300E21A82 /* Build configuration list for PBXNativeTarget "TimVuiTests" */ = {
+		5562B1BB16FC50F300E21A82 /* Build configuration list for PBXNativeTarget "AnuongTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5562B1BC16FC50F300E21A82 /* Debug */,
