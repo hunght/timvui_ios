@@ -18,7 +18,7 @@
 #import "MHFacebookImageViewer.h"
 #import "SpecBranchProfileVC.h"
 #import "TVPhotoBrowserVC.h"
-
+#import "NSDate+Helper.h"
 @interface BranchProfileVC ()
 {
     @private
@@ -110,9 +110,172 @@
     return genarateInfoView;
 }
 
+- (void)addCouponToInfoView:(int *)height_p
+{
+    CALayer *l;
+    if (_branch.coupons.count>0) {
+        UIView* couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, *height_p, 320-6*2, 90)];
+        [couponBranch setBackgroundColor:[UIColor whiteColor]];
+        l=couponBranch.layer;
+        [l setMasksToBounds:YES];
+        [l setCornerRadius:5.0];
+        [l setBorderWidth:1.0];
+        [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+        [_scrollView addSubview:couponBranch];
+        
+        
+        
+        
+        UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
+        lblTitle.backgroundColor = [UIColor clearColor];
+        lblTitle.textColor = [UIColor redColor];
+        lblTitle.font = [UIFont fontWithName:@"UVNVanBold" size:(20)];
+        lblTitle.text=@"COUPON";
+        [couponBranch addSubview:lblTitle];
+        
+        //COUPON
+        *height_p=lblTitle.frame.origin.y+lblTitle.frame.size.height+15;
+        for (TVCoupon* coupon in _branch.coupons.items) {
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,*height_p , 290, 23)];
+            lblDetailRow.backgroundColor = [UIColor clearColor];
+            lblDetailRow.textColor = [UIColor blackColor];
+            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailRow.text = coupon.name;
+            lblDetailRow.numberOfLines = 0;
+            lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
+            [lblDetailRow sizeToFit];
+    
+            
+            UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(5 ,*height_p-5 , 297, lblDetailRow.frame.size.height+10)];
+            [borderView setBackgroundColor:[UIColor clearColor]];
+            
+            CAShapeLayer *_border = [CAShapeLayer layer];
+            _border.strokeColor = [UIColor colorWithRed:67/255.0f green:37/255.0f blue:83/255.0f alpha:1].CGColor;
+            _border.fillColor = nil;
+            _border.lineDashPattern = @[@4, @2];
+            [borderView.layer addSublayer:_border];
+            
+            // Setup the path
+            _border.path = [UIBezierPath bezierPathWithRect:borderView.bounds].CGPath;
+            _border.frame = borderView.bounds;
+            
+            [[borderView layer] addSublayer:_border];
+            [couponBranch addSubview:borderView];
+            [couponBranch addSubview:lblDetailRow];
+            
+            //View for info branch
+            UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(5, lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height+10, 320-(6+5)*2, 85)];
+            [infoCouponBranch setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1.0f]];
+            
+            l=infoCouponBranch.layer;
+            [l setMasksToBounds:YES];
+            [l setCornerRadius:5.0];
+            [l setBorderWidth:1.0];
+            [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+            
+            UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 5, 11, 12)];
+            quatityIcon.image=[UIImage imageNamed:@"img_profile_branch_quatity_coupon"];
+            [infoCouponBranch addSubview:quatityIcon];
+            
+            UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 5.0, 150, 23)];
+            lblTitleRow.backgroundColor = [UIColor clearColor];
+            lblTitleRow.textColor = [UIColor grayColor];
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.text =@"Số lượng";
+            [infoCouponBranch addSubview:lblTitleRow];
+            
+            UILabel *lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 5.0, 150, 23)];
+            lblDetailInfoRow.backgroundColor = [UIColor clearColor];
+            lblDetailInfoRow.textColor = [UIColor grayColor];
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.text =coupon.used;
+            [infoCouponBranch addSubview:lblDetailInfoRow];
+            
+            UIImageView* viewNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 25, 12, 11)];
+            viewNumberIcon.image=[UIImage imageNamed:@"img_profile_branch_view_number"];
+            [infoCouponBranch addSubview:viewNumberIcon];
+            
+            lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 25.0, 150, 23)];
+            lblTitleRow.backgroundColor = [UIColor clearColor];
+            lblTitleRow.textColor = [UIColor grayColor];
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.text =@"Lượt xem";
+            [infoCouponBranch addSubview:lblTitleRow];
+            
+            lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 25.0, 150, 23)];
+            lblDetailInfoRow.backgroundColor = [UIColor clearColor];
+            lblDetailInfoRow.textColor = [UIColor grayColor];
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.text =coupon.view;
+            [infoCouponBranch addSubview:lblDetailInfoRow];
+            
+            UIImageView* codeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0,45, 12, 13)];
+            codeIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_code"];
+            [infoCouponBranch addSubview:codeIcon];
+            
+            
+            lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 45.0, 150, 23)];
+            lblTitleRow.backgroundColor = [UIColor clearColor];
+            lblTitleRow.textColor = [UIColor grayColor];
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.text =@"Mã";
+            [infoCouponBranch addSubview:lblTitleRow];
+            
+            lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 45.0, 150, 23)];
+            lblDetailInfoRow.backgroundColor = [UIColor clearColor];
+            lblDetailInfoRow.textColor = [UIColor grayColor];
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.text =coupon.code;
+            [infoCouponBranch addSubview:lblDetailInfoRow];
+            
+            UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65, 12, 13)];
+            clockIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_clock"];
+            [infoCouponBranch addSubview:clockIcon];
+            
+            
+            lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 65.0, 150, 23)];
+            lblTitleRow.backgroundColor = [UIColor clearColor];
+            lblTitleRow.textColor = [UIColor grayColor];
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.text =@"Thời gian";
+            [infoCouponBranch addSubview:lblTitleRow];
+            
+            lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 65.0, 150, 23)];
+            lblDetailInfoRow.backgroundColor = [UIColor clearColor];
+            lblDetailInfoRow.textColor = [UIColor grayColor];
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[coupon.start stringWithFormat:@"dd/mm/yy"], [coupon.end stringWithFormat:@"dd/mm/yy"]];
+            [infoCouponBranch addSubview:lblDetailInfoRow];
+            
+            
+            *height_p=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height+10;
+            
+            
+            UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 300, 46)];
+            [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
+            [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+            
+            [btnPostPhoto setTitle:@"XEM CHI TIẾT" forState:UIControlStateNormal];
+            [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+            [btnPostPhoto addTarget:self action:@selector(viewDetailCouponClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [couponBranch addSubview:btnPostPhoto];
+            
+            *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+30;
+            [couponBranch addSubview:infoCouponBranch];
+        }
+        
+        [_scrollView addSubview:couponBranch];
+        CGRect frame=couponBranch.frame;
+        frame.size.height=*height_p;
+        couponBranch.frame=frame;
+        
+        *height_p= couponBranch.frame.origin.y+couponBranch.frame.size.height+10;
+    }
+}
+
 - (void)showInfoView
 {
-    
     // Do any additional setup after loading the view from its nib.
     [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]placeholderImage:nil];
     
@@ -128,7 +291,6 @@
         } onClose:^{
             NSLog(@"CLOSE!");
         }];
-        
         i++;
     }
     
@@ -185,10 +347,8 @@
     [_scrollView addSubview:likeButton];
     
     int height= likeButton.frame.origin.y+likeButton.frame.size.height+10;
-    //COUPON
-    for (TVCoupon* coupon in _branch.coupons.items) {
-        
-    }
+    
+    [self addCouponToInfoView:&height];
     
     //Detail Info
     UIView* detailInfoBranch=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 45)];
@@ -400,7 +560,8 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
     self.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
-     NSDictionary *params = @{@"id": _branchID};
+//     NSDictionary *params = @{@"id": _branchID};
+    NSDictionary *params = @{@"id": @"1"};
     [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async( dispatch_get_main_queue(),^ {
             [self showInfoView];
@@ -474,6 +635,10 @@
 }
 
 #pragma mark - IBAction
+-(void)viewDetailCouponClicked:(id)s{
+    
+}
+
 -(void)likeButtonClicked:(id)sender{
     
 }

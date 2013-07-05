@@ -27,17 +27,15 @@
 	self.read = YES;
 }
 
-- (BOOL)isCommentEvent {
-	return [self.name hasSuffix:@"CommentEvent"];
-}
 
 - (void)setValues:(id)dict {
+    
+    NSLog(@"%@",dict);
 	self.couponID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
-	self.view   = [dict safeIntegerForKey:@"view"];
+	self.view   = [dict safeStringForKey:@"view"];
 	self.used = [dict safeStringForKey:@"used"];
     self.code  =[dict safeStringForKey:@"code"];
-    
     self.start = [dict safeDateForKey:@"start"];
 	self.end = [dict safeDateForKey:@"end"];
 
@@ -46,8 +44,5 @@
 
 
 
-- (NSString *)shortenRef:(NSString *)longRef {
-	return [longRef lastPathComponent];
-}
 
 @end

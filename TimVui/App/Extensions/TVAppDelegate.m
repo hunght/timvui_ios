@@ -230,7 +230,6 @@
     strPath=@"data/getDistrictHasPublicLocationData";
     days=7;
     [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getDistrictHasPublicLocationData forKey:kGetPublicLocationData];
-
     
     _getPublicLocationData=[defaults valueForKey:kGetDistrictHasPublicLocationData];
     strPath=@"data/getPublicLocationData";

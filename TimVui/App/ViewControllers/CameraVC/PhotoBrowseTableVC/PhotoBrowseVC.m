@@ -13,7 +13,8 @@
 #import "AFHTTPRequestOperation.h"
 #import "BlockAlertView.h"
 #import "Base64.h"
-
+#import "TSMessage.h"
+#import <JSONKit.h>
 @interface PhotoBrowseVC ()
 
 @end
@@ -114,26 +115,41 @@
     }
     int i=0;
     NSMutableArray* arrImageStr=[[NSMutableArray alloc] init];
+    NSMutableArray* arrImage=[[NSMutableArray alloc] init];
     for (UIImage* image in _arrPhotos) {
         NSNumber* isPicked=[_arrPhotosPick objectAtIndex:i];
         if ([isPicked boolValue]) {
-            NSData *imageToUpload = UIImageJPEGRepresentation(image, 1.00);
-            [arrImageStr addObject:[imageToUpload base64EncodedString]];
+            
+            NSData *imageToUpload = UIImageJPEGRepresentation(image, 0.00);
+            [arrImageStr addObject:[NSString stringWithFormat:@"data:image/jpeg;base64,%@",[imageToUpload base64EncodedString]]];
+            [arrImage addObject:image];
         }
         i++;
     }
 
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _album,@"album" ,
-                            _branch_id,@"branch_id",
+//                            _branch_id,@"branch_id",
+                            @"1",@"branch_id",
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
-                            arrImageStr,@"image_arr",
+                            [arrImageStr JSONString],@"image_arr",
                             nil];
+    
+    NSLog(@"params=====%@",params);
+    
     [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"response: [%@]",JSON);
+
+        if ([_delegate respondsToSelector:@selector(didPickWithImages:)]) {
+            [_delegate didPickWithImages:arrImage];
+        }
+        [self dismissModalViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [operation error]);
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Đăng ảnh không thành công, vui lòng thử lại"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
     }];
+    
     /*
     NSURLRequest* request = [[TVNetworkingClient sharedClient] multipartFormRequestWithMethod:@"POST"
             path:@"branch/postImages"  parameters:params
@@ -212,15 +228,10 @@
     if (cell.btnPicked.isSelected){
         [_arrPhotosPick replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
         [cell.btnPicked setSelected:NO];
-    }
-    else{
+    }else{
         [_arrPhotosPick replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
         [cell.btnPicked setSelected:YES];
     }
-    
 }
-
-
-
 
 @end

@@ -217,6 +217,7 @@
 }
 
 - (NSString *)stringWithFormat:(NSString *)format {
+    NSLog(@"%@",self);
 	NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setTimeZone:[NSTimeZone systemTimeZone]];
 	[outputFormatter setDateFormat:format];

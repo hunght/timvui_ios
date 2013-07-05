@@ -219,24 +219,23 @@
 - (IBAction)postCommentButtonClicked:(id)sender {
     if (_branch) {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                _branch.branchID,@"branch_id" ,
+//                                _branch.branchID,@"branch_id" ,
+                                @"1",@"branch_id" ,
                                 [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                 _txvContent.text,@"content" ,
                                 [_rating stringValue],@"rating" ,
                                 nil];
-        NSLog(@"%@",params);
         [[TVNetworkingClient sharedClient] postPath:@"branch/postComment" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Đăng comment thành công"
                                             withMessage:nil
                                                withType:TSMessageNotificationTypeSuccess];
             [self dismissModalViewControllerAnimated:YES];
-            NSLog(@"%@",JSON);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Đăng comment thất bại"
                                             withMessage:nil
-                                               withType:TSMessageNotificationTypeWarning];
+                                               withType:TSMessageNotificationTypeError];
         }];
     }
 }

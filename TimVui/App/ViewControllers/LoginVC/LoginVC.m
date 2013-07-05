@@ -29,9 +29,6 @@
 #import "SVProgressHUD.h"
 @implementation LoginVC
 
-
-
-
 #pragma mark Setup Methods
 
 - (void)setupViewLayout {
@@ -107,7 +104,6 @@
                                              nil];
                      NSLog(@"%@",params	);
                      // TODO turn on login via openid
-                     
                      [[TVNetworkingClient sharedClient] postPath:@"user/loginOpenid" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                          NSLog(@"%@",JSON);
                          NSLog(@"%ld",(long)operation.response.statusCode);
@@ -124,9 +120,7 @@
                              self.userLoginFail();
                          }
                      }];
-                     
                  }
-                 
              }else{
                  // TODO with error
                  NSLog(@"%@",error);
@@ -225,7 +219,10 @@
                                           if (session.isOpen) {
                                               [self hasPermissionAndGoGetThing];
                                           } else {
-                                              [SharedAppDelegate showAlertAboutSomething:@"Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại hoặc sử dụng tài khoản khác"];
+                                              [TSMessage showNotificationInViewController:self
+                                                                                withTitle:@"Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại hoặc sử dụng tài khoản khác"
+                                                                              withMessage:nil
+                                                                                 withType:TSMessageNotificationTypeWarning];
                         ;                 }
     
                                   }];

@@ -8,6 +8,7 @@
 #import "TVAppDelegate.h"
 #import "PhotoBrowseVC.h"
 #import "UINavigationBar+JTDropShadow.h"
+#import "TSMessage.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -198,10 +199,6 @@
     return img;
 }
 
-- (void)saveImageToPhotoAlbum
-{
-    UIImageWriteToSavedPhotosAlbum([[self captureManager] stillImage], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-}
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
@@ -214,7 +211,13 @@
 }
 #pragma mark - PhotoBrowseVCDelegate
 -(void)didPickWithImages:(NSArray*)images{
-    
+    [TSMessage showNotificationInViewController:self
+                                      withTitle:@"Đăng ảnh thành công"
+                                    withMessage:nil
+                                       withType:TSMessageNotificationTypeSuccess];
+    for (UIImage* image in images) {
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
 }
 
 -(void)wantToShowLeft:(BOOL)isLeft{
@@ -223,6 +226,7 @@
     }else
         [self.slidingViewController anchorTopViewTo:ECRight];
 }
+
 #pragma mark - LocationTableVCDelegate
 
 -(void)didPickWithLoation:(TVBranch *)branch{

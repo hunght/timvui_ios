@@ -18,11 +18,8 @@
 }
 
 - (void)setValues:(id)values {
-	[self setValuesNoItemsQuotes:[values valueForKey:@"items"]];
-}
-
-- (void)setValuesNoItemsQuotes:(id)values {
-	self.items = [NSMutableArray array];
+    NSLog(@"%@",values);
+    self.items = [NSMutableArray array];
 	for (NSDictionary *dict in values) {
 		TVCoupon *event = [[TVCoupon alloc] initWithDict:dict];
 		[self addObject:event];

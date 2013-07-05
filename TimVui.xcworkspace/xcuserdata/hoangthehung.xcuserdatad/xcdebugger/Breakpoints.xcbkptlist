@@ -7,52 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseVC.m"
-         timestampString = "394455295.696058"
+         filePath = "Pods/AFNetworking/AFNetworking/AFHTTPClient.m"
+         timestampString = "394689175.0565"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "135"
-         endingLineNumber = "135"
-         landmarkName = "-postPhotoButtonClicked:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseVC.m"
-         timestampString = "394455295.696058"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "133"
-         endingLineNumber = "133"
-         landmarkName = "-postPhotoButtonClicked:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/LoginVC/LoginVC.m"
-         timestampString = "394618785.757885"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "226"
-         endingLineNumber = "226"
-         landmarkName = "-fbLoginBtnClicked:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/LoginVC/LoginVC.m"
-         timestampString = "394618785.757885"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "228"
-         endingLineNumber = "228"
-         landmarkName = "-fbLoginBtnClicked:"
+         startingLineNumber = "462"
+         endingLineNumber = "462"
+         landmarkName = "-requestWithMethod:path:parameters:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

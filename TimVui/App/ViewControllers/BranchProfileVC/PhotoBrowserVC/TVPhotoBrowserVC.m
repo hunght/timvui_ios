@@ -94,7 +94,6 @@
             NSDictionary* dicPhoto=[[dic allValues] lastObject];
             [photos addObject:[MWPhoto photoWithURL:[Ultilities getOriginalAlbumPhoto:dicPhoto]]];
         }
-    
         _photos=photos;
     }
     
