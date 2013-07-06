@@ -67,10 +67,9 @@
     lblDistance.textColor = [UIColor redColor];
     lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(15)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
-    if (distance>1000.0) {
-//        NSLog(@"%f",distance/1000.0);
+    if (distance>1000.0)
         lblDistance.text=[NSString stringWithFormat:@"%.2f km",distance/1000];
-    }else
+    else
         lblDistance.text=[NSString stringWithFormat:@"%f m",distance];
     
     [genarateInfoView addSubview:lblDistance];
@@ -123,9 +122,6 @@
         [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
         [_scrollView addSubview:couponBranch];
         
-        
-        
-        
         UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
         lblTitle.backgroundColor = [UIColor clearColor];
         lblTitle.textColor = [UIColor redColor];
@@ -144,7 +140,6 @@
             lblDetailRow.numberOfLines = 0;
             lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
             [lblDetailRow sizeToFit];
-    
             
             UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(5 ,*height_p-5 , 297, lblDetailRow.frame.size.height+10)];
             [borderView setBackgroundColor:[UIColor clearColor]];
@@ -244,7 +239,7 @@
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
             lblDetailInfoRow.textColor = [UIColor grayColor];
             lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-            lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[coupon.start stringWithFormat:@"dd/mm/yy"], [coupon.end stringWithFormat:@"dd/mm/yy"]];
+            lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[coupon.start stringWithFormat:@"dd/MM/yy"], [coupon.end stringWithFormat:@"dd/MM/yy"]];
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
             

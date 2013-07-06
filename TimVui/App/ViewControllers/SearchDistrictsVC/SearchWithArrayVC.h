@@ -13,6 +13,6 @@
     
 }
 @property (assign, nonatomic) SearchVC  *searchVC;
-
+@property (strong, nonatomic) NSMutableArray  *pickedArr;
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic;
 @end

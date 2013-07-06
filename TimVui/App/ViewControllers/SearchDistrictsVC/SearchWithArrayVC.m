@@ -11,7 +11,7 @@
 #import <objc/message.h>
 #import "UINavigationBar+JTDropShadow.h"
 #import "TVAppDelegate.h"
-
+static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier = @"kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier";
 @interface SearchWithArrayVC () {
     BOOL _mayUsePrivateAPI;
 }
@@ -48,6 +48,7 @@
         */
         
         //_mayUsePrivateAPI = YES;
+        _pickedArr=[[NSMutableArray alloc] init];
         
     }
     
@@ -122,6 +123,32 @@
 }
 
 #pragma mark - Overrides
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier];
+    }
+    NSDictionary* dic;
+    if (tableView == self.tableView) {
+        if (self.showSectionIndexes) {
+            dic=[[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+            cell.textLabel.text = [dic valueForKey:@"name"] ;
+            
+        } else {
+            dic=[self.famousPersons objectAtIndex:indexPath.row];
+            cell.textLabel.text = [dic valueForKey:@"name"];
+        }
+    } else {
+        dic=[self.filteredPersons objectAtIndex:indexPath.row];
+        cell.textLabel.text = [dic valueForKey:@"name"];
+    }
+    if ([_pickedArr containsObject:dic])
+        cell.accessoryType=UITableViewCellAccessoryCheckmark;
+    else
+        cell.accessoryType=UITableViewCellAccessoryNone;
+    return cell;
+}
 /*
  Override these methods so that the search symbol isn't shown in the section index titles control. 
 */
@@ -142,39 +169,58 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //_searchVC.dicCitySearchParam=[self.famousPersons objectAtIndex:indexPath.row];
     NSDictionary* arrResult=nil;
-    if (tableView != self.tableView){
-       arrResult =  [self.filteredPersons objectAtIndex:indexPath.row];
-        
-    }else{
-        arrResult=  [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    }
+
+    
     UITableViewCell* cell=[tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    if (cell.accessoryType==UITableViewCellAccessoryCheckmark) {
+        arrResult =  [self.filteredPersons objectAtIndex:indexPath.row];
+        if ([_pickedArr containsObject:arrResult])
+            [_pickedArr removeObject:arrResult];
+        else
+        {
+            arrResult=  [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+            [_pickedArr removeObject:arrResult];
+        }
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }else{
+        if (tableView != self.tableView){
+            arrResult =  [self.filteredPersons objectAtIndex:indexPath.row];
+            
+        }else{
+            arrResult=  [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        }
+        [_pickedArr addObject:arrResult];
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
     switch (_searchVC.currentSearchParam) {
         case kSearchParamCity:
             _searchVC.dicCitySearchParam=arrResult;
             _searchVC.dicDistrictSearchParam=nil;
+            [self.navigationController popViewControllerAnimated:YES];
             break;
         case kSearchParamCuisine:
-            _searchVC.dicCuisineSearchParam=arrResult;
+            
+            _searchVC.dicCuisineSearchParam=_pickedArr;
             break;
         case kSearchParamDistrict:
-            _searchVC.dicDistrictSearchParam=arrResult;
+            _searchVC.dicDistrictSearchParam=_pickedArr;
+            [self.navigationController popViewControllerAnimated:YES];
             break;
         case kSearchParamPurpose:
-            _searchVC.dicPurposeSearchParam=arrResult;
+            _searchVC.dicPurposeSearchParam=_pickedArr;
             break;
         case kSearchParamZone:
-            _searchVC.dicPublicLocation=arrResult;
+            _searchVC.dicPublicLocation=_pickedArr;
             break;
         case kSearchParamUtilities:
-            _searchVC.dicUtilitiesSearchParam=arrResult;
+            _searchVC.dicUtilitiesSearchParam=_pickedArr;
             break;
         default:
             break;
     }
+    
+    NSLog(@"%@",_pickedArr);
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    [self.navigationController popViewControllerAnimated:YES];
 }

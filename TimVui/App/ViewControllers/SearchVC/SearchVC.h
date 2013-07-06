@@ -14,6 +14,7 @@
  * followed by an invocation of userDidLogin:
  */
 -(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng;
+-(void)didPickDistricts:(NSArray*)arrDics;
 
 @end
 @interface SearchVC : UIViewController<UITextFieldDelegate>
@@ -42,12 +43,12 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnBackgournd;
 
 @property (retain, nonatomic) NSDictionary *dicCitySearchParam;
-@property (retain, nonatomic) NSDictionary *dicDistrictSearchParam;
-@property (retain, nonatomic) NSDictionary *dicPublicLocation;
-@property (retain, nonatomic) NSDictionary *dicCuisineSearchParam;
-@property (retain, nonatomic) NSDictionary *dicPurposeSearchParam;
-@property (retain, nonatomic) NSDictionary *dicUtilitiesSearchParam;
-@property (retain, nonatomic) NSDictionary *dicPriceSearchParam;
+@property (retain, nonatomic) NSArray *dicDistrictSearchParam;
+@property (retain, nonatomic) NSArray *dicPublicLocation;
+@property (retain, nonatomic) NSArray *dicCuisineSearchParam;
+@property (retain, nonatomic) NSArray *dicPurposeSearchParam;
+@property (retain, nonatomic) NSArray *dicUtilitiesSearchParam;
+@property (retain, nonatomic) NSArray *dicPriceSearchParam;
 @property (retain, nonatomic) NSMutableArray *dicCatSearchParam;
 
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblZone;

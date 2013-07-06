@@ -54,6 +54,7 @@
 
 - (IBAction)buttonDistrictClicked:(id)sender {
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[_dicCitySearchParam valueForKey:@"districts"]];
+    NSLog(@"%@",self.dicCitySearchParam);
     viewController.searchVC=self;
     _currentSearchParam=kSearchParamDistrict;
     [self.navigationController pushViewController:viewController animated:YES];
@@ -61,8 +62,8 @@
 
 - (IBAction)buttonZoneClicked:(id)sender {
     NSPredicate *filter =nil;
-    if (_dicCitySearchParam && _dicDistrictSearchParam) {
-        filter = [NSPredicate predicateWithFormat:@"(city_id == %@) AND (district_id == %@)",[_dicCitySearchParam valueForKey:@"id"],[_dicDistrictSearchParam valueForKey:@"id"]];
+    if (_dicCitySearchParam && _dicDistrictSearchParam.count>0) {
+        filter = [NSPredicate predicateWithFormat:@"(city_id == %@) AND (district_id == %@)",[_dicCitySearchParam valueForKey:@"id"],[[_dicDistrictSearchParam lastObject] valueForKey:@"id"]];
     }else if (_dicCitySearchParam){
         filter = [NSPredicate predicateWithFormat:@"(city_id == %@)",[_dicCitySearchParam valueForKey:@"id"]];
     }
@@ -120,7 +121,6 @@
         [params setValue:[_dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
         location=[_dicCitySearchParam safeLocationForKey:@"latlng"];
     }else{
-
         location=[GlobalDataUser sharedAccountClient].userLocation;
         if (location.latitude) {
             NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
@@ -130,17 +130,28 @@
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
     }
     
-    if (_dicCatSearchParam) {
+    if (_dicCatSearchParam.count>0) {
         [params setValue:_dicCatSearchParam  forKey:@"cat_aliases"];
     }
-    
+     NSLog(@"%@",_dicCatSearchParam);
     if (_dicPriceSearchParam) {
         [params setValue:_dicPriceSearchParam  forKey:@"prices"];
     }
     
+    if (_dicDistrictSearchParam&&_dicDistrictSearchParam.count>0) {
+        NSMutableArray*arr=[[NSMutableArray alloc] init];
+        for (NSDictionary* dic in _dicDistrictSearchParam) {
+            NSLog(@"%@",dic);
+            [arr addObject:[dic valueForKey:@"alias"]];
+            
+        }
+        [params setValue:arr  forKey:@"district_aliases"];
+    }   
+     NSLog(@"%@",params);
     if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
         [_delegate didClickedOnButtonSearch:params withLatlng:location];
     }
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -160,7 +171,13 @@
     [super viewDidLoad];
     [self.tfdSearch setDelegate:self];
     [self.btnBackgournd setEnabled:NO];
-    
+    NSString* idStr=[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"];
+//    NSLog(@"%@",idStr);
+//    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
+    NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",idStr];
+    NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
+    self.dicCitySearchParam=[idPublicArr lastObject];
+//    NSLog(@"%@",self.dicCitySearchParam);
     // Do any additional setup after loading the view from its nib.
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
@@ -258,13 +275,25 @@
     else
         [_btnCity setTitle:@"Tỉnh/TP" forState:UIControlStateNormal];
     
-    if (_dicDistrictSearchParam) 
-        [_btnDistrict setTitle:[_dicDistrictSearchParam valueForKey:@"name"] forState:UIControlStateNormal];
+
+    
+    if (_dicDistrictSearchParam.count>0){
+        [_btnDistrict setTitle:(_dicDistrictSearchParam.count>1)?@"...":[[_dicDistrictSearchParam lastObject] valueForKey:@"name"] forState:UIControlStateNormal];
+        if ([_delegate respondsToSelector:@selector(didPickDistricts:)]) {
+            [_delegate didPickDistricts:_dicDistrictSearchParam];
+        }
+    }
     else
         [_btnDistrict setTitle:@"Quận/Huyện" forState:UIControlStateNormal];
     
-    if (_dicPublicLocation)
-        _lblZone.text=[NSString stringWithFormat:@"Khu vực (%@)",[_dicPublicLocation valueForKey:@"name"]];
+    if (_dicPublicLocation){
+        NSString* tempStrName=@"Khu vực( ";
+        for (NSString* str in [_dicPublicLocation valueForKey:@"name"]) {
+            tempStrName=[tempStrName stringByAppendingString:str];
+        }
+        tempStrName=[tempStrName stringByAppendingString:@")"];
+        _lblZone.text=tempStrName;
+    }
     else
         _lblZone.text=@"Khu vực";
     
@@ -282,7 +311,6 @@
         _lblUtilities.text=[NSString stringWithFormat:@"Tiện ích (%@)",[_dicUtilitiesSearchParam valueForKey:@"name"]];
     else
         _lblUtilities.text=@"Tiện ích";
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

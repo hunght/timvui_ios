@@ -8,7 +8,7 @@
 
 #import "FKRSearchBarTableViewController.h"
 
-static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier = @"kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier";
+
 
 @interface FKRSearchBarTableViewController () {
     
@@ -79,13 +79,18 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
     self.searchBar.placeholder = @"Search";
     self.searchBar.delegate = self;
-    
     [self.searchBar sizeToFit];
     
     self.strongSearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.delegate = self;
+    for(UIView *subView in _searchBar.subviews) {
+        if([subView conformsToProtocol:@protocol(UITextInputTraits)]) {
+            [(UITextField *)subView setKeyboardAppearance: UIKeyboardAppearanceAlert];
+            [(UITextField *)subView setReturnKeyType:UIReturnKeyDone];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -162,25 +167,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier];
-    }
-    
-    if (tableView == self.tableView) {
-        if (self.showSectionIndexes) {
-            cell.textLabel.text = [[[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"name"] ;
-        } else {
-            cell.textLabel.text = [[self.famousPersons objectAtIndex:indexPath.row] valueForKey:@"name"];
-        }
-    } else {
-        cell.textLabel.text = [[self.filteredPersons objectAtIndex:indexPath.row] valueForKey:@"name"];
-    }
 
-    return cell;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -188,6 +175,9 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 }
 
 #pragma mark - Search Delegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self.searchDisplayController setActive:NO];
+}
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
@@ -199,7 +189,9 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 {
     self.filteredPersons = nil;
     self.currentSearchString = nil;
+    [self.tableView reloadData];  
 }
+
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {

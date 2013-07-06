@@ -136,7 +136,7 @@
                             nil];
     
     NSLog(@"params=====%@",params);
-    
+    /*
     [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
 
         if ([_delegate respondsToSelector:@selector(didPickWithImages:)]) {
@@ -149,8 +149,8 @@
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeError];
     }];
+    */
     
-    /*
     NSURLRequest* request = [[TVNetworkingClient sharedClient] multipartFormRequestWithMethod:@"POST"
             path:@"branch/postImages"  parameters:params
             constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -179,7 +179,6 @@
     }];
     
     [operation start];
-     */
 
 
 }

@@ -16,5 +16,18 @@
          landmarkName = "-requestWithMethod:path:parameters:"
          landmarkType = "5">
       </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/Libs/FKRSearchBarTableViewController/FKRSearchBarTableViewController.m"
+         timestampString = "394789255.835197"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "188"
+         endingLineNumber = "188"
+         landmarkName = "-searchDisplayControllerDidEndSearch:"
+         landmarkType = "5">
+      </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

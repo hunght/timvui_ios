@@ -123,6 +123,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 -(void)locationPickerSearchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [searchVC setDelegate:self];
+    searchVC.dicDistrictSearchParam=_arrDics;
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
@@ -235,7 +236,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     return [location1 distanceFromLocation: location2];
 }
 
-#pragma mark - SearchVCDelegate
+#pragma mark - UIscrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [_notificationView closeButtonClicked:nil];
 }
@@ -245,6 +246,9 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 -(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
     _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:14];
     [self postSearchBranch:params];
+}
+-(void)didPickDistricts:(NSArray *)arrDics{
+    _arrDics=arrDics;
 }
 
 #pragma mark - GMSMapViewDelegate

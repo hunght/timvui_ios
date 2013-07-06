@@ -1218,7 +1218,6 @@
 		5562B17D16FC50F300E21A82 = {
 			isa = PBXGroup;
 			children = (
-				552072D917855A2D00DC5E68 /* Security.framework */,
 				5562B18F16FC50F300E21A82 /* TimVui */,
 				5562B1AD16FC50F300E21A82 /* TimVuiTests */,
 				5562B18816FC50F300E21A82 /* Frameworks */,
@@ -1239,6 +1238,7 @@
 		5562B18816FC50F300E21A82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				552072D917855A2D00DC5E68 /* Security.framework */,
 				552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */,
 				552072D5178559C700DC5E68 /* FacebookSDK.framework */,
 				55AD02D017706F2B00A84ED6 /* CoreMedia.framework */,
