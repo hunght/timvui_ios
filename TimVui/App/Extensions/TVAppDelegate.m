@@ -226,15 +226,15 @@
     days=7;
     [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getCityDistrictData forKey:kGetCityDistrictData];
     
-    _getDistrictHasPublicLocationData=[defaults valueForKey:kGetPublicLocationData];
+    _getDistrictHasPublicLocationData=[defaults valueForKey:kGetDistrictHasPublicLocationData];
     strPath=@"data/getDistrictHasPublicLocationData";
     days=7;
-    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getDistrictHasPublicLocationData forKey:kGetPublicLocationData];
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getDistrictHasPublicLocationData forKey:kGetDistrictHasPublicLocationData];
     
-    _getPublicLocationData=[defaults valueForKey:kGetDistrictHasPublicLocationData];
+    _getPublicLocationData=[defaults valueForKey:kGetPublicLocationData];
     strPath=@"data/getPublicLocationData";
     days=7;
-    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getPublicLocationData forKey:kGetDistrictHasPublicLocationData];
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getPublicLocationData forKey:kGetPublicLocationData];
 
     _getPriceAvgData=[defaults valueForKey:kGetPriceAvgData];
     strPath=@"data/getPriceAvgData";

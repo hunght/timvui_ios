@@ -12,6 +12,7 @@
 {
 @private
     double lastDragOffset;
+    BOOL firstLocationUpdate_;
 
 }
 @property (nonatomic) BOOL isMapAnimating;
@@ -122,8 +123,13 @@
         [_mapView setCamera:camera];
         self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.mapView.delegate = self.mapViewDelegate;
+        _mapView.settings.compassButton = YES;
+        _mapView.settings.myLocationButton = YES;
+
         [self insertSubview:self.mapView belowSubview:self.tableView];
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _mapView.myLocationEnabled = YES;
+        });
         if ([self.delegate respondsToSelector:@selector(locationPicker:mapViewDidLoad:)]) {
             [self.delegate locationPicker:self mapViewDidLoad:self.mapView];
         }
@@ -455,7 +461,6 @@
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 		return;
 	}
-    
     if ((object == self.tableView) &&
         ([keyPath isEqualToString:@"contentOffset"] == YES)) {
         [self scrollViewDidScrollWithOffset:self.tableView.contentOffset.y];

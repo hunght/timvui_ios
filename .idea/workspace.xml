@@ -2,137 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60a63a34-05a1-4810-adb9-493b3327284f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/Current" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/GMSSprites-0.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/GMSSprites-0@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/GoogleMaps" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/GoogleMaps" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Headers" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/GMSCacheStorage.momd/Storage.mom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/GMSCacheStorage.momd/Storage.omo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/bubble_left.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/bubble_left@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/bubble_right.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/bubble_right@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/button_compass.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/button_compass@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/button_my_location.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/button_my_location@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/compass_pin.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/compass_pin@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_one_way_16_256.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_32_128.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_32_64.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_40_128.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_44_64.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_48_128.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_48_64.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_56_128.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_hybrid_6_32_high_zoom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/dav_road_hybrid_6_32_low_zoom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/default_marker.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/default_marker@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/polyline_colors_texture.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/polyline_colors_texture@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/turn_arrow_background.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/turn_arrow_foreground.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/walking_dot_gray.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/walking_dot_gray2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/watermark_dark.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/watermark_dark@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/watermark_light.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/watermark_light@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSCameraPosition.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSCameraUpdate.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSCircle.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSCoordinateBounds.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/ar.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/ca.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/cs.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/da.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/de.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/el.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/en.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/en_GB.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/es.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/fi.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/fr.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/he.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/hr.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/hu.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/id.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/it.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/ja.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/ko.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/ms.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/nl.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/no.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/pl.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/pt.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/pt_PT.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/ro.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/ru.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/sk.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/sv.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/th.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/tr.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/uk.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/vi.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/zh_CN.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/zh_TW.lproj/GMSCore.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSGeocoder.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSGroundOverlay.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSMapLayer.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSMapView+Animation.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSMapView+Overlays.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSMapView.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSMarker.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSMutablePath.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSOverlay.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSPath.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSPolygon.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSPolyline.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSProjection.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSReverseGeocodeOutput.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSServices.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSSyncTileLayer.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSTileLayer.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSUISettings.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GMSURLTileLayer.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Headers/GoogleMaps.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/Info.plist" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/en.lproj/InfoPlist.strings" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/LICENSES" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle/GMSCacheStorage.momd/VersionInfo.plist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/AuthenCodeVC/AuthenCodeVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/AuthenCodeVC/AuthenCodeVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/ForgetPassVC/ForgetPassVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/ForgetPassVC/ForgetPassVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/Models/GHResource.m" afterPath="$PROJECT_DIR$/TimVui/App/Models/GHResource.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui.xcworkspace/xcuserdata/hoangthehung.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist" afterPath="$PROJECT_DIR$/TimVui.xcworkspace/xcuserdata/hoangthehung.xcuserdatad/xcdebugger/Breakpoints.xcbkptlist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/Models/GlobalDataUser.h" afterPath="$PROJECT_DIR$/TimVui/App/Models/GlobalDataUser.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/Models/GlobalDataUser.m" afterPath="$PROJECT_DIR$/TimVui/App/Models/GlobalDataUser.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/Extensions/JLog.h" afterPath="$PROJECT_DIR$/TimVui/App/Extensions/JLog.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/LoginVC/LoginVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/LoginVC/LoginVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/MainVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/MainVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Manifest.lock" afterPath="$PROJECT_DIR$/Pods/Manifest.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Podfile.lock" afterPath="$PROJECT_DIR$/Podfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Podfile" afterPath="$PROJECT_DIR$/Podfile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods-Acknowledgements.markdown" afterPath="$PROJECT_DIR$/Pods/Pods-Acknowledgements.markdown" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods-Acknowledgements.plist" afterPath="$PROJECT_DIR$/Pods/Pods-Acknowledgements.plist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods-environment.h" afterPath="$PROJECT_DIR$/Pods/Pods-environment.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods-prefix.pch" afterPath="$PROJECT_DIR$/Pods/Pods-prefix.pch" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods.xcconfig" afterPath="$PROJECT_DIR$/Pods/Pods.xcconfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/LocationPickerView/LocationPickerView.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/LocationPickerView/LocationPickerView.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/MapTableViewController.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/MapTableViewController.m" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/hoangthehung.xcuserdatad/xcschemes/Pods.xcscheme" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/hoangthehung.xcuserdatad/xcschemes/Pods.xcscheme" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.h" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/Extensions/TVAppDelegate.m" afterPath="$PROJECT_DIR$/TimVui/App/Extensions/TVAppDelegate.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/UserRegisterVC/UserRegisterVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/UserRegisterVC/UserRegisterVC.m" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/TimVui.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/hoangthehung.xcuserdatad/xcschemes/xcschememanagement.plist" afterPath="$PROJECT_DIR$/Pods/Pods.xcodeproj/xcuserdata/hoangthehung.xcuserdatad/xcschemes/xcschememanagement.plist" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.h" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.xib" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchDistrictsVC/SearchWithArrayVC.h" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchDistrictsVC/SearchWithArrayVC.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchDistrictsVC/SearchWithArrayVC.m" afterPath="$PROJECT_DIR$/TimVui/App/ViewControllers/SearchDistrictsVC/SearchWithArrayVC.m" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/timvui_ios.iml" afterPath="$PROJECT_DIR$/.idea/timvui_ios.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TimVui.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="60a63a34-05a1-4810-adb9-493b3327284f" time="1370053063635" ignored="false" />
+    <file path="/Dummy.txt" changelist="60a63a34-05a1-4810-adb9-493b3327284f" time="1373160277295" ignored="false" />
     <file path="/LeftMenuVC.m" changelist="60a63a34-05a1-4810-adb9-493b3327284f" time="1368416140126" ignored="false" />
     <file path="/PullToRevealMapVC.m" changelist="60a63a34-05a1-4810-adb9-493b3327284f" time="1370055382672" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -148,33 +34,12 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="iphoneos_IPHONE_efa5e88597792b346e341d5383923d8e45df6c25" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="iphonesimulator_5.1_1" />
   <component name="FavoritesManager">
     <favorites_list name="TimVui" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainVC.m" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/MainVC.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="1326" selection-end="1326" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PullToRevealMapVC.m" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.m">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="32" selection-start="4211" selection-end="4211" vertical-scroll-proportion="-0.3364486">
-              <folding>
-                <element signature="e#242#271#0" expanded="true" />
-                <element signature="e#564#597#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="GMSMapView.h" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GoogleMaps.framework/Headers/GMSMapView.h">
           <provider selected="true" editor-type-id="text-editor">
@@ -184,13 +49,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PullToRevealMapVC.h" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.h">
+      <file leaf-file-name="main.m" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TimVui/main.m">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="77" selection-start="494" selection-end="494" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#157#180#0" expanded="true" />
-              </folding>
+            <state line="15" column="0" selection-start="245" selection-end="245" vertical-scroll-proportion="0.57863504">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchVC.m" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.m">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="31" selection-start="1947" selection-end="1947" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -227,7 +99,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1366" />
-    <option name="height" value="698" />
+    <option name="height" value="700" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -262,8 +134,14 @@
               <option name="myItemId" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
+              <option name="myItemId" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Anuong" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -273,7 +151,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
+              <option name="myItemId" value="Anuong" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -287,29 +165,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Config" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="localizable" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
+              <option name="myItemId" value="Anuong" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -327,7 +183,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
+              <option name="myItemId" value="Anuong" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -349,7 +205,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
+              <option name="myItemId" value="Anuong" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -365,7 +221,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MainVC" />
+              <option name="myItemId" value="SearchVC" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -375,7 +231,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
+              <option name="myItemId" value="Anuong" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -391,11 +247,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="MainVC" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PullToRevealMapVC" />
+              <option name="myItemId" value="LeftMenuVC" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -405,29 +257,7 @@
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="App" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Models" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TimVui" />
+              <option name="myItemId" value="Anuong" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -448,6 +278,14 @@
               <option name="myItemId" />
               <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeRootNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Anuong" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Products" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.XcodeViewNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -463,7 +301,7 @@
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
-  <component name="RunManager" selected="Application.TimVui">
+  <component name="RunManager" selected="Application.Anuong">
     <configuration default="true" type="AppleRunConfiguration" factoryName="Application" PROJECT_NAME="TimVui" TARGET_NAME="TimVui" CONFIG_NAME="Debug" PASS_PARENT_ENVS="FALSE" RUN_TARGET_PROJECT_NAME="TimVui" RUN_TARGET_NAME="TimVui" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
       <envs />
       <method />
@@ -480,9 +318,16 @@
       <envs />
       <method />
     </configuration>
-    <list size="2">
+    <configuration default="false" name="Anuong" type="AppleRunConfiguration" factoryName="Application" SCHEME_NAME="Anuong" PROJECT_NAME="Anuong" TARGET_NAME="Anuong" CONFIG_NAME="Debug" WORKING_DIR="" PASS_PARENT_ENVS="FALSE" RUN_TARGET_PROJECT_NAME="Anuong" RUN_TARGET_NAME="Anuong" MAKE_ACTIVE="TRUE" WAIT_FOR="FALSE">
+      <envs />
+      <RunnerSettings RunnerId="AppRunner" />
+      <ConfigurationWrapper RunnerId="AppRunner" />
+      <method />
+    </configuration>
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.TimVui" />
       <item index="1" class="java.lang.String" itemvalue="Application.Pods" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Anuong" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -512,18 +357,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1366" height="698" extended-state="0" />
+    <frame x="0" y="22" width="1366" height="700" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272727" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32673267" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18484849" sideWeight="0.5778146" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21363637" sideWeight="0.5778146" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3986711" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18484849" sideWeight="0.60231024" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21969697" sideWeight="0.60231024" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39768976" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19545455" sideWeight="0.45348838" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42218542" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42079207" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -597,11 +442,16 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TimVui/localizable/en.lproj/Localizable.strings">
+    <entry file="file://$PROJECT_DIR$/GoogleMaps.framework/Headers/GMSMapView.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="44" selection-start="1165" selection-end="1165" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TimVui/localizable/en.lproj/Localizable.strings">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="44" selection-start="1165" selection-end="1165" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIApplication.h">
@@ -618,9 +468,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Pods/VPPDropDown/VPPDropDown/VPPDropDown.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="347" column="9" selection-start="12711" selection-end="12711" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="347" column="9" selection-start="12711" selection-end="12711" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TimVui/App/Extensions/MacroApp.h">
@@ -632,23 +480,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TimVui/localizable/en.lproj/Localizable.strings">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="44" selection-start="1165" selection-end="1165" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="21" column="44" selection-start="1165" selection-end="1165" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TimVui/App/Libs/Ultilities.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="5" selection-start="1155" selection-end="1155" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="42" column="5" selection-start="1155" selection-end="1155" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/LeftMenuVC/GHMenuCell.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="109" selection-start="711" selection-end="711" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="24" column="109" selection-start="711" selection-end="711" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/LoginVC/LoginVC.m">
@@ -686,29 +528,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/MainVC/MainVC.m">
+    <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/SearchVC/SearchVC.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="1326" selection-end="1326" vertical-scroll-proportion="0.0">
+        <state line="62" column="31" selection-start="1947" selection-end="1947" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.h">
+    <entry file="file://$PROJECT_DIR$/TimVui/main.m">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="77" selection-start="494" selection-end="494" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#157#180#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TimVui/App/ViewControllers/PullToRevealVC/PullToRevealMapVC.m">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="32" selection-start="4211" selection-end="4211" vertical-scroll-proportion="-0.3364486">
-          <folding>
-            <element signature="e#242#271#0" expanded="true" />
-            <element signature="e#564#597#0" expanded="true" />
-          </folding>
+        <state line="15" column="0" selection-start="245" selection-end="245" vertical-scroll-proportion="0.57863504">
+          <folding />
         </state>
       </provider>
     </entry>

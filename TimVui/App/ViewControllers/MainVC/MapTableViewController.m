@@ -123,7 +123,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 -(void)locationPickerSearchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [searchVC setDelegate:self];
-    searchVC.dicDistrictSearchParam=_arrDics;
+    [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_arrDics;
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
@@ -365,16 +365,16 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
     // Animate to the marker
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:1.f];  // 3 second animation
-    
-    GMSCameraPosition *camera =
-    [[GMSCameraPosition alloc] initWithTarget:marker.position
-                                         zoom:14
-                                      bearing:50
-                                 viewingAngle:60];
-    [mapView animateToCameraPosition:camera];
-    [CATransaction commit];
+//    [CATransaction begin];
+//    [CATransaction setAnimationDuration:1.f];  // 3 second animation
+//    
+//    GMSCameraPosition *camera =
+//    [[GMSCameraPosition alloc] initWithTarget:marker.position
+//                                         zoom:14
+//                                      bearing:0
+//                                 viewingAngle:0];
+//    [mapView animateToCameraPosition:camera];
+//    [CATransaction commit];
     return NO;
 }
 

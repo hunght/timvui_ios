@@ -12,8 +12,7 @@
 #import "TVAppDelegate.h"
 #import "GlobalDataUser.h"
 @interface SearchVC ()
-@property (retain,nonatomic) NSArray* priceArr;
-@property (retain,nonatomic) NSArray* catArr;
+
 @end
 
 @implementation SearchVC
@@ -23,63 +22,72 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        _dicCatSearchParam=[[NSMutableArray alloc] init];
+        
         //_dicPriceSearchParam=[[NSMutableArray alloc] init];
     }
     return self;
 }
 
 #pragma mark IBAction
+
 -(void)categoryButtonClicked:(UIButton*)sender{
-    [sender setSelected:YES];
-    NSLog(@"%d",sender.tag);
-    [_dicCatSearchParam addObject:[[_catArr objectAtIndex:sender.tag] valueForKey:@"alias"]];
+    NSLog(@"%@",[GlobalDataUser sharedAccountClient].catArr);
+    if ([sender isSelected]){
+        [[GlobalDataUser sharedAccountClient].dicCatSearchParam removeObject:[[GlobalDataUser sharedAccountClient].catArr objectAtIndex:sender.tag] ];
+        [sender setSelected:NO];
+        
+    }else{
+        [[GlobalDataUser sharedAccountClient].dicCatSearchParam addObject:[[GlobalDataUser sharedAccountClient].catArr objectAtIndex:sender.tag] ];
+        [sender setSelected:YES];
+    }
+    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCatSearchParam);
 }
+
 -(void)priceButtonClicked:(UIButton*)sender{
-    [sender setSelected:YES];
-//    [_dicPriceSearchParam addObject:[[_priceArr objectAtIndex:sender.tag] allValues]];
-    _dicPriceSearchParam=[_priceArr objectAtIndex:sender.tag];
+    if ([sender isSelected]){
+        [[GlobalDataUser sharedAccountClient].dicPriceSearchParam removeObject:[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:sender.tag]];
+        [sender setSelected:NO];
+        
+    }else{
+        [[GlobalDataUser sharedAccountClient].dicPriceSearchParam addObject:[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:sender.tag]];
+        [sender setSelected:YES];
+    }
+    
+    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicPriceSearchParam);
 }
-- (IBAction)buttonBackgroundClicked:(id)sender {
+
+- (IBAction)btnCancelSearchToolbarClicked:(id)sender {
+    [_tfdSearch resignFirstResponder];
+}
+
+- (IBAction)btnSearchToolbarClicked:(id)sender {
+    [_tfdSearch resignFirstResponder];
+}
+
+- (IBAction)buttonBackgroundClicked:(UIButton*)sender {
     [self.tfdSearch resignFirstResponder];
+    [sender setUserInteractionEnabled:NO];
 }
 
 - (IBAction)buttonCityClicked:(id)sender {
     
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[SharedAppDelegate.getCityDistrictData valueForKey:@"data"]];
-    viewController.searchVC=self;
-    self.currentSearchParam=kSearchParamCity;
+    [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamCity;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)buttonDistrictClicked:(id)sender {
-    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[_dicCitySearchParam valueForKey:@"districts"]];
-    NSLog(@"%@",self.dicCitySearchParam);
-    viewController.searchVC=self;
-    _currentSearchParam=kSearchParamDistrict;
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"districts"]];
+    [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamDistrict;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
+
+
 - (IBAction)buttonZoneClicked:(id)sender {
-    NSPredicate *filter =nil;
-    if (_dicCitySearchParam && _dicDistrictSearchParam.count>0) {
-        filter = [NSPredicate predicateWithFormat:@"(city_id == %@) AND (district_id == %@)",[_dicCitySearchParam valueForKey:@"id"],[[_dicDistrictSearchParam lastObject] valueForKey:@"id"]];
-    }else if (_dicCitySearchParam){
-        filter = [NSPredicate predicateWithFormat:@"(city_id == %@)",[_dicCitySearchParam valueForKey:@"id"]];
-    }
-    NSArray* myFilter=nil;
-    if (filter) {
-        NSArray* idPublicArr = [[SharedAppDelegate.getDistrictHasPublicLocationData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
-        NSLog(@"%@",idPublicArr);
-        NSMutableArray*arrIdStr=[[NSMutableArray alloc] init];
-        for (NSDictionary*dic in idPublicArr) {
-            [arrIdStr addObject:[dic valueForKey:@"public_location_id"]];
-        }
-        myFilter=[[SharedAppDelegate.getPublicLocationData valueForKey:@"data"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"id IN %@",arrIdStr]];
-    }
+    NSArray* myFilter = [self getZoneDataForSearching];
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:myFilter];
-    viewController.searchVC=self;
-    _currentSearchParam=kSearchParamZone;
+    [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamZone;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -87,8 +95,7 @@
     NSDictionary* params=[SharedAppDelegate getParamData];
     NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"mon-an"] valueForKey:@"params"];
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[dicCuisines allValues]];
-    viewController.searchVC=self;
-    _currentSearchParam=kSearchParamCuisine;
+    [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamCuisine;
     [self.navigationController pushViewController:viewController animated:YES];
     
 }
@@ -97,8 +104,7 @@
     NSDictionary* params=[SharedAppDelegate getParamData];
     NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"muc-dich"] valueForKey:@"params"];
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[dicCuisines allValues]];
-    viewController.searchVC=self;
-    _currentSearchParam=kSearchParamPurpose;
+    [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamPurpose;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -106,8 +112,7 @@
     NSDictionary* params=[SharedAppDelegate getParamData];
     NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[dicCuisines allValues]];
-    viewController.searchVC=self;
-    _currentSearchParam=kSearchParamUtilities;
+    [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamUtilities;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -117,9 +122,9 @@
     
     [params setValue:kDistanceSearchMapDefault forKey:@"distance"];
     
-    if (_dicCitySearchParam) {
-        [params setValue:[_dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
-        location=[_dicCitySearchParam safeLocationForKey:@"latlng"];
+    if ([GlobalDataUser sharedAccountClient].dicCitySearchParam) {
+        [params setValue:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
+        location=[[GlobalDataUser sharedAccountClient].dicCitySearchParam safeLocationForKey:@"latlng"];
     }else{
         location=[GlobalDataUser sharedAccountClient].userLocation;
         if (location.latitude) {
@@ -130,17 +135,17 @@
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
     }
     
-    if (_dicCatSearchParam.count>0) {
-        [params setValue:_dicCatSearchParam  forKey:@"cat_aliases"];
+    if ([GlobalDataUser sharedAccountClient].dicCatSearchParam.count>0) {
+        [params setValue:[[GlobalDataUser sharedAccountClient].dicCatSearchParam valueForKey:@"alias"] forKey:@"cat_aliases"];
     }
-     NSLog(@"%@",_dicCatSearchParam);
-    if (_dicPriceSearchParam) {
-        [params setValue:_dicPriceSearchParam  forKey:@"prices"];
+
+    if ([GlobalDataUser sharedAccountClient].dicPriceSearchParam) {
+        [params setValue:[GlobalDataUser sharedAccountClient].dicPriceSearchParam  forKey:@"prices"];
     }
     
-    if (_dicDistrictSearchParam&&_dicDistrictSearchParam.count>0) {
+    if ([GlobalDataUser sharedAccountClient].dicDistrictSearchParam&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
         NSMutableArray*arr=[[NSMutableArray alloc] init];
-        for (NSDictionary* dic in _dicDistrictSearchParam) {
+        for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
             NSLog(@"%@",dic);
             [arr addObject:[dic valueForKey:@"alias"]];
             
@@ -155,51 +160,113 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)buttonResetClicked:(id)sender {
+    [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=nil;
+    [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
+    [GlobalDataUser sharedAccountClient].dicCuisineSearchParam=nil;
+    [GlobalDataUser sharedAccountClient].dicPurposeSearchParam=nil;
+    [GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam=nil;
+    [[GlobalDataUser sharedAccountClient].dicPriceSearchParam removeAllObjects];
+    [[GlobalDataUser sharedAccountClient].dicCatSearchParam removeAllObjects];
+    
+    [_btnPrice100 setSelected:NO];
+    [_btnPrice1000 setSelected:NO];
+    [_btnPrice100_200 setSelected:NO];
+    [_btnPrice200_500 setSelected:NO];
+    [_btnPrice500_1000 setSelected:NO];
+    [_btnRestaurant setSelected:NO];
+    [_btnCafe setSelected:NO];
+    [_btnCakeShop setSelected:NO];
+    [_btnEatingShop setSelected:NO];
+    [_btnKaraoke setSelected:NO];
+    [_btnBar setSelected:NO];
+    [self settingForParamView];
+}
+
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark UITextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
-    [self.btnBackgournd setEnabled:YES];
+    [self.btnBackgournd setUserInteractionEnabled:YES];
+}
+
+#pragma mark Helper
+- (NSArray *)getZoneDataForSearching {
+    NSArray *myFilter=nil;
+    NSPredicate *filter =nil;
+    if ([GlobalDataUser sharedAccountClient].dicCitySearchParam && [GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
+        filter = [NSPredicate predicateWithFormat:@"(city_id == %@) AND (district_id == %@)",[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"id"],[[[GlobalDataUser sharedAccountClient].dicDistrictSearchParam lastObject] valueForKey:@"id"]];
+    }else if ([GlobalDataUser sharedAccountClient].dicCitySearchParam){
+        filter = [NSPredicate predicateWithFormat:@"(city_id == %@)",[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"id"]];
+    }
+    NSLog(@"%@",filter);
+    if (filter) {
+        NSArray* idPublicArr = [[SharedAppDelegate.getDistrictHasPublicLocationData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
+        NSLog(@"idPublicArr================/n%@",SharedAppDelegate.getDistrictHasPublicLocationData);
+        NSMutableArray*arrIdStr=[[NSMutableArray alloc] init];
+        for (NSDictionary*dic in idPublicArr) {
+            [arrIdStr addObject:[dic valueForKey:@"public_location_id"]];
+        }
+        myFilter=[[SharedAppDelegate.getPublicLocationData valueForKey:@"data"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"id IN %@",arrIdStr]];
+    }
+    return myFilter;
+}
+
+- (NSString *)getNameParamStringFrom:(NSArray *)arrValue withTitle:(NSString*)tempStrName{
+    if (arrValue){
+        BOOL isFirst=YES;
+        for (NSString* str in [arrValue valueForKey:@"name"]) {
+            if (isFirst) {
+                isFirst=NO;
+                tempStrName=[tempStrName stringByAppendingFormat:@"(%@",str];
+            }else
+                tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
+        }
+        tempStrName=[tempStrName stringByAppendingString:@")"];
+        
+    }
+    return tempStrName;
+}
+
+- (void)settingForParamView {
+    if ([GlobalDataUser sharedAccountClient].dicCitySearchParam)
+        [_btnCity setTitle:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"name"] forState:UIControlStateNormal];
+    else
+        [_btnCity setTitle:@"Tỉnh/TP" forState:UIControlStateNormal];
+    
+    if ([GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0){
+        [_btnDistrict setTitle:([GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>1)?@"...":[[[GlobalDataUser sharedAccountClient].dicDistrictSearchParam lastObject] valueForKey:@"name"] forState:UIControlStateNormal];
+        if ([_delegate respondsToSelector:@selector(didPickDistricts:)]) {
+            [_delegate didPickDistricts:[GlobalDataUser sharedAccountClient].dicDistrictSearchParam];
+        }
+    }
+    else
+        [_btnDistrict setTitle:@"Quận/Huyện" forState:UIControlStateNormal];
+    
+    NSArray* zoneArr=[self getZoneDataForSearching];
+    if (zoneArr.count>0) {
+        [_lblZone setEnabled:YES];
+        [_lblZone setAlpha:1.0];
+        [_btnZone setEnabled:YES];
+        [_btnZone setAlpha:1.0];
+    }else{
+        [_lblZone setEnabled:NO];
+        [_lblZone setAlpha:.7];
+        [_btnZone setEnabled:NO];
+        [_btnZone setAlpha:.7];
+    }
+    _lblZone.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicPublicLocation withTitle:@"Khu vực"];
+    
+    _lblCuisine.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicCuisineSearchParam withTitle:@"Món ăn"];
+    
+    _lblPurpose.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicPurposeSearchParam withTitle:@"Mục đích"];
     
 }
 
-#pragma mark ViewControllerDelegate
-- (void)viewDidLoad
+- (void)settingPriceCatButtons
 {
-    [super viewDidLoad];
-    [self.tfdSearch setDelegate:self];
-    [self.btnBackgournd setEnabled:NO];
-    NSString* idStr=[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"];
-//    NSLog(@"%@",idStr);
-//    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
-    NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",idStr];
-    NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
-    self.dicCitySearchParam=[idPublicArr lastObject];
-//    NSLog(@"%@",self.dicCitySearchParam);
-    // Do any additional setup after loading the view from its nib.
-    // Setup View and Table View
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    _viewNavigation=[[UIView alloc] initWithFrame:CGRectMake(48,0, 320, 44)];
-    [_viewNavigation setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_navigation"]]];
-    UIImageView* imgView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 7, 260, 30)];
-    [imgView setImage:[UIImage imageNamed:@"img_search_bar_text"]];
-    _tfdSearch=[[UITextField alloc] initWithFrame:CGRectMake(33, 10, 227, 30)];
-    
-    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-    [_viewNavigation addSubview:imgView];
-    [_viewNavigation addSubview:_tfdSearch];
-    [self.navigationController.navigationBar  addSubview:_viewNavigation];
-    
-    //
-    self.view.backgroundColor = [UIColor colorWithRed:(236/255.0f) green:(236/255.0f) blue:(236/255.0f) alpha:1.0f];
-    
     [_btnCity setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateSelected];
     [_btnDistrict setBackgroundImage:[UIImage imageNamed:@"img_search_button_on"] forState:UIControlStateSelected];
     
@@ -236,24 +303,34 @@
     [_btnPrice500_1000 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_btnPrice1000 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     //Set title for button Prices
-    _priceArr=[[SharedAppDelegate.getPriceAvgData valueForKey:@"data"] allValues];
-    [_btnPrice100 setTitle:[[_priceArr objectAtIndex:1] valueForKey:@"name"] forState:UIControlStateNormal];
+    if (![GlobalDataUser sharedAccountClient].priceArr) {
+        [GlobalDataUser sharedAccountClient].priceArr=[[SharedAppDelegate.getPriceAvgData valueForKey:@"data"] allValues];
+        NSLog(@"%@",[GlobalDataUser sharedAccountClient].priceArr);
+    }
     
-    [_btnPrice100_200 setTitle:[[_priceArr objectAtIndex:3] valueForKey:@"name"] forState:UIControlStateNormal];
+    [_btnPrice100 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:1] valueForKey:@"name"] forState:UIControlStateNormal];
     
-    [_btnPrice200_500 setTitle:[[_priceArr objectAtIndex:4] valueForKey:@"name"] forState:UIControlStateNormal];
+    [_btnPrice100_200 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:3] valueForKey:@"name"] forState:UIControlStateNormal];
     
-    [_btnPrice500_1000 setTitle:[[_priceArr objectAtIndex:2] valueForKey:@"name"] forState:UIControlStateNormal];
-   
-    [_btnPrice1000 setTitle:[[_priceArr objectAtIndex:0] valueForKey:@"name"] forState:UIControlStateNormal];
+    [_btnPrice200_500 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:4] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice500_1000 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:2] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice1000 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:0] valueForKey:@"name"] forState:UIControlStateNormal];
     _btnPrice1000.tag=0;
     [_btnPrice100 setTag:1];
     _btnPrice100_200.tag=3;
     _btnPrice200_500.tag=4;
     _btnPrice500_1000.tag=2;
+    
+    
+    
     //Set value for button category
-    _catArr=[SharedAppDelegate.getCatData valueForKey:@"data"] ;
-    NSLog(@"%@",_catArr);
+    if (![GlobalDataUser sharedAccountClient].catArr) {
+        [GlobalDataUser sharedAccountClient].catArr=[SharedAppDelegate.getCatData valueForKey:@"data"] ;
+        NSLog(@"%@",[GlobalDataUser sharedAccountClient].catArr);
+    }
+    
     [_btnRestaurant addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _btnRestaurant.tag=0;
     [_btnCafe addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -266,51 +343,103 @@
     _btnKaraoke.tag=5;
     [_btnBar addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _btnBar.tag=4;
+    
+    for (int i=0; i<[GlobalDataUser sharedAccountClient].priceArr.count; i++) {
+        NSDictionary* dic=[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:i];
+        if ([[GlobalDataUser sharedAccountClient].dicPriceSearchParam containsObject:dic]) {
+            switch (i) {
+                case 0:
+                    [_btnPrice1000 setSelected:YES];
+                    break;
+                case 1:
+                    [_btnPrice100 setSelected:YES];
+                    break;
+                case 2:
+                    [_btnPrice500_1000 setSelected:YES];
+                    break;
+                case 3:
+                    [_btnPrice100_200 setSelected:YES];
+                    break;
+                case 4:
+                    [_btnPrice200_500 setSelected:YES];
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    for (int i=0; i<[GlobalDataUser sharedAccountClient].catArr.count; i++) {
+        NSDictionary* dic=[[GlobalDataUser sharedAccountClient].catArr objectAtIndex:i];
+        if ([[GlobalDataUser sharedAccountClient].dicCatSearchParam containsObject:dic]) {
+            switch (i) {
+                case 0:
+                    [_btnRestaurant setSelected:YES];
+                    break;
+                case 1:
+                    [_btnEatingShop setSelected:YES];
+                    break;
+                case 2:
+                    [_btnCafe setSelected:YES];
+                    break;
+                case 3:
+                    [_btnCakeShop setSelected:YES];
+                    break;
+                case 4:
+                    [_btnBar setSelected:YES];
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    
+}
+#pragma mark ViewControllerDelegate
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self.tfdSearch setDelegate:self];
+    [self.btnBackgournd setUserInteractionEnabled:NO];
+    NSString* idStr=[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"];
+//    NSLog(@"%@",idStr);
+    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
+    NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",idStr];
+    NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
+    [GlobalDataUser sharedAccountClient].dicCitySearchParam=[idPublicArr lastObject];
+//    NSLog(@"%@",self.dicCitySearchParam);
+    // Do any additional setup after loading the view from its nib.
+    // Setup View and Table View
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _viewNavigation=[[UIView alloc] initWithFrame:CGRectMake(48,0, 320, 44)];
+    [_viewNavigation setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_navigation"]]];
+    UIImageView* imgView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 7, 260, 30)];
+    [imgView setImage:[UIImage imageNamed:@"img_search_bar_text"]];
+    _tfdSearch=[[UITextField alloc] initWithFrame:CGRectMake(33, 10, 227, 30)];
+    [_tfdSearch setDelegate:self];
+    _tfdSearch.inputAccessoryView=_tbrAccessorySearch;
+    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    [_viewNavigation addSubview:imgView];
+    [_viewNavigation addSubview:_tfdSearch];
+    
+    
+    //
+    self.view.backgroundColor = [UIColor colorWithRed:(236/255.0f) green:(236/255.0f) blue:(236/255.0f) alpha:1.0f];
+    [self settingPriceCatButtons];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [_btnPrice100 setTag:1];
-    if (_dicCitySearchParam)
-        [_btnCity setTitle:[_dicCitySearchParam valueForKey:@"name"] forState:UIControlStateNormal];
-    else
-        [_btnCity setTitle:@"Tỉnh/TP" forState:UIControlStateNormal];
-    
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar  addSubview:_viewNavigation];
+    [self settingForParamView];
     
-    if (_dicDistrictSearchParam.count>0){
-        [_btnDistrict setTitle:(_dicDistrictSearchParam.count>1)?@"...":[[_dicDistrictSearchParam lastObject] valueForKey:@"name"] forState:UIControlStateNormal];
-        if ([_delegate respondsToSelector:@selector(didPickDistricts:)]) {
-            [_delegate didPickDistricts:_dicDistrictSearchParam];
-        }
-    }
-    else
-        [_btnDistrict setTitle:@"Quận/Huyện" forState:UIControlStateNormal];
-    
-    if (_dicPublicLocation){
-        NSString* tempStrName=@"Khu vực( ";
-        for (NSString* str in [_dicPublicLocation valueForKey:@"name"]) {
-            tempStrName=[tempStrName stringByAppendingString:str];
-        }
-        tempStrName=[tempStrName stringByAppendingString:@")"];
-        _lblZone.text=tempStrName;
-    }
-    else
-        _lblZone.text=@"Khu vực";
-    
-    if (_dicCuisineSearchParam)
-        _lblCuisine.text=[NSString stringWithFormat:@"Món ăn (%@)",[_dicCuisineSearchParam valueForKey:@"name"]];
-    else
-        _lblCuisine.text=@"Món ăn";
-    
-    if (_dicPurposeSearchParam)
-        _lblPurpose.text=[NSString stringWithFormat:@"Mục đích (%@)",[_dicPurposeSearchParam valueForKey:@"name"]];
-    else
-        _lblPurpose.text=@"Mục đích";
-    
-    if (_dicUtilitiesSearchParam)
-        _lblUtilities.text=[NSString stringWithFormat:@"Tiện ích (%@)",[_dicUtilitiesSearchParam valueForKey:@"name"]];
-    else
-        _lblUtilities.text=@"Tiện ích";
+    _lblUtilities.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam withTitle:@"Tiện ích"];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -350,6 +479,7 @@
     [self setLblCuisine:nil];
     [self setLblPurpose:nil];
     [self setLblUtilities:nil];
+    [self setTbrAccessorySearch:nil];
     [super viewDidUnload];
 }
 

@@ -4,6 +4,12 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../../data_post.txt">
+      <sourceFolder url="file://$MODULE_DIR$/../../data_post.txt" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle">
+      <sourceFolder url="file://$USER_HOME$/Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle" isTestSource="false" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

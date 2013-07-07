@@ -20,13 +20,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Libs/FKRSearchBarTableViewController/FKRSearchBarTableViewController.m"
-         timestampString = "394789255.835197"
+         filePath = "TimVui/App/ViewControllers/MainVC/LocationPickerView/LocationPickerView.m"
+         timestampString = "394791577.680844"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
-         landmarkName = "-searchDisplayControllerDidEndSearch:"
+         startingLineNumber = "207"
+         endingLineNumber = "207"
+         landmarkName = "-setMapView:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

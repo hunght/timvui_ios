@@ -11,6 +11,7 @@
 #import <objc/message.h>
 #import "UINavigationBar+JTDropShadow.h"
 #import "TVAppDelegate.h"
+#import "GlobalDataUser.h"
 static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier = @"kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier";
 @interface SearchWithArrayVC () {
     BOOL _mayUsePrivateAPI;
@@ -193,28 +194,32 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         [_pickedArr addObject:arrResult];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
-    switch (_searchVC.currentSearchParam) {
+    switch ([GlobalDataUser sharedAccountClient].currentSearchParam) {
         case kSearchParamCity:
-            _searchVC.dicCitySearchParam=arrResult;
-            _searchVC.dicDistrictSearchParam=nil;
+            [GlobalDataUser sharedAccountClient].dicCitySearchParam=arrResult;
+            [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=nil;
+            [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case kSearchParamCuisine:
             
-            _searchVC.dicCuisineSearchParam=_pickedArr;
+            [GlobalDataUser sharedAccountClient].dicCuisineSearchParam=_pickedArr;
             break;
         case kSearchParamDistrict:
-            _searchVC.dicDistrictSearchParam=_pickedArr;
+            [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_pickedArr;
+            
+            //To do with this because mutile choose make it fail
+            [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case kSearchParamPurpose:
-            _searchVC.dicPurposeSearchParam=_pickedArr;
+            [GlobalDataUser sharedAccountClient].dicPurposeSearchParam=_pickedArr;
             break;
         case kSearchParamZone:
-            _searchVC.dicPublicLocation=_pickedArr;
+            [GlobalDataUser sharedAccountClient].dicPublicLocation=_pickedArr;
             break;
         case kSearchParamUtilities:
-            _searchVC.dicUtilitiesSearchParam=_pickedArr;
+            [GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam=_pickedArr;
             break;
         default:
             break;

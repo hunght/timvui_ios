@@ -18,6 +18,27 @@
 @property (retain, nonatomic) NSString *facebookID;
 @property (retain, nonatomic) NSDictionary *dicCity;
 @property (assign, nonatomic) BOOL isLogin;
+
+@property (retain, nonatomic) NSDictionary *dicCitySearchParam;
+@property (retain, nonatomic) NSArray *dicDistrictSearchParam;
+@property (retain, nonatomic) NSArray *dicPublicLocation;
+@property (retain, nonatomic) NSArray *dicCuisineSearchParam;
+@property (retain, nonatomic) NSArray *dicPurposeSearchParam;
+@property (retain, nonatomic) NSArray *dicUtilitiesSearchParam;
+@property (retain, nonatomic) NSMutableArray *dicPriceSearchParam;
+@property (retain, nonatomic) NSMutableArray *dicCatSearchParam;
+@property (retain,nonatomic) NSArray* priceArr;
+@property (retain,nonatomic) NSArray* catArr;
+
+@property (assign, nonatomic) int currentSearchParam;
+enum {
+    kSearchParamCity = 0,
+    kSearchParamDistrict,
+    kSearchParamCuisine,
+    kSearchParamPurpose,
+    kSearchParamUtilities,
+    kSearchParamZone
+};
 -(NSDictionary *)dicCity;
 + (GlobalDataUser *)sharedAccountClient;
 -(void)setGlocalDataUser:(NSDictionary *)attributes;

@@ -27,6 +27,9 @@ static GlobalDataUser *_sharedClient = nil;
         [_sharedClient.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         
         [_sharedClient checkAndGetPersistenceAccount];
+        
+        _sharedClient.dicCatSearchParam=[[NSMutableArray alloc] init];
+        _sharedClient.dicPriceSearchParam=[[NSMutableArray alloc] init];
     });
     return _sharedClient;
 }

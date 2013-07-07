@@ -41,20 +41,16 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnSearch;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnReset;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnBackgournd;
+@property (strong, nonatomic) IBOutlet UIToolbar *tbrAccessorySearch;
 
-@property (retain, nonatomic) NSDictionary *dicCitySearchParam;
-@property (retain, nonatomic) NSArray *dicDistrictSearchParam;
-@property (retain, nonatomic) NSArray *dicPublicLocation;
-@property (retain, nonatomic) NSArray *dicCuisineSearchParam;
-@property (retain, nonatomic) NSArray *dicPurposeSearchParam;
-@property (retain, nonatomic) NSArray *dicUtilitiesSearchParam;
-@property (retain, nonatomic) NSArray *dicPriceSearchParam;
-@property (retain, nonatomic) NSMutableArray *dicCatSearchParam;
+
 
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblZone;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblCuisine;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblPurpose;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblUtilities;
+- (IBAction)btnCancelSearchToolbarClicked:(id)sender;
+- (IBAction)btnSearchToolbarClicked:(id)sender;
 
 - (IBAction)buttonBackgroundClicked:(id)sender;
 - (IBAction)buttonCityClicked:(id)sender;
@@ -64,14 +60,7 @@
 - (IBAction)buttonPurposeClicked:(id)sender;
 - (IBAction)buttonUtilityClicked:(id)sender;
 - (IBAction)buttonSearchClicked:(id)sender;
+- (IBAction)buttonResetClicked:(id)sender;
 
-@property (assign, nonatomic) int currentSearchParam;
-enum {
-    kSearchParamCity = 0,
-    kSearchParamDistrict,
-    kSearchParamCuisine,
-    kSearchParamPurpose,
-    kSearchParamUtilities,
-    kSearchParamZone
-};
+
 @end
