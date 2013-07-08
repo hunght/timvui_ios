@@ -86,7 +86,6 @@
         self.tableView.dataSource = self.tableViewDataSource;
         self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
-        
         // Add scroll view KVO
         void *context = (__bridge void *)self;
         [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
@@ -400,10 +399,11 @@
 
 - (void)hideMapView:(id)sender
 {
+    BOOL isHasDataYES=YES;
     if ([self.delegate respondsToSelector:@selector(locationPicker:mapViewWillBeHidden:)]) {
-        [self.delegate locationPicker:self mapViewWillBeHidden:self.mapView];
+        isHasDataYES=[self.delegate locationPicker:self mapViewWillBeHidden:self.mapView];
     }
-    
+    if (!isHasDataYES) return;
     if (self.shouldCreateHideMapButton) {
         [self hideCloseMapButton];
     }
@@ -442,9 +442,10 @@
 
 - (void)toggleMapView:(id)sender
 {
+    
     if (!self.isMapAnimating) {
         if (self.isMapFullScreen) {
-            [self hideMapView:self];
+             [self hideMapView:self];
         }
         else {
             [self expandMapView:self];

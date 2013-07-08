@@ -78,7 +78,6 @@
 }
 
 -(void)getPublicIPFromSomewhere{
-    
     NSURL *iPURL = [NSURL URLWithString:@"http://api.externalip.net/ip/"];
     if (iPURL) {
         NSError *error = nil;

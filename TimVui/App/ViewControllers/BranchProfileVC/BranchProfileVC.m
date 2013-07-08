@@ -19,6 +19,7 @@
 #import "SpecBranchProfileVC.h"
 #import "TVPhotoBrowserVC.h"
 #import "NSDate+Helper.h"
+#import "CoupBranchProfileVC.h"
 @interface BranchProfileVC ()
 {
     @private
@@ -131,6 +132,7 @@
         
         //COUPON
         *height_p=lblTitle.frame.origin.y+lblTitle.frame.size.height+15;
+        int i=0;
         for (TVCoupon* coupon in _branch.coupons.items) {
             UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,*height_p , 290, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
@@ -254,6 +256,8 @@
             [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
             [btnPostPhoto addTarget:self action:@selector(viewDetailCouponClicked:) forControlEvents:UIControlEventTouchUpInside];
+            btnPostPhoto.tag=i;
+            i++;
             [couponBranch addSubview:btnPostPhoto];
             
             *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+30;
@@ -630,8 +634,12 @@
 }
 
 #pragma mark - IBAction
--(void)viewDetailCouponClicked:(id)s{
-    
+-(void)viewDetailCouponClicked:(UIButton*)sender{
+    TVCoupon* coupon=_branch.coupons.items[sender.tag];
+    CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
+    specBranchVC.branch=_branch;
+    specBranchVC.coupon=coupon;
+    [self.navigationController pushViewController:specBranchVC animated:YES];
 }
 
 -(void)likeButtonClicked:(id)sender{

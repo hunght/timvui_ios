@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "GHResource.h"
-
+#import "TVCuisines.h"
 @class GHUser, TVComment,TVCoupons;
 
 @interface TVBranch : GHResource
@@ -11,6 +11,7 @@
 @property(nonatomic,strong)NSDictionary *arrURLImages;
 @property(nonatomic,assign)int coupon_count;
 @property(nonatomic,strong)TVCoupons *coupons;
+@property(nonatomic,strong)TVCuisines *menu;
 @property(nonatomic,strong)NSArray *special_content;
 @property(nonatomic,strong)NSString *address_full;
 @property(nonatomic,assign)CLLocationCoordinate2D latlng;

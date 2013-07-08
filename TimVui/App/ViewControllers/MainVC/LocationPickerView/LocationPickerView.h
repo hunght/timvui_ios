@@ -113,7 +113,7 @@ typedef void (^LocationPickerViewCompletionBlock)(LocationPickerView *locationPi
 
 /** Called when the mapView is about to be hidden (made tiny). Use this to
  perform custom animations or set attributes of the map/table. */
-- (void)locationPicker:(LocationPickerView *)locationPicker
+- (BOOL)locationPicker:(LocationPickerView *)locationPicker
    mapViewWillBeHidden:(GMSMapView *)mapView;
 
 /** Called when the mapView was hidden (made tiny). Use this to

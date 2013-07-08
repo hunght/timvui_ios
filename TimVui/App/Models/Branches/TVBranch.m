@@ -42,6 +42,9 @@
     self.coupons = [[TVCoupons alloc] init];
 	[self.coupons   setValues:[dict safeArrayForKey:@"coupons"] ];
     
+    self.menu = [[TVCuisines alloc] init];
+	[self.menu   setValues:[dict safeDictForKey:@"items"] ];
+    
 	self.special_content = [dict safeArrayForKey:@"special_content"];
 	self.address_full = [dict safeStringForKey:@"address_full"];
 	self.latlng = [dict safeLocationForKey:@"latlng"];

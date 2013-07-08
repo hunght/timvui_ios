@@ -11,6 +11,7 @@
 @property(nonatomic,strong)NSString *code;
 @property(nonatomic,strong)NSDate *start;
 @property(nonatomic,strong)NSDate *end;
+@property(nonatomic,strong)NSString *content;
 
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;

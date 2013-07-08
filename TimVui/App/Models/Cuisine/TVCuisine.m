@@ -1,16 +1,16 @@
-#import "TVCoupon.h"
+#import "TVCuisine.h"
 #import "GHUser.h"
 #import "TVComment.h"
 #import "NSString+Extensions.h"
 #import "NSDictionary+Extensions.h"
 
 
-@interface TVCoupon ()
+@interface TVCuisine ()
 @property(nonatomic,readwrite)BOOL read;
 @end
 
 
-@implementation TVCoupon
+@implementation TVCuisine
 
 - (id)initWithDict:(NSDictionary *)dict {
 	self = [super init];
@@ -21,28 +21,16 @@
 	return self;
 }
 
-
-
 - (void)markAsRead {
 	self.read = YES;
 }
 
-
 - (void)setValues:(id)dict {
-    
     NSLog(@"%@",dict);
-	self.couponID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
-	self.view   = [dict safeStringForKey:@"view"];
-	self.used = [dict safeStringForKey:@"used"];
-    self.code  =[dict safeStringForKey:@"code"];
-    self.start = [dict safeDateForKey:@"start"];
-	self.end = [dict safeDateForKey:@"end"];
+	self.price   = [dict safeStringForKey:@"price"];
+	self.price_old = [dict safeStringForKey:@"price_old"];
 
-    
 }
-
-
-
 
 @end

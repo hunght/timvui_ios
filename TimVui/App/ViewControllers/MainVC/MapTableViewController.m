@@ -119,6 +119,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 }
 
 #pragma mark - LocationPickerViewDelegate
+
 -(void)didClickedCurrentLocationButton:(UIButton *)btn {
     if (![GlobalDataUser sharedAccountClient].isShowAletForLocationServicesYES&&([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)))
     {
@@ -142,7 +143,6 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 - (void)locationPicker:(LocationPickerView *)locationPicker
      mapViewWillExpand:(GMSMapView *)mapView
 {
-    
 }
 
 /** Called when the mapView was expanded (made fullscreen). Use this to
@@ -153,12 +153,24 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
 }
 
+- (void)alertWhenNoDataLoaded
+{
+    if (self.branches.count==0) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Không có dữ liệu địa điểm"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeWarning];
+    }
+}
+
 /** Called when the mapView is about to be hidden (made tiny). Use this to
  perform custom animations or set attributes of the map/table. */
-- (void)locationPicker:(LocationPickerView *)locationPicker
+- (BOOL)locationPicker:(LocationPickerView *)locationPicker
    mapViewWillBeHidden:(GMSMapView *)mapView
 {
-    
+    [self alertWhenNoDataLoaded];
+    if (self.branches.count>0) return YES;
+    return NO;
 }
 
 /** Called when the mapView was hidden (made tiny). Use this to
@@ -246,6 +258,10 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
             if (weakSelf.branches.count>0&&isSearchYES) {
                 TVBranch* branch=weakSelf.branches[0];
                 _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:branch.latlng zoom:14];
+            }
+            if (weakSelf.branches.count==0) {
+                [_locationPickerView expandMapView:nil];
+                [self alertWhenNoDataLoaded];
             }
             _lastUpdate=[NSDate date];
             [_locationPickerView.tableView reloadData];

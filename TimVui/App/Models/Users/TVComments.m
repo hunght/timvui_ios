@@ -5,10 +5,11 @@
 @implementation TVComments
 
 
-- (void)setValues:(id)values {
+- (void)setValues:(id)valuesJSON {
     if (!self.items) {
         self.items = [NSMutableArray array];
     }
+    NSArray* values=[valuesJSON valueForKey:@"comments"];
     NSLog(@"%@",values);
     for (int i=0; i< [values count]; i++) {
         NSDictionary* dict=[values objectAtIndex:i];
