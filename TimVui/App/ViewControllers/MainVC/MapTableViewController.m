@@ -129,6 +129,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
                                        withType:TSMessageNotificationTypeWarning];
     }
 }
+
 -(void)locationPickerSearchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [searchVC setDelegate:self];

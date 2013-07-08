@@ -113,26 +113,12 @@
         [alert show];
         return;
     }
-    int i=0;
-    NSMutableArray* arrImageStr=[[NSMutableArray alloc] init];
-    NSMutableArray* arrImage=[[NSMutableArray alloc] init];
-    for (UIImage* image in _arrPhotos) {
-        NSNumber* isPicked=[_arrPhotosPick objectAtIndex:i];
-        if ([isPicked boolValue]) {
-            
-            NSData *imageToUpload = UIImageJPEGRepresentation(image, 0.00);
-            [arrImageStr addObject:[NSString stringWithFormat:@"data:image/jpeg;base64,%@",[imageToUpload base64EncodedString]]];
-            [arrImage addObject:image];
-        }
-        i++;
-    }
 
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _album,@"album" ,
 //                            _branch_id,@"branch_id",
                             @"1",@"branch_id",
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
-                            [arrImageStr JSONString],@"image_arr",
                             nil];
     
     NSLog(@"params=====%@",params);
@@ -160,8 +146,8 @@
                     if ([isPicked boolValue]) {
                         NSData *imageToUpload = UIImageJPEGRepresentation(image, .80);
                         [formData appendPartWithFileData:imageToUpload
-                                                    name:[NSString stringWithFormat:@"%d",i]
-                                                fileName:[NSString stringWithFormat:@"%d.jpg",i]
+                                                    name:@"image_arr[]"
+                                                fileName:@"image_arr.jpg"
                                                 mimeType:@"image/jpeg"];
                     }
                     i++;

@@ -123,8 +123,8 @@
         [_mapView setCamera:camera];
         self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.mapView.delegate = self.mapViewDelegate;
-        _mapView.settings.compassButton = YES;
-        _mapView.settings.myLocationButton = YES;
+//        _mapView.settings.compassButton = YES;
+//        _mapView.settings.myLocationButton = YES;
 
         [self insertSubview:self.mapView belowSubview:self.tableView];
         dispatch_async(dispatch_get_main_queue(), ^{

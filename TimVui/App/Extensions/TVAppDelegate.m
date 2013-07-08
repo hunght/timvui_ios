@@ -205,8 +205,7 @@
         if ([date isLaterThan:days]) {
             [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
         }
-    }else{
-        
+    }else {
         [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
     }
 }
