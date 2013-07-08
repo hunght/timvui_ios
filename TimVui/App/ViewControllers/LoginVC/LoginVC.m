@@ -230,9 +230,9 @@
 
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:_tfdUsername]) {
-        [_tfdUsername setKeyboardType:UIKeyboardTypePhonePad];
-    }
+//    if ([textField isEqual:_tfdUsername]) {
+//        [_tfdUsername setKeyboardType:UIKeyboardTypePhonePad];
+//    }
     [self.keyboardControls setActiveField:textField];
 }
 

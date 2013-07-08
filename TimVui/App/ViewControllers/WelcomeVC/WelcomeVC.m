@@ -46,7 +46,6 @@
 
 - (void)checkLocationServiceAvaible
 {
-    
     if ([CLLocationManager locationServicesEnabled]==NO) {
         
         [TSMessage showNotificationInViewController:self
@@ -79,6 +78,7 @@
 }
 
 -(void)getPublicIPFromSomewhere{
+    
     NSURL *iPURL = [NSURL URLWithString:@"http://api.externalip.net/ip/"];
     if (iPURL) {
         NSError *error = nil;
@@ -118,6 +118,7 @@
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     [_locationManager stopMonitoringSignificantLocationChanges];
+    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
 }
 
 

@@ -134,15 +134,6 @@
         
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
     }
-    
-    if ([GlobalDataUser sharedAccountClient].dicCatSearchParam.count>0) {
-        [params setValue:[[GlobalDataUser sharedAccountClient].dicCatSearchParam valueForKey:@"alias"] forKey:@"cat_aliases"];
-    }
-
-    if ([GlobalDataUser sharedAccountClient].dicPriceSearchParam) {
-        [params setValue:[GlobalDataUser sharedAccountClient].dicPriceSearchParam  forKey:@"prices"];
-    }
-    
     if ([GlobalDataUser sharedAccountClient].dicDistrictSearchParam&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
         NSMutableArray*arr=[[NSMutableArray alloc] init];
         for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
@@ -151,8 +142,10 @@
             
         }
         [params setValue:arr  forKey:@"district_aliases"];
-    }   
-     NSLog(@"%@",params);
+    }
+    if ([GlobalDataUser sharedAccountClient].dicPublicLocation)[params setValue:[[GlobalDataUser sharedAccountClient].dicPublicLocation valueForKey:@"alias"] forKey:@"public_location_aliases"];
+  
+    NSLog(@"%@",params);
     if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
         [_delegate didClickedOnButtonSearch:params withLatlng:location];
     }
@@ -215,7 +208,7 @@
 }
 
 - (NSString *)getNameParamStringFrom:(NSArray *)arrValue withTitle:(NSString*)tempStrName{
-    if (arrValue){
+    if (arrValue&&arrValue.count>0){
         BOOL isFirst=YES;
         for (NSString* str in [arrValue valueForKey:@"name"]) {
             if (isFirst) {
@@ -262,7 +255,7 @@
     _lblCuisine.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicCuisineSearchParam withTitle:@"Món ăn"];
     
     _lblPurpose.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicPurposeSearchParam withTitle:@"Mục đích"];
-    
+    _lblUtilities.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam withTitle:@"Tiện ích"];
 }
 
 - (void)settingPriceCatButtons
@@ -334,11 +327,11 @@
     [_btnRestaurant addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _btnRestaurant.tag=0;
     [_btnCafe addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    _btnCafe.tag=2;
+    _btnCafe.tag=1;
     [_btnCakeShop addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _btnCakeShop.tag=3;
     [_btnEatingShop addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    _btnEatingShop.tag  =1;
+    _btnEatingShop.tag  =2;
     [_btnKaraoke addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _btnKaraoke.tag=5;
     [_btnBar addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -403,7 +396,7 @@
     [self.btnBackgournd setUserInteractionEnabled:NO];
     NSString* idStr=[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"];
 //    NSLog(@"%@",idStr);
-    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
+//    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
     NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",idStr];
     NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
     [GlobalDataUser sharedAccountClient].dicCitySearchParam=[idPublicArr lastObject];
@@ -439,7 +432,7 @@
     [self.navigationController.navigationBar  addSubview:_viewNavigation];
     [self settingForParamView];
     
-    _lblUtilities.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam withTitle:@"Tiện ích"];
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

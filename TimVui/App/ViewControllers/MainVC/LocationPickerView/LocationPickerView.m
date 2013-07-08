@@ -234,6 +234,9 @@
 }
 
 -(void)currentLocationBarButtonClicked:(id)sender{
+    if ([_delegate respondsToSelector:@selector(didClickedCurrentLocationButton:)]) {
+        [_delegate didClickedCurrentLocationButton:sender];
+    }
     [self.mapView animateToLocation:[GlobalDataUser sharedAccountClient].userLocation];
 }
 

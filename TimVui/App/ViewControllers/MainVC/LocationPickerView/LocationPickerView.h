@@ -120,5 +120,5 @@ typedef void (^LocationPickerViewCompletionBlock)(LocationPickerView *locationPi
  perform custom animations or set attributes of the map/table. */
 - (void)locationPicker:(LocationPickerView *)locationPicker
       mapViewWasHidden:(GMSMapView *)mapView;
-
+-(void)didClickedCurrentLocationButton:(UIButton*)btn;
 @end

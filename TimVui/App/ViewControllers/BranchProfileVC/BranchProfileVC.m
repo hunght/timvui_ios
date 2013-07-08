@@ -643,7 +643,7 @@
 }
 
 -(void)cameraButtonClicked:(id)sender{
-    [SharedAppDelegate.menuVC cameraButtonClickedWithNav:self.navigationController];
+    [SharedAppDelegate.menuVC cameraButtonClickedWithNav:self.navigationController andWithBranch:_branch];
 }
 
 -(void)mapViewButtonClicked:(id)sender{

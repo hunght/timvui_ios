@@ -13,7 +13,7 @@
  * Sent to the delegate when sign up has completed successfully. Immediately
  * followed by an invocation of userDidLogin:
  */
--(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng;
+-(void)didClickedOnButtonSearch:(NSMutableDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng;
 -(void)didPickDistricts:(NSArray*)arrDics;
 
 @end

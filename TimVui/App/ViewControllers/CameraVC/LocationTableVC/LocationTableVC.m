@@ -43,17 +43,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    NSDictionary *params = nil;
-    CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
-    if (location.latitude) {
-        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
-                   @"latlng": strLatLng};
-    }else
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"]};
+    if (!self.branches) {
+        NSDictionary *params = nil;
+        CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
+        if (location.latitude) {
+            NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+            params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
+                       @"latlng": strLatLng};
+        }else
+            params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"]};
+        
+        [self postSearchBranch:params];
+    }
     
-    [self postSearchBranch:params];
 }
 
 - (void)didReceiveMemoryWarning

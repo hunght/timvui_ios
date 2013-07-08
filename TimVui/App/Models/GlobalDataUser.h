@@ -18,7 +18,7 @@
 @property (retain, nonatomic) NSString *facebookID;
 @property (retain, nonatomic) NSDictionary *dicCity;
 @property (assign, nonatomic) BOOL isLogin;
-
+@property (assign, nonatomic) BOOL isShowAletForLocationServicesYES;
 @property (retain, nonatomic) NSDictionary *dicCitySearchParam;
 @property (retain, nonatomic) NSArray *dicDistrictSearchParam;
 @property (retain, nonatomic) NSArray *dicPublicLocation;

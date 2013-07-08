@@ -25,7 +25,7 @@
 #import "TVCoupon.h"
 #import "TVCoupons.h"
 #import "MyNavigationController.h"
-
+#import "TSMessage.h"
 @interface MapTableViewController (){
 @private
 __strong UIActivityIndicatorView *_activityIndicatorView;
@@ -49,7 +49,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 {
     // Do any additional setup after loading the view from its nib.
     self.notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
-        [SharedAppDelegate.menuVC cameraButtonClickedWithNav:self.navigationController];
+        [SharedAppDelegate.menuVC cameraButtonClickedWithNav:self.navigationController andWithBranches:_branches];
     } withComment:^{
         [SharedAppDelegate.menuVC commentButtonClickedWithNav:self.navigationController];
     }];
@@ -71,7 +71,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     }else
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"]};
     
-    [self postSearchBranch:params];
+    [self postSearchBranch:[[NSMutableDictionary alloc] initWithDictionary:params] withReturnFromSearchScreenYES:NO];
 }
 
 
@@ -119,7 +119,16 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 }
 
 #pragma mark - LocationPickerViewDelegate
-
+-(void)didClickedCurrentLocationButton:(UIButton *)btn {
+    if (![GlobalDataUser sharedAccountClient].isShowAletForLocationServicesYES&&([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)))
+    {
+        [GlobalDataUser sharedAccountClient].isShowAletForLocationServicesYES=YES;
+        [TSMessage showNotificationInViewController:self
+                                      withTitle:@"Để sử dụng tốt nhất tính năng của ứng dụng này, bạn vui lòng bật tính năng Dò tìm vị trí- Location Service trong phần cài đặt của máy điện thoại."
+                                    withMessage:nil
+                                       withType:TSMessageNotificationTypeWarning];
+    }
+}
 -(void)locationPickerSearchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [searchVC setDelegate:self];
@@ -200,7 +209,28 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     }
 }
 
-- (void)postSearchBranch:(NSDictionary*)params {
+- (void)postSearchBranch:(NSMutableDictionary*)params withReturnFromSearchScreenYES:(BOOL)isSearchYES{
+    
+    if ([GlobalDataUser sharedAccountClient].dicCatSearchParam.count>0) {
+        [params setValue:[[GlobalDataUser sharedAccountClient].dicCatSearchParam valueForKey:@"alias"] forKey:@"cat_aliases"];
+    }
+    
+    if ([GlobalDataUser sharedAccountClient].dicPriceSearchParam.count>0) {
+        [params setValue:[GlobalDataUser sharedAccountClient].dicPriceSearchParam  forKey:@"prices"];
+    }
+    
+    NSMutableArray* paramsForSearch=[[NSMutableArray alloc] init];
+    if ([GlobalDataUser sharedAccountClient].dicCuisineSearchParam)
+        [paramsForSearch addObjectsFromArray:[[GlobalDataUser sharedAccountClient].dicCuisineSearchParam valueForKey:@"alias"]];
+    
+    if ([GlobalDataUser sharedAccountClient].dicPurposeSearchParam)
+        [paramsForSearch addObjectsFromArray:[[GlobalDataUser sharedAccountClient].dicPurposeSearchParam valueForKey:@"alias"]];
+    
+    if ([GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam)
+        [paramsForSearch addObjectsFromArray:[[GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam valueForKey:@"alias"]];
+    
+    //    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicPurposeSearchParam);
+    [params setValue:paramsForSearch  forKey:@"params"];
     NSLog(@"%@",params);
     if (!self.branches) {
         self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
@@ -212,6 +242,10 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            if (weakSelf.branches.count>0&&isSearchYES) {
+                TVBranch* branch=weakSelf.branches[0];
+                _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:branch.latlng zoom:14];
+            }
             _lastUpdate=[NSDate date];
             [_locationPickerView.tableView reloadData];
             [weakSelf showBranchOnMap];
@@ -243,17 +277,25 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 
 #pragma mark - SearchVCDelegate
--(void)didClickedOnButtonSearch:(NSDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
+-(void)didClickedOnButtonSearch:(NSMutableDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
     _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:14];
-    [self postSearchBranch:params];
+    [self postSearchBranch:params withReturnFromSearchScreenYES:YES];
 }
 -(void)didPickDistricts:(NSArray *)arrDics{
     _arrDics=arrDics;
 }
 
 #pragma mark - GMSMapViewDelegate
+- (void)mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker{
+    TVBranch* branch= _branches[[marker.title intValue]];
+    BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+    branchProfileVC.branchID=[branch branchID];
+    [self.navigationController pushViewController:branchProfileVC animated:YES];
+}
+
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    NSLog(@"_lastPosition.latitude=%f",_lastPosition.latitude);
     if (_lastPosition.latitude) {
         
         double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition];
@@ -273,7 +315,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
                                ,@"distance": [NSString stringWithFormat:@"%d",(radiusKm)?radiusKm:1]
                                };
                 }
-                [self performSelector:@selector(postSearchBranch:) withObject:params afterDelay:2];
+                [self performSelector:@selector(postSearchBranch:withReturnFromSearchScreenYES:) withObject:[[NSMutableDictionary alloc] initWithDictionary:params] afterDelay:2];
                 _currentCameraPosition=position.target;
             }
         }

@@ -288,10 +288,11 @@ enum {
 }
 
 #pragma mark - Camera Comment Action
-- (void)showCameraAction
+- (void)showCameraActionWithLocation:(TVBranches*)branches
 {
     TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
     LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    tableVC.branches=branches;
     [tableVC setDelegate:tvCameraVC];
     SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
     [skinVC setDelegate:tvCameraVC];
@@ -309,6 +310,22 @@ enum {
     tvCameraVC.slidingViewController=_slidingViewController;
 }
 
+- (void)showCameraActionWithBranch:(TVBranch*)branch
+{
+    TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
+    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+    [skinVC setDelegate:tvCameraVC];
+    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
+    
+    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.topViewController=navController;
+    _slidingViewController.underRightViewController = skinVC;
+    _slidingViewController.anchorLeftRevealAmount = 320-44;
+    
+    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+    [self presentModalViewController:_slidingViewController animated:YES];
+    tvCameraVC.slidingViewController=_slidingViewController;
+}
 - (void)showCommentAction
 {
     CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
@@ -326,10 +343,9 @@ enum {
     commentVC.slidingViewController=_slidingViewController;
 }
 
-- (void)cameraButtonClickedWithNav:(UINavigationController*)nav
-{
+- (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch{
     if ([GlobalDataUser sharedAccountClient].isLogin)
-        [self showCameraAction];
+        [self showCameraActionWithBranch:branch];
     else{
         LoginVC* loginVC=nil;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -340,7 +356,28 @@ enum {
         loginVC.isPushNaviYES=YES;
         [nav pushViewController:loginVC animated:YES];
         [loginVC goWithDidLogin:^{
-            [self showCameraAction];
+            [self showCameraActionWithBranch:branch];
+        } thenLoginFail:^{
+            
+        }];
+    }
+}
+
+- (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranches:(TVBranches*)branches
+{
+    if ([GlobalDataUser sharedAccountClient].isLogin)
+        [self showCameraActionWithLocation:branches];
+    else{
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        loginVC.isPushNaviYES=YES;
+        [nav pushViewController:loginVC animated:YES];
+        [loginVC goWithDidLogin:^{
+            [self showCameraActionWithLocation:branches];
         } thenLoginFail:^{
             
         }];

@@ -10,7 +10,7 @@
 #import "VPPDropDown.h"
 #import "VPPDropDownDelegate.h"
 #import "LoginVC.h"
-
+@class TVBranches,TVBranch;
 @interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate> {
 @private
     NSArray *_headers;
@@ -21,6 +21,6 @@
 
 - (void)openViewController:(UIViewController *)viewController;
 - (void)commentButtonClickedWithNav:(UINavigationController*)nav;
-- (void)cameraButtonClickedWithNav:(UINavigationController*)nav;
-
+- (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranches:(TVBranches*)branches;
+- (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch;
 @end
