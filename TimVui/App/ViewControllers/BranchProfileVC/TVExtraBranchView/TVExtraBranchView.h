@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TVComments.h"
+#import "TVBranch.h"
 typedef enum {
     kTVComment =0,
     kTVMenu,
@@ -20,7 +21,7 @@ typedef enum {
 @property (strong, nonatomic) TVComments* comments;
 @property (strong, nonatomic) NSArray* arrMenu;
 @property (strong, nonatomic) NSArray* arrSimilar;
-@property(nonatomic,strong)NSString *branchID;
+@property(nonatomic,strong)TVBranch *branch;
 @property (assign, nonatomic) BOOL isHiddenYES;
 @property (assign, nonatomic) BOOL isAnimating;
 @property (assign, nonatomic) UIScrollView *scrollView;

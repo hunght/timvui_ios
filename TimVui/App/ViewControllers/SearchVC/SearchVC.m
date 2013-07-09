@@ -82,8 +82,6 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-
-
 - (IBAction)buttonZoneClicked:(id)sender {
     NSArray* myFilter = [self getZoneDataForSearching];
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:myFilter];
@@ -394,12 +392,17 @@
     [super viewDidLoad];
     [self.tfdSearch setDelegate:self];
     [self.btnBackgournd setUserInteractionEnabled:NO];
-    NSString* idStr=[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"];
-//    NSLog(@"%@",idStr);
-//    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
-    NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",idStr];
-    NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
-    [GlobalDataUser sharedAccountClient].dicCitySearchParam=[idPublicArr lastObject];
+    
+    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCitySearchParam);
+    if (![GlobalDataUser sharedAccountClient].dicCitySearchParam) {
+        NSString* idStr=[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"];
+        //    NSLog(@"%@",idStr);
+        //    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
+        NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",idStr];
+        NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
+        [GlobalDataUser sharedAccountClient].dicCitySearchParam=[idPublicArr lastObject];
+    }
+   
 //    NSLog(@"%@",self.dicCitySearchParam);
     // Do any additional setup after loading the view from its nib.
     // Setup View and Table View

@@ -327,7 +327,7 @@
     [self showInfoView];
     TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
     _extraBranchView.scrollView=_scrollView;
-    _extraBranchView.branchID=@"1";
+    _extraBranchView.branch=_branch;
     [self.view addSubview:_extraBranchView];
     if (_scrollView.frame.size.height<self.view.bounds.size.height) {
 //        [_extraBranchView showExtraView:YES];

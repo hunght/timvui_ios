@@ -48,6 +48,7 @@
 		551BB1E8178AC34B0072FD81 /* TVCuisine.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1E3178AC34B0072FD81 /* TVCuisine.m */; };
 		551BB1E9178AC34B0072FD81 /* TVGroupCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1E5178AC34B0072FD81 /* TVGroupCuisines.m */; };
 		551BB1EC178AC7AC0072FD81 /* TVCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EB178AC7AC0072FD81 /* TVCuisines.m */; };
+		551BB1EF178ACE210072FD81 /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */; };
 		552072D6178559C700DC5E68 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D5178559C700DC5E68 /* FacebookSDK.framework */; };
 		552072D8178559DB00DC5E68 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */; };
 		552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D917855A2D00DC5E68 /* Security.framework */; };
@@ -405,7 +406,7 @@
 		55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5A8D4171E88220027BBFE /* GlobalDataUser.m */; };
 		55D6B305176043B100260C09 /* img_direction_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B303176043B000260C09 /* img_direction_icon.png */; };
 		55D6B306176043B100260C09 /* img_direction_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B304176043B100260C09 /* img_direction_icon@2x.png */; };
-		55E654911779387100779B7D /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E654901779387100779B7D /* ExtraCommentCell.m */; };
+		55E654911779387100779B7D /* ExtraMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E654901779387100779B7D /* ExtraMenuCell.m */; };
 		55ECBD301745EBE5005F8FB9 /* ForgetPassVC_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ECBD2C1745EBE3005F8FB9 /* ForgetPassVC_iPad.xib */; };
 		55ECBD311745EBE5005F8FB9 /* ForgetPassVC_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ECBD2D1745EBE4005F8FB9 /* ForgetPassVC_iPhone.xib */; };
 		55ECBD321745EBE5005F8FB9 /* ForgetPassVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECBD2F1745EBE5005F8FB9 /* ForgetPassVC.m */; };
@@ -504,6 +505,8 @@
 		551BB1E5178AC34B0072FD81 /* TVGroupCuisines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVGroupCuisines.m; sourceTree = "<group>"; };
 		551BB1EA178AC7AC0072FD81 /* TVCuisines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCuisines.h; sourceTree = "<group>"; };
 		551BB1EB178AC7AC0072FD81 /* TVCuisines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCuisines.m; sourceTree = "<group>"; };
+		551BB1ED178ACE210072FD81 /* ExtraCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraCommentCell.h; sourceTree = "<group>"; };
+		551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
 		552072D5178559C700DC5E68 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		552072D917855A2D00DC5E68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -917,8 +920,8 @@
 		55D5A8D4171E88220027BBFE /* GlobalDataUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataUser.m; sourceTree = "<group>"; };
 		55D6B303176043B000260C09 /* img_direction_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_direction_icon.png; sourceTree = "<group>"; };
 		55D6B304176043B100260C09 /* img_direction_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_direction_icon@2x.png"; sourceTree = "<group>"; };
-		55E6548F1779387100779B7D /* ExtraCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraCommentCell.h; sourceTree = "<group>"; };
-		55E654901779387100779B7D /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
+		55E6548F1779387100779B7D /* ExtraMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraMenuCell.h; sourceTree = "<group>"; };
+		55E654901779387100779B7D /* ExtraMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraMenuCell.m; sourceTree = "<group>"; };
 		55ECBD2C1745EBE3005F8FB9 /* ForgetPassVC_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPassVC_iPad.xib; sourceTree = "<group>"; };
 		55ECBD2D1745EBE4005F8FB9 /* ForgetPassVC_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPassVC_iPhone.xib; sourceTree = "<group>"; };
 		55ECBD2E1745EBE4005F8FB9 /* ForgetPassVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPassVC.h; sourceTree = "<group>"; };
@@ -1390,8 +1393,10 @@
 		556D444517782D3F00751F83 /* TVExtraBranchView */ = {
 			isa = PBXGroup;
 			children = (
-				55E6548F1779387100779B7D /* ExtraCommentCell.h */,
-				55E654901779387100779B7D /* ExtraCommentCell.m */,
+				551BB1ED178ACE210072FD81 /* ExtraCommentCell.h */,
+				551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */,
+				55E6548F1779387100779B7D /* ExtraMenuCell.h */,
+				55E654901779387100779B7D /* ExtraMenuCell.m */,
 				556D444617782D3F00751F83 /* TVExtraBranchView.h */,
 				556D444717782D3F00751F83 /* TVExtraBranchView.m */,
 			);
@@ -2646,7 +2651,7 @@
 				55C199D01775632D00939768 /* PhotoBrowseCell.m in Sources */,
 				550FDEB21777F5C4005DE15E /* PhotoBrowseVC.m in Sources */,
 				556D444817782D3F00751F83 /* TVExtraBranchView.m in Sources */,
-				55E654911779387100779B7D /* ExtraCommentCell.m in Sources */,
+				55E654911779387100779B7D /* ExtraMenuCell.m in Sources */,
 				55AEAD0A1779A4FF0010638F /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				55AEAD0B1779A4FF0010638F /* UIScrollView+SVPullToRefresh.m in Sources */,
 				55479286177ACD70004FE268 /* CommentVC.m in Sources */,
@@ -2670,6 +2675,7 @@
 				551BB1E8178AC34B0072FD81 /* TVCuisine.m in Sources */,
 				551BB1E9178AC34B0072FD81 /* TVGroupCuisines.m in Sources */,
 				551BB1EC178AC7AC0072FD81 /* TVCuisines.m in Sources */,
+				551BB1EF178ACE210072FD81 /* ExtraCommentCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

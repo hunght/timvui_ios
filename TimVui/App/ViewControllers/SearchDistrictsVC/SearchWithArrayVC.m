@@ -24,6 +24,24 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 #pragma mark - IBAction
 
 -(void)doneButtonClicked:(id)sender{
+    switch ([GlobalDataUser sharedAccountClient].currentSearchParam) {
+        case kSearchParamCuisine:
+            
+            [GlobalDataUser sharedAccountClient].dicCuisineSearchParam=_pickedArr;
+            break;
+            
+        case kSearchParamPurpose:
+            [GlobalDataUser sharedAccountClient].dicPurposeSearchParam=_pickedArr;
+            break;
+        case kSearchParamZone:
+            [GlobalDataUser sharedAccountClient].dicPublicLocation=_pickedArr;
+            break;
+        case kSearchParamUtilities:
+            [GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam=_pickedArr;
+            break;
+        default:
+        break;
+    }
     [self.navigationController.navigationBar setNavigationBarWithoutIcon:NO];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -201,10 +219,6 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
             [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
             [self.navigationController popViewControllerAnimated:YES];
             break;
-        case kSearchParamCuisine:
-            
-            [GlobalDataUser sharedAccountClient].dicCuisineSearchParam=_pickedArr;
-            break;
         case kSearchParamDistrict:
             [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_pickedArr;
             
@@ -212,20 +226,11 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
             [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
             [self.navigationController popViewControllerAnimated:YES];
             break;
-        case kSearchParamPurpose:
-            [GlobalDataUser sharedAccountClient].dicPurposeSearchParam=_pickedArr;
-            break;
-        case kSearchParamZone:
-            [GlobalDataUser sharedAccountClient].dicPublicLocation=_pickedArr;
-            break;
-        case kSearchParamUtilities:
-            [GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam=_pickedArr;
-            break;
+        
         default:
             break;
     }
-    
-    NSLog(@"%@",_pickedArr);
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    [self.navigationController popViewControllerAnimated:YES];
 }

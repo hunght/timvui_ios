@@ -21,6 +21,7 @@
 
 - (void)openViewController:(UIViewController *)viewController;
 - (void)commentButtonClickedWithNav:(UINavigationController*)nav;
+- (void)showLoginScreenWhenUserNotLogin:(UINavigationController *)nav;
 - (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranches:(TVBranches*)branches;
 - (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch;
 @end

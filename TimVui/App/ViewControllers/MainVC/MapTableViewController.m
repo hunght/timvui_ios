@@ -233,16 +233,28 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     }
     
     NSMutableArray* paramsForSearch=[[NSMutableArray alloc] init];
-    if ([GlobalDataUser sharedAccountClient].dicCuisineSearchParam)
-        [paramsForSearch addObjectsFromArray:[[GlobalDataUser sharedAccountClient].dicCuisineSearchParam valueForKey:@"alias"]];
+    if ([GlobalDataUser sharedAccountClient].dicCuisineSearchParam){
+        for (NSString* strCuisine in [[GlobalDataUser sharedAccountClient].dicCuisineSearchParam valueForKey:@"alias"]) {
+            [paramsForSearch addObject:[NSString stringWithFormat:@"mon-an_%@",strCuisine]];
+        }
+    }
+    
     
     if ([GlobalDataUser sharedAccountClient].dicPurposeSearchParam)
-        [paramsForSearch addObjectsFromArray:[[GlobalDataUser sharedAccountClient].dicPurposeSearchParam valueForKey:@"alias"]];
+    {
+        for (NSString* strCuisine in [[GlobalDataUser sharedAccountClient].dicPurposeSearchParam valueForKey:@"alias"]) {
+            [paramsForSearch addObject:[NSString stringWithFormat:@"muc-dich_%@",strCuisine]];
+        }
+    }
     
     if ([GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam)
-        [paramsForSearch addObjectsFromArray:[[GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam valueForKey:@"alias"]];
+    {
+        for (NSString* strCuisine in [[GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam valueForKey:@"alias"]) {
+            [paramsForSearch addObject:[NSString stringWithFormat:@"tien-ich_%@",strCuisine]];
+        }
+    }
     
-    //    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicPurposeSearchParam);
+//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCuisineSearchParam);
     [params setValue:paramsForSearch  forKey:@"params"];
     NSLog(@"%@",params);
     if (!self.branches) {
@@ -314,7 +326,6 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     NSLog(@"_lastPosition.latitude=%f",_lastPosition.latitude);
     if (_lastPosition.latitude) {
-        
         double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition];
         NSLog(@"distance ==== %f",distance);
         if (distance>kTVDistanceMovingMap) {
@@ -336,7 +347,8 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
                 _currentCameraPosition=position.target;
             }
         }
-    }
+    }else
+        _lastPosition=position.target;
     
 }
 

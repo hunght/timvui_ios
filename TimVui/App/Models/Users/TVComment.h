@@ -3,7 +3,7 @@
 
 @class GHUsers;
 
-@interface TVComment : GHResource
+@interface TVComment : NSObject
 @property(nonatomic,strong)NSString *commentID;
 @property(nonatomic,strong)NSString *user_name;
 @property(nonatomic,strong)NSString *content;

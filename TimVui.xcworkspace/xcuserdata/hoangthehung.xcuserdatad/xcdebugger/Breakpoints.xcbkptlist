@@ -7,13 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/LocationTableVC/LocationTableVC.m"
-         timestampString = "394879544.082232"
+         filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
+         timestampString = "395030394.152105"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "47"
-         endingLineNumber = "47"
-         landmarkName = "-viewDidLoad"
+         startingLineNumber = "656"
+         endingLineNumber = "656"
+         landmarkName = "-likeButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

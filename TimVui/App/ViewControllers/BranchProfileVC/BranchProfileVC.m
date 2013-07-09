@@ -20,6 +20,8 @@
 #import "TVPhotoBrowserVC.h"
 #import "NSDate+Helper.h"
 #import "CoupBranchProfileVC.h"
+#import "TVNetworkingClient.h"
+#import <SVProgressHUD.h>
 @interface BranchProfileVC ()
 {
     @private
@@ -566,7 +568,7 @@
             [self showInfoView];
             TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
             _extraBranchView.scrollView=_scrollView;
-            _extraBranchView.branchID=_branch.branchID;
+            _extraBranchView.branch=_branch;
             [self.view addSubview:_extraBranchView];
             [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
         });
@@ -642,8 +644,29 @@
     [self.navigationController pushViewController:specBranchVC animated:YES];
 }
 
--(void)likeButtonClicked:(id)sender{
-    
+-(void)likeButtonClicked:(UIButton*)sender{
+    if ([GlobalDataUser sharedAccountClient].isLogin){
+        sender.userInteractionEnabled=NO;
+        
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
+                                _branch.branchID,@"branch_id",
+                                nil];
+        NSLog(@"%@",params);
+        [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+            NSLog(@"%@",JSON);
+            [SVProgressHUD showSuccessWithStatus:@"Bạn vừa thích nhà hàng này!"];
+            sender.userInteractionEnabled=YES;
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            sender.userInteractionEnabled=YES;
+            [SVProgressHUD showErrorWithStatus:@"Có lỗi khi like nhà hàng"];
+            NSLog(@"%@",error);
+        }];
+    }else{
+        [SharedAppDelegate.menuVC showLoginScreenWhenUserNotLogin:self.navigationController];
+        
+    }
 }
 
 -(void)commentButtonClicked:(id)sender{

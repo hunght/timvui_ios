@@ -347,19 +347,7 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin)
         [self showCameraActionWithBranch:branch];
     else{
-        LoginVC* loginVC=nil;
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-        } else {
-            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
-        }
-        loginVC.isPushNaviYES=YES;
-        [nav pushViewController:loginVC animated:YES];
-        [loginVC goWithDidLogin:^{
-            [self showCameraActionWithBranch:branch];
-        } thenLoginFail:^{
-            
-        }];
+        [self showLoginScreenWhenUserNotLogin:nav];
     }
 }
 
@@ -368,20 +356,25 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin)
         [self showCameraActionWithLocation:branches];
     else{
-        LoginVC* loginVC=nil;
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-        } else {
-            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
-        }
-        loginVC.isPushNaviYES=YES;
-        [nav pushViewController:loginVC animated:YES];
-        [loginVC goWithDidLogin:^{
-            [self showCameraActionWithLocation:branches];
-        } thenLoginFail:^{
-            
-        }];
+        [self showLoginScreenWhenUserNotLogin:nav];
     }
+}
+
+- (void)showLoginScreenWhenUserNotLogin:(UINavigationController *)nav
+{
+    LoginVC* loginVC=nil;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+    } else {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+    }
+    loginVC.isPushNaviYES=YES;
+    [nav pushViewController:loginVC animated:YES];
+    [loginVC goWithDidLogin:^{
+        [self showCommentAction];
+    } thenLoginFail:^{
+        
+    }];
 }
 
 - (void)commentButtonClickedWithNav:(UINavigationController*)nav
@@ -389,19 +382,7 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin)
         [self showCommentAction];
     else{
-        LoginVC* loginVC=nil;
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-        } else {
-            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
-        }
-        loginVC.isPushNaviYES=YES;
-        [nav pushViewController:loginVC animated:YES];
-        [loginVC goWithDidLogin:^{
-            [self showCommentAction];
-        } thenLoginFail:^{
-            
-        }];
+        [self showLoginScreenWhenUserNotLogin:nav];
     }
 }
 
@@ -492,6 +473,10 @@ enum {
                 switch (row) {
                     case kS1Row1:
     
+                        break;
+                    case kS1AccountInteresting:
+                        
+                        
                         break;
                     default:
                         break;
