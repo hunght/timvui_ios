@@ -110,6 +110,7 @@
     NSDictionary* params=[SharedAppDelegate getParamData];
     NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[dicCuisines allValues]];
+    NSLog(@"%@",[dicCuisines allValues]);
     [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamUtilities;
     [self.navigationController pushViewController:viewController animated:YES];
 }

@@ -22,6 +22,7 @@
 #import "CoupBranchProfileVC.h"
 #import "TVNetworkingClient.h"
 #import <SVProgressHUD.h>
+#import "SearchWithContactsVC.h"
 @interface BranchProfileVC ()
 {
     @private
@@ -563,6 +564,13 @@
     if (!isContainYES)
         [[GlobalDataUser sharedAccountClient].recentlyBranches addObject:_branch];
     
+    UIButton* shareButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [shareButton setImage:[UIImage imageNamed:@"img_profile_branch_share_button"] forState:UIControlStateNormal];
+//    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
+    self.navigationItem.rightBarButtonItem = shareButtonItem;
+    
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -647,6 +655,13 @@
 }
 
 #pragma mark - IBAction
+
+-(void)shareButtonClicked:(id)s{
+
+    SearchWithContactsVC *viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES withParam:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
 -(void)viewDetailCouponClicked:(UIButton*)sender{
     TVCoupon* coupon=_branch.coupons.items[sender.tag];
     CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
