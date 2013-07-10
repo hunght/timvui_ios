@@ -48,4 +48,5 @@
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;
 - (void)markAsRead;
+
 @end

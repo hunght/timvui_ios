@@ -20,8 +20,10 @@
 }
 
 - (void)openViewController:(UIViewController *)viewController;
-- (void)commentButtonClickedWithNav:(UINavigationController*)nav;
-- (void)showLoginScreenWhenUserNotLogin:(UINavigationController *)nav;
+- (void)commentButtonClickedWithNav:(UINavigationController*)nav andWithBranches:(TVBranches*)branches;
+- (void)commentButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch;
 - (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranches:(TVBranches*)branches;
 - (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch;
+
+-(void)showLoginScreenWhenUserNotLogin:(UINavigationController*)nav;
 @end

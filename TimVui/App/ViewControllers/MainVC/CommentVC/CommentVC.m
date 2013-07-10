@@ -39,11 +39,13 @@
 {
     [super viewDidLoad];
     
+    
+    
     [self initKeyboardControls];
     
     // Do any additional setup after loading the view from its nib.
     [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
-    self.navigationItem.leftBarButtonItem = self.toggleBarButtonItem;
+    if (!_branch)  self.navigationItem.leftBarButtonItem = self.toggleBarButtonItem;
     self.navigationItem.rightBarButtonItem = [self backBarButtonItem];
     
     // Generate Infomation Of Branch
@@ -108,7 +110,8 @@
     [l setCornerRadius:5];
     [_btnCommentPost setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     
-    
+    if (_branch)
+        [self displayBranchInfo];   
 }
 - (void)viewDidUnload {
     [self setScrollView:nil];
@@ -133,9 +136,7 @@
 }
 
 #pragma mark - LocationTableVCDelegate
--(void)didPickWithLoation:(TVBranch *)_branchProfile{
-    [self toggleTopView];
-    _branch=_branchProfile;
+- (void)displayBranchInfo {
     _lblBranchName.text=_branch.name;
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
     if (distance>1000.0) {
@@ -153,6 +154,12 @@
     } completion:^(BOOL finished){
         
     }];
+}
+
+-(void)didPickWithLoation:(TVBranch *)_branchProfile{
+    [self toggleTopView];
+    _branch=_branchProfile;
+    [self displayBranchInfo];
 
 }
 #pragma mark UITextViewDelegate
@@ -171,7 +178,7 @@
         // because the screenshot intercepts the touches on the toggle button
         [self.slidingViewController resetTopView];
     } else {
-        [self.slidingViewController anchorTopViewTo:ECRight];
+        if(_slidingViewController.underRightViewController)[self.slidingViewController anchorTopViewTo:ECRight];
     }
 }
 

@@ -10,7 +10,6 @@
  * Asks the delegate to return the number of pages.
  */
 - (NSUInteger)numberOfPagesInPagingScrollView:(MHPagingScrollView *)pagingScrollView;
-
 /*
  * Asks the delegate for a page to insert. The delegate should ask for a
  * reusable view using dequeueReusablePageView.
@@ -79,4 +78,5 @@
 - (void)didReceiveMemoryWarning;
 
 - (PageView*)getPageForIndex:(NSUInteger)index;
+-(void)setNameBranchForPageView:(NSString*)text;
 @end

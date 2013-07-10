@@ -20,6 +20,7 @@
 #import "SkinPickerTableVC.h"
 #import "CommentVC.h"
 #import "BlockAlertView.h"
+#import "RecentlyBranchListVC.h"
 #define kNumberOfSections 3
 
 enum {
@@ -286,7 +287,21 @@ enum {
     
     return cell;
 }
-
+-(void)showLoginScreenWhenUserNotLogin:(UINavigationController*)nav{
+    LoginVC* loginVC=nil;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+    } else {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+    }
+    loginVC.isPushNaviYES=YES;
+    [nav pushViewController:loginVC animated:YES];
+    [loginVC goWithDidLogin:^{
+        
+    } thenLoginFail:^{
+        
+    }];
+}
 #pragma mark - Camera Comment Action
 - (void)showCameraActionWithLocation:(TVBranches*)branches
 {
@@ -316,7 +331,7 @@ enum {
     SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
     [skinVC setDelegate:tvCameraVC];
     UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
-    
+    tvCameraVC.branch=branch;
     ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
     _slidingViewController.topViewController=navController;
     _slidingViewController.underRightViewController = skinVC;
@@ -326,11 +341,26 @@ enum {
     [self presentModalViewController:_slidingViewController animated:YES];
     tvCameraVC.slidingViewController=_slidingViewController;
 }
-- (void)showCommentAction
+
+- (void)showCommentActionWithBranch:(TVBranch*)branch
+{
+    CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
+    UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:commentVC];
+    commentVC.branch=branch;
+    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.topViewController=navController;
+    
+    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+    [self presentModalViewController:_slidingViewController animated:YES];
+    commentVC.slidingViewController=_slidingViewController;
+}
+
+- (void)showCommentActionWithBranches:(TVBranches*)branches
 {
     CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
     LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
     [tableVC setDelegate:commentVC];
+    tableVC.branches=branches;
     UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:commentVC];
     
     ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
@@ -347,7 +377,19 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin)
         [self showCameraActionWithBranch:branch];
     else{
-        [self showLoginScreenWhenUserNotLogin:nav];
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        loginVC.isPushNaviYES=YES;
+        [nav pushViewController:loginVC animated:YES];
+        [loginVC goWithDidLogin:^{
+            [self showCommentActionWithBranch:branch];
+        } thenLoginFail:^{
+            
+        }];
     }
 }
 
@@ -356,33 +398,59 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin)
         [self showCameraActionWithLocation:branches];
     else{
-        [self showLoginScreenWhenUserNotLogin:nav];
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        loginVC.isPushNaviYES=YES;
+        [nav pushViewController:loginVC animated:YES];
+        [loginVC goWithDidLogin:^{
+            [self showCameraActionWithLocation:branches];
+        } thenLoginFail:^{
+            
+        }];
     }
 }
 
-- (void)showLoginScreenWhenUserNotLogin:(UINavigationController *)nav
-{
-    LoginVC* loginVC=nil;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-    } else {
-        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+- (void)commentButtonClickedWithNav:(UINavigationController*)nav andWithBranches:(TVBranches*)branches{
+    if ([GlobalDataUser sharedAccountClient].isLogin)
+        [self showCommentActionWithBranches:branches];
+    else{
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        loginVC.isPushNaviYES=YES;
+        [nav pushViewController:loginVC animated:YES];
+        [loginVC goWithDidLogin:^{
+            [self showCommentActionWithBranches:branches];
+        } thenLoginFail:^{
+            
+        }];
     }
-    loginVC.isPushNaviYES=YES;
-    [nav pushViewController:loginVC animated:YES];
-    [loginVC goWithDidLogin:^{
-        [self showCommentAction];
-    } thenLoginFail:^{
-        
-    }];
 }
-
-- (void)commentButtonClickedWithNav:(UINavigationController*)nav
+- (void)commentButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch
 {
     if ([GlobalDataUser sharedAccountClient].isLogin)
-        [self showCommentAction];
+        [self showCommentActionWithBranch:branch];
     else{
-        [self showLoginScreenWhenUserNotLogin:nav];
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        loginVC.isPushNaviYES=YES;
+        [nav pushViewController:loginVC animated:YES];
+        [loginVC goWithDidLogin:^{
+            [self showCommentActionWithBranch:branch];
+        } thenLoginFail:^{
+            
+        }];
     }
 }
 
@@ -473,10 +541,6 @@ enum {
                 switch (row) {
                     case kS1Row1:
     
-                        break;
-                    case kS1AccountInteresting:
-                        
-                        
                         break;
                     default:
                         break;
@@ -585,9 +649,26 @@ enum {
 #pragma mark - VPPDropDownDelegate
 
 - (void) dropDown:(VPPDropDown *)dropDown elementSelected:(VPPDropDownElement *)element atGlobalIndexPath:(NSIndexPath *)indexPath {
-    
+    UIViewController *viewController = nil;
     if (dropDown == _dropDownCustom) {
-        //[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        switch (indexPath.row) {
+            case kS1AccountInteresting:
+
+                break;
+            case kS1AccountRecentlyView:
+                viewController = [[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil];
+                break;
+                
+            default:
+                break;
+        }
+        
+        if (viewController) {
+            [self openViewController:viewController];
+        }
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
     }
 }
 

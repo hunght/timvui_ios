@@ -11,6 +11,25 @@
 
 @implementation TVBranch
 
+
+- (void)encodeWithCoder:(NSCoder *)coder;
+{
+    [coder encodeObject:_branchID forKey:@"branchID"];
+    [coder encodeObject:_name forKey:@"name"];
+}
+
+- (id)initWithCoder:(NSCoder *)coder;
+{
+    self = [[TVBranch alloc] init];
+    if (self != nil)
+    {
+        _branchID = [coder decodeObjectForKey:@"branchID"] ;
+        _name = [coder decodeObjectForKey:@"name"] ;
+    }
+    return self;
+}
+
+
 - (id)initWithDict:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {

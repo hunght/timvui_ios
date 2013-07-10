@@ -97,7 +97,6 @@ static GlobalDataUser *_sharedClient = nil;
 
 #pragma mark Helper
 
-
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
     CLLocation* current=[[CLLocation alloc] initWithLatitude:fromAdd.latitude longitude:fromAdd.longitude];
     CLLocation*userLocal=[[CLLocation alloc] initWithLatitude:_userLocation.latitude longitude:_userLocation.longitude];

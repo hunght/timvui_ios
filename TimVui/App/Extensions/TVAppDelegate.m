@@ -15,7 +15,7 @@
 #import "WelcomeVC.h"
 #import "TSMessage.h"
 #import "NSDate+Helper.h"
-
+#import "GlobalDataUser.h"
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -137,9 +137,9 @@
     
     
 }
+
+
 #pragma mark Helpers
-
-
 // NSURLCache seems to have a problem with Cache-Control="private" headers.
 // Most resources of GitHubs API use this header and the response gets cached
 // longer than the interval given by GitHub (in most cases 60 seconds).
@@ -286,7 +286,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[GlobalDataUser sharedAccountClient].recentlyBranches] forKey:@"savedArray"];
 }
 
 

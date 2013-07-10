@@ -553,6 +553,16 @@
 
 - (void)viewDidLoad
 {
+    BOOL isContainYES=NO;
+    for (TVBranch* branch in [GlobalDataUser sharedAccountClient].recentlyBranches) {
+        if ([branch.branchID isEqualToString:_branch.branchID]) {
+            isContainYES=YES;
+            continue;
+        }
+    }
+    if (!isContainYES)
+        [[GlobalDataUser sharedAccountClient].recentlyBranches addObject:_branch];
+    
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -565,6 +575,7 @@
     NSDictionary *params = @{@"id": @"1"};
     [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async( dispatch_get_main_queue(),^ {
+            
             [self showInfoView];
             TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
             _extraBranchView.scrollView=_scrollView;
@@ -665,12 +676,11 @@
         }];
     }else{
         [SharedAppDelegate.menuVC showLoginScreenWhenUserNotLogin:self.navigationController];
-        
     }
 }
 
 -(void)commentButtonClicked:(id)sender{
-    [SharedAppDelegate.menuVC commentButtonClickedWithNav:self.navigationController];
+    [SharedAppDelegate.menuVC commentButtonClickedWithNav:self.navigationController andWithBranch:_branch];
 }
 
 -(void)cameraButtonClicked:(id)sender{

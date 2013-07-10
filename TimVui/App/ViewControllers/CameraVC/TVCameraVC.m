@@ -9,6 +9,9 @@
 #import "PhotoBrowseVC.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import "TSMessage.h"
+#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
+
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -59,6 +62,10 @@
     // Add scroll view KVO
     void *context = (__bridge void *)self;
     [self.pagingScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
+    
+    if (_branch) {
+        [self.pagingScrollView setNameBranchForPageView:_branch.name];
+    }
 }
 
 
@@ -224,7 +231,7 @@
     if (isLeft) {
         [self.slidingViewController anchorTopViewTo:ECLeft];
     }else
-        [self.slidingViewController anchorTopViewTo:ECRight];
+        if (self.slidingViewController.underLeftViewController)[self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 #pragma mark - LocationTableVCDelegate
@@ -233,7 +240,7 @@
     [self.slidingViewController resetTopView];
     _branch=branch;
     _photoBrowseTableVC.branch_id=_branch.branchID;
-    
+    [self.pagingScrollView setNameBranchForPageView:_branch.name];
 }
 #pragma mark - SkinPickerTableVCDelegate
 
@@ -279,7 +286,8 @@
         // because the screenshot intercepts the touches on the toggle button
         [self.slidingViewController resetTopView];
     } else {
-        [self.slidingViewController anchorTopViewTo:ECRight];
+        
+        if (self.slidingViewController.underLeftViewController)[self.slidingViewController anchorTopViewTo:ECRight];
     }
 }
 
@@ -397,7 +405,7 @@
     
     if (isScrollViewIsDraggedLeft) {
         if (!self.slidingViewController.underLeftShowing && scrollOffset<-70) {
-            [self.slidingViewController anchorTopViewTo:ECRight];
+            if (self.slidingViewController.underLeftViewController)[self.slidingViewController anchorTopViewTo:ECRight];
         }
     }else if (!self.slidingViewController.underRightShowing && scrollOffset>(_numPages-1)*320+70) {
         [self.slidingViewController anchorTopViewTo:ECLeft];
@@ -410,7 +418,7 @@
         // because the screenshot intercepts the touches on the toggle button
         [self.slidingViewController resetTopView];
     } else {
-        [self.slidingViewController anchorTopViewTo:ECRight];
+        if (self.slidingViewController.underLeftViewController)[self.slidingViewController anchorTopViewTo:ECRight];
     }
 }
 
@@ -435,7 +443,6 @@
 
 
 #pragma mark - MHPagingScrollViewDelegate
-
 - (NSUInteger)numberOfPagesInPagingScrollView:(MHPagingScrollView *)pagingScrollView
 {
 	return _numPages;
@@ -443,7 +450,8 @@
 
 
 - (UIView *)pagingScrollView:(MHPagingScrollView *)thePagingScrollView pageForIndex:(NSUInteger)index
-{	PageView *pageView = (PageView *)[thePagingScrollView dequeueReusablePage];
+{
+    PageView *pageView = (PageView *)[thePagingScrollView dequeueReusablePage];
     pageView.index=index;
 	if (pageView == nil){
         switch (index) {
@@ -456,17 +464,17 @@
                 
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
                 break;
-
+            
+            
             default:
                 break;
         }
     }
+    NSDate* date=[NSDate date];
+    pageView.lblTime.text=[[NSDate date] stringWithFormat:@"hh:mm a"];
+    pageView.lblDate.text=[NSString stringWithFormat:@"T.%d:%d-%d",[date weekday],[date day],[date month]];
+    //pageView.lblCompliment.text=@"Seize the day";
 	return pageView;
 }
-
-
-
-
-
 
 @end

@@ -105,6 +105,12 @@
 	}
 	return nil;
 }
+-(void)setNameBranchForPageView:(NSString*)text{
+    for (PageView *page in _visiblePages)
+	{
+		page.lblBranchName.text=text;
+	}
+}
 
 - (UIView *)dequeueReusablePage
 {
@@ -156,10 +162,6 @@
 			pageView.frame = [self frameForPageAtIndex:i];
 			pageView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 			[self addSubview:pageView];
-
-//			MHPage *page = [[MHPage alloc] init];
-//			page.index = i;
-//			page.view = pageView;
             pageView.index = i;
 			[_visiblePages addObject:pageView];
 		}

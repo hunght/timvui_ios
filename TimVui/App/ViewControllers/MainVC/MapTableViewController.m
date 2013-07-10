@@ -51,7 +51,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     self.notificationView=[[TVNotification alloc] initWithView:self.view withTitle:nil goWithCamera:^{
         [SharedAppDelegate.menuVC cameraButtonClickedWithNav:self.navigationController andWithBranches:_branches];
     } withComment:^{
-        [SharedAppDelegate.menuVC commentButtonClickedWithNav:self.navigationController];
+        [SharedAppDelegate.menuVC commentButtonClickedWithNav:self.navigationController andWithBranches:_branches];
     }];
 }
 
