@@ -214,6 +214,7 @@
 //    [self.tableView addInfiniteScrollingWithActionHandler:^{
 //        [weakSelf getCommentRefresh];
 //    }];
+    
 }
 
 -(void)backgroundButtonClicked:(id)sender{

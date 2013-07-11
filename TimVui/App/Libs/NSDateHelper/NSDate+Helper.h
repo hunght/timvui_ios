@@ -41,15 +41,7 @@
 - (NSString *)stringDaysAgoAgainstMidnight:(BOOL)flag;
 - (NSUInteger)weekday;
 
-+ (NSDate *)dateFromString:(NSString *)string;
-+ (NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format;
-+ (NSString *)stringFromDate:(NSDate *)date withFormat:(NSString *)string;
-+ (NSString *)stringFromDate:(NSDate *)date;
-+ (NSString *)stringForDisplayFromDate:(NSDate *)date;
-+ (NSString *)stringForDisplayFromDate:(NSDate *)date prefixed:(BOOL)prefixed;
-+ (NSString *)stringForDisplayFromDate:(NSDate *)date prefixed:(BOOL)prefixed alwaysDisplayTime:(BOOL)displayTime;
-
-- (NSString *)string;
+- (NSString *)stringWithDefautFormat;
 - (NSString *)stringWithFormat:(NSString *)format;
 - (NSString *)stringWithDateStyle:(NSDateFormatterStyle)dateStyle timeStyle:(NSDateFormatterStyle)timeStyle;
 
@@ -61,5 +53,5 @@
 + (NSString *)timeFormatString;
 + (NSString *)timestampFormatString;
 + (NSString *)dbFormatString;
-
++ (NSDate *)dateFromString:(NSString *)format;
 @end

@@ -174,7 +174,7 @@
 {
     [[TVNetworkingClient sharedClient] getPath:strPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:JSON] ;
-        [dic setValue:[NSDate stringFromDate:[NSDate date]] forKey:@"lastUpdated"];
+        [dic setValue:[[NSDate date] string] forKey:@"lastUpdated"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setValue:dic forKey:key];
         [defaults synchronize];

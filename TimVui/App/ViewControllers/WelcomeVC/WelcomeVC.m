@@ -13,7 +13,7 @@
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
 #import "NSDictionary+Extensions.h"
-
+#import "AFJSONRequestOperation.h"
 @interface WelcomeVC ()
 @end
 
@@ -78,18 +78,26 @@
 }
 
 -(void)getPublicIPFromSomewhere{
+       
     NSURL *iPURL = [NSURL URLWithString:@"http://api.externalip.net/ip/"];
-    if (iPURL) {
-        NSError *error = nil;
-        NSString *theIpHtml = [NSString stringWithContentsOfURL:iPURL
-                                                       encoding:NSUTF8StringEncoding
-                                                          error:&error];
-        if (!error) {
-            [self didReceivePublicIPandPort:theIpHtml];
-        } else {
-            [self didReceivePublicIPandPort:@"118.70.176.113"];
-        }
-    }
+    
+    // 1
+    NSURLRequest *request = [NSURLRequest requestWithURL:iPURL];
+    
+    // 2
+    AFHTTPRequestOperation *operation =
+    [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
+    // 5
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success:%@",operation.responseString);
+        [self didReceivePublicIPandPort:operation.responseString];
+    } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failure");
+        [self didReceivePublicIPandPort:@"118.70.176.113"];
+    }];
+    [operation start];
+    
 }
 
 -(void)didReceivePublicIPandPort:(NSString *) data{
