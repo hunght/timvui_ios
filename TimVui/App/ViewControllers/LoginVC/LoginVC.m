@@ -179,9 +179,11 @@
 
 
 #pragma mark - IBAction
+
 -(void)backButtonClicked:(id)sender{
     [self closeViewController];
 }
+
 - (IBAction)userLoginButtonClicked:(id)sender {
     if ([Ultilities validatePassword:_tfdPassword.text]) {
         
@@ -195,7 +197,6 @@
             [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin SĐT"];
     }
 }
-
 
 - (IBAction)signupButtonClicked:(id)sender {
     UserRegisterVC *viewController=[[UserRegisterVC alloc] initWithNibName:@"UserRegisterVC" bundle:nil];
@@ -229,6 +230,7 @@
 }
 
 #pragma mark UITextFieldDelegate
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
 //    if ([textField isEqual:_tfdUsername]) {
 //        [_tfdUsername setKeyboardType:UIKeyboardTypePhonePad];

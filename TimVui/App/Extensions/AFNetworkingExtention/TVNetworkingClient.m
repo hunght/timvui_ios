@@ -55,9 +55,9 @@ static NSString * const kAFAppDotNetAPIBaseURLString = @"http://anuong.net/api/"
 
 - (void)setUsername:(NSString *)username andPassword:(NSString *)password;
 {
+    
     [self clearAuthorizationHeader];
     [self setAuthorizationHeaderWithUsername:username password:password];
 }
-
 
 @end

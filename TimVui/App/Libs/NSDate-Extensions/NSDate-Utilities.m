@@ -303,7 +303,7 @@
 // I have not yet thoroughly tested this
 - (NSInteger)distanceInDaysToDate:(NSDate *)anotherDate
 {
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorianCalendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [gregorianCalendar components:NSDayCalendarUnit fromDate:self toDate:anotherDate options:0];
     return components.day;
 }

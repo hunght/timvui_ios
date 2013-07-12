@@ -69,11 +69,10 @@ static NSDateFormatter *formatter;
 
 - (BOOL) isLaterThanSeconds:(int)min
 {
-    //    NSLog(@"date==%@",[NSDate date]);
-    
+    //NSLog(@"date==%@",[NSDate date]);
 	NSTimeInterval ti = -[self timeIntervalSinceDate:[NSDate date]];
     int minsAway=ti ;
-    //    NSLog(@"hours==%d",hours);
+    //NSLog(@"hours==%d",hours);
     return minsAway>min;
 }
 

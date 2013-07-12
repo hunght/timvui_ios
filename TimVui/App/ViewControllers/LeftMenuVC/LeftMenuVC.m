@@ -21,6 +21,7 @@
 #import "CommentVC.h"
 #import "BlockAlertView.h"
 #import "RecentlyBranchListVC.h"
+#import "ManualVC.h"
 #define kNumberOfSections 3
 
 enum {
@@ -455,6 +456,7 @@ enum {
 }
 
 #pragma mark - Table view delegate
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	return (_headers[section] == [NSNull null]) ? 0.0f : 44.0f;
 }
@@ -528,10 +530,12 @@ enum {
         switch (indexPath.section) {
             case kSection2Services:
                 switch (row) {
-                    case kS1Row0:
+                    case kS2Home:
                         viewController = [[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil];
                         break;
-                        
+                    case kS2Handbook:
+                        viewController = [[ManualVC alloc] initWithNibName:@"ManualVC" bundle:nil];
+                        break;
                     default:
                         break;
                 }

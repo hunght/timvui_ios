@@ -95,8 +95,7 @@
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         [self settingForCell:cell indexPath:indexPath];
-    }
-    else{
+    }else{
         [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [self settingForCell:cell indexPath:indexPath];
     }

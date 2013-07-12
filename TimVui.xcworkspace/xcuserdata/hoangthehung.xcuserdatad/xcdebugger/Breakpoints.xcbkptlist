@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
-         timestampString = "395120079.076288"
+         timestampString = "395209200.42974"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "328"
-         endingLineNumber = "328"
+         startingLineNumber = "329"
+         endingLineNumber = "329"
          landmarkName = "-showCameraActionWithBranch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
-         timestampString = "395120079.076288"
+         timestampString = "395209200.42974"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "306"
-         endingLineNumber = "306"
+         startingLineNumber = "307"
+         endingLineNumber = "307"
          landmarkName = "-showCameraActionWithLocation:"
          landmarkType = "5">
       </FileBreakpoint>
