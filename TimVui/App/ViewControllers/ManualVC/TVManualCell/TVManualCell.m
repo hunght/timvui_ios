@@ -44,7 +44,7 @@
     if (!self) {
         return nil;
     }
-    UIView* couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, 6, 320-6*2, 110)];
+    UIView* couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, 6, 320-6*2, 360)];
     [couponBranch setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=couponBranch.layer;
     [l setMasksToBounds:YES];
@@ -53,16 +53,34 @@
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     [self.contentView addSubview:couponBranch];
     
-    self.textLabel.frame=CGRectMake(10.0, 19, 210, 23);
-    self.textLabel.backgroundColor = [UIColor clearColor];
-    self.textLabel.textColor = [UIColor redColor];
-    self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(20)];
-    self.textLabel.numberOfLines = 0;
-    self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+    self.lblTitle=[[UILabel alloc] initWithFrame:CGRectMake(10.0, 5, 300, 23)];
+    self.lblTitle.backgroundColor = [UIColor clearColor];
+    self.lblTitle.textColor = [UIColor redColor];
+    self.lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
+    self.lblTitle.numberOfLines = 0;
+    self.lblTitle.lineBreakMode = UILineBreakModeWordWrap;
+    [couponBranch addSubview:self.lblTitle];
     
     [self.contentView setBackgroundColor:[UIColor grayColor]];
-    int height=self.textLabel.frame.origin.y+self.textLabel.frame.size.height;
-    self.webView=[[UIWebView alloc] initWithFrame:CGRectMake(6+5, height, 320-(6+5)*2, 100)];
+
+    self.webView=[[UIWebView alloc] initWithFrame:CGRectMake(6+5, 0, 320-(6+5)*2, 270)];
+    [self.webView.scrollView setScrollEnabled:NO];
+    
+    [couponBranch addSubview:self.webView];   
+
+    _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(3, 0, 150, 44)];
+    [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
+//    [_saveButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateNormal];
+//    [_saveButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateHighlighted];
+    [_saveButton setBackgroundColor:[UIColor grayColor]];
+    [couponBranch addSubview:_saveButton];
+    
+    _detailButton = [[UIButton alloc] initWithFrame:CGRectMake(150+5, 0, 150, 44)];
+    [_detailButton setTitle:@"Chi tiết" forState:UIControlStateNormal];
+    //[_detailButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateNormal];
+    //    [_detailButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateHighlighted];
+    [_detailButton setBackgroundColor:[UIColor grayColor]];
+    [couponBranch addSubview:_detailButton];
     
     return self;
 }

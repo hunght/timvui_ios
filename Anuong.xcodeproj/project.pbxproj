@@ -239,6 +239,9 @@
 		55977D431762DBF100D2CE2D /* img_profile_branch_button_addition.png in Resources */ = {isa = PBXBuildFile; fileRef = 55977D3F1762DBF100D2CE2D /* img_profile_branch_button_addition.png */; };
 		55977D441762DBF100D2CE2D /* img_profile_branch_button_addition@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55977D401762DBF100D2CE2D /* img_profile_branch_button_addition@2x.png */; };
 		5598CF6C176FF14C001C0C67 /* TVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5598CF6B176FF14C001C0C67 /* TVNotification.m */; };
+		559984C817900D430054003C /* DetailManualVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 559984C617900D430054003C /* DetailManualVC.m */; };
+		559984C917900D430054003C /* DetailManualVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 559984C717900D430054003C /* DetailManualVC.xib */; };
+		559984CD179013140054003C /* TVManual.m in Sources */ = {isa = PBXBuildFile; fileRef = 559984CC179013140054003C /* TVManual.m */; };
 		559F402A174B6D7900E30BFF /* TVBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 559F4023174B6D7500E30BFF /* TVBranch.m */; };
 		559F402B174B6D7900E30BFF /* TVBranches.m in Sources */ = {isa = PBXBuildFile; fileRef = 559F4025174B6D7700E30BFF /* TVBranches.m */; };
 		55A1F3CF176077150098E9FD /* img_profile_branch_phone.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A1F3CD176077150098E9FD /* img_profile_branch_phone.png */; };
@@ -736,6 +739,11 @@
 		55977D401762DBF100D2CE2D /* img_profile_branch_button_addition@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_button_addition@2x.png"; sourceTree = "<group>"; };
 		5598CF6A176FF14C001C0C67 /* TVNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVNotification.h; sourceTree = "<group>"; };
 		5598CF6B176FF14C001C0C67 /* TVNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVNotification.m; sourceTree = "<group>"; };
+		559984C517900D420054003C /* DetailManualVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailManualVC.h; path = DetailManualVC/DetailManualVC.h; sourceTree = "<group>"; };
+		559984C617900D430054003C /* DetailManualVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailManualVC.m; path = DetailManualVC/DetailManualVC.m; sourceTree = "<group>"; };
+		559984C717900D430054003C /* DetailManualVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailManualVC.xib; path = DetailManualVC/DetailManualVC.xib; sourceTree = "<group>"; };
+		559984CB179013140054003C /* TVManual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVManual.h; path = ManualVC/TVManual.h; sourceTree = "<group>"; };
+		559984CC179013140054003C /* TVManual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVManual.m; path = ManualVC/TVManual.m; sourceTree = "<group>"; };
 		559F4022174B6D7500E30BFF /* TVBranch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVBranch.h; sourceTree = "<group>"; };
 		559F4023174B6D7500E30BFF /* TVBranch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVBranch.m; sourceTree = "<group>"; };
 		559F4024174B6D7600E30BFF /* TVBranches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVBranches.h; sourceTree = "<group>"; };
@@ -1519,6 +1527,16 @@
 			name = Notification;
 			sourceTree = "<group>";
 		};
+		559984CA17900D600054003C /* DetailManualVC */ = {
+			isa = PBXGroup;
+			children = (
+				559984C517900D420054003C /* DetailManualVC.h */,
+				559984C617900D430054003C /* DetailManualVC.m */,
+				559984C717900D430054003C /* DetailManualVC.xib */,
+			);
+			name = DetailManualVC;
+			sourceTree = "<group>";
+		};
 		559DD410174B0C14009E7344 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -1988,6 +2006,7 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				559984CA17900D600054003C /* DetailManualVC */,
 				55EB34F0178E68220041E481 /* ManualVC */,
 				55F71980178D3FEB00C0535D /* SearchWithArrayVC */,
 				55ED8490170D5A0E00344215 /* SearchVC */,
@@ -2109,6 +2128,8 @@
 				55EB34EB178E681B0041E481 /* ManualVC.h */,
 				55EB34EC178E681B0041E481 /* ManualVC.m */,
 				55EB34ED178E681B0041E481 /* ManualVC.xib */,
+				559984CB179013140054003C /* TVManual.h */,
+				559984CC179013140054003C /* TVManual.m */,
 			);
 			name = ManualVC;
 			sourceTree = "<group>";
@@ -2624,6 +2645,7 @@
 				5531EF1F178D473600093934 /* img_profile_branch_share_button.png in Resources */,
 				5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */,
 				55EB34EF178E681B0041E481 /* ManualVC.xib in Resources */,
+				559984C917900D430054003C /* DetailManualVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2754,6 +2776,8 @@
 				55EB34EE178E681B0041E481 /* ManualVC.m in Sources */,
 				55F77D32178EB88D00E0D99D /* ExtraMenuCell.m in Sources */,
 				55F77D36178EB8BD00E0D99D /* TVManualCell.m in Sources */,
+				559984C817900D430054003C /* DetailManualVC.m in Sources */,
+				559984CD179013140054003C /* TVManual.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

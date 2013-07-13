@@ -11,19 +11,9 @@
 #import "GlobalDataUser.h"
 #import "NSDictionary+Extensions.h"
 #import "TVManualCell.h"
+#import "DetailManualVC.h"
+#import "TVManual.h"
 @interface ManualVC ()
-
-@end
-
-@interface TVManual : NSObject
-@property(nonatomic,strong)NSString *manualID;
-@property(nonatomic,strong)NSString *title;
-
-@property(nonatomic,strong)NSString *content;
-
-@end
-
-@implementation TVManual
 
 @end
 
@@ -44,8 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"1",@"username" ,
-                            @"2",@"password",
+                            @"view",@"type" ,
                             nil];
     
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -83,17 +72,26 @@
 }
 
 - (IBAction)popularButtonClicked:(id)sender {
-
+    
 }
 
 - (IBAction)savedButtonClicked:(id)sender {
-
+    
 }
 
+-(void)saveButtonClicked:(UIButton*)sender{
+    TVManual* manual=_manualArr[sender.tag];
+    
+}
+
+-(void)detailButtonClicked:(UIButton*)sender{
+    TVManual* manual=_manualArr[sender.tag];
+    DetailManualVC* detailManual=[[DetailManualVC alloc] initWithNibName:@"DetailManualVC" bundle:nil withManual:manual];
+    
+    [self.navigationController pushViewController:detailManual animated:YES];
+}
 
 #pragma mark - UITableViewDataSource
-
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _manualArr.count;
@@ -101,20 +99,45 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TVManualCell* cell;
+    
     NSString* strCellIdentifier=@"TVManualCell";
     cell = [tableView dequeueReusableCellWithIdentifier:strCellIdentifier];
     if (!cell) {
         cell = [[TVManualCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strCellIdentifier];
     }
+    
     TVManual* manual=_manualArr[indexPath.row];
-    cell.textLabel.text=manual.title;
-    [cell.webView loadHTMLString:manual.content baseURL:nil];    return cell;
+    cell.lblTitle.text=manual.title;
+    [cell.lblTitle sizeToFit];
+    int height=cell.lblTitle.frame.origin.y+cell.lblTitle.frame.size.height;
+    
+    CGRect frame=cell.webView.frame;
+    frame.origin.y=height+5;
+    [cell.webView setFrame:frame];
+    
+    [cell.webView loadHTMLString:manual.content baseURL:nil];
+    [cell.webView setDelegate:self];
+    
+    height=cell.webView.frame.origin.y+cell.webView.frame.size.height;
+    
+    frame=cell.saveButton.frame;
+    frame.origin.y=height+5;
+    cell.saveButton.frame=frame;
+    
+    frame=cell.detailButton.frame;
+    frame.origin.y=height+5;
+    cell.detailButton.frame=frame;
+    cell.saveButton.tag=indexPath.row;
+    cell.detailButton.tag=indexPath.row;
+    [cell.saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-        return 100;
+        return 380;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //

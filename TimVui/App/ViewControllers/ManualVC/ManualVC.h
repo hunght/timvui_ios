@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ManualVC : UIViewController
+@interface ManualVC : UIViewController<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *btnRecently;
 @property (weak, nonatomic) IBOutlet UIButton *btnPopular;
 @property (weak, nonatomic) IBOutlet UIButton *btnSaved;
