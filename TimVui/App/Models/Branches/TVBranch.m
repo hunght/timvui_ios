@@ -49,7 +49,7 @@
 	return [self.name hasSuffix:@"CommentEvent"];
 }
 
-- (void)setValues:(id)dict {
+- (void)setValues:(NSDictionary*)dict {
     NSLog(@"tvBranch===%@",dict);
 	self.branchID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
@@ -75,7 +75,7 @@
     self.phone = [dict safeStringForKey:@"phone"];
     self.cats = [dict safeDictForKey:@"cats"];
     self.district = [dict safeDictForKey:@"district"];
-        
+    
     self.space = [dict safeStringForKey:@"space"];
     self.time_open = [dict safeStringForKey:@"time_open"];
     
@@ -85,18 +85,20 @@
     self.year = [dict safeStringForKey:@"year"];
     self.utilities = [dict safeArrayForKey:@"utilities"];
 //    NSLog(@"%@",_utilities);
-    self.adaptive = [[[dict valueForKey:@"params"] valueForKey:@"thich-hop"] safeDictForKey:@"params"];
-    self.styleFoody = [[[dict valueForKey:@"params"] valueForKey:@"am-thuc"] safeDictForKey:@"params"];
-    self.services = [[[dict valueForKey:@"params"] valueForKey:@"tien-ich"] safeDictForKey:@"params"];
-    self.purpose = [[[dict valueForKey:@"params"] valueForKey:@"muc-dich"] safeDictForKey:@"params"];
-    self.decoration = [[[dict valueForKey:@"params"] valueForKey:@"khong-gian"] safeDictForKey:@"params"];
-    self.cuisine = [[[dict valueForKey:@"params"] valueForKey:@"mon-an"] safeDictForKey:@"params"];
+    self.adaptive = [[[dict safeDictForKey:@"params"] safeDictForKey:@"thich-hop"] safeDictForKey:@"params"];
+    self.styleFoody = [[[dict safeDictForKey:@"params"] safeDictForKey:@"am-thuc"] safeDictForKey:@"params"];
+    self.services = [[[dict safeDictForKey:@"params"] safeDictForKey:@"tien-ich"] safeDictForKey:@"params"];
+    self.purpose = [[[dict safeDictForKey:@"params"] safeDictForKey:@"muc-dich"] safeDictForKey:@"params"];
+    self.decoration = [[[dict safeDictForKey:@"params"] safeDictForKey:@"khong-gian"] safeDictForKey:@"params"];
+    self.cuisine = [[[dict safeDictForKey:@"params"] safeDictForKey:@"mon-an"] safeDictForKey:@"params"];
     
     self.space = [dict safeStringForKey:@"space"];
     self.direction = [dict safeStringForKey:@"direction"];
     self.public_locations = [dict safeDictForKey:@"public_locations"];
     
     self.time_close =[dict safeStringForKey:@"time_close"];
+    
+    
 }
 
 

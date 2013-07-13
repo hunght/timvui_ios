@@ -36,7 +36,6 @@
 		550FDEB21777F5C4005DE15E /* PhotoBrowseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 550FDEB01777F5C4005DE15E /* PhotoBrowseVC.m */; };
 		550FDEB31777F5C4005DE15E /* PhotoBrowseVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 550FDEB11777F5C4005DE15E /* PhotoBrowseVC.xib */; };
 		5516D1A11758AA1D00A0C6CE /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A01758AA1D00A0C6CE /* GoogleMaps.framework */; };
-		5516D1A31758AA7D00A0C6CE /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5516D1A21758AA7C00A0C6CE /* GoogleMaps.bundle */; };
 		5516D1A51758AB3D00A0C6CE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A41758AB0100A0C6CE /* AVFoundation.framework */; };
 		5516D1A71758AC6B00A0C6CE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A61758AC2F00A0C6CE /* CoreText.framework */; };
 		551BB1D7178A9D590072FD81 /* CoupBranchProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1D1178A9D590072FD81 /* CoupBranchProfileVC.m */; };
@@ -49,9 +48,10 @@
 		551BB1E9178AC34B0072FD81 /* TVGroupCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1E5178AC34B0072FD81 /* TVGroupCuisines.m */; };
 		551BB1EC178AC7AC0072FD81 /* TVCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EB178AC7AC0072FD81 /* TVCuisines.m */; };
 		551BB1EF178ACE210072FD81 /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */; };
-		552072D6178559C700DC5E68 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D5178559C700DC5E68 /* FacebookSDK.framework */; };
-		552072D8178559DB00DC5E68 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */; };
 		552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D917855A2D00DC5E68 /* Security.framework */; };
+		55289C56179199BD002544B3 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55289C55179199BD002544B3 /* FacebookSDK.framework */; };
+		55289C58179199C8002544B3 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55289C57179199C8002544B3 /* FacebookSDKResources.bundle */; };
+		55289C5A179199EF002544B3 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 55289C59179199EF002544B3 /* GoogleMaps.bundle */; };
 		5531EF1F178D473600093934 /* img_profile_branch_share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1D178D473600093934 /* img_profile_branch_share_button.png */; };
 		5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */; };
 		5531EF22178D4A3400093934 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5531EF21178D4A3400093934 /* AddressBook.framework */; };
@@ -498,7 +498,6 @@
 		550FDEB01777F5C4005DE15E /* PhotoBrowseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBrowseVC.m; sourceTree = "<group>"; };
 		550FDEB11777F5C4005DE15E /* PhotoBrowseVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoBrowseVC.xib; sourceTree = "<group>"; };
 		5516D1A01758AA1D00A0C6CE /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
-		5516D1A21758AA7C00A0C6CE /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = TimVui/Resourses/GoogleMaps.bundle; sourceTree = "<group>"; };
 		5516D1A41758AB0100A0C6CE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5516D1A61758AC2F00A0C6CE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		551BB1D0178A9D590072FD81 /* CoupBranchProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoupBranchProfileVC.h; sourceTree = "<group>"; };
@@ -519,9 +518,10 @@
 		551BB1EB178AC7AC0072FD81 /* TVCuisines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCuisines.m; sourceTree = "<group>"; };
 		551BB1ED178ACE210072FD81 /* ExtraCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraCommentCell.h; sourceTree = "<group>"; };
 		551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
-		552072D5178559C700DC5E68 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		552072D917855A2D00DC5E68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		55289C55179199BD002544B3 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		55289C57179199C8002544B3 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		55289C59179199EF002544B3 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../Desktop/GoogleMaps-iOS-1.3.1/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
 		5531EF1D178D473600093934 /* img_profile_branch_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_share_button.png; sourceTree = "<group>"; };
 		5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_share_button@2x.png"; sourceTree = "<group>"; };
 		5531EF21178D4A3400093934 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -1037,7 +1037,7 @@
 				B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */,
 				55954F57172A141100A8A351 /* libGoogleAnalytics.a in Frameworks */,
 				5516D1A11758AA1D00A0C6CE /* GoogleMaps.framework in Frameworks */,
-				552072D6178559C700DC5E68 /* FacebookSDK.framework in Frameworks */,
+				55289C56179199BD002544B3 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1332,10 +1332,11 @@
 		5562B18816FC50F300E21A82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55289C59179199EF002544B3 /* GoogleMaps.bundle */,
+				55289C57179199C8002544B3 /* FacebookSDKResources.bundle */,
+				55289C55179199BD002544B3 /* FacebookSDK.framework */,
 				5531EF21178D4A3400093934 /* AddressBook.framework */,
 				552072D917855A2D00DC5E68 /* Security.framework */,
-				552072D7178559DB00DC5E68 /* FacebookSDKResources.bundle */,
-				552072D5178559C700DC5E68 /* FacebookSDK.framework */,
 				55AD02D017706F2B00A84ED6 /* CoreMedia.framework */,
 				5588C24A1758B5E8001B624A /* OpenGLES.framework */,
 				5588C2481758B48C001B624A /* libz.dylib */,
@@ -1344,7 +1345,6 @@
 				5588C2421758B123001B624A /* GLKit.framework */,
 				5516D1A61758AC2F00A0C6CE /* CoreText.framework */,
 				5516D1A41758AB0100A0C6CE /* AVFoundation.framework */,
-				5516D1A21758AA7C00A0C6CE /* GoogleMaps.bundle */,
 				5516D1A01758AA1D00A0C6CE /* GoogleMaps.framework */,
 				55954F5B172A15A800A8A351 /* CoreData.framework */,
 				55954F59172A159A00A8A351 /* SystemConfiguration.framework */,
@@ -2433,7 +2433,6 @@
 				55D17A2F1754A6B6005FA3CA /* img_search_restaurant_off@2x.png in Resources */,
 				55D17A321754A94F005FA3CA /* img_search_eating_shop_on.png in Resources */,
 				55D17A331754A94F005FA3CA /* img_search_eating_shop_on@2x.png in Resources */,
-				5516D1A31758AA7D00A0C6CE /* GoogleMaps.bundle in Resources */,
 				557BCE46175C99490054BCBE /* imgMapMakerBackground.png in Resources */,
 				557BCE47175C99490054BCBE /* imgMapMakerBackground@2x.png in Resources */,
 				5506B0B4175EF65A0054D606 /* LICENCE in Resources */,
@@ -2628,7 +2627,6 @@
 				55B8B8771784164D00DD32CE /* imgTVExtraBranchViewLike@2x.png in Resources */,
 				55B8B87A178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off.png in Resources */,
 				55B8B87B178416AE00DD32CE /* imgTVExtraBranchViewLikeButton_off@2x.png in Resources */,
-				552072D8178559DB00DC5E68 /* FacebookSDKResources.bundle in Resources */,
 				5592B6261786C38300BEF9DD /* img_profile_branch_coupon_clock.png in Resources */,
 				5592B6271786C38300BEF9DD /* img_profile_branch_coupon_clock@2x.png in Resources */,
 				5592B6281786C38300BEF9DD /* img_profile_branch_coupon_code.png in Resources */,
@@ -2646,6 +2644,8 @@
 				5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */,
 				55EB34EF178E681B0041E481 /* ManualVC.xib in Resources */,
 				559984C917900D430054003C /* DetailManualVC.xib in Resources */,
+				55289C58179199C8002544B3 /* FacebookSDKResources.bundle in Resources */,
+				55289C5A179199EF002544B3 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2899,6 +2899,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/Anuong-Prefix.pch";
@@ -2937,6 +2938,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../Documents/FacebookSDK\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/Anuong-Prefix.pch";
