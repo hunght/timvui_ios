@@ -19,9 +19,14 @@
 }
 
 - (void)setValues:(id)values {
+    
 	self.items = [NSMutableArray array];
-	for (NSDictionary *dict in [values valueForKey:@"items"]) {
+    NSArray* arr=[values valueForKey:@"items"];
+    
+	for (NSDictionary *dict in arr) {
+        
 		TVBranch *branch = [[TVBranch alloc] initWithDict:dict];
+        
 		[self addObject:branch];
 	}
 	self.lastUpdate = [NSDate date];

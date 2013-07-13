@@ -55,6 +55,9 @@ static GlobalDataUser *_sharedClient = nil;
     NSLog(@"%@",JSON);
     [self.user setValues:[JSON valueForKey:@"data"]];
     self.facebookID=[JSON valueForKey:@""];
+    
+    #warning User login set default USER ID TEST
+    self.user.userId=@"8878";
 }
 
 -(void)setGlocalDataUser:(NSDictionary *)JSON{

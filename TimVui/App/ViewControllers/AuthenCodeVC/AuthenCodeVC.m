@@ -60,7 +60,7 @@
 
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-
+    
 }
 
 #pragma mark Template generated code

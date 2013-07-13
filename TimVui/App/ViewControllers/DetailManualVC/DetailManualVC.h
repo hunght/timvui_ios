@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TVBranches.h"
 @class TVManual;
-@interface DetailManualVC : UIViewController<UIWebViewDelegate>
+@interface DetailManualVC : UIViewController<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate>
+{
+    @private
+    UIView* _couponBranch;
+}
+@property(strong, nonatomic) TVBranches* branches;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withManual:(TVManual*)manual;
 @end

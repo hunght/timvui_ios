@@ -13,6 +13,7 @@
 #import "TVManualCell.h"
 #import "DetailManualVC.h"
 #import "TVManual.h"
+#import "TSMessage.h"
 @interface ManualVC ()
 
 @end
@@ -29,25 +30,34 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void)postToGetManualWithType:(NSDictionary *)params
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"view",@"type" ,
-                            nil];
-    
+
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [_manualArr removeAllObjects];
         for (NSDictionary* dic in [[JSON valueForKey:@"data"] allValues]) {
             TVManual* munual=[[TVManual alloc] init];
             munual.title=[dic safeStringForKey:@"tilte"];
             munual.content=[dic safeStringForKey:@"content"];
+            munual.manualID=[dic safeStringForKey:@"id"];
+            munual.branch_ids=[dic safeArrayForKey:@"branch_ids"];
             [_manualArr addObject:munual];
         }
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    NSString* strType=@"view";
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            strType,@"type" ,
+                            nil];
+    [self postToGetManualWithType:params];
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,20 +78,45 @@
 #pragma mark IBAction
 
 - (IBAction)recentlyButtonClicked:(id)sender {
-    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"new",@"type" ,
+                            nil];
+    [self postToGetManualWithType:params];
 }
 
 - (IBAction)popularButtonClicked:(id)sender {
-    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"view",@"type",
+                            nil];
+    [self postToGetManualWithType:params];
 }
 
 - (IBAction)savedButtonClicked:(id)sender {
-    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"user",@"type",
+                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                            nil];
+    [self postToGetManualWithType:params];
 }
 
 -(void)saveButtonClicked:(UIButton*)sender{
     TVManual* manual=_manualArr[sender.tag];
-    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            manual.manualID,@"handbook_id" ,
+                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                            nil];
+    [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Lưu cẩm nang thành công"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+        [self dismissModalViewControllerAnimated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Lưu cẩm nang thất bại thất bại"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
+    }];
 }
 
 -(void)detailButtonClicked:(UIButton*)sender{

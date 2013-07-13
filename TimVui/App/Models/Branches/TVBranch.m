@@ -50,9 +50,11 @@
 }
 
 - (void)setValues:(id)dict {
-    NSLog(@"%@",dict);
+    NSLog(@"tvBranch===%@",dict);
 	self.branchID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
+    
+    NSLog(@"self.name===%@",self.name);
 	self.arrURLImages = [dict safeDictForKey:@"image"];
     
 	self.price_avg = [dict safeStringForKey:@"price_avg"];

@@ -117,7 +117,6 @@ enum {
     return self;
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -288,6 +287,7 @@ enum {
     
     return cell;
 }
+
 -(void)showLoginScreenWhenUserNotLogin:(UINavigationController*)nav{
     LoginVC* loginVC=nil;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -303,6 +303,7 @@ enum {
         
     }];
 }
+
 #pragma mark - Camera Comment Action
 - (void)showCameraActionWithLocation:(TVBranches*)branches
 {

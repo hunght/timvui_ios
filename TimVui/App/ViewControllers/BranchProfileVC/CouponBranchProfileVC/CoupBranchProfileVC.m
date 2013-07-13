@@ -174,7 +174,6 @@
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     [_scrollView addSubview:_couponBranch];
     
-    
     UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, 7, 300, 46)];
     [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
     [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
