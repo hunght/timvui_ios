@@ -216,7 +216,13 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:[defaults valueForKey:kBranchIDs]];
+    if (!dic)
+        dic=[[NSMutableDictionary alloc] init];
+    [GlobalDataUser sharedAccountClient].branchIDs=dic;
+    
     _getParamData=[defaults valueForKey:kDataGetParamData];
+    
     NSString* strPath=@"data/getParamData";
     int days=7;
     [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getParamData forKey:kDataGetParamData];
@@ -286,7 +292,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-//    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[GlobalDataUser sharedAccountClient].recentlyBranches] forKey:@"savedArray"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[GlobalDataUser sharedAccountClient].branchIDs] forKey:kBranchIDs];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

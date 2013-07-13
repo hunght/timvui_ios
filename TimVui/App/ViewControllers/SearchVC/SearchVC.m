@@ -31,7 +31,7 @@
 #pragma mark IBAction
 
 -(void)categoryButtonClicked:(UIButton*)sender{
-    NSLog(@"%@",[GlobalDataUser sharedAccountClient].catArr);
+//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].catArr);
     if ([sender isSelected]){
         [[GlobalDataUser sharedAccountClient].dicCatSearchParam removeObject:[[GlobalDataUser sharedAccountClient].catArr objectAtIndex:sender.tag] ];
         [sender setSelected:NO];
@@ -40,7 +40,7 @@
         [[GlobalDataUser sharedAccountClient].dicCatSearchParam addObject:[[GlobalDataUser sharedAccountClient].catArr objectAtIndex:sender.tag] ];
         [sender setSelected:YES];
     }
-    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCatSearchParam);
+//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCatSearchParam);
 }
 
 -(void)priceButtonClicked:(UIButton*)sender{
@@ -53,7 +53,7 @@
         [sender setSelected:YES];
     }
     
-    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicPriceSearchParam);
+//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicPriceSearchParam);
 }
 
 - (IBAction)btnCancelSearchToolbarClicked:(id)sender {
@@ -61,7 +61,13 @@
 }
 
 - (IBAction)btnSearchToolbarClicked:(id)sender {
+    
     [_tfdSearch resignFirstResponder];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    
+    [params setValue:_tfdSearch.text forKey:@"keyword"];
+    [self prepareForSettingSearchWithParams:params];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)buttonBackgroundClicked:(UIButton*)sender {
@@ -115,8 +121,7 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)buttonSearchClicked:(id)sender {
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+- (void)prepareForSettingSearchWithParams:(NSMutableDictionary *)params {
     CLLocationCoordinate2D location;
     
     [params setValue:kDistanceSearchMapDefault forKey:@"distance"];
@@ -143,11 +148,15 @@
         [params setValue:arr  forKey:@"district_aliases"];
     }
     if ([GlobalDataUser sharedAccountClient].dicPublicLocation)[params setValue:[[GlobalDataUser sharedAccountClient].dicPublicLocation valueForKey:@"alias"] forKey:@"public_location_aliases"];
-  
-    NSLog(@"%@",params);
+    
     if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
         [_delegate didClickedOnButtonSearch:params withLatlng:location];
     }
+}
+
+- (IBAction)buttonSearchClicked:(id)sender {
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [self prepareForSettingSearchWithParams:params];
 
     [self.navigationController popViewControllerAnimated:YES];
 }

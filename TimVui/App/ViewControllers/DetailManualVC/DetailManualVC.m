@@ -36,34 +36,34 @@
         // Custom initialization
         _manual=manual;
         _branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
+        _branches.isNotSearchAPIYES=YES;
     }
     return self;
 }
 
 -(void)postGetBranches{
-    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSArray arrayWithObjects:@"1",@"4", nil],@"id" ,
+                            _manual.branch_ids,@"id" ,
                             nil];
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
+            //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
             [self.tableView reloadData];
-
+            
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            
         });
     }];
 
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
     _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, 6, 320-6*2, 200)];
     [_couponBranch setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=_couponBranch.layer;
@@ -95,9 +95,11 @@
     [webView setFrame:frame];
     [webView setDelegate:self];
     [webView sizeToFit];
-    NSString *html = [NSString stringWithFormat: @"<html><head><meta name=\"viewport\" content=\"initial-scale=1, user-scalable=no, width=device-width\" /></head><body>%@</body></html>",_manual.content];
+    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
     //    NSLog(@"%@",_coupon.content);
     //continue building the string
+    [html appendString:_manual.content];
+    [html appendString:@"</body></html>"];
     [webView loadHTMLString:html baseURL:nil];
     [self.view insertSubview:_couponBranch belowSubview:self.tableView];
 }

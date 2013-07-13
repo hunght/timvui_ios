@@ -29,8 +29,7 @@
 @property (retain, nonatomic) NSMutableArray *dicCatSearchParam;
 @property (retain,nonatomic) NSArray* priceArr;
 @property (retain,nonatomic) NSArray* catArr;
-
-@property (retain, nonatomic) NSMutableArray* recentlyBranches;
+@property (retain, nonatomic) NSMutableDictionary* branchIDs;
 @property (assign, nonatomic) int currentSearchParam;
 enum {
     kSearchParamCity = 0,

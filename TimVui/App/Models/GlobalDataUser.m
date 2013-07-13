@@ -30,6 +30,7 @@ static GlobalDataUser *_sharedClient = nil;
         
         _sharedClient.dicCatSearchParam=[[NSMutableArray alloc] init];
         _sharedClient.dicPriceSearchParam=[[NSMutableArray alloc] init];
+        _sharedClient.branchIDs=[[NSMutableDictionary alloc] init];
     });
     return _sharedClient;
 }

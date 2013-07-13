@@ -13,6 +13,7 @@
 #import "TVCoupon.h"
 #import "TVCoupons.h"
 #import "BranchProfileVC.h"
+#import "GlobalDataUser.h"
 @interface RecentlyBranchListVC ()
 
 @end
@@ -24,6 +25,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
+        _branches.isNotSearchAPIYES=YES;
     }
     return self;
 }
@@ -31,6 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self postGetBranches];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -55,7 +59,6 @@
         NSDictionary* dicCuisines=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
         NSArray* idPublicArr = [[dicCuisines allValues] filteredArrayUsingPredicate:filter];
         NSDictionary* utilityDic=[idPublicArr lastObject];
-        
         UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(countUtilities*(8+18),0, 18, 18)];
         [iconIView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_on",[utilityDic valueForKey:@"id"]]]];
         
@@ -86,6 +89,31 @@
     frame.size.height+=branch.coupons.items.count*30;
     [cell.utility setFrame:frame];
     
+}
+-(void)postGetBranches{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [[GlobalDataUser sharedAccountClient].branchIDs allKeys],@"id" ,
+                            nil];
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
+    
+    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
+            [self.tableView reloadData];
+            
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            
+        });
+    }];
+    
+}
+
+#pragma mark UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.branches.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

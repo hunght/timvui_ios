@@ -554,16 +554,6 @@
 
 - (void)viewDidLoad
 {
-    BOOL isContainYES=NO;
-    for (TVBranch* branch in [GlobalDataUser sharedAccountClient].recentlyBranches) {
-        if ([branch.branchID isEqualToString:_branch.branchID]) {
-            isContainYES=YES;
-            continue;
-        }
-    }
-    if (!isContainYES)
-        [[GlobalDataUser sharedAccountClient].recentlyBranches addObject:_branch];
-    
     UIButton* shareButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [shareButton setImage:[UIImage imageNamed:@"img_profile_branch_share_button"] forState:UIControlStateNormal];
 //    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -579,23 +569,26 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
     self.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
-//     NSDictionary *params = @{@"id": _branchID};
+    //NSDictionary *params = @{@"id": _branchID};
+    
     NSDictionary *params = @{@"id": @"1"};
     [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async( dispatch_get_main_queue(),^ {
-            
             [self showInfoView];
             TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
             _extraBranchView.scrollView=_scrollView;
             _extraBranchView.branch=_branch;
+            [[GlobalDataUser sharedAccountClient].branchIDs setValue:_branch.branchID forKey:_branch.branchID];
             [self.view addSubview:_extraBranchView];
             [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
         });
+        
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async( dispatch_get_main_queue(),^ {
             
         });
     }];
+    
     [super viewDidLoad];
 }
 

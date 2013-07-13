@@ -33,3 +33,5 @@
 
 #define SMS_NUMBER @"8588"//VDC
 #define SMS_STR @"CITYOFFERS"//VDC
+
+#define kBranchIDs               @"kBranchIDs"

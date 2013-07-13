@@ -19,9 +19,9 @@
 }
 
 - (void)setValues:(id)values {
-    
+    NSArray* arr=(_isNotSearchAPIYES)?values:[values valueForKey:@"items"];
 	self.items = [NSMutableArray array];
-    NSArray* arr=[values valueForKey:@"items"];
+
     
 	for (NSDictionary *dict in arr) {
         
