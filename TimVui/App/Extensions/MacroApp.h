@@ -35,3 +35,4 @@
 #define SMS_STR @"CITYOFFERS"//VDC
 
 #define kBranchIDs               @"kBranchIDs"
+#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"

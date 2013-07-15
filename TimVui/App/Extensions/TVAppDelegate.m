@@ -215,8 +215,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:[defaults valueForKey:kBranchIDs]];
+//    [defaults removeObjectForKey:kBranchIDs];
+    NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kBranchIDs]];
     if (!dic)
         dic=[[NSMutableDictionary alloc] init];
     [GlobalDataUser sharedAccountClient].branchIDs=dic;
@@ -267,8 +267,10 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[GlobalDataUser sharedAccountClient].branchIDs] forKey:kBranchIDs];
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] valueForKey:kBranchIDs]);
+    
+    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].branchIDs);
+    [[NSUserDefaults standardUserDefaults] setObject:[GlobalDataUser sharedAccountClient].branchIDs forKey:kBranchIDs];
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] dictionaryForKey:kBranchIDs]);
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

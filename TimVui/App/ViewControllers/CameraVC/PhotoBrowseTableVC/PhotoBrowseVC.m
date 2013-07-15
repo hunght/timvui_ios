@@ -15,8 +15,12 @@
 #import "Base64.h"
 #import "TSMessage.h"
 #import <JSONKit.h>
+#import "NSDictionary+Extensions.h"
 @interface PhotoBrowseVC ()
-
+{
+    @private
+    NSMutableData *_responseData;
+}
 @end
 
 @implementation PhotoBrowseVC
@@ -83,11 +87,144 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark NSURLConnectionDelegate Methods
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    // A response has been received, this is where we initialize the instance var you created
+    // so that we can append data to it in the didReceiveData method
+    // Furthermore, this method is called each time there is a redirect so reinitializing it
+    // also serves to clear it
+    _responseData = [[NSMutableData alloc] init];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    // Append the new data to the instance variable you declared
+    [_responseData appendData:data];
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+    // Return nil to indicate not necessary to store a cached response for this connection
+    return nil;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // The request is complete and data has been received
+    // You can parse the stuff in your instance variable now
+    NSString* strJSON = [[NSString alloc] initWithData:_responseData
+                                              encoding:NSUTF8StringEncoding] ;
+    NSDictionary* dic=[strJSON objectFromJSONString];
+    NSLog(@"_responseData===%@",[NSString stringWithUTF8String:[_responseData bytes]]);
+    NSLog(@"dic=%@",[dic objectForKey:@"status"]);
+    
+    if ([dic safeIntegerForKey:@"status"]==200)
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Đăng ảnh thành công"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+    else
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Đăng ảnh thất bại"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // The request has failed for some reason!
+    // Check the error var
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
+    if ([challenge previousFailureCount] == 0) {
+
+        NSURLCredential *newCredential;
+        newCredential = [NSURLCredential credentialWithUser:@"ios"
+                                                   password:@"ios"
+                                                persistence:NSURLCredentialPersistenceNone];
+        [[challenge sender] useCredential:newCredential
+               forAuthenticationChallenge:challenge];
+    } else {
+        [[challenge sender] cancelAuthenticationChallenge:challenge];
+        // inform the user that the user name and password
+        // in the preferences are incorrect
+        //[self showPreferencesCredentialsAreIncorrectPanel:self];
+    }
+}
+
 
 #pragma mark IBAction
 - (IBAction)switchChangedValue:(id)sender {
     UISwitch *onoff = (UISwitch *) sender;
     NSLog(@"%@", onoff.on ? @"On" : @"Off");
+}
+
+-(void)uploadImagesToServer{
+    // create request
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    //Set Params
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [request setHTTPShouldHandleCookies:NO];
+    [request setTimeoutInterval:30];
+    [request setHTTPMethod:@"POST"];
+    
+    //Create boundary, it can be anything
+    NSString *boundary = @"------WebKitFormBoundary4QuqLuM1cE5lMwCy";
+    
+    // set Content-Type in HTTP header
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    
+    // post body
+    NSMutableData *body = [NSMutableData data];
+    
+    //Populate a dictionary with all the regular values you would like to send.
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:11];
+    
+    [parameters setValue:@"1" forKey:@"branch_id"];
+    [parameters setValue:[GlobalDataUser sharedAccountClient].user.userId forKey:@"user_id"];
+    // add params (all params are strings)
+    for (NSString *param in parameters) {
+        [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", param] dataUsingEncoding:NSUTF8StringEncoding]];
+        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [parameters objectForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    NSString *FileParamConstant = @"image_arr[]";
+    
+    // add image data and compress to send if needed.
+    int i=0;
+    for (UIImage* image in _arrPhotos) {
+        NSNumber* isPicked=[_arrPhotosPick objectAtIndex:i];
+        if ([isPicked boolValue]) {
+            NSData *imageData = UIImageJPEGRepresentation(image, .80);
+            if (imageData) {
+                [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image_arr.jpg\"\r\n", FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+                [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+                
+                [body appendData:imageData];
+                
+                [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+            }
+        }
+        i++;
+    }
+    
+    //Assuming data is not nil we add this to the multipart form
+
+    
+    //Close off the request with the boundary
+    [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // setting the body of the post to the request
+    [request setHTTPBody:body];
+    NSLog(@"%@",[NSString stringWithUTF8String:[body bytes]]);
+    // set URL
+    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@branch/postImages",kAFAppDotNetAPIBaseURLString]]];
+    
+    NSURLConnection*connect=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connect start];
 }
 
 -(void)postPhotoButtonClicked:(id)s{
@@ -114,7 +251,7 @@
         return;
     }
 
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _album,@"album" ,
 //                            _branch_id,@"branch_id",
                             @"1",@"branch_id",
@@ -122,51 +259,7 @@
                             nil];
     
     NSLog(@"params=====%@",params);
-    /*
-    [[TVNetworkingClient sharedClient] postPath:@"branch/postImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-
-        if ([_delegate respondsToSelector:@selector(didPickWithImages:)]) {
-            [_delegate didPickWithImages:arrImage];
-        }
-        [self dismissModalViewControllerAnimated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Đăng ảnh không thành công, vui lòng thử lại"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeError];
-    }];
-    */
-    
-    NSURLRequest* request = [[TVNetworkingClient sharedClient] multipartFormRequestWithMethod:@"POST"
-            path:@"branch/postImages"  parameters:params
-            constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                int i=0;
-                for (UIImage* image in _arrPhotos) {
-                    NSNumber* isPicked=[_arrPhotosPick objectAtIndex:i];
-                    if ([isPicked boolValue]) {
-                        NSData *imageToUpload = UIImageJPEGRepresentation(image, .80);
-                        [formData appendPartWithFileData:imageToUpload
-                                                    name:@"image_arr[]"
-                                                fileName:@"image_arr.jpg"
-                                                mimeType:@"image/jpeg"];
-                    }
-                    i++;
-                }
-    }];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *response = [operation responseString];
-        NSLog(@"response: [%@]",response);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", [operation error]);
-        
-    }];
-    
-    [operation start];
-
-
+    [self uploadImagesToServer];
 }
 
 #pragma mark PhotoBrowseCellDelegate

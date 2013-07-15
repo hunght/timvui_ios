@@ -21,11 +21,11 @@
 // THE SOFTWARE.
 
 #import "TVNetworkingClient.h"
-
+#import "MacroApp.h"
 #import "AFJSONRequestOperation.h"
 
 //static NSString * const kAFAppDotNetAPIBaseURLString = @"https://alpha-api.app.net/";
-static NSString * const kAFAppDotNetAPIBaseURLString = @"http://anuong.net/api/";
+
 
 
 @implementation TVNetworkingClient

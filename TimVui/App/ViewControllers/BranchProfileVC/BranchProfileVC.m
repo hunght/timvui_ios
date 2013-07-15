@@ -582,7 +582,6 @@
             [self.view addSubview:_extraBranchView];
             [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
         });
-        
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async( dispatch_get_main_queue(),^ {
             

@@ -11,7 +11,7 @@
 @protocol PhotoBrowseVCDelegate;
 
 
-@interface PhotoBrowseVC : UIViewController<PhotoBrowseCellDelegate,UITableViewDataSource, UITableViewDelegate>
+@interface PhotoBrowseVC : UIViewController<PhotoBrowseCellDelegate,UITableViewDataSource, UITableViewDelegate,NSURLConnectionDelegate>
 @property(nonatomic,strong)NSMutableArray *arrPhotos;
 @property(nonatomic,strong)NSMutableArray *arrPhotosPick;
 @property (nonatomic, unsafe_unretained) id<PhotoBrowseVCDelegate> delegate;
