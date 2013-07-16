@@ -18,16 +18,32 @@
 #import "BSKeyboardControls.h"
 #import <FacebookSDK/FacebookSDK.h>
 
+
 @class TPKeyboardAvoidingScrollView;
 
-@interface LoginVC : UIViewController<UITextFieldDelegate,UIWebViewDelegate>
+
+@interface LoginVC : UIViewController<UITextFieldDelegate,BSKeyboardControlsDelegate>
 
 @property (copy) void (^userLoginFail)();
 @property (copy) void (^userDidLogin)();
 @property (nonatomic, assign)BOOL isPushNaviYES;
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (nonatomic, strong) BSKeyboardControls *keyboardControls;
+
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdUsername;
+@property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPassword;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnLogin;
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRegistering;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblOr;
+
+@property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblLostPass;
+
+//Action
+- (IBAction)userLoginButtonClicked:(id)sender;
+- (IBAction)signupButtonClicked:(id)sender;
+- (IBAction)forgetPasswordButtonClicked:(id)sender;
+- (IBAction)fbLoginBtnClicked:(id)sender;
 
 -(void)goWithDidLogin:(void (^)())userDidLogin thenLoginFail:(void (^)())userLoginFail;
-
 @end
 

@@ -23,6 +23,7 @@
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import "ForgetPassVC.h"
+#import "TPKeyboardAvoidingScrollView.h"
 #import "GlobalDataUser.h"
 #import "TSMessage.h"
 #import "SVProgressHUD.h"
@@ -30,20 +31,47 @@
 
 #pragma mark Setup Methods
 
+- (void)setupViewLayout {
+    [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
+    
+    [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
+    [_btnLogin setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    [_btnLogin.titleLabel setFont:[UIFont fontWithName:@"UVNVanBold" size:(17)]];
+    
+    _lblOr.textColor = [UIColor colorWithRed:(253.0f/255.0f) green:(83/255.0f) blue:(83/255.0f) alpha:1.0f];
+    
+    // Setup View and Table View
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+}
 
 #pragma mark ViewControllerDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString* urlStr=[NSString stringWithFormat:@"https://id.vatgia.com/dang-nhap/oauth?_cont=http://anuong.net/tai-khoan/dang-nhap&client_id={$client_id}"];
-    NSURLRequest* request=[[NSURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:urlStr]];
-    [_webView loadRequest:request];
-    [_webView setDelegate:self];
+    [self setupViewLayout];
+    
+    NSArray *fields = @[ self.tfdUsername,self.tfdPassword];
+    [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:fields]];
+    [self.keyboardControls setDelegate:self];
 }
 
 - (void)viewDidUnload
 {
-    [self setWebView:nil];
+    [self setTfdUsername:nil];
+    [self setTfdPassword:nil];
+    [self setScrollView:nil];
+    [self setBtnLogin:nil];
+    [self setBtnRegistering:nil];
+    [self setLblOr:nil];
+    [self setLblLostPass:nil];
     [super viewDidUnload];
 }
 
@@ -118,7 +146,29 @@
                                                 if (error.fberrorCategory != FBErrorCategoryUserCancelled) {
                                                     NSLog(@"%@",error);
                                                 }
-                                            }
+                                            }                                        }];
+   
+}
+
+
+- (void)postAPIUserLogin {
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            _tfdUsername.text,@"username" ,
+                            _tfdPassword.text,@"password",
+                            nil];
+    
+    [[TVNetworkingClient sharedClient] postPath:@"user/login" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [[GlobalDataUser sharedAccountClient] setGlocalDataUser:JSON];
+        if (self.userDidLogin)
+        {
+            [self closeViewController];
+            self.userDidLogin();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (self.userLoginFail)
+        {
+            self.userLoginFail();
+        }
     }];
 }
 
@@ -132,6 +182,20 @@
 
 -(void)backButtonClicked:(id)sender{
     [self closeViewController];
+}
+
+- (IBAction)userLoginButtonClicked:(id)sender {
+    if ([Ultilities validatePassword:_tfdPassword.text]) {
+        
+        if ([Ultilities validateEmail:_tfdUsername.text]) {
+            //
+            [self postAPIUserLogin];
+        }else if ([Ultilities validatePhone:_tfdUsername.text]){
+            
+            [self postAPIUserLogin];
+        }else
+            [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin SĐT"];
+    }
 }
 
 - (IBAction)signupButtonClicked:(id)sender {
@@ -166,8 +230,21 @@
 
 #pragma mark UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+//    if ([textField isEqual:_tfdUsername]) {
+//        [_tfdUsername setKeyboardType:UIKeyboardTypePhonePad];
+//    }
+    [self.keyboardControls setActiveField:textField];
+}
 
 #pragma mark -
+#pragma mark Keyboard Controls Delegate
+
+
+- (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls
+{
+    [self.view endEditing:NO];
+}
 
 
 @end

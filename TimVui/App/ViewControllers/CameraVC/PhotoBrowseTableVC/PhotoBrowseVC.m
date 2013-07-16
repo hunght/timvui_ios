@@ -213,7 +213,6 @@
     
     //Assuming data is not nil we add this to the multipart form
 
-    
     //Close off the request with the boundary
     [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -252,7 +251,7 @@
     }
 
     NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            _album,@"album" ,
+                            _album,@"album",
 //                            _branch_id,@"branch_id",
                             @"1",@"branch_id",
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",

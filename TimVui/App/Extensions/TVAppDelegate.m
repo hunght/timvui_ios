@@ -16,6 +16,7 @@
 #import "TSMessage.h"
 #import "NSDate+Helper.h"
 #import "GlobalDataUser.h"
+#import "NSDate-Utilities.h"
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -174,7 +175,7 @@
 {
     [[TVNetworkingClient sharedClient] getPath:strPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:JSON] ;
-        [dic setValue:[[NSDate date] string] forKey:@"lastUpdated"];
+        [dic setValue:[[NSDate date] stringWithDefautFormat] forKey:@"lastUpdated"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setValue:dic forKey:key];
         [defaults synchronize];
