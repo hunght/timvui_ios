@@ -686,8 +686,8 @@ enum {
     }
     
     if ([GlobalDataUser sharedAccountClient].isLogin){
-        cell.textLabel.text = [GlobalDataUser sharedAccountClient].user.name;
-        [cell.imageView setImageWithURL:[[GlobalDataUser sharedAccountClient].user.avatar valueForKey:@"50"] placeholderImage:[UIImage imageNamed:@"user"]];
+        cell.textLabel.text = [GlobalDataUser sharedAccountClient].user.first_name;
+        [cell.imageView setImageWithURL:[[NSURL alloc] initWithString:[GlobalDataUser sharedAccountClient].user.avatar]  placeholderImage:[UIImage imageNamed:@"user"]];
     }else{
         cell.textLabel.text = @"Đăng nhập";
         [cell.imageView setImage:[UIImage imageNamed:@"user"]];
@@ -723,8 +723,6 @@ enum {
         default:
             break;
     }
-    
-    
     return cell;
 }
 

@@ -52,7 +52,10 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
+    if (!url) {  return NO; }
     
+    NSString *URLString = [url absoluteString];
+    NSLog(@"URLString ==== %@",URLString);
     // Facebook SDK * login flow *
     // Attempt to handle URLs to complete any auth (e.g., SSO) flow.
     if ([[FBSession activeSession] handleOpenURL:url]) {

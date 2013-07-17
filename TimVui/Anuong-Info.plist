@@ -28,6 +28,14 @@
 				<string>fb370141479762946</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>anuong</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.vatgia</string>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>

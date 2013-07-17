@@ -26,8 +26,16 @@
 #import "GlobalDataUser.h"
 #import "TSMessage.h"
 #import "SVProgressHUD.h"
+#import  <JSONKit.h>
+#import "NSDictionary+Extensions.h"
+@interface LoginVC
+(){
+    @private
+    NSMutableData *_responseData;
+    BOOL _isRequestSendYES;
+}
+@end
 @implementation LoginVC
-
 #pragma mark Setup Methods
 
 
@@ -35,10 +43,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString* urlStr=[NSString stringWithFormat:@"https://id.vatgia.com/dang-nhap/oauth?_cont=http://anuong.net/tai-khoan/dang-nhap&client_id={$client_id}"];
-    NSURLRequest* request=[[NSURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:urlStr]];
+    [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+    // Setup View and Table View
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
+    /*
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    */
+    NSURLRequest* request=[[NSURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[NSString stringWithFormat:@"https://id.vatgia.com/dang-nhap/oauth?_cont=anuong://login&client_id=%@",kVatgiaClientID]]];
     [_webView loadRequest:request];
     [_webView setDelegate:self];
+    
 }
 
 - (void)viewDidUnload
@@ -125,6 +151,132 @@
 -(void)goWithDidLogin:(void (^)())userDidLogin thenLoginFail:(void (^)())userLoginFail{
     self.userDidLogin =userDidLogin;
     self.userLoginFail=userLoginFail;
+}
+#pragma mark NSURLConnectionDelegate
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    // A response has been received, this is where we initialize the instance var you created
+    // so that we can append data to it in the didReceiveData method
+    // Furthermore, this method is called each time there is a redirect so reinitializing it
+    // also serves to clear it
+    _responseData = [[NSMutableData alloc] init];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    // Append the new data to the instance variable you declared
+    [_responseData appendData:data];
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+    // Return nil to indicate not necessary to store a cached response for this connection
+    return nil;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // The request is complete and data has been received
+    // You can parse the stuff in your instance variable now
+    NSString* strJSON = [[NSString alloc] initWithData:_responseData
+                                              encoding:NSUTF8StringEncoding] ;
+    NSDictionary* dic=[strJSON objectFromJSONString];
+    NSLog(@"_responseData===%@",strJSON);
+    NSLog(@"dic=%@",dic);
+    NSDictionary* dicAcc=[[[dic safeArrayForKey:@"objects"] lastObject] safeDictForKey:@"acc"];
+    if (dicAcc){
+        [[GlobalDataUser sharedAccountClient] setGlocalDataUser:dicAcc];
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Đăng nhập thành công"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+    }
+    else
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Đăng nhập thất bại"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
+    if (self.userDidLogin)
+    {
+        [self closeViewController];
+        self.userDidLogin();
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // The request has failed for some reason!
+    // Check the error var
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
+    if ([challenge previousFailureCount] == 0) {
+        
+        NSURLCredential *newCredential;
+        newCredential = [NSURLCredential credentialWithUser:kVatgiaClientID
+                                                   password:kVatgiaClientSecret
+                                                persistence:NSURLCredentialPersistenceNone];
+        [[challenge sender] useCredential:newCredential
+               forAuthenticationChallenge:challenge];
+    } else {
+        [[challenge sender] cancelAuthenticationChallenge:challenge];
+        // inform the user that the user name and password
+        // in the preferences are incorrect
+        //[self showPreferencesCredentialsAreIncorrectPanel:self];
+    }
+}
+
+
+#pragma mark - UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSURL* url = [request URL];
+    if (navigationType == UIWebViewNavigationTypeOther) {
+        NSString *string = [url absoluteString];
+        NSLog(@"string===%@",string);
+        if ([string rangeOfString:@"login?"].location == NSNotFound) {
+            NSLog(@"string not contains in %@",string);
+        } else {
+            if (_isRequestSendYES) {
+                return NO;
+            }
+            NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+            for (NSString *param in [[url query] componentsSeparatedByString:@"&"]) {
+                NSArray *elts = [param componentsSeparatedByString:@"="];
+                if([elts count] < 2) continue;
+                [params setObject:[elts objectAtIndex:1] forKey:[elts objectAtIndex:0]];
+            }
+            
+            NSLog(@"params===%@",params);
+            NSString* strTokenKey=[NSString stringWithFormat:@"https://id.vatgia.com/oauth2/accessCode/%@?with=acc",[params objectForKey:@"access_code" ]];
+            NSLog(@"strTokenKey===%@",strTokenKey);
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+            //Set Params
+            [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+            [request setHTTPShouldHandleCookies:NO];
+            [request setTimeoutInterval:30];
+            [request setHTTPMethod:@"GET"];
+            [request setURL:[[NSURL alloc] initWithString:strTokenKey]];
+            NSURLConnection*connect=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+            _isRequestSendYES=YES;
+            [connect start];
+
+            //[[TVNetworkingClient sharedClient] setUsername:kVatgiaClientID andPassword:kVatgiaClientSecret];
+//            [[TVNetworkingClient sharedClient] getPath:strTokenKey parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+//                NSLog(@"params===%@",params);
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                NSLog(@"params===%@",params);
+//            }];
+        
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    NSLog(@"params===%@",[webView.request.URL absoluteString]);
+    
 }
 
 
