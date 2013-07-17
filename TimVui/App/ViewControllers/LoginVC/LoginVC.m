@@ -179,8 +179,8 @@
     NSString* strJSON = [[NSString alloc] initWithData:_responseData
                                               encoding:NSUTF8StringEncoding] ;
     NSDictionary* dic=[strJSON objectFromJSONString];
-    NSLog(@"_responseData===%@",strJSON);
-    NSLog(@"dic=%@",dic);
+//    NSLog(@"_responseData===%@",strJSON);
+//    NSLog(@"dic=%@",dic);
     NSDictionary* dicAcc=[[[dic safeArrayForKey:@"objects"] lastObject] safeDictForKey:@"acc"];
     if (dicAcc){
         [[GlobalDataUser sharedAccountClient] setGlocalDataUser:dicAcc];
