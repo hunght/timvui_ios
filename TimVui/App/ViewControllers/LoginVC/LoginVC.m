@@ -43,6 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
@@ -61,10 +62,10 @@
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
     */
+    
     NSURLRequest* request=[[NSURLRequest alloc] initWithURL:[[NSURL alloc] initWithString:[NSString stringWithFormat:@"https://id.vatgia.com/dang-nhap/oauth?_cont=anuong://login&client_id=%@",kVatgiaClientID]]];
     [_webView loadRequest:request];
     [_webView setDelegate:self];
-    
 }
 
 - (void)viewDidUnload
@@ -127,26 +128,7 @@
     }
 }
 
-// Displays the user's name and profile picture so they are aware of the Facebook
-// identity they are logged in as.
-- (void)getInfoAccountFacebook{
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [FBSession.activeSession requestNewPublishPermissions:[NSArray arrayWithObject:@"email"]
-                                          defaultAudience:FBSessionDefaultAudienceEveryone
-                                        completionHandler:^(FBSession *session, NSError *error) {
-                                            if (!error) {
-                                                // Now have the permission
-                                                
-                                            } else {
-                                                [SVProgressHUD dismiss];
-                                                // Facebook SDK * error handling *
-                                                // if the operation is not user cancelled
-                                                if (error.fberrorCategory != FBErrorCategoryUserCancelled) {
-                                                    NSLog(@"%@",error);
-                                                }
-                                            }
-    }];
-}
+
 
 -(void)goWithDidLogin:(void (^)())userDidLogin thenLoginFail:(void (^)())userLoginFail{
     self.userDidLogin =userDidLogin;
@@ -194,6 +176,7 @@
                                           withTitle:@"Đăng nhập thất bại"
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeError];
+    [SVProgressHUD dismiss];
     if (self.userDidLogin)
     {
         [self closeViewController];
@@ -202,6 +185,7 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    [SVProgressHUD dismiss];
     // The request has failed for some reason!
     // Check the error var
 }
@@ -226,11 +210,12 @@
 
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    if(![SVProgressHUD isVisible])[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     NSURL* url = [request URL];
     if (navigationType == UIWebViewNavigationTypeOther) {
         NSString *string = [url absoluteString];
         NSLog(@"string===%@",string);
-        if ([string rangeOfString:@"login?"].location == NSNotFound) {
+        if ([string rangeOfString:@"anuong://login?"].location == NSNotFound) {
             NSLog(@"string not contains in %@",string);
         } else {
             if (_isRequestSendYES) {
@@ -255,15 +240,7 @@
             [request setURL:[[NSURL alloc] initWithString:strTokenKey]];
             NSURLConnection*connect=[[NSURLConnection alloc] initWithRequest:request delegate:self];
             _isRequestSendYES=YES;
-            [connect start];
-
-            //[[TVNetworkingClient sharedClient] setUsername:kVatgiaClientID andPassword:kVatgiaClientSecret];
-//            [[TVNetworkingClient sharedClient] getPath:strTokenKey parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-//                NSLog(@"params===%@",params);
-//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                NSLog(@"params===%@",params);
-//            }];
-        
+            [connect start];        
             return NO;
         }
     }
@@ -272,13 +249,15 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    NSLog(@"params===%@",[webView.request.URL absoluteString]);
     
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [SVProgressHUD dismiss];
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    [SVProgressHUD dismiss];
+}
 
 #pragma mark - IBAction
 

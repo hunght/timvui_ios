@@ -20,7 +20,6 @@ static GlobalDataUser *_sharedClient = nil;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[GlobalDataUser alloc] init];
         _sharedClient.user=[[GHUser alloc] init];
-        
         _sharedClient.locationManager = [[CLLocationManager alloc] init];
         [_sharedClient.locationManager setDelegate:_sharedClient];
         [_sharedClient.locationManager setDistanceFilter:kCLDistanceFilterNone];
@@ -69,6 +68,12 @@ static GlobalDataUser *_sharedClient = nil;
     self.isLogin = NO;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:nil forKey:kAccountUserJSON];
+    
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
     [defaults synchronize];
 }
 

@@ -172,6 +172,7 @@
 }
 
 #pragma mark IBAction
+
 - (void)toggleTopView {
     if (self.slidingViewController.underLeftShowing) {
         // actually this does not get called when the top view screenshot is enabled
@@ -187,7 +188,7 @@
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateHighlighted];
     
-    //    [backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
+    //[backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
     [backButton addTarget:self action:@selector(toggleTopView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     item.accessibilityLabel = NSLocalizedString(@"Menu", nil);

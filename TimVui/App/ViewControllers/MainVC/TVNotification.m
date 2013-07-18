@@ -25,16 +25,16 @@
         [self addSubview:lblDetailRow];
         
         UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(7, lblDetailRow.frame.size.height+ 3, 150, 38)];
-        [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera"] forState:UIControlStateNormal];
-        [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera_on"] forState:UIControlStateHighlighted];
+        [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_main_camera_off"] forState:UIControlStateNormal];
+        [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_main_camera_on"] forState:UIControlStateHighlighted];
         [cameraButton setTitle:@"             CHỤP ẢNH" forState:UIControlStateNormal];
         [cameraButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         cameraButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
         [cameraButton addTarget:self action:@selector(cameraButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(7+150+5, lblDetailRow.frame.size.height+ 3, 150, 38)];
-        [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
-        [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
+        [commentButton setBackgroundImage:[UIImage imageNamed:@"img_main_comment_off"] forState:UIControlStateNormal];
+        [commentButton setBackgroundImage:[UIImage imageNamed:@"img_main_comment_on"] forState:UIControlStateHighlighted];
         [commentButton setTitle:@"             BÌNH LUẬN" forState:UIControlStateNormal];
         [commentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         commentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
