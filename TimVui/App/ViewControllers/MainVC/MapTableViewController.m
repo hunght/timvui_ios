@@ -100,13 +100,15 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     };
     
     [self.view addSubview:self.locationPickerView];
-    _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(15, 9, 301, 42)];
+    UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(5, 1, 53, 43)];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
     [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    [self.locationPickerView addSubview:_btnSearchBar];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_btnSearchBar];
+    self.navigationItem.rightBarButtonItem = searchButtonItem;
     [self initNotificationView];
 }
+
 -(void)viewDidUnload{
     [super viewDidUnload];
     [self setNotificationView:nil];
@@ -131,7 +133,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     }
 }
 
--(void)locationPickerSearchBarButtonClicked{
+-(void)searchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [searchVC setDelegate:self];
     [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_arrDics;
@@ -253,8 +255,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
             [paramsForSearch addObject:[NSString stringWithFormat:@"tien-ich_%@",strCuisine]];
         }
     }
-    
-//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCuisineSearchParam);
+
     [params setValue:paramsForSearch  forKey:@"params"];
     NSLog(@"%@",params);
     if (!self.branches) {
@@ -451,7 +452,9 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     else{
         [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-    cell.branch = self.branches[indexPath.row];
+    
+    double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[self.branches[indexPath.row]latlng]];
+    [cell setBranch:self.branches[indexPath.row] withDistance:distance];
     return cell;
 }
 

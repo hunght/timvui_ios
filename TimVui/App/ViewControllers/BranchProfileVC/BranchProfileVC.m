@@ -295,7 +295,7 @@
         }];
         i++;
     }
-    
+
     if (_branch.image_count>=4) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
@@ -311,15 +311,24 @@
     UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
     [mapViewButton setImageWithURL:url];
     [mapViewButton addTarget:self action:@selector(mapViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    CALayer* l=mapViewButton.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:5.0];
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     [_scrollView addSubview:mapViewButton];
+    
+    UIView* bgImageView=[[UIView alloc] initWithFrame:CGRectMake(0, 140-5, 320, 35+10)];
+    [bgImageView setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.7]];
+//    [_scrollView insertSubview:bgImageView belowSubview:mapViewButton];
+    [_scrollView insertSubview:bgImageView atIndex:0];
     
     // Generate Infomation Of Branch
     UIView *genarateInfoView = [self addGenerationInfoView];
     [_scrollView addSubview:genarateInfoView];
-    CALayer *l;
-    
+
     //Button Camera, Comment, Follow
-    UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(7, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 101, 38)];
+    UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(7, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 100, 44)];
     [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera"] forState:UIControlStateNormal];
     [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera_on"] forState:UIControlStateHighlighted];
     [cameraButton setTitle:@"             CHỤP ẢNH" forState:UIControlStateNormal];
@@ -328,7 +337,7 @@
     [cameraButton addTarget:self action:@selector(cameraButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cameraButton];
     
-    UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(7+101+5, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 101, 38)];
+    UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(7+101+5, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 100, 44)];
     [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
     [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
     [commentButton setTitle:@"             BÌNH LUẬN" forState:UIControlStateNormal];
@@ -338,7 +347,7 @@
     [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:commentButton];
     
-    UIButton* likeButton = [[UIButton alloc] initWithFrame:CGRectMake(7+101*2+5*2, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 101, 38)];
+    UIButton* likeButton = [[UIButton alloc] initWithFrame:CGRectMake(7+101*2+5*2, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 100, 44)];
     [likeButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_like"] forState:UIControlStateNormal];
     [likeButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_like_on"] forState:UIControlStateHighlighted];
     [likeButton setTitle:@"             QUAN TÂM" forState:UIControlStateNormal];
@@ -549,11 +558,21 @@
         [_scrollView addSubview:specialContentButton];
         height+=45;
     }
+    
+    //Setbackground color dot line
+//    int bgViewHeight=mapViewButton.frame.origin.y+mapViewButton.frame.size.height+3;
+//    UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, bgViewHeight, 320, height-bgViewHeight)];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+//    [_scrollView insertSubview:bgView belowSubview:mapViewButton];
+    
+    
     [_scrollView setContentSize:CGSizeMake(320, height)];
 }
 
 - (void)viewDidLoad
 {
+    
+    
     UIButton* shareButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [shareButton setImage:[UIImage imageNamed:@"img_profile_branch_share_button"] forState:UIControlStateNormal];
 //    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -580,7 +599,7 @@
             _extraBranchView.branch=_branch;
             [[GlobalDataUser sharedAccountClient].branchIDs setValue:_branch.branchID forKey:_branch.branchID];
             [self.view addSubview:_extraBranchView];
-            [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+//            [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async( dispatch_get_main_queue(),^ {

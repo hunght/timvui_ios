@@ -150,20 +150,9 @@
 //    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 //    [toolbar setBackgroundColor:[UIColor redColor]];
 //    [self.tableView addSubview:toolbar];
-    if (!_btnSearchBar) {
-        _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(15, 9, 301, 42)];
-        [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];
-        [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
-        [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_btnSearchBar];
-    }
 }
 
--(void)searchBarButtonClicked{
-    if ([_delegate respondsToSelector:@selector(locationPickerSearchBarButtonClicked)]) {
-        [_delegate locationPickerSearchBarButtonClicked];
-    }
-}
+
 - (void)setTableViewDataSource:(id<UITableViewDataSource>)tableViewDataSource
 {
     _tableViewDataSource = tableViewDataSource;
@@ -303,13 +292,6 @@
     self.btnZoomIn.alpha = 0.0;
     self.btnZoomIn.hidden = NO;
     
-    self.btnSearchBar.alpha = 0.0;
-    self.btnSearchBar.hidden = NO;
-    
-    if (_btnSearchBar) {
-        [_btnSearchBar removeFromSuperview];
-        [self addSubview:_btnSearchBar];
-    }
     
     [UIView animateWithDuration:0.3
                           delay:0.0
@@ -319,7 +301,6 @@
                          self.closeMapButton.alpha=1.0;
                          self.btnZoomIn.alpha = 1.0;
                          self.btnZoomOut.alpha = 1.0;
-                         self.btnSearchBar.alpha = 1.0;
                      }
                      completion:nil];
 }
@@ -505,32 +486,6 @@
             CGRect newMapFrame = self.mapView.frame;
             newMapFrame.origin.y = mapFrameYAdjustment;
             [self.mapView setFrame:newMapFrame];
-        }
-        if ( isScrollViewIsDraggedDownwards && scrollOffset < 70 ) {
-            
-            if ([self.btnSearchBar isHidden]) {
-                self.btnSearchBar.alpha = 0.0;
-                self.btnSearchBar.hidden = NO;
-                [UIView animateWithDuration:0.3
-                                      delay:0.0
-                                    options:UIViewAnimationOptionCurveLinear
-                                 animations:^{
-                                     self.btnSearchBar.alpha = 1.0;
-                                 }
-                                 completion:nil];
-            }
-        }else if ( !isScrollViewIsDraggedDownwards && scrollOffset > 70 ) {
-            if (![_btnSearchBar isHidden]) {
-                self.btnSearchBar.alpha = 1.0;
-                self.btnSearchBar.hidden = YES;
-                [UIView animateWithDuration:0.3
-                                      delay:0.0
-                                    options:UIViewAnimationOptionCurveLinear
-                                 animations:^{
-                                     self.btnSearchBar.alpha = 0.0;
-                                 }
-                                 completion:nil];
-            }
         }
     }
 }

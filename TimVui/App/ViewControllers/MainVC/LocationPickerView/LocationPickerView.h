@@ -18,7 +18,6 @@ typedef void (^LocationPickerViewCompletionBlock)(LocationPickerView *locationPi
 
 @interface LocationPickerView : UIView <UIScrollViewDelegate>
 
-@property (nonatomic, strong)UIButton* btnSearchBar;
 /** How much of the screen the map takes up initially and the height
  it returns to after scrolling is done. By default this is set to
  "180.0f". */
@@ -90,7 +89,7 @@ typedef void (^LocationPickerViewCompletionBlock)(LocationPickerView *locationPi
 @protocol LocationPickerViewDelegate <NSObject>
 
 @optional
--(void)locationPickerSearchBarButtonClicked;
+
 /** Called when the mapView is loaded or reloaded. Alternatively, the block 
  properties of LocationPickerView can be used. */
 - (void)locationPicker:(LocationPickerView *)locationPicker

@@ -13,52 +13,61 @@
       withComment:(void (^)())commentCall{
     self=[super initWithFrame:CGRectZero];
     if (self) {
-        // Drawing code
-        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(3, 3, 130, 23)];
-        lblDetailRow.backgroundColor = [UIColor clearColor];
-        lblDetailRow.textColor = [UIColor blackColor];
-        lblDetailRow.numberOfLines = 0;
-        lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
-        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-        lblDetailRow.text =strTitle;
-        [lblDetailRow sizeToFit];
-        [self addSubview:lblDetailRow];
         
-        UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(7, lblDetailRow.frame.size.height+ 3, 150, 38)];
+        // Drawing code
+        int height=20;
+        if (strTitle) {
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(3, height, 130, 23)];
+            lblDetailRow.backgroundColor = [UIColor clearColor];
+            lblDetailRow.textColor = [UIColor blackColor];
+            lblDetailRow.numberOfLines = 0;
+            lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
+            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailRow.text =strTitle;
+            [lblDetailRow sizeToFit];
+            [self addSubview:lblDetailRow];
+            UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, lblDetailRow.frame.size.height+ 1, 320, 1.0f)];
+            grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+            height=grayLine.frame.origin.y+grayLine.frame.size.height;
+            [self addSubview:grayLine];
+        }
+        
+        UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, height, 160, 43)];
         [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_main_camera_on"] forState:UIControlStateNormal];
         [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_main_camera_off"] forState:UIControlStateHighlighted];
         [cameraButton setTitle:@"             CHỤP ẢNH" forState:UIControlStateNormal];
-        [cameraButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        cameraButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
+        [cameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cameraButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
         [cameraButton addTarget:self action:@selector(cameraButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(7+150+5, lblDetailRow.frame.size.height+ 3, 150, 38)];
+        UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(161, height   , 160, 43)];
         [commentButton setBackgroundImage:[UIImage imageNamed:@"img_main_comment_on"] forState:UIControlStateNormal];
         [commentButton setBackgroundImage:[UIImage imageNamed:@"img_main_comment_off"] forState:UIControlStateHighlighted];
         [commentButton setTitle:@"             BÌNH LUẬN" forState:UIControlStateNormal];
-        [commentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        commentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
+        [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        commentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
         
         [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton* btnClose = [[UIButton alloc] initWithFrame:CGRectMake(320-20-5, -10, 20, 20)];
-        [btnClose setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
+        UIButton* btnClose = [[UIButton alloc] initWithFrame:CGRectMake(320-34-3, 0, 34, 34)];
+        [btnClose setBackgroundImage:[UIImage imageNamed:@"img_main_notification_close"] forState:UIControlStateNormal];
         [btnClose addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:cameraButton];
         [self addSubview:commentButton];
         [self addSubview:btnClose];
         
-        _height=commentButton.frame.size.height+commentButton.frame.origin.y+5+40;
+        _height=commentButton.frame.size.height+commentButton.frame.origin.y+4+40;
         CGRect _frame= CGRectMake(0, _view.frame.size.height, 320,_height );
         self.frame=_frame;
-        [self setBackgroundColor:[UIColor colorWithRed:(101.0f/255.0f) green:(111.0f/255.0f) blue:(85.0f/255.0f) alpha:1.0f]];
+//        [self setBackgroundColor:[UIColor colorWithRed:(25/255.0f) green:(25/255.0f) blue:(16/255.0f) alpha:.90f]];
         
+        [self setBackgroundColor:[UIColor clearColor]];
         [_view addSubview:self];
         
         //Add open button
         
-        _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-44-5, 32, 32)];
+        _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-44-5, 34, 34)];
         [_btnOpen setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
         [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_view addSubview:_btnOpen];

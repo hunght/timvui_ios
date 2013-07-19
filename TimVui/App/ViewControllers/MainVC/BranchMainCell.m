@@ -28,6 +28,7 @@
 #import "TVAppDelegate.h"
 #import "TVCoupon.h"
 #import "TVCoupons.h"
+
 @implementation BranchMainCell {
 @private
     __strong TVBranch *_branch;
@@ -49,9 +50,8 @@
         return nil;
     }
     
-    self.textLabel.adjustsFontSizeToFitWidth = YES;
-    self.textLabel.textColor = [UIColor redColor];
-
+    self.textLabel.textColor = [UIColor blackColor];
+    self.textLabel.numberOfLines = 1;
     self.detailTextLabel.numberOfLines = 1;
     self.textLabel.backgroundColor=[UIColor clearColor];
     self.detailTextLabel.backgroundColor=[UIColor clearColor];
@@ -64,15 +64,15 @@
     self.price_avg.highlightedTextColor = [UIColor whiteColor];
     
     
-    self.textLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    self.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
     self.price_avg.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     
     
-    UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 8.0, 35.0, 11, 12)];
+    UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 8.0, 35.0+7, 11, 12)];
     homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];
     
-    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 10.0, 53.0, 8, 11)];
+    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 10.0, 53.0+7, 8, 11)];
     price_avgIcon.image=[UIImage imageNamed:@"img_price_range_branch_icon"];
     
     CALayer* l = [self.imageView layer];
@@ -82,31 +82,41 @@
     [self.contentView addSubview:homeIcon];
     [self.contentView addSubview:price_avgIcon];
     
-    _utility=[[UIView alloc] initWithFrame:CGRectMake(80,65, 320-88, 18)];
+    _utility=[[UIView alloc] initWithFrame:CGRectMake(88,70+7, 320-88, 18)];
     [self.contentView addSubview:_utility];
-    [self.contentView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+    [self.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+
+    _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,7+7, 60, 15)];
+    _lblDistance.backgroundColor = [UIColor clearColor];
+    _lblDistance.textColor = [UIColor grayColor];
+    _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];
     
+    [self.contentView addSubview:_lblDistance];
     return self;
 }
 
-- (void)setBranch:(TVBranch *)branch {
+- (void)setBranch:(TVBranch *)branch withDistance:(double)distance {
     _branch = branch;
     self.textLabel.text=_branch.name;
     self.detailTextLabel.text=_branch.address_full;
     self.price_avg.text=_branch.price_avg;
+    
+    if (distance>1000.0)
+        _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
+    else
+        _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
     
     [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
 
     int lineHeight=0;
     
     for (TVCoupon* coupon in branch.coupons.items) {
-        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+25, lineHeight, 180, 25)];
+        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
         lblAddress.backgroundColor = [UIColor clearColor];
         lblAddress.textColor = [UIColor redColor];
         lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblAddress.numberOfLines = 1;
         lblAddress.text=coupon.name;
-        [lblAddress sizeToFit];
         [self.utility addSubview:lblAddress];
         
         UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, lineHeight, 15, 15)];
@@ -123,17 +133,17 @@
 }
 
 + (CGFloat)heightForCellWithPost:(TVBranch *)branch {
-    return (8+ 96+ 8+ branch.coupon_count* 30);
+    return (8+ 70+ 8+15+ branch.coupon_count* 18);
 }
 
 #pragma mark - UIView
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(5.0f, 8.0f, 70.0f, 70.0f);
-    self.textLabel.frame = CGRectMake(80+10.0f, 8.0f, 222.0f, 20.0f);
-    self.detailTextLabel.frame = CGRectMake(80+25.0f, 30.0f, 210.0f, 20.0f);
-    self.price_avg.frame = CGRectMake(80 +25.0f, 48.0f, 210.0f, 20.0f);
+    self.imageView.frame = CGRectMake(5.0f, 8.0f+7, 70.0f, 70.0f);
+    self.textLabel.frame = CGRectMake(80+10.0f, 8.0f+7, 180.0f, 20.0f);
+    self.detailTextLabel.frame = CGRectMake(80+25.0f, 30.0f+7, 210.0f, 20.0f);
+    self.price_avg.frame = CGRectMake(80 +25.0f, 48.0f+7, 210.0f, 20.0f);
     
 }
 

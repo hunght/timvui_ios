@@ -14,7 +14,6 @@
 
 @interface MapTableViewController : UIViewController<LocationPickerViewDelegate,UITableViewDataSource, UITableViewDelegate,SearchVCDelegate,GMSMapViewDelegate>
 @property (nonatomic, strong) LocationPickerView *locationPickerView;
-@property (nonatomic, retain) UIButton *btnSearchBar;
 @property(nonatomic,strong)TVBranches *branches;
 @property(nonatomic,assign)CLLocationCoordinate2D lastPosition;
 @property(nonatomic,assign)CLLocationCoordinate2D currentCameraPosition;

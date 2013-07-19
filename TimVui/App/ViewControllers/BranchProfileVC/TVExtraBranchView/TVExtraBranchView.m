@@ -310,6 +310,7 @@
     }
     return nil;
 }
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;{
     switch (_currentTableType) {
         case kTVComment:

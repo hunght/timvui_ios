@@ -29,7 +29,8 @@
 @property (nonatomic, strong) TVBranch *branch;
 @property(nonatomic,strong)UIView *utility;
 @property (nonatomic,strong) UILabel *price_avg;
-
+@property (nonatomic, strong)UILabel* lblDistance;
 + (CGFloat)heightForCellWithPost:(TVBranch *)branch;
+- (void)setBranch:(TVBranch *)branch withDistance:(double)distance ;
 
 @end
