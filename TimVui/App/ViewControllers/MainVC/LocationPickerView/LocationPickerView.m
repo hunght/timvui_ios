@@ -455,14 +455,6 @@
 
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
-    BOOL isScrollViewIsDraggedDownwards;
-    if (scrollOffset < lastDragOffset){
-        isScrollViewIsDraggedDownwards = YES;
-        
-    }
-    else
-        isScrollViewIsDraggedDownwards = NO;
-    
     if ((self.isMapFullScreen == NO) &&
         (self.isMapAnimating == NO)) {
         CGFloat mapFrameYAdjustment = 0.0;
@@ -480,9 +472,7 @@
             if (mapFrameYAdjustment <= -(self.defaultMapViewFrame.size.height)) {
                 mapFrameYAdjustment = -(self.defaultMapViewFrame.size.height);
             }
-        }
-        
-        if (mapFrameYAdjustment) {
+        }if (mapFrameYAdjustment) {
             CGRect newMapFrame = self.mapView.frame;
             newMapFrame.origin.y = mapFrameYAdjustment;
             [self.mapView setFrame:newMapFrame];

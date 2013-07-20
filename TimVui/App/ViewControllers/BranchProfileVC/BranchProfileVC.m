@@ -26,6 +26,8 @@
 @interface BranchProfileVC ()
 {
     @private
+        int heightDefaultScroll;
+    int sizeHeightDefaultScroll;
         double lastDragOffset;
 }
 @end
@@ -48,11 +50,7 @@
     UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7, 186, 310, 90)];
     [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=genarateInfoView.layer;
-    [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
-    // You can even add a border
-    [l setBorderWidth:1.0];
-    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    [self setConnerBorderWithLayer:l];
     
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
@@ -113,6 +111,21 @@
     return genarateInfoView;
 }
 
+- (void)setConnerBorderWithLayer:(CALayer *)l
+{
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:1.0];
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+}
+
+- (void)settingTextForTitle:(UILabel *)lblTitle
+{
+    lblTitle.backgroundColor = [UIColor clearColor];
+    lblTitle.textColor = [UIColor blackColor];
+    lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
+}
+
 - (void)addCouponToInfoView:(int *)height_p
 {
     CALayer *l;
@@ -120,27 +133,31 @@
         UIView* couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, *height_p, 320-6*2, 90)];
         [couponBranch setBackgroundColor:[UIColor whiteColor]];
         l=couponBranch.layer;
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:5.0];
-        [l setBorderWidth:1.0];
-        [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+        [self setConnerBorderWithLayer:l];
         [_scrollView addSubview:couponBranch];
         
         UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
         lblTitle.backgroundColor = [UIColor clearColor];
-        lblTitle.textColor = [UIColor redColor];
-        lblTitle.font = [UIFont fontWithName:@"UVNVanBold" size:(20)];
+        lblTitle.textColor = [UIColor blackColor];
+        lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
         lblTitle.text=@"COUPON";
         [couponBranch addSubview:lblTitle];
-        
+        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+        [couponBranch addSubview:imageLine];
         //COUPON
-        *height_p=lblTitle.frame.origin.y+lblTitle.frame.size.height+15;
+        *height_p=imageLine.frame.origin.y+imageLine.frame.size.height+15;
+        
+
+        
         int i=0;
         for (TVCoupon* coupon in _branch.coupons.items) {
+
+            
             UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,*height_p , 290, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
-            lblDetailRow.textColor = [UIColor blackColor];
-            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailRow.textColor = [UIColor redColor];
+            lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
             lblDetailRow.text = coupon.name;
             lblDetailRow.numberOfLines = 0;
             lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
@@ -163,15 +180,36 @@
             [couponBranch addSubview:borderView];
             [couponBranch addSubview:lblDetailRow];
             
-            //View for info branch
-            UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(5, lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height+10, 320-(6+5)*2, 85)];
+            *height_p=lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height+20;
+            
+            UIButton* btnSMS = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 75, 25)];
+            [btnSMS setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_compose"] forState:UIControlStateNormal];
+            //[btnSMS setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+            [btnSMS addTarget:self action:@selector(btnSMSButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [couponBranch addSubview:btnSMS];
+            *height_p=btnSMS.frame.origin.y+btnSMS.frame.size.height;
+            
+            UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, *height_p, 170, 23)];
+            [self settingTextForTitle:lblTitle];
+            lblTitle.text=[NSString stringWithFormat:@"COUPON %@",coupon.code];
+            [couponBranch addSubview:lblTitle];
+            
+            UILabel *lblSendTo = [[UILabel alloc] initWithFrame:CGRectMake(170+10.0, *height_p, 130, 23)];
+            lblSendTo.backgroundColor = [UIColor clearColor];
+            lblSendTo.textColor = [UIColor blackColor];
+            lblSendTo.font = [UIFont fontWithName:@"Arial-BoldMT" size:(20)];
+            lblSendTo.text=[NSString stringWithFormat:@"gửi tới %@",SMS_NUMBER];
+            [couponBranch addSubview:lblSendTo];
+            *height_p=lblSendTo.frame.origin.y+lblSendTo.frame.size.height+10;
+            
+            //View for info coupon
+            UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(5, *height_p, 320-(6+5)*2, 85)];
             [infoCouponBranch setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1.0f]];
             
             l=infoCouponBranch.layer;
+//            [self setConnerBorderWithLayer:l];
             [l setMasksToBounds:YES];
-            [l setCornerRadius:5.0];
-            [l setBorderWidth:1.0];
-            [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+            [l setCornerRadius:1.0];
             
             UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 5, 11, 12)];
             quatityIcon.image=[UIImage imageNamed:@"img_profile_branch_quatity_coupon"];
@@ -213,7 +251,6 @@
             codeIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_code"];
             [infoCouponBranch addSubview:codeIcon];
             
-            
             lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 45.0, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
             lblTitleRow.textColor = [UIColor grayColor];
@@ -231,7 +268,6 @@
             UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65, 12, 13)];
             clockIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_clock"];
             [infoCouponBranch addSubview:clockIcon];
-            
             
             lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 65.0, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
@@ -312,10 +348,7 @@
     [mapViewButton setImageWithURL:url];
     [mapViewButton addTarget:self action:@selector(mapViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     CALayer* l=mapViewButton.layer;
-    [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
-    [l setBorderWidth:1.0];
-    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    [self setConnerBorderWithLayer:l];
     [_scrollView addSubview:mapViewButton];
     
     UIView* bgImageView=[[UIView alloc] initWithFrame:CGRectMake(0, 140-5, 320, 35+10)];
@@ -365,20 +398,18 @@
     UIView* detailInfoBranch=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 45)];
     [detailInfoBranch setBackgroundColor:[UIColor whiteColor]];
     l=detailInfoBranch.layer;
-    [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
-    [l setBorderWidth:1.0];
-    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+   [self setConnerBorderWithLayer:l];
     [_scrollView addSubview:detailInfoBranch];
     
     UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
-    lblTitle.backgroundColor = [UIColor clearColor];
-    lblTitle.textColor = [UIColor redColor];
-    lblTitle.font = [UIFont fontWithName:@"UVNVanBold" size:(20)];
-    lblTitle.text=@"THÔNG TIN";
+    [self settingTextForTitle:lblTitle];
+    lblTitle.text=@"Thông tin";
     [detailInfoBranch addSubview:lblTitle];
+    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+    [detailInfoBranch addSubview:imageLine];
     
-    int heightDetailInfo=lblTitle.frame.origin.y+lblTitle.frame.size.height +12;
+    int heightDetailInfo=imageLine.frame.origin.y+imageLine.frame.size.height +12;
     //Style foody
     
     NSString* strDetail=[_branch.cats valueForKey:@"name"];
@@ -473,19 +504,17 @@
     UIView* utilitiesView=[[UIView alloc] initWithFrame:CGRectMake(6, detailInfoBranch.frame.origin.y+detailInfoBranch.frame.size.height+10, 320-6*2, 45)];
     [utilitiesView setBackgroundColor:[UIColor whiteColor]];
     l=utilitiesView.layer;
-    [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
-    [l setBorderWidth:1.0];
-    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    [self setConnerBorderWithLayer:l];
     [_scrollView addSubview:utilitiesView];
     
     lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
-    lblTitle.backgroundColor = [UIColor clearColor];
-    lblTitle.textColor = [UIColor redColor];
-    lblTitle.font = [UIFont fontWithName:@"UVNVanBold" size:(20)];
-    lblTitle.text=@"TIỆN ÍCH";
+    [self settingTextForTitle:lblTitle];
+    lblTitle.text=@"Tiện ích";
     [utilitiesView addSubview:lblTitle];
-    int heightUtilities=lblTitle.frame.origin.y+lblTitle.frame.size.height +27;
+    imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+    [utilitiesView addSubview:imageLine];
+    int heightUtilities=imageLine.frame.origin.y+imageLine.frame.size.height +27;
     int rowCount=0;
     
     NSDictionary* params=[SharedAppDelegate getParamData];
@@ -564,15 +593,11 @@
 //    UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, bgViewHeight, 320, height-bgViewHeight)];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
 //    [_scrollView insertSubview:bgView belowSubview:mapViewButton];
-    
-    
     [_scrollView setContentSize:CGSizeMake(320, height)];
 }
 
 - (void)viewDidLoad
 {
-    
-    
     UIButton* shareButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [shareButton setImage:[UIImage imageNamed:@"img_profile_branch_share_button"] forState:UIControlStateNormal];
 //    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -608,12 +633,55 @@
     }];
     
     [super viewDidLoad];
+    
+    void *context = (__bridge void *)self;
+    [self.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
+    heightDefaultScroll=_imgBranchCover.frame.origin.y;
+    sizeHeightDefaultScroll=_imgBranchCover.frame.size.height;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)dealloc
+{
+    void *context = (__bridge void *)self;
+    [self.scrollView removeObserver:self forKeyPath:@"contentOffset" context:context];
+}
+
+#pragma mark - KVO Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+	// Make sure we are observing this value.
+	if (context != (__bridge void *)self) {
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+		return;
+	}
+    if ((object == self.scrollView) &&
+        ([keyPath isEqualToString:@"contentOffset"] == YES)) {
+        [self scrollViewDidScrollWithOffset:self.scrollView.contentOffset.y];
+        return;
+    }
+}
+
+- (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
+{
+//    NSLog(@"scrollOffset=%f",scrollOffset);
+    if (scrollOffset>0) {
+        CGRect frame= _imgBranchCover.frame;
+        frame.origin.y=heightDefaultScroll-scrollOffset*.8;
+        _imgBranchCover.frame=frame;
+    }else{
+        CGRect frame= _imgBranchCover.frame;
+        frame.size.height=sizeHeightDefaultScroll-scrollOffset*.8;
+        _imgBranchCover.frame=frame;
+    }
 }
 
 #pragma mark - Helper
@@ -666,9 +734,11 @@
 }
 
 #pragma mark - IBAction
+-(void)btnSMSButtonClicked:(id)sender{
+    
+}
 
 -(void)shareButtonClicked:(id)s{
-
     SearchWithContactsVC *viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES withParam:nil];
     [self.navigationController pushViewController:viewController animated:YES];
 }

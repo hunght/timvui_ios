@@ -40,7 +40,7 @@
         [[GlobalDataUser sharedAccountClient].dicCatSearchParam addObject:[[GlobalDataUser sharedAccountClient].catArr objectAtIndex:sender.tag] ];
         [sender setSelected:YES];
     }
-//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCatSearchParam);
+    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCatSearchParam);
 }
 
 -(void)priceButtonClicked:(UIButton*)sender{
@@ -75,7 +75,7 @@
     [sender setUserInteractionEnabled:NO];
 }
 
-- (IBAction)buttonCityClicked:(id)sender {
+- (void)buttonCityClicked:(id)sender {
     
     SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[SharedAppDelegate.getCityDistrictData valueForKey:@"data"]];
     [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamCity;
@@ -420,6 +420,12 @@
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _btnCity = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [_btnCity setBackgroundImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [_btnCity addTarget:self action:@selector(buttonCityClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_viewNavigation addSubview:_btnCity];
+    
     _viewNavigation=[[UIView alloc] initWithFrame:CGRectMake(48,0, 320, 44)];
     [_viewNavigation setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_navigation"]]];
     UIImageView* imgView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 7, 260, 30)];

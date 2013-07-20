@@ -21,7 +21,7 @@
 @property (nonatomic, retain) NSObject<SearchVCDelegate>* delegate;
 @property (retain, nonatomic) UITextField *tfdSearch;
 @property (retain, nonatomic) UIView *viewNavigation;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCity;
+@property (retain, nonatomic) UIButton *btnCity;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnDistrict;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnZone;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCuisine;
