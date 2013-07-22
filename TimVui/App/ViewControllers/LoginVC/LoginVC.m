@@ -70,8 +70,10 @@
 
 - (void)viewDidUnload
 {
+    [self.webView setDelegate:nil];
     [self setWebView:nil];
     [super viewDidUnload];
+    [SVProgressHUD dismiss];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
