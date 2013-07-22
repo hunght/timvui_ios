@@ -22,6 +22,7 @@
 #import "BlockAlertView.h"
 #import "RecentlyBranchListVC.h"
 #import "ManualVC.h"
+#import <SVProgressHUD.h>
 #define kNumberOfSections 3
 
 enum {
@@ -35,18 +36,17 @@ enum {
 /* set to 3 if you want to see how it behaves 
  when having more cells in the same section 
  */
-#define kNumberOfRowsInSection1 2 
+#define kNumberOfRowsInSection1 2
 
 enum {
     kS1Row0 = 0,
     kS1Row1
 };
 enum {
-    kS1AccountRecentlyAction = 0,
-    kS1AccountInfoUser,
+    kS1AccountRecentlyView=1,
     kS1AccountReceivedCoupon,
-    kS1AccountInteresting,
-    kS1AccountRecentlyView
+    kS1AccountInteresting
+    
 };
 
 /* set to 2 if you want to see how it behaves 
@@ -79,7 +79,7 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin) {
         _lastStatusLogin=YES;
         elts = [NSMutableArray array];
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 3; i++) {
             // just some mock elements
             VPPDropDownElement *e = [[VPPDropDownElement alloc] initWithTitle:[NSString stringWithFormat:@"Element %d",i] andObject:[NSNumber numberWithInt:i]];
             [elts addObject:e];
@@ -108,9 +108,9 @@ enum {
     if (self) {
         [self checkAndRefreshTableviewWhenUserLoginOrLogout];
         _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ Anuong.net",@"Cài đặt", nil];
-        [self.tableView setBackgroundColor:[UIColor clearColor]];
+        [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
         [self.view setBackgroundColor:[UIColor clearColor]];
-        UIColor *bgColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_table_menu_bg"]];
+        UIColor *bgColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]];
         self.tableView.backgroundColor = bgColor;
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
@@ -150,6 +150,9 @@ enum {
 {
     [super viewWillAppear:animated];
     [self refreshTableViewDropdown];
+    if ([SVProgressHUD isVisible])
+        [SVProgressHUD dismiss];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -174,119 +177,6 @@ enum {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - Table view data source
-
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 44;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return kNumberOfSections;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    int rows = [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:section];
-    switch (section) {
-
-        case kSection1UserAccount:
-            rows += kNumberOfRowsInSection1;
-            break;
-        case kSection2Services:
-            rows += kNumberOfRowsInSection2;
-            break;
-        case kSection3Setting:
-            if ([GlobalDataUser sharedAccountClient].isLogin)
-                rows += kNumberOfRowsInSection3;
-            else
-                rows += kNumberOfRowsInSection3 -1;
-            
-            break;
-            
-    }
-    return rows;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    
-    GHMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
-    }
-    
-    
-    // Configure the cell...
-    cell.textLabel.text = nil;
-
-    if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
-        return [VPPDropDown tableView:tableView cellForRowAtIndexPath:indexPath];
-    }
-    
-    // first check if any dropdown contains the requested cell
-    int row = indexPath.row - [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:indexPath.section];
-    switch (indexPath.section) {
-        case kSection1UserAccount:
-            switch (row) {
-                case kS1Row1:
-                    if ([GlobalDataUser sharedAccountClient].isLogin) 
-                        cell.textLabel.text = @"Cài đặt tài khoản";
-                    else
-                        cell.textLabel.text = @"Xem gần đây";
-                    
-                    break;
-            }
-            break;
-        case kSection2Services:
-            switch (row) {
-                case kS2Home:
-                    cell.textLabel.text = @"Trang chủ";
-                    break;
-                case kS2Handbook:
-                    cell.textLabel.text = @"Cẩm nang";
-                    break;
-                case kS2GoingEven:
-                    cell.textLabel.text = @"Sưu tập";
-                    break;
-                case kS2Promotion:
-                    cell.textLabel.text = @"Blog";
-                    break;
-            }
-            break;
-        case kSection3Setting:
-            switch (row) {
-                case kS3Row0:
-                    cell.textLabel.text = @"Giới thiệu";
-                    break;
-                case kS3Row1:
-                    cell.textLabel.text = @"Điều khoản sử dụng";
-                    break;
-                case kS3Row2:
-                    cell.textLabel.text = @"Facebook Page";
-                    break;
-                case kS3Row3:
-                    cell.textLabel.text = @"Góp ý- Báo lỗi";
-                    break;
-                case kS3Row4:
-                    cell.textLabel.text = @"Mời bạn bè";
-                    break;
-                case kS3Row5:
-                    if ([GlobalDataUser sharedAccountClient].isLogin) {
-                        cell.textLabel.text = @"Đăng suất";
-                    }
-                    break;
-            }
-            break;
-
-    }
-    
-    return cell;
-}
 
 -(void)showLoginScreenWhenUserNotLogin:(UINavigationController*)nav{
     LoginVC* loginVC=nil;
@@ -446,6 +336,7 @@ enum {
         } else {
             loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
         }
+        
         loginVC.isPushNaviYES=YES;
         [nav pushViewController:loginVC animated:YES];
         [loginVC goWithDidLogin:^{
@@ -459,15 +350,15 @@ enum {
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return (_headers[section] == [NSNull null]) ? 0.0f : 44.0f;
+	return (_headers[section] == [NSNull null]) ? 0.0f : 34.0f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSObject *headerText = _headers[section];
 	UIView *headerView = nil;
 	if (headerText != [NSNull null]) {
-		headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 44.0f)];
-		headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_header_session"]];
+		headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 34.0f)];
+		headerView.backgroundColor = [UIColor colorWithRed:(0/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:1.0f];
 		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 3.0f, 5.0f)];
 		textLabel.text = (NSString *) headerText;
 		textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(17)];
@@ -544,7 +435,7 @@ enum {
                 
             case kSection1UserAccount:
                 switch (row) {
-                    case kS1Row1:
+                    case kS1Row0:
     
                         break;
                     default:
@@ -650,6 +541,134 @@ enum {
     [navController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
     [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
 }
+#pragma mark - Table view data source
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section==0 && indexPath.row==0) {
+        return 65;
+    }
+    return 50;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return kNumberOfSections;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    int rows = [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:section];
+    switch (section) {
+            
+        case kSection1UserAccount:
+            rows += kNumberOfRowsInSection1;
+            break;
+        case kSection2Services:
+            rows += kNumberOfRowsInSection2;
+            break;
+        case kSection3Setting:
+            if ([GlobalDataUser sharedAccountClient].isLogin)
+                rows += kNumberOfRowsInSection3;
+            else
+                rows += kNumberOfRowsInSection3 -1;
+            
+            break;
+            
+    }
+    return rows;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    
+    GHMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] ;
+    }
+    
+    
+    // Configure the cell...
+    cell.textLabel.text = nil;
+    
+    if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
+        return [VPPDropDown tableView:tableView cellForRowAtIndexPath:indexPath];
+    }
+    
+    // first check if any dropdown contains the requested cell
+    int row = indexPath.row - [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:indexPath.section];
+    switch (indexPath.section) {
+        case kSection1UserAccount:
+            switch (row) {
+                case kS1Row1:
+                    if ([GlobalDataUser sharedAccountClient].isLogin)
+                    {
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_user_option"];
+                        cell.textLabel.text = @"Tuỳ chọn Gợi ý";
+                       
+                    }
+                    else{
+                              
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_recently_views"];
+                        cell.textLabel.text = @"Xem gần đây";
+                    }
+                    break;
+//                case kS1AccountUserOption:
+//                    if ([GlobalDataUser sharedAccountClient].isLogin){
+//                        cell.imageView.image=[UIImage imageNamed:@"img_menu_user_option"];
+//                        cell.textLabel.text = @"Tuỳ chọn Gợi ý";
+//                    }
+//                    break;
+                
+            }
+            break;
+        case kSection2Services:
+            switch (row) {
+                case kS2Home:
+                    cell.textLabel.text = @"Trang chủ";
+                    break;
+                case kS2Handbook:
+                    cell.textLabel.text = @"Cẩm nang";
+                    break;
+                case kS2GoingEven:
+                    cell.textLabel.text = @"Sưu tập";
+                    break;
+                case kS2Promotion:
+                    cell.textLabel.text = @"Blog";
+                    break;
+            }
+            break;
+        case kSection3Setting:
+            switch (row) {
+                case kS3Row0:
+                    cell.textLabel.text = @"Giới thiệu";
+                    break;
+                case kS3Row1:
+                    cell.textLabel.text = @"Điều khoản sử dụng";
+                    break;
+                case kS3Row2:
+                    cell.textLabel.text = @"Facebook Page";
+                    break;
+                case kS3Row3:
+                    cell.textLabel.text = @"Góp ý- Báo lỗi";
+                    break;
+                case kS3Row4:
+                    cell.textLabel.text = @"Mời bạn bè";
+                    break;
+                case kS3Row5:
+                    if ([GlobalDataUser sharedAccountClient].isLogin) {
+                        cell.textLabel.text = @"Đăng suất";
+                    }
+                    break;
+            }
+            break;
+            
+    }
+    
+    return cell;
+}
 
 #pragma mark - VPPDropDownDelegate
 
@@ -688,6 +707,9 @@ enum {
     if ([GlobalDataUser sharedAccountClient].isLogin){
         cell.textLabel.text = [GlobalDataUser sharedAccountClient].user.first_name;
         [cell.imageView setImageWithURL:[[NSURL alloc] initWithString:[GlobalDataUser sharedAccountClient].user.avatar]  placeholderImage:[UIImage imageNamed:@"user"]];
+        cell.textLabel.frame = CGRectMake(50.0f, 10.0f, 200.0f, 43.0f);
+        cell.imageView.frame = CGRectMake(28, 5, 50, 50);
+        [cell setNeedsDisplay];
     }else{
         cell.textLabel.text = @"Đăng nhập";
         [cell.imageView setImage:[UIImage imageNamed:@"user"]];
@@ -705,19 +727,16 @@ enum {
     }
     int row=globalIndexPath.row;
     switch (row) {
-        case kS1AccountRecentlyAction:
-            cell.textLabel.text = @"Hoạt động gần đây";
-            break;
-        case kS1AccountInfoUser:
-            cell.textLabel.text = @"Thông tin cá nhân";
-            break;
         case kS1AccountReceivedCoupon:
+            cell.imageView.image=[UIImage imageNamed:@"img_menu_coupon_received"];
             cell.textLabel.text = @"Coupon đã nhận";
             break;
         case kS1AccountInteresting:
+            cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
             cell.textLabel.text = @"Đang quan tâm";
             break;
         case kS1AccountRecentlyView:
+            cell.imageView.image=[UIImage imageNamed:@"img_menu_recently_views"];
             cell.textLabel.text = @"Xem gần đây";
             break;
         default:

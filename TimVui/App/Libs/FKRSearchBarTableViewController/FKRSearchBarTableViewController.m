@@ -50,7 +50,9 @@
             }
             
             for (NSDictionary *personName in self.famousPersons) {
+                NSLog(@"%@",personName);
                 NSString* personNameStr=[personName valueForKey:@"name"];
+                
                 NSInteger index = [collation sectionForObject:personNameStr collationStringSelector:@selector(description)];
                 [[unsortedSections objectAtIndex:index] addObject:personName];
             }

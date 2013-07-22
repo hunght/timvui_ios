@@ -22,7 +22,7 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
 		self.clipsToBounds = YES;
 		UIView *bgView = [[UIView alloc] init];
-        bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_cell_menu_hover"]];
+        bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]];
 		self.selectedBackgroundView = bgView;
 		
 		self.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -33,12 +33,12 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 		self.textLabel.textColor = [UIColor colorWithRed:(101.0f/255.0f) green:(96.0f/255.0f) blue:(100.0f/255.0f) alpha:1.0f];
 		
 		UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:1.0f];
+		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:2.0f];
 		[self.textLabel.superview addSubview:topLine];
 		
-		UIView *topLine2 = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 1.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-		topLine2.backgroundColor = [UIColor whiteColor];
-		[self.textLabel.superview addSubview:topLine2];
+//		UIView *topLine2 = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 1.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
+//		topLine2.backgroundColor = [UIColor whiteColor];
+//		[self.textLabel.superview addSubview:topLine2];
 		
 //		UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
 //		bottomLine.backgroundColor = [UIColor colorWithRed:(40.0f/255.0f) green:(47.0f/255.0f) blue:(61.0f/255.0f) alpha:1.0f];
@@ -50,8 +50,8 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 #pragma mark UIView
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	self.textLabel.frame = CGRectMake(50.0f, 0.0f, 200.0f, 43.0f);
-	self.imageView.frame = CGRectMake(0.0f, 0.0f, 50.0f, 43.0f);
+	self.textLabel.frame = CGRectMake(50.0f, 5.0f, 200.0f, 43.0f);
+	self.imageView.frame = CGRectMake(28, 15.0f, 20, 20);
 }
 
 @end

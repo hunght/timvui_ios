@@ -31,6 +31,24 @@
 }
 
 #pragma mark IBAction
+- (IBAction)swithChagedValue:(UISwitch*)sender {
+    sender.userInteractionEnabled=NO;
+    if (sender.isOn) {
+        CGAffineTransform transform = CGAffineTransformMakeTranslation(0,-70);
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            // animate it to the identity transform (100% scale)
+            _viewSlide.transform = transform;
+        } completion:^(BOOL finished){
+            sender.userInteractionEnabled=YES;
+        }];
+    }else
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            // animate it to the identity transform (100% scale)
+            _viewSlide.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished){
+            sender.userInteractionEnabled=YES;
+        }];
+}
 
 -(void)categoryButtonClicked:(UIButton*)sender{
 //    NSLog(@"%@",[GlobalDataUser sharedAccountClient].catArr);
@@ -109,7 +127,7 @@
 }
 
 - (IBAction)buttonDistrictClicked:(id)sender {
-    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"districts"]];
+    SearchWithArrayVC *viewController = [[SearchWithArrayVC alloc] initWithSectionIndexes:YES withParam:[[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"districts"] allValues]];
     [GlobalDataUser sharedAccountClient].currentSearchParam=kSearchParamDistrict;
     [viewController.pickedArr addObjectsFromArray:[GlobalDataUser sharedAccountClient].dicDistrictSearchParam];
     [self.navigationController pushViewController:viewController animated:YES];
@@ -155,7 +173,7 @@
     
     [params setValue:kDistanceSearchMapDefault forKey:@"distance"];
     
-    if ([GlobalDataUser sharedAccountClient].dicCitySearchParam) {
+    if ([GlobalDataUser sharedAccountClient].dicCitySearchParam&&!_switchUserLocation.isOn) {
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
         location=[[GlobalDataUser sharedAccountClient].dicCitySearchParam safeLocationForKey:@"latlng"];
     }else{
@@ -381,8 +399,7 @@
     _btnPrice100_200.tag=3;
     _btnPrice200_500.tag=4;
     _btnPrice500_1000.tag=2;
-    
-    
+
     
     //Set value for button category
     if (![GlobalDataUser sharedAccountClient].catArr) {
@@ -574,7 +591,10 @@
     [self setLblKaraoke:nil];
     [self setLblCakeShop:nil];
     [self setLblBarPub:nil];
+    [self setSwitchUserLocation:nil];
+    [self setViewSlide:nil];
     [super viewDidUnload];
 }
+
 
 @end

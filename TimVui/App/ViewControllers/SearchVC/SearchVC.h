@@ -21,7 +21,10 @@
 @property (nonatomic, retain) NSObject<SearchVCDelegate>* delegate;
 @property (retain, nonatomic) UITextField *tfdSearch;
 @property (retain, nonatomic) UIView *viewNavigation;
+@property (weak, nonatomic) IBOutlet UISwitch *switchUserLocation;
 @property (retain, nonatomic) UIButton *btnCity;
+@property (weak, nonatomic) IBOutlet UIView *viewSlide;
+- (IBAction)swithChagedValue:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *lblRestaurant;
 @property (weak, nonatomic) IBOutlet UILabel *lblEatingShop;
 @property (weak, nonatomic) IBOutlet UILabel *lblCafeKem;

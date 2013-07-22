@@ -60,6 +60,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 {
     self.famousPersons=dic;
+    NSLog(@"%@",dic);
     if ((self = [super initWithSectionIndexes:showSectionIndexes])) {
         /*
          The exact same behavior as the contacts app is only possible with using private API. Without using private API the section index control on the right of the table won't overlap the search bar.

@@ -75,14 +75,15 @@
     self.navigationController.navigationBarHidden=YES;
     [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
 }
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 	_numPages = kNumberOfSkinsCamera;
     _arrImages=[[NSMutableArray alloc] init];
-    _lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 20, 20)];
-    _lblPhone.backgroundColor = [UIColor whiteColor];
-    _lblPhone.textColor = [UIColor redColor];
+    _lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(5, -14, 20, 20)];
+    _lblPhone.backgroundColor = [UIColor redColor];
+    _lblPhone.textColor = [UIColor whiteColor];
     _lblPhone.textAlignment=UITextAlignmentCenter;
     _lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(15)];
     
@@ -90,9 +91,6 @@
     [l setMasksToBounds:YES];
     [l setCornerRadius:10];
     
-    // You can even add a border
-    [l setBorderWidth:1.0];
-    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     [_lblPhone setHidden:YES];
     [_btnStoreImage addSubview:_lblPhone];
     
@@ -103,7 +101,8 @@
     [_btnStoreImage setImage:[UIImage imageNamed:@"img_camera_store_photos"] forState:UIControlStateNormal];
     [_btnAlbumPicker setImage:[UIImage imageNamed:@"img_camera_album_picker"] forState:UIControlStateNormal];
     [_btnCameraSkin setBackgroundImage:[UIImage imageNamed:@"img_camera_camera_skin"] forState:UIControlStateNormal];
-    
+    [_btnClose setImage:[UIImage imageNamed:@"img_camera_close"] forState:UIControlStateNormal];
+    [_btnLocationPicker setImage:[UIImage imageNamed:@"img_camera_location_picker"] forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload {

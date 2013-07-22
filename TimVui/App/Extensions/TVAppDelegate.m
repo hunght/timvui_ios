@@ -183,10 +183,12 @@
         [defaults setValue:dic forKey:key];
         [defaults synchronize];
         if ([key isEqualToString:kGetCityDistrictData]) {
+             NSLog(@"%@",dic);
             _getCityDistrictData=dic;
         }else if ([key isEqualToString:kDataGetParamData]) {
             _getParamData=dic;
         }else if ([key isEqualToString:kGetDistrictHasPublicLocationData]) {
+           
             _getDistrictHasPublicLocationData=dic;
         }else if ([key isEqualToString:kGetPublicLocationData]) {
             _getPublicLocationData=dic;
