@@ -22,11 +22,16 @@
 @property (retain, nonatomic) UITextField *tfdSearch;
 @property (retain, nonatomic) UIView *viewNavigation;
 @property (retain, nonatomic) UIButton *btnCity;
+@property (weak, nonatomic) IBOutlet UILabel *lblRestaurant;
+@property (weak, nonatomic) IBOutlet UILabel *lblEatingShop;
+@property (weak, nonatomic) IBOutlet UILabel *lblCafeKem;
+@property (weak, nonatomic) IBOutlet UILabel *lblKaraoke;
+@property (weak, nonatomic) IBOutlet UILabel *lblCakeShop;
+@property (weak, nonatomic) IBOutlet UILabel *lblBarPub;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnDistrict;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnZone;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCuisine;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPurpose;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnUlitility;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice100;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice100_200;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice200_500;
@@ -48,7 +53,7 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblZone;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblCuisine;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblPurpose;
-@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblUtilities;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblDictricts;
 - (IBAction)btnCancelSearchToolbarClicked:(id)sender;
 - (IBAction)btnSearchToolbarClicked:(id)sender;
 

@@ -99,6 +99,7 @@ static bool isRetinaYES =NO;
     else
         return [NSURL URLWithString:[arrURLs valueForKey:@"480"]];
 }
+
 + (NSURL *)getLargeAlbumPhoto:(NSDictionary *)arrURLs
 {
     if (!isRetinaYES)
@@ -106,6 +107,7 @@ static bool isRetinaYES =NO;
     else
         return [NSURL URLWithString:[arrURLs valueForKey:@"300"]];
 }
+
 + (NSURL *)getOriginalAlbumPhoto:(NSDictionary *)arrURLs
 {
         return [NSURL URLWithString:[arrURLs valueForKey:@"900"]];
@@ -123,6 +125,18 @@ static bool isRetinaYES =NO;
     // You can even add a border
     [l setBorderWidth:1.0];
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+}
+
++ (UIImage *) imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    //  [[UIColor colorWithRed:222./255 green:227./255 blue: 229./255 alpha:1] CGColor]) ;
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
 }
 
 #pragma mark - Validate TextField

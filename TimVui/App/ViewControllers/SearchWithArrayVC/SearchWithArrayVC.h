@@ -12,6 +12,8 @@
 @interface SearchWithArrayVC : FKRSearchBarTableViewController {
     
 }
+
 @property (strong, nonatomic) NSMutableArray  *pickedArr;
+
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic;
 @end

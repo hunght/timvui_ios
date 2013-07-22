@@ -224,7 +224,6 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
             
             //To do with this because mutile choose make it fail
             [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
-            [self.navigationController popViewControllerAnimated:YES];
             break;
         
         default:
