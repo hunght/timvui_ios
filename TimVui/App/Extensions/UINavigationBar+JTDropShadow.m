@@ -12,11 +12,12 @@
 
 @implementation UINavigationBar (JTDropShadow)
 
-- (void)dropShadowWithOffset:(CGSize)offset
-                      radius:(CGFloat)radius
-                       color:(UIColor*)color 
-                     opacity:(CGFloat)opacity
+- (void)dropShadow
 {
+   CGSize offset= CGSizeMake(0,2);
+   CGFloat  radius=2.0f;
+   CGFloat opacity=0.6;
+    UIColor* color=[UIColor blackColor];
     if ([self respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])
     {
         [self setBackgroundImage:[UIImage imageNamed:@"img_navigation_with_icon"] forBarMetrics:UIBarMetricsDefault];

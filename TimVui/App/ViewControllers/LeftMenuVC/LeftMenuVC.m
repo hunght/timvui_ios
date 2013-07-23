@@ -528,7 +528,7 @@ enum {
     } else {
         navController = [[MyNavigationController alloc] initWithRootViewController:viewController];
     }
-    [navController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+    [navController.navigationBar dropShadow];
 	navController.view.layer.shadowOpacity = 0.8f;
 	navController.view.layer.shadowRadius = 5;
 	navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -538,7 +538,7 @@ enum {
     [self.slidingViewController setTopViewController:navController];
 	self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
     [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
-    [navController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+    [navController.navigationBar dropShadow];
     [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
 }
 #pragma mark - Table view data source

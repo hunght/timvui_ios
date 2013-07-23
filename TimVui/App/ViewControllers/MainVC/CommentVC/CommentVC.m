@@ -44,7 +44,7 @@
     [self initKeyboardControls];
     
     // Do any additional setup after loading the view from its nib.
-    [self.navigationController.navigationBar dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+    [self.navigationController.navigationBar dropShadow];
     if (!_branch)  self.navigationItem.leftBarButtonItem = self.toggleBarButtonItem;
     self.navigationItem.rightBarButtonItem = [self backBarButtonItem];
     

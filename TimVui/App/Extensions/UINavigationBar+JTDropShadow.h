@@ -11,10 +11,7 @@
 
 @interface UINavigationBar (JTDropShadow)
 
-- (void)dropShadowWithOffset:(CGSize)offset
-                      radius:(CGFloat)radius
-                       color:(UIColor*)color
-                     opacity:(CGFloat)opacity;
+- (void)dropShadow;
 -(void)setNavigationBarWithoutIcon:(BOOL)isYES;
 @end
 
