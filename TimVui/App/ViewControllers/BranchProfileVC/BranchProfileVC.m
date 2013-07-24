@@ -23,6 +23,7 @@
 #import "TVNetworkingClient.h"
 #import <SVProgressHUD.h>
 #import "SearchWithContactsVC.h"
+#import "TVBranches.h"
 @interface BranchProfileVC ()
 {
     @private
@@ -470,7 +471,7 @@
             NSLog(@"dicStyle = %@",dicStyle);
             NSString* strStyleFoodyRow=@"";
             if ([[dicStyle valueForKey:@"params"] count]>0) {
-                for (NSDictionary* dicStyleDeeper in [[dicStyle valueForKey:@"params"] allValues]){
+                for (NSDictionary* dicStyleDeeper in [dicStyle valueForKey:@"params"] ){
                     NSLog(@"dicStyleDeeper = %@",dicStyleDeeper);
                     strStyleFoodyRow=[strStyleFoodyRow stringByAppendingFormat:@"%@-%@",[dicStyle valueForKey:@"name"],[dicStyleDeeper valueForKey:@"name"]];
                 }
@@ -526,8 +527,8 @@
         
         BOOL isServiceOnYES=NO;
         for (NSDictionary *dicOn in [_branch.services allValues]) {
-            NSString* strOne=[dicOn valueForKey:@"id"];
-            NSString* strTwo=[dic valueForKey:@"id"];
+            NSString* strOne=[dicOn valueForKey:@"alias"];
+            NSString* strTwo=[dic valueForKey:@"alias"];
             if ([strOne isEqualToString:strTwo]){
                 isServiceOnYES=YES;
                 break;
@@ -612,12 +613,15 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
-    self.branch=[[TVBranch alloc] initWithPath:@"branch/getById"];
+    TVBranches* branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
+    branches.isNotSearchAPIYES=YES;
+    
     //NSDictionary *params = @{@"id": _branchID};
     
     NSDictionary *params = @{@"id": @"1"};
-    [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+    [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async( dispatch_get_main_queue(),^ {
+            _branch=branches[0];
             [self showInfoView];
             TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
             _extraBranchView.scrollView=_scrollView;

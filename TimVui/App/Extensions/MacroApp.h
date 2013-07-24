@@ -23,7 +23,7 @@
 #define kGetPriceAvgData   @"kGetPriceAvgData"
 #define kGetCatData   @"kGetCatData"
 
-#define kDistanceSearchMapDefault   @"1"//km
+#define kDistanceSearchMapDefault   @"5"//km
 #define kTVDistanceMovingMap   5000 //m
 
 #define kNumberOfSkinsCamera   2

@@ -4,7 +4,7 @@
 #import "TVCuisines.h"
 @class GHUser, TVComment,TVCoupons;
 
-@interface TVBranch : GHResource
+@interface TVBranch : NSObject
 @property(nonatomic,strong)NSString *branchID;
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *price_avg;
@@ -38,7 +38,6 @@
 @property(nonatomic,strong)NSDictionary *decoration;
 @property(nonatomic,strong)NSDictionary *cuisine;
 
-@property(nonatomic,strong)NSArray *utilities;
 
 @property(nonatomic,strong)NSDictionary *public_locations;
 @property(nonatomic,strong)NSString *direction;

@@ -106,7 +106,7 @@
     else
         _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
     
-    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    [self.imageView setImageWithURL:[NSURL URLWithString:[_branch.arrURLImages valueForKey:@"80"]]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
 
     int lineHeight=0;
     

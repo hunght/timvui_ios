@@ -360,7 +360,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     //
     TVBranch* branch= _branches[[marker.title intValue]];
     UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
-    [imgPhoto setImageWithURL:[Ultilities getThumbImageOfCoverBranch:branch.arrURLImages]];
+    [imgPhoto setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]];
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 110)];
     [view addSubview:imgPhoto];
 

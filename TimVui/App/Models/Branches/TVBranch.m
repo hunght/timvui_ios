@@ -83,15 +83,14 @@
     self.waiting_end = [dict safeStringForKey:@"waiting_end"];
     self.holiday = [dict safeStringForKey:@"holiday"];
     self.year = [dict safeStringForKey:@"year"];
-    self.utilities = [dict safeArrayForKey:@"utilities"];
-//    NSLog(@"%@",_utilities);
+    
     self.adaptive = [[[dict safeDictForKey:@"params"] safeDictForKey:@"thich-hop"] safeDictForKey:@"params"];
     self.styleFoody = [[[dict safeDictForKey:@"params"] safeDictForKey:@"am-thuc"] safeDictForKey:@"params"];
     self.services = [[[dict safeDictForKey:@"params"] safeDictForKey:@"tien-ich"] safeDictForKey:@"params"];
     self.purpose = [[[dict safeDictForKey:@"params"] safeDictForKey:@"muc-dich"] safeDictForKey:@"params"];
     self.decoration = [[[dict safeDictForKey:@"params"] safeDictForKey:@"khong-gian"] safeDictForKey:@"params"];
     self.cuisine = [[[dict safeDictForKey:@"params"] safeDictForKey:@"mon-an"] safeDictForKey:@"params"];
-    
+    NSLog(@"services=%@",_services);
     self.space = [dict safeStringForKey:@"space"];
     self.direction = [dict safeStringForKey:@"direction"];
     self.public_locations = [dict safeDictForKey:@"public_locations"];

@@ -2,7 +2,7 @@
 
 @class GHUsers, TVComments;
 
-@interface GHUser : GHResource
+@interface GHUser : NSObject
 @property(nonatomic,strong)NSString *last_name;
 @property(nonatomic, strong)NSString*first_name;
 @property(nonatomic,strong)NSString *email;
@@ -20,5 +20,5 @@
 @property(nonatomic,strong)NSString  *address;
 @property(nonatomic,strong)NSString *addressFull;
 @property(nonatomic,strong)NSDate *created;
-
+- (void)setValues:(id)dict;
 @end

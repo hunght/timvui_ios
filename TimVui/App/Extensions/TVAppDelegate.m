@@ -239,6 +239,7 @@
     }
      */
     
+    [Ultilities iPhoneRetina];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    [defaults removeObjectForKey:kBranchIDs];
     NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kBranchIDs]];
