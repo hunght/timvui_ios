@@ -1,7 +1,7 @@
 
-#import "MHPagingScrollView.h"
+#import "TVPagingScrollView.h"
 
-@implementation MHPagingScrollView
+@implementation TVPagingScrollView
 {
 	NSMutableSet *_recycledPages;
 	NSMutableSet *_visiblePages;

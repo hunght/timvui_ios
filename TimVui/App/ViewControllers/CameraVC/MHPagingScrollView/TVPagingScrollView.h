@@ -1,5 +1,5 @@
 #import "PageView.h"
-@class MHPagingScrollView;
+@class TVPagingScrollView;
 
 /*
  * Delegate protocol for MHPagingScrollView.
@@ -9,12 +9,12 @@
 /*
  * Asks the delegate to return the number of pages.
  */
-- (NSUInteger)numberOfPagesInPagingScrollView:(MHPagingScrollView *)pagingScrollView;
+- (NSUInteger)numberOfPagesInPagingScrollView:(TVPagingScrollView *)pagingScrollView;
 /*
  * Asks the delegate for a page to insert. The delegate should ask for a
  * reusable view using dequeueReusablePageView.
  */
-- (PageView *)pagingScrollView:(MHPagingScrollView *)pagingScrollView pageForIndex:(NSUInteger)index;
+- (PageView *)pagingScrollView:(TVPagingScrollView *)pagingScrollView pageForIndex:(NSUInteger)index;
 
 @end
 
@@ -27,7 +27,7 @@
  * smaller to make room for the preview pages and set the previewInsets
  * property.
  */
-@interface MHPagingScrollView : UIScrollView
+@interface TVPagingScrollView : UIScrollView
 
 /* The delegate for paging events. */
 @property (nonatomic, unsafe_unretained) IBOutlet id <MHPagingScrollViewDelegate> pagingDelegate;

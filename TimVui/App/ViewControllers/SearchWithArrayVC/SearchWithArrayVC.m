@@ -55,7 +55,23 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 
 #pragma mark - Initializer
-
+- (void)setTitle:(NSString *)title
+{
+    [super setTitle:title];
+    UILabel *titleView = (UILabel *)self.navigationItem.titleView;
+    if (!titleView) {
+        titleView = [[UILabel alloc] initWithFrame:CGRectZero];
+        titleView.backgroundColor = [UIColor clearColor];
+        titleView.font =  [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
+        titleView.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
+        
+        titleView.textColor = [UIColor blackColor]; // Change to desired color
+        
+        self.navigationItem.titleView = titleView;
+    }
+    titleView.text = title;
+    [titleView sizeToFit];
+}
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic
 
 {
@@ -70,6 +86,34 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         //_mayUsePrivateAPI = YES;
         _pickedArr=[[NSMutableArray alloc] init];
         
+        switch ([GlobalDataUser sharedAccountClient].currentSearchParam) {
+            case kSearchParamCuisine:
+                [self setTitle:@"Món ăn"];
+                break;
+                
+            case kSearchParamPurpose:
+                [self setTitle:@"Mục đích"];
+                break;
+            
+            case kSearchParamZone:
+                [self setTitle:@"Khu vực"];
+                break;
+            
+            case kSearchParamUtilities:
+                [self setTitle:@""];
+                break;
+            
+            case kSearchParamCity:
+                [self setTitle:@"Tỉnh/Thành Phố"];
+                break;
+            
+            case kSearchParamDistrict:
+                [self setTitle:@"Quận/Huyện"];
+                break;
+                
+            default:
+                break;
+        }
     }
     
     return self;
@@ -90,7 +134,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button_on"] forState:UIControlStateHighlighted];
     [doneButton setTitle:@"Xong" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
     self.navigationItem.rightBarButtonItem=doneButtonItem;
@@ -169,6 +213,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         cell.accessoryType=UITableViewCellAccessoryNone;
     return cell;
 }
+
 /*
  Override these methods so that the search symbol isn't shown in the section index titles control. 
 */

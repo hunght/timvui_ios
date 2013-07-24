@@ -54,7 +54,7 @@ int cellPad=44;
     self.textLabel.backgroundColor=[UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleGray;
     
-    self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    self.textLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
 
     UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 35.0, 11, 12)];
     homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];

@@ -53,13 +53,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationController.navigationBar dropShadow];
-    _lblNoticeText.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    _lblNoticeText.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_background"]]];
     
     [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
     [_btnContinue setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    _btnContinue.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+    _btnContinue.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
     
     // Setup View and Table View
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];

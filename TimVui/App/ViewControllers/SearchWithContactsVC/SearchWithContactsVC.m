@@ -170,7 +170,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button_on"] forState:UIControlStateHighlighted];
     [doneButton setTitle:@"Xong" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [doneButton addTarget:self action:@selector(sendButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
     self.navigationItem.rightBarButtonItem=doneButtonItem;

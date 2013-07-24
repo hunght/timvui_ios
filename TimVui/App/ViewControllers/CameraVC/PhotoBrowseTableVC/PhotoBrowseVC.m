@@ -68,7 +68,7 @@
     [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     [btnPostPhoto setTitle:@"ĐĂNG ẢNH" forState:UIControlStateNormal];
     [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+    btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
     [btnPostPhoto addTarget:self action:@selector(postPhotoButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_bottomView addSubview:btnPostPhoto];
     

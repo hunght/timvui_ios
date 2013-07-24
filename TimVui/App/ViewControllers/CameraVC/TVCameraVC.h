@@ -1,5 +1,5 @@
 
-#import "MHPagingScrollView.h"
+#import "TVPagingScrollView.h"
 #import "CaptureSessionManager.h"
 #import "ECSlidingViewController.h"
 #import "SSPhotoCropperViewController.h"
@@ -8,7 +8,7 @@
 #import "PhotoBrowseVC.h"
 @interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate,SkinPickerTableVCDelegate,PhotoBrowseVCDelegate>
 
-@property (nonatomic, unsafe_unretained) IBOutlet MHPagingScrollView *pagingScrollView;
+@property (nonatomic, unsafe_unretained) IBOutlet TVPagingScrollView *pagingScrollView;
 @property (nonatomic, unsafe_unretained) IBOutlet UIPageControl *pageControl;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnStoreImage;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnAlbumPicker;

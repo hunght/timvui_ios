@@ -49,9 +49,9 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>UVNVan_R.TTF</string>
+		<string>UVNTinTucHepThem_R.TTF</string>
 		<string>Arial.ttf</string>
-		<string>UVNVan.TTF</string>
+		<string>UVNTinTucHepThem.TTF</string>
 		<string>Arial Bold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>

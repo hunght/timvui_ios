@@ -50,7 +50,7 @@
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
     lblBranchName.textColor = [UIColor redColor];
-    lblBranchName.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     lblBranchName.text=_branch.name;
     [genarateInfoView addSubview:lblBranchName];
     
@@ -124,7 +124,7 @@
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 30)];
     lblBranchName.backgroundColor = [UIColor clearColor];
     lblBranchName.textColor = [UIColor redColor];
-    lblBranchName.font = [UIFont fontWithName:@"UVNVanBold" size:(20)];
+    lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(20)];
     lblBranchName.text=@"ĐIỂM NỔI BẬT";
     [genarateInfoView addSubview:lblBranchName];
     int lineHeight=50;

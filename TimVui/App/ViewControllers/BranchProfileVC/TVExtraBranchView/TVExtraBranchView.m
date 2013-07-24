@@ -34,6 +34,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        UIScrollView* viewScroll= [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 56)];
+        [self addSubview:viewScroll];
+        [viewScroll setContentSize:CGSizeMake(320+106, 56)];
         UIButton* similarButton = [[UIButton alloc] initWithFrame:CGRectMake(214,0, 106, 56)];
         [similarButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
         [similarButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
@@ -41,7 +44,7 @@
         [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [similarButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         similarButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
-        [self addSubview:similarButton];
+        [viewScroll addSubview:similarButton];
         
         UIButton* menuButton = [[UIButton alloc] initWithFrame:CGRectMake(107, 0, 106, 56)];
         [menuButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
@@ -50,7 +53,7 @@
         [menuButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         menuButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
         [menuButton addTarget:self action:@selector(menuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:menuButton];
+        [viewScroll addSubview:menuButton];
         
         UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 106, 56)];
         [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
@@ -60,14 +63,14 @@
         commentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
         
         [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:commentButton];
-        
+
+        [viewScroll addSubview:commentButton];
     }
     return self;
 }
 
 - (void)postCommentBranch:(NSDictionary*)params {
-    NSLog(@"%@",params);
+    //NSLog(@"%@",params);
     if (!self.comments) {
         self.comments=[[TVComments alloc] initWithPath:@"branch/getComments"];
     }
@@ -84,6 +87,7 @@
         });
     }];
 }
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

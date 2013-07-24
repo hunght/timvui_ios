@@ -56,7 +56,7 @@
     self.detailTextLabel.textColor=[UIColor whiteColor];
     self.selectionStyle = UITableViewCellSelectionStyleGray;
     self.detailTextLabel.textAlignment = UITextAlignmentCenter;
-    self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    self.textLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     self.imageView.image=[UIImage imageNamed:@"img_map_coupon_event_icon_cell"];
     [self.contentView insertSubview:self.detailTextLabel aboveSubview:self.imageView];

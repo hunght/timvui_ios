@@ -442,13 +442,13 @@
 
 
 #pragma mark - MHPagingScrollViewDelegate
-- (NSUInteger)numberOfPagesInPagingScrollView:(MHPagingScrollView *)pagingScrollView
+- (NSUInteger)numberOfPagesInPagingScrollView:(TVPagingScrollView *)pagingScrollView
 {
 	return _numPages;
 }
 
 
-- (UIView *)pagingScrollView:(MHPagingScrollView *)thePagingScrollView pageForIndex:(NSUInteger)index
+- (UIView *)pagingScrollView:(TVPagingScrollView *)thePagingScrollView pageForIndex:(NSUInteger)index
 {
     PageView *pageView = (PageView *)[thePagingScrollView dequeueReusablePage];
     pageView.index=index;

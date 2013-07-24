@@ -94,7 +94,7 @@
     [self.contentView addSubview:_imgLike];
     [self.contentView addSubview:_lblLike];
     
-    self.textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    self.textLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     self.date.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
 

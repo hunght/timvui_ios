@@ -35,7 +35,6 @@
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes
 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
-        self.title = @"Search Bar";
         
         _showSectionIndexes = showSectionIndexes;
         

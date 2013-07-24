@@ -294,7 +294,7 @@
                                            lineBreakMode:[_btnCity.titleLabel lineBreakMode]];
     CGRect newFrame = [_btnCity frame];
     newFrame.size.width = expectedLabelSize.width+15;
-    newFrame.origin.x=258-newFrame.size.width;
+    newFrame.origin.x=265-newFrame.size.width;
     [_btnCity setFrame:newFrame];
     
     if ([GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0){
@@ -499,12 +499,18 @@
    
     // Do any additional setup after loading the view from its nib.
     // Setup View and Table View
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
+    backButtonView.bounds = CGRectOffset(backButtonView.bounds, 10, 0);
+    [backButtonView addSubview:backButton];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+
     
-    _btnCity = [[UIButton alloc] initWithFrame:CGRectMake(200,11    , 57, 23)];
+    _btnCity = [[UIButton alloc] initWithFrame:CGRectMake(200,11, 57, 23)];
     [_btnCity setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]];
     [_btnCity addTarget:self action:@selector(buttonCityClicked:) forControlEvents:UIControlEventTouchUpInside];
     [[_btnCity layer] setCornerRadius:12.0f];
@@ -515,10 +521,10 @@
     _btnCity.titleLabel.adjustsFontSizeToFitWidth = YES;
     _btnCity.titleLabel.lineBreakMode = UILineBreakModeClip;
     
-    _viewNavigation=[[UIView alloc] initWithFrame:CGRectMake(48,0, 320, 44)];
+    _viewNavigation=[[UIView alloc] initWithFrame:CGRectMake(39,0, 320, 44)];
     [_viewNavigation setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_pattern_navigation"]]];
     
-    UIImageView* imgView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 7, 260, 30)];
+    UIImageView* imgView=[[UIImageView alloc] initWithFrame:CGRectMake(0, 7, 269, 31)];
     [imgView setImage:[UIImage imageNamed:@"img_search_bar_text"]];
     _tfdSearch=[[UITextField alloc] initWithFrame:CGRectMake(33, 10, 227, 30)];
     [_tfdSearch setDelegate:self];
@@ -526,8 +532,6 @@
     _tfdSearch.inputAccessoryView=_tbrAccessorySearch;
     
     self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
     [_viewNavigation addSubview:imgView];
     [_viewNavigation addSubview:_tfdSearch];
     [_viewNavigation addSubview:_btnCity];

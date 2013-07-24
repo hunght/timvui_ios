@@ -55,7 +55,7 @@
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
     lblBranchName.textColor = [UIColor redColor];
-    lblBranchName.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     lblBranchName.text=_branch.name;
     [genarateInfoView addSubview:lblBranchName];
     
@@ -293,7 +293,7 @@
             
             [btnPostPhoto setTitle:@"XEM CHI TIẾT" forState:UIControlStateNormal];
             [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+            btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
             [btnPostPhoto addTarget:self action:@selector(viewDetailCouponClicked:) forControlEvents:UIControlEventTouchUpInside];
             btnPostPhoto.tag=i;
             i++;

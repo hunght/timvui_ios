@@ -131,11 +131,9 @@ enum {
 {
     [super viewDidLoad];
 
-    NSArray *fonts = [UIFont fontNamesForFamilyName:@"Arial"];
+    
     [self showTableDropDown];
-    for(NSString *string in fonts){
-        NSLog(@"%@", string);
-    }
+    
 
 }
 

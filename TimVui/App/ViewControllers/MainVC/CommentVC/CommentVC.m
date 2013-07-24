@@ -62,7 +62,7 @@
     _lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     _lblBranchName.backgroundColor = [UIColor clearColor];
     _lblBranchName.textColor = [UIColor redColor];
-    _lblBranchName.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     
     [genarateInfoView addSubview:_lblBranchName];
     
@@ -202,7 +202,7 @@
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button_on"] forState:UIControlStateHighlighted];
     [doneButton setTitle:@"Đóng" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
     return doneButtonItem;

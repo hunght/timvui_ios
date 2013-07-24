@@ -100,11 +100,14 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     };
     
     [self.view addSubview:self.locationPickerView];
-    UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(5, 1, 53, 43)];
+    UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
     [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_btnSearchBar];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
+    [backButtonView addSubview:_btnSearchBar];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     [self initNotificationView];
 }
@@ -378,7 +381,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     price_avg.highlightedTextColor = [UIColor whiteColor];
     
     
-    textLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(15)];
+    textLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     price_avg.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     

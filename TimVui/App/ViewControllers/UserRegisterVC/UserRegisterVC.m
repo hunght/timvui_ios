@@ -67,8 +67,8 @@
     [btnRegister setBackgroundImage:[UIImage imageNamed:@"img_button_large_on"] forState:UIControlStateHighlighted];
     [_btn_Cancel setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_off"] forState:UIControlStateNormal];
     [_btn_Cancel setBackgroundImage:[UIImage imageNamed:@"img_button_cancel_on"] forState:UIControlStateHighlighted];
-    btnRegister.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
-    _btn_Cancel.titleLabel.font = [UIFont fontWithName:@"UVNVanBold" size:(17)];
+    btnRegister.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
+    _btn_Cancel.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
 }
 
 -(void)didReceiveMemoryWarning{
