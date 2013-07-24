@@ -67,8 +67,8 @@
     [_webView loadRequest:request];
     [_webView setDelegate:self];
 }
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self.webView setDelegate:nil];[SVProgressHUD dismiss];
 }
 - (void)viewDidUnload
@@ -246,13 +246,12 @@
             [request setTimeoutInterval:30];
             [request setHTTPMethod:@"GET"];
             [request setURL:[[NSURL alloc] initWithString:strTokenKey]];
-            NSURLConnection*connect=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+            NSURLConnection *connect=[[NSURLConnection alloc] initWithRequest:request delegate:self];
             _isRequestSendYES=YES;
             [connect start];        
             return NO;
         }
     }
-    
     return YES;
 }
 

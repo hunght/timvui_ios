@@ -74,6 +74,7 @@
     self.images = [dict safeArrayForKey:@"images"];
     self.phone = [dict safeStringForKey:@"phone"];
     self.cats = [dict safeDictForKey:@"cats"];
+     NSLog(@"self.name===%@",self.cats);
     self.district = [dict safeDictForKey:@"district"];
     
     self.space = [dict safeStringForKey:@"space"];
