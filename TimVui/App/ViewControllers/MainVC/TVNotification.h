@@ -15,6 +15,8 @@
 @property (assign, nonatomic)int height;
 @property (assign, nonatomic) BOOL isHiddenYES;
 @property (assign, nonatomic) BOOL isAnimating;
+@property (assign, nonatomic) BOOL isWantShowCloseButtonYES;
+
 -(id)initWithView:(UIView*)_view withTitle:(NSString*)strTitle goWithCamera:(void (^)())cameraCall
       withComment:(void (^)())commentCall;
 -(void)openButtonClicked:(id)sender;

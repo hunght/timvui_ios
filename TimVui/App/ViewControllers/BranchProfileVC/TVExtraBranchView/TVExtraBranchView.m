@@ -17,7 +17,7 @@
 #import "GlobalDataUser.h"
 #import "SVProgressHUD.h"
 #import "TVComment.h"
-
+#import "Ultilities.h"
 #define kTableViewHeightOffset 150
 @interface TVExtraBranchView() {
 @private
@@ -34,37 +34,64 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        UIScrollView* viewScroll= [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 56)];
-        [self addSubview:viewScroll];
-        [viewScroll setContentSize:CGSizeMake(320+106, 56)];
-        UIButton* similarButton = [[UIButton alloc] initWithFrame:CGRectMake(214,0, 106, 56)];
-        [similarButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
-        [similarButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
-        [similarButton setTitle:@"             SIMILAR" forState:UIControlStateNormal];
-        [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [similarButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        similarButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
-        [viewScroll addSubview:similarButton];
+        _viewScroll= [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 41)];
+        [self addSubview:_viewScroll];
+//        [viewScroll setPagingEnabled:YES];
+        [_viewScroll setBackgroundColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:1.0f]];
+        [_viewScroll setShowsHorizontalScrollIndicator:NO];
+        UIImageView* image=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 384, 41)];
+        image.image=[UIImage imageNamed:@"img_profile_branch_scrollView"];
         
-        UIButton* menuButton = [[UIButton alloc] initWithFrame:CGRectMake(107, 0, 106, 56)];
-        [menuButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
-        [menuButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
-        [menuButton setTitle:@"             MENU" forState:UIControlStateNormal];
-        [menuButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        menuButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
-        [menuButton addTarget:self action:@selector(menuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [viewScroll addSubview:menuButton];
+        [_viewScroll addSubview:image];
+        [_viewScroll setContentSize:CGSizeMake(384, 41)];
         
-        UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 106, 56)];
-        [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
-        [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
+        
+        
+        UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 99, 41)];
+        [commentButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [commentButton setTitle:@"             BÌNH LUẬN" forState:UIControlStateNormal];
-        [commentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        commentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
+        [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        commentButton.titleLabel.font =[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
         
         [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-
-        [viewScroll addSubview:commentButton];
+        
+        
+        UIButton* menuButton = [[UIButton alloc] initWithFrame:CGRectMake(99, 0, 100, 41)];
+        [menuButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+        [menuButton setTitle:@"             MENU" forState:UIControlStateNormal];
+        [menuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        menuButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+        [menuButton addTarget:self action:@selector(menuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_viewScroll addSubview:menuButton];
+        int pad=0;
+        if (_isHasKaraokeYES) {
+            UIButton* karaokeButton = [[UIButton alloc] initWithFrame:CGRectMake(199, 0, 98, 41)];
+            [karaokeButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+            [karaokeButton setTitle:@"             MENU" forState:UIControlStateNormal];
+            [karaokeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            karaokeButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+            [karaokeButton addTarget:self action:@selector(karaokeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_viewScroll addSubview:karaokeButton];
+            pad=karaokeButton.frame.size.width;
+        }
+        
+        
+        UIButton* eventButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad,0, 82, 41)];
+        [eventButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+        [eventButton setTitle:@"             SỰ KIỆN" forState:UIControlStateNormal];
+        [eventButton addTarget:self action:@selector(eventButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [eventButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        eventButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+        [_viewScroll addSubview:eventButton];
+        
+        UIButton* similarButton = [[UIButton alloc] initWithFrame:CGRectMake(199+8+pad,0, 94, 41)];
+        [similarButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+        [similarButton setTitle:@"             SIMILAR" forState:UIControlStateNormal];
+        [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [similarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        similarButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+        [_viewScroll addSubview:similarButton];
+        [_viewScroll addSubview:commentButton];
     }
     return self;
 }
@@ -98,34 +125,15 @@
 }
 */
 
-- (void)initTableView {
-    
-    if (!_tableView) {
-        _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 47, 320,self.superview.bounds.size.height- kTableViewHeightOffset) style:UITableViewStylePlain];
-        [self addSubview:_tableView];
-        [_tableView setDelegate:self];
-        [_tableView setDataSource:self];
-        _currentTableType=-1;
-        CGRect frame= self.frame;
-        frame.size.height+=_tableView.frame.size.height;
-        self.frame=frame;
-    }
-    
-    if (!_btnBackground) {
-        _btnBackground = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, kTableViewHeightOffset-46)];
-        
-        [_btnBackground addTarget:self action:@selector(backgroundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.superview addSubview:_btnBackground];
-    }
-    
-    [self showExtraView:YES];
-    
-    
+#pragma mark Actions
+
+-(void)eventButtonClicked:(UIButton*)sender{
+    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
 }
 
--(void)similarButtonClicked:(id)sender{
+-(void)similarButtonClicked:(UIButton*)sender{
     [self initTableView];
-    
+    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     if (_currentTableType!=kTVSimilar){
         _currentTableType=kTVSimilar;
         [_tableView reloadData];
@@ -135,15 +143,37 @@
 
 
 
--(void)menuButtonClicked:(id)sender{
+-(void)menuButtonClicked:(UIButton*)sender{
     [self initTableView];
-    
+    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     if (_currentTableType!=kTVMenu){
         _currentTableType=kTVMenu;
         [_tableView reloadData];
         
     }
 }
+-(void)karaokeButtonClicked:(UIButton*)sender{
+    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
+}
+
+-(void)commentButtonClicked:(UIButton*)sender{
+    [self initTableView];
+    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
+    if (_currentTableType!=kTVComment)
+    {
+        _currentTableType=kTVComment;
+        [self getCommentRefresh];
+        
+    }
+    
+}
+
+-(void)backgroundButtonClicked:(id)sender{
+    [self showExtraView:NO];
+}
+
+
+#pragma mark Helper
 
 -(void)showExtraView:(BOOL)isYES{
     if (isYES){
@@ -153,7 +183,7 @@
             [self.scrollView setContentOffset:CGPointMake(0, kTableViewHeightOffset+28) animated:YES];
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // animate it to the identity transform (100% scale)
-                self.transform = CGAffineTransformMakeTranslation(0, -46-(self.superview.bounds.size.height- kTableViewHeightOffset));
+                self.transform = CGAffineTransformMakeTranslation(0, -41-(self.superview.bounds.size.height- kTableViewHeightOffset));
             } completion:^(BOOL finished){
                 self.isAnimating=NO;
             }];
@@ -166,7 +196,7 @@
             self.isAnimating=YES;
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // animate it to the identity transform (100% scale)
-                self.transform = CGAffineTransformMakeTranslation(0, -46);
+                self.transform = CGAffineTransformMakeTranslation(0, -41);
             } completion:^(BOOL finished){
                 self.isAnimating=NO;
             }];
@@ -188,17 +218,7 @@
     [self postCommentBranch:params];
 }
 
--(void)commentButtonClicked:(id)sender{
-    [self initTableView];
-    
-    if (_currentTableType!=kTVComment)
-    {
-        _currentTableType=kTVComment;
-        [self getCommentRefresh];
-        
-    }
-    
-}
+
 
 -(void)layoutSubviews{
     [super layoutSubviews];
@@ -221,8 +241,36 @@
     
 }
 
--(void)backgroundButtonClicked:(id)sender{
-    [self showExtraView:NO];
+- (void)initTableView {
+    
+    if (!_tableView) {
+        _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 41, 320,self.superview.bounds.size.height- kTableViewHeightOffset) style:UITableViewStylePlain];
+        [self addSubview:_tableView];
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
+        _currentTableType=-1;
+        CGRect frame= self.frame;
+        frame.size.height+=_tableView.frame.size.height;
+        self.frame=frame;
+        //        int numberOfPages=(_isHasKaraokeYES)?5:4;
+        //        [_viewScroll setPagingEnabled: YES] ;
+        //        [_viewScroll setContentSize: CGSizeMake(_viewScroll.bounds.size.width * numberOfPages, _viewScroll.bounds.size.height)] ;
+        
+        
+    }
+    
+    if (!_btnBackground) {
+        _btnBackground = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, kTableViewHeightOffset-41)];
+        
+        [_btnBackground addTarget:self action:@selector(backgroundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.superview addSubview:_btnBackground];
+    }
+    
+    
+    
+    [self showExtraView:YES];
+    
+    
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -240,7 +288,7 @@
         if (self.isHiddenYES&&!self.isAnimating) {
             self.isAnimating=YES;
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                self.transform = CGAffineTransformMakeTranslation(0, -46);
+                self.transform = CGAffineTransformMakeTranslation(0, -41);
             } completion:^(BOOL finished){
                 self.isAnimating=NO;
                 self.isHiddenYES=NO;

@@ -54,8 +54,8 @@
     
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
-    lblBranchName.textColor = [UIColor redColor];
-    lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+    lblBranchName.textColor = [UIColor blackColor];
+    lblBranchName.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
     lblBranchName.text=_branch.name;
     [genarateInfoView addSubview:lblBranchName];
     
@@ -619,12 +619,11 @@
     [self.branch loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async( dispatch_get_main_queue(),^ {
             [self showInfoView];
-            TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
+            TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
             _extraBranchView.scrollView=_scrollView;
             _extraBranchView.branch=_branch;
             [[GlobalDataUser sharedAccountClient].branchIDs setValue:_branch.branchID forKey:_branch.branchID];
             [self.view addSubview:_extraBranchView];
-//            [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async( dispatch_get_main_queue(),^ {

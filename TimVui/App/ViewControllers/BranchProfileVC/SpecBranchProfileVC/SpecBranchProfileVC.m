@@ -176,7 +176,7 @@
 - (void)viewDidLoad
 {
     [self showInfoView];
-    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 46)];
+    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
     _extraBranchView.scrollView=_scrollView;
     _extraBranchView.branch=_branch;
     [self.view addSubview:_extraBranchView];

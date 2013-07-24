@@ -49,13 +49,16 @@
         
         [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton* btnClose = [[UIButton alloc] initWithFrame:CGRectMake(320-34-3, 0, 34, 34)];
-        [btnClose setBackgroundImage:[UIImage imageNamed:@"img_main_notification_close"] forState:UIControlStateNormal];
-        [btnClose addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        if (strTitle) {
+            UIButton* btnClose = [[UIButton alloc] initWithFrame:CGRectMake(320-34-3, 0, 34, 34)];
+            [btnClose setBackgroundImage:[UIImage imageNamed:@"img_main_notification_close"] forState:UIControlStateNormal];
+            [btnClose addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:btnClose];
+        }
         
         [self addSubview:cameraButton];
         [self addSubview:commentButton];
-        [self addSubview:btnClose];
+        
         
         _height=commentButton.frame.size.height+commentButton.frame.origin.y+4+40;
         CGRect _frame= CGRectMake(0, _view.frame.size.height, 320,_height );

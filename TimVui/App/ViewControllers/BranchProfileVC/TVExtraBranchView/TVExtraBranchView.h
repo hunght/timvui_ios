@@ -25,6 +25,8 @@ typedef enum {
 @property (assign, nonatomic) BOOL isHiddenYES;
 @property (assign, nonatomic) BOOL isAnimating;
 @property (assign, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIScrollView *viewScroll;
 @property (strong, nonatomic) UIButton* btnBackground;
+@property (assign, nonatomic) BOOL isHasKaraokeYES;
 -(void)showExtraView:(BOOL)isYES;
 @end

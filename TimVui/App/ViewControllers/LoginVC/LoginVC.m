@@ -67,7 +67,10 @@
     [_webView loadRequest:request];
     [_webView setDelegate:self];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.webView setDelegate:nil];[SVProgressHUD dismiss];
+}
 - (void)viewDidUnload
 {
     [self.webView setDelegate:nil];
@@ -212,7 +215,10 @@
 
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if(![SVProgressHUD isVisible])[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    if (![self isBeingDismissed]) {
+        if(![SVProgressHUD isVisible])[SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    }
+    
     NSURL* url = [request URL];
     if (navigationType == UIWebViewNavigationTypeOther) {
         NSString *string = [url absoluteString];
