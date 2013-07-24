@@ -171,7 +171,7 @@
     
     CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.width);
     UIGraphicsBeginImageContext( newSize );
-    
+    NSLog(@"height=%f", newSize.height);
     // Use existing opacity as is
     [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
     
@@ -192,6 +192,7 @@
 -(void)getImageToAddSkin{
     if (self.captureManager.stillImage) {
         UIImage *bottomImage = [self.captureManager.stillImage cropImageInstagramStyleWithBottomBar:44+20]; //background image
+        
         [self mergeSkinWithImage:bottomImage];
     }
 }
