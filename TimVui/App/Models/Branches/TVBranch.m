@@ -71,10 +71,10 @@
 	self.latlng = [dict safeLocationForKey:@"latlng"];
     
     self.image_count=[dict safeIntegerForKey:@"image_count"];
-    self.images = [dict safeArrayForKey:@"images"];
+    self.images = [dict safeDictForKey:@"images"];
     self.phone = [dict safeStringForKey:@"phone"];
     self.cats = [dict safeDictForKey:@"cats"];
-     NSLog(@"self.name===%@",self.cats);
+     NSLog(@"self.images===%@",self.images);
     self.district = [dict safeDictForKey:@"district"];
     
     self.space = [dict safeStringForKey:@"space"];

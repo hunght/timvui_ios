@@ -166,6 +166,34 @@
 }
 
 - (void)mergeSkinWithImage:(UIImage *)bottomImage {
+    NSString* text=self.branch.name;
+    CGPoint point=CGPointMake(5*bottomImage.size.width/320, bottomImage.size.height/2);
+    int textSize=20*(bottomImage.size.width/320);
+    int padWidth=5*bottomImage.size.width/320;
+    int padHeight=5*bottomImage.size.width/320;
+    UIFont *font = [UIFont boldSystemFontOfSize:textSize];
+    UIGraphicsBeginImageContext(bottomImage.size);
+    [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
+    CGRect rect = CGRectMake(point.x, point.y, bottomImage.size.width, bottomImage.size.height);
+    
+    CGSize maximumLabelSize = CGSizeMake(bottomImage.size.width,9999);
+    CGSize expectedLabelSize = [text sizeWithFont:font
+                                               constrainedToSize:maximumLabelSize
+                                                   lineBreakMode:NSLineBreakByWordWrapping];
+    
+    [[UIColor brownColor] set];
+    CGContextFillRect(UIGraphicsGetCurrentContext(),
+                      CGRectMake(point.x-padWidth,point.y-padHeight,
+                                 expectedLabelSize.width+padWidth*2, expectedLabelSize.height+padHeight*2));
+    
+    [[UIColor whiteColor] set];
+    [text drawInRect:CGRectIntegral(rect) withFont:font];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
+    
+    /*
     PageView* pageView=[_pagingScrollView getPageForIndex:self.pageControl.currentPage];
     UIImage *image       = [self imageWithView:pageView.viewSkin]; //foreground image
     
@@ -180,13 +208,19 @@
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+     */
+    
+    
+    
     [_arrImages addObject:newImage];
     
     if (_lblPhone.isHidden)
         _lblPhone.hidden=NO;
     
     self.imgStillCamera.image=newImage;
-    [self showAnimationWhenDidTakeImage];
+    
+    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    //[self showAnimationWhenDidTakeImage];
 }
 
 -(void)getImageToAddSkin{
@@ -216,7 +250,9 @@
         
     }
 }
+
 #pragma mark - PhotoBrowseVCDelegate
+
 -(void)didPickWithImages:(NSArray*)images{
     [TSMessage showNotificationInViewController:self
                                       withTitle:@"Đăng ảnh thành công"

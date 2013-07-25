@@ -24,6 +24,7 @@
 #import <SVProgressHUD.h>
 #import "SearchWithContactsVC.h"
 #import "TVBranches.h"
+#import "NSDictionary+Extensions.h"
 @interface BranchProfileVC ()
 {
     @private
@@ -110,6 +111,8 @@
     lblPhone.text=_branch.phone;
     [genarateInfoView addSubview:lblPhone];
     return genarateInfoView;
+    
+    
 }
 
 - (void)setConnerBorderWithLayer:(CALayer *)l
@@ -316,26 +319,37 @@
 - (void)showInfoView
 {
     // Do any additional setup after loading the view from its nib.
-    [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]placeholderImage:nil];
+    [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages] placeholderImage:nil];
     
+//    NSLog(@"[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]%@",[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]);
+//    NSArray* imageDicArr=[_branch.images ];
     //Show Ablum images
     int i=0;
-    for (NSDictionary* images in _branch.images) {
-        UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-        [imageButton setImageWithURL:[Ultilities getThumbImageOfCoverBranch:images]];
-        imageButton.tag=i;
-        [_scrollView addSubview:imageButton];
-        [imageButton setupImageViewerWithImageURL:[Ultilities getLargeImageOfCoverBranch:images] onOpen:^{
-            NSLog(@"OPEN!");
-        } onClose:^{
-            NSLog(@"CLOSE!");
-        }];
-        i++;
+    for (NSArray* imagesArr in [_branch.images allValues]) {
+        
+        for (NSDictionary* images in imagesArr) {
+            NSLog(@"images%@",images);
+            UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
+            [imageButton setImageWithURL:[Ultilities getThumbImageOfCoverBranch:[images safeDictForKey:@"image"]]];
+            imageButton.tag=i;
+            [_scrollView addSubview:imageButton];
+            [imageButton setupImageViewerWithImageURL:[Ultilities getLargeImageOfCoverBranch:images] onOpen:^{
+                NSLog(@"OPEN!");
+            } onClose:^{
+                NSLog(@"CLOSE!");
+            }];
+            i++;
+            if (i==3)break;
+        }
+        if (i==3)break;
     }
 
-    if (_branch.image_count>=4) {
+    if (i>=3) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-        [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
+//        [NSString stringWithFormat:@"+%d",_branch.image_count-3]
+        [imageButton setTitle:@"+" forState:UIControlStateNormal];
+        [imageButton setBackgroundColor:[UIColor whiteColor]];
+        imageButton.titleLabel.textColor=[UIColor redColor];
         [imageButton addTarget:self action:@selector(albumButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:imageButton];
     }
@@ -797,8 +811,8 @@
     } else {
         mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TMViewController_iPad" bundle:nil] ;
     }
-    mbImagesVC.brandID=_branch.branchID;
-    [self.navigationController pushViewController:mbImagesVC animated:YES];
+    mbImagesVC.branch=_branch;
+    [self presentModalViewController:mbImagesVC animated:YES];
 }
 
 -(void)specialContentButtonClicked:(id)sender{

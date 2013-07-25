@@ -20,7 +20,8 @@
 #import <UIKit/UIKit.h>
 #import "TMQuiltViewController.h"
 #import "MWPhotoBrowser.h"
+#import "TVBranch.h"
 @interface TVPhotoBrowserVC : TMQuiltViewController<MWPhotoBrowserDelegate>
-@property (nonatomic, strong) NSString* brandID;
+@property (nonatomic, strong) TVBranch* branch;
 @property (nonatomic, strong) NSArray * photos;
 @end

@@ -23,10 +23,12 @@
 #import "TMQuiltView.h"
 #import "TVNetworkingClient.h"
 #import "Ultilities.h"
-@interface TVPhotoBrowserVC ()
+#import "NSDictionary+Extensions.h"
+@interface TVPhotoBrowserVC (){
+    @private
+        NSArray *albumArr;
+}
 
-@property (nonatomic, retain) NSDictionary *imagesDic;
-@property (nonatomic, retain) NSArray *albumArr;
 @end
 
 @implementation TVPhotoBrowserVC
@@ -40,20 +42,20 @@
 {
     [super viewDidLoad];
     
+
+    
     self.quiltView.backgroundColor = [UIColor blackColor];
+    NSMutableArray* arr=[[NSMutableArray alloc] init];
+    for (NSArray* imagesArr in [_branch.images allValues]) {
+        [arr addObjectsFromArray:imagesArr];
+    }
+    albumArr=arr;
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            _brandID,@"branch_id" ,
-                            nil];
-    
-    [[TVNetworkingClient sharedClient] postPath:@"branch/getImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        _imagesDic=[JSON valueForKey:@"data"];
-        NSLog(@"%@",_imagesDic);
-        _albumArr=[[_imagesDic allValues] lastObject] ;
-        
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-       
-    }];
+    UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(15, 10, 41, 26)];
+    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_browse_close"] forState:UIControlStateNormal];
+//    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    [btnPostPhoto addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnPostPhoto];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -65,10 +67,14 @@
     }
 }
 
+-(void)closeButtonClicked:(id)s{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - QuiltViewControllerDataSource
 
 - (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
-    return [self.albumArr count];
+    return [albumArr count];
 }
 
 - (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
@@ -76,7 +82,7 @@
     if (!cell) {
         cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"] ;
     }
-    NSDictionary* dic=[[[_albumArr objectAtIndex:indexPath.row] allValues] lastObject];
+    NSDictionary* dic=[[albumArr objectAtIndex:indexPath.row] safeDictForKey:@"image"] ;
     [cell.photoView setImageWithURL:[Ultilities getLargeAlbumPhoto:dic]placeholderImage:nil];
     cell.titleLabel.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     return cell;
@@ -90,9 +96,8 @@
     
     if (!_photos) {
         NSMutableArray *photos = [[NSMutableArray alloc] init];
-        for (NSDictionary* dic in _albumArr) {
-            NSDictionary* dicPhoto=[[dic allValues] lastObject];
-            [photos addObject:[MWPhoto photoWithURL:[Ultilities getOriginalAlbumPhoto:dicPhoto]]];
+        for (NSDictionary* dic in albumArr) {
+            [photos addObject:[MWPhoto photoWithURL:[Ultilities getOriginalAlbumPhoto:[dic safeDictForKey:@"image"]]]];
         }
         _photos=photos;
     }

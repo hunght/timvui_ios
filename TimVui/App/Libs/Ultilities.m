@@ -97,7 +97,7 @@ static bool isRetinaYES =NO;
     if (!isRetinaYES)
         return [NSURL URLWithString:[arrURLs valueForKey:@"300"]];
     else
-        return [NSURL URLWithString:[arrURLs valueForKey:@"480"]];
+        return [NSURL URLWithString:[arrURLs valueForKey:@"640"]];
 }
 
 + (NSURL *)getLargeAlbumPhoto:(NSDictionary *)arrURLs
