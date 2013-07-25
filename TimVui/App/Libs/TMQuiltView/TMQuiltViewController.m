@@ -37,11 +37,13 @@
 }
 
 - (void)loadView {
+
     _quiltView = [[TMQuiltView alloc] initWithFrame:CGRectZero];
     _quiltView.delegate = self;
     _quiltView.dataSource = self;
     _quiltView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.view = _quiltView;
+
 }
 
 - (void)viewDidLoad

@@ -21,7 +21,7 @@
 #import "TMQuiltViewCell.h"
 
 const NSInteger kTMQuiltViewDefaultColumns = 2;
-const CGFloat kTMQuiltViewDefaultMargin = 10.0f;
+const CGFloat kTMQuiltViewDefaultMargin = 0;
 const CGFloat kTMQuiltViewDefaultCellHeight = 50.0f;
 
 NSString *const kDefaultReusableIdentifier = @"kTMQuiltViewDefaultReusableIdentifier";

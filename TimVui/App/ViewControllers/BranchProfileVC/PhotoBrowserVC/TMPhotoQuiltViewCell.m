@@ -20,7 +20,7 @@
 
 #import "TMPhotoQuiltViewCell.h"
 
-const CGFloat kTMPhotoQuiltViewMargin = 5;
+const CGFloat kTMPhotoQuiltViewMargin = 0;
 
 @implementation TMPhotoQuiltViewCell
 
@@ -60,7 +60,7 @@ const CGFloat kTMPhotoQuiltViewMargin = 5;
 
 
 - (void)layoutSubviews {
-    self.photoView.frame = CGRectInset(self.bounds, kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
+    self.photoView.frame = CGRectMake(0, 0, 160, 160);
     self.titleLabel.frame = CGRectMake(kTMPhotoQuiltViewMargin, self.bounds.size.height - 20 - kTMPhotoQuiltViewMargin,
                                        self.bounds.size.width - 2 * kTMPhotoQuiltViewMargin, 20);
 }

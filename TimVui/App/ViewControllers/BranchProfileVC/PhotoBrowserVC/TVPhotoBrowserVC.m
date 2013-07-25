@@ -41,9 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
 
-    
     self.quiltView.backgroundColor = [UIColor blackColor];
     NSMutableArray* arr=[[NSMutableArray alloc] init];
     for (NSArray* imagesArr in [_branch.images allValues]) {
@@ -53,9 +51,11 @@
     
     UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(15, 10, 41, 26)];
     [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_browse_close"] forState:UIControlStateNormal];
-//    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    //    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     [btnPostPhoto addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btnPostPhoto];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnPostPhoto];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -84,7 +84,6 @@
     }
     NSDictionary* dic=[[albumArr objectAtIndex:indexPath.row] safeDictForKey:@"image"] ;
     [cell.photoView setImageWithURL:[Ultilities getLargeAlbumPhoto:dic]placeholderImage:nil];
-    cell.titleLabel.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     return cell;
 }
 
@@ -118,7 +117,7 @@
 }
 
 - (CGFloat)quiltView:(TMQuiltView *)quiltView heightForCellAtIndexPath:(NSIndexPath *)indexPath {
-    return 300 / [self quiltViewNumberOfColumns:quiltView];
+    return 320 / [self quiltViewNumberOfColumns:quiltView];
 }
 
 #pragma mark - MWPhotoBrowserDelegate

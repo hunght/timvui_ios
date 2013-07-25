@@ -812,7 +812,11 @@
         mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TMViewController_iPad" bundle:nil] ;
     }
     mbImagesVC.branch=_branch;
-    [self presentModalViewController:mbImagesVC animated:YES];
+    UINavigationController* navController = [[UINavigationController    alloc] initWithRootViewController:mbImagesVC];
+    navController.navigationBar.tintColor = [UIColor clearColor];
+    navController.navigationBar.alpha = 0.7f;
+    navController.navigationBar.translucent = YES;
+    [self presentModalViewController:navController animated:YES];
 }
 
 -(void)specialContentButtonClicked:(id)sender{
