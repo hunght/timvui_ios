@@ -8,7 +8,7 @@
 
 #import "PageView.h"
 
-@interface PageTwoView : UIView
+@interface PageTwoView : PageView
 @property (nonatomic, assign) NSUInteger index;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblBranchName;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblCompliment;

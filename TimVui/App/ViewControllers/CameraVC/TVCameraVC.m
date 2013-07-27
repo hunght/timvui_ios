@@ -9,8 +9,7 @@
 #import "PhotoBrowseVC.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import "TSMessage.h"
-#import "NSDate+Helper.h"
-#import "NSDate-Utilities.h"
+#import "PageTwoView.h"
 
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
@@ -165,61 +164,17 @@
     }
 }
 
-- (void)setTextForSkin:(UIImage *)bottomImage fontText:(int)fontText rectView:(CGRect)rectView text:(NSString *)text {
-    int textSize=fontText*(bottomImage.size.width/320);
-    
-    UIFont *font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(textSize)];
-    CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
 
-    [ text drawInRect : CGRectIntegral(rect)                      // render the text
-             withFont : font
-        lineBreakMode : UILineBreakModeWordWrap  // clip overflow from end of last line
-            alignment : UITextAlignmentCenter ];
-}
 
 - (void)mergeSkinWithImage:(UIImage *)bottomImage {
     PageView* pageView=[_pagingScrollView getPageForIndex:self.pageControl.currentPage];
-    
-    UIGraphicsBeginImageContext(bottomImage.size);
-    [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
-    [[UIColor whiteColor] set];
-    UILabel* lbl=pageView.lblBranchName;
-    
-    NSString* text=self.branch.name;
-    CGRect rectView=lbl.frame;
-    
-    int fontText=20;
-    
-    [self setTextForSkin:bottomImage fontText:fontText rectView:rectView text:text];
-    
-    text=self.branch.address_full;
-    rectView=pageView.lblAddress.frame;
-    fontText=13;
-    [self setTextForSkin:bottomImage fontText:fontText rectView:rectView text:text];
-    
-    UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
-    rectView=pageView.imagLocationIcon.frame;
-    CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
-    [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
-
-    
-    [[UIColor colorWithWhite:1.0 alpha:.2] set];
-
-    rectView=pageView.backgroundLocation.frame;
-    rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
-    
-    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
+    UIImage* newImage=[pageView mergeSkinWithImage:bottomImage];
     [_arrImages addObject:newImage];
     
     if (_lblPhone.isHidden)
         _lblPhone.hidden=NO;
     
     self.imgStillCamera.image=newImage;
-    
     UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     [self showAnimationWhenDidTakeImage];
 }
@@ -495,17 +450,16 @@
                 break;
                 
             case 1:
-                
-                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
+            {
+                  PageTwoView *pageTwoView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
+                    pageView=pageTwoView;
                 break;
-            
+            }
             default:
                 break;
         }
     }
-    NSDate* date=[NSDate date];
-    pageView.lblTime.text=[[NSDate date] stringWithFormat:@"hh:mm a"];
-    pageView.lblDate.text=[NSString stringWithFormat:@"T.%d:%d-%d",[date weekday],[date day],[date month]];
+
     //pageView.lblCompliment.text=@"Seize the day";
 	return pageView;
 }
