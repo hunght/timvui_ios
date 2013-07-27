@@ -17,6 +17,7 @@
 #import "NSDate+Helper.h"
 #import "GlobalDataUser.h"
 #import "NSDate-Utilities.h"
+#import <JSONKit.h>
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -241,11 +242,16 @@
     
     [Ultilities iPhoneRetina];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults removeObjectForKey:kBranchIDs];
-    NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kBranchIDs]];
-    if (!dic)
-        dic=[[NSMutableDictionary alloc] init];
-    [GlobalDataUser sharedAccountClient].branchIDs=dic;
+    NSString* jsonStr=[defaults objectForKey:kBranchIDs] ;
+    if (jsonStr) {
+        NSDictionary* dicIm=(NSDictionary*)[jsonStr objectFromJSONString];
+        //    [defaults removeObjectForKey:kBranchIDs];
+        NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:dicIm];
+        if (!dic)
+            dic=[[NSMutableDictionary alloc] init];
+        [GlobalDataUser sharedAccountClient].recentlyBranches=dic;
+    }
+
     
     _getParamData=[defaults valueForKey:kDataGetParamData];
     
@@ -294,9 +300,11 @@
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
-    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].branchIDs);
-    [[NSUserDefaults standardUserDefaults] setObject:[GlobalDataUser sharedAccountClient].branchIDs forKey:kBranchIDs];
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] dictionaryForKey:kBranchIDs]);
+    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].recentlyBranches);
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[[GlobalDataUser sharedAccountClient].recentlyBranches JSONString] forKey:kBranchIDs];
+    
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kBranchIDs]);
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

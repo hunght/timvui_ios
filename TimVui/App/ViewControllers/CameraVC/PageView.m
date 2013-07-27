@@ -3,10 +3,6 @@
 
 @implementation PageView
 
-
-
-
-
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
     
 }

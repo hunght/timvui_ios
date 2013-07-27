@@ -51,11 +51,11 @@
 }
 
 
-- (void)setTextForSkin:(UIImage *)bottomImage fontText:(int)fontText rectView:(CGRect)rectView text:(NSString *)text {
-    int textSize=fontText*(bottomImage.size.width/320);
+- (void)setTextForSkin:(CGSize )size fontText:(int)fontText rectView:(CGRect)rectView text:(NSString *)text {
+    int textSize=fontText*(size.width/320);
     
     UIFont *font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(textSize)];
-    CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    CGRect rect = CGRectMake(rectView.origin.x*size.width/320, rectView.origin.y*size.width/320, rectView.size.width*size.width/320, rectView.size.height*size.width/320);
     
     [ text drawInRect : CGRectIntegral(rect)                      // render the text
              withFont : font
@@ -72,24 +72,20 @@
     
     NSString* text=lbl.text;
     CGRect rectView=lbl.frame;
-    
     int fontText=20;
-    
-    [self setTextForSkin:bottomImage fontText:fontText rectView:rectView text:text];
+    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
     text=_lblAddress.text;
     rectView=_lblAddress.frame;
     fontText=13;
-    [self setTextForSkin:bottomImage fontText:fontText rectView:rectView text:text];
+    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
     UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
     rectView=_imagLocationIcon.frame;
     CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    
     [[UIColor colorWithWhite:1.0 alpha:.2] set];
-    
     rectView=_backgroundLocation.frame;
     rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
     
@@ -97,11 +93,9 @@
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-    
+
     return newImage;
 }
-
 
 -(void)layoutSubviews{
     [super layoutSubviews];

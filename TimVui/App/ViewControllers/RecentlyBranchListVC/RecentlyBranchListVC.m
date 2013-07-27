@@ -51,22 +51,25 @@
 
 
 -(void)postGetBranches{
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [[GlobalDataUser sharedAccountClient].branchIDs allKeys],@"id" ,
-                            nil];
-    __unsafe_unretained __typeof(&*self)weakSelf = self;
+//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+//                            [[GlobalDataUser sharedAccountClient].branchIDs allKeys],@"id" ,
+//                            nil];
     
-    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
-            [self.tableView reloadData];
-            
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            
-        });
-    }];
+    [_branches setValues:[[GlobalDataUser sharedAccountClient].recentlyBranches allValues]];
+    [self.tableView reloadData];
+//    __unsafe_unretained __typeof(&*self)weakSelf = self;
+//    
+//    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+//        dispatch_async(dispatch_get_main_queue(),^ {
+//            //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
+//            [self.tableView reloadData];
+//            
+//        });
+//    } failure:^(GHResource *instance, NSError *error) {
+//        dispatch_async(dispatch_get_main_queue(),^ {
+//            
+//        });
+//    }];
     
 }
 
@@ -78,14 +81,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    
     BranchMainCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }else{
+    }
+    else{
         [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-    cell.branch = self.branches[indexPath.row];
+    
+    double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[self.branches[indexPath.row]latlng]];
+    [cell setBranch:self.branches[indexPath.row] withDistance:distance];
     return cell;
 }
 

@@ -11,25 +11,6 @@
 
 @implementation TVBranch
 
-
-- (void)encodeWithCoder:(NSCoder *)coder;
-{
-    [coder encodeObject:_branchID forKey:@"branchID"];
-    [coder encodeObject:_name forKey:@"name"];
-}
-
-- (id)initWithCoder:(NSCoder *)coder;
-{
-    self = [[TVBranch alloc] init];
-    if (self != nil)
-    {
-        _branchID = [coder decodeObjectForKey:@"branchID"] ;
-        _name = [coder decodeObjectForKey:@"name"] ;
-    }
-    return self;
-}
-
-
 - (id)initWithDict:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
@@ -38,8 +19,6 @@
 	}
 	return self;
 }
-
-
 
 - (void)markAsRead {
 	self.read = YES;
@@ -97,8 +76,6 @@
     self.public_locations = [dict safeDictForKey:@"public_locations"];
     
     self.time_close =[dict safeStringForKey:@"time_close"];
-    
-    
 }
 
 
