@@ -47,7 +47,6 @@
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
 
-    
     _arrPhotosPick=[[NSMutableArray alloc] init];
     for (int i=0; i<_arrPhotos.count; i++) {
         [_arrPhotosPick addObject:[NSNumber numberWithBool:YES]];
@@ -264,6 +263,7 @@
 #pragma mark PhotoBrowseCellDelegate
 
 -(void)pickerButtonClicked:(UIButton *)sender{
+    NSLog(@"sender.tag=====%d",sender.tag);
     if (sender.isSelected)
         [_arrPhotosPick replaceObjectAtIndex:sender.tag withObject:[NSNumber numberWithBool:NO]];
     else
@@ -275,7 +275,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of sections.
-    return  [_arrPhotos count];
+    int i=(float)[_arrPhotos count]/2.0+.5;
+    NSLog(@"row count=== %d",i);
+    return  i;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -284,31 +286,23 @@
     PhotoBrowseCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[PhotoBrowseCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        cell.btnPicked.tag=indexPath.row;
+        cell.btnImageOne.tag=indexPath.row*2;
+        cell.btnImageTwo.tag=indexPath.row*2+1;
         [cell setDelegate:self];
     }
-    // Configure the cell...
-    cell.imageView.image=[[_arrPhotos objectAtIndex:indexPath.row] imageByScalingAndCroppingForSize:(CGSizeMake(306, 120))];
+    [cell.btnImageOne setImage:[_arrPhotos objectAtIndex:cell.btnImageOne.tag] forState:UIControlStateNormal];
+    
+    if (!([_arrPhotos count]==cell.btnImageTwo.tag))
+        [cell.btnImageTwo setImage:[_arrPhotos objectAtIndex:cell.btnImageTwo.tag] forState:UIControlStateNormal];
+    
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120+7+7;
+    return 160;
 }
 
 #pragma mark - Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PhotoBrowseCell* cell=(PhotoBrowseCell*)[tableView cellForRowAtIndexPath:indexPath];
-    if (cell.btnPicked.isSelected){
-        [_arrPhotosPick replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
-        [cell.btnPicked setSelected:NO];
-    }else{
-        [_arrPhotosPick replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
-        [cell.btnPicked setSelected:YES];
-    }
-}
 
 @end

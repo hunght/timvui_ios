@@ -219,8 +219,8 @@
     
     self.imgStillCamera.image=newImage;
     
-    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-    //[self showAnimationWhenDidTakeImage];
+    //UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    [self showAnimationWhenDidTakeImage];
 }
 
 -(void)getImageToAddSkin{

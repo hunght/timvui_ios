@@ -348,6 +348,7 @@
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
 //        [NSString stringWithFormat:@"+%d",_branch.image_count-3]
         [imageButton setTitle:@"+" forState:UIControlStateNormal];
+        [imageButton setTitle:@"+" forState:UIControlStateSelected];
         [imageButton setBackgroundColor:[UIColor whiteColor]];
         imageButton.titleLabel.textColor=[UIColor redColor];
         [imageButton addTarget:self action:@selector(albumButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -582,6 +583,7 @@
     }
     
     frame=utilitiesView.frame;
+    
     if (rowCount%2)
         frame.size.height=heightUtilities +26+ 10;
     else
