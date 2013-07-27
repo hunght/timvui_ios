@@ -105,10 +105,12 @@
 	}
 	return nil;
 }
--(void)setNameBranchForPageView:(NSString*)text{
+
+-(void)setNameBranchForPageViewName:(NSString*)name andAddress:(NSString*)address{
     for (PageView *page in _visiblePages)
 	{
-		page.lblBranchName.text=text;
+		[page setName:name andAddress:address];
+//        NSLog(@"name= %@",name);
 	}
 }
 

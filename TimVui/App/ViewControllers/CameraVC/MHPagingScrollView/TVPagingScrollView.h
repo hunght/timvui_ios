@@ -78,5 +78,5 @@
 - (void)didReceiveMemoryWarning;
 
 - (PageView*)getPageForIndex:(NSUInteger)index;
--(void)setNameBranchForPageView:(NSString*)text;
+-(void)setNameBranchForPageViewName:(NSString*)name andAddress:(NSString*)address;
 @end

@@ -64,7 +64,7 @@
     [self.pagingScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
     
     if (_branch) {
-        [self.pagingScrollView setNameBranchForPageView:_branch.name];
+        [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
     }
 }
 
@@ -165,53 +165,54 @@
     }
 }
 
+- (void)setTextForSkin:(UIImage *)bottomImage fontText:(int)fontText rectView:(CGRect)rectView text:(NSString *)text {
+    int textSize=fontText*(bottomImage.size.width/320);
+    
+    UIFont *font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(textSize)];
+    CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+
+    [ text drawInRect : CGRectIntegral(rect)                      // render the text
+             withFont : font
+        lineBreakMode : UILineBreakModeWordWrap  // clip overflow from end of last line
+            alignment : UITextAlignmentCenter ];
+}
+
 - (void)mergeSkinWithImage:(UIImage *)bottomImage {
-    NSString* text=self.branch.name;
-    CGPoint point=CGPointMake(5*bottomImage.size.width/320, bottomImage.size.height/2);
-    int textSize=20*(bottomImage.size.width/320);
-    int padWidth=5*bottomImage.size.width/320;
-    int padHeight=5*bottomImage.size.width/320;
-    UIFont *font = [UIFont boldSystemFontOfSize:textSize];
+    PageView* pageView=[_pagingScrollView getPageForIndex:self.pageControl.currentPage];
+    
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
-    CGRect rect = CGRectMake(point.x, point.y, bottomImage.size.width, bottomImage.size.height);
-    
-    CGSize maximumLabelSize = CGSizeMake(bottomImage.size.width,9999);
-    CGSize expectedLabelSize = [text sizeWithFont:font
-                                               constrainedToSize:maximumLabelSize
-                                                   lineBreakMode:NSLineBreakByWordWrapping];
-    
-    [[UIColor brownColor] set];
-    CGContextFillRect(UIGraphicsGetCurrentContext(),
-                      CGRectMake(point.x-padWidth,point.y-padHeight,
-                                 expectedLabelSize.width+padWidth*2, expectedLabelSize.height+padHeight*2));
-    
     [[UIColor whiteColor] set];
-    [text drawInRect:CGRectIntegral(rect) withFont:font];
+    UILabel* lbl=pageView.lblBranchName;
+    
+    NSString* text=self.branch.name;
+    CGRect rectView=lbl.frame;
+    
+    int fontText=20;
+    
+    [self setTextForSkin:bottomImage fontText:fontText rectView:rectView text:text];
+    
+    text=self.branch.address_full;
+    rectView=pageView.lblAddress.frame;
+    fontText=13;
+    [self setTextForSkin:bottomImage fontText:fontText rectView:rectView text:text];
+    
+    UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
+    rectView=pageView.imagLocationIcon.frame;
+    CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+
+    
+    [[UIColor colorWithWhite:1.0 alpha:.2] set];
+
+    rectView=pageView.backgroundLocation.frame;
+    rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
+    
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-    
-    
-    /*
-    PageView* pageView=[_pagingScrollView getPageForIndex:self.pageControl.currentPage];
-    UIImage *image       = [self imageWithView:pageView.viewSkin]; //foreground image
-    
-    CGSize newSize = CGSizeMake(bottomImage.size.width, bottomImage.size.width);
-    UIGraphicsBeginImageContext( newSize );
-    NSLog(@"height=%f", newSize.height);
-    // Use existing opacity as is
-    [bottomImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    
-    // Apply supplied opacity if applicable
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height) blendMode:kCGBlendModeNormal alpha:1];
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-     */
-    
-    
-    
+
     [_arrImages addObject:newImage];
     
     if (_lblPhone.isHidden)
@@ -219,7 +220,7 @@
     
     self.imgStillCamera.image=newImage;
     
-    //UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     [self showAnimationWhenDidTakeImage];
 }
 
@@ -276,8 +277,9 @@
     [self.slidingViewController resetTopView];
     _branch=branch;
     _photoBrowseTableVC.branch_id=_branch.branchID;
-    [self.pagingScrollView setNameBranchForPageView:_branch.name];
+    [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
 }
+
 #pragma mark - SkinPickerTableVCDelegate
 
 -(void)didPickWithAlbum:(NSString *)strAlbum{
@@ -366,7 +368,6 @@
 
 #pragma mark Imagepickerdelegate methods
 
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)selectedImage editingInfo:(NSDictionary *)editingInfo {
     
     [picker dismissModalViewControllerAnimated:YES];
@@ -382,9 +383,9 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
 	// The user canceled -- simply dismiss the image picker.
-
 	[picker dismissModalViewControllerAnimated:YES];
 }
+
 #pragma mark - View Controller Rotation
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation 
@@ -475,15 +476,11 @@
 //	}
 }
 
-
-
-
 #pragma mark - MHPagingScrollViewDelegate
 - (NSUInteger)numberOfPagesInPagingScrollView:(TVPagingScrollView *)pagingScrollView
 {
 	return _numPages;
 }
-
 
 - (UIView *)pagingScrollView:(TVPagingScrollView *)thePagingScrollView pageForIndex:(NSUInteger)index
 {
@@ -496,11 +493,11 @@
                 
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageOneView" owner:self options:nil] objectAtIndex:0];
                 break;
+                
             case 1:
                 
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
                 break;
-            
             
             default:
                 break;
