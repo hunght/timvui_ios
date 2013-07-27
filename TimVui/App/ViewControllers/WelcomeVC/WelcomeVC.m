@@ -31,10 +31,15 @@
 
 - (void)viewDidLoad
 {
+    self.navigationController.navigationBarHidden=YES;
     [self getPublicIPFromSomewhere];
+     
     [super viewDidLoad];
 }
-
+-(void)viewDidUnload{
+    [super viewDidUnload];
+    self.navigationController.navigationBarHidden=NO;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -117,7 +122,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
-    //NSLog(@"%f",newLocation.coordinate.latitude);
+    NSLog(@"%f",newLocation.coordinate.latitude);
     [_locationManager stopMonitoringSignificantLocationChanges];
     [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
 }

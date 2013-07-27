@@ -14,6 +14,7 @@
 #import "Ultilities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
+
 @interface TVAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
@@ -26,9 +27,11 @@
 @property (retain, nonatomic) NSDictionary *getPublicLocationData;
 @property (retain, nonatomic) NSDictionary *getPriceAvgData;
 @property (retain, nonatomic) NSDictionary *getCatData;
-
+@property(nonatomic,assign)BOOL isLoadWhenConnectedYES;
 
 -(void)showNotificationAboutSomething:(TVBranch*)branch;
 -(void)showSuccessAboutSomething:(NSString*)mess;
 -(void)showAlertAboutSomething:(NSString*)mess;
+- (BOOL)connected;
+-(void)loadWhenInternetConnected;
 @end

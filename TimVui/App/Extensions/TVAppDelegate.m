@@ -18,6 +18,11 @@
 #import "GlobalDataUser.h"
 #import "NSDate-Utilities.h"
 #import <JSONKit.h>
+
+#import "Reachability.h"
+#import <SystemConfiguration/SystemConfiguration.h>
+#import "RecentlyBranchListVC.h"
+
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -155,17 +160,7 @@
 	[[NSURLCache sharedURLCache] setDiskCapacity:0];
 }
 
-- (void)setupSlidingViewController {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-    self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
-    WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
-    _slidingViewController=[[ECSlidingViewController alloc] init];
-    _slidingViewController.topViewController=welcomeVC;
-    _slidingViewController.underLeftViewController = self.menuVC;
-    _slidingViewController.anchorRightRevealAmount = 230;
-    self.window.rootViewController = _slidingViewController;
-}
+
 
 
 -(void)setData:(NSString*)key{
@@ -216,30 +211,23 @@
         [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
     }
 }
+//Class.m
+- (BOOL)connected
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return !(networkStatus == NotReachable);
+}
 
 #pragma mark Application Events
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+
+- (void)loadWhenInternetConnected
 {
-    
-    
-    /*
-    NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
-    NSArray *fontNames;
-    NSInteger indFamily, indFont;
-    for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
-    {
-        NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
-        fontNames = [[NSArray alloc] initWithArray:
-                     [UIFont fontNamesForFamilyName:
-                      [familyNames objectAtIndex:indFamily]]];
-        for (indFont=0; indFont<[fontNames count]; ++indFont)
-        {
-            NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
-        }
+    if (self.isLoadWhenConnectedYES) {
+        return;
     }
-     */
-    
+    self.isLoadWhenConnectedYES=YES;
     [Ultilities iPhoneRetina];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString* jsonStr=[defaults objectForKey:kBranchIDs] ;
@@ -251,7 +239,7 @@
             dic=[[NSMutableDictionary alloc] init];
         [GlobalDataUser sharedAccountClient].recentlyBranches=dic;
     }
-
+    
     
     _getParamData=[defaults valueForKey:kDataGetParamData];
     
@@ -273,7 +261,7 @@
     strPath=@"data/getPublicLocationData";
     days=7;
     [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getPublicLocationData forKey:kGetPublicLocationData];
-
+    
     _getPriceAvgData=[defaults valueForKey:kGetPriceAvgData];
     strPath=@"data/getPriceAvgData";
     days=7;
@@ -287,10 +275,31 @@
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
     [self setupGoogleAnalytics];
     [self setupAFNetworking];
-    [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-    [self deactivateURLCache];
-    [self setupSlidingViewController];
     
+    [self deactivateURLCache];
+    WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
+//    [self.menuVC openViewController:welcomeVC];
+    [self.menuVC performSelector:@selector(openViewController:) withObject:welcomeVC afterDelay:0.0];
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
+    [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    _slidingViewController=[[ECSlidingViewController alloc] init];
+    
+    if ([self connected]) {
+        [self loadWhenInternetConnected];
+    }else{
+     [self.menuVC performSelector:@selector(openViewController:) withObject:[[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil] afterDelay:0.0];
+    }
+    
+    _slidingViewController.underLeftViewController = self.menuVC;
+    _slidingViewController.anchorRightRevealAmount = 230;
+    self.window.rootViewController = _slidingViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -23,6 +23,8 @@
 #import "RecentlyBranchListVC.h"
 #import "ManualVC.h"
 #import <SVProgressHUD.h>
+
+
 #define kNumberOfSections 3
 
 enum {
@@ -71,6 +73,8 @@ enum {
     kS3Row5
 };
 @implementation LeftMenuVC
+
+
 
 - (void)showTableDropDown
 {
@@ -406,6 +410,11 @@ enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (SharedAppDelegate.isLoadWhenConnectedYES==NO) {
+        if ([SharedAppDelegate connected])
+            [SharedAppDelegate loadWhenInternetConnected];
+        return;
+    }
 	UIViewController *viewController = nil;
     
     // first check if any dropdown contains the requested cell
