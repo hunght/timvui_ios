@@ -260,7 +260,10 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     }
 
     [params setValue:paramsForSearch  forKey:@"params"];
+    [params setValue:kSearchBranchLimit  forKey:@"limit"];
+    [params setValue:@"0"  forKey:@"offset"];
     NSLog(@"%@",params);
+    
     if (!self.branches) {
         self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     }
@@ -273,7 +276,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
         dispatch_async(dispatch_get_main_queue(),^ {
             if (weakSelf.branches.count>0&&isSearchYES) {
                 TVBranch* branch=weakSelf.branches[0];
-                _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:branch.latlng zoom:14];
+                _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:branch.latlng zoom:15];
             }
             if (weakSelf.branches.count==0) {
                 [_locationPickerView expandMapView:nil];
@@ -311,7 +314,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 #pragma mark - SearchVCDelegate
 -(void)didClickedOnButtonSearch:(NSMutableDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
-    _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:14];
+    _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:15];
     [self postSearchBranch:params withReturnFromSearchScreenYES:YES];
 }
 -(void)didPickDistricts:(NSArray *)arrDics{
@@ -352,76 +355,103 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
             }
         }
     }else
-        _lastPosition=position.target;
-    
+        _lastPosition=position.target;    
 }
+
+- (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:radius];
+    // You can even add a border
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+}
+
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     //
     TVBranch* branch= _branches[[marker.title intValue]];
-    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
+    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f+7, 70.0f, 70.0f)];
     imgPhoto.contentMode = UIViewContentModeScaleAspectFill;
     
     [imgPhoto setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]];
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 110)];
     [view addSubview:imgPhoto];
-
-    UIView* _whiteView;
-    UILabel* textLabel= [[UILabel alloc] initWithFrame:CGRectZero];
-    UILabel* detailTextLabel= [[UILabel alloc] initWithFrame:CGRectZero];
-    textLabel.adjustsFontSizeToFitWidth = YES;
-    textLabel.textColor = [UIColor redColor];
     
+    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+10.0f, 8.0f+7, 180.0f, 20.0f)];
+    [view  addSubview:textLabel];
+    
+    UILabel* detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+25.0f, 30.0f+7, 210.0f, 20.0f)];
+    [view  addSubview:detailTextLabel];
+    
+    textLabel.textColor = [UIColor blackColor];
+    textLabel.numberOfLines = 1;
     detailTextLabel.numberOfLines = 1;
     textLabel.backgroundColor=[UIColor clearColor];
     detailTextLabel.backgroundColor=[UIColor clearColor];
-
-    UILabel* price_avg = [[UILabel alloc] initWithFrame:CGRectZero];
+    
+    UILabel* price_avg = [[UILabel alloc] initWithFrame: CGRectMake(80 +25.0f, 48.0f+7, 210.0f, 20.0f)];
     price_avg.backgroundColor = [UIColor clearColor];
     
     price_avg.textColor = [UIColor grayColor];
     price_avg.highlightedTextColor = [UIColor whiteColor];
+
+    textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    price_avg.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+    detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     
-    
-    textLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
-    price_avg.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    
-    
-    UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 35.0, 11, 12)];
+    UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 8.0, 35.0+7, 11, 12)];
     homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];
     
-    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(10.0, 53.0, 8, 11)];
+    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 10.0, 53.0+7, 8, 11)];
     price_avgIcon.image=[UIImage imageNamed:@"img_price_range_branch_icon"];
     
+    CALayer* l = [imgPhoto layer];
+    [self setBorderForLayer:l radius:1];
     
+    [view addSubview:price_avg];
+    [view addSubview:homeIcon];
+    [view addSubview:price_avgIcon];
     
-    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(80.0, 0, 234, 96)];
-    [_whiteView setBackgroundColor:[UIColor whiteColor]];
-    // Get the Layer of any view
-    CALayer * l = [_whiteView layer];
-    [Ultilities setBorderForLayer:l radius:3];
+    UIView* _utility=[[UIView alloc] initWithFrame:CGRectMake(88,70+7, 320-88, 18)];
+    [view   addSubview:_utility];
+    [view   setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
-    l = [imgPhoto layer];
-    [Ultilities setBorderForLayer:l radius:1];
-    
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 66.0f, 234.0f, 1.0f)];
-    grayLine.backgroundColor = [UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f];
-    [_whiteView addSubview:grayLine];
-    [_whiteView addSubview:textLabel];
-    [_whiteView addSubview:detailTextLabel];
-    [_whiteView addSubview:price_avg];
-    [_whiteView addSubview:homeIcon];
-    [_whiteView addSubview:price_avgIcon];
-    
-    [view  addSubview:_whiteView];
+    UILabel* _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,7+7, 60, 15)];
+    _lblDistance.backgroundColor = [UIColor clearColor];
+    _lblDistance.textColor = [UIColor grayColor];
+    _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];
 
-    textLabel.frame = CGRectMake(10.0f, 8.0f, 222.0f, 20.0f);
-    detailTextLabel.frame = CGRectMake(25.0f, 30.0f, 210.0f, 20.0f);
-    price_avg.frame = CGRectMake(25.0f, 48.0f, 210.0f, 20.0f);
     textLabel.text=branch.name;
     detailTextLabel.text=branch.address_full;
     price_avg.text=branch.price_avg;
+    double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[branch latlng]];
+    
+    if (distance>1000.0)
+        _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
+    else
+        _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+
+    int lineHeight=0;
+    
+    for (TVCoupon* coupon in branch.coupons.items) {
+        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
+        lblAddress.backgroundColor = [UIColor clearColor];
+        lblAddress.textColor = [UIColor redColor];
+        lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblAddress.numberOfLines = 1;
+        lblAddress.text=coupon.name;
+        [_utility addSubview:lblAddress];
+        
+        UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, lineHeight, 15, 15)];
+        homeIcon.image=[UIImage imageNamed:@"img_main_coupon_icon"];
+        [_utility addSubview:homeIcon];
+        lineHeight+=lblAddress.frame.size.height+5;
+    }
+    
+    CGRect frame=_utility.frame;
+    frame.size.height+=branch.coupons.items.count*30;
+    [_utility setFrame:frame];
+    [view  addSubview:_lblDistance];
     return view;
 }
 

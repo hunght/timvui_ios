@@ -15,20 +15,6 @@
 @end
 
 @implementation LocationTableVC
-- (void)postSearchBranch:(NSDictionary*)params {
-    NSLog(@"%@",params);
-    self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
-    
-    __unsafe_unretained __typeof(&*self)weakSelf = self;
-    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            [self.tableView reloadData];
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-        });
-    }];
-}
 
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -43,18 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (!self.branches) {
-        NSDictionary *params = nil;
-        CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
-        if (location.latitude) {
-            NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-            params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
-                       @"latlng": strLatLng};
-        }else
-            params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"]};
-        
-        [self postSearchBranch:params];
-    }
     
 }
 

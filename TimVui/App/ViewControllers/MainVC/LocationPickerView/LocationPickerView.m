@@ -24,8 +24,8 @@
 @property (nonatomic, strong) UIButton *closeMapButton;
 @property (nonatomic, strong) UIButton *currentLocation;
 
-@property (nonatomic, strong) UIButton *btnZoomIn;
-@property (nonatomic, strong) UIButton *btnZoomOut;
+//@property (nonatomic, strong) UIButton *btnZoomIn;
+//@property (nonatomic, strong) UIButton *btnZoomOut;
 
 @end
 
@@ -116,7 +116,7 @@
         _mapView = [[GMSMapView alloc] initWithFrame:self.defaultMapViewFrame];
         GMSCameraPosition *camera =
         [[GMSCameraPosition alloc] initWithTarget:[GlobalDataUser sharedAccountClient].userLocation
-                                             zoom:14
+                                             zoom:15
                                           bearing:0
                                      viewingAngle:0];
         [_mapView setCamera:camera];
@@ -237,47 +237,16 @@
 {
     if (!self.currentLocation) {
         
-        self.currentLocation = [[UIButton alloc] initWithFrame:CGRectMake(272, 180, 40, 40)];
+        self.currentLocation = [[UIButton alloc] initWithFrame:CGRectMake(8, 180+30+5, 30, 30)];
         [self.currentLocation setImage:[UIImage imageNamed:@"img_map_view_user_current_location"] forState:UIControlStateNormal];
         [self.currentLocation addTarget:self action:@selector(currentLocationBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.currentLocation setBackgroundColor:[UIColor whiteColor]];
-        CALayer *l=self.currentLocation.layer;
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:2.0];
         [self insertSubview:self.currentLocation aboveSubview:self.mapView];
 
-        self.closeMapButton = [[UIButton alloc] initWithFrame:CGRectMake(8, 180, 40, 40)];
+        self.closeMapButton = [[UIButton alloc] initWithFrame:CGRectMake(8, 180, 30, 30)];
         [self.closeMapButton setImage:[UIImage imageNamed:@"img_map_view_menu_icon"] forState:UIControlStateNormal];
         [self.closeMapButton addTarget:self action:@selector(hideMapView:) forControlEvents:UIControlEventTouchUpInside];
-        [self.closeMapButton setBackgroundColor:[UIColor whiteColor]];
-        l=self.closeMapButton.layer;
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:2.0];
         [self insertSubview:self.closeMapButton aboveSubview:self.mapView];
-        
-        self.btnZoomIn = [[UIButton alloc] initWithFrame:CGRectMake(272, 290, 40, 40)];
-        [self.btnZoomIn setImage:[UIImage imageNamed:@"img_map_view_zoom_in"] forState:UIControlStateNormal];
-        [self.btnZoomIn addTarget:self action:@selector(zoomInMapView:) forControlEvents:UIControlEventTouchUpInside];
-        [self.btnZoomIn setBackgroundColor:[UIColor whiteColor]];
-        l=self.btnZoomIn.layer;
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:2.0];
-        
-        self.btnZoomIn.hidden = YES;
-        [self insertSubview:self.btnZoomIn aboveSubview:self.mapView];
-        
 
-        self.btnZoomOut = [[UIButton alloc] initWithFrame:CGRectMake(272, 333, 40, 40)];
-        [self.btnZoomOut setImage:[UIImage imageNamed:@"img_map_view_zoom_out"] forState:UIControlStateNormal];
-        [self.btnZoomOut addTarget:self action:@selector(zoomOutMapView:) forControlEvents:UIControlEventTouchUpInside];
-        [self.btnZoomOut setBackgroundColor:[UIColor whiteColor]];
-        l=self.btnZoomOut.layer;
-        [l setMasksToBounds:YES];
-        [l setCornerRadius:2.0];
-        
-        self.btnZoomOut.hidden = YES;
-        [self insertSubview:self.btnZoomOut aboveSubview:self.mapView];
-        
     }
     
     self.currentLocation.alpha = 0.0;
@@ -285,22 +254,14 @@
     
     self.closeMapButton.alpha = 0.0;
     self.closeMapButton.hidden = NO;
-    
-    self.btnZoomOut.alpha = 0.0;
-    self.btnZoomOut.hidden = NO;
-    
-    self.btnZoomIn.alpha = 0.0;
-    self.btnZoomIn.hidden = NO;
-    
-    
+
     [UIView animateWithDuration:0.3
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
                          self.currentLocation.alpha=1.0;
                          self.closeMapButton.alpha=1.0;
-                         self.btnZoomIn.alpha = 1.0;
-                         self.btnZoomOut.alpha = 1.0;
+
                      }
                      completion:nil];
 }
@@ -310,8 +271,6 @@
     if (self.currentLocation) {
         self.closeMapButton.hidden = NO;
         self.currentLocation.hidden = NO;
-        self.btnZoomIn.hidden = NO;
-        self.btnZoomOut.hidden = NO;
         
         [UIView animateWithDuration:0.3
                               delay:0.0
@@ -319,17 +278,11 @@
                          animations:^{
                              self.currentLocation.alpha = 0.0;
                              self.closeMapButton.alpha = 0.0;
-                             
-                             self.btnZoomOut.alpha = 0.0;
-                             self.btnZoomIn.alpha = 0.0;
                          }
                          completion:^(BOOL finished) {
                              self.closeMapButton.hidden = YES;
                              self.currentLocation.hidden = YES;
-                             
-                             self.btnZoomIn.hidden = YES;
-                             self.btnZoomOut.hidden = YES;
-                             
+
                          }];
     }
 }
@@ -356,9 +309,7 @@
     [self insertSubview:self.closeMapButton aboveSubview:self.mapView];
     [self insertSubview:self.currentLocation aboveSubview:self.mapView];
     
-    [self insertSubview:self.btnZoomOut aboveSubview:self.mapView];
-    [self insertSubview:self.btnZoomIn aboveSubview:self.mapView];
-    
+
     [UIView animateWithDuration:0.3
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
@@ -408,9 +359,7 @@
                          [self insertSubview:self.mapView belowSubview:self.tableView];
                          [self insertSubview:self.closeMapButton aboveSubview:self.mapView];
                          [self insertSubview:self.currentLocation aboveSubview:self.mapView];
-                         
-                         [self insertSubview:self.btnZoomIn aboveSubview:self.mapView];
-                         [self insertSubview:self.btnZoomOut aboveSubview:self.mapView];
+                        
                          
                          self.isMapAnimating = NO;
                          _isMapFullScreen = NO;

@@ -38,3 +38,5 @@
 #define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
 #define kVatgiaClientID @"anuong-ios"
 #define kVatgiaClientSecret @"2ETkVUuMAIPmOY8liDzj0x"
+
+#define kSearchBranchLimit @"30"
