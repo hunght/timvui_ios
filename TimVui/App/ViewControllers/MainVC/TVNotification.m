@@ -43,7 +43,7 @@
         UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(161, height   , 160, 43)];
         [commentButton setBackgroundImage:[UIImage imageNamed:@"img_main_comment_on"] forState:UIControlStateNormal];
         [commentButton setBackgroundImage:[UIImage imageNamed:@"img_main_comment_off"] forState:UIControlStateHighlighted];
-        [commentButton setTitle:@"             BÌNH LUẬN" forState:UIControlStateNormal];
+        [commentButton setTitle:@"             ĐÁNH GIÁ" forState:UIControlStateNormal];
         [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         commentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
         

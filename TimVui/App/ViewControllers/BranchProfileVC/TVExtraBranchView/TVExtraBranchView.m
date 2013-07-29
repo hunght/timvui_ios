@@ -33,6 +33,7 @@
 -(void)setScrollView:(UIScrollView *)scrollView{
     _scrollView=scrollView;
     [_scrollView setDelegate:self];
+    lastDragOffset = scrollView.contentOffset.y;
 }
 - (id)initWithFrame:(CGRect)frame
 {
@@ -57,7 +58,7 @@
         
         commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 99, 41)];
         [commentButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
-        [commentButton setTitle:@"             BÌNH LUẬN" forState:UIControlStateNormal];
+        [commentButton setTitle:@"             ĐÁNH GIÁ" forState:UIControlStateNormal];
         [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         commentButton.titleLabel.font =[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
         
@@ -142,7 +143,6 @@
         _currentTableType=kTVSimilar;
         [_tableView reloadData];
     }
-    
 }
 
 
@@ -290,11 +290,12 @@
         return;
     lastDragOffset = scrollView.contentOffset.y;
 }
-
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+    lastDragOffset=scrollView.contentOffset.y;
+}
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     if ([scrollView isKindOfClass:[UITableView class]])
         return;
-    
     //NSLog(@"%f",scrollView.contentOffset.y);
     if ((int)scrollView.contentOffset.y < lastDragOffset){
         if (self.isHiddenYES&&!self.isAnimating) {
@@ -318,6 +319,7 @@
             }];
         }
     }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

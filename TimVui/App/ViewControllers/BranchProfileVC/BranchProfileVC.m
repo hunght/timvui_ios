@@ -381,17 +381,17 @@
     [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera"] forState:UIControlStateNormal];
     [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera_on"] forState:UIControlStateHighlighted];
     [cameraButton setTitle:@"             CHỤP ẢNH" forState:UIControlStateNormal];
-    [cameraButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    cameraButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
+    [cameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    cameraButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [cameraButton addTarget:self action:@selector(cameraButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:cameraButton];
     
     UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(7+101+5, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 100, 44)];
     [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment"] forState:UIControlStateNormal];
     [commentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_coment_on"] forState:UIControlStateHighlighted];
-    [commentButton setTitle:@"             BÌNH LUẬN" forState:UIControlStateNormal];
-    [commentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    commentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
+    [commentButton setTitle:@"          ĐÁNH GIÁ" forState:UIControlStateNormal];
+    [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    commentButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     
     [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:commentButton];
@@ -399,9 +399,9 @@
     UIButton* likeButton = [[UIButton alloc] initWithFrame:CGRectMake(7+101*2+5*2, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 100, 44)];
     [likeButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_like"] forState:UIControlStateNormal];
     [likeButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_like_on"] forState:UIControlStateHighlighted];
-    [likeButton setTitle:@"             QUAN TÂM" forState:UIControlStateNormal];
-    [likeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    likeButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
+    [likeButton setTitle:@"          QUAN TÂM" forState:UIControlStateNormal];
+    [likeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    likeButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     
     [likeButton addTarget:self action:@selector(likeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:likeButton];

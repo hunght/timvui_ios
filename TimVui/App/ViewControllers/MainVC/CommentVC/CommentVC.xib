@@ -48,7 +48,7 @@
 								<string key="NSFrame">{{5, 115}, {310, 177}}</string>
 								<reference key="NSSuperview" ref="221122913"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="670458742"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -190,7 +190,7 @@
 								<string key="NSFrame">{{142, 315}, {24, 24}}</string>
 								<reference key="NSSuperview" ref="221122913"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="167841483"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<int key="IBUITag">5</int>
@@ -228,19 +228,19 @@
 								<string key="NSFrame">{{10, 352}, {300, 46}}</string>
 								<reference key="NSSuperview" ref="221122913"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<int key="IBUITag">1</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">Đăng bình luận về địa điểm này</string>
 								<reference key="IBUIHighlightedTitleColor" ref="797492987"/>
 								<reference key="IBUINormalTitleColor" ref="797492987"/>
 								<reference key="IBUINormalTitleShadowColor" ref="503631300"/>
 								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">img_buttom-big-off.png</string>
+									<string key="NSResourceName">img_comment_postButton.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<string key="name">ArialMT</string>
@@ -651,7 +651,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="img_buttom-big-off.png">{298, 38}</string>
+			<string key="img_comment_postButton.png">{294, 40}</string>
 			<string key="img_comment_star_off.png">{24, 24}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
