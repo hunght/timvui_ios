@@ -372,7 +372,6 @@
 
 - (void)toggleMapView:(id)sender
 {
-    
     if (!self.isMapAnimating) {
         if (self.isMapFullScreen) {
              [self hideMapView:self];

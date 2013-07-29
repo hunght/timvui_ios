@@ -10,16 +10,16 @@
 #import "ECSlidingViewController.h"
 #import "LocationTableVC.h"
 #import "BSKeyboardControls.h"
+#import "UIPlaceHolderTextView.h"
 @class TPKeyboardAvoidingScrollView;
 @interface CommentVC : UIViewController<UITextViewDelegate,LocationTableVCDelegate,BSKeyboardControlsDelegate>
 @property(nonatomic, assign)ECSlidingViewController *slidingViewController;
 @property (nonatomic, strong)UILabel *lblBranchName;
-@property (nonatomic, strong)UILabel *lblDistance;
 @property (nonatomic, strong)UILabel *lblAddress;
 @property (nonatomic, strong)UILabel *lblPrice;
 @property (nonatomic, strong)TVBranch *branch;
 @property (nonatomic, strong)NSNumber * rating;
-@property (unsafe_unretained, nonatomic) IBOutlet UITextView *txvContent;
+@property (unsafe_unretained, nonatomic) IBOutlet UIPlaceHolderTextView *txvContent;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCommentPost;
 @property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *firstStar;

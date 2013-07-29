@@ -11,6 +11,8 @@
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
+#import "Ultilities.h"
+
 @interface CommentVC ()
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 @end
@@ -37,9 +39,10 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
-    
-    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [_txvContent setPlaceholder:@"Viết đánh giá về địa điểm này"];
     
     [self initKeyboardControls];
     
@@ -48,20 +51,37 @@
     if (!_branch)  self.navigationItem.leftBarButtonItem = self.toggleBarButtonItem;
     self.navigationItem.rightBarButtonItem = [self backBarButtonItem];
     
+    UIView *bgGenarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    [bgGenarateInfoView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+    
+    UIView *bgGreenInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, 100-3, 320, 3)];
+    [bgGreenInfoView setBackgroundColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]];
+    [bgGenarateInfoView addSubview:bgGreenInfoView];
+    
     // Generate Infomation Of Branch
-    UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(5, 10, 310, 80)];
+    UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(5, 10, 310, 85)];
+    [self.scrollView  insertSubview:bgGenarateInfoView belowSubview:genarateInfoView];
+    
     [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=genarateInfoView.layer;
     [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
+    [l setCornerRadius:1.0];
     // You can even add a border
+    
     [l setBorderWidth:1.0];
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     [(UIScrollView*)_scrollView addSubview:genarateInfoView];
+    l=_txvContent.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:3.0];
+    // You can even add a border
+    
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     
     _lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     _lblBranchName.backgroundColor = [UIColor clearColor];
-    _lblBranchName.textColor = [UIColor redColor];
+    _lblBranchName.textColor = [UIColor blackColor];
     _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     
     [genarateInfoView addSubview:_lblBranchName];
@@ -70,13 +90,6 @@
     UIImageView* imgDirectionView=[[UIImageView alloc] initWithFrame:CGRectMake(257,9+8 , 9, 9)];
     [imgDirectionView setImage:imageDirection];
     [genarateInfoView addSubview:imgDirectionView];
-    
-    _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,9+4, 60, 15)];
-    _lblDistance.backgroundColor = [UIColor clearColor];
-    _lblDistance.textColor = [UIColor redColor];
-    _lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(15)];
-    
-    [genarateInfoView addSubview:_lblDistance];
     
     _lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 210, 12)];
     _lblAddress.backgroundColor = [UIColor clearColor];
@@ -104,7 +117,6 @@
     CGRect frame=self.view.frame;
     frame.origin.y-=genarateInfoView.frame.size.height;
     [(UIScrollView*)_scrollView setFrame:frame];
-    [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
     l=_txvContent.layer;
     [l setMasksToBounds:YES];
     [l setCornerRadius:5];
@@ -113,6 +125,7 @@
     if (_branch)
         [self displayBranchInfo];   
 }
+
 - (void)viewDidUnload {
     [self setScrollView:nil];
     [self setFirstStar:nil];
@@ -138,13 +151,6 @@
 #pragma mark - LocationTableVCDelegate
 - (void)displayBranchInfo {
     _lblBranchName.text=_branch.name;
-    double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
-    if (distance>1000.0) {
-        NSLog(@"%f",distance/1000.0);
-        _lblDistance.text=[NSString stringWithFormat:@"%.2f km",distance/1000];
-    }
-    else
-        _lblDistance.text=[NSString stringWithFormat:@"%f m",distance];
     _lblAddress.text=_branch.address_full;
     _lblPrice.text=_branch.price_avg;
     UIView* view=(UIView*)_scrollView;
@@ -197,14 +203,21 @@
 }
 
 - (UIBarButtonItem *)backBarButtonItem {
-    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 56, 29)];
-    [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button"] forState:UIControlStateNormal];
-    [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button_on"] forState:UIControlStateHighlighted];
-    [doneButton setTitle:@"Đóng" forState:UIControlStateNormal];
-    [doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    
+    [doneButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    
+    [doneButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    
+    [doneButton setTitle:@"ĐÓNG" forState:UIControlStateNormal];
+    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
+    [backButtonView addSubview:doneButton];
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
+    self.navigationItem.rightBarButtonItem=doneButtonItem;
     return doneButtonItem;
 }
 
