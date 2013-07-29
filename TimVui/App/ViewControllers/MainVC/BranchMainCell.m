@@ -49,6 +49,7 @@
     if (!self) {
         return nil;
     }
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     self.textLabel.textColor = [UIColor blackColor];
     self.textLabel.numberOfLines = 1;
@@ -107,7 +108,7 @@
         _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
     
     [self.imageView setImageWithURL:[NSURL URLWithString:[_branch.arrURLImages valueForKey:@"80"]]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
-
+    
     int lineHeight=0;
     
     for (TVCoupon* coupon in branch.coupons.items) {
