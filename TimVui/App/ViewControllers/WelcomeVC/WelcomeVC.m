@@ -119,6 +119,7 @@
 }
 
 #pragma mark CLLocationManagerDelegate
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
@@ -132,7 +133,5 @@
     [_locationManager stopMonitoringSignificantLocationChanges];
     [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
 }
-
-
 
 @end

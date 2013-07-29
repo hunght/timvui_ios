@@ -107,7 +107,7 @@
 #pragma TVNetworking
 
 - (void)postCommentBranch:(NSDictionary*)params {
-//    NSLog(@"%@",params);
+    NSLog(@"%@",params);
     if (!self.comments) {
         self.comments=[[TVComments alloc] initWithPath:@"branch/getComments"];
     }

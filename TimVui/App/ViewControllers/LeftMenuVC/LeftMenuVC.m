@@ -635,15 +635,19 @@ enum {
             switch (row) {
                 case kS2Home:
                     cell.textLabel.text = @"Trang chủ";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_home"];
                     break;
                 case kS2Handbook:
                     cell.textLabel.text = @"Cẩm nang";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_handbook"];
                     break;
                 case kS2GoingEven:
                     cell.textLabel.text = @"Sưu tập";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_collection"];
                     break;
                 case kS2Promotion:
                     cell.textLabel.text = @"Blog";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_blog"];
                     break;
             }
             break;
@@ -651,22 +655,28 @@ enum {
             switch (row) {
                 case kS3Row0:
                     cell.textLabel.text = @"Giới thiệu";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_intro"];
                     break;
                 case kS3Row1:
                     cell.textLabel.text = @"Điều khoản sử dụng";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_termOfUse"];
                     break;
                 case kS3Row2:
                     cell.textLabel.text = @"Facebook Page";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_fanPage"];
                     break;
                 case kS3Row3:
                     cell.textLabel.text = @"Góp ý- Báo lỗi";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_reportError"];
                     break;
                 case kS3Row4:
                     cell.textLabel.text = @"Mời bạn bè";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_inviteFriends"];
                     break;
                 case kS3Row5:
                     if ([GlobalDataUser sharedAccountClient].isLogin) {
                         cell.textLabel.text = @"Đăng suất";
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_signOut"];
                     }
                     break;
             }
