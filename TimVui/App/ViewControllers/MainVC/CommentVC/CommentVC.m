@@ -11,7 +11,7 @@
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 
 @interface CommentVC ()
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
@@ -205,9 +205,9 @@
 - (UIBarButtonItem *)backBarButtonItem {
     UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
     
-    [doneButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
     
-    [doneButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
     
     [doneButton setTitle:@"ĐÓNG" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

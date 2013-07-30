@@ -17,7 +17,7 @@
 #import "GlobalDataUser.h"
 #import "SVProgressHUD.h"
 #import "TVComment.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 #define kTableViewHeightOffset 150
 @interface TVExtraBranchView() {
 @private
@@ -57,7 +57,7 @@
         
         
         commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 99, 41)];
-        [commentButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+        [commentButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [commentButton setTitle:@"             ĐÁNH GIÁ" forState:UIControlStateNormal];
         [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         commentButton.titleLabel.font =[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
@@ -66,7 +66,7 @@
         
         
         menuButton = [[UIButton alloc] initWithFrame:CGRectMake(99, 0, 100, 41)];
-        [menuButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+        [menuButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [menuButton setTitle:@"             MENU" forState:UIControlStateNormal];
         [menuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         menuButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
@@ -75,7 +75,7 @@
         
         if (_isHasKaraokeYES) {
             karaokeButton = [[UIButton alloc] initWithFrame:CGRectMake(199, 0, 98, 41)];
-            [karaokeButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+            [karaokeButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
             [karaokeButton setTitle:@"             MENU" forState:UIControlStateNormal];
             [karaokeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             karaokeButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
@@ -86,7 +86,7 @@
         
         
         eventButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad,0, 82, 41)];
-        [eventButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+        [eventButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [eventButton setTitle:@"             SỰ KIỆN" forState:UIControlStateNormal];
         [eventButton addTarget:self action:@selector(eventButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [eventButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -94,7 +94,7 @@
         [_viewScroll addSubview:eventButton];
         
         similarButton = [[UIButton alloc] initWithFrame:CGRectMake(199+82+pad,0, 94, 41)];
-        [similarButton setBackgroundImage:[Ultilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
+        [similarButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [similarButton setTitle:@"             SIMILAR" forState:UIControlStateNormal];
         [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [similarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

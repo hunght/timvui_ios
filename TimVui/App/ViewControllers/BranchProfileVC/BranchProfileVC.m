@@ -319,7 +319,7 @@
 - (void)showInfoView
 {
     // Do any additional setup after loading the view from its nib.
-    [_imgBranchCover setImageWithURL:[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages] placeholderImage:nil];
+    [_imgBranchCover setImageWithURL:[Utilities getLargeImageOfCoverBranch:_branch.arrURLImages] placeholderImage:nil];
     
 //    NSLog(@"[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]%@",[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]);
 //    NSArray* imageDicArr=[_branch.images ];
@@ -330,10 +330,10 @@
         for (NSDictionary* images in imagesArr) {
             NSLog(@"images%@",images);
             UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-            [imageButton setImageWithURL:[Ultilities getThumbImageOfCoverBranch:[images safeDictForKey:@"image"]]];
+            [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[images safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-            [imageButton setupImageViewerWithImageURL:[Ultilities getLargeImageOfCoverBranch:images] onOpen:^{
+            [imageButton setupImageViewerWithImageURL:[Utilities getLargeImageOfCoverBranch:images] onOpen:^{
                 NSLog(@"OPEN!");
             } onClose:^{
                 NSLog(@"CLOSE!");

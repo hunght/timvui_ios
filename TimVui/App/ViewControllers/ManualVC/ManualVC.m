@@ -14,6 +14,7 @@
 #import "DetailManualVC.h"
 #import "TVManual.h"
 #import "TSMessage.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 @interface ManualVC ()
 
 @end
@@ -36,11 +37,7 @@
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         [_manualArr removeAllObjects];
         for (NSDictionary* dic in [[JSON valueForKey:@"data"] allValues]) {
-            TVManual* munual=[[TVManual alloc] init];
-            munual.title=[dic safeStringForKey:@"tilte"];
-            munual.content=[dic safeStringForKey:@"content"];
-            munual.manualID=[dic safeStringForKey:@"id"];
-            munual.branch_ids=[dic safeArrayForKey:@"branch_ids"];
+            TVManual* munual=[[TVManual alloc] initWithDict:dic];
             [_manualArr addObject:munual];
         }
         [self.tableView reloadData];
@@ -53,6 +50,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+    
     NSString* strType=@"view";
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             strType,@"type" ,
@@ -110,6 +109,7 @@
                                           withTitle:@"Lưu cẩm nang thành công"
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeSuccess];
+        
         [self dismissModalViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [TSMessage showNotificationInViewController:self
@@ -139,14 +139,22 @@
     cell = [tableView dequeueReusableCellWithIdentifier:strCellIdentifier];
     if (!cell) {
         cell = [[TVManualCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strCellIdentifier];
+        [cell.saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     TVManual* manual=_manualArr[indexPath.row];
     cell.lblTitle.text=manual.title;
     [cell.lblTitle sizeToFit];
-    int height=cell.lblTitle.frame.origin.y+cell.lblTitle.frame.size.height;
     
-    CGRect frame=cell.webView.frame;
+    int height=cell.lblTitle.frame.origin.y+cell.lblTitle.frame.size.height;
+    CGRect frame=cell.imgView.frame;
+    frame.origin.y=height+5;
+    [cell.imgView setFrame:frame];
+    [cell.imgView setImageWithURL:[NSURL URLWithString:manual.images]];
+    
+    height=cell.imgView.frame.origin.y+cell.imgView.frame.size.height;
+    frame=cell.webView.frame;
     frame.origin.y=height+5;
     [cell.webView setFrame:frame];
     
@@ -154,7 +162,6 @@
     [cell.webView setDelegate:self];
     
     height=cell.webView.frame.origin.y+cell.webView.frame.size.height;
-    
     frame=cell.saveButton.frame;
     frame.origin.y=height+5;
     cell.saveButton.frame=frame;
@@ -162,10 +169,12 @@
     frame=cell.detailButton.frame;
     frame.origin.y=height+5;
     cell.detailButton.frame=frame;
+    
     cell.saveButton.tag=indexPath.row;
     cell.detailButton.tag=indexPath.row;
-    [cell.saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    cell.lblTags.text=@"adfjklasfghklds";
+    
     return cell;
 }
 
@@ -174,6 +183,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         return 380;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
     

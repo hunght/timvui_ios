@@ -9,13 +9,13 @@
 #import "MapTableViewController.h"
 #import "TVBranch.h"
 #import "GlobalDataUser.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImage+Crop.h"
 #import "BranchProfileVC.h"
 #import "BranchMainCell.h"
 #import "TVAppDelegate.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "NSDate+Helper.h"
 #import "NSDictionary+Extensions.h"
 #import "TVNotification.h"
@@ -207,7 +207,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
         melbourneMarker.title = [NSString stringWithFormat:@"%d",i];
         melbourneMarker.position =  branch.latlng;
         SDWebImageManager *manager = [SDWebImageManager sharedManager];
-        [manager downloadWithURL:[Ultilities getThumbImageOfCoverBranch:branch.arrURLImages]
+        [manager downloadWithURL:[Utilities getThumbImageOfCoverBranch:branch.arrURLImages]
                         delegate:self
                          options:0
                          success:^(UIImage *image, BOOL cached)

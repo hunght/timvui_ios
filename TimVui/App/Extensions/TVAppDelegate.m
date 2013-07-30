@@ -228,7 +228,7 @@
         return;
     }
     self.isLoadWhenConnectedYES=YES;
-    [Ultilities iPhoneRetina];
+    [Utilities iPhoneRetina];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString* jsonStr=[defaults objectForKey:kBranchIDs] ;
     if (jsonStr) {

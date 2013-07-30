@@ -24,7 +24,7 @@
 #import "TVBranch.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "TVAppDelegate.h"
 #import "TVCoupon.h"
 #import "TVCoupons.h"

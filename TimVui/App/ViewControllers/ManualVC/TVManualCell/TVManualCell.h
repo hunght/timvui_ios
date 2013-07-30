@@ -29,4 +29,6 @@
 @property(strong, nonatomic)UILabel* lblTitle;
 @property(strong, nonatomic)UIButton* saveButton;
 @property(strong, nonatomic)UIButton* detailButton;
+@property(strong, nonatomic)UIImageView* imgView;
+@property(strong, nonatomic)UILabel* lblTags;
 @end

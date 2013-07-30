@@ -18,7 +18,7 @@
 #import "TVAppDelegate.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "AFHTTPRequestOperation.h"
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"
@@ -95,11 +95,11 @@
 
 - (IBAction)contiuneButtonClicked:(id)sender {
         
-        if ([Ultilities validatePhone:_tfdAuthenCode.text]){
+        if ([Utilities validatePhone:_tfdAuthenCode.text]){
 
             [self postCreatePhoneVerify];
         }else
-            [Ultilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
+            [Utilities showAlertWithMessage:@"Xin điền đúng thông tin Email/SĐT"];
 }
 
 

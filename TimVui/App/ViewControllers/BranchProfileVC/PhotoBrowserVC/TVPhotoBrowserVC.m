@@ -22,7 +22,7 @@
 #import "TMPhotoQuiltViewCell.h"
 #import "TMQuiltView.h"
 #import "TVNetworkingClient.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "NSDictionary+Extensions.h"
 @interface TVPhotoBrowserVC (){
     @private
@@ -83,7 +83,7 @@
         cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"] ;
     }
     NSDictionary* dic=[[albumArr objectAtIndex:indexPath.row] safeDictForKey:@"image"] ;
-    [cell.photoView setImageWithURL:[Ultilities getLargeAlbumPhoto:dic]placeholderImage:nil];
+    [cell.photoView setImageWithURL:[Utilities getLargeAlbumPhoto:dic]placeholderImage:nil];
     return cell;
 }
 
@@ -96,7 +96,7 @@
     if (!_photos) {
         NSMutableArray *photos = [[NSMutableArray alloc] init];
         for (NSDictionary* dic in albumArr) {
-            [photos addObject:[MWPhoto photoWithURL:[Ultilities getOriginalAlbumPhoto:[dic safeDictForKey:@"image"]]]];
+            [photos addObject:[MWPhoto photoWithURL:[Utilities getOriginalAlbumPhoto:[dic safeDictForKey:@"image"]]]];
         }
         _photos=photos;
     }

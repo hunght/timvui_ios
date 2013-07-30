@@ -18,7 +18,7 @@
 #import "TVAppDelegate.h"
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "AFHTTPRequestOperation.h"
 #import "UserRegisterVC.h"
 #import "UINavigationBar+JTDropShadow.h"

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Ultilities.h"
+#import "Utilities.h"
 @interface UIImage (Crop)
 - (UIImage *)cropImageInstagramStyle;
 - (UIImage *)cropImageInstagramStyleWithBottomBar:(int)heightBar;

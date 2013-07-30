@@ -15,7 +15,7 @@ typedef enum
     kNormalSizeType,//300*300
     kOriginalSizeType,//1024*1024
 } ImageSizeType;
-@interface Ultilities : NSObject
+@interface Utilities : NSObject
 +(void) logMemoryUsage;
 +(BOOL)isRetinaYES;
 +(void)iPhoneRetina;

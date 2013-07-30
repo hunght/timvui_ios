@@ -11,7 +11,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/SDImageCache.h>
 #import "TVNetworkingClient.h"
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "AFHTTPRequestOperation.h"
 #import "AuthenCodeVC.h"
 
@@ -131,13 +131,13 @@
 
 - (IBAction)userRegisterClicked:(id)sender {
     [self.view endEditing:YES];
-        if ([Ultilities validatePhone:txfPhone.text]) {
-            if ([Ultilities validatePassword:txfPassword.text withConfirmPass:txfConfirmPassword.text]){
-                if ([Ultilities validateString:_txfName.text])
+        if ([Utilities validatePhone:txfPhone.text]) {
+            if ([Utilities validatePassword:txfPassword.text withConfirmPass:txfConfirmPassword.text]){
+                if ([Utilities validateString:_txfName.text])
                     [self postAPIUserCreatePhone];
             }
         }else
-            [Ultilities showAlertWithMessage:@"Xin dien thong tin day du"];
+            [Utilities showAlertWithMessage:@"Xin dien thong tin day du"];
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {

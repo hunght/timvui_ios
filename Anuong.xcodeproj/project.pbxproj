@@ -306,7 +306,7 @@
 		55A1F3DA17607DCF0098E9FD /* img_profile_branch_coment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A1F3D417607DCF0098E9FD /* img_profile_branch_coment@2x.png */; };
 		55A1F3DB17607DCF0098E9FD /* img_profile_branch_like.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A1F3D517607DCF0098E9FD /* img_profile_branch_like.png */; };
 		55A1F3DC17607DCF0098E9FD /* img_profile_branch_like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A1F3D617607DCF0098E9FD /* img_profile_branch_like@2x.png */; };
-		55A25F4F1728C56A00D5E29F /* Ultilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A25F4E1728C56A00D5E29F /* Ultilities.m */; };
+		55A25F4F1728C56A00D5E29F /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A25F4E1728C56A00D5E29F /* Utilities.m */; };
 		55A25F521728C8AB00D5E29F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55A25F511728C8AB00D5E29F /* QuartzCore.framework */; };
 		55A25F581728CCD700D5E29F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A25F541728CCD700D5E29F /* Localizable.strings */; };
 		55A25F591728CCD700D5E29F /* Localizable_vn.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A25F561728CCD700D5E29F /* Localizable_vn.strings */; };
@@ -884,8 +884,8 @@
 		55A1F3D417607DCF0098E9FD /* img_profile_branch_coment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_coment@2x.png"; sourceTree = "<group>"; };
 		55A1F3D517607DCF0098E9FD /* img_profile_branch_like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_like.png; sourceTree = "<group>"; };
 		55A1F3D617607DCF0098E9FD /* img_profile_branch_like@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_like@2x.png"; sourceTree = "<group>"; };
-		55A25F4D1728C56A00D5E29F /* Ultilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ultilities.h; sourceTree = "<group>"; };
-		55A25F4E1728C56A00D5E29F /* Ultilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ultilities.m; sourceTree = "<group>"; };
+		55A25F4D1728C56A00D5E29F /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		55A25F4E1728C56A00D5E29F /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		55A25F511728C8AB00D5E29F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		55A25F551728CCD700D5E29F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55A25F571728CCD700D5E29F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable_vn.strings; sourceTree = "<group>"; };
@@ -1265,8 +1265,8 @@
 		5506B0A7175EF4FA0054D606 /* Ultilities */ = {
 			isa = PBXGroup;
 			children = (
-				55A25F4D1728C56A00D5E29F /* Ultilities.h */,
-				55A25F4E1728C56A00D5E29F /* Ultilities.m */,
+				55A25F4D1728C56A00D5E29F /* Utilities.h */,
+				55A25F4E1728C56A00D5E29F /* Utilities.m */,
 			);
 			name = Ultilities;
 			sourceTree = "<group>";
@@ -2994,7 +2994,7 @@
 				5554483B170EBC2D00965E1E /* LeftMenuVC.m in Sources */,
 				5554483C170EBC2D00965E1E /* GHMenuCell.m in Sources */,
 				55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */,
-				55A25F4F1728C56A00D5E29F /* Ultilities.m in Sources */,
+				55A25F4F1728C56A00D5E29F /* Utilities.m in Sources */,
 				55954F4D172A132F00A8A351 /* UserRegisterVC.m in Sources */,
 				55F25DFC17423262003EB902 /* GHCollection.m in Sources */,
 				55F25DFD17423262003EB902 /* GHResource.m in Sources */,

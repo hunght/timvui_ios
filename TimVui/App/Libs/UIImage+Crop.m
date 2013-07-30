@@ -102,7 +102,7 @@
 
 -(UIImage*)resizedImageToFitInSize:(CGSize)boundingSize scaleIfSmaller:(BOOL)scale
 {
-    if ([Ultilities isRetinaYES]) {
+    if ([Utilities isRetinaYES]) {
         boundingSize.height+=boundingSize.height;
         boundingSize.width+=boundingSize.width;
     }
@@ -148,7 +148,7 @@
 
 - (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize
 {
-    if ([Ultilities isRetinaYES]) {
+    if ([Utilities isRetinaYES]) {
         targetSize.height+=targetSize.height;
         targetSize.width+=targetSize.width;
     }

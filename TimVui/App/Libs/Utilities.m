@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "MacroApp.h"
 #import <mach/mach.h>
 #import <mach/mach_host.h>
 #import <QuartzCore/QuartzCore.h>
 #import "JSONKit.h"
 
-@implementation Ultilities
+@implementation Utilities
 static bool isRetinaYES =NO;
 +(BOOL)isRetinaYES{
     return isRetinaYES;
@@ -188,12 +188,12 @@ static bool isRetinaYES =NO;
     return NO;
 }
 + (BOOL)validatePassword:(NSString*)pass withConfirmPass:(NSString*)confirmPass {
-    if ([Ultilities validateString:pass]) {
-        if ([Ultilities validateString:confirmPass]) {
+    if ([Utilities validateString:pass]) {
+        if ([Utilities validateString:confirmPass]) {
             if ([pass isEqualToString:confirmPass]) {
                 return YES;
             }else {
-                [Ultilities showAlertWithMessage:NSLocalizedString(@"Password and Confirm Password don't have same value",@"")];
+                [Utilities showAlertWithMessage:NSLocalizedString(@"Password and Confirm Password don't have same value",@"")];
                 return NO;
             }
         }
@@ -204,7 +204,7 @@ static bool isRetinaYES =NO;
 + (BOOL)validatePassword:(NSString*)pass{
     if ([pass length] ==0 ) {
         
-            [Ultilities showAlertWithMessage:@"Vui lòng nhập Password"];
+            [Utilities showAlertWithMessage:@"Vui lòng nhập Password"];
         return NO;
     }
     return YES;

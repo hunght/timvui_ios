@@ -24,7 +24,7 @@
 #import "TVBranch.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "TVAppDelegate.h"
 int cellPad=44;
 @implementation CameraBranchCell {
@@ -88,7 +88,7 @@ int cellPad=44;
     [_lblDetailRow sizeToFit];
     [self.whiteView addSubview:_lblDetailRow];
 
-    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    [self.imageView setImageWithURL:[Utilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     [self setNeedsLayout];
 }
 

@@ -24,7 +24,7 @@
 #import "TVComment.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "Ultilities.h"
+#import "Utilities.h"
 #import "TVAppDelegate.h"
 #import "NSDate+Helper.h"
 @implementation ExtraCommentCell {
@@ -113,7 +113,7 @@
     [self.detailTextLabel sizeToFit];
 
     self.date.text=[_comment.created stringWithFormat:@"dd/mm/yy"];
-    [self.imageView setImageWithURL:[Ultilities getThumbImageOfCoverBranch:_comment.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    [self.imageView setImageWithURL:[Utilities getThumbImageOfCoverBranch:_comment.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     _firstStar.image=[UIImage imageNamed:(_comment.rating>=1)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _secondStar.image=[UIImage imageNamed:(_comment.rating>=2)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _thirdStar.image=[UIImage imageNamed:(_comment.rating>=3)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
