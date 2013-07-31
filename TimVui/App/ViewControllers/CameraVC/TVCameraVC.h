@@ -24,7 +24,7 @@
 @property(nonatomic, unsafe_unretained)ECSlidingViewController *slidingViewController;
 @property (nonatomic, retain) NSMutableArray *arrImages;
 @property (nonatomic, retain) UILabel *lblPhone;
-@property (nonatomic,strong)PhotoBrowseVC *photoBrowseTableVC;
+@property (nonatomic,strong)   PhotoBrowseVC *photoBrowseTableVC;
 @property (nonatomic, retain) TVBranch *branch;
 @property (nonatomic, retain) NSString* strAlbum;
 - (IBAction)skinPickerButtonClicked:(id)sender;

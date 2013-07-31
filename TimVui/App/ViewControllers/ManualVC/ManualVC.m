@@ -17,7 +17,6 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NSDate+Helper.h"
 #import "Utilities.h"
-#import "ECSlidingViewController.h"
 @interface ManualVC ()
 
 @end

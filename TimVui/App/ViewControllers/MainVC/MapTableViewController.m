@@ -19,7 +19,6 @@
 #import "NSDate+Helper.h"
 #import "NSDictionary+Extensions.h"
 #import "TVNotification.h"
-
 #import "ECSlidingViewController.h"
 #import "LocationTableVC.h"
 #import "TVCoupon.h"
