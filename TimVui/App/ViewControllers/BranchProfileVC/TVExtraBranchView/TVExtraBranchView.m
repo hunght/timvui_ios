@@ -83,8 +83,7 @@
             [_viewScroll addSubview:karaokeButton];
             pad=karaokeButton.frame.size.width;
         }
-        
-        
+
         eventButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad,0, 82, 41)];
         [eventButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [eventButton setTitle:@"             SỰ KIỆN" forState:UIControlStateNormal];

@@ -51,14 +51,12 @@
         dispatch_async(dispatch_get_main_queue(),^ {
             //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
             [self.tableView reloadData];
-            
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
             
         });
     }];
-
 }
 
 - (void)viewDidLoad
@@ -175,7 +173,6 @@
 }
 
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
@@ -186,7 +183,9 @@
     else{
         [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-    cell.branch = self.branches[indexPath.row];
+    
+    double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[self.branches[indexPath.row]latlng]];
+    [cell setBranch:self.branches[indexPath.row] withDistance:distance];
     return cell;
 }
 
@@ -197,7 +196,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     //
     BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
     branchProfileVC.branchID=[_branches[indexPath.row] branchID];

@@ -496,7 +496,7 @@ enum {
 #pragma mark Helper
 
 - (void)toggleTopView {
-    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
+//    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
     if (self.slidingViewController.underLeftShowing) {
         // actually this does not get called when the top view screenshot is enabled
         // because the screenshot intercepts the touches on the toggle button
@@ -543,11 +543,13 @@ enum {
     [(UIViewController *)navController.viewControllers[0] navigationItem].leftBarButtonItem = self.toggleBarButtonItem;
 	// set the navigation controller as the new top view and bring it on
     [self.slidingViewController setTopViewController:navController];
-	self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
-    [navController.view addGestureRecognizer:self.slidingViewController.panGesture];
+	//self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
+    self.slidingViewController.anchorRightPeekAmount=40.0f;
+    [[(UIViewController *)navController.viewControllers[0] view] addGestureRecognizer:self.slidingViewController.panGesture];
     [navController.navigationBar dropShadow];
     [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
 }
+
 #pragma mark - Table view data source
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

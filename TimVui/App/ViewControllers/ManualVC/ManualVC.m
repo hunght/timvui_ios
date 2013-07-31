@@ -15,6 +15,9 @@
 #import "TVManual.h"
 #import "TSMessage.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "NSDate+Helper.h"
+#import "Utilities.h"
+#import "ECSlidingViewController.h"
 @interface ManualVC ()
 
 @end
@@ -33,13 +36,14 @@
 
 - (void)postToGetManualWithType:(NSDictionary *)params
 {
-
+    NSLog(@"param=%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         [_manualArr removeAllObjects];
         for (NSDictionary* dic in [[JSON valueForKey:@"data"] allValues]) {
             TVManual* munual=[[TVManual alloc] initWithDict:dic];
             [_manualArr addObject:munual];
         }
+
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -49,8 +53,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+    
+    [_btnRecently setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnPopular setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnSaved setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnRecently setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_btnPopular setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_btnSaved setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_btnRecently setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    [_btnPopular setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    [_btnSaved setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    [_btnRecently setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+    [_btnPopular setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+    [_btnSaved setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+    [_btnRecently setSelected:YES];
+    [_btnPopular setSelected:NO];
+    [_btnSaved setSelected:NO];
+    
+    UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_off"] forState:UIControlStateNormal];
+    [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_on"] forState:UIControlStateHighlighted];
+    [_btnSearchBar addTarget:self action:@selector(filterButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
+    [backButtonView addSubview:_btnSearchBar];
+    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
+    self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     NSString* strType=@"view";
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -75,22 +107,38 @@
 }
 
 #pragma mark IBAction
+-(void)filterButtonClicked{
+    
+}
 
-- (IBAction)recentlyButtonClicked:(id)sender {
+- (IBAction)recentlyButtonClicked:(UIButton*)sender {
+    [_btnPopular setSelected:NO];
+    [_btnSaved setSelected:NO];
+    [sender setSelected:YES];
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             @"new",@"type" ,
                             nil];
+    
     [self postToGetManualWithType:params];
 }
 
-- (IBAction)popularButtonClicked:(id)sender {
+- (IBAction)popularButtonClicked:(UIButton*)sender {
+    [_btnRecently setSelected:NO];
+    [_btnSaved setSelected:NO];
+    [sender setSelected:YES];
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             @"view",@"type",
                             nil];
     [self postToGetManualWithType:params];
 }
 
-- (IBAction)savedButtonClicked:(id)sender {
+- (IBAction)savedButtonClicked:(UIButton*)sender {
+    [_btnRecently setSelected:NO];
+    [_btnPopular setSelected:NO];
+    [sender setSelected:YES];
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             @"user",@"type",
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
@@ -154,8 +202,13 @@
     [cell.imgView setImageWithURL:[NSURL URLWithString:manual.images]];
     
     height=cell.imgView.frame.origin.y+cell.imgView.frame.size.height;
-    frame=cell.webView.frame;
+    frame=cell.viewCountDate.frame;
     frame.origin.y=height+5;
+    [cell.viewCountDate setFrame:frame];
+
+    height=cell.viewCountDate.frame.origin.y+cell.viewCountDate.frame.size.height;
+    frame=cell.webView.frame;
+    frame.origin.y=height-7;
     [cell.webView setFrame:frame];
     
     [cell.webView loadHTMLString:manual.content baseURL:nil];
@@ -163,25 +216,48 @@
     
     height=cell.webView.frame.origin.y+cell.webView.frame.size.height;
     frame=cell.saveButton.frame;
-    frame.origin.y=height+5;
+    frame.origin.y=height+15;
     cell.saveButton.frame=frame;
     
     frame=cell.detailButton.frame;
-    frame.origin.y=height+5;
+    frame.origin.y=height+15;
     cell.detailButton.frame=frame;
     
     cell.saveButton.tag=indexPath.row;
     cell.detailButton.tag=indexPath.row;
+
+    cell.lblView.text=manual.view;
+    cell.lblDate.text=[manual.changed stringWithFormat:@"dd/mm/yyyy"];
     
-    cell.lblTags.text=@"adfjklasfghklds";
+    NSString* tempStrName=@"";
+    BOOL isFirst=YES;
+    for (NSString* str in [manual.cities valueForKey:@"name"]) {
+        if (isFirst) {
+            isFirst=NO;
+            tempStrName=[tempStrName stringByAppendingFormat:@"  %@",str];
+        }else
+            tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
+    }
     
+    tempStrName=[tempStrName stringByAppendingString:@"|"];
+    isFirst=YES;
+    for (NSString* str in [manual.handbook_cat valueForKey:@"name"]) {
+        if (isFirst) {
+            isFirst=NO;
+            tempStrName=[tempStrName stringByAppendingFormat:@"%@",str];
+        }else
+            tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
+    }
+    
+    cell.lblTags.text=[NSString stringWithFormat:@"%@",tempStrName];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-        return 380;
+    TVManual* manual=_manualArr[indexPath.row];
+    return 370+ [TVManualCell sizeExpectedWithText:manual.title];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

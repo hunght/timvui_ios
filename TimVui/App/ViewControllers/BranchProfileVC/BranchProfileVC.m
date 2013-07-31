@@ -636,30 +636,37 @@
     branches.isNotSearchAPIYES=YES;
     
     //NSDictionary *params = @{@"id": _branchID};
-    
-    NSDictionary *params = @{@"id": @"1"};
-    [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async( dispatch_get_main_queue(),^ {
-            NSLog(@"data===%@",data);
-            NSDictionary* dict=[[data safeArrayForKey:@"data"] objectAtIndex:0];
-            _branch=branches[0];
-            [self showInfoView];
-            
-            TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
-            _extraBranchView.scrollView=_scrollView;
-            _extraBranchView.branch=_branch;
-            
-            if(![[GlobalDataUser sharedAccountClient].recentlyBranches objectForKey:_branch.branchID])[[GlobalDataUser sharedAccountClient].recentlyBranches setObject:dict forKey:_branch.branchID];
-            [self.view addSubview:_extraBranchView];
-            
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async( dispatch_get_main_queue(),^ {
-            
-        });
-    }];
-    
-    
+    if (!_branch) {
+        NSDictionary *params = @{@"id": @"1"};
+        [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+            dispatch_async( dispatch_get_main_queue(),^ {
+                NSLog(@"data===%@",data);
+                NSDictionary* dict=[[data safeArrayForKey:@"data"] objectAtIndex:0];
+                _branch=branches[0];
+                [self showInfoView];
+                
+                TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
+                _extraBranchView.scrollView=_scrollView;
+                _extraBranchView.branch=_branch;
+                
+                if(![[GlobalDataUser sharedAccountClient].recentlyBranches objectForKey:_branch.branchID])[[GlobalDataUser sharedAccountClient].recentlyBranches setObject:dict forKey:_branch.branchID];
+                [self.view addSubview:_extraBranchView];
+                
+            });
+        } failure:^(GHResource *instance, NSError *error) {
+            dispatch_async( dispatch_get_main_queue(),^ {
+                
+            });
+        }];
+    }else{
+        [self showInfoView];
+        
+        TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
+        _extraBranchView.scrollView=_scrollView;
+        _extraBranchView.branch=_branch;
+        [self.view addSubview:_extraBranchView];
+    }
+
     void *context = (__bridge void *)self;
     [self.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
     heightDefaultScroll=_imgBranchCover.frame.origin.y;

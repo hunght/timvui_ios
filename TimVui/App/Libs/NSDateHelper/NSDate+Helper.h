@@ -42,7 +42,8 @@
 - (NSUInteger)weekday;
 
 - (NSString *)stringWithDefautFormat;
-- (NSString *)stringWithFormat:(NSString *)format;
+- (NSString *)stringWithFormat
+:(NSString *)format;
 - (NSString *)stringWithDateStyle:(NSDateFormatterStyle)dateStyle timeStyle:(NSDateFormatterStyle)timeStyle;
 
 - (NSDate *)beginningOfWeek;

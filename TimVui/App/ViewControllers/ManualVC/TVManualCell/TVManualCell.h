@@ -31,4 +31,8 @@
 @property(strong, nonatomic)UIButton* detailButton;
 @property(strong, nonatomic)UIImageView* imgView;
 @property(strong, nonatomic)UILabel* lblTags;
+@property(strong, nonatomic)UILabel* lblView;
+@property(strong, nonatomic)UILabel* lblDate;
+@property(strong, nonatomic)UIView* viewCountDate;
++ (CGFloat)sizeExpectedWithText:(NSString *)branch;
 @end
