@@ -53,57 +53,77 @@
         
         [_viewScroll addSubview:image];
         [_viewScroll setContentSize:CGSizeMake(384+pad, 41)];
-        
-        
-        
+
         commentButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 99, 41)];
+        _lblReview=[[UILabel alloc] initWithFrame:CGRectMake(65, 10, 30, 20)];
+        [commentButton addSubview:_lblReview];
+        _lblReview.textColor=[UIColor colorWithRed:(146/255.0f) green:(232/255.0f) blue:(255/255.0f) alpha:.5f];
+        _lblReview.font=[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
+
+        _lblReview.backgroundColor=[UIColor clearColor];
+        
         [commentButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
-        [commentButton setTitle:@"             ĐÁNH GIÁ" forState:UIControlStateNormal];
+        [commentButton setTitle:@"    ĐÁNH GIÁ" forState:UIControlStateNormal];
         [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        commentButton.titleLabel.font =[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+        commentButton.titleLabel.font =[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
         
         [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
-        
         menuButton = [[UIButton alloc] initWithFrame:CGRectMake(99, 0, 100, 41)];
+        _lblMenu=[[UILabel alloc] initWithFrame:CGRectMake(65, 10, 40, 20)];
+        [menuButton addSubview:_lblMenu];
+        _lblMenu.textColor=[UIColor colorWithRed:(146/255.0f) green:(232/255.0f) blue:(255/255.0f) alpha:.5f];
+        _lblMenu.font=[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
+
+        _lblMenu.backgroundColor=[UIColor clearColor];
         [menuButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
-        [menuButton setTitle:@"             MENU" forState:UIControlStateNormal];
+        [menuButton setTitle:@"MENU" forState:UIControlStateNormal];
         [menuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        menuButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+        menuButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
         [menuButton addTarget:self action:@selector(menuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_viewScroll addSubview:menuButton];
         
         if (_isHasKaraokeYES) {
             karaokeButton = [[UIButton alloc] initWithFrame:CGRectMake(199, 0, 98, 41)];
             [karaokeButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
-            [karaokeButton setTitle:@"             MENU" forState:UIControlStateNormal];
+            [karaokeButton setTitle:@"MENU" forState:UIControlStateNormal];
             [karaokeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            karaokeButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+            karaokeButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
             [karaokeButton addTarget:self action:@selector(karaokeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_viewScroll addSubview:karaokeButton];
             pad=karaokeButton.frame.size.width;
         }
-
+        
         eventButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad,0, 82, 41)];
         [eventButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
-        [eventButton setTitle:@"             SỰ KIỆN" forState:UIControlStateNormal];
+        [eventButton setTitle:@"          SỰ KIỆN" forState:UIControlStateNormal];
         [eventButton addTarget:self action:@selector(eventButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [eventButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        eventButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+        eventButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
         [_viewScroll addSubview:eventButton];
         
         similarButton = [[UIButton alloc] initWithFrame:CGRectMake(199+82+pad,0, 94, 41)];
         [similarButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
-        [similarButton setTitle:@"             SIMILAR" forState:UIControlStateNormal];
+        [similarButton setTitle:@"     SIMILAR" forState:UIControlStateNormal];
         [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [similarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        similarButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
+        similarButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
         [_viewScroll addSubview:similarButton];
         [_viewScroll addSubview:commentButton];
+        [self   setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+        
     }
     return self;
 }
-
+-(void)setBranch:(TVBranch *)branch{
+    _branch=branch;
+    int countMenu=0;
+    for (TVGroupCuisines* group in _branch.menu.items ) {
+        countMenu+=group.items.count;
+    }
+    
+    self.lblMenu.text=[NSString stringWithFormat:@"(%d)",countMenu];
+}
 #pragma TVNetworking
 
 - (void)postCommentBranch:(NSDictionary*)params {
@@ -114,7 +134,9 @@
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.comments loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            
             [weakSelf.tableView.pullToRefreshView stopAnimating];
+            self.lblReview.text=[NSString stringWithFormat:@"    (%d)",weakSelf.comments.count];
             [self.tableView reloadData];
         });
     } failure:^(GHResource *instance, NSError *error) {
@@ -136,6 +158,7 @@
 
 -(void)similarButtonClicked:(UIButton*)sender{
     [self resetToUnselectedButtons];
+    [sender setSelected:YES];
     [self initTableView];
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     if (_currentTableType!=kTVSimilar){
@@ -148,6 +171,7 @@
 
 -(void)menuButtonClicked:(UIButton*)sender{
     [self resetToUnselectedButtons];
+    [sender setSelected:YES];
     [self initTableView];
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     if (_currentTableType!=kTVMenu){
@@ -158,11 +182,13 @@
 }
 -(void)karaokeButtonClicked:(UIButton*)sender{
     [self resetToUnselectedButtons];
+    [sender setSelected:YES];
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
 }
 
 -(void)commentButtonClicked:(UIButton*)sender{
     [self resetToUnselectedButtons];
+    [sender setSelected:YES];
     [self initTableView];
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     if (_currentTableType!=kTVComment)
@@ -257,6 +283,7 @@
     
     if (!_tableView) {
         _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 41, 320,self.superview.bounds.size.height- kTableViewHeightOffset) style:UITableViewStylePlain];
+        [_tableView setBackgroundColor:[UIColor clearColor]];
         [self addSubview:_tableView];
         [_tableView setDelegate:self];
         [_tableView setDataSource:self];
@@ -279,24 +306,20 @@
     }
 
     [self showExtraView:YES];
-    
-    
+
+        self.isAnimating=NO;
+        self.isHiddenYES=YES;
+
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
 #pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
     if ([scrollView isKindOfClass:[UITableView class]])
         return;
-    lastDragOffset = scrollView.contentOffset.y;
-}
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
-    lastDragOffset=scrollView.contentOffset.y;
-}
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    if ([scrollView isKindOfClass:[UITableView class]])
-        return;
-    //NSLog(@"%f",scrollView.contentOffset.y);
-    if ((int)scrollView.contentOffset.y < lastDragOffset){
+    //NSLog(@"scrollView.contentOffset.y====%f",scrollView.contentOffset.y);
+    if (scrollView.contentOffset.y < lastDragOffset){
         if (self.isHiddenYES&&!self.isAnimating) {
             self.isAnimating=YES;
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -319,7 +342,10 @@
         }
     }
     
+    lastDragOffset = scrollView.contentOffset.y;
+    // do whatever you need to with scrollDirection here.
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (_currentTableType==kTVMenu) {
@@ -359,15 +385,16 @@
 		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 3.0f, 5.0f)];
         TVGroupCuisines* group=[_branch.menu.items objectAtIndex:section];
 		textLabel.text =group.name;
-		textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(20)];
+		textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
 		textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
 		textLabel.textColor = [UIColor redColor];
 		textLabel.backgroundColor = [UIColor clearColor];
         [textLabel sizeToFit];
-        UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(textLabel.frame.size.width+textLabel.frame.origin.x, 30.0f, [UIScreen mainScreen].bounds.size.height, 2.0f)];
-		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:1.0f];
-		[textLabel.superview addSubview:topLine];
+        
+        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5,44-3, 295, 3)];
+        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+		[headerView addSubview:imageLine];
 		
 		[headerView addSubview:textLabel];
         return headerView;
@@ -433,7 +460,7 @@
             }
             TVGroupCuisines* group=[_branch.menu.items objectAtIndex:indexPath.section];
             TVCuisine* cuisine=group.items[indexPath.row];
-            cell.textLabel.text=cuisine.name;
+            [(ExtraMenuCell*)cell titleRow].text=cuisine.name;[[(ExtraMenuCell*)cell titleRow] sizeToFit];
             cell.detailTextLabel.text=cuisine.price;
             break;
         }

@@ -6,5 +6,5 @@
 @property(nonatomic,strong)NSMutableArray *items;
 @property(nonatomic,strong)NSString *groupID;
 @property(nonatomic,strong)NSString *name;
-- (id)initWithDict:(NSDictionary *)dict;
+- (id)initWithDict:(NSArray *)dict;
 @end

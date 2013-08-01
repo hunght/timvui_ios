@@ -57,38 +57,34 @@
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
     lblBranchName.textColor = [UIColor blackColor];
-    lblBranchName.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
+    lblBranchName.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
     lblBranchName.text=_branch.name;
     [genarateInfoView addSubview:lblBranchName];
     
-    UIImage *imageDirection=[UIImage imageNamed:@"img_direction_icon"];
-    UIImageView* imgDirectionView=[[UIImageView alloc] initWithFrame:CGRectMake(257,9+8 , 9, 9)];
-    [imgDirectionView setImage:imageDirection];
-    [genarateInfoView addSubview:imgDirectionView];
     
     UILabel *lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,9+4, 60, 15)];
     lblDistance.backgroundColor = [UIColor clearColor];
-    lblDistance.textColor = [UIColor redColor];
-    lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(15)];
+    lblDistance.textColor = [UIColor grayColor];
+    lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
     if (distance>1000.0)
-        lblDistance.text=[NSString stringWithFormat:@"%.2f km",distance/1000];
+        lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
     else
-        lblDistance.text=[NSString stringWithFormat:@"%f m",distance];
+        lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
     
     [genarateInfoView addSubview:lblDistance];
     
-    UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 210, 12)];
+    UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 260, 12)];
     lblAddress.backgroundColor = [UIColor clearColor];  
     lblAddress.textColor = [UIColor grayColor];
-    lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblAddress.text=_branch.address_full;
     [genarateInfoView addSubview:lblAddress];
     
     UILabel *lblPrice = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 53.0, 210, 12)];
     lblPrice.backgroundColor = [UIColor clearColor];
     lblPrice.textColor = [UIColor grayColor];
-    lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblPrice.text=_branch.price_avg;
     [genarateInfoView addSubview:lblPrice];
     
@@ -107,7 +103,7 @@
     UILabel *lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(10.0+15, 71.0, 210, 12)];
     lblPhone.backgroundColor = [UIColor clearColor];
     lblPhone.textColor = [UIColor grayColor];
-    lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblPhone.text=_branch.phone;
     [genarateInfoView addSubview:lblPhone];
     return genarateInfoView;

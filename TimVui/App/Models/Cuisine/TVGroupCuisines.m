@@ -4,7 +4,7 @@
 
 @implementation TVGroupCuisines
 
-- (id)initWithDict:(NSDictionary *)dict {
+- (id)initWithDict:(NSArray *)dict {
 	self = [super init];
 	if (self) {
 		[self setValues:dict];
@@ -14,10 +14,10 @@
 
 
 - (void)setValues:(id)values {
-    NSLog(@"%@",values);
-    self.name = [values safeStringForKey:@"group"];
+    NSLog(@"TVGroupCuisines======%@",values);
+    
     self.items = [NSMutableArray array];
-	for (NSDictionary *dict in [values valueForKey:@"items"] ) {
+	for (NSDictionary *dict in values ) {
 		TVCuisine *event = [[TVCuisine alloc] initWithDict:dict];
 		[self.items addObject:event];
 	}

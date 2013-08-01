@@ -190,6 +190,7 @@
     if (self.tableViewDidLoadBlock) {
         self.tableViewDidLoadBlock(self);
     }
+    [_tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
 }
 
 - (void)setMapView:(GMSMapView *)mapView

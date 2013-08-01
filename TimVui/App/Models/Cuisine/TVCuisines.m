@@ -5,12 +5,13 @@
 @implementation TVCuisines
 
 - (void)setValues:(id)values {
-    NSLog(@"%@",values);
+    NSLog(@"TVCuisines====%@",values);
     self.count=[values safeIntegerForKey:@"count"];
     self.items = [NSMutableArray array];
-	for (NSDictionary *dict in [[values safeDictForKey:@"groups"] allValues]) {
+	for (NSString*key in [values allKeys]) {
         
-		TVGroupCuisines *event = [[TVGroupCuisines alloc] initWithDict:dict];
+		TVGroupCuisines *event = [[TVGroupCuisines alloc] initWithDict:[values safeArrayForKey:key]];
+        event.name = key;
 		[self.items addObject:event];
 	}
 }

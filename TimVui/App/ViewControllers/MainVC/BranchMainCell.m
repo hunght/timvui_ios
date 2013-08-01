@@ -49,11 +49,18 @@
     if (!self) {
         return nil;
     }
+    [self setSelectionStyle:UITableViewCellSelectionStyleGray];
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern_menu"]];
+    [self setSelectedBackgroundView:bgView];
+    
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     self.textLabel.textColor = [UIColor blackColor];
+    self.textLabel.highlightedTextColor=[UIColor blackColor];
     self.textLabel.numberOfLines = 1;
     self.detailTextLabel.numberOfLines = 1;
+    self.detailTextLabel.highlightedTextColor=self.detailTextLabel.textColor;
     self.textLabel.backgroundColor=[UIColor clearColor];
     self.detailTextLabel.backgroundColor=[UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleGray;
@@ -62,7 +69,7 @@
     self.price_avg.backgroundColor = [UIColor clearColor];
     
     self.price_avg.textColor = [UIColor grayColor];
-    self.price_avg.highlightedTextColor = [UIColor whiteColor];
+    self.price_avg.highlightedTextColor = [UIColor grayColor];
     
     
     self.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
@@ -90,6 +97,7 @@
     _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,7+7, 60, 15)];
     _lblDistance.backgroundColor = [UIColor clearColor];
     _lblDistance.textColor = [UIColor grayColor];
+    _lblDistance.highlightedTextColor = [UIColor grayColor];
     _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];
     
     [self.contentView addSubview:_lblDistance];
@@ -115,6 +123,7 @@
         UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
         lblAddress.backgroundColor = [UIColor clearColor];
         lblAddress.textColor = [UIColor redColor];
+        lblAddress.highlightedTextColor = [UIColor redColor];
         lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblAddress.numberOfLines = 1;
         lblAddress.text=coupon.name;

@@ -21,21 +21,21 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         
-        [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+        [self setSelectionStyle:UITableViewCellSelectionStyleGray];
         
         self.clipsToBounds = YES;
         
 		UIView *bgView = [[UIView alloc] init];
-        bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]];
+        bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern_menu"]];
 		self.selectedBackgroundView = bgView;
-		
 		self.imageView.contentMode = UIViewContentModeScaleAspectFill;
 		
-		self.textLabel.font = [UIFont fontWithName:@"ArialMT" size:(17)];
+        self.textLabel.font = [UIFont fontWithName:@"ArialMT" size:(17)];
 		self.textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        
 		self.textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
 		self.textLabel.textColor = [UIColor colorWithRed:(101.0f/255.0f) green:(96.0f/255.0f) blue:(100.0f/255.0f) alpha:1.0f];
-		
+		self.textLabel.highlightedTextColor = [UIColor colorWithRed:(101.0f/255.0f) green:(96.0f/255.0f) blue:(100.0f/255.0f) alpha:1.0f];
 		UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
 		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:2.0f];
 		[self.textLabel.superview addSubview:topLine];

@@ -44,33 +44,38 @@
     if (!self) {
         return nil;
     }
-    
-    self.textLabel.adjustsFontSizeToFitWidth = YES;
-    self.textLabel.textColor = [UIColor blackColor];
+    _titleRow=[[UILabel alloc] initWithFrame:CGRectMake(15.0f, 4.0f, 222.0f, 15.0f)];
+    self.titleRow.adjustsFontSizeToFitWidth = YES;
+    self.titleRow.textColor = [UIColor blackColor];
 
-    self.textLabel.backgroundColor=[UIColor clearColor];
-    self.detailTextLabel.backgroundColor=[UIColor clearColor];
-    self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    self.textLabel.numberOfLines = 0;
-    self.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+    self.titleRow.backgroundColor=[UIColor whiteColor];
+    [self.contentView addSubview:_titleRow];
+    self.detailTextLabel.backgroundColor=[UIColor redColor];
     self.detailTextLabel.textColor=[UIColor whiteColor];
-    self.selectionStyle = UITableViewCellSelectionStyleGray;
-    self.detailTextLabel.textAlignment = UITextAlignmentCenter;
-    self.textLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    self.imageView.image=[UIImage imageNamed:@"img_map_coupon_event_icon_cell"];
+    self.titleRow.numberOfLines = 1;
+//    self.titleRow.lineBreakMode = UILineBreakModeWordWrap;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.detailTextLabel.textAlignment = UITextAlignmentCenter;
+    
+    self.titleRow.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+    self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    self.imageView.image=[Utilities imageFromColor:[UIColor grayColor]];
     [self.contentView insertSubview:self.detailTextLabel aboveSubview:self.imageView];
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
+    UILabel* dotLine=[[UILabel alloc] initWithFrame: CGRectMake(150.0f, 6.0f, 90, 15.0f)];
+    dotLine.font=[UIFont systemFontOfSize:12];
+    dotLine.text=@"................................................";
+    dotLine.textColor=[UIColor lightGrayColor];
+    dotLine.backgroundColor=[UIColor clearColor];
+    [self.contentView insertSubview:dotLine belowSubview:self.titleRow];
     return self;
 }
-
-
 
 #pragma mark - UIView
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(254.0f, 8.0f, 56.0f, 17.0f);
-    self.textLabel.frame = CGRectMake(15.0f, 8.0f, 222.0f, 15.0f);
     self.detailTextLabel.frame = CGRectMake(254.0f, 8.0f, 56.0f, 17.0f);
 }
 

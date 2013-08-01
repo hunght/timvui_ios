@@ -30,7 +30,8 @@
 	self.name = [dict safeStringForKey:@"name"];
 	self.price   = [dict safeStringForKey:@"price"];
 	self.price_old = [dict safeStringForKey:@"price_old"];
-
+    
+    //
 }
 
 @end

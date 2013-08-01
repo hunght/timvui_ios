@@ -36,7 +36,7 @@
 @property (nonatomic, strong)     UIImageView* thirdStar;
 @property (nonatomic, strong)     UIImageView* fourthStar;
 @property (nonatomic, strong)     UIImageView* fifthStar;
-
+@property (nonatomic, strong) UIView* bgView;
 + (CGFloat)heightForCellWithPost:(TVComment *)branch;
 
 @end
