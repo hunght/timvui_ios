@@ -23,7 +23,7 @@
 #import "RecentlyBranchListVC.h"
 #import "ManualVC.h"
 #import <SVProgressHUD.h>
-
+#import "TVMenuUserCell.h"
 
 #define kNumberOfSections 3
 
@@ -352,12 +352,19 @@ enum {
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if(section==0)return 2;
 	return (_headers[section] == [NSNull null]) ? 0.0f : 34.0f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	NSObject *headerText = _headers[section];
+
 	UIView *headerView = nil;
+    if (section==0) {
+        headerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 3)];
+        [headerView setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]];
+        return  headerView;
+    }
 	if (headerText != [NSNull null]) {
 		headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 34.0f)];
 		headerView.backgroundColor = [UIColor colorWithRed:(0/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:1.0f];
@@ -419,6 +426,24 @@ enum {
     
     // first check if any dropdown contains the requested cell
     if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
+        
+        if (indexPath.section==0&&indexPath.row==0) {
+            TVMenuUserCell* user=(TVMenuUserCell*)[tableView cellForRowAtIndexPath:indexPath];
+            if ([user isKindOfClass:[TVMenuUserCell class]]) {
+                if (isRotatedYES==NO) {
+                    isRotatedYES=YES;
+                    [user.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon_down"]];
+                    
+                }else{
+                    isRotatedYES=NO;
+                    [user.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon"]];
+                }
+            }
+        }
+       
+
+
+        
         [VPPDropDown tableView:tableView didSelectRowAtIndexPath:indexPath];
         if ([GlobalDataUser sharedAccountClient].isLogin==NO&&indexPath.section==kSection1UserAccount && indexPath.row==kS1Row0) {
             [self showLoginViewController];
@@ -554,7 +579,7 @@ enum {
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==0 && indexPath.row==0) {
-        return 65;
+        return 70;
     }
     return 50;
 }
@@ -716,25 +741,33 @@ enum {
 }
 
 - (UITableViewCell *) dropDown:(VPPDropDown *)dropDown rootCellAtGlobalIndexPath:(NSIndexPath *)globalIndexPath {
-    static NSString *cellIdentifier = @"GlobalDropDownCell";
+    static NSString *cellIdentifier = @"GlobalCustomDropDownCell";
+    TVMenuUserCell *cellUser = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cellUser) {
+        cellUser = [[TVMenuUserCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
+        if (isRotatedYES==NO) {
+            [cellUser.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon_down"]];
+        }else
+            [cellUser.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon"]];
     
-    GHMenuCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
     }
-    
+
     if ([GlobalDataUser sharedAccountClient].isLogin){
-        cell.textLabel.text = [GlobalDataUser sharedAccountClient].user.first_name;
-        [cell.imageView setImageWithURL:[[NSURL alloc] initWithString:[GlobalDataUser sharedAccountClient].user.avatar]  placeholderImage:[UIImage imageNamed:@"user"]];
-        cell.textLabel.frame = CGRectMake(50.0f, 10.0f, 200.0f, 43.0f);
-        cell.imageView.frame = CGRectMake(28, 5, 50, 50);
-        [cell setNeedsDisplay];
+
+//
+//        [UIView beginAnimations:@"rotate" context:nil];
+//        [UIView setAnimationDuration:0.5];
+//        cellUser.imgTriangleIcon.transform = CGAffineTransformMakeRotation(60/360*M_PI);
+//        [UIView commitAnimations];
+        
+        cellUser.textLabel.text = [GlobalDataUser sharedAccountClient].user.first_name;
+        [cellUser.imgAvatar setImageWithURL:[[NSURL alloc] initWithString:[GlobalDataUser sharedAccountClient].user.avatar]  placeholderImage:[UIImage imageNamed:@"user"]];
     }else{
-        cell.textLabel.text = @"Đăng nhập";
-        [cell.imageView setImage:[UIImage imageNamed:@"user"]];
+        cellUser.textLabel.text = @"Đăng nhập";
+        [cellUser.imgAvatar setImage:[UIImage imageNamed:@"user"]];
     }
     
-    return cell;
+    return cellUser;
 }
 
 - (UITableViewCell *) dropDown:(VPPDropDown *)dropDown cellForElement:(VPPDropDownElement *)element atGlobalIndexPath:(NSIndexPath *)globalIndexPath {

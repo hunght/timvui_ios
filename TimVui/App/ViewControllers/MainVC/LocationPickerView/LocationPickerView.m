@@ -309,7 +309,6 @@
     [self bringSubviewToFront:self.mapView];
     [self insertSubview:self.closeMapButton aboveSubview:self.mapView];
     [self insertSubview:self.currentLocation aboveSubview:self.mapView];
-    
 
     [UIView animateWithDuration:0.3
                           delay:0.0

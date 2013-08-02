@@ -17,6 +17,7 @@
     VPPDropDown *_dropDownCustom;
     BOOL _lastStatusLogin;
     NSIndexPath *_globalIndexPath;
+    BOOL isRotatedYES;
 }
 
 - (void)openViewController:(UIViewController *)viewController;

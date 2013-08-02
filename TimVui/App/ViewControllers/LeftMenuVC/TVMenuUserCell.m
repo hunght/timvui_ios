@@ -5,17 +5,14 @@
 //  Created by Greg Haines on 11/20/11.
 //
 
-#import "GHMenuCell.h"
+#import "TVMenuUserCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 
-#pragma mark -
-#pragma mark Constants
-NSString const *kSidebarCellTextKey = @"CellText";
-NSString const *kSidebarCellImageKey = @"CellImage";
 
 #pragma mark -
 #pragma mark Implementation
-@implementation GHMenuCell
+@implementation TVMenuUserCell
 
 #pragma mark Memory Management
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -28,9 +25,9 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 		UIView *bgView = [[UIView alloc] init];
         bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern_menu"]];
 		self.selectedBackgroundView = bgView;
-		self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+		self.imgAvatar.contentMode = UIViewContentModeScaleAspectFit;
 		
-        self.textLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+        self.textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(17)];
 		self.textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
         
 		self.textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
@@ -40,6 +37,14 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:2.0f];
 		[self.textLabel.superview addSubview:topLine];
 		
+        self.imgTriangleIcon=[[UIImageView alloc] initWithFrame:CGRectMake(230, 30, 24, 15)];
+        [self.contentView addSubview:self.imgTriangleIcon];
+        
+        self.imgAvatar=[[UIImageView alloc] initWithFrame:CGRectMake(18, 12, 50, 50)];
+        [self.contentView addSubview:self.imgAvatar];
+        CALayer* l=_imgAvatar.layer;
+        [l setMasksToBounds:YES];
+        [l setCornerRadius:3];
 //		UIView *topLine2 = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 1.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
 //		topLine2.backgroundColor = [UIColor whiteColor];
 //		[self.textLabel.superview addSubview:topLine2];
@@ -55,8 +60,8 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 #pragma mark UIView
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	self.textLabel.frame = CGRectMake(73.0f, 5.0f, 200.0f, 43.0f);
-	self.imageView.frame = CGRectMake(25, 15.0f, 20, 20);
+	self.textLabel.frame = CGRectMake(73.0f+10, 15.0f, 200.0f, 43.0f);
+//	self.imageView.frame = CGRectMake(18, 12, 50, 50);
 }
 
 @end

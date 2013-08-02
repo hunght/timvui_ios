@@ -631,9 +631,10 @@
     TVBranches* branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
     branches.isNotSearchAPIYES=YES;
     
-    //NSDictionary *params = @{@"id": _branchID};
+    
     if (!_branch) {
-        NSDictionary *params = @{@"id": @"1"};
+        NSDictionary *params = @{@"id": _branchID};
+//        NSDictionary *params = @{@"id": @"1"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
                 NSLog(@"data===%@",data);

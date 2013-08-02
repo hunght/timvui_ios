@@ -58,10 +58,19 @@
         });
     }];
 }
-
+-(void)backButtonClicked:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
     _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, 6, 320-6*2, 200)];
     [_couponBranch setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=_couponBranch.layer;
