@@ -90,6 +90,7 @@
             [karaokeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             karaokeButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
             [karaokeButton addTarget:self action:@selector(karaokeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
             [_viewScroll addSubview:karaokeButton];
             pad=karaokeButton.frame.size.width;
         }
@@ -115,15 +116,17 @@
     }
     return self;
 }
+
 -(void)setBranch:(TVBranch *)branch{
+    
     _branch=branch;
     int countMenu=0;
     for (TVGroupCuisines* group in _branch.menu.items ) {
         countMenu+=group.items.count;
     }
-    
     self.lblMenu.text=[NSString stringWithFormat:@"(%d)",countMenu];
 }
+
 #pragma TVNetworking
 
 - (void)postCommentBranch:(NSDictionary*)params {

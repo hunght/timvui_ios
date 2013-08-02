@@ -32,8 +32,8 @@
 - (void)viewDidLoad
 {
     self.navigationController.navigationBarHidden=YES;
-    [self getPublicIPFromSomewhere];
-     
+
+    [self checkLocationServiceAvaible];
     [super viewDidLoad];
 }
 -(void)viewDidUnload{
@@ -69,6 +69,7 @@
                                        withDuration:10.0
                                        withCallback:nil
                                          atPosition:TSMessageNotificationPositionTop];
+        
     }else{
         // Do any additional setup after loading the view from its nib.
         self.locationManager = [[CLLocationManager alloc] init];
@@ -77,44 +78,24 @@
         [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         [self.locationManager startMonitoringSignificantLocationChanges];
     }
+    
     if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
         [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     }
 }
 
--(void)getPublicIPFromSomewhere{
-       
-    NSURL *iPURL = [NSURL URLWithString:@"http://api.externalip.net/ip/"];
-    
-    // 1
-    NSURLRequest *request = [NSURLRequest requestWithURL:iPURL];
-    
-    // 2
-    AFHTTPRequestOperation *operation =
-    [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    // 5
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success:%@",operation.responseString);
-        [self didReceivePublicIPandPort:operation.responseString];
-    } failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failure");
-        [self didReceivePublicIPandPort:@"118.70.176.113"];
-    }];
-    [operation start];
-    
-}
 
 -(void)didReceivePublicIPandPort:(NSString *) data{
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            data,@"decimal_ip",
+                            data,@"latlng",
                             nil];
-    [[TVNetworkingClient sharedClient] postPath:@"data/getCityByIp" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[TVNetworkingClient sharedClient] postPath:@"data/getCityByLatlng" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
         [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
-        [GlobalDataUser sharedAccountClient].userLocation=[[JSON valueForKey:@"data"] safeLocationForKey:@"latlng"];
-        [self checkLocationServiceAvaible];
+        
+        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self checkLocationServiceAvaible];
+        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     }];
 }
 
@@ -123,15 +104,23 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
+    NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",newLocation.coordinate.latitude,newLocation.coordinate.longitude];
+    [self didReceivePublicIPandPort:strLatLng];
+    
     NSLog(@"%f",newLocation.coordinate.latitude);
     [_locationManager stopMonitoringSignificantLocationChanges];
-    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
+    [self didReceivePublicIPandPort:@"20.882551,105.776947"];
+    CLLocationCoordinate2D location;
+	location.latitude=20.882551;
+    location.longitude=105.776947;
+    [GlobalDataUser sharedAccountClient].userLocation=location;
     [_locationManager stopMonitoringSignificantLocationChanges];
-    [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
+
 }
 
 @end

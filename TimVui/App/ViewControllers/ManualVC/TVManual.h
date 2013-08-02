@@ -18,6 +18,7 @@
 @property(nonatomic,strong)NSString *view;
 @property(nonatomic,strong)NSDate *changed;
 @property(nonatomic,strong)NSString *images;
+@property(nonatomic, strong)NSString *desc;
 @property(nonatomic, strong)NSArray* handbook_cat;
 @property(nonatomic, strong)NSArray* cities;
 - (id)initWithDict:(NSDictionary *)dict;

@@ -206,14 +206,14 @@
     [cell.viewCountDate setFrame:frame];
 
     height=cell.viewCountDate.frame.origin.y+cell.viewCountDate.frame.size.height;
-    frame=cell.webView.frame;
-    frame.origin.y=height-7;
-    [cell.webView setFrame:frame];
     
-    [cell.webView loadHTMLString:manual.content baseURL:nil];
-    [cell.webView setDelegate:self];
+    [cell.lblDesc setText:manual.desc];
+    [cell.lblDesc sizeToFit];
+    frame=cell.lblDesc.frame;
+    frame.origin.y=height;
+    [cell.lblDesc setFrame:frame];
     
-    height=cell.webView.frame.origin.y+cell.webView.frame.size.height;
+    height=cell.lblDesc.frame.origin.y+cell.lblDesc.frame.size.height;
     frame=cell.saveButton.frame;
     frame.origin.y=height+15;
     cell.saveButton.frame=frame;
@@ -256,12 +256,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     TVManual* manual=_manualArr[indexPath.row];
-    return 370+ [TVManualCell sizeExpectedWithText:manual.title];
+    return 270 + [TVManualCell sizeExpectedWithText:manual.title andDesc:manual.desc];
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //
-    
-}
-
 @end

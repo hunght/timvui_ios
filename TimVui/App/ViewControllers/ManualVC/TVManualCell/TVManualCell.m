@@ -56,12 +56,12 @@
     [self.contentView    addSubview:self.lblTitle];
     
     [self.contentView setBackgroundColor:[UIColor clearColor]];
-    self.webView=[[UIWebView alloc] initWithFrame:CGRectMake(6+5, 170, 320-(6+5)*2, 100)];
-    [self.webView.scrollView setScrollEnabled:NO];
-    _webView.opaque = NO;
-
-    [self.webView setBackgroundColor:[UIColor clearColor]];
-    [self.contentView addSubview:self.webView];
+    self.lblDesc=[[UILabel alloc] initWithFrame:CGRectMake(15, 170, 320-(6+5)*2, 100)];
+    self.lblDesc.font = [UIFont fontWithName:@"ArialMT" size:(15)];
+    self.lblDesc.numberOfLines = 0;
+    self.lblDesc.lineBreakMode = UILineBreakModeWordWrap;
+    [self.lblDesc setBackgroundColor:[UIColor clearColor]];
+    [self.contentView addSubview:self.lblDesc];
 
     _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(3, 0, 150, 34)];
     [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
@@ -122,13 +122,19 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 }
-+ (CGFloat)sizeExpectedWithText:(NSString *)branch {
++ (CGFloat)sizeExpectedWithText:(NSString *)branch andDesc:(NSString*)desc{
     CGSize maximumLabelSize = CGSizeMake(300.0f,9999);
-    UIFont *cellFont = [UIFont fontWithName:@"ArialMT" size:(15)];
+    UIFont *cellFont =[UIFont fontWithName:@"Arial-BoldMT" size:(15)];
     CGSize expectedLabelSize = [branch sizeWithFont:cellFont
                                                constrainedToSize:maximumLabelSize
                                                    lineBreakMode:NSLineBreakByWordWrapping];
-    return expectedLabelSize.height;
+    
+    maximumLabelSize=CGSizeMake(320-(6+5)*2, 9999);
+    cellFont =[UIFont fontWithName:@"ArialMT" size:(15)];
+    CGSize expectedLabelDescSize = [desc sizeWithFont:cellFont
+                                  constrainedToSize:maximumLabelSize
+                                      lineBreakMode:NSLineBreakByWordWrapping];
+    return expectedLabelSize.height+expectedLabelDescSize.height;
 }
 
 @end

@@ -299,7 +299,7 @@
             i++;
             [couponBranch addSubview:btnPostPhoto];
             
-            *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+30;
+            *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+50;
             [couponBranch addSubview:infoCouponBranch];
         }
         
@@ -589,21 +589,12 @@
     height =utilitiesView.frame.origin.y +utilitiesView.frame.size.height+40;
     if(_branch.special_content)
     {
-        UIButton* specialContentButton = [[UIButton alloc] initWithFrame:CGRectMake(10, utilitiesView.frame.origin.y+utilitiesView.frame.size.height+10, 301, 45)];
-        [specialContentButton addTarget:self action:@selector(specialContentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        specialContentButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [specialContentButton setTitle:@"    Điểm nổi bật" forState:UIControlStateNormal];
-        specialContentButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
-        [specialContentButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [specialContentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_button_addition"] forState:UIControlStateNormal];
-        [specialContentButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_button_addition_on"] forState:UIControlStateHighlighted];
-        [_scrollView addSubview:specialContentButton];
-        height+=45;
+        UIView *specInfoView = [self addSpecPointViewWithHeight:height];
+        [_scrollView addSubview:specInfoView];
+        height+=specInfoView.frame.size.height+30;
     }
     
     //Setbackground color dot line
-//    int bgViewHeight=mapViewButton.frame.origin.y+mapViewButton.frame.size.height+3;
-//    UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, bgViewHeight, 320, height-bgViewHeight)];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
 //    [_scrollView insertSubview:bgView belowSubview:mapViewButton];
     [_scrollView setContentSize:CGSizeMake(320, height)];
@@ -633,8 +624,8 @@
     
     
     if (!_branch) {
-        NSDictionary *params = @{@"id": _branchID};
-//        NSDictionary *params = @{@"id": @"1"};
+        //NSDictionary *params = @{@"id": _branchID};
+        NSDictionary *params = @{@"id": @"1"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
                 NSLog(@"data===%@",data);
@@ -715,6 +706,50 @@
 }
 
 #pragma mark - Helper
+- (UIView *)addSpecPointViewWithHeight:(int)height
+{
+    UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7,height, 310, 10)];
+    [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
+    CALayer* l=genarateInfoView.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:1.0];
+    // You can even add a border
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    
+    UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
+    [self settingTextForTitle:lblTitle];
+    lblTitle.text=@"Giới thiệu";
+    [genarateInfoView addSubview:lblTitle];
+    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+    [genarateInfoView addSubview:imageLine];
+    int lineHeight=imageLine.frame.origin.y+imageLine.frame.size.height +27;
+//    int lineHeight=50;
+    
+    for (NSString* str in _branch.special_content) {
+        
+        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+25, lineHeight, 265, 25)];
+        lblAddress.backgroundColor = [UIColor clearColor];
+        lblAddress.textColor = [UIColor grayColor];
+        lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(15)];
+        lblAddress.numberOfLines = 0;
+        lblAddress.lineBreakMode = UILineBreakModeWordWrap;
+        lblAddress.text=str;
+        [lblAddress sizeToFit];
+        [genarateInfoView addSubview:lblAddress];
+        
+        UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, lineHeight, 25, 25)];
+        homeIcon.image=[UIImage imageNamed:@"img_camera_cell_button"];
+        [genarateInfoView addSubview:homeIcon];
+        lineHeight+=lblAddress.frame.size.height+5;
+    }
+    
+    CGRect frame=genarateInfoView.frame;
+    frame.size.height+=lineHeight;
+    genarateInfoView.frame=frame;
+    return genarateInfoView;
+}
 
 - (void)setRowWithHeight:(int *)heightDetailInfo_p detailInfoBranch:(UIView *)detailInfoBranch strDetail:(NSString *)strDetail strTiltle:(NSString *)strTiltle
 {

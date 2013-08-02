@@ -25,7 +25,7 @@
 
 
 @interface TVManualCell : UITableViewCell
-@property(strong, nonatomic)UIWebView* webView;
+@property(strong, nonatomic)UILabel* lblDesc;
 @property(strong, nonatomic)UILabel* lblTitle;
 @property(strong, nonatomic)UIButton* saveButton;
 @property(strong, nonatomic)UIButton* detailButton;
@@ -34,5 +34,5 @@
 @property(strong, nonatomic)UILabel* lblView;
 @property(strong, nonatomic)UILabel* lblDate;
 @property(strong, nonatomic)UIView* viewCountDate;
-+ (CGFloat)sizeExpectedWithText:(NSString *)branch;
++ (CGFloat)sizeExpectedWithText:(NSString *)branch andDesc:(NSString*)desc;
 @end

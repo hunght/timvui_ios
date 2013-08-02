@@ -19,14 +19,15 @@
 
 - (void)setValues:(id)dic {
 //    NSLog(@"%@",dic);
-    self.title=[dic safeStringForKey:@"tilte"];
-    self.content=[dic safeStringForKey:@"content"];
-    self.manualID=[dic safeStringForKey:@"id"];
-    self.branch_ids=[dic safeArrayForKey:@"branch_ids"];
+    self.title      =[dic safeStringForKey:@"tilte"];
+    self.desc       =[dic safeStringForKey:@"desc"];
+    self.content    =[dic safeStringForKey:@"content"];
+    self.manualID   =[dic safeStringForKey:@"id"];
+    self.branch_ids =[dic safeArrayForKey:@"branch_ids"];
     
-    self.view=[dic safeStringForKey:@"view"];
-    self.changed=[dic safeDateForKey:@"changed"];
-    self.images=[dic safeStringForKey:@"images"];
+    self.view       =[dic safeStringForKey:@"view"];
+    self.changed    =[dic safeDateForKey:@"changed"];
+    self.images     =[dic safeStringForKey:@"images"];
     NSLog(@"images===%@",_images);
     self.handbook_cat=[dic safeArrayForKey:@"handbook_cat"];
     self.cities=[dic safeArrayForKey:@"cities"];
