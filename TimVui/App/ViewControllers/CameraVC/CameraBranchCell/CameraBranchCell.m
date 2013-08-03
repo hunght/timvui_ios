@@ -26,6 +26,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Utilities.h"
 #import "TVAppDelegate.h"
+#import "UILabel+DynamicHeight.h"
 int cellPad=44;
 @implementation CameraBranchCell {
 @private
@@ -85,7 +86,7 @@ int cellPad=44;
     _lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
     _lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     _lblDetailRow.text =_branch.address_full;
-    [_lblDetailRow sizeToFit];
+    [_lblDetailRow resizeToStretch];
     [self.whiteView addSubview:_lblDetailRow];
 
     [self.imageView setImageWithURL:[Utilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];

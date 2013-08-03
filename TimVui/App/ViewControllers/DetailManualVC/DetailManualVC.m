@@ -61,6 +61,7 @@
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -210,10 +211,7 @@
     branchProfileVC.branchID=[_branches[indexPath.row] branchID];
     [self.navigationController pushViewController:branchProfileVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
 }
-
-
 
 - (void)viewDidUnload {
     [self setTableView:nil];

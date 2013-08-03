@@ -22,7 +22,7 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class TVManual;
 
 @interface TVManualCell : UITableViewCell
 @property(strong, nonatomic)UILabel* lblDesc;
@@ -35,4 +35,5 @@
 @property(strong, nonatomic)UILabel* lblDate;
 @property(strong, nonatomic)UIView* viewCountDate;
 + (CGFloat)sizeExpectedWithText:(NSString *)branch andDesc:(NSString*)desc;
+-(void)setManual:(TVManual*)manual;
 @end

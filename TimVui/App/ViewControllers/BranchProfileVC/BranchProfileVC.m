@@ -25,6 +25,7 @@
 #import "SearchWithContactsVC.h"
 #import "TVBranches.h"
 #import "NSDictionary+Extensions.h"
+#import "UILabel+DynamicHeight.h"
 @interface BranchProfileVC ()
 {
     @private
@@ -161,7 +162,7 @@
             lblDetailRow.text = coupon.name;
             lblDetailRow.numberOfLines = 0;
             lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
-            [lblDetailRow sizeToFit];
+            [lblDetailRow resizeToStretch];
             
             UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(5 ,*height_p-5 , 297, lblDetailRow.frame.size.height+10)];
             [borderView setBackgroundColor:[UIColor clearColor]];
@@ -555,7 +556,7 @@
         lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
         lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblDetailRow.text =[dic valueForKey:@"name"];
-        [lblDetailRow sizeToFit];
+        [lblDetailRow resizeToStretch];
         [utilitiesView addSubview:lblDetailRow];
         
         NSString * strImageName;
@@ -736,7 +737,7 @@
         lblAddress.numberOfLines = 0;
         lblAddress.lineBreakMode = UILineBreakModeWordWrap;
         lblAddress.text=str;
-        [lblAddress sizeToFit];
+        [lblAddress resizeToStretch];
         [genarateInfoView addSubview:lblAddress];
         
         UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, lineHeight, 25, 25)];
@@ -773,7 +774,7 @@
         lblDetailRow.text = strDetail;
         lblDetailRow.numberOfLines = 0;
         lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
-        [lblDetailRow sizeToFit];
+        [lblDetailRow resizeToStretch];
         [detailInfoBranch addSubview:lblDetailRow];
         *heightDetailInfo_p+=14+lblDetailRow.frame.size.height;
     }

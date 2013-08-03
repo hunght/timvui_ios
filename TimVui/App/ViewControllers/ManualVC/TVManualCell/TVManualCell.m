@@ -1,4 +1,4 @@
-// TweetTableViewCell.m
+// TweetTableView_m
 //
 // Copyright (c) 2012 Mattt Thompson (http://mattt.me/)
 // 
@@ -27,6 +27,8 @@
 #import "Utilities.h"
 #import "TVAppDelegate.h"
 #import "NSDate+Helper.h"
+#import "TVManual.h"
+#import "UILabel+DynamicHeight.h"
 @implementation TVManualCell {
 }
 
@@ -122,6 +124,68 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
 }
+
+-(void)setManual:(TVManual*)manual{
+    _lblTitle.text=manual.title;
+    [_lblTitle resizeToStretch];
+    
+    int height=_lblTitle.frame.origin.y+_lblTitle.frame.size.height;
+    CGRect frame=_imgView.frame;
+    frame.origin.y=height+5;
+    [_imgView setFrame:frame];
+    [_imgView setImageWithURL:[NSURL URLWithString:manual.images]];
+    
+    height=_imgView.frame.origin.y+_imgView.frame.size.height;
+    frame=_viewCountDate.frame;
+    frame.origin.y=height+5;
+    [_viewCountDate setFrame:frame];
+    
+    height=_viewCountDate.frame.origin.y+_viewCountDate.frame.size.height;
+    
+    [_lblDesc setText:manual.desc];
+    [_lblDesc resizeToStretch];
+    frame=_lblDesc.frame;
+    frame.origin.y=height;
+    [_lblDesc setFrame:frame];
+    
+    height=_lblDesc.frame.origin.y+_lblDesc.frame.size.height;
+    frame=_saveButton.frame;
+    frame.origin.y=height+15;
+    _saveButton.frame=frame;
+    
+    frame=_detailButton.frame;
+    frame.origin.y=height+15;
+    _detailButton.frame=frame;
+    
+
+    
+    _lblView.text=manual.view;
+    _lblDate.text=[manual.changed stringWithFormat:@"dd/mm/yyyy"];
+    
+    NSString* tempStrName=@"";
+    BOOL isFirst=YES;
+    for (NSString* str in [manual.cities valueForKey:@"name"]) {
+        if (isFirst) {
+            isFirst=NO;
+            tempStrName=[tempStrName stringByAppendingFormat:@"  %@",str];
+        }else
+            tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
+    }
+    
+    tempStrName=[tempStrName stringByAppendingString:@"|"];
+    isFirst=YES;
+    for (NSString* str in [manual.handbook_cat valueForKey:@"name"]) {
+        if (isFirst) {
+            isFirst=NO;
+            tempStrName=[tempStrName stringByAppendingFormat:@"%@",str];
+        }else
+            tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
+    }
+    
+    _lblTags.text=[NSString stringWithFormat:@"%@",tempStrName];
+}
+
+
 + (CGFloat)sizeExpectedWithText:(NSString *)branch andDesc:(NSString*)desc{
     CGSize maximumLabelSize = CGSizeMake(300.0f,9999);
     UIFont *cellFont =[UIFont fontWithName:@"Arial-BoldMT" size:(15)];

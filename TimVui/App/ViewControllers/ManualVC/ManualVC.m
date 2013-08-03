@@ -17,6 +17,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NSDate+Helper.h"
 #import "Utilities.h"
+#import "FilterVC.h"
 @interface ManualVC ()
 
 @end
@@ -107,7 +108,8 @@
 
 #pragma mark IBAction
 -(void)filterButtonClicked{
-    
+    FilterVC* viewController = [[FilterVC alloc] initWithNibName:@"FilterVC" bundle:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)recentlyButtonClicked:(UIButton*)sender {
@@ -188,67 +190,12 @@
         cell = [[TVManualCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strCellIdentifier];
         [cell.saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.saveButton.tag=indexPath.row;
+        cell.detailButton.tag=indexPath.row;
     }
     
     TVManual* manual=_manualArr[indexPath.row];
-    cell.lblTitle.text=manual.title;
-    [cell.lblTitle sizeToFit];
-    
-    int height=cell.lblTitle.frame.origin.y+cell.lblTitle.frame.size.height;
-    CGRect frame=cell.imgView.frame;
-    frame.origin.y=height+5;
-    [cell.imgView setFrame:frame];
-    [cell.imgView setImageWithURL:[NSURL URLWithString:manual.images]];
-    
-    height=cell.imgView.frame.origin.y+cell.imgView.frame.size.height;
-    frame=cell.viewCountDate.frame;
-    frame.origin.y=height+5;
-    [cell.viewCountDate setFrame:frame];
-
-    height=cell.viewCountDate.frame.origin.y+cell.viewCountDate.frame.size.height;
-    
-    [cell.lblDesc setText:manual.desc];
-    [cell.lblDesc sizeToFit];
-    frame=cell.lblDesc.frame;
-    frame.origin.y=height;
-    [cell.lblDesc setFrame:frame];
-    
-    height=cell.lblDesc.frame.origin.y+cell.lblDesc.frame.size.height;
-    frame=cell.saveButton.frame;
-    frame.origin.y=height+15;
-    cell.saveButton.frame=frame;
-    
-    frame=cell.detailButton.frame;
-    frame.origin.y=height+15;
-    cell.detailButton.frame=frame;
-    
-    cell.saveButton.tag=indexPath.row;
-    cell.detailButton.tag=indexPath.row;
-
-    cell.lblView.text=manual.view;
-    cell.lblDate.text=[manual.changed stringWithFormat:@"dd/mm/yyyy"];
-    
-    NSString* tempStrName=@"";
-    BOOL isFirst=YES;
-    for (NSString* str in [manual.cities valueForKey:@"name"]) {
-        if (isFirst) {
-            isFirst=NO;
-            tempStrName=[tempStrName stringByAppendingFormat:@"  %@",str];
-        }else
-            tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
-    }
-    
-    tempStrName=[tempStrName stringByAppendingString:@"|"];
-    isFirst=YES;
-    for (NSString* str in [manual.handbook_cat valueForKey:@"name"]) {
-        if (isFirst) {
-            isFirst=NO;
-            tempStrName=[tempStrName stringByAppendingFormat:@"%@",str];
-        }else
-            tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
-    }
-    
-    cell.lblTags.text=[NSString stringWithFormat:@"%@",tempStrName];
+    [cell setManual:manual];
     return cell;
 }
 
