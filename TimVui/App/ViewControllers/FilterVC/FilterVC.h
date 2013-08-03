@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TVFilter.h"
 @interface FilterVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray* cityArr;
 @property (nonatomic, strong) NSArray* topicArr;
+@property (nonatomic, assign)NSMutableDictionary* params;
 @end

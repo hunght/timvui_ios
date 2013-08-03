@@ -19,7 +19,9 @@
 #import "Utilities.h"
 #import "FilterVC.h"
 @interface ManualVC ()
-
+{
+    NSMutableDictionary* params;
+}
 @end
 
 @implementation ManualVC
@@ -34,7 +36,7 @@
     return self;
 }
 
-- (void)postToGetManualWithType:(NSDictionary *)params
+- (void)postToGetManual
 {
     NSLog(@"param=%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -84,11 +86,9 @@
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
-    NSString* strType=@"view";
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            strType,@"type" ,
-                            nil];
-    [self postToGetManualWithType:params];
+    params=[[NSMutableDictionary alloc] init];
+    [params setValue:@"view" forKey:@"type"];
+    [self postToGetManual];
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,6 +109,7 @@
 #pragma mark IBAction
 -(void)filterButtonClicked{
     FilterVC* viewController = [[FilterVC alloc] initWithNibName:@"FilterVC" bundle:nil];
+    viewController.params=params;
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
@@ -117,11 +118,8 @@
     [_btnSaved setSelected:NO];
     [sender setSelected:YES];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"new",@"type" ,
-                            nil];
-    
-    [self postToGetManualWithType:params];
+    [params setValue:@"new" forKey:@"type"];
+    [self postToGetManual];
 }
 
 - (IBAction)popularButtonClicked:(UIButton*)sender {
@@ -129,10 +127,8 @@
     [_btnSaved setSelected:NO];
     [sender setSelected:YES];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"view",@"type",
-                            nil];
-    [self postToGetManualWithType:params];
+    [params setValue:@"view" forKey:@"type"];
+    [self postToGetManual];
 }
 
 - (IBAction)savedButtonClicked:(UIButton*)sender {
@@ -140,20 +136,18 @@
     [_btnPopular setSelected:NO];
     [sender setSelected:YES];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            @"user",@"type",
-                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
-                            nil];
-    [self postToGetManualWithType:params];
+    [params setValue:@"user" forKey:@"type"];
+    [params setValue:[GlobalDataUser sharedAccountClient].user.userId forKey:@"user_id"];
+    [self postToGetManual];
 }
 
 -(void)saveButtonClicked:(UIButton*)sender{
     TVManual* manual=_manualArr[sender.tag];
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
                             manual.manualID,@"handbook_id" ,
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                             nil];
-    [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Lưu cẩm nang thành công"
                                         withMessage:nil

@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MyDictionary : NSDictionary
-
+@interface TVFilter : NSObject
+@property(nonatomic, assign) BOOL isCheck;
+@property(nonatomic, strong)NSString* name;
+@property(nonatomic, strong)NSString* TVFilteID;
+-(id)initWithDic:(NSDictionary*)dic;
 @end

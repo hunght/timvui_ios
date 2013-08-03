@@ -33,8 +33,17 @@
     // Do any additional setup after loading the view from its nib.
     [[TVNetworkingClient sharedClient] getPath:@"handbook/getFilters" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSDictionary* dic=[JSON safeDictForKey:@"data"];
-        _cityArr=[[dic safeDictForKey:@"cities"] allValues];
-        _topicArr=[[dic safeDictForKey:@"cats"] allValues];
+        
+        NSMutableArray* temp=[[NSMutableArray alloc] init];
+        for (NSDictionary *dicRow in [[dic safeDictForKey:@"cities"] allValues]) {
+            [temp addObject:[[TVFilter alloc] initWithDic:dicRow]];
+        }
+        _cityArr=temp;
+        temp=[[NSMutableArray alloc] init];
+        for (NSDictionary *dicRow in [[dic safeDictForKey:@"cats"] allValues]) {
+            [temp addObject:[[TVFilter alloc] initWithDic:dicRow]];
+        }
+        _topicArr=temp;
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -64,12 +73,15 @@
     else 
         return [_topicArr count];
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 30;
 }
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 
 	NSString *headerText;
@@ -102,22 +114,63 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString* strCellIdentifier=@"FilterCell";
+    
     FilterCell*cell = [tableView dequeueReusableCellWithIdentifier:strCellIdentifier];
+    
     if (!cell) {
         cell = [[FilterCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strCellIdentifier];
     }
+    TVFilter* dic=nil;
     switch (indexPath.section) {
+        
         case 0:
-            cell.textLabel.text=[[_cityArr objectAtIndex:indexPath.row] safeStringForKey:@"name"];
+            dic=[_cityArr objectAtIndex:indexPath.row] ;
+            cell.textLabel.text=dic.name;
             break;
+            
         case 1:
-            cell.textLabel.text=[[_topicArr objectAtIndex:indexPath.row] safeStringForKey:@"name"];
+            dic=[_topicArr objectAtIndex:indexPath.row] ;
+            cell.textLabel.text=dic.name;
             break;
+            
         default:
             break;
+            
     }
-    
+
+    if (dic.isCheck){
+        cell.accessoryView.hidden=NO;
+        
+    }else{
+        cell.accessoryView.hidden=YES;
+    }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    TVFilter* dic=nil;
+    switch (indexPath.section) { 
+        case 0:
+            dic=[_cityArr objectAtIndex:indexPath.row] ;
+            break;
+            
+        case 1:
+            dic=[_topicArr objectAtIndex:indexPath.row] ;
+            break;
+            
+        default:
+            break;
+            
+    }
+    FilterCell* cell=(FilterCell*)[tableView cellForRowAtIndexPath:indexPath];
+    if (dic.isCheck){
+        dic.isCheck=NO;
+        cell.accessoryView.hidden=YES;
+        
+    }else{
+        dic.isCheck=YES;
+        cell.accessoryView.hidden=NO;
+    }
 }
 
 @end

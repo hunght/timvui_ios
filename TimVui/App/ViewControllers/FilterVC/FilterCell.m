@@ -22,8 +22,9 @@
         // You can even add a border
         [l setBorderWidth:1.0];
         [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"foo.png"]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"img_filter_check_mark"]];
         self.accessoryView = imageView;
+        
         [view setBackgroundColor:[UIColor whiteColor]];
         [self.contentView addSubview:view];
         [self.contentView setBackgroundColor:[UIColor clearColor]];
