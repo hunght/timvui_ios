@@ -6,13 +6,6 @@
 
 @synthesize resourcePath = _resourcePath;
 
-- (id)initWithPath:(NSString *)path account:(GHAccount *)account {
-	self = [super initWithPath:path];
-	if (self) {
-	}
-	return self;
-}
-
 
 - (void)setResourcePath:(NSString *)path {
 	_resourcePath = path;

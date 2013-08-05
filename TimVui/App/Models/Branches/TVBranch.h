@@ -2,7 +2,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GHResource.h"
 #import "TVCuisines.h"
-@class GHUser, TVComment,TVCoupons;
+#import "TVEvents.h"
+@class GHUser, TVComment,TVCoupons,TVEvent;
 
 @interface TVBranch : NSObject
 @property(nonatomic,strong)NSString *branchID;
@@ -11,6 +12,8 @@
 @property(nonatomic,strong)NSDictionary *arrURLImages;
 @property(nonatomic,assign)int coupon_count;
 @property(nonatomic,strong)TVCoupons *coupons;
+@property(nonatomic,assign)int event_count;
+@property(nonatomic,strong)TVEvents *events;
 @property(nonatomic,strong)TVCuisines *menu;
 @property(nonatomic,strong)NSArray *special_content;
 @property(nonatomic,strong)NSString *address_full;
@@ -46,6 +49,5 @@
 
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;
-- (void)markAsRead;
 
 @end

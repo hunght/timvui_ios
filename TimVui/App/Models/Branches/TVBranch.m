@@ -5,7 +5,6 @@
 #import "NSDictionary+Extensions.h"
 #import "TVCoupons.h"
 @interface TVBranch ()
-@property(nonatomic,readwrite)BOOL read;
 @end
 
 
@@ -14,15 +13,12 @@
 - (id)initWithDict:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
-		self.read = NO;
 		[self setValues:dict];
 	}
 	return self;
 }
 
-- (void)markAsRead {
-	self.read = YES;
-}
+
 
 - (BOOL)isCommentEvent {
 	return [self.name hasSuffix:@"CommentEvent"];
@@ -41,6 +37,11 @@
     
     self.coupons = [[TVCoupons alloc] init];
 	[self.coupons   setValues:[dict safeArrayForKey:@"coupons"] ];
+    
+    self.event_count=[dict safeIntegerForKey:@"event_count"];
+    
+    self.events = [[TVEvents alloc] init];
+	[self.events   setValues:[dict safeArrayForKey:@"events"] ];
     
     self.menu = [[TVCuisines alloc] init];
 	[self.menu   setValues:[dict safeDictForKey:@"items"] ];

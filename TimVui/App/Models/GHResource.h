@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 
-@class GHAccount, GHResource;
+@class  GHResource;
 
 typedef enum {
 	GHResourceStatusFailed   = -1,
@@ -18,7 +18,6 @@ typedef void (^resourceFailure)(GHResource *instance, NSError *error);
 @interface GHResource : NSObject
 @property(nonatomic,strong)NSString *resourcePath;
 @property(nonatomic,strong)NSError *error;
-@property(nonatomic,readonly)GHAccount *account;
 @property(nonatomic,readonly)BOOL isEmpty;
 @property(nonatomic,readonly)BOOL isFailed;
 @property(nonatomic,readonly)BOOL isUnloaded;
@@ -26,6 +25,7 @@ typedef void (^resourceFailure)(GHResource *instance, NSError *error);
 @property(nonatomic,readonly)BOOL isLoading;
 @property(nonatomic,readonly)BOOL isChanged;
 @property(nonatomic, assign)BOOL isShowLoading;
+
 - (id)initWithPath:(NSString *)path;
 - (id)initWithPath:(NSString *)path withShowLoading:(BOOL)isShow;
 - (void)markAsUnloaded;
