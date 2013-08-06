@@ -38,16 +38,21 @@ enum {
 /* set to 3 if you want to see how it behaves 
  when having more cells in the same section 
  */
-#define kNumberOfRowsInSection1 2
+#define kNumberOfRowsInSection1 6
+
 
 enum {
-    kS1Row0 = 0,
-    kS1Row1
+    kS1AccountRecentlyView=0,
+    kS1AccountReceivedCoupon,
+    kS1AccountSetting
 };
 enum {
-    kS1AccountRecentlyView=1,
-    kS1AccountReceivedCoupon,
-    kS1AccountInteresting
+    kS1RecentlyView=0,
+    kS1ReceivedCoupon,
+    kS1Interesting,
+    kS1Setting,
+    kS1History,
+    kS1UpdateAccount
     
 };
 
@@ -58,9 +63,9 @@ enum {
 #define kNumberOfRowsInSection2 4
 enum {
     kS2Home = 0,
-    kS2Handbook,
+    kS2Coupon,
     kS2GoingEven,
-    kS2Promotion
+    kS2Handbook
 };
 
 #define kNumberOfRowsInSection3 6
@@ -74,36 +79,11 @@ enum {
 };
 @implementation LeftMenuVC
 
-
-
-- (void)showTableDropDown
-{
-    NSMutableArray *elts=nil;
-    _lastStatusLogin=NO;
-    if ([GlobalDataUser sharedAccountClient].isLogin) {
-        _lastStatusLogin=YES;
-        elts = [NSMutableArray array];
-        for (int i = 1; i <= 3; i++) {
-            // just some mock elements
-            VPPDropDownElement *e = [[VPPDropDownElement alloc] initWithTitle:[NSString stringWithFormat:@"Element %d",i] andObject:[NSNumber numberWithInt:i]];
-            [elts addObject:e];
-        }
-    }
-    
-    _dropDownCustom = [[VPPDropDown alloc] initWithTitle:@"Custom Combo" 
-                                                    type:VPPDropDownTypeCustom 
-                                               tableView:self.tableView 
-                                               indexPath:[NSIndexPath indexPathForRow:kS1Row0 inSection:kSection1UserAccount]
-                                                elements:elts
-                                                delegate:self];
-}
-
 - (void)checkAndRefreshTableviewWhenUserLoginOrLogout
 {
     if (_lastStatusLogin==[GlobalDataUser sharedAccountClient].isLogin) {
         return;
     }
-    [self showTableDropDown];
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -134,11 +114,6 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    
-    [self showTableDropDown];
-    
-
 }
 
 - (void)viewDidUnload
@@ -348,180 +323,10 @@ enum {
         }];
     }
 }
-
-#pragma mark - Table view delegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if(section==0)return 2;
-	return (_headers[section] == [NSNull null]) ? 0.0f : 34.0f;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	NSObject *headerText = _headers[section];
-
-	UIView *headerView = nil;
-    if (section==0) {
-        headerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 3)];
-        [headerView setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]];
-        return  headerView;
-    }
-	if (headerText != [NSNull null]) {
-		headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 34.0f)];
-		headerView.backgroundColor = [UIColor colorWithRed:(0/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:1.0f];
-		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 3.0f, 5.0f)];
-		textLabel.text = (NSString *) headerText;
-		textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(17)];
-		textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
-		textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-		textLabel.textColor = [UIColor colorWithRed:(236.0f/255.0f) green:(234.0f/255.0f) blue:(235.0f/255.0f) alpha:1.0f];
-		textLabel.backgroundColor = [UIColor clearColor];
-        UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:1.0f];
-		[textLabel.superview addSubview:topLine];
-		
-		UIView *topLine2 = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 1.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-		topLine2.backgroundColor = [UIColor whiteColor];
-		[textLabel.superview addSubview:topLine2];
-		[headerView addSubview:textLabel];
-	}
-	return headerView;
-}
-
-- (void)refreshTableViewDropdown
-{
-    [self checkAndRefreshTableviewWhenUserLoginOrLogout];
-
-}
-
-- (void)showLoginViewController
-{
-    LoginVC* loginVC=nil;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
-    } else {
-        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
-    }
-    
-    UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:loginVC];
-    [self presentModalViewController:navController animated:YES];
-    [loginVC goWithDidLogin:^{
-        [self refreshTableViewDropdown];
-        [self.tableView reloadData];
-        if ([VPPDropDown tableView:self.tableView dropdownsContainIndexPath:_globalIndexPath]) {
-            [VPPDropDown tableView:self.tableView didSelectRowAtIndexPath:_globalIndexPath];
-        }
-    } thenLoginFail:^{
-        
-    }];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (SharedAppDelegate.isLoadWhenConnectedYES==NO) {
-        if ([SharedAppDelegate connected])
-            [SharedAppDelegate loadWhenInternetConnected];
-        return;
-    }
-	UIViewController *viewController = nil;
-    
-    // first check if any dropdown contains the requested cell
-    if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
-        
-        if (indexPath.section==0&&indexPath.row==0) {
-            TVMenuUserCell* user=(TVMenuUserCell*)[tableView cellForRowAtIndexPath:indexPath];
-            if ([user isKindOfClass:[TVMenuUserCell class]]) {
-                if (isRotatedYES==NO) {
-                    isRotatedYES=YES;
-                    [user.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon_down"]];
-                    
-                }else{
-                    isRotatedYES=NO;
-                    [user.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon"]];
-                }
-            }
-        }
-       
-
-
-        
-        [VPPDropDown tableView:tableView didSelectRowAtIndexPath:indexPath];
-        if ([GlobalDataUser sharedAccountClient].isLogin==NO&&indexPath.section==kSection1UserAccount && indexPath.row==kS1Row0) {
-            [self showLoginViewController];
-            _globalIndexPath=indexPath;
-        }
-    }else{
-        int row = indexPath.row - [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:indexPath.section];
-        switch (indexPath.section) {
-            case kSection2Services:
-                switch (row) {
-                    case kS2Home:
-                        viewController = [[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil];
-                        break;
-                    case kS2Handbook:
-                        viewController = [[ManualVC alloc] initWithNibName:@"ManualVC" bundle:nil];
-                        break;
-                    default:
-                        break;
-                }
-                break;
-                
-            case kSection1UserAccount:
-                switch (row) {
-                    case kS1Row0:
-    
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case kSection3Setting:
-                switch (row) {
-                    case kS3Row0:
-
-                        break;
-                    case kS3Row1:
-
-                        break;
-                    case kS3Row2:
-
-                        break;
-                    case kS3Row3:
-
-                        break;
-                    case kS3Row4:
-
-                        break;
-                    case kS3Row5:
-                    {
-                        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Bạn muốn đăng xuất ?"];
-                        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
-                        [alert setDestructiveButtonWithTitle:@"Logout!" block:^{
-                            if ([GlobalDataUser sharedAccountClient].isLogin) {
-                                [[FBSession activeSession] closeAndClearTokenInformation];
-                                [[GlobalDataUser sharedAccountClient] userLogout];
-                                [self showTableDropDown];
-                                [tableView reloadData];
-                            }
-                        }];
-                        [alert show];
-                        break;
-                    }
-                }
-                break;
-        }
-        // Maybe push a controller
-        if (viewController) {
-            [self openViewController:viewController];
-        }
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
-}
-
-
 #pragma mark Helper
 
 - (void)toggleTopView {
-//    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
+    //    self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
     if (self.slidingViewController.underLeftShowing) {
         // actually this does not get called when the top view screenshot is enabled
         // because the screenshot intercepts the touches on the toggle button
@@ -575,6 +380,183 @@ enum {
     [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
 }
 
+
+- (void)refreshTableViewDropdown
+{
+    [self checkAndRefreshTableviewWhenUserLoginOrLogout];
+    
+}
+
+- (void)showLoginViewController
+{
+    LoginVC* loginVC=nil;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+    } else {
+        loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+    }
+    
+    UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:loginVC];
+    [self presentModalViewController:navController animated:YES];
+    [loginVC goWithDidLogin:^{
+        [self refreshTableViewDropdown];
+        [self.tableView reloadData];
+    } thenLoginFail:^{
+        
+    }];
+}
+
+#pragma mark - Table view delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if(section==0)return 2;
+	return (_headers[section] == [NSNull null]) ? 0.0f : 34.0f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	NSObject *headerText = _headers[section];
+
+	UIView *headerView = nil;
+    if (section==0) {
+        headerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 3)];
+        [headerView setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]];
+        return  headerView;
+    }
+	if (headerText != [NSNull null]) {
+		headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 34.0f)];
+		headerView.backgroundColor = [UIColor colorWithRed:(0/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:1.0f];
+		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 3.0f, 5.0f)];
+		textLabel.text = (NSString *) headerText;
+		textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(17)];
+		textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+		textLabel.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+		textLabel.textColor = [UIColor colorWithRed:(236.0f/255.0f) green:(234.0f/255.0f) blue:(235.0f/255.0f) alpha:1.0f];
+		textLabel.backgroundColor = [UIColor clearColor];
+        UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
+		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:1.0f];
+		[textLabel.superview addSubview:topLine];
+		
+		UIView *topLine2 = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 1.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
+		topLine2.backgroundColor = [UIColor whiteColor];
+		[textLabel.superview addSubview:topLine2];
+		[headerView addSubview:textLabel];
+	}
+	return headerView;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (SharedAppDelegate.isLoadWhenConnectedYES==NO) {
+        if ([SharedAppDelegate connected])
+            [SharedAppDelegate loadWhenInternetConnected];
+        return;
+    }
+	UIViewController *viewController = nil;
+    int row = indexPath.row;
+    switch (indexPath.section) {
+        case kSection1UserAccount:
+            if ([GlobalDataUser sharedAccountClient].isLogin){
+                switch (row) {
+                        
+                    case kS1RecentlyView:
+                        viewController = [[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil];
+                        
+                        break;
+                    case kS1ReceivedCoupon:
+
+                        break;
+                    case kS1Interesting:
+
+                        break;
+                        
+                    case kS1Setting:
+
+                        break;
+                    case kS1History:
+
+                        break;
+                    case kS1UpdateAccount:
+
+                        break;
+                        
+                }
+            }else
+            {
+                switch (row) {
+                        
+                    case kS1AccountRecentlyView:
+                        viewController = [[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil];
+                        break;
+                    case kS1AccountReceivedCoupon:
+
+                        break;
+                    case kS1AccountSetting:
+
+                        break;
+                }
+                break;
+            case kSection2Services:
+                switch (row) {
+                    case kS2Home:
+                        viewController = [[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil];
+                        break;
+                    case kS2Handbook:
+                        viewController = [[ManualVC alloc] initWithNibName:@"ManualVC" bundle:nil];
+                        break;
+                    case kS2GoingEven:
+
+                        break;
+                    case kS2Coupon:
+
+                        break;
+                }
+                break;
+            case kSection3Setting:
+                switch (row) {
+                    case kS3Row0:
+
+                        break;
+                    case kS3Row1:
+
+                        break;
+                    case kS3Row2:
+
+                        break;
+                    case kS3Row3:
+
+                        break;
+                    case kS3Row4:
+
+                        break;
+                    case kS3Row5:
+                    {
+                        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Bạn muốn đăng xuất ?"];
+                        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
+                        [alert setDestructiveButtonWithTitle:@"Logout!" block:^{
+                            if ([GlobalDataUser sharedAccountClient].isLogin) {
+                                [[FBSession activeSession] closeAndClearTokenInformation];
+                                [[GlobalDataUser sharedAccountClient] userLogout];
+                                [tableView reloadData];
+                            }
+                        }];
+                        [alert show];
+                    }
+                        break;
+                }
+                break;
+            }
+    }
+        // Maybe push a controller
+    if (viewController) {
+            [self openViewController:viewController];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
+
+
 #pragma mark - Table view data source
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -593,12 +575,15 @@ enum {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    int rows = [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:section];
+    int rows =0;
     switch (section) {
             
         case kSection1UserAccount:
-            rows += kNumberOfRowsInSection1;
-            break;
+            if ([GlobalDataUser sharedAccountClient].isLogin)
+                rows += kNumberOfRowsInSection1;
+            else
+                rows += 3;
+                break;
         case kSection2Services:
             rows += kNumberOfRowsInSection2;
             break;
@@ -627,36 +612,61 @@ enum {
     // Configure the cell...
     cell.textLabel.text = nil;
     
-    if ([VPPDropDown tableView:tableView dropdownsContainIndexPath:indexPath]) {
-        return [VPPDropDown tableView:tableView cellForRowAtIndexPath:indexPath];
-    }
-    
     // first check if any dropdown contains the requested cell
-    int row = indexPath.row - [VPPDropDown tableView:tableView numberOfExpandedRowsInSection:indexPath.section];
+    int row = indexPath.row;
     switch (indexPath.section) {
         case kSection1UserAccount:
-            switch (row) {
-                case kS1Row1:
-                    if ([GlobalDataUser sharedAccountClient].isLogin)
-                    {
-                        cell.imageView.image=[UIImage imageNamed:@"img_menu_user_option"];
-                        cell.textLabel.text = @"Tuỳ chọn Gợi ý";
-                       
-                    }
-                    else{
-                              
-                        cell.imageView.image=[UIImage imageNamed:@"img_menu_recently_views"];
-                        cell.textLabel.text = @"Xem gần đây";
-                    }
-                    break;
-//                case kS1AccountUserOption:
-//                    if ([GlobalDataUser sharedAccountClient].isLogin){
-//                        cell.imageView.image=[UIImage imageNamed:@"img_menu_user_option"];
-//                        cell.textLabel.text = @"Tuỳ chọn Gợi ý";
-//                    }
-//                    break;
-                
-            }
+            if ([GlobalDataUser sharedAccountClient].isLogin){
+                switch (row) {
+
+                    case kS1RecentlyView:
+                            cell.imageView.image=[UIImage imageNamed:@"img_menu_user_option"];
+                            cell.textLabel.text = @"Xem gần đây";
+                            
+
+                        break;
+                    case kS1ReceivedCoupon:
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_coupon_received"];
+                        cell.textLabel.text = @"Coupon đã nhận";
+                        break;
+                    case kS1Interesting:
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
+                        cell.textLabel.text = @"Đang quan tâm";
+                        break;
+                        
+                    case kS1Setting:
+                            cell.imageView.image=[UIImage imageNamed:@"img_menu_user_option"];
+                            cell.textLabel.text = @"Tuỳ chọn Gợi ý";
+
+                        break;
+                    case kS1History:
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_coupon_received"];
+                        cell.textLabel.text = @"Lịch sử hoạt động";
+                        break;
+                    case kS1UpdateAccount:
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
+                        cell.textLabel.text = @"Cập nhật tài khoản";
+                        break;
+
+                }
+            }else
+            {
+                switch (row) {
+                        
+                    case kS1AccountRecentlyView:
+
+                            cell.imageView.image=[UIImage imageNamed:@"img_menu_recently_views"];
+                            cell.textLabel.text = @"Xem gần đây";
+                        break;
+                    case kS1AccountReceivedCoupon:
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_coupon_received"];
+                        cell.textLabel.text = @"Coupon đã nhận";
+                        break;
+                    case kS1AccountSetting:
+                        cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
+                        cell.textLabel.text = @"ĐTuỳ chọn Gợi ý";
+                        break;
+                }
             break;
         case kSection2Services:
             switch (row) {
@@ -669,12 +679,12 @@ enum {
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_handbook"];
                     break;
                 case kS2GoingEven:
-                    cell.textLabel.text = @"Sưu tập";
-                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_collection"];
+                    cell.textLabel.text = @"Sự kiện";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_event"];
                     break;
-                case kS2Promotion:
-                    cell.textLabel.text = @"Blog";
-                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_blog"];
+                case kS2Coupon:
+                    cell.textLabel.text = @"Coupon";
+                    cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_coupon"];
                     break;
             }
             break;
@@ -708,109 +718,9 @@ enum {
                     break;
             }
             break;
-            
-    }
-    
-    return cell;
-}
-
-#pragma mark - VPPDropDownDelegate
-
-- (void) dropDown:(VPPDropDown *)dropDown elementSelected:(VPPDropDownElement *)element atGlobalIndexPath:(NSIndexPath *)indexPath {
-    UIViewController *viewController = nil;
-    if (dropDown == _dropDownCustom) {
-        switch (indexPath.row) {
-            case kS1AccountInteresting:
-
-                break;
-            case kS1AccountRecentlyView:
-                viewController = [[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil];
-                break;
-                
-            default:
-                break;
         }
-        
-        if (viewController) {
-            [self openViewController:viewController];
-        }
-        
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-    }
-}
-
-- (UITableViewCell *) dropDown:(VPPDropDown *)dropDown rootCellAtGlobalIndexPath:(NSIndexPath *)globalIndexPath {
-    static NSString *cellIdentifier = @"GlobalCustomDropDownCell";
-    TVMenuUserCell *cellUser = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cellUser) {
-        cellUser = [[TVMenuUserCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
-        if (isRotatedYES==NO) {
-            [cellUser.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon_down"]];
-        }else
-            [cellUser.imgTriangleIcon setImage:[UIImage imageNamed:@"img_menu_triangleI_icon"]];
-    
-    }
-
-    if ([GlobalDataUser sharedAccountClient].isLogin){
-
-//
-//        [UIView beginAnimations:@"rotate" context:nil];
-//        [UIView setAnimationDuration:0.5];
-//        cellUser.imgTriangleIcon.transform = CGAffineTransformMakeRotation(60/360*M_PI);
-//        [UIView commitAnimations];
-        
-        cellUser.textLabel.text = [GlobalDataUser sharedAccountClient].user.first_name;
-        [cellUser.imgAvatar setImageWithURL:[[NSURL alloc] initWithString:[GlobalDataUser sharedAccountClient].user.avatar]  placeholderImage:[UIImage imageNamed:@"user"]];
-    }else{
-        cellUser.textLabel.text = @"Đăng nhập";
-        [cellUser.imgAvatar setImage:[UIImage imageNamed:@"user"]];
-    }
-    
-    return cellUser;
-}
-
-- (UITableViewCell *) dropDown:(VPPDropDown *)dropDown cellForElement:(VPPDropDownElement *)element atGlobalIndexPath:(NSIndexPath *)globalIndexPath {
-    static NSString *cellIdentifier = @"CustomDropDownCell";
-
-    GHMenuCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[GHMenuCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier] ;
-    }
-    int row=globalIndexPath.row;
-    switch (row) {
-        case kS1AccountReceivedCoupon:
-            cell.imageView.image=[UIImage imageNamed:@"img_menu_coupon_received"];
-            cell.textLabel.text = @"Coupon đã nhận";
-            break;
-        case kS1AccountInteresting:
-            cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
-            cell.textLabel.text = @"Đang quan tâm";
-            break;
-        case kS1AccountRecentlyView:
-            cell.imageView.image=[UIImage imageNamed:@"img_menu_recently_views"];
-            cell.textLabel.text = @"Xem gần đây";
-            break;
-        default:
-            break;
     }
     return cell;
-}
-
-
-- (CGFloat) dropDown:(VPPDropDown *)dropDown heightForElement:(VPPDropDownElement *)element atIndexPath:(NSIndexPath *)indexPath {
-    float height = dropDown.tableView.rowHeight;
-    
-    return height + indexPath.row * 10;
-}
-
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (_globalIndexPath != nil) {
-        [self.tableView deselectRowAtIndexPath:_globalIndexPath animated:YES];
-        _globalIndexPath = nil;
-    }
 }
 
 @end

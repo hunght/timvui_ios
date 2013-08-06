@@ -45,7 +45,6 @@
         for (NSDictionary* dic in [[JSON safeDictForKey:@"data"] allValues]) {
             TVManual* munual=[[TVManual alloc] initWithDict:dic];
             [_manualArr addObject:munual];
-            
         }
         if (_btnSaved.isSelected) {
             _lblSaveHandbookCount.text=[NSString stringWithFormat:@"%d",_manualArr.count];
@@ -71,6 +70,7 @@
     [_btnSaved setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [_btnRecently setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    
     [_btnPopular setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
     [_btnSaved setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
     [_btnRecently setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
@@ -84,8 +84,7 @@
     _lblSaveHandbookCount.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     _lblSaveHandbookCount.textColor=[UIColor blackColor];
     [_btnSaved addSubview:_lblSaveHandbookCount];
-    
-    
+
     UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_off"] forState:UIControlStateNormal];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_on"] forState:UIControlStateHighlighted];

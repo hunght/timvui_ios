@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VPPDropDown.h"
-#import "VPPDropDownDelegate.h"
 #import "LoginVC.h"
 @class TVBranches,TVBranch;
-@interface LeftMenuVC : UITableViewController <VPPDropDownDelegate, UIActionSheetDelegate> {
+@interface LeftMenuVC : UITableViewController <UIActionSheetDelegate> {
 @private
     NSArray *_headers;
-    VPPDropDown *_dropDownCustom;
+
     BOOL _lastStatusLogin;
-    NSIndexPath *_globalIndexPath;
     BOOL isRotatedYES;
 }
 
