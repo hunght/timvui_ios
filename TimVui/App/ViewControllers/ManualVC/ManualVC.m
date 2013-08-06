@@ -90,6 +90,7 @@
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_off"] forState:UIControlStateNormal];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_on"] forState:UIControlStateHighlighted];
     [_btnSearchBar addTarget:self action:@selector(filterButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
     UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
     backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
     [backButtonView addSubview:_btnSearchBar];
@@ -105,7 +106,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-
 }
 
 - (void)viewDidUnload {
@@ -115,9 +115,11 @@
     [self setTableView:nil];
     [super viewDidUnload];
 }
+
 #pragma mark TVFilterVCDelegate
 -(void)didClickedFilterButton{
     [self postToGetManual];
+    
 }
 
 #pragma mark IBAction
