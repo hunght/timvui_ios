@@ -40,12 +40,16 @@
 {
     NSLog(@"param=%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"JSON=%@",JSON);
         [_manualArr removeAllObjects];
-        for (NSDictionary* dic in [[JSON valueForKey:@"data"] allValues]) {
+        for (NSDictionary* dic in [[JSON safeDictForKey:@"data"] allValues]) {
             TVManual* munual=[[TVManual alloc] initWithDict:dic];
             [_manualArr addObject:munual];
+            
         }
-
+        if (_btnSaved.isSelected) {
+            _lblSaveHandbookCount.text=[NSString stringWithFormat:@"%d",_manualArr.count];
+        }
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -76,6 +80,12 @@
     [_btnPopular setSelected:NO];
     [_btnSaved setSelected:NO];
     
+    _lblSaveHandbookCount=[[UILabel  alloc] initWithFrame:CGRectMake(20, 5, 20, 12)];
+    _lblSaveHandbookCount.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+    _lblSaveHandbookCount.textColor=[UIColor blackColor];
+    [_btnSaved addSubview:_lblSaveHandbookCount];
+    
+    
     UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_off"] forState:UIControlStateNormal];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_on"] forState:UIControlStateHighlighted];
@@ -95,7 +105,7 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    
+
 }
 
 - (void)viewDidUnload {

@@ -42,22 +42,27 @@
 }
 
 -(void)postGetBranches{
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            _manual.branch_ids,@"id" ,
-                            nil];
-    __unsafe_unretained __typeof(&*self)weakSelf = self;
-    
-    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
-            [self.tableView reloadData];
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            
-        });
-    }];
+    if (_manual.branch_ids.count>0) {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                _manual.branch_ids,@"id" ,
+                                @"short",@"infoType",
+                                nil];
+        __unsafe_unretained __typeof(&*self)weakSelf = self;
+        
+        [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+            dispatch_async(dispatch_get_main_queue(),^ {
+                //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
+                [self.tableView reloadData];
+            });
+        } failure:^(GHResource *instance, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(),^ {
+                
+            });
+        }];
+
+    }
 }
+
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }

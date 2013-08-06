@@ -15,9 +15,7 @@
 
 @interface FilterVC ()
 {
-    @private
-    NSMutableArray* arrCity;
-    NSMutableArray* arrTopic;
+
 }
 @end
 
@@ -36,11 +34,25 @@
 }
 -(void)doneButtonClicked{
     
+    NSMutableArray* arrTopic=[[NSMutableArray alloc] init];
+    NSMutableArray* arrCity=[[NSMutableArray alloc] init];
 
-        [_params setObject:arrTopic forKey:@"handbook_cat_id"];
-
-        [_params setObject:arrCity forKey:@"city_id"];
+    for (TVFilter* filter in _cityArr) {
+        if (filter.isCheck) {
+            [arrCity addObject:filter.TVFilteID];
+        }
+    }
+    
+    for (TVFilter* filter in _topicArr) {
+        if (filter.isCheck) {
+            [arrTopic addObject:filter.TVFilteID];
+        }
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
+    [_params setObject:arrTopic forKey:@"handbook_cat_id"];
+    
+    [_params setObject:arrCity forKey:@"city_id"];
     if ([_delegate respondsToSelector:@selector(didClickedFilterButton)]) {
         [_delegate didClickedFilterButton];
     }
@@ -50,9 +62,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    arrCity=[[NSMutableArray alloc] initWithArray:[_params objectForKey:@"city_id"]] ;
-    arrTopic=[[NSMutableArray alloc] initWithArray:[_params objectForKey:@"handbook_cat_id"]] ;
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -214,35 +223,24 @@
     switch (indexPath.section) { 
         case 0:
             dic=[_cityArr objectAtIndex:indexPath.row] ;
-            
-            
-            if (dic.isCheck){
-                dic.isCheck=NO;
-                cell.accessoryView.hidden=YES;
-                [arrCity removeObject:dic.TVFilteID];
-            }else{
-                dic.isCheck=YES;
-                cell.accessoryView.hidden=NO;
-                [arrCity addObject:dic.TVFilteID];
-            }
+
             break;
             
         case 1:
             dic=[_topicArr objectAtIndex:indexPath.row] ;
-            if (dic.isCheck){
-                dic.isCheck=NO;
-                cell.accessoryView.hidden=YES;
-                [arrTopic removeObject:dic.TVFilteID];
-            }else{
-                dic.isCheck=YES;
-                cell.accessoryView.hidden=NO;
-                [arrTopic addObject:dic.TVFilteID];
-            }
+
             break;
             
         default:
             break;
             
+    }
+    if (dic.isCheck){
+        dic.isCheck=NO;
+        cell.accessoryView.hidden=YES;
+    }else{
+        dic.isCheck=YES;
+        cell.accessoryView.hidden=NO;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

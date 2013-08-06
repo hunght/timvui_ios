@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnSaved;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* manualArr;
+@property (strong, nonatomic) UILabel* lblSaveHandbookCount;
 - (IBAction)recentlyButtonClicked:(id)sender;
 - (IBAction)popularButtonClicked:(id)sender;
 - (IBAction)savedButtonClicked:(id)sender;
