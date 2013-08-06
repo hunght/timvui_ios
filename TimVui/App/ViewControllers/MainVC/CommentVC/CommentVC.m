@@ -49,7 +49,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.navigationController.navigationBar dropShadow];
     if (!_branch)  self.navigationItem.leftBarButtonItem = self.toggleBarButtonItem;
-    self.navigationItem.rightBarButtonItem = [self backBarButtonItem];
+    [self backBarButtonItem];
     
     UIView *bgGenarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     [bgGenarateInfoView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
@@ -202,7 +202,7 @@
     return item;
 }
 
-- (UIBarButtonItem *)backBarButtonItem {
+- (void)backBarButtonItem {
     UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
     
     [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
@@ -218,7 +218,6 @@
     [backButtonView addSubview:doneButton];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     self.navigationItem.rightBarButtonItem=doneButtonItem;
-    return doneButtonItem;
 }
 
 - (IBAction)starButtonClicked:(UIButton*)sender {

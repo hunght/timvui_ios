@@ -105,11 +105,16 @@
     [self setTableView:nil];
     [super viewDidUnload];
 }
+#pragma mark TVFilterVCDelegate
+-(void)didClickedFilterButton{
+    [self postToGetManual];
+}
 
 #pragma mark IBAction
 -(void)filterButtonClicked{
     FilterVC* viewController = [[FilterVC alloc] initWithNibName:@"FilterVC" bundle:nil];
     viewController.params=params;
+    [viewController setDelegate:self];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

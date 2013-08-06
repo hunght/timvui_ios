@@ -11,8 +11,14 @@
 #import "NSDictionary+Extensions.h"
 #import "FilterCell.h"
 #import <QuartzCore/QuartzCore.h>
-@interface FilterVC ()
+#import "Utilities.h"
 
+@interface FilterVC ()
+{
+    @private
+    NSMutableArray* arrCity;
+    NSMutableArray* arrTopic;
+}
 @end
 
 @implementation FilterVC
@@ -25,10 +31,62 @@
     }
     return self;
 }
+-(void)backButtonClicked{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)doneButtonClicked{
+    
+
+        [_params setObject:arrTopic forKey:@"handbook_cat_id"];
+
+        [_params setObject:arrCity forKey:@"city_id"];
+    [self.navigationController popViewControllerAnimated:YES];
+    if ([_delegate respondsToSelector:@selector(didClickedFilterButton)]) {
+        [_delegate didClickedFilterButton];
+    }
+    
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    arrCity=[[NSMutableArray alloc] initWithArray:[_params objectForKey:@"city_id"]] ;
+    arrTopic=[[NSMutableArray alloc] initWithArray:[_params objectForKey:@"handbook_cat_id"]] ;
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
+    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    
+    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    
+    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    
+    [doneButton setTitle:@"Lọc" forState:UIControlStateNormal];
+    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+    [doneButton addTarget:self action:@selector(doneButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
+    [backButtonView addSubview:doneButton];
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
+    self.navigationItem.rightBarButtonItem=doneButtonItem;
+
+    UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, 416-44, 320, 44)];
+    [bgView setBackgroundColor:[UIColor lightGrayColor]];
+    [self.view addSubview:bgView];
+    
+    UIButton* _detailButton = [[UIButton alloc] initWithFrame:CGRectMake(5+5, 416-44+5, 300, 34)];
+    [_detailButton  setTitle:@"LỌC LẠI DANH SÁCH" forState:UIControlStateNormal];
+    [_detailButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    
+    [_detailButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    [_detailButton addTarget:self action:@selector(doneButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_detailButton];
+    
     [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     // Do any additional setup after loading the view from its nib.
     [[TVNetworkingClient sharedClient] getPath:@"handbook/getFilters" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -38,11 +96,13 @@
         for (NSDictionary *dicRow in [[dic safeDictForKey:@"cities"] allValues]) {
             [temp addObject:[[TVFilter alloc] initWithDic:dicRow]];
         }
+        
         _cityArr=temp;
         temp=[[NSMutableArray alloc] init];
         for (NSDictionary *dicRow in [[dic safeDictForKey:@"cats"] allValues]) {
             [temp addObject:[[TVFilter alloc] initWithDic:dicRow]];
         }
+        
         _topicArr=temp;
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -149,28 +209,42 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     TVFilter* dic=nil;
+    FilterCell* cell=(FilterCell*)[tableView cellForRowAtIndexPath:indexPath];
+
     switch (indexPath.section) { 
         case 0:
             dic=[_cityArr objectAtIndex:indexPath.row] ;
+            
+            
+            if (dic.isCheck){
+                dic.isCheck=NO;
+                cell.accessoryView.hidden=YES;
+                [arrCity removeObject:dic.TVFilteID];
+            }else{
+                dic.isCheck=YES;
+                cell.accessoryView.hidden=NO;
+                [arrCity addObject:dic.TVFilteID];
+            }
             break;
             
         case 1:
             dic=[_topicArr objectAtIndex:indexPath.row] ;
+            if (dic.isCheck){
+                dic.isCheck=NO;
+                cell.accessoryView.hidden=YES;
+                [arrTopic removeObject:dic.TVFilteID];
+            }else{
+                dic.isCheck=YES;
+                cell.accessoryView.hidden=NO;
+                [arrTopic addObject:dic.TVFilteID];
+            }
             break;
             
         default:
             break;
             
     }
-    FilterCell* cell=(FilterCell*)[tableView cellForRowAtIndexPath:indexPath];
-    if (dic.isCheck){
-        dic.isCheck=NO;
-        cell.accessoryView.hidden=YES;
-        
-    }else{
-        dic.isCheck=YES;
-        cell.accessoryView.hidden=NO;
-    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

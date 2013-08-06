@@ -263,6 +263,7 @@
             [webView sizeToFit];
             // assuming your self.viewer is a UIWebView
             [webView setDelegate:self];
+            [webView setAlpha:0.0];
             [eventView addSubview:webView];
         }
         [self.scrollEvent addSubview:eventView];
@@ -271,6 +272,7 @@
 
 #pragma mark - UIWebViewDelegate
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
+    [webView setAlpha:1.0];
     CGRect newBounds = webView.frame;
     newBounds.size.height = webView.scrollView.contentSize.height;
     webView.frame = newBounds;
