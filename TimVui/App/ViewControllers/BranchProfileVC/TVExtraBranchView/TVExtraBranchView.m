@@ -18,6 +18,9 @@
 #import "SVProgressHUD.h"
 #import "TVComment.h"
 #import "Utilities.h"
+#import <QuartzCore/QuartzCore.h>
+#import "UILabel+DynamicHeight.h"
+#import "TVEvent.h"
 #define kTableViewHeightOffset 150
 @interface TVExtraBranchView() {
 @private
@@ -27,6 +30,7 @@
     UIButton* karaokeButton;
     UIButton* eventButton;
     UIButton* similarButton;
+    UIView* eventView;
 }
 @end
 @implementation TVExtraBranchView
@@ -149,17 +153,156 @@
         });
     }];
 }
+- (void)initTableView {
+    if (!_scrollEvent) {
+        _scrollEvent=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 41, 320,self.superview.bounds.size.height- kTableViewHeightOffset)];
+        [_scrollEvent setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+        [_scrollEvent setUserInteractionEnabled:YES];
+        [self addSubview:_scrollEvent];
+    }
+    if (!_tableView) {
+        _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 41, 320,self.superview.bounds.size.height- kTableViewHeightOffset) style:UITableViewStylePlain];
+        [_tableView setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:_tableView];
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
+        _currentTableType=-1;
+        CGRect frame= self.frame;
+        frame.size.height+=_tableView.frame.size.height;
+        self.frame=frame;
+        
+        if (!_btnBackground) {
+            _btnBackground = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, kTableViewHeightOffset-41)];
+            
+            [_btnBackground addTarget:self action:@selector(backgroundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self.superview addSubview:_btnBackground];
+        }
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    }
 
+
+    [self showExtraView:YES];
+}
+
+
+- (void)setConnerBorderWithLayer:(CALayer *)l
+{
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:1.0];
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+}
+
+- (void)settingTextForTitle:(UILabel *)lblTitle
+{
+    lblTitle.backgroundColor = [UIColor clearColor];
+    lblTitle.textColor = [UIColor blackColor];
+    lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
+}
+
+- (void)addEventToInfoView
+{
+    int height=15;
+    CALayer *l;
+    if (_branch.events.count>0) {
+        eventView=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 90)];
+        [eventView setBackgroundColor:[UIColor whiteColor]];
+        l=eventView.layer;
+        [self setConnerBorderWithLayer:l];
+        
+        UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
+        lblTitle.backgroundColor = [UIColor clearColor];
+        lblTitle.textColor = [UIColor blackColor];
+        lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
+        lblTitle.text=@"Sự kiện";
+        [eventView addSubview:lblTitle];
+        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+        [eventView addSubview:imageLine];
+        
+        //EVENT
+        height =imageLine.frame.origin.y+imageLine.frame.size.height+15;
+        for (TVEvent* event in _branch.events.items) {
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,height , 290, 23)];
+            lblDetailRow.backgroundColor = [UIColor clearColor];
+            lblDetailRow.textColor = [UIColor blackColor];
+            lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
+//            NSLog(@"event=%@",event.title);
+            lblDetailRow.text = event.title;
+            [lblDetailRow resizeToStretch];
+            height=lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height+ 3;
+            [eventView addSubview:lblDetailRow];
+            for (NSString*addressStr in event.addresses) {
+                UILabel *lblAddress= [[UILabel alloc] initWithFrame:CGRectMake(10, height, 290, 23)];
+                lblAddress.backgroundColor = [UIColor clearColor];
+                lblAddress.textColor = [UIColor colorWithRed:(11/255.0f) green:(154 /255.0f) blue:(227/255.0f) alpha:1.0f];
+                lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+                lblAddress.text=addressStr;
+                
+                [lblDetailRow resizeToStretch];
+                [eventView addSubview:lblAddress];
+                height=lblAddress.frame.origin.y+lblAddress.frame.size.height+ 3;
+            }
+            
+            NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
+            //    NSLog(@"%@",_coupon.content);
+            //continue building the string
+            [html appendString:event.content];
+            [html appendString:@"</body></html>"];
+            
+            //instantiate the web view
+            UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, height, 290, 200)];
+            
+            //make the background transparent
+            [webView setBackgroundColor:[UIColor clearColor]];
+            
+            //pass the string to the webview
+            [webView loadHTMLString:[html description] baseURL:nil];
+            
+            //add it to the subview
+            [webView sizeToFit];
+            // assuming your self.viewer is a UIWebView
+            [webView setDelegate:self];
+            [eventView addSubview:webView];
+        }
+        [self.scrollEvent addSubview:eventView];
+    }
+}
+
+#pragma mark - UIWebViewDelegate
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    CGRect newBounds = webView.frame;
+    newBounds.size.height = webView.scrollView.contentSize.height;
+    webView.frame = newBounds;
+    
+    int height_p=webView.frame.origin.y+webView.frame.size.height+10;
+    CGRect frame=eventView.frame;
+    frame.size.height=height_p;
+    eventView.frame=frame;
+    
+    height_p=eventView.frame.origin.y+eventView.frame.size.height+30;
+    _scrollEvent.scrollEnabled=YES;
+    [_scrollEvent setContentSize:CGSizeMake(320, height_p)];
+    
+}
 
 #pragma mark Actions
 
 -(void)eventButtonClicked:(UIButton*)sender{
+
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
+    [self initTableView];
+    [self addEventToInfoView ];
+    [self.tableView setHidden:YES];
+    [self.scrollEvent setHidden:NO];
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
 }
 
 -(void)similarButtonClicked:(UIButton*)sender{
+    [self.tableView setHidden:NO];
+    [self.scrollEvent setHidden:YES];
+    
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
@@ -170,9 +313,9 @@
     }
 }
 
-
-
 -(void)menuButtonClicked:(UIButton*)sender{
+    [self.tableView setHidden:NO];
+    [self.scrollEvent setHidden:YES];
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
@@ -180,9 +323,9 @@
     if (_currentTableType!=kTVMenu){
         _currentTableType=kTVMenu;
         [_tableView reloadData];
-        
     }
 }
+
 -(void)karaokeButtonClicked:(UIButton*)sender{
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
@@ -190,6 +333,9 @@
 }
 
 -(void)commentButtonClicked:(UIButton*)sender{
+    [self.tableView setHidden:NO];
+    [self.scrollEvent setHidden:YES];
+    
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
@@ -198,9 +344,7 @@
     {
         _currentTableType=kTVComment;
         [self getCommentRefresh];
-        
     }
-    
 }
 
 -(void)backgroundButtonClicked:(id)sender{
@@ -216,6 +360,7 @@
     menuButton.selected=NO;
     similarButton.selected=NO;
 }
+
 -(void)showExtraView:(BOOL)isYES{
     if (isYES){
         if (!self.isAnimating) {
@@ -227,19 +372,21 @@
                 self.transform = CGAffineTransformMakeTranslation(0, -41-(self.superview.bounds.size.height- kTableViewHeightOffset));
             } completion:^(BOOL finished){
                 self.isAnimating=NO;
+                self.isShowFullExtraYES=YES;
             }];
         }
         
     }else{
         if (!self.isAnimating) {
             [_btnBackground setHidden:YES];
-            [self.scrollView setDelegate:self];
+//            [self.scrollView setDelegate:self];
             self.isAnimating=YES;
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // animate it to the identity transform (100% scale)
                 self.transform = CGAffineTransformMakeTranslation(0, -41);
             } completion:^(BOOL finished){
                 self.isAnimating=NO;
+                 self.scrollView.scrollEnabled=YES;
             }];
         }
     }
@@ -258,8 +405,6 @@
                    };
     [self postCommentBranch:params];
 }
-
-
 
 -(void)layoutSubviews{
     [super layoutSubviews];
@@ -282,44 +427,10 @@
     
 }
 
-- (void)initTableView {
-    
-    if (!_tableView) {
-        _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 41, 320,self.superview.bounds.size.height- kTableViewHeightOffset) style:UITableViewStylePlain];
-        [_tableView setBackgroundColor:[UIColor clearColor]];
-        [self addSubview:_tableView];
-        [_tableView setDelegate:self];
-        [_tableView setDataSource:self];
-        _currentTableType=-1;
-        CGRect frame= self.frame;
-        frame.size.height+=_tableView.frame.size.height;
-        self.frame=frame;
-        //        int numberOfPages=(_isHasKaraokeYES)?5:4;
-        //        [_viewScroll setPagingEnabled: YES] ;
-        //        [_viewScroll setContentSize: CGSizeMake(_viewScroll.bounds.size.width * numberOfPages, _viewScroll.bounds.size.height)] ;
-        
-        
-    }
-    
-    if (!_btnBackground) {
-        _btnBackground = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, kTableViewHeightOffset-41)];
-        
-        [_btnBackground addTarget:self action:@selector(backgroundButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.superview addSubview:_btnBackground];
-    }
-
-    [self showExtraView:YES];
-
-        self.isAnimating=NO;
-        self.isHiddenYES=YES;
-
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-}
-
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if ([scrollView isKindOfClass:[UITableView class]])
+    if (![scrollView isEqual:_scrollView])
         return;
     //NSLog(@"scrollView.contentOffset.y====%f",scrollView.contentOffset.y);
     if (scrollView.contentOffset.y < lastDragOffset){
@@ -355,7 +466,6 @@
         return  44.0f;
     }else
         return 0;
-	
 }
 
 -(void)likeCommentButtonClicked:(UIButton*)sender{
@@ -367,6 +477,7 @@
                             comment.commentID,@"comment_id",
                             nil];
     NSLog(@"%@",params);
+    
     [[TVNetworkingClient sharedClient] postPath:@"branch/userVoteComment" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
         [SVProgressHUD showSuccessWithStatus:@"Bạn vừa thích comment này!"];

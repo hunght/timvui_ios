@@ -15,7 +15,7 @@ typedef enum {
     kTVSimilar
 } kTVTable;
 
-@interface TVExtraBranchView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
+@interface TVExtraBranchView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,UIWebViewDelegate>
 @property (strong, nonatomic) UITableView *tableView;
 @property (assign, nonatomic) kTVTable currentTableType;
 @property (strong, nonatomic) TVComments* comments;
@@ -30,5 +30,6 @@ typedef enum {
 @property (strong, nonatomic) UILabel*lblReview;
 @property (strong, nonatomic) UILabel*lblMenu;
 @property (assign, nonatomic) BOOL isHasKaraokeYES;
--(void)showExtraView:(BOOL)isYES;
+@property (strong, nonatomic) UIScrollView *scrollEvent;
+@property (assign, nonatomic) BOOL isShowFullExtraYES;
 @end

@@ -1,9 +1,5 @@
-    #import "TVEvent.h"
-#import "GHUser.h"
-#import "TVComment.h"
-#import "NSString+Extensions.h"
+#import "TVEvent.h"
 #import "NSDictionary+Extensions.h"
-#import "TVCoupons.h"
 @interface TVEvent ()
 @end
 
@@ -20,6 +16,7 @@
 
 - (void)setValues:(NSDictionary*)dict {
     NSLog(@"tvEvent===%@",dict);
+    
 	self.eventID = [dict safeStringForKey:@"id"];
     self.title = [dict safeStringForKey:@"title"];
     self.alias = [dict safeStringForKey:@"alias"];
@@ -33,8 +30,5 @@
     self.image= [dict safeStringForKey:@"image"];
     self.created= [dict safeDateForKey:@"created"];
 }
-
-
-
 
 @end

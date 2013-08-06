@@ -160,8 +160,6 @@
             lblDetailRow.textColor = [UIColor redColor];
             lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
             lblDetailRow.text = coupon.name;
-            lblDetailRow.numberOfLines = 0;
-            lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
             [lblDetailRow resizeToStretch];
             
             UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(5 ,*height_p-5 , 297, lblDetailRow.frame.size.height+10)];
@@ -552,8 +550,6 @@
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
         lblDetailRow.textColor = [UIColor blackColor];
-        lblDetailRow.numberOfLines = 0;
-        lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
         lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblDetailRow.text =[dic valueForKey:@"name"];
         [lblDetailRow resizeToStretch];
@@ -734,8 +730,6 @@
         lblAddress.backgroundColor = [UIColor clearColor];
         lblAddress.textColor = [UIColor grayColor];
         lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(15)];
-        lblAddress.numberOfLines = 0;
-        lblAddress.lineBreakMode = UILineBreakModeWordWrap;
         lblAddress.text=str;
         [lblAddress resizeToStretch];
         [genarateInfoView addSubview:lblAddress];
@@ -772,8 +766,6 @@
         lblDetailRow.textColor = [UIColor blackColor];
         lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblDetailRow.text = strDetail;
-        lblDetailRow.numberOfLines = 0;
-        lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
         [lblDetailRow resizeToStretch];
         [detailInfoBranch addSubview:lblDetailRow];
         *heightDetailInfo_p+=14+lblDetailRow.frame.size.height;

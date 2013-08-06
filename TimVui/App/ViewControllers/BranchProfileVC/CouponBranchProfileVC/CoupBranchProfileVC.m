@@ -328,9 +328,6 @@
     _extraBranchView.scrollView=_scrollView;
     _extraBranchView.branch=_branch;
     [self.view addSubview:_extraBranchView];
-    if (_scrollView.frame.size.height<self.view.bounds.size.height) {
-//        [_extraBranchView showExtraView:YES];
-    }
     
     [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
     [super viewDidLoad];

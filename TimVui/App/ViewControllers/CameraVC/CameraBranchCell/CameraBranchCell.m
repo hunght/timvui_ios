@@ -82,8 +82,6 @@ int cellPad=44;
     self.textLabel.text=_branch.name;
     _lblDetailRow.backgroundColor = [UIColor clearColor];
     _lblDetailRow.textColor = [UIColor blackColor];
-    _lblDetailRow.numberOfLines = 0;
-    _lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
     _lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     _lblDetailRow.text =_branch.address_full;
     [_lblDetailRow resizeToStretch];

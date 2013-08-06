@@ -9,6 +9,8 @@
 @implementation UILabel (DynamicHeight)
 
 -(void)resizeToStretch{
+    self.numberOfLines = 0;
+    self.lineBreakMode = UILineBreakModeWordWrap;
     float height = [self expectedHeight];
     CGRect newFrame = [self frame];
     newFrame.size.height = height;
