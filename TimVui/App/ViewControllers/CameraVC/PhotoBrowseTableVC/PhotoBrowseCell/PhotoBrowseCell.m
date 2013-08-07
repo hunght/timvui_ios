@@ -28,11 +28,13 @@
         [_btnImageTwo setBackgroundColor:[UIColor whiteColor]];
         [self.contentView addSubview:_btnImageTwo];
         
-        _imgPickedOne=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 25, 25)];
+        _imgPickedOne=[[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 15, 15)];
         [self.contentView addSubview:_imgPickedOne];
         
-        _imgPickedTwo=[[UIImageView alloc] initWithFrame:CGRectMake(15+160, 15, 25, 25)];
+        _imgPickedTwo=[[UIImageView alloc] initWithFrame:CGRectMake(15+160, 15, 15, 15)];
         [self.contentView addSubview:_imgPickedTwo];
+        [_imgPickedOne setImage:[UIImage imageNamed:@"img_camera_photo_browser_save_on"]];
+        [_imgPickedTwo setImage:[UIImage imageNamed:@"img_camera_photo_browser_save_on"]];
     }
     return self;
 }
@@ -53,15 +55,15 @@
     
     if ([s isEqual:_btnImageOne]) {
         if (s.isSelected)
-            [_imgPickedOne setImage:[UIImage imageNamed:@""]];
+            [_imgPickedOne setImage:[UIImage imageNamed:@"img_camera_photo_browser_save_on"]];
         else
-            [_imgPickedOne setImage:[UIImage imageNamed:@""]];
+            [_imgPickedOne setImage:[UIImage imageNamed:@"img_camera_photo_browser_save_off"]];
         
     }else{
         if (s.isSelected)
-            [_imgPickedTwo setImage:[UIImage imageNamed:@""]];
+            [_imgPickedTwo setImage:[UIImage imageNamed:@"img_camera_photo_browser_save_on"]];
         else
-            [_imgPickedTwo setImage:[UIImage imageNamed:@""]];
+            [_imgPickedTwo setImage:[UIImage imageNamed:@"img_camera_photo_browser_save_off"]];
         
     }
     

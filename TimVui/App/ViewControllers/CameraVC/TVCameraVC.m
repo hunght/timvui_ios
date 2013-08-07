@@ -429,6 +429,7 @@
 //		[self.pagingScrollView reloadPages];
 //		self.pageControl.numberOfPages = _numPages;
 //	}
+    
 }
 
 #pragma mark - MHPagingScrollViewDelegate

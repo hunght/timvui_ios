@@ -289,11 +289,14 @@
         cell.btnImageOne.tag=indexPath.row*2;
         cell.btnImageTwo.tag=indexPath.row*2+1;
         [cell setDelegate:self];
+        
     }
     [cell.btnImageOne setImage:[_arrPhotos objectAtIndex:cell.btnImageOne.tag] forState:UIControlStateNormal];
     
     if (!([_arrPhotos count]==cell.btnImageTwo.tag))
         [cell.btnImageTwo setImage:[_arrPhotos objectAtIndex:cell.btnImageTwo.tag] forState:UIControlStateNormal];
+    else
+        cell.imgPickedTwo.hidden=YES;
     
     return cell;
 }

@@ -697,7 +697,7 @@ enum {
                         break;
                     case kS1AccountSetting:
                         cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
-                        cell.textLabel.text = @"ĐTuỳ chọn Gợi ý";
+                        cell.textLabel.text = @"Tuỳ chọn Gợi ý";
                         break;
                 }
             break;
