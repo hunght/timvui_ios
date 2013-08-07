@@ -9,7 +9,6 @@
 
 
 @interface TVMenuUserCell : UITableViewCell
-@property(nonatomic, strong)UIImageView* imgTriangleIcon;
 @property(nonatomic, strong)UIImageView* imgAvatar;
 @property(nonatomic, assign)BOOL isRotatedYES;
 @end

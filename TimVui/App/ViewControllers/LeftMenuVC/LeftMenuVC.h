@@ -12,9 +12,10 @@
 @interface LeftMenuVC : UITableViewController <UIActionSheetDelegate> {
 @private
     NSArray *_headers;
-
+    NSIndexPath* lastIndexPath;
     BOOL _lastStatusLogin;
     BOOL isRotatedYES;
+    BOOL isNotTheFirstTimeOpenHomeYES;
 }
 
 - (void)openViewController:(UIViewController *)viewController;

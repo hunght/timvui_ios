@@ -38,16 +38,18 @@ enum {
 /* set to 3 if you want to see how it behaves 
  when having more cells in the same section 
  */
-#define kNumberOfRowsInSection1 6
+#define kNumberOfRowsInSection1 7
 
 
 enum {
-    kS1AccountRecentlyView=0,
+    kS1AccountInfoUser=0,
+    kS1AccountRecentlyView,
     kS1AccountReceivedCoupon,
     kS1AccountSetting
 };
 enum {
-    kS1RecentlyView=0,
+    kS1InfoUser=0,
+    kS1RecentlyView,
     kS1ReceivedCoupon,
     kS1Interesting,
     kS1Setting,
@@ -92,10 +94,7 @@ enum {
     if (self) {
         [self checkAndRefreshTableviewWhenUserLoginOrLogout];
         _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ Anuong.net",@"Cài đặt", nil];
-        [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
-        [self.view setBackgroundColor:[UIColor clearColor]];
-        UIColor *bgColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]];
-        self.tableView.backgroundColor = bgColor;
+        
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
@@ -105,8 +104,8 @@ enum {
 {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
     // Release any cached data, images, etc that aren't in use.
+    
 }
 
 #pragma mark - View lifecycle
@@ -114,6 +113,7 @@ enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
 }
 
 - (void)viewDidUnload
@@ -153,7 +153,6 @@ enum {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
 
 -(void)showLoginScreenWhenUserNotLogin:(UINavigationController*)nav{
     LoginVC* loginVC=nil;
@@ -452,7 +451,22 @@ enum {
             [SharedAppDelegate loadWhenInternetConnected];
         return;
     }
-	UIViewController *viewController = nil;
+    if (isNotTheFirstTimeOpenHomeYES==NO&&indexPath.section==kSection2Services&&indexPath.row==kS2Home) {
+        isNotTheFirstTimeOpenHomeYES=YES;
+        [self toggleTopView];
+        lastIndexPath=indexPath;
+        return;
+    }
+    if (lastIndexPath.section==indexPath.section&&lastIndexPath.row==indexPath.row) {
+        if (lastIndexPath.section!=kSection1UserAccount) {
+            [self toggleTopView];
+            lastIndexPath=indexPath;
+            return;
+        }
+    }
+    lastIndexPath=indexPath;
+	
+    UIViewController *viewController = nil;
     int row = indexPath.row;
     switch (indexPath.section) {
         case kSection1UserAccount:
@@ -582,7 +596,7 @@ enum {
             if ([GlobalDataUser sharedAccountClient].isLogin)
                 rows += kNumberOfRowsInSection1;
             else
-                rows += 3;
+                rows += 4;
                 break;
         case kSection2Services:
             rows += kNumberOfRowsInSection2;
@@ -601,7 +615,26 @@ enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier;
+    if (indexPath.section==kSection1UserAccount&&indexPath.row==kS1InfoUser) {
+         CellIdentifier = @"GlobalCustomDropDownCell";
+        TVMenuUserCell *cellUser = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cellUser) {
+            cellUser = [[TVMenuUserCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] ;
+        }
+        
+        if ([GlobalDataUser sharedAccountClient].isLogin){           
+            cellUser.textLabel.text = [GlobalDataUser sharedAccountClient].user.first_name;
+            [cellUser.imgAvatar setImageWithURL:[[NSURL alloc] initWithString:[GlobalDataUser sharedAccountClient].user.avatar]  placeholderImage:[UIImage imageNamed:@"user"]];
+        }else{
+            cellUser.textLabel.text = @"Đăng nhập";
+            [cellUser.imgAvatar setImage:[UIImage imageNamed:@"user"]];
+        }
+        
+        return cellUser;
+    }
+    
+    CellIdentifier = @"Cell";
     
     GHMenuCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
