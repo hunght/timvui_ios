@@ -110,7 +110,10 @@
     for (PageView *page in _visiblePages)
 	{
 		[page setName:name andAddress:address];
-//        NSLog(@"name= %@",name);
+	}
+    for (PageView *page in _recycledPages)
+	{
+		[page setName:name andAddress:address];
 	}
 }
 

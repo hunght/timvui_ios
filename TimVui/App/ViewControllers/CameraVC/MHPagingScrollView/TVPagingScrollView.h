@@ -28,7 +28,6 @@
  * property.
  */
 @interface TVPagingScrollView : UIScrollView
-@property (nonatomic, assign) BOOL isNotWantRunTilePage;
 /* The delegate for paging events. */
 @property (nonatomic, unsafe_unretained) IBOutlet id <MHPagingScrollViewDelegate> pagingDelegate;
 

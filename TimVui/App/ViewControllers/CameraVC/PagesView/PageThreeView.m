@@ -10,6 +10,7 @@
 #import "TVBranch.h"
 //#import "NSDate+Helper.h"
 #import "NSDate-Utilities.h"
+#import "UILabel+DynamicHeight.h"
 @implementation PageThreeView
 
 - (id)initWithFrame:(CGRect)frame
@@ -24,26 +25,22 @@
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
     _lblBranchName.backgroundColor = [UIColor clearColor];
     _lblBranchName.textColor = [UIColor whiteColor];
-    _lblBranchName.numberOfLines = 0;
-    _lblBranchName.lineBreakMode = UILineBreakModeWordWrap;
     _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(20)];
     _lblBranchName.text=name;
-    [_lblBranchName sizeToFit];
+    [_lblBranchName resizeToStretch];
     
     CGRect rect=_lblAddress.frame;
     rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height+5;
     _lblAddress.frame=rect;
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor whiteColor];
-    _lblAddress.numberOfLines = 0;
-    _lblAddress.lineBreakMode = UILineBreakModeWordWrap;
     _lblAddress.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
     _lblAddress.text= address;
-    [_lblAddress sizeToFit];
+    [_lblAddress resizeToStretch];
     
-    rect=_backgroundLocation.frame;
+    rect=_bgBranchView.frame;
     rect.size.height=_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height+15;
-    _backgroundLocation.frame=rect;
+    _bgBranchView.frame=rect;
 }
 
 
@@ -61,35 +58,46 @@
 
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{
+    float ratioImage=bottomImage.size.width/320;
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
     [[UIColor whiteColor] set];
     UILabel* lbl=_lblBranchName;
     
     NSString* text=lbl.text;
-    CGRect rectView=lbl.frame;
+    CGRect rectView=[lbl convertRect:lbl.frame toView:_viewSkin];
     int fontText=20;
     [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
     text=_lblAddress.text;
-    rectView=_lblAddress.frame;
+    rectView=[_lblAddress convertRect:_lblAddress.frame toView:_viewSkin];;
     fontText=13;
     [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
-    UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
-    rectView=_imagLocationIcon.frame;
-    CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    UIImage* imageLocation=[UIImage imageNamed:@"skin_toi_dang_o_day_icon"];
+    
+    rectView=[_imagLocationIcon convertRect:_imagLocationIcon.frame toView:_viewSkin];
+    CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    [[UIColor colorWithWhite:1.0 alpha:.2] set];
-    rectView=_backgroundLocation.frame;
-    rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    UIImage* imgImHere=[UIImage imageNamed:@"skin_toi_dang_o_day"];
+    rectView=[_imagImHereIcon convertRect:_imagImHereIcon.frame toView:_viewSkin];
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    [imgImHere drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
+    UIImage* imgTriAngle=[UIImage imageNamed:@"skin_toi_dang_o_day_tam_giac"];
+    rectView=[_imagTriangleIcon convertRect:_imagTriangleIcon.frame toView:_viewSkin];
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    [imgTriAngle drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    [[UIColor colorWithWhite:1.0 alpha:0.3] set];
+    rectView=_bgBranchView.frame;
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    [[UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:5*ratioImage] fill];
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
     return newImage;
 }
 

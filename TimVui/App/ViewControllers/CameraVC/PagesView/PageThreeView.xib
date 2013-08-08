@@ -42,7 +42,6 @@
 						<string key="NSFrame">{{2, 50}, {315, 315}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -220,14 +219,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">backgroundLocation</string>
-						<reference key="source" ref="191373211"/>
-						<reference key="destination" ref="639126920"/>
-					</object>
-					<int key="connectionID">18</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">imagLocationIcon</string>
 						<reference key="source" ref="191373211"/>
 						<reference key="destination" ref="564850962"/>
@@ -249,6 +240,30 @@
 						<reference key="destination" ref="998471388"/>
 					</object>
 					<int key="connectionID">21</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">bgBranchView</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="639126920"/>
+					</object>
+					<int key="connectionID">22</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">imagTriangleIcon</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="689858234"/>
+					</object>
+					<int key="connectionID">23</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">imagImHereIcon</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="497055368"/>
+					</object>
+					<int key="connectionID">24</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -353,7 +368,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">21</int>
+			<int key="maxID">24</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -361,7 +376,7 @@
 					<string key="className">PageThreeView</string>
 					<string key="superclassName">PageView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="backgroundLocation">UIView</string>
+						<string key="bgBranchView">UIView</string>
 						<string key="imagImHereIcon">UIImageView</string>
 						<string key="imagLocationIcon">UIImageView</string>
 						<string key="imagTriangleIcon">UIImageView</string>
@@ -370,8 +385,8 @@
 						<string key="viewSkin">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="backgroundLocation">
-							<string key="name">backgroundLocation</string>
+						<object class="IBToOneOutletInfo" key="bgBranchView">
+							<string key="name">bgBranchView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="imagImHereIcon">

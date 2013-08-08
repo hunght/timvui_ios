@@ -73,7 +73,6 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=YES;
     [self.navigationController.navigationBar dropShadow];
-    _pagingScrollView.isNotWantRunTilePage=NO;
 }
 
 - (void)viewDidLoad
@@ -222,12 +221,10 @@
 
 -(void)wantToShowLeft:(BOOL)isLeft{
     if (isLeft) {
-        _pagingScrollView.isNotWantRunTilePage=YES;
         [self.slidingViewController anchorTopViewTo:ECLeft];
     }else
         
     if (self.slidingViewController.underLeftViewController){
-        _pagingScrollView.isNotWantRunTilePage=YES;
         [self.slidingViewController anchorTopViewTo:ECRight];
     }
 }
@@ -235,7 +232,6 @@
 #pragma mark - LocationTableVCDelegate
 
 -(void)didPickWithLoation:(TVBranch *)branch{
-    _pagingScrollView.isNotWantRunTilePage=NO;
     [self.slidingViewController resetTopView];
     _branch=branch;
     _photoBrowseTableVC.branch_id=_branch.branchID;
@@ -245,7 +241,6 @@
 #pragma mark - SkinPickerTableVCDelegate
 
 -(void)didPickWithAlbum:(NSString *)strAlbum{
-    _pagingScrollView.isNotWantRunTilePage=NO;
     [self.slidingViewController resetTopView];
     _strAlbum=strAlbum;
     _photoBrowseTableVC.album=_strAlbum;
@@ -283,12 +278,10 @@
 - (IBAction)locationPickerButtonClicked:(id)sender {
     [self.pagingScrollView selectPageAtIndex:0 animated:NO];
     if (self.slidingViewController.underLeftShowing) {
-        _pagingScrollView.isNotWantRunTilePage=NO;
         // actually this does not get called when the top view screenshot is enabled
         // because the screenshot intercepts the touches on the toggle button
         [self.slidingViewController resetTopView];
     } else {
-        _pagingScrollView.isNotWantRunTilePage=YES;
         if (self.slidingViewController.underLeftViewController)[self.slidingViewController anchorTopViewTo:ECRight];
     }
 }
@@ -296,12 +289,10 @@
 - (IBAction)skinPickerButtonClicked:(id)sender {
     [self.pagingScrollView selectPageAtIndex:_numPages-1 animated:NO];
     if (self.slidingViewController.underRightShowing) {
-                _pagingScrollView.isNotWantRunTilePage=NO;
         // actually this does not get called when the top view screenshot is enabled
         // because the screenshot intercepts the touches on the toggle button
         [self.slidingViewController resetTopView];
     } else {
-                _pagingScrollView.isNotWantRunTilePage=YES;
         [self.slidingViewController anchorTopViewTo:ECLeft];
     }
 }
@@ -404,11 +395,9 @@
         if (!self.slidingViewController.underLeftShowing && scrollOffset<-70) {
             
             if (self.slidingViewController.underLeftViewController){
-                _pagingScrollView.isNotWantRunTilePage=YES;
                 [self.slidingViewController anchorTopViewTo:ECRight];
             }
         }else if (!self.slidingViewController.underRightShowing && scrollOffset>(_numPages-1)*320+70) {
-            _pagingScrollView.isNotWantRunTilePage=YES;
             [self.slidingViewController anchorTopViewTo:ECLeft];
         }
    
@@ -418,13 +407,10 @@
     if (self.slidingViewController.underLeftShowing) {
         // actually this does not get called when the top view screenshot is enabled
         // because the screenshot intercepts the touches on the toggle button
-        _pagingScrollView.isNotWantRunTilePage=NO;
         [self.slidingViewController resetTopView];
     } else {
-        
         if (self.slidingViewController.underLeftViewController)
         {
-            _pagingScrollView.isNotWantRunTilePage=YES;
             [self.slidingViewController anchorTopViewTo:ECRight];
         }
     }
@@ -433,7 +419,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)theScrollView
 {
-    NSLog(@"self.pageControl.currentPage=%ld",(long)self.pageControl.currentPage);
 	self.pageControl.currentPage = [self.pagingScrollView indexOfSelectedPage];
 	[self.pagingScrollView scrollViewDidScroll];
     
@@ -458,7 +443,7 @@
 - (UIView *)pagingScrollView:(TVPagingScrollView *)thePagingScrollView pageForIndex:(NSUInteger)index
 {
     PageView *pageView = (PageView *)[thePagingScrollView dequeueReusablePageAtIndex:index];
-    pageView.index=index;
+    
 	if (pageView == nil){
         switch (index) {
             case 0:
@@ -480,8 +465,10 @@
             default:
                 break;
         }
+        pageView.index=index;
+        [pageView setName:_branch.name andAddress:_branch.address_full];
     }
-
+    
     //pageView.lblCompliment.text=@"Seize the day";
 	return pageView;
 }
