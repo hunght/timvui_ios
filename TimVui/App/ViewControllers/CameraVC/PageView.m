@@ -8,7 +8,8 @@
 }
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{
-    return nil;
+    
+    return bottomImage;
 }
 
 @end

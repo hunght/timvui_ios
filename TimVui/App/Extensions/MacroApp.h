@@ -26,7 +26,7 @@
 #define kDistanceSearchMapDefault   @"5"//km
 #define kTVDistanceMovingMap   5000 //m
 
-#define kNumberOfSkinsCamera   2
+#define kNumberOfSkinsCamera   3
 
 #define kNumberLimitRefresh   @"10"
 

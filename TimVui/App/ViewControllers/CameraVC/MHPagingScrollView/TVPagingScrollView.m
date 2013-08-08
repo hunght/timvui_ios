@@ -114,15 +114,15 @@
 	}
 }
 
-- (UIView *)dequeueReusablePage
+- (UIView *)dequeueReusablePageAtIndex:(int)index
 {
-	PageView *page = [_recycledPages anyObject];
-	if (page != nil)
-	{
-		UIView *view = page;
-		[_recycledPages removeObject:page];
-		return view;
-	}
+    for (PageView *page in [_recycledPages allObjects]) {
+        if (index==page.index) {
+            UIView *view = page;
+            [_recycledPages removeObject:page];
+            return view;
+        }
+    }
 	return nil;
 }
 
