@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
 
-#import "PageTwoView.h"
+#import "PageSixView.h"
 #import "TVBranch.h"
 //#import "NSDate+Helper.h"
 #import "NSDate-Utilities.h"
 #import "UILabel+DynamicHeight.h"
-@implementation PageTwoView
+@implementation PageSixView
 
 - (void)settingView
 {

@@ -11,13 +11,15 @@
 #import "TSMessage.h"
 #import "PageTwoView.h"
 #import "PageThreeView.h"
+#import "PageFourView.h"
+#import "PageFiveView.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
+static int _numPages = 5;
 
 @implementation TVCameraVC
 {
-	NSUInteger _numPages;
 @private
     double lastDragOffset;
 }
@@ -78,7 +80,6 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	_numPages = kNumberOfSkinsCamera;
     _arrImages=[[NSMutableArray alloc] init];
     _lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(5, -14, 20, 20)];
     _lblPhone.backgroundColor = [UIColor redColor];
@@ -92,8 +93,7 @@
     
     [_lblPhone setHidden:YES];
     [_btnStoreImage addSubview:_lblPhone];
-    
-    
+
 	[self initScrollPagingView];
     [self initCameraCapture];
     
@@ -452,7 +452,7 @@
                 
             case 1:
             {
-                  PageTwoView* pageTwoView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
+                PageTwoView* pageTwoView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
                 pageView=pageTwoView;
             }
                 break;
@@ -462,12 +462,18 @@
                 pageView=pageThreeView;
             }
                 break;
+            case 3:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageFourView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 4:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageFiveView" owner:self options:nil] objectAtIndex:0];
+                break;
             default:
                 break;
         }
-        pageView.index=index;
+        pageView.index=index;[pageView settingView];
         if (_branch) {
-            [pageView settingView];
+            
             [pageView setName:_branch.name andAddress:_branch.address_full];
             
         }

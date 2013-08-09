@@ -41,6 +41,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{2, 51}, {315, 315}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -56,8 +57,9 @@
 							<object class="IBUILabel" id="121057026">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{49, 244}, {262, 25}}</string>
+								<string key="NSFrame">{{39, 268}, {262, 25}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="775197523"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="985379797">
@@ -87,11 +89,38 @@
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
+							<object class="IBUIImageView" id="597001034">
+								<reference key="NSNextResponder" ref="154895063"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{15, 16}, {25, 36}}</string>
+								<reference key="NSSuperview" ref="154895063"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="121057026"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage" id="16580604">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">img_skin_common_location.png</string>
+								</object>
+							</object>
+							<object class="IBUIImageView" id="211861085">
+								<reference key="NSNextResponder" ref="154895063"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{147, 142}, {25, 36}}</string>
+								<reference key="NSSuperview" ref="154895063"/>
+								<reference key="NSWindow"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIImage" ref="16580604"/>
+							</object>
 							<object class="IBUILabel" id="775197523">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{51, 271}, {243, 18}}</string>
+								<string key="NSFrame">{{48, 20}, {243, 18}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="847916006"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="985379797"/>
@@ -115,26 +144,13 @@
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
-							<object class="IBUIImageView" id="597001034">
-								<reference key="NSNextResponder" ref="154895063"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{18, 249}, {25, 36}}</string>
-								<reference key="NSSuperview" ref="154895063"/>
-								<reference key="NSNextKeyView" ref="121057026"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">img_skin_common_location.png</string>
-								</object>
-							</object>
 							<object class="IBUIView" id="114538472">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrame">{{1, 239}, {318, 62}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="597001034"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -150,6 +166,7 @@
 						</array>
 						<string key="NSFrame">{{0, 48}, {320, 320}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="114538472"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="985379797"/>
@@ -158,6 +175,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 416}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="154895063"/>
 				<reference key="IBUIBackgroundColor" ref="985379797"/>
 				<object class="IBUISimulatedSizeMetrics" key="IBUISimulatedDestinationMetrics">
@@ -243,9 +261,10 @@
 						<reference key="object" ref="154895063"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="121057026"/>
-							<reference ref="775197523"/>
 							<reference ref="114538472"/>
+							<reference ref="775197523"/>
 							<reference ref="597001034"/>
+							<reference ref="211861085"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">View -Skin</string>
@@ -278,6 +297,11 @@
 						<reference key="object" ref="597001034"/>
 						<reference key="parent" ref="154895063"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">53</int>
+						<reference key="object" ref="211861085"/>
+						<reference key="parent" ref="154895063"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -293,14 +317,193 @@
 				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="42.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="43.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="53.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">52</int>
+			<int key="maxID">53</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">PageTwoView</string>
+					<string key="superclassName">PageView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="backgroundLocation">UIView</string>
+						<string key="imagLocationIcon">UIImageView</string>
+						<string key="lblAddress">UILabel</string>
+						<string key="lblBranchName">UILabel</string>
+						<string key="lblCity">UILabel</string>
+						<string key="lblCompliment">UILabel</string>
+						<string key="lblDate">UILabel</string>
+						<string key="lblTime">UILabel</string>
+						<string key="viewSkin">UIView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="backgroundLocation">
+							<string key="name">backgroundLocation</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imagLocationIcon">
+							<string key="name">imagLocationIcon</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lblAddress">
+							<string key="name">lblAddress</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lblBranchName">
+							<string key="name">lblBranchName</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lblCity">
+							<string key="name">lblCity</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lblCompliment">
+							<string key="name">lblCompliment</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lblDate">
+							<string key="name">lblDate</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lblTime">
+							<string key="name">lblTime</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewSkin">
+							<string key="name">viewSkin</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PageTwoView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PageView</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PageView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TVCameraVC</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="albumPickerButtonClicked:">id</string>
+						<string key="cameraButtonClicked:">id</string>
+						<string key="closeButtonClicked:">id</string>
+						<string key="locationPickerButtonClicked:">id</string>
+						<string key="pageTurn">id</string>
+						<string key="photoBrowseButtonClicked:">id</string>
+						<string key="skinPickerButtonClicked:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="albumPickerButtonClicked:">
+							<string key="name">albumPickerButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="cameraButtonClicked:">
+							<string key="name">cameraButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="closeButtonClicked:">
+							<string key="name">closeButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="locationPickerButtonClicked:">
+							<string key="name">locationPickerButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="pageTurn">
+							<string key="name">pageTurn</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="photoBrowseButtonClicked:">
+							<string key="name">photoBrowseButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="skinPickerButtonClicked:">
+							<string key="name">skinPickerButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="btnAlbumPicker">UIButton</string>
+						<string key="btnCameraSkin">UIButton</string>
+						<string key="btnClose">UIButton</string>
+						<string key="btnLocationPicker">UIButton</string>
+						<string key="btnStoreImage">UIButton</string>
+						<string key="imgImagePicked">UIImageView</string>
+						<string key="pageControl">UIPageControl</string>
+						<string key="pagingScrollView">TVPagingScrollView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="btnAlbumPicker">
+							<string key="name">btnAlbumPicker</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnCameraSkin">
+							<string key="name">btnCameraSkin</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnClose">
+							<string key="name">btnClose</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnLocationPicker">
+							<string key="name">btnLocationPicker</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnStoreImage">
+							<string key="name">btnStoreImage</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imgImagePicked">
+							<string key="name">imgImagePicked</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pageControl">
+							<string key="name">pageControl</string>
+							<string key="candidateClassName">UIPageControl</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pagingScrollView">
+							<string key="name">pagingScrollView</string>
+							<string key="candidateClassName">TVPagingScrollView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TVCameraVC.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TVPagingScrollView</string>
+					<string key="superclassName">UIScrollView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">pagingDelegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">pagingDelegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">pagingDelegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TVPagingScrollView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

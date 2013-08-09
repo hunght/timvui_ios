@@ -13,11 +13,11 @@
     newFrame.size.width = width;
     [self setFrame:newFrame];
 }
--(void)resizeWidthToStretchWidth:(int)height{
+-(void)resizeWidthToStretchToCenter{
     float width ;
     [self setNumberOfLines:1];
     
-    CGSize maximumLabelSize = CGSizeMake(9999,height);
+    CGSize maximumLabelSize = CGSizeMake(9999,self.frame.size.height);
     
     CGSize expectedLabelSize = [[self text] sizeWithFont:[self font]
                                        constrainedToSize:maximumLabelSize

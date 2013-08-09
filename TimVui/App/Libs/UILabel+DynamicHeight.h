@@ -13,5 +13,5 @@
 -(float)expectedHeight;
 -(void)resizeWidthToStretch;
 -(void)resizeToStretchWidth:(int)width;
--(void)resizeWidthToStretchWidth:(int)height;
+-(void)resizeWidthToStretchToCenter;
 @end
