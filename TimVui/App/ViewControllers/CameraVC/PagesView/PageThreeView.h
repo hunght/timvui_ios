@@ -18,4 +18,5 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imagTriangleIcon;
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imagImHereIcon;
 -(void)setName:(NSString*)name andAddress:(NSString*)address;
+
 @end

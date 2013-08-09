@@ -7,13 +7,39 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
-         timestampString = "397645866.200215"
+         filePath = "TimVui/App/ViewControllers/CameraVC/PagesView/PageThreeView.m"
+         timestampString = "397726967.167283"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "234"
-         endingLineNumber = "234"
-         landmarkName = "-didPickWithLoation:"
+         startingLineNumber = "56"
+         endingLineNumber = "56"
+         landmarkName = "-setName:andAddress:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/CameraVC/PagesView/PageThreeView.m"
+         timestampString = "397726967.167283"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "40"
+         endingLineNumber = "40"
+         landmarkName = "-setName:andAddress:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/CameraVC/PagesView/PageThreeView.m"
+         timestampString = "397726967.167283"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "35"
+         endingLineNumber = "35"
+         landmarkName = "-layoutSubviews"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -466,7 +466,12 @@
                 break;
         }
         pageView.index=index;
-        [pageView setName:_branch.name andAddress:_branch.address_full];
+        if (_branch) {
+            [pageView settingView];
+            [pageView setName:_branch.name andAddress:_branch.address_full];
+            
+        }
+    
     }
     
     //pageView.lblCompliment.text=@"Seize the day";
