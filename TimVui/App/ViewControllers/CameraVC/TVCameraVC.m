@@ -13,10 +13,13 @@
 #import "PageThreeView.h"
 #import "PageFourView.h"
 #import "PageFiveView.h"
+#import "PageSixView.h"
+
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
-static int _numPages = 5;
+
+static int _numPages = 6;
 
 @implementation TVCameraVC
 {
@@ -467,6 +470,9 @@ static int _numPages = 5;
                 break;
             case 4:
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageFiveView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 5:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageSixView" owner:self options:nil] objectAtIndex:0];
                 break;
             default:
                 break;

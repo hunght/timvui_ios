@@ -28,34 +28,19 @@
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
     _lblBranchName.text=name;
     [_lblBranchName resizeToStretch];
-    
-    CGRect rect=_lblAddress.frame;
-    rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height+5;
-    _lblAddress.frame=rect;
+
     _lblAddress.text= address;
     [_lblAddress resizeToStretch];
-    
-    rect=_backgroundLocation.frame;
-    rect.size.height=_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height+15;
-    _backgroundLocation.frame=rect;
-    rect=_backgroundLocation.frame;
-    float padHeight=_backgroundLocation.frame.origin.y;
-    rect.size.height=_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height+ 7;
+
+   CGRect    rect=_lblBranchName.frame;
+    float padHeight=_lblBranchName.frame.origin.y;
     rect.origin.y = 320 - rect.size.height-10;
     padHeight=rect.origin.y-padHeight;
-    _backgroundLocation.frame=rect;
-    
-    rect= _imagLocationIcon.frame;
-    rect.origin.y+=padHeight;
-    _imagLocationIcon.frame=rect;
-    
-    rect= _lblAddress.frame;
-    rect.origin.y+=padHeight;
-    _lblAddress.frame=rect;
-    
-    rect= _lblBranchName.frame;
-    rect.origin.y+=padHeight;
     _lblBranchName.frame=rect;
+    
+    rect= _viewVitoryFinger.frame;
+    rect.origin.y+=padHeight;
+    _viewVitoryFinger.frame=rect;
     
 }
 
@@ -89,16 +74,16 @@
     fontText=13;
     [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
-    UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
+    UIImage* imageLocation=[UIImage imageNamed:@"skin_pose_phat_icon"];
     rectView=_imagLocationIcon.frame;
     CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    [[UIColor colorWithWhite:1.0 alpha:.2] set];
-    rectView=_backgroundLocation.frame;
+    UIImage* imgVictoryFinger=[UIImage imageNamed:@"skin_pose_phat_text"];
+    rectView=_viewVitoryFinger.frame;
     rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    [imgVictoryFinger drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
