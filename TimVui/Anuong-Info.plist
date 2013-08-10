@@ -49,6 +49,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>VNF Prime Regular.ttf</string>
 		<string>UVNTinTucHepThem_R.TTF</string>
 		<string>Arial.ttf</string>
 		<string>UVNTinTucHepThem.TTF</string>

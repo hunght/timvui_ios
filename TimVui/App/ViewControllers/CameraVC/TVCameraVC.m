@@ -14,12 +14,12 @@
 #import "PageFourView.h"
 #import "PageFiveView.h"
 #import "PageSixView.h"
-
+#import "PageTwelveView.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
 
-static int _numPages = 10;
+static int _numPages = 16;
 
 @implementation TVCameraVC
 {
@@ -485,6 +485,47 @@ static int _numPages = 10;
                 break;
             case 9:
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageTenView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 10:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageElevenView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 11:
+            {
+                PageTwelveView* page=[[[NSBundle mainBundle] loadNibNamed:@"PageTwelveView" owner:self options:nil] objectAtIndex:0];
+                page.strImageName= @"skin_khong_den_day_thi_phi_text";
+                pageView=page;
+            }
+                break;
+            case 12:{
+                PageTwelveView* page=[[[NSBundle mainBundle] loadNibNamed:@"PageTwelveView" owner:self options:nil] objectAtIndex:0];
+                page.imagLocationIcon.image=[UIImage imageNamed:@"skin_do_an_ngon_text_mobile"];
+                page.strImageName= @"skin_do_an_ngon_text";
+                pageView=page;
+            }
+                break;
+            case 13:
+            {
+                PageTwelveView* page=[[[NSBundle mainBundle] loadNibNamed:@"PageTwelveView" owner:self options:nil] objectAtIndex:0];
+                page.imagLocationIcon.image=[UIImage imageNamed:@"skin_khong_gian_dep_text_mobile"];
+                page.strImageName= @"skin_khong_gian_dep_text";
+                pageView=page;
+            }
+                break;
+            case 14:
+            {
+                PageTwelveView* page=[[[NSBundle mainBundle] loadNibNamed:@"PageTwelveView" owner:self options:nil] objectAtIndex:0];
+                page.imagLocationIcon.image=[UIImage imageNamed:@"skin_dich_vu_tot_mobile"];
+                page.strImageName= @"skin_dich_vu_tot";
+                pageView=page;
+            }
+                break;
+            case 15:
+            {
+                PageTwelveView* page=[[[NSBundle mainBundle] loadNibNamed:@"PageTwelveView" owner:self options:nil] objectAtIndex:0];
+                page.imagLocationIcon.image=[UIImage imageNamed:@"skin_gia_hop_ly_mobile"];
+                page.strImageName= @"skin_gia_hop_ly";
+                pageView=page;
+            }
                 break;
             default:
                 break;
