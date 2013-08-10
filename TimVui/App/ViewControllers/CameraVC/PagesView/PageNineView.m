@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
 
-#import "PageSixView.h"
+#import "PageNineView.h"
 #import "TVBranch.h"
 //#import "NSDate+Helper.h"
 #import "NSDate-Utilities.h"
 #import "UILabel+DynamicHeight.h"
-@implementation PageSixView
+@implementation PageNineView
 
 - (void)settingView
 {
@@ -28,19 +28,34 @@
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
     _lblBranchName.text=name;
     [_lblBranchName resizeToStretch];
-
+    
+    CGRect rect=_lblAddress.frame;
+    rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height+5;
+    _lblAddress.frame=rect;
     _lblAddress.text= address;
     [_lblAddress resizeToStretch];
-
-   CGRect    rect=_lblBranchName.frame;
-    float padHeight=_lblBranchName.frame.origin.y;
+    
+    rect=_backgroundLocation.frame;
+    rect.size.height=_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height+15;
+    _backgroundLocation.frame=rect;
+    rect=_backgroundLocation.frame;
+    float padHeight=_backgroundLocation.frame.origin.y;
+    rect.size.height=_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height+ 7;
     rect.origin.y = 320 - rect.size.height-10;
     padHeight=rect.origin.y-padHeight;
-    _lblBranchName.frame=rect;
+    _backgroundLocation.frame=rect;
     
-    rect= _viewVitoryFinger.frame;
+    rect= _imagLocationIcon.frame;
     rect.origin.y+=padHeight;
-    _viewVitoryFinger.frame=rect;
+    _imagLocationIcon.frame=rect;
+    
+    rect= _lblAddress.frame;
+    rect.origin.y+=padHeight;
+    _lblAddress.frame=rect;
+    
+    rect= _lblBranchName.frame;
+    rect.origin.y+=padHeight;
+    _lblBranchName.frame=rect;
     
 }
 
@@ -75,16 +90,21 @@
     fontText=13;
     [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
-    UIImage* imageLocation=[UIImage imageNamed:@"skin_pose_phat_icon"];
+    UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
     rectView=_imagLocationIcon.frame;
     CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    UIImage* imgVictoryFinger=[UIImage imageNamed:@"skin_pose_phat_text"];
-    rectView=_viewVitoryFinger.frame;
+    UIImage* imageMummumn=[UIImage imageNamed:@"skin_mammam_text"];
+    rectView=_imgMummum.frame;
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
-    [imgVictoryFinger drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+    [imageMummumn drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
+    [[UIColor colorWithWhite:1.0 alpha:.2] set];
+    rectView=_backgroundLocation.frame;
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 

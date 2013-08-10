@@ -19,7 +19,7 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
 
-static int _numPages = 6;
+static int _numPages = 10;
 
 @implementation TVCameraVC
 {
@@ -473,6 +473,18 @@ static int _numPages = 6;
                 break;
             case 5:
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageSixView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 6:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageSevenView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 7:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageEightView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 8:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageNineView" owner:self options:nil] objectAtIndex:0];
+                break;
+            case 9:
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageTenView" owner:self options:nil] objectAtIndex:0];
                 break;
             default:
                 break;

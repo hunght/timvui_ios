@@ -74,6 +74,7 @@
 
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{
+    float ratioImage=bottomImage.size.width/320;
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
     [[UIColor whiteColor] set];
@@ -91,12 +92,12 @@
     
     UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
     rectView=_imagLocationIcon.frame;
-    CGRect rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
     [[UIColor colorWithWhite:1.0 alpha:.2] set];
     rectView=_backgroundLocation.frame;
-    rect = CGRectMake(rectView.origin.x*bottomImage.size.width/320, rectView.origin.y*bottomImage.size.width/320, rectView.size.width*bottomImage.size.width/320, rectView.size.height*bottomImage.size.width/320);
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     
     CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();

@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
 
-#import "PageSixView.h"
+#import "PageSevenView.h"
 #import "TVBranch.h"
 //#import "NSDate+Helper.h"
 #import "NSDate-Utilities.h"
 #import "UILabel+DynamicHeight.h"
-@implementation PageSixView
+@implementation PageSevenView
 
 - (void)settingView
 {
@@ -59,7 +59,7 @@
 
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{
-    float ratioImage=bottomImage.size.width/320;
+    float ratioImage=bottomImage.size.width/320;;
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
     [[UIColor whiteColor] set];
@@ -80,7 +80,7 @@
     CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    UIImage* imgVictoryFinger=[UIImage imageNamed:@"skin_pose_phat_text"];
+    UIImage* imgVictoryFinger=[UIImage imageNamed:@"skin_tu_suong_text"];
     rectView=_viewVitoryFinger.frame;
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imgVictoryFinger drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];

@@ -13,8 +13,6 @@
 #import "UILabel+DynamicHeight.h"
 #import <QuartzCore/QuartzCore.h>
 
-static int radius=3;
-
 @implementation PageFiveView
 
 - (void)settingView
@@ -147,10 +145,15 @@ static int radius=3;
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imgImHere drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    [[UIColor colorWithWhite:1.0 alpha:0.3] set];
+    [[UIColor colorWithWhite:1.0 alpha:0.7] set];
     rectView=_bgBranchView.frame;
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
-    [[UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:radius*ratioImage] fill];
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
+    
+    [[UIColor colorWithWhite:0.0 alpha:0.7] set];
+    rectView=_bgBranchAddress.frame;
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
