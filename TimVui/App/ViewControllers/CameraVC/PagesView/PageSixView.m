@@ -45,35 +45,18 @@
 }
 
 
-- (void)setTextForSkin:(CGSize )size fontText:(int)fontText rectView:(CGRect)rectView text:(NSString *)text {
-    int textSize=fontText*(size.width/320);
-    
-    UIFont *font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(textSize)];
-    CGRect rect = CGRectMake(rectView.origin.x*size.width/320, rectView.origin.y*size.width/320, rectView.size.width*size.width/320, rectView.size.height*size.width/320);
-    
-    [ text drawInRect : CGRectIntegral(rect)                      // render the text
-             withFont : font
-        lineBreakMode : UILineBreakModeWordWrap  // clip overflow from end of last line
-            alignment : NSTextAlignmentLeft ];
-}
 
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{
     float ratioImage=bottomImage.size.width/320;
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
-    [[UIColor whiteColor] set];
-    UILabel* lbl=_lblBranchName;
+
+    CGRect rectView;
+    [self setTextForSkin:_lblBranchName fontText:20 sizeBottomImage:bottomImage.size];
     
-    NSString* text=lbl.text;
-    CGRect rectView=lbl.frame;
-    int fontText=20;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
-    text=_lblAddress.text;
-    rectView=_lblAddress.frame;
-    fontText=13;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
+    [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];
     
     UIImage* imageLocation=[UIImage imageNamed:@"skin_pose_phat_icon"];
     rectView=_imagLocationIcon.frame;

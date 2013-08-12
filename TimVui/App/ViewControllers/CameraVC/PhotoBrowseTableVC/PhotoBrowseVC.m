@@ -16,9 +16,11 @@
 #import "TSMessage.h"
 #import <JSONKit.h>
 #import "NSDictionary+Extensions.h"
+#import <SVProgressHUD.h>
 @interface PhotoBrowseVC ()
 {
     @private
+    BOOL isSaveImagesYES;
     NSMutableData *_responseData;
 }
 @end
@@ -33,6 +35,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        isSaveImagesYES=NO;
     }
     return self;
 }
@@ -108,6 +111,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    [SVProgressHUD dismiss];
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
     NSString* strJSON = [[NSString alloc] initWithData:_responseData
@@ -116,11 +120,13 @@
     NSLog(@"_responseData===%@",[NSString stringWithUTF8String:[_responseData bytes]]);
     NSLog(@"dic=%@",[dic objectForKey:@"status"]);
     
-    if ([dic safeIntegerForKey:@"status"]==200)
+    if ([dic safeIntegerForKey:@"status"]==200){
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Đăng ảnh thành công"
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeSuccess];
+        [self.navigationController   popViewControllerAnimated:YES];
+    }
     else
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Đăng ảnh thất bại"
@@ -130,6 +136,11 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    [SVProgressHUD dismiss];
+    [TSMessage showNotificationInViewController:self
+                                      withTitle:@"Đăng ảnh thất bại"
+                                    withMessage:nil
+                                       withType:TSMessageNotificationTypeError];
     // The request has failed for some reason!
     // Check the error var
 }
@@ -193,10 +204,12 @@
     
     // add image data and compress to send if needed.
     int i=0;
+    NSMutableArray* arrImages=[[NSMutableArray alloc] init];
     for (UIImage* image in _arrPhotos) {
         NSNumber* isPicked=[_arrPhotosPick objectAtIndex:i];
         if ([isPicked boolValue]) {
-            NSData *imageData = UIImageJPEGRepresentation(image, .80);
+            [arrImages addObject:image];
+            NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
             if (imageData) {
                 [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
                 [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"image_arr.jpg\"\r\n", FileParamConstant] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -209,7 +222,13 @@
         }
         i++;
     }
-    
+    if (isSaveImagesYES==NO) {
+        if ([_delegate respondsToSelector:@selector(didPickWithImages:)]) {
+            [_delegate didPickWithImages:arrImages];
+            isSaveImagesYES=YES;
+        }
+    }
+
     //Assuming data is not nil we add this to the multipart form
 
     //Close off the request with the boundary
@@ -223,6 +242,7 @@
     
     NSURLConnection*connect=[[NSURLConnection alloc] initWithRequest:request delegate:self];
     [connect start];
+    [SVProgressHUD show];
 }
 
 -(void)postPhotoButtonClicked:(id)s{
@@ -286,6 +306,10 @@
     PhotoBrowseCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[PhotoBrowseCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        
+        cell.btnImageOne.selected=YES;
+        cell.btnImageTwo.selected=YES;
+        
         cell.btnImageOne.tag=indexPath.row*2;
         cell.btnImageTwo.tag=indexPath.row*2+1;
         [cell setDelegate:self];
@@ -304,8 +328,5 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 160;
 }
-
-#pragma mark - Table view delegate
-
 
 @end

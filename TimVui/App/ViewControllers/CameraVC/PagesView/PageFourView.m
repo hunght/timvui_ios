@@ -104,40 +104,31 @@
 }
 
 
-- (void)setTextForSkin:(CGSize )size fontText:(int)fontText rectView:(CGRect)rectView text:(NSString *)text {
-    int textSize=fontText*(size.width/320);
-    
-    UIFont *font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(textSize)];
-    CGRect rect = CGRectMake(rectView.origin.x*size.width/320, rectView.origin.y*size.width/320, rectView.size.width*size.width/320, rectView.size.height*size.width/320);
-    
-    [ text drawInRect : CGRectIntegral(rect)                      // render the text
-             withFont : font
-        lineBreakMode : UILineBreakModeWordWrap  // clip overflow from end of last line
-            alignment : UITextAlignmentCenter ];
-}
 
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{
     float ratioImage=bottomImage.size.width/320;
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
-    [[UIColor whiteColor] set];
-    UILabel* lbl=_lblBranchName;
+
+    CGRect rectView;
+    [[UIColor colorWithWhite:1.0 alpha:0.7] set];
+    rectView=_bgBranchView.frame;
+    CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     
-    NSString* text=lbl.text;
-    CGRect rectView=[_bgBranchView convertRect:lbl.frame toView:_viewSkin];
-    int fontText=20;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
-    
-    text=_lblAddress.text;
-    rectView=[_bgBranchView convertRect:_lblAddress.frame toView:_viewSkin];;
-    fontText=13;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
+    [[UIColor colorWithWhite:0.0 alpha:0.7] set];
+    rectView=_bgBranchAddress.frame;
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
+    [self setTextForSkin:_lblBranchName fontText:20 sizeBottomImage:bottomImage.size];
+
+    [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];
     
     UIImage* imageLocation=[UIImage imageNamed:@"skin_thu_tuc_truoc_khi_an_icon"];
     
-    rectView=[_bgBranchView convertRect:_imagLocationIcon.frame toView:_viewSkin];
-    CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    rectView=_imagLocationIcon.frame ;
+     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
     UIImage* imgImHere=[UIImage imageNamed:@"skin_thu_tuc_truoc_khi_an_text"];
@@ -145,15 +136,7 @@
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imgImHere drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    [[UIColor colorWithWhite:0.0 alpha:0.7] set];
-    rectView=_bgBranchView.frame;
-    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
-    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     
-    [[UIColor colorWithWhite:1.0 alpha:0.7] set];
-    rectView=_bgBranchAddress.frame;
-    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
-    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

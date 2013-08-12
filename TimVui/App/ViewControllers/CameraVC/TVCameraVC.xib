@@ -35,7 +35,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="548297266">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIImageView" id="915427464">
@@ -43,6 +43,7 @@
 						<int key="NSvFlags">261</int>
 						<string key="NSFrame">{{0, -22}, {320, 460}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="994811018"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -60,6 +61,7 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{0, 370}, {320, 36}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="577817426"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -77,7 +79,8 @@
 								<array class="NSMutableArray" key="NSSubviews"/>
 								<string key="NSFrameSize">{320, 372}</string>
 								<reference key="NSSuperview" ref="994811018"/>
-								<reference key="NSNextKeyView" ref="335820848"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="8775252"/>
 								<object class="NSColor" key="IBUIBackgroundColor" id="825635346">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MCAwAA</bytes>
@@ -92,15 +95,34 @@
 						</array>
 						<string key="NSFrameSize">{320, 416}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="251902864"/>
 						<reference key="IBUIBackgroundColor" ref="825635346"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+					</object>
+					<object class="IBUIImageView" id="8775252">
+						<reference key="NSNextResponder" ref="548297266"/>
+						<int key="NSvFlags">261</int>
+						<string key="NSFrameSize">{320, 416}</string>
+						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="335820848"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<reference key="IBUIBackgroundColor" ref="825635346"/>
+						<int key="IBUIContentMode">1</int>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">img_camera_crop_line.png</string>
+						</object>
 					</object>
 					<object class="IBUIButton" id="337442876">
 						<reference key="NSNextResponder" ref="548297266"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{119, 420}, {83, 32}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="192127188"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -134,6 +156,8 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{288, 428}, {21, 21}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -157,6 +181,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{13, 424}, {21, 21}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="337442876"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -178,6 +203,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{266, 10}, {44, 29}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="651046659"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -205,6 +231,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{13, 12}, {44, 29}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="392356300"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -225,6 +252,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{282, 378}, {25, 20}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="186336416"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -242,6 +270,8 @@
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="915427464"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -437,6 +467,7 @@
 							<reference ref="337442876"/>
 							<reference ref="192127188"/>
 							<reference ref="915427464"/>
+							<reference ref="8775252"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -501,6 +532,12 @@
 						<reference key="object" ref="915427464"/>
 						<reference key="parent" ref="548297266"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">48</int>
+						<reference key="object" ref="8775252"/>
+						<reference key="parent" ref="548297266"/>
+						<string key="objectName">Image crop cover</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -520,6 +557,7 @@
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="48.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.CustomClassName">TVPagingScrollView</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -528,29 +566,10 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">47</int>
+			<int key="maxID">48</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">MHPagingScrollView</string>
-					<string key="superclassName">UIScrollView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">pagingDelegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">pagingDelegate</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">pagingDelegate</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/MHPagingScrollView.h</string>
-					</object>
-				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">TVCameraVC</string>
 					<string key="superclassName">UIViewController</string>
@@ -601,7 +620,7 @@
 						<string key="btnStoreImage">UIButton</string>
 						<string key="imgImagePicked">UIImageView</string>
 						<string key="pageControl">UIPageControl</string>
-						<string key="pagingScrollView">MHPagingScrollView</string>
+						<string key="pagingScrollView">TVPagingScrollView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="btnAlbumPicker">
@@ -634,12 +653,31 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="pagingScrollView">
 							<string key="name">pagingScrollView</string>
-							<string key="candidateClassName">MHPagingScrollView</string>
+							<string key="candidateClassName">TVPagingScrollView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/TVCameraVC.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">TVPagingScrollView</string>
+					<string key="superclassName">UIScrollView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">pagingDelegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">pagingDelegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">pagingDelegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/TVPagingScrollView.h</string>
 					</object>
 				</object>
 			</array>
@@ -648,10 +686,10 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">filter-close.png</string>
-			<string key="NS.object.0">{16, 16}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="filter-close.png">{16, 16}</string>
+			<string key="img_camera_crop_line.png">{315, 316}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

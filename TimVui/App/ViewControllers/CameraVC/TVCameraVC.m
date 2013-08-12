@@ -13,8 +13,9 @@
 #import "PageThreeView.h"
 #import "PageFourView.h"
 #import "PageFiveView.h"
-#import "PageSixView.h"
+#import "PageEightView.h"
 #import "PageTwelveView.h"
+#import "BlockAlertView.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -178,7 +179,6 @@ static int _numPages = 16;
         _lblPhone.hidden=NO;
     
     self.imgStillCamera.image=newImage;
-    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     [self showAnimationWhenDidTakeImage];
 }
 
@@ -213,21 +213,17 @@ static int _numPages = 16;
 #pragma mark - PhotoBrowseVCDelegate
 
 -(void)didPickWithImages:(NSArray*)images{
-    [TSMessage showNotificationInViewController:self
-                                      withTitle:@"Đăng ảnh thành công"
-                                    withMessage:nil
-                                       withType:TSMessageNotificationTypeSuccess];
     for (UIImage* image in images) {
         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
+    [_arrImages removeAllObjects];
+    _lblPhone.hidden=YES;
 }
 
 -(void)wantToShowLeft:(BOOL)isLeft{
     if (isLeft) {
         [self.slidingViewController anchorTopViewTo:ECLeft];
-    }else
-        
-    if (self.slidingViewController.underLeftViewController){
+    }else    if (self.slidingViewController.underLeftViewController){
         [self.slidingViewController anchorTopViewTo:ECRight];
     }
 }
@@ -257,7 +253,15 @@ static int _numPages = 16;
 }
 
 - (IBAction)cameraButtonClicked:(id)sender {
-    
+    if (!_branch) {
+        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Vui lòng chọn nhà hàng trước khí đăng ảnh"];
+        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
+        [alert setDestructiveButtonWithTitle:@"Chọn Nhà hàng" block:^{
+            [self wantToShowLeft:NO];
+        }];
+        [alert show];
+        return;
+    }
     if (self.imgImagePicked.image) {
         [self mergeSkinWithImage:self.imgImagePicked.image];
     }else
@@ -434,7 +438,6 @@ static int _numPages = 16;
 //		[self.pagingScrollView reloadPages];
 //		self.pageControl.numberOfPages = _numPages;
 //	}
-    
 }
 
 #pragma mark - MHPagingScrollViewDelegate
@@ -454,16 +457,15 @@ static int _numPages = 16;
                 break;
                 
             case 1:
-            {
-                PageTwoView* pageTwoView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
-                pageView=pageTwoView;
-            }
+
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageTwoView" owner:self options:nil] objectAtIndex:0];
+
                 break;
             case 2:
-            {
-                PageThreeView* pageThreeView=[[[NSBundle mainBundle] loadNibNamed:@"PageThreeView" owner:self options:nil] objectAtIndex:0];
-                pageView=pageThreeView;
-            }
+
+                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageThreeView" owner:self options:nil] objectAtIndex:0];
+
+
                 break;
             case 3:
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageFourView" owner:self options:nil] objectAtIndex:0];
@@ -478,10 +480,20 @@ static int _numPages = 16;
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageSevenView" owner:self options:nil] objectAtIndex:0];
                 break;
             case 7:
-                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageEightView" owner:self options:nil] objectAtIndex:0];
+            {
+                PageEightView* page=[[[NSBundle mainBundle] loadNibNamed:@"PageEightView" owner:self options:nil] objectAtIndex:0];
+//                [page.imgMummum setImage:[UIImage imageNamed:@"skin_mammam_text_mobile"]];
+                page.strImageName= @"skin_mammam_text";
+                pageView=page;
+            }
                 break;
             case 8:
-                pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageNineView" owner:self options:nil] objectAtIndex:0];
+            {
+                PageEightView* page=[[[NSBundle mainBundle] loadNibNamed:@"PageEightView" owner:self options:nil] objectAtIndex:0];
+                [page.imgMummum setImage:[UIImage imageNamed:@"skin_ngon_qua_uc_uc_text_mobile"]];
+                page.strImageName= @"skin_ngon_qua_uc_uc_text";
+                pageView=page;
+            }
                 break;
             case 9:
                 pageView=[[[NSBundle mainBundle] loadNibNamed:@"PageTenView" owner:self options:nil] objectAtIndex:0];
@@ -532,9 +544,10 @@ static int _numPages = 16;
         }
         pageView.index=index;[pageView settingView];
         if (_branch) {
-            
             [pageView setName:_branch.name andAddress:_branch.address_full];
             
+        }else{
+            [pageView setName:@"Chọn nhà hàng để chụp ảnh" andAddress:@"Bạn chưa có thông tin nhà hàng"];
         }
     
     }

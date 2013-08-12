@@ -43,7 +43,7 @@
 							<object class="IBUIImageView" id="312758512">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{8, 6}, {12, 12}}</string>
+								<string key="NSFrame">{{17, 10}, {12, 12}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="862026084"/>
@@ -58,7 +58,7 @@
 							<object class="IBUILabel" id="862026084">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{26, 3}, {222, 19}}</string>
+								<string key="NSFrame">{{35, 7}, {222, 19}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="597001034"/>
@@ -95,7 +95,7 @@
 							<object class="IBUILabel" id="121057026">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{64, 252}, {254, 25}}</string>
+								<string key="NSFrame">{{70, 242}, {245, 25}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="775197523"/>
@@ -124,10 +124,9 @@
 							<object class="IBUILabel" id="775197523">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{66, 279}, {243, 18}}</string>
+								<string key="NSFrame">{{72, 269}, {243, 18}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="985379797"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -490,7 +489,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="skin_clock_icon_moblie.png">{12, 12}</string>
+			<string key="skin_clock_icon_moblie.png">{14, 14}</string>
 			<string key="skin_khong_den_day_thi_phi_text_mobile.png">{54, 54}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

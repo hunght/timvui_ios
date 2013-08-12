@@ -16,6 +16,6 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *backgroundLocation;
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imagLocationIcon;
 @property (weak, nonatomic) IBOutlet UIImageView *imgMummum;
-
+@property(strong, nonatomic) NSString* strImageName;
 -(void)setName:(NSString*)name andAddress:(NSString*)address;
 @end

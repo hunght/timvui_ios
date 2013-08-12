@@ -23,6 +23,7 @@
     _lblAddress.textColor = [UIColor whiteColor];
     _lblAddress.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(13)];
     _lblAddress.textAlignment = UITextAlignmentLeft;
+    
     _lblTime.font = [UIFont fontWithName:@"VNF Prime" size:(10)];
     NSDate* date=[NSDate date];
     int weekday=[date weekday];
@@ -60,53 +61,29 @@
 }
 
 
-- (void)setTextForSkin:(CGSize )size fontText:(int)fontText rectView:(CGRect)rectView text:(NSString *)text {
-    int textSize=fontText*(size.width/320);
-    
-    UIFont *font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(textSize)];
-    CGRect rect = CGRectMake(rectView.origin.x*size.width/320, rectView.origin.y*size.width/320, rectView.size.width*size.width/320, rectView.size.height*size.width/320);
-    
-    [ text drawInRect : CGRectIntegral(rect)                      // render the text
-             withFont : font
-        lineBreakMode : UILineBreakModeWordWrap  // clip overflow from end of last line
-            alignment : NSTextAlignmentLeft ];
-}
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{
     float ratioImage=bottomImage.size.width/320;
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
-    [[UIColor whiteColor] set];
-    UILabel* lbl=_lblBranchName;
+    CGRect rectView;
+    [[UIColor colorWithWhite:1.0 alpha:.2] set];
+    rectView=_backgroundLocation.frame;
+    CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     
-    NSString* text=lbl.text;
-    CGRect rectView=lbl.frame;
-    int fontText=20;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
+    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
+    [self setTextForSkin:_lblBranchName fontText:20 sizeBottomImage:bottomImage.size];
     
-    text=_lblAddress.text;
-    rectView=_lblAddress.frame;
-    fontText=13;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
     
-    text=_lblLineTop.text;
-    rectView=_lblLineTop.frame;
-    fontText=_lblLineTop.font.leading;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
+    [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];
     
-    text=_lblLineBottom.text;
-    rectView=_lblLineBottom.frame;
-    fontText=_lblLineBottom.font.leading;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
-    
-    text=_lblTime.text;
-    rectView=_lblTime.frame;
-    fontText=_lblTime.font.leading;
-    [self setTextForSkin:bottomImage.size fontText:fontText rectView:rectView text:text];
-    
+    [self setTextForSkin:_lblLineTop fontText:_lblLineTop.font.leading sizeBottomImage:bottomImage.size];
+    [self setTextForSkin:_lblLineBottom fontText:_lblLineBottom.font.leading sizeBottomImage:bottomImage.size];
+    [self setTextForSkin:_lblTime fontText:_lblTime.font.leading sizeBottomImage:bottomImage.size];
+
     UIImage* imgLike=[UIImage imageNamed:@"skin_Like_icon"];
     rectView=_imgLike.frame;
-    CGRect rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imgLike drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
     UIImage* imgClockIcon=[UIImage imageNamed:@"skin_clock_icon"];
@@ -114,11 +91,7 @@
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imgClockIcon drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
-    [[UIColor colorWithWhite:1.0 alpha:.2] set];
-    rectView=_backgroundLocation.frame;
-    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     
-    CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 

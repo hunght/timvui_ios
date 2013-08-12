@@ -539,8 +539,6 @@
 		55CFAF2417B5CE66001B2E2C /* skin_mammam_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF2317B5CE66001B2E2C /* skin_mammam_text.png */; };
 		55CFAF2717B5CE6D001B2E2C /* skin_mammam_text_mobile.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF2517B5CE6D001B2E2C /* skin_mammam_text_mobile.png */; };
 		55CFAF2817B5CE6D001B2E2C /* skin_mammam_text_mobile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF2617B5CE6D001B2E2C /* skin_mammam_text_mobile@2x.png */; };
-		55CFAF2C17B5D121001B2E2C /* PageNineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CFAF2A17B5D11F001B2E2C /* PageNineView.m */; };
-		55CFAF2D17B5D121001B2E2C /* PageNineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF2B17B5D120001B2E2C /* PageNineView.xib */; };
 		55CFAF2F17B5D176001B2E2C /* skin_ngon_qua_uc_uc_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF2E17B5D176001B2E2C /* skin_ngon_qua_uc_uc_text.png */; };
 		55CFAF3217B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF3017B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile.png */; };
 		55CFAF3317B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF3117B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile@2x.png */; };
@@ -1264,9 +1262,6 @@
 		55CFAF2317B5CE66001B2E2C /* skin_mammam_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skin_mammam_text.png; sourceTree = "<group>"; };
 		55CFAF2517B5CE6D001B2E2C /* skin_mammam_text_mobile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skin_mammam_text_mobile.png; sourceTree = "<group>"; };
 		55CFAF2617B5CE6D001B2E2C /* skin_mammam_text_mobile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skin_mammam_text_mobile@2x.png"; sourceTree = "<group>"; };
-		55CFAF2917B5D11E001B2E2C /* PageNineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageNineView.h; sourceTree = "<group>"; };
-		55CFAF2A17B5D11F001B2E2C /* PageNineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageNineView.m; sourceTree = "<group>"; };
-		55CFAF2B17B5D120001B2E2C /* PageNineView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageNineView.xib; sourceTree = "<group>"; };
 		55CFAF2E17B5D176001B2E2C /* skin_ngon_qua_uc_uc_text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skin_ngon_qua_uc_uc_text.png; sourceTree = "<group>"; };
 		55CFAF3017B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skin_ngon_qua_uc_uc_text_mobile.png; sourceTree = "<group>"; };
 		55CFAF3117B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skin_ngon_qua_uc_uc_text_mobile@2x.png"; sourceTree = "<group>"; };
@@ -1942,9 +1937,6 @@
 				55CFAF3417B5D425001B2E2C /* PageTenView.h */,
 				55CFAF3517B5D427001B2E2C /* PageTenView.m */,
 				55CFAF3617B5D429001B2E2C /* PageTenView.xib */,
-				55CFAF2917B5D11E001B2E2C /* PageNineView.h */,
-				55CFAF2A17B5D11F001B2E2C /* PageNineView.m */,
-				55CFAF2B17B5D120001B2E2C /* PageNineView.xib */,
 				55CFAF1E17B5CBB3001B2E2C /* PageEightView.h */,
 				55CFAF1F17B5CBB3001B2E2C /* PageEightView.m */,
 				55CFAF2017B5CBB4001B2E2C /* PageEightView.xib */,
@@ -3419,7 +3411,6 @@
 				55CFAF2417B5CE66001B2E2C /* skin_mammam_text.png in Resources */,
 				55CFAF2717B5CE6D001B2E2C /* skin_mammam_text_mobile.png in Resources */,
 				55CFAF2817B5CE6D001B2E2C /* skin_mammam_text_mobile@2x.png in Resources */,
-				55CFAF2D17B5D121001B2E2C /* PageNineView.xib in Resources */,
 				55CFAF2F17B5D176001B2E2C /* skin_ngon_qua_uc_uc_text.png in Resources */,
 				55CFAF3217B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile.png in Resources */,
 				55CFAF3317B5D187001B2E2C /* skin_ngon_qua_uc_uc_text_mobile@2x.png in Resources */,
@@ -3600,7 +3591,6 @@
 				5575F8BB17B500430091D74D /* PageSixView.m in Sources */,
 				55CFAF1617B5C6B2001B2E2C /* PageSevenView.m in Sources */,
 				55CFAF2117B5CBB4001B2E2C /* PageEightView.m in Sources */,
-				55CFAF2C17B5D121001B2E2C /* PageNineView.m in Sources */,
 				55CFAF3717B5D42A001B2E2C /* PageTenView.m in Sources */,
 				55CFAF4217B5DF4D001B2E2C /* PageElevenView.m in Sources */,
 				55CFAF5517B5F7D5001B2E2C /* PageTwelveView.m in Sources */,

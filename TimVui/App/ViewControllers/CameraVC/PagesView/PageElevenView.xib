@@ -622,7 +622,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="skin_Like_icon_mobile.png">{105, 15}</string>
-			<string key="skin_clock_icon_moblie.png">{12, 12}</string>
+			<string key="skin_clock_icon_moblie.png">{14, 14}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
