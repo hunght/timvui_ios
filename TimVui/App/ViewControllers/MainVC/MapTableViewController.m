@@ -257,7 +257,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
             [paramsForSearch addObject:[NSString stringWithFormat:@"tien-ich_%@",strCuisine]];
         }
     }
-
+    
     [params setValue:paramsForSearch  forKey:@"params"];
     [params setValue:kSearchBranchLimit  forKey:@"limit"];
     [params setValue:@"0"  forKey:@"offset"];

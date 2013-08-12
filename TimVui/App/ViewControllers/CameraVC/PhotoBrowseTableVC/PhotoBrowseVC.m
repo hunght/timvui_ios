@@ -117,8 +117,8 @@
     NSString* strJSON = [[NSString alloc] initWithData:_responseData
                                               encoding:NSUTF8StringEncoding] ;
     NSDictionary* dic=[strJSON objectFromJSONString];
-    NSLog(@"_responseData===%@",[NSString stringWithUTF8String:[_responseData bytes]]);
-    NSLog(@"dic=%@",[dic objectForKey:@"status"]);
+//    NSLog(@"_responseData===%@",[NSString stringWithUTF8String:[_responseData bytes]]);
+//    NSLog(@"dic=%@",[dic objectForKey:@"status"]);
     
     if ([dic safeIntegerForKey:@"status"]==200){
         [TSMessage showNotificationInViewController:self
@@ -141,8 +141,6 @@
                                       withTitle:@"Đăng ảnh thất bại"
                                     withMessage:nil
                                        withType:TSMessageNotificationTypeError];
-    // The request has failed for some reason!
-    // Check the error var
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{

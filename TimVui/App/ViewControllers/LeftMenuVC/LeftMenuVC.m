@@ -24,6 +24,7 @@
 #import "ManualVC.h"
 #import <SVProgressHUD.h>
 #import "TVMenuUserCell.h"
+#import "NearbyCouponVC.h"
 
 #define kNumberOfSections 3
 
@@ -522,7 +523,7 @@ enum {
 
                         break;
                     case kS2Coupon:
-
+                        viewController = [[NearbyCouponVC alloc] initWithNibName:@"NearbyCouponVC" bundle:nil];
                         break;
                 }
                 break;
