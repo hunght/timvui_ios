@@ -25,7 +25,7 @@
 #import <SVProgressHUD.h>
 #import "TVMenuUserCell.h"
 #import "NearbyCouponVC.h"
-
+#import "EventVC.h"
 #define kNumberOfSections 3
 
 enum {
@@ -520,7 +520,7 @@ enum {
                         viewController = [[ManualVC alloc] initWithNibName:@"ManualVC" bundle:nil];
                         break;
                     case kS2GoingEven:
-
+                        viewController = [[EventVC alloc] initWithNibName:@"EventVC" bundle:nil];
                         break;
                     case kS2Coupon:
                         viewController = [[NearbyCouponVC alloc] initWithNibName:@"NearbyCouponVC" bundle:nil];
@@ -542,7 +542,7 @@ enum {
 
                         break;
                     case kS3Row4:
-
+                        viewController = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
                         break;
                     case kS3Row5:
                     {

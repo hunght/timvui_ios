@@ -12,15 +12,21 @@
 #import "TVNetworkingClient.h"
 #import "GlobalDataUser.h"
 #import "NSDictionary+Extensions.h"
+#import "TVCoupon.h"
+static const NSString* limitCount=@"10";
+static const NSString* distanceMapSearch=@"100";
+
 @interface NearbyCouponVC ()
 {
     @private
+    NSMutableArray* arrCoupons;
     NSNumber* offset;
 }
 @end
 
 @implementation NearbyCouponVC
-static const NSString* limitCount=@"10";
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,11 +34,13 @@ static const NSString* limitCount=@"10";
     if (self) {
         // Custom initialization
         _branches=[[TVBranches alloc] initWithPath:@"search/getBranchesHaveCoupon"];
-        _branches.isNotSearchAPIYES=YES;
-        offset=0;
+        _branches.isNotSearchAPIYES=NO;
+        arrCoupons=[[NSMutableArray alloc] init];
+        offset=[[NSNumber alloc] initWithInt:0];
     }
     return self;
 }
+
 - (void)postToGetBranches
 {
     NSDictionary *params = nil;
@@ -41,7 +49,7 @@ static const NSString* limitCount=@"10";
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
-                   @"latlng": strLatLng,@"limit":limitCount,@"offset":offset.stringValue,@"distance":kDistanceSearchMapDefault};
+                   @"latlng": strLatLng,@"limit":limitCount,@"offset":offset.stringValue,@"distance":distanceMapSearch};
     }else
     {
         NSLog(@"Can't get location of user");
@@ -53,7 +61,16 @@ static const NSString* limitCount=@"10";
         dispatch_async(dispatch_get_main_queue(),^ {
             if (weakSelf.branches.count==0) {
                 
+            }else{
+                for (TVBranch* branch in _branches.items) {
+                    for (TVCoupon* coupon in branch.coupons.items) {
+                        coupon.branch=branch;
+                        [arrCoupons addObject:coupon];
+                        [self.tableView reloadData];
+                    }
+                }
             }
+            
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
@@ -77,7 +94,8 @@ static const NSString* limitCount=@"10";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _branches.count;
+    
+    return [arrCoupons count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -89,15 +107,19 @@ static const NSString* limitCount=@"10";
         cell = [[NearbyCouponCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strCellIdentifier];
     }
     
-    TVBranch* branch=_branches[indexPath.row];
-    [cell setBranch:branch];
+    TVCoupon* coupon=arrCoupons[indexPath.row];
+    [cell setCoupon:coupon];
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TVBranch* manual=_branches[indexPath.row];
+    TVCoupon* manual=arrCoupons[indexPath.row];
     return 270 + [NearbyCouponCell heightForCellWithPost:manual];
+}
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
 }
 @end

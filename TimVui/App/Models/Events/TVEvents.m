@@ -6,9 +6,11 @@
 
 @synthesize resourcePath = _resourcePath;
 
-
-- (void)setResourcePath:(NSString *)path {
-	_resourcePath = path;
+- (id)initWithPath:(NSString *)path{
+	self = [super initWithPath:path];
+	if (self) {
+	}
+	return self;
 }
 
 - (void)setValues:(id)values {

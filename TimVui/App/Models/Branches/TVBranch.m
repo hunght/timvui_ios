@@ -18,8 +18,6 @@
 	return self;
 }
 
-
-
 - (BOOL)isCommentEvent {
 	return [self.name hasSuffix:@"CommentEvent"];
 }
@@ -71,6 +69,7 @@
     self.purpose = [[[dict safeDictForKey:@"params"] safeDictForKey:@"muc-dich"] safeDictForKey:@"params"];
     self.decoration = [[[dict safeDictForKey:@"params"] safeDictForKey:@"khong-gian"] safeDictForKey:@"params"];
     self.cuisine = [[[dict safeDictForKey:@"params"] safeDictForKey:@"mon-an"] safeDictForKey:@"params"];
+    
     NSLog(@"services=%@",_services);
     self.space = [dict safeStringForKey:@"space"];
     self.direction = [dict safeStringForKey:@"direction"];

@@ -49,6 +49,9 @@ int cellPad=44;
         return nil;
     }
     _lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(25.0f, 30.0f, 210.0f-cellPad, 20.0f)];
+    _lblDetailRow.backgroundColor = [UIColor clearColor];
+    _lblDetailRow.textColor = [UIColor blackColor];
+    _lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     self.textLabel.adjustsFontSizeToFitWidth = YES;
     self.textLabel.textColor = [UIColor redColor];
 
@@ -71,7 +74,7 @@ int cellPad=44;
     [self setBorderForLayer:l radius:1];
     [_whiteView addSubview:self.textLabel];
     [_whiteView addSubview:homeIcon];
-    
+    [self.whiteView addSubview:_lblDetailRow];
     [self.contentView addSubview:_whiteView];
     [self.contentView setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
     return self;
@@ -80,12 +83,10 @@ int cellPad=44;
 - (void)setBranch:(TVBranch *)branch {
     _branch = branch;
     self.textLabel.text=_branch.name;
-    _lblDetailRow.backgroundColor = [UIColor clearColor];
-    _lblDetailRow.textColor = [UIColor blackColor];
-    _lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+
     _lblDetailRow.text =_branch.address_full;
     [_lblDetailRow resizeToStretch];
-    [self.whiteView addSubview:_lblDetailRow];
+    
 
     [self.imageView setImageWithURL:[Utilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     [self setNeedsLayout];

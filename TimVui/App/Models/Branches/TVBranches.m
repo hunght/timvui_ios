@@ -17,6 +17,7 @@
     if (_isNotSearchAPIYES) {
         arr=values;
     }
+    
 	self.items = [NSMutableArray array];
 
     

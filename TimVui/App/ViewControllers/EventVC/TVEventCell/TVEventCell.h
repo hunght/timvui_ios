@@ -20,20 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+//
+//  NearbyCouponCell.h
+//  Anuong
+//
+//  Created by Hoang The Hung on 8/12/13.
+//  Copyright (c) 2013 Hoang The Hung. All rights reserved.
+//
+
 #import <UIKit/UIKit.h>
 
-@class TVManual;
+@class TVEvent;
 
 @interface TVEventCell : UITableViewCell
-@property(strong, nonatomic)UILabel* lblDesc;
-@property(strong, nonatomic)UILabel* lblTitle;
-@property(strong, nonatomic)UIButton* saveButton;
-@property(strong, nonatomic)UIButton* detailButton;
-@property(strong, nonatomic)UIImageView* imgView;
-@property(strong, nonatomic)UILabel* lblTags;
-@property(strong, nonatomic)UILabel* lblView;
-@property(strong, nonatomic)UILabel* lblDate;
-@property(strong, nonatomic)UIView* viewCountDate;
-+ (CGFloat)sizeExpectedWithText:(NSString *)branch andDesc:(NSString*)desc;
--(void)setManual:(TVManual*)manual;
+
+@property(nonatomic,strong)UILabel *lblContent;
+@property(nonatomic,strong)UILabel *lblNameBranch;
+@property(nonatomic,strong)UILabel *lblTime;
+@property(nonatomic,strong)UIImageView *imgCoverEvent;
++ (CGFloat)heightForCellWithPost:(TVEvent *)event;
+- (void)setEvent:(TVEvent *)event;
+
 @end

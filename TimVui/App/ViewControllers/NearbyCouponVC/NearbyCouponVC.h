@@ -10,5 +10,6 @@
 #import "TVCoupons.h"
 #import "TVBranches.h"
 @interface NearbyCouponVC : UIViewController
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) TVBranches* branches;
 @end

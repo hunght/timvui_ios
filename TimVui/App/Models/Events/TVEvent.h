@@ -2,7 +2,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GHResource.h"
 #import "TVCuisines.h"
-@class GHUser, TVComment,TVCoupons;
+@class GHUser, TVComment,TVCoupons,TVBranch;
 
 @interface TVEvent : NSObject
 @property(nonatomic,strong)NSString *eventID;
@@ -19,7 +19,7 @@
 @property(nonatomic,strong)NSString *image;
 
 @property(nonatomic,strong)NSDate *created;
-
+@property(nonatomic,strong)TVBranch *branch;
 
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;
