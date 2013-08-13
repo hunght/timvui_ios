@@ -13,6 +13,7 @@
 #import "GlobalDataUser.h"
 #import "NSDictionary+Extensions.h"
 #import "TVEvent.h"
+#import "BranchProfileVC.h"
 static const NSString* limitCount=@"10";
 static const NSString* distanceMapSearch=@"100";
 
@@ -85,6 +86,10 @@ static const NSString* distanceMapSearch=@"100";
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -115,11 +120,16 @@ static const NSString* distanceMapSearch=@"100";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TVEvent* manual=arrEvents[indexPath.row];
-    return 270 + [TVEventCell heightForCellWithPost:manual];
+    return 150;
 }
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [super viewDidUnload];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //
+    BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+    [branchProfileVC setOpenTab:kOpenEventTab];
+    branchProfileVC.branchID=[[arrEvents[indexPath.row] branch] branchID] ;
+    [self.navigationController pushViewController:branchProfileVC animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
+
 @end

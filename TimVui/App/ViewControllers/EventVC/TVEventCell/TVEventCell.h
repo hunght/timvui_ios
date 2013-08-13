@@ -38,6 +38,8 @@
 @property(nonatomic,strong)UILabel *lblNameBranch;
 @property(nonatomic,strong)UILabel *lblTime;
 @property(nonatomic,strong)UIImageView *imgCoverEvent;
+@property(nonatomic,strong)UIView *viewBgTime;
+@property(nonatomic,strong)UIView *viewBgContent;
 + (CGFloat)heightForCellWithPost:(TVEvent *)event;
 - (void)setEvent:(TVEvent *)event;
 

@@ -26,6 +26,9 @@
 #import "TVBranches.h"
 #import "NSDictionary+Extensions.h"
 #import "UILabel+DynamicHeight.h"
+
+
+
 @interface BranchProfileVC ()
 {
     @private
@@ -596,7 +599,19 @@
 //    [_scrollView insertSubview:bgView belowSubview:mapViewButton];
     [_scrollView setContentSize:CGSizeMake(320, height)];
 }
-
+-(void)openTabNow{
+    switch (_openTab) {
+        case kOpenEventTab:
+        {
+            [_extraBranchView showExtraView:YES];
+            [_extraBranchView eventButtonClicked:nil];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -630,12 +645,17 @@
                 _branch=branches[0];
                 [self showInfoView];
                 
-                TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
-                _extraBranchView.scrollView=_scrollView;
-                _extraBranchView.branch=_branch;
+                if (!_extraBranchView) {
+                    _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
+                    _extraBranchView.scrollView=_scrollView;
+                    _extraBranchView.branch=_branch;
+                    [self.view addSubview:_extraBranchView];
+                }
                 
                 if(![[GlobalDataUser sharedAccountClient].recentlyBranches objectForKey:_branch.branchID])[[GlobalDataUser sharedAccountClient].recentlyBranches setObject:dict forKey:_branch.branchID];
-                [self.view addSubview:_extraBranchView];
+                
+                [self openTabNow];
+                
                 
             });
         } failure:^(GHResource *instance, NSError *error) {
@@ -645,11 +665,12 @@
         }];
     }else{
         [self showInfoView];
-        
-        TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
-        _extraBranchView.scrollView=_scrollView;
-        _extraBranchView.branch=_branch;
-        [self.view addSubview:_extraBranchView];
+        if (!_extraBranchView) {
+            _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
+            _extraBranchView.scrollView=_scrollView;
+            _extraBranchView.branch=_branch;
+            [self.view addSubview:_extraBranchView];
+        }
     }
 
     void *context = (__bridge void *)self;

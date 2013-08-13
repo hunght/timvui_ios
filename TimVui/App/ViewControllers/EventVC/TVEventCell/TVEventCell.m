@@ -29,7 +29,7 @@
 #import "TVAppDelegate.h"
 #import "UILabel+DynamicHeight.h"
 #import "TVEvent.h"
-
+#import "NSDate+Helper.h"
 @implementation TVEventCell {
 }
 
@@ -49,62 +49,50 @@
     }
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     _imgCoverEvent=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 5, 310, 140)];
-    _lblNameBranch=[[UILabel alloc] initWithFrame:CGRectMake(50, 5, 250, 20.0f)];
-    _lblTime=[[UILabel alloc] initWithFrame:CGRectMake(50.0f, 25.0f, 250, 20)];
+    _lblNameBranch=[[UILabel alloc] initWithFrame:CGRectMake(12, 105, 290, 30)];
+    _lblTime=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 12)];
     
-    _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 290, 20.0f)];
+    _viewBgContent=[[UIView alloc] initWithFrame:CGRectMake(0, 140-45, 310, 45)];
+    [_viewBgContent setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.7]];
+    
+    _viewBgTime=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 110, 30)];
+    [_viewBgTime setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.7]];
+    
+    _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 105, 290, 30)];
     _lblContent.backgroundColor = [UIColor clearColor];
-    _lblContent.textColor = [UIColor blackColor];
-    _lblContent.font =  [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    _lblContent.textColor = [UIColor whiteColor];
+    _lblContent.numberOfLines=2;
+    _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
     
-    _lblTime.textColor = [UIColor colorWithRed:(149/255.0f) green:(149/255.0f) blue:(149/255.0f) alpha:1.0f];
+    _lblTime.textColor = [UIColor whiteColor];
     _lblTime.backgroundColor=[UIColor clearColor];
-    _lblTime.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+    _lblTime.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     
     _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
     _lblNameBranch.backgroundColor=[UIColor clearColor];
-    _lblNameBranch.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     
     // Get the Layer of any view
+    [self.imgCoverEvent addSubview:_viewBgTime];
+    [self.imgCoverEvent addSubview:_viewBgContent];
     [self.imgCoverEvent addSubview:_lblContent];
     [self.imgCoverEvent addSubview:_lblNameBranch];
     [self.imgCoverEvent addSubview:_lblTime];
     
+    [self.contentView addSubview:_imgCoverEvent];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
     return self;
 }
 
 - (void)setEvent:(TVEvent *)event{
+    NSDate* date =event.start;
+    int weekday=[date weekday];
+    _lblTime.text=(weekday!=8)?[NSString stringWithFormat:@"%@: T%d | %@",[date stringWithFormat:@"HH:mm"],weekday,[date stringWithFormat:@"dd/MM/yyyy"]]:[NSString stringWithFormat:@"%@: CN | %@",[date stringWithFormat:@"HH:mm"],[date stringWithFormat:@"dd/MM/yyyy"]];
+    
     _lblNameBranch.text=event.branch.name;
-    _lblTime.text =event.branch.address_full;
-    _lblContent.text=event.title;
-    [_lblContent resizeToStretch];
-    
-    CGRect frame=    _lblNameBranch.frame;
-    int padHeight=    frame.origin.y;
-    frame.origin.y=_lblContent.frame.origin.y+_lblContent.frame.size.height+15;
-    _lblNameBranch.frame=frame;
-    padHeight=frame.origin.y-padHeight;
-    
-    
-    frame= _lblContent.frame;
-    frame.origin.x-=5;
-    frame.origin.y-=5;
-    frame.size.width+=10;
-    frame.size.height+=10;
-    
-
-    frame= _lblTime.frame;
-    frame.origin.y+=padHeight;
-    _lblTime.frame=frame;
-    
-    frame= _imgCoverEvent.frame;
-    frame.origin.y+=padHeight;
-    _imgCoverEvent.frame=frame;
-    
+    _lblContent.text=[NSString stringWithFormat:@"%@: %@",event.branch.name, event.title];
     //    NSLog(@"[arrCoupons count]===%@",_coupon.branch.arrURLImages);
     [_imgCoverEvent setImageWithURL:[Utilities getThumbImageOfCoverBranch:event.branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
-    [self setNeedsLayout];
 }
 
 + (CGFloat)heightForCellWithPost:(TVEvent *)event {

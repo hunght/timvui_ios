@@ -252,7 +252,7 @@
             
             //instantiate the web view
             UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, height, 290, 200)];
-            
+            [webView.scrollView setScrollEnabled:NO];
             //make the background transparent
             [webView setBackgroundColor:[UIColor clearColor]];
             
@@ -293,7 +293,7 @@
 -(void)eventButtonClicked:(UIButton*)sender{
 
     [self resetToUnselectedButtons];
-    [sender setSelected:YES];
+    [eventButton setSelected:YES];
     [self initTableView];
     [self addEventToInfoView ];
     [self.tableView setHidden:YES];

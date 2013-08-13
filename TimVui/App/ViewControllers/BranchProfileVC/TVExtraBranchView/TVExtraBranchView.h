@@ -32,4 +32,6 @@ typedef enum {
 @property (assign, nonatomic) BOOL isHasKaraokeYES;
 @property (strong, nonatomic) UIScrollView *scrollEvent;
 @property (assign, nonatomic) BOOL isShowFullExtraYES;
+-(void)showExtraView:(BOOL)isYES;
+-(void)eventButtonClicked:(UIButton*)sender;
 @end
