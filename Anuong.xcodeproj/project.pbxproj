@@ -82,10 +82,6 @@
 		553B003217A62ABB00E60510 /* img_menu_icon_blog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B003017A62ABB00E60510 /* img_menu_icon_blog@2x.png */; };
 		553B856517AB3F0C00C73746 /* GHMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 553B856417AB3F0C00C73746 /* GHMenuCell.m */; };
 		553B856817AB400D00C73746 /* TVMenuUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 553B856717AB400D00C73746 /* TVMenuUserCell.m */; };
-		553B856B17AB438000C73746 /* img_menu_triangleI_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B856917AB438000C73746 /* img_menu_triangleI_icon.png */; };
-		553B856C17AB438000C73746 /* img_menu_triangleI_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B856A17AB438000C73746 /* img_menu_triangleI_icon@2x.png */; };
-		553B856F17AB55AC00C73746 /* img_menu_triangleI_icon_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B856D17AB55AC00C73746 /* img_menu_triangleI_icon_down.png */; };
-		553B857017AB55AC00C73746 /* img_menu_triangleI_icon_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B856E17AB55AC00C73746 /* img_menu_triangleI_icon_down@2x.png */; };
 		553F5F201797A4A90089254A /* img_main_coupon_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 553F5F1E1797A4A90089254A /* img_main_coupon_icon.png */; };
 		553F5F211797A4A90089254A /* img_main_coupon_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553F5F1F1797A4A90089254A /* img_main_coupon_icon@2x.png */; };
 		5540853B1782BC7400E07988 /* BSKeyboardControls.m in Sources */ = {isa = PBXBuildFile; fileRef = 554085391782BC7400E07988 /* BSKeyboardControls.m */; };
@@ -750,10 +746,6 @@
 		553B856417AB3F0C00C73746 /* GHMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHMenuCell.m; sourceTree = "<group>"; };
 		553B856617AB400D00C73746 /* TVMenuUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVMenuUserCell.h; sourceTree = "<group>"; };
 		553B856717AB400D00C73746 /* TVMenuUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVMenuUserCell.m; sourceTree = "<group>"; };
-		553B856917AB438000C73746 /* img_menu_triangleI_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_menu_triangleI_icon.png; sourceTree = "<group>"; };
-		553B856A17AB438000C73746 /* img_menu_triangleI_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_menu_triangleI_icon@2x.png"; sourceTree = "<group>"; };
-		553B856D17AB55AC00C73746 /* img_menu_triangleI_icon_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_menu_triangleI_icon_down.png; sourceTree = "<group>"; };
-		553B856E17AB55AC00C73746 /* img_menu_triangleI_icon_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_menu_triangleI_icon_down@2x.png"; sourceTree = "<group>"; };
 		553F5F1E1797A4A90089254A /* img_main_coupon_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_main_coupon_icon.png; sourceTree = "<group>"; };
 		553F5F1F1797A4A90089254A /* img_main_coupon_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_main_coupon_icon@2x.png"; sourceTree = "<group>"; };
 		554085381782BC7400E07988 /* BSKeyboardControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSKeyboardControls.h; sourceTree = "<group>"; };
@@ -2156,10 +2148,6 @@
 				556681C017AF98ED00B53683 /* img_branch_profile_event_pattern@2x.png */,
 				55941C0417ACE560001F14D0 /* img_filter_check_mark.png */,
 				55941C0517ACE560001F14D0 /* img_filter_check_mark@2x.png */,
-				553B856D17AB55AC00C73746 /* img_menu_triangleI_icon_down.png */,
-				553B856E17AB55AC00C73746 /* img_menu_triangleI_icon_down@2x.png */,
-				553B856917AB438000C73746 /* img_menu_triangleI_icon.png */,
-				553B856A17AB438000C73746 /* img_menu_triangleI_icon@2x.png */,
 				55A7E94A17AA6AF800AECECC /* img_handbook_filter_off.png */,
 				55A7E94B17AA6AF800AECECC /* img_handbook_filter_off@2x.png */,
 				55A7E94C17AA6AF800AECECC /* img_main_cell_pattern_menu.png */,
@@ -3390,10 +3378,6 @@
 				55A7E94F17AA6AF800AECECC /* img_handbook_filter_off@2x.png in Resources */,
 				55A7E95017AA6AF800AECECC /* img_main_cell_pattern_menu.png in Resources */,
 				55A7E95117AA6AF800AECECC /* img_main_cell_pattern_menu@2x.png in Resources */,
-				553B856B17AB438000C73746 /* img_menu_triangleI_icon.png in Resources */,
-				553B856C17AB438000C73746 /* img_menu_triangleI_icon@2x.png in Resources */,
-				553B856F17AB55AC00C73746 /* img_menu_triangleI_icon_down.png in Resources */,
-				553B857017AB55AC00C73746 /* img_menu_triangleI_icon_down@2x.png in Resources */,
 				55941BFF17ACAC08001F14D0 /* FilterVC.xib in Resources */,
 				55941C0617ACE560001F14D0 /* img_filter_check_mark.png in Resources */,
 				55941C0717ACE560001F14D0 /* img_filter_check_mark@2x.png in Resources */,

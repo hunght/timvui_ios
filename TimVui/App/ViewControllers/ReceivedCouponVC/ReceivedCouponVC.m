@@ -14,6 +14,8 @@
 #import "NSDictionary+Extensions.h"
 #import "TVCoupon.h"
 #import "CoupBranchProfileVC.h"
+#import "Utilities.h"
+
 static const NSString* limitCount=@"10";
 static const NSString* distanceMapSearch=@"100";
 
@@ -21,13 +23,12 @@ static const NSString* distanceMapSearch=@"100";
 {
     @private
     NSMutableArray* arrCoupons;
+    NSMutableArray* arrExperiedCoupons;
     NSNumber* offset;
 }
 @end
 
 @implementation ReceivedCouponVC
-
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,6 +38,7 @@ static const NSString* distanceMapSearch=@"100";
         _branches=[[TVBranches alloc] initWithPath:@"search/getBranchesHaveCoupon"];
         _branches.isNotSearchAPIYES=NO;
         arrCoupons=[[NSMutableArray alloc] init];
+        arrExperiedCoupons=[[NSMutableArray alloc] init];
         offset=[[NSNumber alloc] initWithInt:0];
     }
     return self;
@@ -65,7 +67,8 @@ static const NSString* distanceMapSearch=@"100";
             }else{
                 for (TVBranch* branch in _branches.items) {
                     for (TVCoupon* coupon in branch.coupons.items) {
-                        coupon.branch=branch;
+                        coupon.branch = branch;
+                        
                         [arrCoupons addObject:coupon];
                         [self.tableView reloadData];
                     }
@@ -82,12 +85,31 @@ static const NSString* distanceMapSearch=@"100";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+    
+    [_btnActive setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnExperied setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    
+    [_btnActive setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    [_btnExperied setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    
+    [_btnActive setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+    [_btnExperied setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+    
+    [_btnActive setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_btnExperied setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_btnActive.titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:(15)]] ;
+    [_btnExperied.titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:(15)]];
+    [_btnExperied setSelected:NO];
     [self postToGetBranches];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload {
     [self setTableView:nil];
+    [self setBtnActive:nil];
+    [self setBtnExperied:nil];
     [super viewDidUnload];
 }
 - (void)didReceiveMemoryWarning
@@ -99,8 +121,10 @@ static const NSString* distanceMapSearch=@"100";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return [arrCoupons count];
+    if (_btnActive.isSelected)
+        return [arrCoupons count];
+    else
+        return [arrExperiedCoupons count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -112,7 +136,7 @@ static const NSString* distanceMapSearch=@"100";
         cell = [[NearbyCouponCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strCellIdentifier];
     }
     
-    TVCoupon* coupon=arrCoupons[indexPath.row];
+    TVCoupon* coupon=(_btnActive.isSelected)?arrCoupons[indexPath.row]:arrExperiedCoupons[indexPath.row];
     [cell setCoupon:coupon];
     return cell;
 }
@@ -120,12 +144,13 @@ static const NSString* distanceMapSearch=@"100";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TVCoupon* manual=arrCoupons[indexPath.row];
+    TVCoupon* manual=(_btnActive.isSelected)?arrCoupons[indexPath.row]:arrExperiedCoupons[indexPath.row];
     return 270 + [NearbyCouponCell heightForCellWithPost:manual];
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
-    TVCoupon* coupon=arrCoupons[indexPath.row];
+    TVCoupon* coupon=(_btnActive.isSelected)?arrCoupons[indexPath.row]:arrExperiedCoupons[indexPath.row];
     CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
     specBranchVC.branchID=coupon.branch.branchID;
     specBranchVC.coupon=coupon;
@@ -133,4 +158,17 @@ static const NSString* distanceMapSearch=@"100";
     
 }
 
+#pragma mark - IBAction
+
+- (IBAction)activeButtonClicked:(id)sender {
+    [_btnExperied setSelected:NO];
+    [sender setSelected:YES];
+    [self.tableView reloadData];
+}
+
+- (IBAction)expriedButtonClicked:(id)sender {
+    [_btnActive setSelected:NO];
+    [sender setSelected:YES];
+    [self.tableView reloadData];    
+}
 @end

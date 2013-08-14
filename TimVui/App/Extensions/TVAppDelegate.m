@@ -216,7 +216,8 @@
 {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-    return !(networkStatus == NotReachable);
+    _isHasInternetYES=!(networkStatus == NotReachable);
+    return _isHasInternetYES;
 }
 
 #pragma mark Application Events

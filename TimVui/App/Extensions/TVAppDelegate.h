@@ -28,7 +28,7 @@
 @property (retain, nonatomic) NSDictionary *getPriceAvgData;
 @property (retain, nonatomic) NSDictionary *getCatData;
 @property(nonatomic,assign)BOOL isLoadWhenConnectedYES;
-
+@property(nonatomic,assign)BOOL isHasInternetYES;
 -(void)showNotificationAboutSomething:(TVBranch*)branch;
 -(void)showSuccessAboutSomething:(NSString*)mess;
 -(void)showAlertAboutSomething:(NSString*)mess;
