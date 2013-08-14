@@ -607,7 +607,12 @@
             [_extraBranchView eventButtonClicked:nil];
         }
             break;
-            
+        case kOpenCouponTab:
+        {
+            [_extraBranchView showExtraView:NO];
+            [_extraBranchView eventButtonClicked:nil];
+        }
+            break;
         default:
             break;
     }

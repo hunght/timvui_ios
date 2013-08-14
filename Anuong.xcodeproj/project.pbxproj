@@ -43,7 +43,6 @@
 		5515BC0317AF468000A11CF4 /* TVBranches.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BBFC17AF468000A11CF4 /* TVBranches.m */; };
 		5515BC0417AF468000A11CF4 /* TVEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BBFF17AF468000A11CF4 /* TVEvent.m */; };
 		5515BC0517AF468000A11CF4 /* TVEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BC0117AF468000A11CF4 /* TVEvents.m */; };
-		5516D1A11758AA1D00A0C6CE /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A01758AA1D00A0C6CE /* GoogleMaps.framework */; };
 		5516D1A51758AB3D00A0C6CE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A41758AB0100A0C6CE /* AVFoundation.framework */; };
 		5516D1A71758AC6B00A0C6CE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A61758AC2F00A0C6CE /* CoreText.framework */; };
 		551BB1D7178A9D590072FD81 /* CoupBranchProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1D1178A9D590072FD81 /* CoupBranchProfileVC.m */; };
@@ -56,6 +55,10 @@
 		551BB1E9178AC34B0072FD81 /* TVGroupCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1E5178AC34B0072FD81 /* TVGroupCuisines.m */; };
 		551BB1EC178AC7AC0072FD81 /* TVCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EB178AC7AC0072FD81 /* TVCuisines.m */; };
 		551BB1EF178ACE210072FD81 /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */; };
+		5520471B17BB1486003F0506 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5520471A17BB1486003F0506 /* FacebookSDK.framework */; };
+		5520471D17BB1491003F0506 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5520471C17BB1491003F0506 /* FacebookSDKResources.bundle */; };
+		5520471F17BB14C1003F0506 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5520471E17BB14C1003F0506 /* GoogleMaps.framework */; };
+		5520472117BB14C8003F0506 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5520472017BB14C8003F0506 /* GoogleMaps.bundle */; };
 		552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D917855A2D00DC5E68 /* Security.framework */; };
 		5531EF1F178D473600093934 /* img_profile_branch_share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1D178D473600093934 /* img_profile_branch_share_button.png */; };
 		5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */; };
@@ -136,9 +139,6 @@
 		556681C317AF990F00B53683 /* img_branch_profile_event_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 556681C217AF990F00B53683 /* img_branch_profile_event_pattern.png */; };
 		5566A33017718F8C0025E79C /* CameraBranchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5566A32F17718F8C0025E79C /* CameraBranchCell.m */; };
 		5566A33317718F9A0025E79C /* BranchMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5566A33217718F9A0025E79C /* BranchMainCell.m */; };
-		556AA5EA17BA674E00C41A52 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 556AA5E917BA674E00C41A52 /* GoogleMaps.bundle */; };
-		556AA5EC17BA675700C41A52 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 556AA5EB17BA675700C41A52 /* FacebookSDK.framework */; };
-		556AA5EE17BA675E00C41A52 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 556AA5ED17BA675E00C41A52 /* FacebookSDKResources.bundle */; };
 		556CDB91174CAE9B00865790 /* branch_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 556CDB8F174CAE9A00865790 /* branch_placeholder.png */; };
 		556CDB92174CAE9B00865790 /* branch_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 556CDB90174CAE9A00865790 /* branch_placeholder@2x.png */; };
 		556D444817782D3F00751F83 /* TVExtraBranchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 556D444717782D3F00751F83 /* TVExtraBranchView.m */; };
@@ -696,7 +696,6 @@
 		5515BBFF17AF468000A11CF4 /* TVEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEvent.m; sourceTree = "<group>"; };
 		5515BC0017AF468000A11CF4 /* TVEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEvents.h; sourceTree = "<group>"; };
 		5515BC0117AF468000A11CF4 /* TVEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEvents.m; sourceTree = "<group>"; };
-		5516D1A01758AA1D00A0C6CE /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		5516D1A41758AB0100A0C6CE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5516D1A61758AC2F00A0C6CE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		551BB1D0178A9D590072FD81 /* CoupBranchProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoupBranchProfileVC.h; sourceTree = "<group>"; };
@@ -717,6 +716,10 @@
 		551BB1EB178AC7AC0072FD81 /* TVCuisines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCuisines.m; sourceTree = "<group>"; };
 		551BB1ED178ACE210072FD81 /* ExtraCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraCommentCell.h; sourceTree = "<group>"; };
 		551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
+		5520471A17BB1486003F0506 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		5520471C17BB1491003F0506 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		5520471E17BB14C1003F0506 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../GoogleMaps-iOS-1.3.0/GoogleMaps.framework"; sourceTree = "<group>"; };
+		5520472017BB14C8003F0506 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../../GoogleMaps-iOS-1.3.0/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
 		552072D917855A2D00DC5E68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5531EF1D178D473600093934 /* img_profile_branch_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_share_button.png; sourceTree = "<group>"; };
 		5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_share_button@2x.png"; sourceTree = "<group>"; };
@@ -816,9 +819,6 @@
 		5566A32F17718F8C0025E79C /* CameraBranchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraBranchCell.m; sourceTree = "<group>"; };
 		5566A33117718F9A0025E79C /* BranchMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchMainCell.h; sourceTree = "<group>"; };
 		5566A33217718F9A0025E79C /* BranchMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchMainCell.m; sourceTree = "<group>"; };
-		556AA5E917BA674E00C41A52 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../Desktop/GoogleMaps-iOS-1.3.1/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
-		556AA5EB17BA675700C41A52 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		556AA5ED17BA675E00C41A52 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		556CDB8F174CAE9A00865790 /* branch_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = branch_placeholder.png; sourceTree = "<group>"; };
 		556CDB90174CAE9A00865790 /* branch_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "branch_placeholder@2x.png"; sourceTree = "<group>"; };
 		556D444617782D3F00751F83 /* TVExtraBranchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVExtraBranchView.h; sourceTree = "<group>"; };
@@ -1432,8 +1432,8 @@
 				5562B18E16FC50F300E21A82 /* CoreGraphics.framework in Frameworks */,
 				B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */,
 				55954F57172A141100A8A351 /* libGoogleAnalytics.a in Frameworks */,
-				5516D1A11758AA1D00A0C6CE /* GoogleMaps.framework in Frameworks */,
-				556AA5EC17BA675700C41A52 /* FacebookSDK.framework in Frameworks */,
+				5520471B17BB1486003F0506 /* FacebookSDK.framework in Frameworks */,
+				5520471F17BB14C1003F0506 /* GoogleMaps.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1752,9 +1752,10 @@
 		5562B18816FC50F300E21A82 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				556AA5ED17BA675E00C41A52 /* FacebookSDKResources.bundle */,
-				556AA5EB17BA675700C41A52 /* FacebookSDK.framework */,
-				556AA5E917BA674E00C41A52 /* GoogleMaps.bundle */,
+				5520472017BB14C8003F0506 /* GoogleMaps.bundle */,
+				5520471E17BB14C1003F0506 /* GoogleMaps.framework */,
+				5520471C17BB1491003F0506 /* FacebookSDKResources.bundle */,
+				5520471A17BB1486003F0506 /* FacebookSDK.framework */,
 				5531EF21178D4A3400093934 /* AddressBook.framework */,
 				552072D917855A2D00DC5E68 /* Security.framework */,
 				55AD02D017706F2B00A84ED6 /* CoreMedia.framework */,
@@ -1765,7 +1766,6 @@
 				5588C2421758B123001B624A /* GLKit.framework */,
 				5516D1A61758AC2F00A0C6CE /* CoreText.framework */,
 				5516D1A41758AB0100A0C6CE /* AVFoundation.framework */,
-				5516D1A01758AA1D00A0C6CE /* GoogleMaps.framework */,
 				55954F5B172A15A800A8A351 /* CoreData.framework */,
 				55954F59172A159A00A8A351 /* SystemConfiguration.framework */,
 				55A25F511728C8AB00D5E29F /* QuartzCore.framework */,
@@ -3462,8 +3462,8 @@
 				55CFAF7417B5FD7C001B2E2C /* skin_khong_gian_dep_text.png in Resources */,
 				55CF087E17BA31C2006556A4 /* EventVC.xib in Resources */,
 				55CF088217BA31C2006556A4 /* NearbyCouponVC.xib in Resources */,
-				556AA5EA17BA674E00C41A52 /* GoogleMaps.bundle in Resources */,
-				556AA5EE17BA675E00C41A52 /* FacebookSDKResources.bundle in Resources */,
+				5520471D17BB1491003F0506 /* FacebookSDKResources.bundle in Resources */,
+				5520472117BB14C8003F0506 /* GoogleMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3740,6 +3740,7 @@
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../Documents/FacebookSDK\"",
+					"\"$(SRCROOT)/../../GoogleMaps-iOS-1.3.0\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/Anuong-Prefix.pch";
@@ -3779,6 +3780,7 @@
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/../Documents/FacebookSDK\"",
+					"\"$(SRCROOT)/../../GoogleMaps-iOS-1.3.0\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TimVui/Anuong-Prefix.pch";

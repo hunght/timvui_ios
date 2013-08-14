@@ -13,6 +13,7 @@
 #import "GlobalDataUser.h"
 #import "NSDictionary+Extensions.h"
 #import "TVCoupon.h"
+#import "CoupBranchProfileVC.h"
 static const NSString* limitCount=@"10";
 static const NSString* distanceMapSearch=@"100";
 
@@ -85,6 +86,10 @@ static const NSString* distanceMapSearch=@"100";
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -118,8 +123,14 @@ static const NSString* distanceMapSearch=@"100";
     TVCoupon* manual=arrCoupons[indexPath.row];
     return 270 + [NearbyCouponCell heightForCellWithPost:manual];
 }
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [super viewDidUnload];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //
+    TVCoupon* coupon=arrCoupons[indexPath.row];
+    CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
+    specBranchVC.branch=coupon.branch;
+    specBranchVC.coupon=coupon;
+    [self.navigationController pushViewController:specBranchVC animated:YES];
+    
 }
+
 @end
