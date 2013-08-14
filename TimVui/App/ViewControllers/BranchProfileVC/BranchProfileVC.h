@@ -14,7 +14,7 @@ typedef enum {
     kOpenEventTab
 }kOpenTab;
 @class TVExtraBranchView;
-@interface BranchProfileVC : UIViewController
+@interface BranchProfileVC : UIViewController<UIWebViewDelegate>
 @property (retain, nonatomic) TVBranch *branch;
 
 @property(assign, nonatomic) kOpenTab openTab;

@@ -59,6 +59,11 @@
 		5520471D17BB1491003F0506 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5520471C17BB1491003F0506 /* FacebookSDKResources.bundle */; };
 		5520471F17BB14C1003F0506 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5520471E17BB14C1003F0506 /* GoogleMaps.framework */; };
 		5520472117BB14C8003F0506 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5520472017BB14C8003F0506 /* GoogleMaps.bundle */; };
+		5520472C17BB351C003F0506 /* NearbyCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520472417BB351C003F0506 /* NearbyCouponCell.m */; };
+		5520472D17BB351C003F0506 /* NearbyCouponVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520472617BB351C003F0506 /* NearbyCouponVC.m */; };
+		5520472E17BB351C003F0506 /* NearbyCouponVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5520472717BB351C003F0506 /* NearbyCouponVC.xib */; };
+		5520472F17BB351C003F0506 /* ReceivedCouponVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520472A17BB351C003F0506 /* ReceivedCouponVC.m */; };
+		5520473017BB351C003F0506 /* ReceivedCouponVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */; };
 		552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D917855A2D00DC5E68 /* Security.framework */; };
 		5531EF1F178D473600093934 /* img_profile_branch_share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1D178D473600093934 /* img_profile_branch_share_button.png */; };
 		5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */; };
@@ -529,9 +534,6 @@
 		55CF087D17BA31C2006556A4 /* EventVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF087217BA31C2006556A4 /* EventVC.m */; };
 		55CF087E17BA31C2006556A4 /* EventVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CF087317BA31C2006556A4 /* EventVC.xib */; };
 		55CF087F17BA31C2006556A4 /* TVEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF087617BA31C2006556A4 /* TVEventCell.m */; };
-		55CF088017BA31C2006556A4 /* NearbyCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF087917BA31C2006556A4 /* NearbyCouponCell.m */; };
-		55CF088117BA31C2006556A4 /* NearbyCouponVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF087B17BA31C2006556A4 /* NearbyCouponVC.m */; };
-		55CF088217BA31C2006556A4 /* NearbyCouponVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CF087C17BA31C2006556A4 /* NearbyCouponVC.xib */; };
 		55CFAF1617B5C6B2001B2E2C /* PageSevenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CFAF1417B5C6B2001B2E2C /* PageSevenView.m */; };
 		55CFAF1717B5C6B2001B2E2C /* PageSevenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF1517B5C6B2001B2E2C /* PageSevenView.xib */; };
 		55CFAF1917B5CAE5001B2E2C /* skin_tu_suong_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF1817B5CAE5001B2E2C /* skin_tu_suong_text.png */; };
@@ -720,6 +722,14 @@
 		5520471C17BB1491003F0506 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		5520471E17BB14C1003F0506 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../GoogleMaps-iOS-1.3.0/GoogleMaps.framework"; sourceTree = "<group>"; };
 		5520472017BB14C8003F0506 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../../GoogleMaps-iOS-1.3.0/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
+		5520472317BB351C003F0506 /* NearbyCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCouponCell.h; sourceTree = "<group>"; };
+		5520472417BB351C003F0506 /* NearbyCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCouponCell.m; sourceTree = "<group>"; };
+		5520472517BB351C003F0506 /* NearbyCouponVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCouponVC.h; sourceTree = "<group>"; };
+		5520472617BB351C003F0506 /* NearbyCouponVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCouponVC.m; sourceTree = "<group>"; };
+		5520472717BB351C003F0506 /* NearbyCouponVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyCouponVC.xib; sourceTree = "<group>"; };
+		5520472917BB351C003F0506 /* ReceivedCouponVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivedCouponVC.h; sourceTree = "<group>"; };
+		5520472A17BB351C003F0506 /* ReceivedCouponVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivedCouponVC.m; sourceTree = "<group>"; };
+		5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceivedCouponVC.xib; sourceTree = "<group>"; };
 		552072D917855A2D00DC5E68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5531EF1D178D473600093934 /* img_profile_branch_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_share_button.png; sourceTree = "<group>"; };
 		5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_share_button@2x.png"; sourceTree = "<group>"; };
@@ -1253,11 +1263,6 @@
 		55CF087317BA31C2006556A4 /* EventVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventVC.xib; sourceTree = "<group>"; };
 		55CF087517BA31C2006556A4 /* TVEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEventCell.h; sourceTree = "<group>"; };
 		55CF087617BA31C2006556A4 /* TVEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEventCell.m; sourceTree = "<group>"; };
-		55CF087817BA31C2006556A4 /* NearbyCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCouponCell.h; sourceTree = "<group>"; };
-		55CF087917BA31C2006556A4 /* NearbyCouponCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCouponCell.m; sourceTree = "<group>"; };
-		55CF087A17BA31C2006556A4 /* NearbyCouponVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCouponVC.h; sourceTree = "<group>"; };
-		55CF087B17BA31C2006556A4 /* NearbyCouponVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyCouponVC.m; sourceTree = "<group>"; };
-		55CF087C17BA31C2006556A4 /* NearbyCouponVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyCouponVC.xib; sourceTree = "<group>"; };
 		55CFAF1317B5C6B2001B2E2C /* PageSevenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageSevenView.h; sourceTree = "<group>"; };
 		55CFAF1417B5C6B2001B2E2C /* PageSevenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageSevenView.m; sourceTree = "<group>"; };
 		55CFAF1517B5C6B2001B2E2C /* PageSevenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageSevenView.xib; sourceTree = "<group>"; };
@@ -1641,6 +1646,29 @@
 				551BB1E5178AC34B0072FD81 /* TVGroupCuisines.m */,
 			);
 			path = Cuisine;
+			sourceTree = "<group>";
+		};
+		5520472217BB351C003F0506 /* NearbyCouponVC */ = {
+			isa = PBXGroup;
+			children = (
+				5520472317BB351C003F0506 /* NearbyCouponCell.h */,
+				5520472417BB351C003F0506 /* NearbyCouponCell.m */,
+				5520472517BB351C003F0506 /* NearbyCouponVC.h */,
+				5520472617BB351C003F0506 /* NearbyCouponVC.m */,
+				5520472717BB351C003F0506 /* NearbyCouponVC.xib */,
+			);
+			name = NearbyCouponVC;
+			path = NearbyCouponV;
+			sourceTree = "<group>";
+		};
+		5520472817BB351C003F0506 /* ReceivedCouponVC */ = {
+			isa = PBXGroup;
+			children = (
+				5520472917BB351C003F0506 /* ReceivedCouponVC.h */,
+				5520472A17BB351C003F0506 /* ReceivedCouponVC.m */,
+				5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */,
+			);
+			path = ReceivedCouponVC;
 			sourceTree = "<group>";
 		};
 		554085371782BC7400E07988 /* BSKeyboardControls */ = {
@@ -2605,8 +2633,9 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5520472217BB351C003F0506 /* NearbyCouponVC */,
+				5520472817BB351C003F0506 /* ReceivedCouponVC */,
 				55CF087017BA31C2006556A4 /* EventVC */,
-				55CF087717BA31C2006556A4 /* NearbyCouponVC */,
 				559984CA17900D600054003C /* DetailManualVC */,
 				55EB34F0178E68220041E481 /* ManualVC */,
 				55F71980178D3FEB00C0535D /* SearchWithArrayVC */,
@@ -2717,18 +2746,6 @@
 				55CF087617BA31C2006556A4 /* TVEventCell.m */,
 			);
 			path = TVEventCell;
-			sourceTree = "<group>";
-		};
-		55CF087717BA31C2006556A4 /* NearbyCouponVC */ = {
-			isa = PBXGroup;
-			children = (
-				55CF087817BA31C2006556A4 /* NearbyCouponCell.h */,
-				55CF087917BA31C2006556A4 /* NearbyCouponCell.m */,
-				55CF087A17BA31C2006556A4 /* NearbyCouponVC.h */,
-				55CF087B17BA31C2006556A4 /* NearbyCouponVC.m */,
-				55CF087C17BA31C2006556A4 /* NearbyCouponVC.xib */,
-			);
-			path = NearbyCouponVC;
 			sourceTree = "<group>";
 		};
 		55D391DF177D767300BE41B7 /* TMQuiltView */ = {
@@ -3461,9 +3478,10 @@
 				55CFAF7317B5FD7C001B2E2C /* skin_khong_den_day_thi_phi_text.png in Resources */,
 				55CFAF7417B5FD7C001B2E2C /* skin_khong_gian_dep_text.png in Resources */,
 				55CF087E17BA31C2006556A4 /* EventVC.xib in Resources */,
-				55CF088217BA31C2006556A4 /* NearbyCouponVC.xib in Resources */,
 				5520471D17BB1491003F0506 /* FacebookSDKResources.bundle in Resources */,
 				5520472117BB14C8003F0506 /* GoogleMaps.bundle in Resources */,
+				5520472E17BB351C003F0506 /* NearbyCouponVC.xib in Resources */,
+				5520473017BB351C003F0506 /* ReceivedCouponVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3616,8 +3634,9 @@
 				55CFAF5517B5F7D5001B2E2C /* PageTwelveView.m in Sources */,
 				55CF087D17BA31C2006556A4 /* EventVC.m in Sources */,
 				55CF087F17BA31C2006556A4 /* TVEventCell.m in Sources */,
-				55CF088017BA31C2006556A4 /* NearbyCouponCell.m in Sources */,
-				55CF088117BA31C2006556A4 /* NearbyCouponVC.m in Sources */,
+				5520472C17BB351C003F0506 /* NearbyCouponCell.m in Sources */,
+				5520472D17BB351C003F0506 /* NearbyCouponVC.m in Sources */,
+				5520472F17BB351C003F0506 /* ReceivedCouponVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

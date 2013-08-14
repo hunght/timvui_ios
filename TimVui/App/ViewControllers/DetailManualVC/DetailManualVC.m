@@ -109,7 +109,7 @@
     [webView setDelegate:self];
     [webView sizeToFit];
     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
-    //    NSLog(@"%@",_coupon.content);
+        NSLog(@"%@",_manual.content);
     //continue building the string
     [html appendString:_manual.content];
     [html appendString:@"</body></html>"];

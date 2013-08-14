@@ -26,6 +26,7 @@
 #import "TVMenuUserCell.h"
 #import "NearbyCouponVC.h"
 #import "EventVC.h"
+#import "ReceivedCouponVC.h"
 #define kNumberOfSections 3
 
 enum {
@@ -479,7 +480,7 @@ enum {
                         
                         break;
                     case kS1ReceivedCoupon:
-
+                        viewController = [[ReceivedCouponVC alloc] initWithNibName:@"ReceivedCouponVC" bundle:nil];
                         break;
                     case kS1Interesting:
 
@@ -504,7 +505,7 @@ enum {
                         viewController = [[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil];
                         break;
                     case kS1AccountReceivedCoupon:
-
+                        viewController = [[ReceivedCouponVC alloc] initWithNibName:@"ReceivedCouponVC" bundle:nil];
                         break;
                     case kS1AccountSetting:
 

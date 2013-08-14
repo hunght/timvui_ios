@@ -31,10 +31,11 @@
 
 @interface BranchProfileVC ()
 {
-    @private
-        int heightDefaultScroll;
+@private
+    int heightDefaultScroll;
     int sizeHeightDefaultScroll;
-        double lastDragOffset;
+    double lastDragOffset;
+    UIView *_introducingView;
 }
 @end
 
@@ -79,7 +80,7 @@
     [genarateInfoView addSubview:lblDistance];
     
     UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 260, 12)];
-    lblAddress.backgroundColor = [UIColor clearColor];  
+    lblAddress.backgroundColor = [UIColor clearColor];
     lblAddress.textColor = [UIColor grayColor];
     lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblAddress.text=_branch.address_full;
@@ -152,11 +153,11 @@
         //COUPON
         *height_p=imageLine.frame.origin.y+imageLine.frame.size.height+15;
         
-
+        
         
         int i=0;
         for (TVCoupon* coupon in _branch.coupons.items) {
-
+            
             
             UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,*height_p , 290, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
@@ -209,7 +210,7 @@
             [infoCouponBranch setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1.0f]];
             
             l=infoCouponBranch.layer;
-//            [self setConnerBorderWithLayer:l];
+            //            [self setConnerBorderWithLayer:l];
             [l setMasksToBounds:YES];
             [l setCornerRadius:1.0];
             
@@ -319,8 +320,8 @@
     // Do any additional setup after loading the view from its nib.
     [_imgBranchCover setImageWithURL:[Utilities getLargeImageOfCoverBranch:_branch.arrURLImages] placeholderImage:nil];
     
-//    NSLog(@"[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]%@",[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]);
-//    NSArray* imageDicArr=[_branch.images ];
+    //    NSLog(@"[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]%@",[Ultilities getLargeImageOfCoverBranch:_branch.arrURLImages]);
+    //    NSArray* imageDicArr=[_branch.images ];
     //Show Ablum images
     int i=0;
     for (NSArray* imagesArr in [_branch.images allValues]) {
@@ -341,10 +342,10 @@
         }
         if (i==3)break;
     }
-
+    
     if (i>=3) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-//        [NSString stringWithFormat:@"+%d",_branch.image_count-3]
+        //        [NSString stringWithFormat:@"+%d",_branch.image_count-3]
         [imageButton setTitle:@"+" forState:UIControlStateNormal];
         [imageButton setTitle:@"+" forState:UIControlStateSelected];
         [imageButton setBackgroundColor:[UIColor whiteColor]];
@@ -356,7 +357,7 @@
     //Show mapView button
     NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
     NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=160x160&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
-//    NSLog(@"strURL = %@",strURL);
+    //    NSLog(@"strURL = %@",strURL);
     NSURL* url=[NSURL URLWithString:strURL];
     UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
     [mapViewButton setImageWithURL:url];
@@ -367,13 +368,13 @@
     
     UIView* bgImageView=[[UIView alloc] initWithFrame:CGRectMake(0, 140-5, 320, 35+10)];
     [bgImageView setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.7]];
-//    [_scrollView insertSubview:bgImageView belowSubview:mapViewButton];
+    //    [_scrollView insertSubview:bgImageView belowSubview:mapViewButton];
     [_scrollView insertSubview:bgImageView atIndex:0];
     
     // Generate Infomation Of Branch
     UIView *genarateInfoView = [self addGenerationInfoView];
     [_scrollView addSubview:genarateInfoView];
-
+    
     //Button Camera, Comment, Follow
     UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(7, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 100, 44)];
     [cameraButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_camera"] forState:UIControlStateNormal];
@@ -412,7 +413,7 @@
     UIView* detailInfoBranch=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 45)];
     [detailInfoBranch setBackgroundColor:[UIColor whiteColor]];
     l=detailInfoBranch.layer;
-   [self setConnerBorderWithLayer:l];
+    [self setConnerBorderWithLayer:l];
     [_scrollView addSubview:detailInfoBranch];
     
     UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
@@ -587,17 +588,8 @@
     
     [utilitiesView setFrame:frame];
     height =utilitiesView.frame.origin.y +utilitiesView.frame.size.height+40;
-    if(_branch.special_content)
-    {
-        UIView *specInfoView = [self addSpecPointViewWithHeight:height];
-        [_scrollView addSubview:specInfoView];
-        height+=specInfoView.frame.size.height+30;
-    }
     
-    //Setbackground color dot line
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
-//    [_scrollView insertSubview:bgView belowSubview:mapViewButton];
-    [_scrollView setContentSize:CGSizeMake(320, height)];
+    [self addSpecPointViewWithHeight:height];
 }
 -(void)openTabNow{
     switch (_openTab) {
@@ -621,10 +613,12 @@
 {
     [super viewDidLoad];
     
+    //Setbackground color dot line
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
     UIButton* shareButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [shareButton setImage:[UIImage imageNamed:@"img_profile_branch_share_button"] forState:UIControlStateNormal];
-//    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    //    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
     self.navigationItem.rightBarButtonItem = shareButtonItem;
@@ -677,7 +671,7 @@
             [self.view addSubview:_extraBranchView];
         }
     }
-
+    
     void *context = (__bridge void *)self;
     [self.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
     heightDefaultScroll=_imgBranchCover.frame.origin.y;
@@ -716,7 +710,7 @@
 
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
-//    NSLog(@"scrollOffset=%f",scrollOffset);
+    //    NSLog(@"scrollOffset=%f",scrollOffset);
     if (scrollOffset>0) {
         CGRect frame= _imgBranchCover.frame;
         frame.origin.y=heightDefaultScroll-scrollOffset*.8;
@@ -729,11 +723,11 @@
 }
 
 #pragma mark - Helper
-- (UIView *)addSpecPointViewWithHeight:(int)height
+- (void)addSpecPointViewWithHeight:(int)height
 {
-    UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7,height, 310, 10)];
-    [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
-    CALayer* l=genarateInfoView.layer;
+    _introducingView=[[UIView alloc] initWithFrame:CGRectMake(7,height, 310, 10)];
+    [_introducingView setBackgroundColor:[UIColor whiteColor]];
+    CALayer* l=_introducingView.layer;
     [l setMasksToBounds:YES];
     [l setCornerRadius:1.0];
     // You can even add a border
@@ -743,35 +737,72 @@
     UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
     [self settingTextForTitle:lblTitle];
     lblTitle.text=@"Giới thiệu";
-    [genarateInfoView addSubview:lblTitle];
+    [_introducingView addSubview:lblTitle];
     UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
     [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-    [genarateInfoView addSubview:imageLine];
-    int lineHeight=imageLine.frame.origin.y+imageLine.frame.size.height +27;
-//    int lineHeight=50;
-    
-    for (NSString* str in _branch.special_content) {
+    [_introducingView addSubview:imageLine];
+    int lineHeight=imageLine.frame.origin.y+imageLine.frame.size.height +17;
+    //    int lineHeight=50;
+    [_scrollView addSubview:_introducingView];
+    if (_branch.review) {
+        NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
+        //    NSLog(@"%@",_coupon.content);
+        //continue building the string
+        [html appendString:_branch.review];
+        [html appendString:@"</body></html>"];
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(5, lineHeight, 310, 25)];
+        [webView.scrollView setScrollEnabled:NO];
+        //make the background transparent
+        [webView setBackgroundColor:[UIColor clearColor]];
         
-        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+25, lineHeight, 265, 25)];
-        lblAddress.backgroundColor = [UIColor clearColor];
-        lblAddress.textColor = [UIColor grayColor];
-        lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(15)];
-        lblAddress.text=str;
-        [lblAddress resizeToStretch];
-        [genarateInfoView addSubview:lblAddress];
+        //pass the string to the webview
+        [webView loadHTMLString:[html description] baseURL:nil];
         
-        UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, lineHeight, 25, 25)];
-        homeIcon.image=[UIImage imageNamed:@"img_camera_cell_button"];
-        [genarateInfoView addSubview:homeIcon];
-        lineHeight+=lblAddress.frame.size.height+5;
+        //add it to the subview
+        [webView sizeToFit];
+        // assuming your self.viewer is a UIWebView
+        [webView setDelegate:self];
+        [webView setAlpha:0.0];
+        [_introducingView addSubview:webView];
+    }else if(_branch.special_content)
+    {
+        for (NSString* str in _branch.special_content) {
+            
+            UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, lineHeight, 265, 25)];
+            lblAddress.backgroundColor = [UIColor clearColor];
+            lblAddress.textColor = [UIColor grayColor];
+            lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblAddress.text=str;
+            [lblAddress resizeToStretch];
+            [_introducingView addSubview:lblAddress];
+            
+            UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, lineHeight, 15, 15)];
+            homeIcon.image=[UIImage imageNamed:@"img_camera_cell_button"];
+            [_introducingView addSubview:homeIcon];
+            lineHeight+=lblAddress.frame.size.height+5;
+        }
+        CGRect frame=_introducingView.frame;
+        frame.size.height+=lineHeight;
+        _introducingView.frame=frame;
+        
+        [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
     }
-    
-    CGRect frame=genarateInfoView.frame;
-    frame.size.height+=lineHeight;
-    genarateInfoView.frame=frame;
-    return genarateInfoView;
 }
 
+#pragma mark - UIWebViewDelegate
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    [webView setAlpha:1.0];
+    CGRect newBounds = webView.frame;
+    newBounds.size.height = webView.scrollView.contentSize.height;
+    webView.frame = newBounds;
+    
+    CGRect frame=_introducingView.frame;
+    frame.size.height+=newBounds.size.height;
+    _introducingView.frame=frame;
+    [_scrollView addSubview:_introducingView];
+    [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
+    
+}
 - (void)setRowWithHeight:(int *)heightDetailInfo_p detailInfoBranch:(UIView *)detailInfoBranch strDetail:(NSString *)strDetail strTiltle:(NSString *)strTiltle
 {
     if (strDetail) {

@@ -16,6 +16,7 @@
 #import "TVExtraBranchView.h"
 #import "MHFacebookImageViewer.h"
 #import "NSDate+Helper.h"
+#import "TVBranches.h"
 @interface CoupBranchProfileVC ()
 {
 @private
@@ -34,56 +35,51 @@
     }
     return self;
 }
-
-- (UIView *)addGenerationInfoView
+- (void)setConnerBorderWithLayer:(CALayer *)l
 {
-    UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7, 15, 310, 90)];
-    [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
-    CALayer* l=genarateInfoView.layer;
     [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
-    // You can even add a border
+    [l setCornerRadius:1.0];
     [l setBorderWidth:1.0];
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
-    
+}
+- (UIView *)addGenerationInfoView
+{
+    UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7, 7, 310, 90)];
+    [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
+    CALayer* l=genarateInfoView.layer;
+    [self setConnerBorderWithLayer:l];
     
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
-    lblBranchName.textColor = [UIColor redColor];
-    lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+    lblBranchName.textColor = [UIColor blackColor];
+    lblBranchName.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
     lblBranchName.text=_branch.name;
     [genarateInfoView addSubview:lblBranchName];
     
-    UIImage *imageDirection=[UIImage imageNamed:@"img_direction_icon"];
-    UIImageView* imgDirectionView=[[UIImageView alloc] initWithFrame:CGRectMake(257,9+8 , 9, 9)];
-    [imgDirectionView setImage:imageDirection];
-    [genarateInfoView addSubview:imgDirectionView];
     
     UILabel *lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,9+4, 60, 15)];
     lblDistance.backgroundColor = [UIColor clearColor];
-    lblDistance.textColor = [UIColor redColor];
-    lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(15)];
+    lblDistance.textColor = [UIColor grayColor];
+    lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
-    if (distance>1000.0) {
-        NSLog(@"%f",distance/1000.0);
-        lblDistance.text=[NSString stringWithFormat:@"%.2f km",distance/1000];
-    }
+    if (distance>1000.0)
+        lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
     else
-        lblDistance.text=[NSString stringWithFormat:@"%f m",distance];
+        lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
     
     [genarateInfoView addSubview:lblDistance];
     
-    UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 210, 12)];
-    lblAddress.backgroundColor = [UIColor clearColor];  
+    UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 260, 12)];
+    lblAddress.backgroundColor = [UIColor clearColor];
     lblAddress.textColor = [UIColor grayColor];
-    lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblAddress.text=_branch.address_full;
     [genarateInfoView addSubview:lblAddress];
     
     UILabel *lblPrice = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 53.0, 210, 12)];
     lblPrice.backgroundColor = [UIColor clearColor];
     lblPrice.textColor = [UIColor grayColor];
-    lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblPrice.text=_branch.price_avg;
     [genarateInfoView addSubview:lblPrice];
     
@@ -102,10 +98,12 @@
     UILabel *lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(10.0+15, 71.0, 210, 12)];
     lblPhone.backgroundColor = [UIColor clearColor];
     lblPhone.textColor = [UIColor grayColor];
-    lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblPhone.text=_branch.phone;
     [genarateInfoView addSubview:lblPhone];
     return genarateInfoView;
+    
+    
 }
 
 
@@ -321,7 +319,7 @@
     
 }
 
-- (void)viewDidLoad
+- (void)displayInfoWhenGetBranch
 {
     [self showInfoView];
     TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
@@ -330,6 +328,29 @@
     [self.view addSubview:_extraBranchView];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];
+}
+
+- (void)viewDidLoad
+{
+    
+    if (!_branch) {
+        TVBranches* branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
+        branches.isNotSearchAPIYES=YES;
+        //NSDictionary *params = @{@"id": _branchID};
+        NSDictionary *params = @{@"id": @"1"};
+        [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+            dispatch_async( dispatch_get_main_queue(),^ {
+                _branch=branches[0];
+                [self displayInfoWhenGetBranch];
+            });
+        } failure:^(GHResource *instance, NSError *error) {
+            dispatch_async( dispatch_get_main_queue(),^ {
+                
+            });
+        }];
+    }else
+        [self displayInfoWhenGetBranch];
+    
     [super viewDidLoad];
 }
 

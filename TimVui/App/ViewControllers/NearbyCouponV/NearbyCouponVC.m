@@ -127,7 +127,7 @@ static const NSString* distanceMapSearch=@"100";
     //
     TVCoupon* coupon=arrCoupons[indexPath.row];
     CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
-    specBranchVC.branch=coupon.branch;
+    specBranchVC.branchID=coupon.branch.branchID;
     specBranchVC.coupon=coupon;
     [self.navigationController pushViewController:specBranchVC animated:YES];
     

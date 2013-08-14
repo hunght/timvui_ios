@@ -16,6 +16,7 @@
 @property(nonatomic,strong)TVEvents *events;
 @property(nonatomic,strong)TVCuisines *menu;
 @property(nonatomic,strong)NSArray *special_content;
+@property(nonatomic,strong)NSString *review;
 @property(nonatomic,strong)NSString *address_full;
 @property(nonatomic,assign)CLLocationCoordinate2D latlng;
 
