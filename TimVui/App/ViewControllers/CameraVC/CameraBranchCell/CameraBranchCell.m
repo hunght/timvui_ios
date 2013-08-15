@@ -48,6 +48,10 @@ int cellPad=44;
     if (!self) {
         return nil;
     }
+    UIView *bgView = [[UIView alloc] init];
+    bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern_menu"]];
+    [self setSelectedBackgroundView:bgView];
+    
     _lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(25.0f, 30.0f, 210.0f-cellPad, 20.0f)];
     _lblDetailRow.backgroundColor = [UIColor clearColor];
     _lblDetailRow.textColor = [UIColor blackColor];
@@ -64,7 +68,7 @@ int cellPad=44;
     homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];
     
 
-    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(80.0, 8.0, 234-cellPad, 96)];
+    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(80.0, 8.0, 234-cellPad, 0)];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
     // Get the Layer of any view
     CALayer * l = [_whiteView layer];
@@ -86,7 +90,9 @@ int cellPad=44;
 
     _lblDetailRow.text =_branch.address_full;
     [_lblDetailRow resizeToStretch];
-    
+    CGRect frame=_whiteView.frame;
+    frame.size.height=_lblDetailRow.frame.origin.y+_lblDetailRow.frame.size.height+5;
+    _whiteView.frame=frame;
 
     [self.imageView setImageWithURL:[Utilities getThumbImageOfCoverBranch:_branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     [self setNeedsLayout];
@@ -98,7 +104,7 @@ int cellPad=44;
     CGSize expectedLabelSize = [branch.address_full sizeWithFont:cellFont
                                            constrainedToSize:maximumLabelSize
                                                lineBreakMode:NSLineBreakByWordWrapping];
-    return expectedLabelSize.height+ 8+96+8;
+    return expectedLabelSize.height+ 8+ 36+8;
 }
 
 #pragma mark - UIView

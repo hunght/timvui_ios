@@ -102,6 +102,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">Lưu</string>
 						<reference key="IBUIHighlightedTitleColor" ref="648263729"/>
@@ -116,7 +117,6 @@
 						<string key="NSFrame">{{0, 35}, {320, 381}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="1062703352">
 							<int key="NSColorSpace">3</int>
@@ -267,8 +267,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="377724323"/>
 							<reference ref="151183731"/>
-							<reference ref="805136115"/>
 							<reference ref="981230605"/>
+							<reference ref="805136115"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -320,7 +320,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">19</int>
+			<int key="maxID">20</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -350,6 +350,7 @@
 						<string key="btnPopular">UIButton</string>
 						<string key="btnRecently">UIButton</string>
 						<string key="btnSaved">UIButton</string>
+						<string key="lblSaveHandbookCount">UILabel</string>
 						<string key="tableView">UITableView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -364,6 +365,10 @@
 						<object class="IBToOneOutletInfo" key="btnSaved">
 							<string key="name">btnSaved</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="lblSaveHandbookCount">
+							<string key="name">lblSaveHandbookCount</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="tableView">
 							<string key="name">tableView</string>

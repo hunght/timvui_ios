@@ -27,7 +27,7 @@
 #import "TSMessage.h"
 @interface MapTableViewController (){
 @private
-__strong UIActivityIndicatorView *_activityIndicatorView;
+    __strong UIActivityIndicatorView *_activityIndicatorView;
 }
 
 @end
@@ -92,7 +92,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
     // Optional setup
     self.locationPickerView.mapViewDidLoadBlock = ^(LocationPickerView *locationPicker) {
-//        locationPicker.mapView.mapType = MKMapTypeStandard;
+        //        locationPicker.mapView.mapType = MKMapTypeStandard;
     };
     self.locationPickerView.tableViewDidLoadBlock = ^(LocationPickerView *locationPicker) {
         locationPicker.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -129,9 +129,9 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     {
         [GlobalDataUser sharedAccountClient].isShowAletForLocationServicesYES=YES;
         [TSMessage showNotificationInViewController:self
-                                      withTitle:@"Để sử dụng tốt nhất tính năng của ứng dụng này, bạn vui lòng bật tính năng Dò tìm vị trí- Location Service trong phần cài đặt của máy điện thoại."
-                                    withMessage:nil
-                                       withType:TSMessageNotificationTypeWarning];
+                                          withTitle:@"Để sử dụng tốt nhất tính năng của ứng dụng này, bạn vui lòng bật tính năng Dò tìm vị trí- Location Service trong phần cài đặt của máy điện thoại."
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeWarning];
     }
 }
 
@@ -154,7 +154,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 - (void)locationPicker:(LocationPickerView *)locationPicker
       mapViewDidExpand:(GMSMapView *)mapView
 {
-    
+    [_notificationView closeButtonClicked:nil];
 }
 
 - (void)alertWhenNoDataLoaded
@@ -212,7 +212,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
                          success:^(UIImage *image, BOOL cached)
          {
              UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
-             image=[image imageByScalingAndCroppingForSize:CGSizeMake(30, 30)];
+             image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
              UIGraphicsBeginImageContext( bottomImage.size );
              [bottomImage drawAtPoint:CGPointZero];
              [image drawInRect:CGRectMake(6.0f,5.0f,30.0f,30.0f) blendMode:kCGBlendModeNormal alpha:1];
@@ -221,7 +221,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
              melbourneMarker.icon = newImage;
              melbourneMarker.map = _locationPickerView.mapView;
          }
-        failure:nil];
+                         failure:nil];
         i++;
     }
 }
@@ -271,6 +271,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
     __unsafe_unretained __typeof(&*self)weakSelf = self;
+    
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             if (weakSelf.branches.count>0&&isSearchYES) {
@@ -349,12 +350,13 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
                                ,@"distance": [NSString stringWithFormat:@"%d",(radiusKm)?radiusKm:1]
                                };
                 }
+                
                 [self performSelector:@selector(postSearchBranch:withReturnFromSearchScreenYES:) withObject:[[NSMutableDictionary alloc] initWithDictionary:params] afterDelay:2];
                 _currentCameraPosition=position.target;
             }
         }
     }else
-        _lastPosition=position.target;    
+        _lastPosition=position.target;
 }
 
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
@@ -369,8 +371,8 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     //
     TVBranch* branch= _branches[[marker.title intValue]];
-    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f+7, 70.0f, 70.0f)];
-    imgPhoto.contentMode = UIViewContentModeScaleAspectFill;
+    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f+7+9, 70.0f, 52.5f)];
+    imgPhoto.contentMode = UIViewContentModeScaleAspectFit;
     
     [imgPhoto setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]];
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 110)];
@@ -393,7 +395,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     
     price_avg.textColor = [UIColor grayColor];
     price_avg.highlightedTextColor = [UIColor whiteColor];
-
+    
     textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
     price_avg.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(12)];
@@ -419,7 +421,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     _lblDistance.backgroundColor = [UIColor clearColor];
     _lblDistance.textColor = [UIColor grayColor];
     _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];
-
+    
     textLabel.text=branch.name;
     detailTextLabel.text=branch.address_full;
     price_avg.text=branch.price_avg;
@@ -429,7 +431,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
         _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
     else
         _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
-
+    
     int lineHeight=0;
     
     for (TVCoupon* coupon in branch.coupons.items) {
@@ -456,16 +458,16 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
     // Animate to the marker
-//    [CATransaction begin];
-//    [CATransaction setAnimationDuration:1.f];  // 3 second animation
-//    
-//    GMSCameraPosition *camera =
-//    [[GMSCameraPosition alloc] initWithTarget:marker.position
-//                                         zoom:14
-//                                      bearing:0
-//                                 viewingAngle:0];
-//    [mapView animateToCameraPosition:camera];
-//    [CATransaction commit];
+    //    [CATransaction begin];
+    //    [CATransaction setAnimationDuration:1.f];  // 3 second animation
+    //
+    //    GMSCameraPosition *camera =
+    //    [[GMSCameraPosition alloc] initWithTarget:marker.position
+    //                                         zoom:14
+    //                                      bearing:0
+    //                                 viewingAngle:0];
+    //    [mapView animateToCameraPosition:camera];
+    //    [CATransaction commit];
     return NO;
 }
 
@@ -482,8 +484,7 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     BranchMainCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    else{
+    }else{
         [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     
@@ -500,11 +501,12 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
+    
     BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
     branchProfileVC.branchID=[_branches[indexPath.row] branchID];
     [self.navigationController pushViewController:branchProfileVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
 }
 
 @end

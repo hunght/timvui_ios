@@ -29,12 +29,7 @@
 #import "TVCoupon.h"
 #import "TVCoupons.h"
 
-@implementation BranchMainCell {
-@private
-    __strong TVBranch *_branch;
-}
-
-@synthesize branch = _branch;
+@implementation BranchMainCell
 
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
     [l setMasksToBounds:YES];
@@ -54,7 +49,7 @@
     bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern_menu"]];
     [self setSelectedBackgroundView:bgView];
     
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     self.textLabel.textColor = [UIColor blackColor];
     self.textLabel.highlightedTextColor=[UIColor blackColor];
@@ -105,17 +100,16 @@
 }
 
 - (void)setBranch:(TVBranch *)branch withDistance:(double)distance {
-    _branch = branch;
-    self.textLabel.text=_branch.name;
-    self.detailTextLabel.text=_branch.address_full;
-    self.price_avg.text=_branch.price_avg;
+    self.textLabel.text=branch.name;
+    self.detailTextLabel.text=branch.address_full;
+    self.price_avg.text=branch.price_avg;
     
     if (distance>1000.0)
         _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
     else
         _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
     
-    [self.imageView setImageWithURL:[NSURL URLWithString:[_branch.arrURLImages valueForKey:@"80"]]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    [self.imageView setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     
     int lineHeight=0;
     
@@ -128,7 +122,6 @@
         lblAddress.numberOfLines = 1;
         lblAddress.text=coupon.name;
         [self.utility addSubview:lblAddress];
-        
         UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, lineHeight, 15, 15)];
         homeIcon.image=[UIImage imageNamed:@"img_main_coupon_icon"];
         [self.utility addSubview:homeIcon];
@@ -150,7 +143,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(5.0f, 8.0f+7, 70.0f, 70.0f);
+    self.imageView.frame = CGRectMake(5.0f, 8.0f+7+9, 70.0f, 52.5f);
     self.textLabel.frame = CGRectMake(80+10.0f, 8.0f+7, 180.0f, 20.0f);
     self.detailTextLabel.frame = CGRectMake(80+25.0f, 30.0f+7, 210.0f, 20.0f);
     self.price_avg.frame = CGRectMake(80 +25.0f, 48.0f+7, 210.0f, 20.0f);

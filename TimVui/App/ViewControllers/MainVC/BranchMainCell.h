@@ -25,8 +25,6 @@
 @class TVBranch;
 
 @interface BranchMainCell : UITableViewCell
-
-@property (nonatomic, strong) TVBranch *branch;
 @property(nonatomic,strong)UIView *utility;
 @property (nonatomic,strong) UILabel *price_avg;
 @property (nonatomic, strong)UILabel* lblDistance;

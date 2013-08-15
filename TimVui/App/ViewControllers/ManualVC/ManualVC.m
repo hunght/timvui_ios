@@ -18,6 +18,7 @@
 #import "NSDate+Helper.h"
 #import "Utilities.h"
 #import "FilterVC.h"
+#import <QuartzCore/QuartzCore.h> 
 @interface ManualVC ()
 {
     NSMutableDictionary* params;
@@ -64,14 +65,15 @@
     
     [_btnRecently setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
     [_btnPopular setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    
     [_btnSaved setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
     [_btnRecently setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnPopular setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnSaved setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [_btnRecently setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
-    
     [_btnPopular setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
+    
     [_btnSaved setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateSelected];
     [_btnRecently setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
     [_btnPopular setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
@@ -80,11 +82,18 @@
     [_btnPopular setSelected:NO];
     [_btnSaved setSelected:NO];
     
-    _lblSaveHandbookCount=[[UILabel  alloc] initWithFrame:CGRectMake(20, 5, 20, 12)];
+    _lblSaveHandbookCount=[[UILabel  alloc] initWithFrame:CGRectMake(65,10, 15, 15)];
     _lblSaveHandbookCount.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     _lblSaveHandbookCount.textColor=[UIColor blackColor];
+    
+    _lblSaveHandbookCount.textAlignment=UITextAlignmentCenter;
+    _lblSaveHandbookCount.text=@"0";
     [_btnSaved addSubview:_lblSaveHandbookCount];
-
+    [_lblSaveHandbookCount.layer setMasksToBounds:YES];
+    [_lblSaveHandbookCount.layer setCornerRadius:2];
+    [_lblSaveHandbookCount.layer setBorderWidth:1.0];
+    [_lblSaveHandbookCount.layer setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    
     UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_off"] forState:UIControlStateNormal];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_on"] forState:UIControlStateHighlighted];

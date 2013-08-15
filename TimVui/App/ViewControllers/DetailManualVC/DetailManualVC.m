@@ -88,7 +88,7 @@
     
     UILabel* lblTitle=[[UILabel alloc] initWithFrame:CGRectMake(10.0, 5, 300, 23)];
     lblTitle.backgroundColor = [UIColor clearColor];
-    lblTitle.textColor = [UIColor redColor];
+    lblTitle.textColor = [UIColor blackColor];
     lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
     lblTitle.numberOfLines = 0;
     lblTitle.lineBreakMode = UILineBreakModeWordWrap;
@@ -109,7 +109,7 @@
     [webView setDelegate:self];
     [webView sizeToFit];
     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
-        NSLog(@"%@",_manual.content);
+//        NSLog(@"%@",_manual.content);
     //continue building the string
     [html appendString:_manual.content];
     [html appendString:@"</body></html>"];
@@ -158,9 +158,6 @@
     return NO;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-}
-
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -176,8 +173,49 @@
     CGRect frame=_couponBranch.frame;
     frame.size.height=height_p;
     _couponBranch.frame=frame;
+    
+    if (_manual.branch_ids.count>0) {
+        UILabel* lblTitle=[[UILabel alloc] initWithFrame:CGRectMake(25, 10, 300, 14)];
+        lblTitle.backgroundColor = [UIColor clearColor];
+        lblTitle.textColor = [UIColor whiteColor];
+        lblTitle.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+        lblTitle.text=@"Danh sách gợi ý";
+        
+
+        UIView* viewButtons=[[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-35, 320, 35)];
+        [viewButtons   setBackgroundColor:[UIColor colorWithRed:(72/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]];
+        [viewButtons addSubview:lblTitle];
+        UIButton* btnListView = [[UIButton alloc] initWithFrame:CGRectMake(320-35,0 , 35, 35)];
+        [btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+        [btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+        [btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateNormal];
+        [btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateHighlighted];
+        [btnListView addTarget:self action:@selector(listViewButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [viewButtons addSubview:btnListView];
+        
+        UIButton* btnSMS = [[UIButton alloc] initWithFrame:CGRectMake(320-35-36,0 , 35, 35)];
+        [btnSMS setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+        [btnSMS setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+        [btnSMS setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateNormal];
+        [btnSMS setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateHighlighted];
+        [btnSMS addTarget:self action:@selector(mapButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [viewButtons addSubview:btnSMS];
+        [_couponBranch addSubview:viewButtons];
+    }
+
     self.tableView.tableHeaderView = _couponBranch;
     [self postGetBranches];
+}
+
+
+#pragma mark - IBActions
+
+-(void)listViewButtonClicked{
+    
+}
+
+-(void)mapButtonClicked{
+    
 }
 
 

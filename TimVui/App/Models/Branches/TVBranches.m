@@ -22,7 +22,6 @@
 
     
 	for (NSDictionary *dict in arr) {
-        
 		TVBranch *branch = [[TVBranch alloc] initWithDict:dict];
         
 		[self addObject:branch];

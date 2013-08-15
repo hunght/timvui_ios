@@ -76,7 +76,8 @@
     self.public_locations = [dict safeDictForKey:@"public_locations"];
     
     self.time_close =[dict safeStringForKey:@"time_close"];
-    self.review = [[[dict safeArrayForKey:@"review"] lastObject] safeStringForKey:@"content"];
+    
+    self.review = [[[dict safeArrayForKey:@"review"] lastObject] valueForKey:@"content"];
 }
 
 
