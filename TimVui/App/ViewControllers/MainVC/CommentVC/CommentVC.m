@@ -41,6 +41,12 @@
 {
     
     [super viewDidLoad];
+    _bgView.backgroundColor =[UIColor colorWithWhite:0.0 alpha:0.7];
+    _btnSelectLocation.titleLabel.font=[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+    [_btnSelectLocation setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    
+    [_btnSelectLocation setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [_txvContent setPlaceholder:@"Viết đánh giá về địa điểm này"];
     
@@ -86,12 +92,7 @@
     
     [genarateInfoView addSubview:_lblBranchName];
     
-    UIImage *imageDirection=[UIImage imageNamed:@"img_direction_icon"];
-    UIImageView* imgDirectionView=[[UIImageView alloc] initWithFrame:CGRectMake(257,9+8 , 9, 9)];
-    [imgDirectionView setImage:imageDirection];
-    [genarateInfoView addSubview:imgDirectionView];
-    
-    _lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 210, 12)];
+    _lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 270, 12)];
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor grayColor];
     _lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(13)];
@@ -114,16 +115,14 @@
     [genarateInfoView addSubview:price_avgIcon];
     
     
-    CGRect frame=self.view.frame;
-    frame.origin.y-=genarateInfoView.frame.size.height;
-    [(UIScrollView*)_scrollView setFrame:frame];
     l=_txvContent.layer;
     [l setMasksToBounds:YES];
     [l setCornerRadius:5];
     [_btnCommentPost setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
     
     if (_branch)
-        [self displayBranchInfo];   
+        [self displayBranchInfo];
+    
 }
 
 - (void)viewDidUnload {
@@ -135,6 +134,8 @@
     [self setFifthStar:nil];
     [self setBtnCommentPost:nil];
     [self setTxvContent:nil];
+    [self setBgView:nil];
+    [self setBtnSelectLocation:nil];
     [super viewDidUnload];
 }
 
@@ -150,16 +151,10 @@
 
 #pragma mark - LocationTableVCDelegate
 - (void)displayBranchInfo {
+    if (!_bgView.isHidden) _bgView.hidden=YES;
     _lblBranchName.text=_branch.name;
     _lblAddress.text=_branch.address_full;
     _lblPrice.text=_branch.price_avg;
-    UIView* view=(UIView*)_scrollView;
-    view.transform=CGAffineTransformIdentity;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        view.transform=CGAffineTransformMakeTranslation(0, 85);
-    } completion:^(BOOL finished){
-        
-    }];
 }
 
 -(void)didPickWithLoation:(TVBranch *)_branchProfile{
@@ -185,7 +180,7 @@
         // because the screenshot intercepts the touches on the toggle button
         [self.slidingViewController resetTopView];
     } else {
-        if(_slidingViewController.underRightViewController)[self.slidingViewController anchorTopViewTo:ECRight];
+        [self.slidingViewController anchorTopViewTo:ECRight];
     }
 }
 
@@ -203,7 +198,7 @@
 }
 
 - (void)backBarButtonItem {
-    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     
     [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
     
@@ -213,7 +208,7 @@
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
     [backButtonView addSubview:doneButton];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
@@ -262,6 +257,12 @@
 }
 
 
+
+
+- (IBAction)selectLocationButtonClicked:(id)sender {
+    [self toggleTopView];
+}
+
 #pragma mark -
 #pragma mark Keyboard Controls Delegate
 
@@ -269,6 +270,5 @@
 {
     [self.view endEditing:NO];
 }
-
 
 @end

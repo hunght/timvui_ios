@@ -99,12 +99,12 @@ __strong UIActivityIndicatorView *_activityIndicatorView;
     };
     
     [self.view addSubview:self.locationPickerView];
-    UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_on"] forState:UIControlStateHighlighted];
     [_btnSearchBar addTarget:self action:@selector(searchBarButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
-    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
+    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -2);
     [backButtonView addSubview:_btnSearchBar];
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     self.navigationItem.rightBarButtonItem = searchButtonItem;

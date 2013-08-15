@@ -60,7 +60,7 @@
         [self addSubview:commentButton];
         
         
-        _height=commentButton.frame.size.height+commentButton.frame.origin.y+4+40;
+        _height=commentButton.frame.size.height+commentButton.frame.origin.y;
         CGRect _frame= CGRectMake(0, _view.frame.size.height, 320,_height );
         self.frame=_frame;
 //        [self setBackgroundColor:[UIColor colorWithRed:(25/255.0f) green:(25/255.0f) blue:(16/255.0f) alpha:.90f]];
@@ -70,7 +70,7 @@
         
         //Add open button
         
-        _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-44-5, 34, 34)];
+        _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34)];
         [_btnOpen setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
         [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_view addSubview:_btnOpen];
@@ -79,6 +79,8 @@
         self.btnCameraCallback =cameraCall;
         self.btnCommentCallback=commentCall;
     }
+    self.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin ;
+    _btnOpen.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin;
     return self;
 }
 

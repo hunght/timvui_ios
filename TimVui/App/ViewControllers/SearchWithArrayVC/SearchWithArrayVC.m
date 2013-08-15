@@ -130,7 +130,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     self.navigationItem.leftBarButtonItem = backButtonItem;
     
 
-    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     
     [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
     
@@ -140,7 +140,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 43)];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
     [backButtonView addSubview:doneButton];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];

@@ -13,6 +13,9 @@
 #import "UIPlaceHolderTextView.h"
 @class TPKeyboardAvoidingScrollView;
 @interface CommentVC : UIViewController<UITextViewDelegate,LocationTableVCDelegate,BSKeyboardControlsDelegate>
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (weak, nonatomic) IBOutlet UIButton *btnSelectLocation;
+- (IBAction)selectLocationButtonClicked:(id)sender;
 @property(nonatomic, assign)ECSlidingViewController *slidingViewController;
 @property (nonatomic, strong)UILabel *lblBranchName;
 @property (nonatomic, strong)UILabel *lblAddress;
