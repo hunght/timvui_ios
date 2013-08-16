@@ -185,6 +185,7 @@
         
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
     }
+    
     if ([GlobalDataUser sharedAccountClient].dicDistrictSearchParam&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
         NSMutableArray*arr=[[NSMutableArray alloc] init];
         for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
@@ -194,6 +195,7 @@
         }
         [params setValue:arr  forKey:@"district_aliases"];
     }
+    
     if ([GlobalDataUser sharedAccountClient].dicPublicLocation)[params setValue:[[GlobalDataUser sharedAccountClient].dicPublicLocation valueForKey:@"alias"] forKey:@"public_location_aliases"];
     
     if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {

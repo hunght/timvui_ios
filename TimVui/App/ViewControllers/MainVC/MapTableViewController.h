@@ -11,13 +11,15 @@
 #import "UINavigationBar+JTDropShadow.h"
 #import "SearchVC.h"
 #import "TVBranches.h"
-
-@interface MapTableViewController : UIViewController<LocationPickerViewDelegate,UITableViewDataSource, UITableViewDelegate,SearchVCDelegate,GMSMapViewDelegate>
+#import "SBTableAlert.h"
+@interface MapTableViewController : UIViewController<LocationPickerViewDelegate,UITableViewDataSource,SBTableAlertDelegate, SBTableAlertDataSource, UITableViewDelegate,SearchVCDelegate,GMSMapViewDelegate>
 @property (nonatomic, strong) LocationPickerView *locationPickerView;
 @property(nonatomic,strong)TVBranches *branches;
 @property(nonatomic,assign)CLLocationCoordinate2D lastPosition;
-@property(nonatomic,assign)CLLocationCoordinate2D currentCameraPosition;
+@property(nonatomic,assign)float lastDistanceSearch;
+@property(nonatomic,assign)CLLocationCoordinate2D currentCameraPositionSearch;
 @property(nonatomic,strong)NSDate* lastUpdate;
 @property(nonatomic, strong)TVNotification* notificationView;
 @property(nonatomic, strong)NSArray* arrDics;
+
 @end

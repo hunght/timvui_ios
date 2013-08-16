@@ -5,7 +5,7 @@
 //  Created by Hoang The Hung on 6/13/13.
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
-
+#import <MapKit/MapKit.h>
 #import "MapTableViewController.h"
 #import "TVBranch.h"
 #import "GlobalDataUser.h"
@@ -25,9 +25,11 @@
 #import "TVCoupons.h"
 #import "MyNavigationController.h"
 #import "TSMessage.h"
+
 @interface MapTableViewController (){
 @private
     __strong UIActivityIndicatorView *_activityIndicatorView;
+    __strong  SBTableAlert *alert;
 }
 
 @end
@@ -57,8 +59,7 @@
 
 #pragma mark - ViewController
 
-- (void)loadView {
-    [super loadView];
+- (void)getBranchesForView {
     NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
     NSDictionary *params = nil;
     CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
@@ -67,17 +68,22 @@
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
                    @"latlng": strLatLng};
-    }else
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"]};
+    }
     
+    _currentCameraPositionSearch=location;
     [self postSearchBranch:[[NSMutableDictionary alloc] initWithDictionary:params] withReturnFromSearchScreenYES:NO];
+}
+
+- (void)loadView {
+    [super loadView];
+    
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    _lastDistanceSearch=kDistanceSearchMapDefault.floatValue;
     // The LocationPickerView can be created programmatically (see below) or
     // using Storyboards/XIBs (see Storyboard file).
     self.locationPickerView = [[LocationPickerView alloc] initWithFrame:self.view.bounds];
@@ -109,6 +115,29 @@
     UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     [self initNotificationView];
+    
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if ([GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary* dic=[defaults dictionaryForKey:kGetCityDataUser];
+        if (dic) {
+            [GlobalDataUser sharedAccountClient].dicCity=    dic;
+            [GlobalDataUser sharedAccountClient].userLocation=[dic safeLocationForKey:@"latlng"];
+            [self getBranchesForView];
+        }else if(([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))){
+            
+            alert	= [[SBTableAlert alloc] initWithTitle:@"Single Select" cancelButtonTitle:@"Cancel" messageFormat:nil];
+            [alert setDelegate:self];
+            [alert setDataSource:self];
+            
+            [alert show];
+            //        NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
+        }
+    }else
+        [self getBranchesForView];
+   
 }
 
 -(void)viewDidUnload{
@@ -195,6 +224,57 @@
     
 }
 
+#pragma mark - SBTableAlertDataSource
+
+- (UITableViewCell *)tableAlert:(SBTableAlert *)tableAlert cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	UITableViewCell *cell;
+	
+	if (tableAlert.view.tag == 0 || tableAlert.view.tag == 1) {
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] ;
+	} else {
+		// Note: SBTableAlertCell
+		cell = [[SBTableAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] ;
+	}
+	
+	[cell.textLabel setText:[[[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:indexPath.row] safeStringForKey:@"name"]];
+	
+	return cell;
+}
+
+- (NSInteger)tableAlert:(SBTableAlert *)tableAlert numberOfRowsInSection:(NSInteger)section {
+    return [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] count];
+}
+
+- (NSInteger)numberOfSectionsInTableAlert:(SBTableAlert *)tableAlert {
+    return 1;
+}
+
+//- (NSString *)tableAlert:(SBTableAlert *)tableAlert titleForHeaderInSection:(NSInteger)section {
+//	if (tableAlert.view.tag == 3)
+//		return [NSString stringWithFormat:@"Section Header %d", section];
+//	else
+//		return nil;
+//}
+
+#pragma mark - SBTableAlertDelegate
+
+- (void)tableAlert:(SBTableAlert *)tableAlert didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [GlobalDataUser sharedAccountClient].dicCity=     [[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:indexPath.row];
+    [GlobalDataUser sharedAccountClient].userLocation=[[GlobalDataUser sharedAccountClient].dicCity safeLocationForKey:@"latlng"];
+    [self getBranchesForView];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:[GlobalDataUser sharedAccountClient].dicCity forKey:kGetCityDataUser];
+    [defaults synchronize];
+    
+    [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=NO;
+}
+
+- (void)tableAlert:(SBTableAlert *)tableAlert didDismissWithButtonIndex:(NSInteger)buttonIndex {
+	
+    
+}
+
 #pragma mark - Helper
 
 -(void)showBranchOnMap{
@@ -224,6 +304,24 @@
                          failure:nil];
         i++;
     }
+}
+
+-(void)updateCameraMapPosition:(CLLocationCoordinate2D) latlng{
+    
+    CLLocationCoordinate2D center = _currentCameraPositionSearch;
+    
+    //    float radius = [self getDistanceMetresFrom:_currentCameraPositionSearch toLocation:latlng]*1000; //radius in meters (25km)
+    float radius=3000;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(center, radius*2, radius*2);
+    
+    CLLocationCoordinate2D  northEast = CLLocationCoordinate2DMake(region.center.latitude - region.span.latitudeDelta/2, region.center.longitude - region.span.longitudeDelta/2);
+    CLLocationCoordinate2D  southWest = CLLocationCoordinate2DMake(region.center.latitude + region.span.latitudeDelta/2, region.center.longitude + region.span.longitudeDelta/2);
+    
+    GMSCoordinateBounds* bounds = [[GMSCoordinateBounds alloc]
+                                   initWithCoordinate:northEast
+                                   coordinate: southWest];
+    GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:bounds];
+    [_locationPickerView.mapView animateWithCameraUpdate:update];
 }
 
 - (void)postSearchBranch:(NSMutableDictionary*)params withReturnFromSearchScreenYES:(BOOL)isSearchYES{
@@ -266,7 +364,7 @@
     if (!self.branches) {
         self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     }
-    _lastPosition=_currentCameraPosition;
+    _lastPosition=_currentCameraPositionSearch;
     
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _activityIndicatorView.hidesWhenStopped = YES;
@@ -274,10 +372,15 @@
     
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            
+            // View map with contain all search items
             if (weakSelf.branches.count>0&&isSearchYES) {
-                TVBranch* branch=weakSelf.branches[0];
-                _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:branch.latlng zoom:15];
+                TVBranch* branch=weakSelf.branches.items.lastObject;
+                [self updateCameraMapPosition:branch.latlng];
+                
+                
             }
+            
             if (weakSelf.branches.count==0) {
                 [_locationPickerView expandMapView:nil];
                 [self alertWhenNoDataLoaded];
@@ -303,7 +406,7 @@
      initWithLatitude: coord2.latitude
      longitude: coord2.longitude];
     
-    return [location1 distanceFromLocation: location2];
+    return [location1 distanceFromLocation: location2]/1000; //KM
 }
 
 #pragma mark - UIscrollViewDelegate
@@ -315,7 +418,9 @@
 #pragma mark - SearchVCDelegate
 -(void)didClickedOnButtonSearch:(NSMutableDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
     _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:15];
+    _currentCameraPositionSearch=latlng;
     [self postSearchBranch:params withReturnFromSearchScreenYES:YES];
+    
 }
 -(void)didPickDistricts:(NSArray *)arrDics{
     _arrDics=arrDics;
@@ -331,28 +436,28 @@
 
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    NSLog(@"_lastPosition.latitude=%f",_lastPosition.latitude);
+    NSLog(@"_lastDistanceSearch/2=%f",_lastDistanceSearch/2);
     if (_lastPosition.latitude) {
         double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition];
         NSLog(@"distance ==== %f",distance);
-        if (distance>kTVDistanceMovingMap) {
+        if (distance>_lastDistanceSearch/2) {
             if ([_lastUpdate isLaterThanSeconds:2]) {
                 CLLocationCoordinate2D bottomLeftCoord =
                 mapView.projection.visibleRegion.nearLeft;
                 double distanceMetres=[self getDistanceMetresFrom:position.target toLocation:bottomLeftCoord];
-                int radiusKm=distanceMetres/1000;
+                float radiusKm=distanceMetres;
                 NSDictionary *params = nil;
                 CLLocationCoordinate2D location=position.target;
                 
-                if (location.latitude) {
-                    NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-                    params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"],@"latlng": strLatLng
-                               ,@"distance": [NSString stringWithFormat:@"%d",(radiusKm)?radiusKm:1]
-                               };
-                }
+                NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+                float distance=(radiusKm<kDistanceSearchMapDefault.floatValue)?radiusKm:kDistanceSearchMapDefault.floatValue;
+                params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"],@"latlng": strLatLng
+                           ,@"distance": [NSString stringWithFormat:@"%f",distance]
+                           };
                 
+                _lastDistanceSearch=distance;
                 [self performSelector:@selector(postSearchBranch:withReturnFromSearchScreenYES:) withObject:[[NSMutableDictionary alloc] initWithDictionary:params] afterDelay:2];
-                _currentCameraPosition=position.target;
+                _currentCameraPositionSearch=position.target;
             }
         }
     }else

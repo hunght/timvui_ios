@@ -47,7 +47,7 @@
 @property(nonatomic,strong)NSString *direction;
 @property(nonatomic,readonly)BOOL isCommentEvent;
 @property(nonatomic,readonly)BOOL read;
-
+@property (assign, nonatomic) BOOL isHasKaraokeYES;
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;
 

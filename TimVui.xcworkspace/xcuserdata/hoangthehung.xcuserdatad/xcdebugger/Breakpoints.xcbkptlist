@@ -7,39 +7,52 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/CameraVC/PhotoBrowseTableVC/PhotoBrowseCell/PhotoBrowseCell.m"
-         timestampString = "397972197.697435"
+         filePath = "TimVui/App/ViewControllers/SearchVC/SearchVC.m"
+         timestampString = "398318318.491824"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
-         landmarkName = "-pickButtonClicked:"
+         startingLineNumber = "177"
+         endingLineNumber = "177"
+         landmarkName = "-prepareForSettingSearchWithParams:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
-         timestampString = "398255546.065291"
+         filePath = "TimVui/App/ViewControllers/SearchVC/SearchVC.m"
+         timestampString = "398318320.823085"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "469"
-         endingLineNumber = "469"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         startingLineNumber = "180"
+         endingLineNumber = "180"
+         landmarkName = "-prepareForSettingSearchWithParams:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
-         timestampString = "398255547.873969"
+         filePath = "TimVui/App/ViewControllers/WelcomeVC/WelcomeVC.m"
+         timestampString = "398332879.161596"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "463"
-         endingLineNumber = "463"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         startingLineNumber = "84"
+         endingLineNumber = "84"
+         landmarkName = "-didReceivePublicIPandPort:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/WelcomeVC/WelcomeVC.m"
+         timestampString = "398332879.161596"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
+         landmarkName = "-didReceivePublicIPandPort:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

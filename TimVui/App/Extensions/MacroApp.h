@@ -16,6 +16,7 @@
 
 
 // get params from server
+#define kGetCityDataUser                    @"kGetCityDataUser"
 #define kDataGetParamData                    @"kDataGetParamData"
 #define kGetCityDistrictData                    @"kGetCityDistrictData"
 #define kGetDistrictHasPublicLocationData   @"kGetDistrictHasPublicLocationData"

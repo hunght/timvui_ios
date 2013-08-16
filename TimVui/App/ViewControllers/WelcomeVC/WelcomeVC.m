@@ -51,8 +51,8 @@
 
 - (void)checkLocationServiceAvaible
 {
-    if ([CLLocationManager locationServicesEnabled]==NO) {
-        
+    
+    if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Location Service Disabled"
                                         withMessage:@"To re-enable, please go to Settings and turn on Location Service for this app."
@@ -60,16 +60,8 @@
                                        withDuration:10.0
                                        withCallback:nil
                                          atPosition:TSMessageNotificationPositionTop];
-    }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
-        
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Location Service Disabled"
-                                        withMessage:@"To re-enable, please go to Settings and turn on Location Service for this app."
-                                           withType:TSMessageNotificationTypeError
-                                       withDuration:10.0
-                                       withCallback:nil
-                                         atPosition:TSMessageNotificationPositionTop];
-        
+        [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
+        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     }else{
         // Do any additional setup after loading the view from its nib.
         self.locationManager = [[CLLocationManager alloc] init];
@@ -77,10 +69,6 @@
         [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
         [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         [self.locationManager startMonitoringSignificantLocationChanges];
-    }
-    
-    if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
-        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     }
 }
 
@@ -105,6 +93,7 @@
 {
     [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",newLocation.coordinate.latitude,newLocation.coordinate.longitude];
+    [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=NO;
     [self didReceivePublicIPandPort:strLatLng];
     
     NSLog(@"%f",newLocation.coordinate.latitude);
@@ -119,6 +108,7 @@
 	location.latitude=20.882551;
     location.longitude=105.776947;
     [GlobalDataUser sharedAccountClient].userLocation=location;
+    [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
     [_locationManager stopMonitoringSignificantLocationChanges];
 
 }

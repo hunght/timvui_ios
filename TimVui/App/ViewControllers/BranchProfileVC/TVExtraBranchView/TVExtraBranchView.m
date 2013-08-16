@@ -44,7 +44,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        int pad=(_isHasKaraokeYES)?98:0;
+        int pad=(_branch.isHasKaraokeYES)?98:0;
         
         _viewScroll= [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 41)];
         [self addSubview:_viewScroll];
@@ -52,7 +52,7 @@
         [_viewScroll setBackgroundColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:1.0f]];
         [_viewScroll setShowsHorizontalScrollIndicator:NO];
         UIImageView* image=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 384+pad, 41)];
-        if (_isHasKaraokeYES) image.image=[UIImage imageNamed:@"img_profile_branch_scrollView_karaoke"];
+        if (_branch.isHasKaraokeYES) image.image=[UIImage imageNamed:@"img_profile_branch_scrollView_karaoke"];
         else image.image=[UIImage imageNamed:@"img_profile_branch_scrollView"];
         
         [_viewScroll addSubview:image];
@@ -87,7 +87,7 @@
         [menuButton addTarget:self action:@selector(menuButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_viewScroll addSubview:menuButton];
         
-        if (_isHasKaraokeYES) {
+        if (_branch.isHasKaraokeYES) {
             karaokeButton = [[UIButton alloc] initWithFrame:CGRectMake(199, 0, 98, 41)];
             [karaokeButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
             [karaokeButton setTitle:@"MENU" forState:UIControlStateNormal];
@@ -159,6 +159,12 @@
         [_scrollEvent setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
         [_scrollEvent setUserInteractionEnabled:YES];
         [self addSubview:_scrollEvent];
+    }
+    if (!_scrollKaraoke) {
+        _scrollKaraoke=[[UIScrollView alloc] initWithFrame:CGRectMake(0, 41, 320,self.superview.bounds.size.height- kTableViewHeightOffset)];
+        [_scrollKaraoke setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+        [_scrollKaraoke setUserInteractionEnabled:YES];
+        [self addSubview:_scrollKaraoke];
     }
     if (!_tableView) {
         _tableView=[[UITableView alloc] initWithFrame:CGRectMake(0, 41, 320,self.superview.bounds.size.height- kTableViewHeightOffset) style:UITableViewStylePlain];
@@ -270,41 +276,132 @@
     }
 }
 
+
+- (void)addKaraokeToInfoView
+{
+    int height=15;
+    CALayer *l;
+    if (_branch.events.count>0) {
+        eventView=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 90)];
+        [eventView setBackgroundColor:[UIColor whiteColor]];
+        l=eventView.layer;
+        [self setConnerBorderWithLayer:l];
+        
+        UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
+        lblTitle.backgroundColor = [UIColor clearColor];
+        lblTitle.textColor = [UIColor blackColor];
+        lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
+        lblTitle.text=@"Sự kiện";
+        [eventView addSubview:lblTitle];
+        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+        [eventView addSubview:imageLine];
+        
+        //EVENT
+        height =imageLine.frame.origin.y+imageLine.frame.size.height+15;
+        for (TVEvent* event in _branch.events.items) {
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,height , 290, 23)];
+            lblDetailRow.backgroundColor = [UIColor clearColor];
+            lblDetailRow.textColor = [UIColor blackColor];
+            lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
+            //            NSLog(@"event=%@",event.title);
+            lblDetailRow.text = event.title;
+            [lblDetailRow resizeToStretch];
+            height=lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height+ 3;
+            [eventView addSubview:lblDetailRow];
+            for (NSString*addressStr in event.addresses) {
+                UILabel *lblAddress= [[UILabel alloc] initWithFrame:CGRectMake(10, height, 290, 23)];
+                lblAddress.backgroundColor = [UIColor clearColor];
+                lblAddress.textColor = [UIColor colorWithRed:(11/255.0f) green:(154 /255.0f) blue:(227/255.0f) alpha:1.0f];
+                lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+                lblAddress.text=addressStr;
+                
+                [lblDetailRow resizeToStretch];
+                [eventView addSubview:lblAddress];
+                height=lblAddress.frame.origin.y+lblAddress.frame.size.height+ 3;
+            }
+            
+            NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
+            //    NSLog(@"%@",_coupon.content);
+            //continue building the string
+            [html appendString:event.content];
+            [html appendString:@"</body></html>"];
+            
+            //instantiate the web view
+            UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, height, 290, 200)];
+            [webView.scrollView setScrollEnabled:NO];
+            //make the background transparent
+            [webView setBackgroundColor:[UIColor clearColor]];
+            
+            //pass the string to the webview
+            [webView loadHTMLString:[html description] baseURL:nil];
+            
+            //add it to the subview
+            [webView sizeToFit];
+            // assuming your self.viewer is a UIWebView
+            [webView setDelegate:self];
+            [webView setAlpha:0.0];
+            [eventView addSubview:webView];
+        }
+        [self.scrollKaraoke addSubview:eventView];
+    }
+}
+
+
+
 #pragma mark - UIWebViewDelegate
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
-    [webView setAlpha:1.0];
-    CGRect newBounds = webView.frame;
-    newBounds.size.height = webView.scrollView.contentSize.height;
-    webView.frame = newBounds;
-    
-    int height_p=webView.frame.origin.y+webView.frame.size.height+10;
-    CGRect frame=eventView.frame;
-    frame.size.height=height_p;
-    eventView.frame=frame;
-    
-    height_p=eventView.frame.origin.y+eventView.frame.size.height+30;
-    _scrollEvent.scrollEnabled=YES;
-    [_scrollEvent setContentSize:CGSizeMake(320, height_p)];
+    if (_currentTableType==kTVEvent) {
+        [webView setAlpha:1.0];
+        CGRect newBounds = webView.frame;
+        newBounds.size.height = webView.scrollView.contentSize.height;
+        webView.frame = newBounds;
+        
+        int height_p=webView.frame.origin.y+webView.frame.size.height+10;
+        CGRect frame=eventView.frame;
+        frame.size.height=height_p;
+        eventView.frame=frame;
+        
+        height_p=eventView.frame.origin.y+eventView.frame.size.height+30;
+        _scrollEvent.scrollEnabled=YES;
+        [_scrollEvent setContentSize:CGSizeMake(320, height_p)];
+    }else if (_currentTableType==kTVKaraoke) {
+        [webView setAlpha:1.0];
+        CGRect newBounds = webView.frame;
+        newBounds.size.height = webView.scrollView.contentSize.height;
+        webView.frame = newBounds;
+        
+        int height_p=webView.frame.origin.y+webView.frame.size.height+10;
+        CGRect frame=eventView.frame;
+        frame.size.height=height_p;
+        eventView.frame=frame;
+        
+        height_p=eventView.frame.origin.y+eventView.frame.size.height+30;
+        _scrollKaraoke.scrollEnabled=YES;
+        [_scrollKaraoke setContentSize:CGSizeMake(320, height_p)];
+    }
+
     
 }
 
 #pragma mark Actions
 
 -(void)eventButtonClicked:(UIButton*)sender{
-
+    _currentTableType=kTVEvent;
     [self resetToUnselectedButtons];
     [eventButton setSelected:YES];
     [self initTableView];
     [self addEventToInfoView ];
     [self.tableView setHidden:YES];
     [self.scrollEvent setHidden:NO];
+    [self.scrollKaraoke setHidden:YES];
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
 }
 
 -(void)similarButtonClicked:(UIButton*)sender{
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
-    
+    [self.scrollKaraoke setHidden:YES];
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
@@ -318,6 +415,7 @@
 -(void)menuButtonClicked:(UIButton*)sender{
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
+    [self.scrollKaraoke setHidden:YES];
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
@@ -329,15 +427,21 @@
 }
 
 -(void)karaokeButtonClicked:(UIButton*)sender{
+    _currentTableType=kTVKaraoke;
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
+    [self initTableView];
+    [self addEventToInfoView ];
+    [self.tableView setHidden:YES];
+    [self.scrollKaraoke setHidden:NO];
+    [self.scrollEvent setHidden:YES];
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
 }
 
 -(void)commentButtonClicked:(UIButton*)sender{
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
-    
+    [self.scrollKaraoke setHidden:YES];
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];

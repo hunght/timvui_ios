@@ -27,9 +27,7 @@
 	self.branchID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
     
-    NSLog(@"self.name===%@",self.name);
 	self.arrURLImages = [dict safeDictForKey:@"image"];
-    
 	self.price_avg = [dict safeStringForKey:@"price_avg"];
     self.coupon_count=[dict safeIntegerForKey:@"coupon_count"];
     
@@ -52,7 +50,7 @@
     self.images = [dict safeDictForKey:@"images"];
     self.phone = [dict safeStringForKey:@"phone"];
     self.cats = [dict safeDictForKey:@"cats"];
-     NSLog(@"self.images===%@",self.images);
+    
     self.district = [dict safeDictForKey:@"district"];
     
     self.space = [dict safeStringForKey:@"space"];
@@ -70,7 +68,6 @@
     self.decoration = [[[dict safeDictForKey:@"params"] safeDictForKey:@"khong-gian"] safeDictForKey:@"params"];
     self.cuisine = [[[dict safeDictForKey:@"params"] safeDictForKey:@"mon-an"] safeDictForKey:@"params"];
     
-    NSLog(@"services=%@",_services);
     self.space = [dict safeStringForKey:@"space"];
     self.direction = [dict safeStringForKey:@"direction"];
     self.public_locations = [dict safeDictForKey:@"public_locations"];

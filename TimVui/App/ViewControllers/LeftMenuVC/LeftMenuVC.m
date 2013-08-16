@@ -453,11 +453,13 @@ enum {
             [SharedAppDelegate loadWhenInternetConnected];
         return;
     }
-    if (isNotTheFirstTimeOpenHomeYES==NO&&indexPath.section==kSection2Services&&indexPath.row==kS2Home) {
+    if (isNotTheFirstTimeOpenHomeYES==NO) {
         isNotTheFirstTimeOpenHomeYES=YES;
-        [self toggleTopView];
-        lastIndexPath=indexPath;
-        return;
+        if (indexPath.section==kSection2Services&&indexPath.row==kS2Home) {
+            [self toggleTopView];
+            lastIndexPath=indexPath;
+            return;
+        }
     }
     if (lastIndexPath.section==indexPath.section&&lastIndexPath.row==indexPath.row) {
         if (lastIndexPath.section!=kSection1UserAccount) {
