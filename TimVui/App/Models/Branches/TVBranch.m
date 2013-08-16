@@ -4,6 +4,7 @@
 #import "NSString+Extensions.h"
 #import "NSDictionary+Extensions.h"
 #import "TVCoupons.h"
+#import "TVKaraokes.h"
 @interface TVBranch ()
 @end
 
@@ -31,6 +32,14 @@
 	self.price_avg = [dict safeStringForKey:@"price_avg"];
     self.coupon_count=[dict safeIntegerForKey:@"coupon_count"];
     
+    self.coupons = [[TVCoupons alloc] init];
+	[self.coupons   setValues:[dict safeArrayForKey:@"coupons"] ];
+    
+    if ([dict objectForKey:@"karaokes"]) {
+        _isHasKaraokeYES=YES;
+        self.karaokes = [[TVKaraokes alloc] init];
+        [self.karaokes   setValues:[[dict safeDictForKey:@"karaokes"] allValues]];
+    }
     self.coupons = [[TVCoupons alloc] init];
 	[self.coupons   setValues:[dict safeArrayForKey:@"coupons"] ];
     

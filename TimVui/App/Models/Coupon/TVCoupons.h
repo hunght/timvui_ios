@@ -2,8 +2,8 @@
 #import "GHCollection.h"
 
 
-@interface TVCoupons : GHCollection
-@property(nonatomic,strong)NSDate *lastUpdate;
+@interface TVCoupons : NSObject
 
-- (id)initWithPath:(NSString *)path;
+@property(nonatomic,strong)NSMutableArray *items;
+- (void)setValues:(id)values;
 @end

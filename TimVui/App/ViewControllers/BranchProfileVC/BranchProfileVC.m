@@ -134,7 +134,7 @@
 - (void)addCouponToInfoView:(int *)height_p
 {
     CALayer *l;
-    if (_branch.coupons.count>0) {
+    if (_branch.coupons.items.count>0) {
         UIView* couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, *height_p, 320-6*2, 90)];
         [couponBranch setBackgroundColor:[UIColor whiteColor]];
         l=couponBranch.layer;

@@ -1,8 +1,8 @@
-#import "TVEvents.h"
-#import "TVEvent.h"
+#import "TVKaraokes.h"
+#import "TVKaraoke.h"
 
 
-@implementation TVEvents
+@implementation TVKaraokes
 
 
 
@@ -12,7 +12,7 @@
     
 	for (NSDictionary *dict in values) {
         
-		TVEvent *branch = [[TVEvent alloc] initWithDict:dict];
+		TVKaraoke *branch = [[TVKaraoke alloc] initWithDict:dict];
         
 		[self.items addObject:branch];
 	}

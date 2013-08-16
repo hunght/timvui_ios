@@ -3,7 +3,7 @@
 #import "GHResource.h"
 #import "TVCuisines.h"
 #import "TVEvents.h"
-@class GHUser, TVComment,TVCoupons,TVEvent;
+@class GHUser, TVComment,TVCoupons,TVEvent,TVKaraoke,TVKaraokes;
 
 @interface TVBranch : NSObject
 @property(nonatomic,strong)NSString *branchID;
@@ -12,6 +12,7 @@
 @property(nonatomic,strong)NSDictionary *arrURLImages;
 @property(nonatomic,assign)int coupon_count;
 @property(nonatomic,strong)TVCoupons *coupons;
+@property(nonatomic,strong)TVKaraokes *karaokes;
 @property(nonatomic,assign)int event_count;
 @property(nonatomic,strong)TVEvents *events;
 @property(nonatomic,strong)TVCuisines *menu;

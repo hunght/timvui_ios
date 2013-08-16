@@ -41,8 +41,6 @@
 		5511DB35179E64D30071ABCF /* UVNTinTucHepThem.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5511DB33179E64D30071ABCF /* UVNTinTucHepThem.TTF */; };
 		5515BC0217AF468000A11CF4 /* TVBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BBFA17AF468000A11CF4 /* TVBranch.m */; };
 		5515BC0317AF468000A11CF4 /* TVBranches.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BBFC17AF468000A11CF4 /* TVBranches.m */; };
-		5515BC0417AF468000A11CF4 /* TVEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BBFF17AF468000A11CF4 /* TVEvent.m */; };
-		5515BC0517AF468000A11CF4 /* TVEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BC0117AF468000A11CF4 /* TVEvents.m */; };
 		5516D1A51758AB3D00A0C6CE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A41758AB0100A0C6CE /* AVFoundation.framework */; };
 		5516D1A71758AC6B00A0C6CE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A61758AC2F00A0C6CE /* CoreText.framework */; };
 		551BB1D7178A9D590072FD81 /* CoupBranchProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1D1178A9D590072FD81 /* CoupBranchProfileVC.m */; };
@@ -533,6 +531,10 @@
 		55CF087E17BA31C2006556A4 /* EventVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CF087317BA31C2006556A4 /* EventVC.xib */; };
 		55CF087F17BA31C2006556A4 /* TVEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF087617BA31C2006556A4 /* TVEventCell.m */; };
 		55CF453A17BE060A009C4308 /* SBTableAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF453917BE060A009C4308 /* SBTableAlert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		55CF454517BE37E9009C4308 /* TVEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF453D17BE37E9009C4308 /* TVEvent.m */; };
+		55CF454617BE37E9009C4308 /* TVEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF453F17BE37E9009C4308 /* TVEvents.m */; };
+		55CF454717BE37E9009C4308 /* TVKaraoke.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF454217BE37E9009C4308 /* TVKaraoke.m */; };
+		55CF454817BE37E9009C4308 /* TVKaraokes.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF454417BE37E9009C4308 /* TVKaraokes.m */; };
 		55CFAF1617B5C6B2001B2E2C /* PageSevenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CFAF1417B5C6B2001B2E2C /* PageSevenView.m */; };
 		55CFAF1717B5C6B2001B2E2C /* PageSevenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF1517B5C6B2001B2E2C /* PageSevenView.xib */; };
 		55CFAF1917B5CAE5001B2E2C /* skin_tu_suong_text.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CFAF1817B5CAE5001B2E2C /* skin_tu_suong_text.png */; };
@@ -695,10 +697,6 @@
 		5515BBFA17AF468000A11CF4 /* TVBranch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVBranch.m; sourceTree = "<group>"; };
 		5515BBFB17AF468000A11CF4 /* TVBranches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVBranches.h; sourceTree = "<group>"; };
 		5515BBFC17AF468000A11CF4 /* TVBranches.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVBranches.m; sourceTree = "<group>"; };
-		5515BBFE17AF468000A11CF4 /* TVEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEvent.h; sourceTree = "<group>"; };
-		5515BBFF17AF468000A11CF4 /* TVEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEvent.m; sourceTree = "<group>"; };
-		5515BC0017AF468000A11CF4 /* TVEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEvents.h; sourceTree = "<group>"; };
-		5515BC0117AF468000A11CF4 /* TVEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEvents.m; sourceTree = "<group>"; };
 		5516D1A41758AB0100A0C6CE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5516D1A61758AC2F00A0C6CE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		551BB1D0178A9D590072FD81 /* CoupBranchProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoupBranchProfileVC.h; sourceTree = "<group>"; };
@@ -1264,6 +1262,14 @@
 		55CF087617BA31C2006556A4 /* TVEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEventCell.m; sourceTree = "<group>"; };
 		55CF453817BE060A009C4308 /* SBTableAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTableAlert.h; sourceTree = "<group>"; };
 		55CF453917BE060A009C4308 /* SBTableAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTableAlert.m; sourceTree = "<group>"; };
+		55CF453C17BE37E9009C4308 /* TVEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEvent.h; sourceTree = "<group>"; };
+		55CF453D17BE37E9009C4308 /* TVEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEvent.m; sourceTree = "<group>"; };
+		55CF453E17BE37E9009C4308 /* TVEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEvents.h; sourceTree = "<group>"; };
+		55CF453F17BE37E9009C4308 /* TVEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEvents.m; sourceTree = "<group>"; };
+		55CF454117BE37E9009C4308 /* TVKaraoke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVKaraoke.h; sourceTree = "<group>"; };
+		55CF454217BE37E9009C4308 /* TVKaraoke.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVKaraoke.m; sourceTree = "<group>"; };
+		55CF454317BE37E9009C4308 /* TVKaraokes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVKaraokes.h; sourceTree = "<group>"; };
+		55CF454417BE37E9009C4308 /* TVKaraokes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVKaraokes.m; sourceTree = "<group>"; };
 		55CFAF1317B5C6B2001B2E2C /* PageSevenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageSevenView.h; sourceTree = "<group>"; };
 		55CFAF1417B5C6B2001B2E2C /* PageSevenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageSevenView.m; sourceTree = "<group>"; };
 		55CFAF1517B5C6B2001B2E2C /* PageSevenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageSevenView.xib; sourceTree = "<group>"; };
@@ -1592,17 +1598,6 @@
 				5515BBFC17AF468000A11CF4 /* TVBranches.m */,
 			);
 			path = Branches;
-			sourceTree = "<group>";
-		};
-		5515BBFD17AF468000A11CF4 /* Events */ = {
-			isa = PBXGroup;
-			children = (
-				5515BBFE17AF468000A11CF4 /* TVEvent.h */,
-				5515BBFF17AF468000A11CF4 /* TVEvent.m */,
-				5515BC0017AF468000A11CF4 /* TVEvents.h */,
-				5515BC0117AF468000A11CF4 /* TVEvents.m */,
-			);
-			path = Events;
 			sourceTree = "<group>";
 		};
 		551BB1CF178A9D590072FD81 /* CouponBranchProfileVC */ = {
@@ -2619,8 +2614,9 @@
 		55C8C0F417052E4C007D8E78 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				55CF453B17BE37E8009C4308 /* Events */,
+				55CF454017BE37E9009C4308 /* Karaokes */,
 				5515BBF817AF468000A11CF4 /* Branches */,
-				5515BBFD17AF468000A11CF4 /* Events */,
 				551BB1DC178AC34A0072FD81 /* Coupon */,
 				551BB1E1178AC34A0072FD81 /* Cuisine */,
 				55F25E03174238BB003EB902 /* Users */,
@@ -2759,6 +2755,28 @@
 				55CF453917BE060A009C4308 /* SBTableAlert.m */,
 			);
 			path = SBTableAlert;
+			sourceTree = "<group>";
+		};
+		55CF453B17BE37E8009C4308 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				55CF453C17BE37E9009C4308 /* TVEvent.h */,
+				55CF453D17BE37E9009C4308 /* TVEvent.m */,
+				55CF453E17BE37E9009C4308 /* TVEvents.h */,
+				55CF453F17BE37E9009C4308 /* TVEvents.m */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		55CF454017BE37E9009C4308 /* Karaokes */ = {
+			isa = PBXGroup;
+			children = (
+				55CF454117BE37E9009C4308 /* TVKaraoke.h */,
+				55CF454217BE37E9009C4308 /* TVKaraoke.m */,
+				55CF454317BE37E9009C4308 /* TVKaraokes.h */,
+				55CF454417BE37E9009C4308 /* TVKaraokes.m */,
+			);
+			path = Karaokes;
 			sourceTree = "<group>";
 		};
 		55D391DF177D767300BE41B7 /* TMQuiltView */ = {
@@ -3632,8 +3650,6 @@
 				55941C0A17ACE7BF001F14D0 /* TVFilter.m in Sources */,
 				5515BC0217AF468000A11CF4 /* TVBranch.m in Sources */,
 				5515BC0317AF468000A11CF4 /* TVBranches.m in Sources */,
-				5515BC0417AF468000A11CF4 /* TVEvent.m in Sources */,
-				5515BC0517AF468000A11CF4 /* TVEvents.m in Sources */,
 				556681B317AF86AA00B53683 /* ManualVC.m in Sources */,
 				556681B517AF86AA00B53683 /* TVManualCell.m in Sources */,
 				55E7E34C17B3541400F7C978 /* PageThreeView.m in Sources */,
@@ -3651,6 +3667,10 @@
 				5520472D17BB351C003F0506 /* NearbyCouponVC.m in Sources */,
 				5520472F17BB351C003F0506 /* ReceivedCouponVC.m in Sources */,
 				55CF453A17BE060A009C4308 /* SBTableAlert.m in Sources */,
+				55CF454517BE37E9009C4308 /* TVEvent.m in Sources */,
+				55CF454617BE37E9009C4308 /* TVEvents.m in Sources */,
+				55CF454717BE37E9009C4308 /* TVKaraoke.m in Sources */,
+				55CF454817BE37E9009C4308 /* TVKaraokes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -210,7 +210,7 @@
 {
     int height=15;
     CALayer *l;
-    if (_branch.events.count>0) {
+    if (_branch.events.items.count>0) {
         eventView=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 90)];
         [eventView setBackgroundColor:[UIColor whiteColor]];
         l=eventView.layer;
@@ -281,7 +281,7 @@
 {
     int height=15;
     CALayer *l;
-    if (_branch.events.count>0) {
+    if (_branch.events.items.count>0) {
         eventView=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 90)];
         [eventView setBackgroundColor:[UIColor whiteColor]];
         l=eventView.layer;
