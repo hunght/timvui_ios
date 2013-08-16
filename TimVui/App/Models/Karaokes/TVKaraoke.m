@@ -16,7 +16,7 @@
 
 - (void)setValues:(NSDictionary*)dict {
 //    NSLog(@"tv Karaoke===%@",dict);
-	self.karaokeID = [dict safeStringForKey:@"id"];
+//	self.karaokeID = [dict safeStringForKey:@"id"];
     self.type = [dict safeStringForKey:@"type"];
     self.content = [dict safeStringForKey:@"content"];
     self.price = [dict safeArrayForKey:@"price"];
