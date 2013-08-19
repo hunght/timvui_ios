@@ -53,7 +53,6 @@
 -(void)postGetBranches{
     
     if (SharedAppDelegate.isHasInternetYES) {
-        
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"short",@"infoType",
                                 [[GlobalDataUser sharedAccountClient].recentlyBranches allKeys],@"id" ,
                                 nil];

@@ -19,11 +19,14 @@
 #import "TVBranch.h"
 #import "TVAppDelegate.h"
 #import "BranchProfileVC.h"
-@interface DetailManualVC (){
+#import <GoogleMaps/GoogleMaps.h>
+#import "UIImage+Crop.h"
+@interface DetailManualVC ()<GMSMapViewDelegate>
+{
 
 @private
     TVManual* _manual;
-
+    GMSMapView *mapView_;
 }
 @end
 
@@ -123,6 +126,48 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)showBranchOnMap{
+    [mapView_ clear];
+    NSLog(@"_branches.count = %d",_branches.count);
+    int i=0;
+    for (TVBranch* branch in _branches.items) {
+        GMSMarker *melbourneMarker = [[GMSMarker alloc] init];
+        melbourneMarker.title = [NSString stringWithFormat:@"%d",i];
+        melbourneMarker.position =  branch.latlng;
+        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+        [manager downloadWithURL:[Utilities getThumbImageOfCoverBranch:branch.arrURLImages]
+                        delegate:self
+                         options:0
+                         success:^(UIImage *image, BOOL cached)
+         {
+             UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
+             image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
+             UIGraphicsBeginImageContext( bottomImage.size );
+             [bottomImage drawAtPoint:CGPointZero];
+             [image drawInRect:CGRectMake(6.0f,5.0f,30.0f,30.0f) blendMode:kCGBlendModeNormal alpha:1];
+             UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+             UIGraphicsEndImageContext();
+             melbourneMarker.icon = newImage;
+             melbourneMarker.map = mapView_;
+         }
+                         failure:nil];
+        i++;
+    }
+}
+
+- (void)didTapFitBounds {
+    GMSCoordinateBounds *bounds;
+    for (TVBranch *marker in _branches.items) {
+        if (bounds == nil) {
+            bounds = [[GMSCoordinateBounds alloc] initWithCoordinate:marker.latlng
+                                                          coordinate:marker.latlng];
+        }
+        bounds = [bounds includingCoordinate:marker.latlng];
+    }
+    GMSCameraUpdate *update = [GMSCameraUpdate fitBounds:bounds
+                                             withPadding:50.0f];
+    [mapView_ moveCamera:update];
+}
 #pragma mark - UIWebViewDelegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -211,18 +256,48 @@
 #pragma mark - IBActions
 
 -(void)listViewButtonClicked{
-    
+    if (!mapView_||mapView_.isHidden)return;
+    if (mapView_) mapView_.hidden=YES;
+    CGRect frame=    _couponBranch.frame;
+    frame.size.height-=320;
+    _couponBranch.frame=frame;
+    self.tableView.tableHeaderView=_couponBranch;
+    [_tableView reloadData];
 }
 
 -(void)mapButtonClicked{
     
+    if (!mapView_) {
+        TVBranch*branch=[_branches.items objectAtIndex:0];
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:branch.latlng.latitude
+                                                                longitude:branch.latlng.longitude
+                                                                     zoom:4];
+        mapView_ = [GMSMapView mapWithFrame:CGRectMake(0, _couponBranch.frame.size.height, 320, 320) camera:camera];
+        mapView_.delegate = self;
+        [_couponBranch addSubview:mapView_];
+        mapView_.hidden=YES;
+        [self showBranchOnMap];
+    }
+    if (mapView_.isHidden==NO)return;
+    CGRect frame = _couponBranch.frame;
+    frame.size.height+=320;
+    _couponBranch.frame=frame;
+    self.tableView.tableHeaderView=_couponBranch;
+    mapView_.hidden=NO;
+    [_tableView reloadData];
+    [self didTapFitBounds];
 }
 
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.branches count];
+    
+    if (!mapView_|| mapView_.isHidden) {
+        return [self.branches count];
+    }else
+        return 0;
+    
 }
 
 
@@ -232,8 +307,7 @@
     BranchMainCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    }
-    else{
+    }else{
         [[cell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     

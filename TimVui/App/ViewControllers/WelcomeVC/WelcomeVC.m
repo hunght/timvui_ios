@@ -11,7 +11,6 @@
 #import "TVAppDelegate.h"
 #import "MapTableViewController.h"
 #import "TVNetworkingClient.h"
-#import "TSMessage.h"
 #import "NSDictionary+Extensions.h"
 #import "AFJSONRequestOperation.h"
 @interface WelcomeVC ()
@@ -53,13 +52,6 @@
 {
     
     if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Location Service Disabled"
-                                        withMessage:@"To re-enable, please go to Settings and turn on Location Service for this app."
-                                           withType:TSMessageNotificationTypeError
-                                       withDuration:10.0
-                                       withCallback:nil
-                                         atPosition:TSMessageNotificationPositionTop];
         [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
         [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     }else{

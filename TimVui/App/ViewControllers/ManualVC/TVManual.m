@@ -28,7 +28,7 @@
     self.view       =[dic safeStringForKey:@"view"];
     self.changed    =[dic safeDateForKey:@"changed"];
     self.images     =[dic safeStringForKey:@"images"];
-    NSLog(@"images===%@",_images);
+    NSLog(@"branch_ids===%@",_branch_ids);
     self.handbook_cat=[dic safeArrayForKey:@"handbook_cat"];
     self.cities=[dic safeArrayForKey:@"cities"];
     

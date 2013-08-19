@@ -78,7 +78,7 @@
     [self.imgCoverEvent addSubview:_lblContent];
     [self.imgCoverEvent addSubview:_lblNameBranch];
     [self.imgCoverEvent addSubview:_lblTime];
-    
+    _imgCoverEvent.contentMode=UIViewContentModeScaleToFill;
     [self.contentView addSubview:_imgCoverEvent];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
     return self;
@@ -92,7 +92,7 @@
     _lblNameBranch.text=event.branch.name;
     _lblContent.text=[NSString stringWithFormat:@"%@: %@",event.branch.name, event.title];
     //    NSLog(@"[arrCoupons count]===%@",_coupon.branch.arrURLImages);
-    [_imgCoverEvent setImageWithURL:[Utilities getThumbImageOfCoverBranch:event.branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    [_imgCoverEvent setImageWithURL:[NSURL URLWithString:event.image]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
 }
 
 + (CGFloat)heightForCellWithPost:(TVEvent *)event {

@@ -310,8 +310,9 @@
     
     CLLocationCoordinate2D center = _currentCameraPositionSearch;
     
-    //    float radius = [self getDistanceMetresFrom:_currentCameraPositionSearch toLocation:latlng]*1000; //radius in meters (25km)
-    float radius=3000;
+    float radius = [self getDistanceMetresFrom:_currentCameraPositionSearch toLocation:latlng]*1000; //radius in meters (25km)
+    _lastDistanceSearch=radius/1000;
+    //float radius=3000;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(center, radius*2, radius*2);
     
     CLLocationCoordinate2D  northEast = CLLocationCoordinate2DMake(region.center.latitude - region.span.latitudeDelta/2, region.center.longitude - region.span.longitudeDelta/2);
@@ -374,11 +375,9 @@
         dispatch_async(dispatch_get_main_queue(),^ {
             
             // View map with contain all search items
-            if (weakSelf.branches.count>0&&isSearchYES) {
+            if (weakSelf.branches.count>0) {
                 TVBranch* branch=weakSelf.branches.items.lastObject;
                 [self updateCameraMapPosition:branch.latlng];
-                
-                
             }
             
             if (weakSelf.branches.count==0) {
@@ -419,6 +418,8 @@
 -(void)didClickedOnButtonSearch:(NSMutableDictionary *)params withLatlng:(CLLocationCoordinate2D)latlng{
     _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:latlng zoom:15];
     _currentCameraPositionSearch=latlng;
+     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",latlng.latitude,latlng.longitude];
+    [params setValue:strLatLng forKey:@"latlng"];
     [self postSearchBranch:params withReturnFromSearchScreenYES:YES];
     
 }

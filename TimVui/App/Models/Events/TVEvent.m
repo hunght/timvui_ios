@@ -1,5 +1,6 @@
 #import "TVEvent.h"
 #import "NSDictionary+Extensions.h"
+#import "NSDate-Utilities.h"
 @interface TVEvent ()
 @end
 
@@ -25,10 +26,34 @@
     
     self.addresses = [dict safeArrayForKey:@"addresses"];
     self.hot = [dict safeStringForKey:@"hot"];
+
     self.start = [dict safeDateForKey:@"start"];
-    self.end= [dict safeDateForKey:@"end"];
-    self.image= [dict safeStringForKey:@"image"];
+    if (self.start) {
+        self.end= [dict safeDateForKey:@"end"];
+    }else{
+        NSDate* date=[NSDate date];
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        NSMutableDictionary* keyValueFre=[[NSMutableDictionary alloc] init];
+        for (NSDictionary* dic in [dict safeDictForKey:@"frequencies"]) {
+            NSNumber i=[NSNumber numberWithInteger:[dic safeIntegerForKey:@"frequency_id"]];
+            [array addObject:i];
+            [keyValueFre setObject:dic forKey:i];
+        }
+        
+        NSArray* sorted = [array sortedArrayUsingSelector: @selector(compare:)];
+        for (NSNumber* num in sorted) {
+            if (num.intValue>=[date day]) {
+                
+                
+                continue;
+            }
+        }
+    }
+    
+    self.image= [[dict safeDictForKey:@"image"] safeStringForKey:@"cover"];
     self.created= [dict safeDateForKey:@"created"];
+    
+    
 }
 
 @end
