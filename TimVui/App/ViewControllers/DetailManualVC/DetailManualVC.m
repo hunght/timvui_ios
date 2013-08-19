@@ -96,7 +96,7 @@
     
     [self.view setBackgroundColor:[UIColor grayColor]];
     
-    UIWebView* webView=[[UIWebView alloc] initWithFrame:CGRectMake(6+5, 0, 320-(6+5)*2, 200)];
+    UIWebView* webView=[[UIWebView alloc] initWithFrame:CGRectMake(6+5, 0, 320-(6+5)*2, 25)];
     [webView.scrollView setScrollEnabled:NO];
     [_couponBranch addSubview:webView];
     lblTitle.text=_manual.title;

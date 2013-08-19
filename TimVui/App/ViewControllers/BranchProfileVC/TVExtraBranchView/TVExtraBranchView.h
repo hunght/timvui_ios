@@ -32,10 +32,13 @@ typedef enum {
 @property (strong, nonatomic) UILabel*lblReview;
 @property (strong, nonatomic) UILabel*lblMenu;
 
+@property (strong, nonatomic) UILabel* lblKaraoke;
+
 @property (strong, nonatomic) UIScrollView *scrollEvent;
 @property (strong, nonatomic) UIScrollView *scrollKaraoke;
 
 @property (assign, nonatomic) BOOL isShowFullExtraYES;
 -(void)showExtraView:(BOOL)isYES;
 -(void)eventButtonClicked:(UIButton*)sender;
+- (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch;
 @end

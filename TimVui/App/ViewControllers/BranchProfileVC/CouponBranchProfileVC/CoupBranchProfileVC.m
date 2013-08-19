@@ -303,7 +303,7 @@
     [html appendString:@"</body></html>"];
     
     //instantiate the web view
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, height_p, 290, 200)];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(10, height_p, 290, 25)];
     
     //make the background transparent
     [webView setBackgroundColor:[UIColor clearColor]];
@@ -322,9 +322,8 @@
 - (void)displayInfoWhenGetBranch
 {
     [self showInfoView];
-    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
+    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch];
     _extraBranchView.scrollView=_scrollView;
-    _extraBranchView.branch=_branch;
     [self.view addSubview:_extraBranchView];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:(239/255.0f) green:(239/255.0f) blue:(239/255.0f) alpha:1.0f]];

@@ -39,14 +39,13 @@
 		550FDEB31777F5C4005DE15E /* PhotoBrowseVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 550FDEB11777F5C4005DE15E /* PhotoBrowseVC.xib */; };
 		5511DB34179E64D30071ABCF /* UVNTinTucHepThem_R.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5511DB32179E64D30071ABCF /* UVNTinTucHepThem_R.TTF */; };
 		5511DB35179E64D30071ABCF /* UVNTinTucHepThem.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 5511DB33179E64D30071ABCF /* UVNTinTucHepThem.TTF */; };
+		5513C21517BF37C0004E4F5B /* InfinitePagingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5513C21417BF37C0004E4F5B /* InfinitePagingView.m */; };
 		5515BC0217AF468000A11CF4 /* TVBranch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BBFA17AF468000A11CF4 /* TVBranch.m */; };
 		5515BC0317AF468000A11CF4 /* TVBranches.m in Sources */ = {isa = PBXBuildFile; fileRef = 5515BBFC17AF468000A11CF4 /* TVBranches.m */; };
 		5516D1A51758AB3D00A0C6CE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A41758AB0100A0C6CE /* AVFoundation.framework */; };
 		5516D1A71758AC6B00A0C6CE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5516D1A61758AC2F00A0C6CE /* CoreText.framework */; };
 		551BB1D7178A9D590072FD81 /* CoupBranchProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1D1178A9D590072FD81 /* CoupBranchProfileVC.m */; };
 		551BB1D8178A9D590072FD81 /* CoupBranchProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 551BB1D2178A9D590072FD81 /* CoupBranchProfileVC.xib */; };
-		551BB1D9178A9D590072FD81 /* SpecBranchProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1D5178A9D590072FD81 /* SpecBranchProfileVC.m */; };
-		551BB1DA178A9D590072FD81 /* SpecBranchProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 551BB1D6178A9D590072FD81 /* SpecBranchProfileVC.xib */; };
 		551BB1E6178AC34B0072FD81 /* TVCoupon.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1DE178AC34A0072FD81 /* TVCoupon.m */; };
 		551BB1E7178AC34B0072FD81 /* TVCoupons.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1E0178AC34A0072FD81 /* TVCoupons.m */; };
 		551BB1E8178AC34B0072FD81 /* TVCuisine.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1E3178AC34B0072FD81 /* TVCuisine.m */; };
@@ -693,6 +692,8 @@
 		550FDEB11777F5C4005DE15E /* PhotoBrowseVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoBrowseVC.xib; sourceTree = "<group>"; };
 		5511DB32179E64D30071ABCF /* UVNTinTucHepThem_R.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = UVNTinTucHepThem_R.TTF; sourceTree = "<group>"; };
 		5511DB33179E64D30071ABCF /* UVNTinTucHepThem.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = UVNTinTucHepThem.TTF; sourceTree = "<group>"; };
+		5513C21317BF37C0004E4F5B /* InfinitePagingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitePagingView.h; sourceTree = "<group>"; };
+		5513C21417BF37C0004E4F5B /* InfinitePagingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitePagingView.m; sourceTree = "<group>"; };
 		5515BBF917AF468000A11CF4 /* TVBranch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVBranch.h; sourceTree = "<group>"; };
 		5515BBFA17AF468000A11CF4 /* TVBranch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVBranch.m; sourceTree = "<group>"; };
 		5515BBFB17AF468000A11CF4 /* TVBranches.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVBranches.h; sourceTree = "<group>"; };
@@ -702,9 +703,6 @@
 		551BB1D0178A9D590072FD81 /* CoupBranchProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoupBranchProfileVC.h; sourceTree = "<group>"; };
 		551BB1D1178A9D590072FD81 /* CoupBranchProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoupBranchProfileVC.m; sourceTree = "<group>"; };
 		551BB1D2178A9D590072FD81 /* CoupBranchProfileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoupBranchProfileVC.xib; sourceTree = "<group>"; };
-		551BB1D4178A9D590072FD81 /* SpecBranchProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpecBranchProfileVC.h; sourceTree = "<group>"; };
-		551BB1D5178A9D590072FD81 /* SpecBranchProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpecBranchProfileVC.m; sourceTree = "<group>"; };
-		551BB1D6178A9D590072FD81 /* SpecBranchProfileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpecBranchProfileVC.xib; sourceTree = "<group>"; };
 		551BB1DD178AC34A0072FD81 /* TVCoupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCoupon.h; sourceTree = "<group>"; };
 		551BB1DE178AC34A0072FD81 /* TVCoupon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCoupon.m; sourceTree = "<group>"; };
 		551BB1DF178AC34A0072FD81 /* TVCoupons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCoupons.h; sourceTree = "<group>"; };
@@ -1469,7 +1467,6 @@
 			children = (
 				55F71983178D3FEB00C0535D /* SearchWithContactsVC */,
 				551BB1CF178A9D590072FD81 /* CouponBranchProfileVC */,
-				551BB1D3178A9D590072FD81 /* SpecBranchProfileVC */,
 				5541283D177D2B4D00A46593 /* PhotoBrowser */,
 				55C18031177C414800A57233 /* BranchProfileVC.h */,
 				55C18032177C414800A57233 /* BranchProfileVC.m */,
@@ -1589,6 +1586,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		5513C21217BF37C0004E4F5B /* InfinitePagingView */ = {
+			isa = PBXGroup;
+			children = (
+				5513C21317BF37C0004E4F5B /* InfinitePagingView.h */,
+				5513C21417BF37C0004E4F5B /* InfinitePagingView.m */,
+			);
+			path = InfinitePagingView;
+			sourceTree = "<group>";
+		};
 		5515BBF817AF468000A11CF4 /* Branches */ = {
 			isa = PBXGroup;
 			children = (
@@ -1609,17 +1615,6 @@
 			);
 			name = CouponBranchProfileVC;
 			path = BranchProfileVC/CouponBranchProfileVC;
-			sourceTree = "<group>";
-		};
-		551BB1D3178A9D590072FD81 /* SpecBranchProfileVC */ = {
-			isa = PBXGroup;
-			children = (
-				551BB1D4178A9D590072FD81 /* SpecBranchProfileVC.h */,
-				551BB1D5178A9D590072FD81 /* SpecBranchProfileVC.m */,
-				551BB1D6178A9D590072FD81 /* SpecBranchProfileVC.xib */,
-			);
-			name = SpecBranchProfileVC;
-			path = BranchProfileVC/SpecBranchProfileVC;
 			sourceTree = "<group>";
 		};
 		551BB1DC178AC34A0072FD81 /* Coupon */ = {
@@ -2517,6 +2512,7 @@
 		55BAED3B1709726300CF3171 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				5513C21217BF37C0004E4F5B /* InfinitePagingView */,
 				55CF453717BE060A009C4308 /* SBTableAlert */,
 				5540855A1782DDB500E07988 /* Base64 */,
 				554085371782BC7400E07988 /* BSKeyboardControls */,
@@ -3337,7 +3333,6 @@
 				5592B62E1786C38300BEF9DD /* img_profile_branch_view_number.png in Resources */,
 				5592B62F1786C38300BEF9DD /* img_profile_branch_view_number@2x.png in Resources */,
 				551BB1D8178A9D590072FD81 /* CoupBranchProfileVC.xib in Resources */,
-				551BB1DA178A9D590072FD81 /* SpecBranchProfileVC.xib in Resources */,
 				55CB8FAB178BCA6F00C258BB /* RecentlyBranchListVC.xib in Resources */,
 				5531EF1F178D473600093934 /* img_profile_branch_share_button.png in Resources */,
 				5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */,
@@ -3627,7 +3622,6 @@
 				5540853B1782BC7400E07988 /* BSKeyboardControls.m in Sources */,
 				5540855D1782DDB500E07988 /* Base64.m in Sources */,
 				551BB1D7178A9D590072FD81 /* CoupBranchProfileVC.m in Sources */,
-				551BB1D9178A9D590072FD81 /* SpecBranchProfileVC.m in Sources */,
 				551BB1E6178AC34B0072FD81 /* TVCoupon.m in Sources */,
 				551BB1E7178AC34B0072FD81 /* TVCoupons.m in Sources */,
 				551BB1E8178AC34B0072FD81 /* TVCuisine.m in Sources */,
@@ -3671,6 +3665,7 @@
 				55CF454617BE37E9009C4308 /* TVEvents.m in Sources */,
 				55CF454717BE37E9009C4308 /* TVKaraoke.m in Sources */,
 				55CF454817BE37E9009C4308 /* TVKaraokes.m in Sources */,
+				5513C21517BF37C0004E4F5B /* InfinitePagingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

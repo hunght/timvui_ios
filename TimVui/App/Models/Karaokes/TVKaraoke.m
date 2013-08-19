@@ -15,13 +15,15 @@
 }
 
 - (void)setValues:(NSDictionary*)dict {
-//    NSLog(@"tv Karaoke===%@",dict);
-//	self.karaokeID = [dict safeStringForKey:@"id"];
+    
+    //NSLog(@"tv Karaoke===%@",dict);
+    
+	self.name = [dict safeStringForKey:@"name"];
     self.type = [dict safeStringForKey:@"type"];
     self.content = [dict safeStringForKey:@"content"];
     self.price = [dict safeArrayForKey:@"price"];
     self.count = [dict safeStringForKey:@"count"];
-    self.images= [dict safeArrayForKey:@"images"];
+    self.images= [[dict safeDictForKey:@"images"] allValues];
     
 }
 

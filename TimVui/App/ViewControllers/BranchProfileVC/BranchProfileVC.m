@@ -16,7 +16,7 @@
 #import "TVCoupon.h"
 #import "TVExtraBranchView.h"
 #import "MHFacebookImageViewer.h"
-#import "SpecBranchProfileVC.h"
+
 #import "TVPhotoBrowserVC.h"
 #import "NSDate+Helper.h"
 #import "CoupBranchProfileVC.h"
@@ -645,7 +645,7 @@
                 [self showInfoView];
                 
                 if (!_extraBranchView) {
-                    _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
+                    _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch];
                     _extraBranchView.scrollView=_scrollView;
                     _extraBranchView.branch=_branch;
                     [self.view addSubview:_extraBranchView];
@@ -917,11 +917,7 @@
     [self presentModalViewController:navController animated:YES];
 }
 
--(void)specialContentButtonClicked:(id)sender{
-    SpecBranchProfileVC* specBranchVC=[[SpecBranchProfileVC alloc] initWithNibName:@"SpecBranchProfileVC" bundle:nil];
-    specBranchVC.branch=_branch;
-    [self.navigationController pushViewController:specBranchVC animated:YES];
-}
+
 
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];

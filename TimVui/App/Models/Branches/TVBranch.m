@@ -38,8 +38,9 @@
     if ([dict objectForKey:@"karaokes"]) {
         _isHasKaraokeYES=YES;
         self.karaokes = [[TVKaraokes alloc] init];
-        [self.karaokes   setValues:[[dict safeDictForKey:@"karaokes"] allValues]];
+        [self.karaokes   setValues:[dict safeArrayForKey:@"karaokes"] ];
     }
+    
     self.coupons = [[TVCoupons alloc] init];
 	[self.coupons   setValues:[dict safeArrayForKey:@"coupons"] ];
     
@@ -61,7 +62,6 @@
     self.cats = [dict safeDictForKey:@"cats"];
     
     self.district = [dict safeDictForKey:@"district"];
-    
     self.space = [dict safeStringForKey:@"space"];
     self.time_open = [dict safeStringForKey:@"time_open"];
     
@@ -80,9 +80,7 @@
     self.space = [dict safeStringForKey:@"space"];
     self.direction = [dict safeStringForKey:@"direction"];
     self.public_locations = [dict safeDictForKey:@"public_locations"];
-    
     self.time_close =[dict safeStringForKey:@"time_close"];
-    
     self.review = [[[dict safeArrayForKey:@"review"] lastObject] valueForKey:@"content"];
 }
 
