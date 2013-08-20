@@ -140,7 +140,6 @@
 		556CDB91174CAE9B00865790 /* branch_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 556CDB8F174CAE9A00865790 /* branch_placeholder.png */; };
 		556CDB92174CAE9B00865790 /* branch_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 556CDB90174CAE9A00865790 /* branch_placeholder@2x.png */; };
 		556D444817782D3F00751F83 /* TVExtraBranchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 556D444717782D3F00751F83 /* TVExtraBranchView.m */; };
-		557328941761E1A900765988 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 557328931761E1A900765988 /* NSDate+Helper.m */; };
 		5575F89817B4DED70091D74D /* PageFourView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5575F89717B4DED70091D74D /* PageFourView.m */; };
 		5575F89A17B4DF2E0091D74D /* PageFourView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5575F89917B4DF2D0091D74D /* PageFourView.xib */; };
 		5575F89D17B4E3DE0091D74D /* skin_thu_tuc_truoc_khi_an_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5575F89B17B4E3DE0091D74D /* skin_thu_tuc_truoc_khi_an_icon.png */; };
@@ -826,8 +825,6 @@
 		556CDB90174CAE9A00865790 /* branch_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "branch_placeholder@2x.png"; sourceTree = "<group>"; };
 		556D444617782D3F00751F83 /* TVExtraBranchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVExtraBranchView.h; sourceTree = "<group>"; };
 		556D444717782D3F00751F83 /* TVExtraBranchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVExtraBranchView.m; sourceTree = "<group>"; };
-		557328921761E1A900765988 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
-		557328931761E1A900765988 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		5575F89617B4DED70091D74D /* PageFourView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageFourView.h; sourceTree = "<group>"; };
 		5575F89717B4DED70091D74D /* PageFourView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageFourView.m; sourceTree = "<group>"; };
 		5575F89917B4DF2D0091D74D /* PageFourView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageFourView.xib; sourceTree = "<group>"; };
@@ -1888,15 +1885,6 @@
 			path = BranchProfileVC/TVExtraBranchView;
 			sourceTree = "<group>";
 		};
-		557328911761E1A900765988 /* NSDateHelper */ = {
-			isa = PBXGroup;
-			children = (
-				557328921761E1A900765988 /* NSDate+Helper.h */,
-				557328931761E1A900765988 /* NSDate+Helper.m */,
-			);
-			path = NSDateHelper;
-			sourceTree = "<group>";
-		};
 		558D0DAE17695ED800C98FAB /* LocationPickerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2522,7 +2510,6 @@
 				5591DB7B176EE6B70064B611 /* MHFBImageViewController */,
 				55914BA11762F0EB00A9C63D /* FKRSearchBarTableViewController */,
 				55C30FBE1761E61800D04744 /* NSDate-Extensions */,
-				557328911761E1A900765988 /* NSDateHelper */,
 				5506B0A8175EF6590054D606 /* TSMessage */,
 				5506B0A7175EF4FA0054D606 /* Ultilities */,
 				5506B0A6175EF47A0054D606 /* NSURL+Extensions */,
@@ -3585,7 +3572,6 @@
 				5506B0B2175EF65A0054D606 /* TSMessage.m in Sources */,
 				5506B0B3175EF65A0054D606 /* TSMessageView.m in Sources */,
 				5506B0B6175EF65A0054D606 /* UIColor+MLColorAdditions.m in Sources */,
-				557328941761E1A900765988 /* NSDate+Helper.m in Sources */,
 				55C30FC21761E61800D04744 /* NSDate-Utilities.m in Sources */,
 				55914BA51762F0EB00A9C63D /* FKRSearchBarTableViewController.m in Sources */,
 				558D0DB317695ED800C98FAB /* LocationPickerView.m in Sources */,

@@ -14,6 +14,28 @@
 
 @interface NSDate (Utilities)
 
+- (BOOL) isLaterThan:(int)days;
+- (BOOL) isLaterThanSeconds:(int)min;
+- (NSUInteger)daysAgo;
+- (NSUInteger)daysAgoAgainstMidnight;
+- (NSString*) stringMinutesFromNowAgo;
+- (NSString *)stringDaysAgo;
+- (NSString *)stringDaysAgoAgainstMidnight:(BOOL)flag;
+
+- (NSString *)stringWithDefautFormat;
+- (NSString *)stringWithFormat:(NSString *)format;
+- (NSString *)stringWithDateStyle:(NSDateFormatterStyle)dateStyle timeStyle:(NSDateFormatterStyle)timeStyle;
+
+- (NSDate *)beginningOfWeek;
+- (NSDate *)beginningOfDay;
+- (NSDate *)endOfWeek;
+
++ (NSString *)dateFormatString;
++ (NSString *)timeFormatString;
++ (NSString *)timestampFormatString;
++ (NSString *)dbFormatString;
++ (NSDate *)dateFromString:(NSString *)format;
+
 // Relative dates from the current date
 + (NSDate *) dateTomorrow;
 + (NSDate *) dateYesterday;
@@ -56,7 +78,9 @@
 - (NSDate *) dateByAddingMinutes: (NSInteger) dMinutes;
 - (NSDate *) dateBySubtractingMinutes: (NSInteger) dMinutes;
 - (NSDate *) dateAtStartOfDay;
-
+-( NSDate *) dateWithHour:(NSInteger)hour
+                  minute:(NSInteger)minute
+                  second:(NSInteger)second;
 // Retrieving intervals
 - (NSInteger) minutesAfterDate: (NSDate *) aDate;
 - (NSInteger) minutesBeforeDate: (NSDate *) aDate;

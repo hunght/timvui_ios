@@ -16,6 +16,191 @@
 #define CURRENT_CALENDAR [NSCalendar currentCalendar]
 
 @implementation NSDate (Utilities)
+static NSDateFormatter *formatter;
+
++ (NSDateFormatter *)formatter {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+    });
+    return formatter;
+}
+
+- (NSString*) stringMinutesFromNowAgo
+{
+    //    NSLog(@"date==%@",[NSDate date]);
+    
+	NSTimeInterval ti = -[self timeIntervalSinceDate:[NSDate date]];
+    int hours=ti / D_MINUTE/60;
+    //    NSLog(@"hours==%d",hours);
+    if (hours>=1&& hours<24) {
+        return [NSString stringWithFormat:NSLocalizedString(@"X hours ago", nil), (NSInteger) (hours)];
+    }else if(hours>=24){
+        return [self stringDaysAgo];
+    }
+    return [NSString stringWithFormat:NSLocalizedString(@"X minutes ago", nil), (NSInteger) (ti / D_MINUTE)];
+}
+
+- (BOOL) isLaterThan:(int)days
+{
+    //    NSLog(@"date==%@",[NSDate date]);
+    
+	NSTimeInterval ti = -[self timeIntervalSinceDate:[NSDate date]];
+    int daysAway=ti / D_MINUTE/60/24;
+    //    NSLog(@"hours==%d",hours);
+    return daysAway>days;
+}
+
+- (BOOL) isLaterThanSeconds:(int)min
+{
+    //NSLog(@"date==%@",[NSDate date]);
+	NSTimeInterval ti = -[self timeIntervalSinceDate:[NSDate date]];
+    int minsAway=ti ;
+    //NSLog(@"hours==%d",hours);
+    return minsAway>min;
+}
+
+/*
+ * This guy can be a little unreliable and produce unexpected results,
+ * you're better off using daysAgoAgainstMidnight
+ */
+- (NSUInteger)daysAgo {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSDayCalendarUnit)
+											   fromDate:self
+												 toDate:[NSDate date]
+												options:0];
+	return [components day];
+}
+
+- (NSUInteger)daysAgoAgainstMidnight {
+	// get a midnight version of ourself:
+	NSDateFormatter *mdf = [NSDate formatter];
+	[mdf setDateFormat:@"yyyy-MM-dd"];
+	NSDate *midnight = [mdf dateFromString:[mdf stringFromDate:self]];
+	return (int)[midnight timeIntervalSinceNow] / (60*60*24) *-1;
+}
+
+- (NSString *)stringDaysAgo {
+	return [self stringDaysAgoAgainstMidnight:YES];
+}
+
+
+- (NSString *)stringDaysAgoAgainstMidnight:(BOOL)flag {
+	NSUInteger daysAgo = (flag) ? [self daysAgoAgainstMidnight] : [self daysAgo];
+	NSString *text = nil;
+	switch (daysAgo) {
+		case 0:
+			text = NSLocalizedString(@"Today", nil);
+			break;
+		case 1:
+			text = NSLocalizedString(@"Tomorrow", nil);
+			break;
+		default:
+			text = [NSString stringWithFormat:NSLocalizedString(@"X dates ago", nil), daysAgo];
+	}
+	return text;
+}
+
+
+
+
+
+- (NSString *)stringWithFormat:(NSString *)format {
+    NSLog(@"%@",self);
+	NSDateFormatter *outputFormatter = [NSDate formatter];
+    [outputFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+	[outputFormatter setDateFormat:format];
+	NSString *timestamp_str = [outputFormatter stringFromDate:self];
+	return timestamp_str;
+}
+
++ (NSDate *)dateFromString:(NSString *)format {
+    [[NSDate formatter] setDateFormat:[NSDate dbFormatString]];
+	return [[NSDate formatter] dateFromString:format];
+}
+
+- (NSString *)stringWithDefautFormat{
+	return [self stringWithFormat:[NSDate dbFormatString]];
+}
+
+- (NSString *)stringWithDateStyle:(NSDateFormatterStyle)dateStyle timeStyle:(NSDateFormatterStyle)timeStyle {
+	NSDateFormatter *outputFormatter = [NSDate formatter];
+	[outputFormatter setDateStyle:dateStyle];
+	[outputFormatter setTimeStyle:timeStyle];
+	NSString *outputString = [outputFormatter stringFromDate:self];
+	return outputString;
+}
+
+
+
+- (NSDate *)beginningOfWeek {
+	// largely borrowed from "Date and Time Programming Guide for Cocoa"
+	// we'll use the default calendar and hope for the best
+	NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDate *beginningOfWeek = nil;
+	BOOL ok = [calendar rangeOfUnit:NSWeekCalendarUnit startDate:&beginningOfWeek
+						   interval:NULL forDate:self];
+	if (ok) {
+		return beginningOfWeek;
+	}
+	
+	// couldn't calc via range, so try to grab Sunday, assuming gregorian style
+	// Get the weekday component of the current date
+	NSDateComponents *weekdayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:self];
+	
+	/*
+	 Create a date components to represent the number of days to subtract from the current date.
+	 The weekday value for Sunday in the Gregorian calendar is 1, so subtract 1 from the number of days to subtract from the date in question.  (If today's Sunday, subtract 0 days.)
+	 */
+	NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
+	[componentsToSubtract setDay: 0 - ([weekdayComponents weekday] - 1)];
+	beginningOfWeek = nil;
+	beginningOfWeek = [calendar dateByAddingComponents:componentsToSubtract toDate:self options:0];
+	
+	//normalize to midnight, extract the year, month, and day components and create a new date from those components.
+	NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
+											   fromDate:beginningOfWeek];
+	return [calendar dateFromComponents:components];
+}
+
+- (NSDate *)beginningOfDay {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // Get the weekday component of the current date
+	NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
+											   fromDate:self];
+	return [calendar dateFromComponents:components];
+}
+
+- (NSDate *)endOfWeek {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // Get the weekday component of the current date
+	NSDateComponents *weekdayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:self];
+	NSDateComponents *componentsToAdd = [[NSDateComponents alloc] init];
+	// to get the end of week for a particular date, add (7 - weekday) days
+	[componentsToAdd setDay:(7 - [weekdayComponents weekday])];
+	NSDate *endOfWeek = [calendar dateByAddingComponents:componentsToAdd toDate:self options:0];
+	
+	return endOfWeek;
+}
+
++ (NSString *)dateFormatString {
+	return @"yyyy-MM-dd";
+}
+
++ (NSString *)timeFormatString {
+	return @"HH:mm:ss";
+}
+
++ (NSString *)timestampFormatString {
+	return @"yyyy-MM-dd HH:mm:ss";
+}
+
+// preserving for compatibility
++ (NSString *)dbFormatString {
+	return [NSDate timestampFormatString];
+}
 
 #pragma mark Relative Dates
 
@@ -209,6 +394,22 @@
 }
 
 #pragma mark Adjusting Dates
+// Returns a new NSDate object with the time set to the indicated hour, min, sec.
+-(NSDate *) dateWithHour:(NSInteger)hour
+                  minute:(NSInteger)minute
+                  second:(NSInteger)second
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components: NSYearCalendarUnit|
+                                    NSMonthCalendarUnit|
+                                    NSDayCalendarUnit
+                                               fromDate:self];
+    [components setHour:hour];
+    [components setMinute:minute];
+    [components setSecond:second];
+    NSDate *newDate = [calendar dateFromComponents:components];
+    return newDate;
+}
 
 - (NSDate *) dateByAddingDays: (NSInteger) dDays
 {
@@ -357,7 +558,8 @@
 - (NSInteger) weekday
 {
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:self];
-	return components.weekday;
+    int i=components.weekday;
+	return (i==1)?8:i;
 }
 
 - (NSInteger) nthWeekday // e.g. 2nd Tuesday of the month is 2

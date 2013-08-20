@@ -30,6 +30,7 @@
 #import "UILabel+DynamicHeight.h"
 #import "TVEvent.h"
 #import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 @implementation TVEventCell {
 }
 
