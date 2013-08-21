@@ -16,7 +16,7 @@
 #import "BranchMainCell.h"
 #import "TVAppDelegate.h"
 #import "Utilities.h"
-#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 #import "NSDictionary+Extensions.h"
 #import "TVNotification.h"
 #import "ECSlidingViewController.h"
@@ -101,7 +101,7 @@
         //        locationPicker.mapView.mapType = MKMapTypeStandard;
     };
     self.locationPickerView.tableViewDidLoadBlock = ^(LocationPickerView *locationPicker) {
-        locationPicker.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        
     };
     
     [self.view addSubview:self.locationPickerView];
@@ -116,9 +116,7 @@
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     [self initNotificationView];
     
-}
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
+    //Update location user and get branches
     if ([GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSDictionary* dic=[defaults dictionaryForKey:kGetCityDataUser];
@@ -128,7 +126,7 @@
             [self getBranchesForView];
         }else if(([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))){
             
-            alert	= [[SBTableAlert alloc] initWithTitle:@"Single Select" cancelButtonTitle:@"Cancel" messageFormat:nil];
+            alert	= [[SBTableAlert alloc] initWithTitle:@"Vui lòng chọn Tỉnh/TP" cancelButtonTitle:@"Cancel" messageFormat:nil];
             [alert setDelegate:self];
             [alert setDataSource:self];
             
@@ -137,6 +135,10 @@
         }
     }else
         [self getBranchesForView];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
    
 }
 
@@ -376,6 +378,7 @@
             
             // View map with contain all search items
             if (weakSelf.branches.count>0) {
+                _locationPickerView.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
                 TVBranch* branch=weakSelf.branches.items.lastObject;
                 [self updateCameraMapPosition:branch.latlng];
             }
@@ -423,6 +426,7 @@
     [self postSearchBranch:params withReturnFromSearchScreenYES:YES];
     
 }
+
 -(void)didPickDistricts:(NSArray *)arrDics{
     _arrDics=arrDics;
 }

@@ -244,17 +244,6 @@
 }
 
 -(void)postPhotoButtonClicked:(id)s{
-    if (!_album) {
-        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Vui lòng chọn tên album trước khí đăng ảnh"];
-        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
-        [alert setDestructiveButtonWithTitle:@"Chọn Ablum!" block:^{
-            if ([_delegate respondsToSelector:@selector(wantToShowLeft:)]) {
-                [_delegate wantToShowLeft:YES];
-            }
-        }];
-        [alert show];
-        return;
-    }
     if (!_branch_id) {
         BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Vui lòng chọn nhà hàng trước khí đăng ảnh"];
         [alert setCancelButtonWithTitle:@"Cancel" block:nil];

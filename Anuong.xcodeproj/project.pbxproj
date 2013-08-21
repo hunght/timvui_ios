@@ -618,7 +618,6 @@
 		55F25E0D174238BF003EB902 /* TVComments.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E07174238BD003EB902 /* TVComments.m */; };
 		55F25E0E174238BF003EB902 /* GHUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E09174238BE003EB902 /* GHUser.m */; };
 		55F25E0F174238BF003EB902 /* GHUsers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E0B174238BE003EB902 /* GHUsers.m */; };
-		55F25E1B17423969003EB902 /* NSDate+Nibware.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E1217423965003EB902 /* NSDate+Nibware.m */; };
 		55F25E1C17423969003EB902 /* NSDictionary+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E1417423965003EB902 /* NSDictionary+Extensions.m */; };
 		55F25E1D17423969003EB902 /* NSMutableArray+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E1617423966003EB902 /* NSMutableArray+Extensions.m */; };
 		55F25E1E17423969003EB902 /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F25E1817423967003EB902 /* NSString+Extensions.m */; };
@@ -640,6 +639,7 @@
 		55FE1C641782B9C600146875 /* BlockBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FE1C5D1782B9C600146875 /* BlockBackground.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		55FE1C651782B9C600146875 /* BlockTableAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FE1C5F1782B9C600146875 /* BlockTableAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		55FE1C661782B9C600146875 /* BlockTextPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FE1C611782B9C600146875 /* BlockTextPromptAlertView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		55FE4D0817C37F39005B08FA /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FE4D0717C37F39005B08FA /* FloatView.m */; };
 		B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A89DFA4254249D091202191 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1372,8 +1372,6 @@
 		55F25E09174238BE003EB902 /* GHUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUser.m; sourceTree = "<group>"; };
 		55F25E0A174238BE003EB902 /* GHUsers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHUsers.h; sourceTree = "<group>"; };
 		55F25E0B174238BE003EB902 /* GHUsers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUsers.m; sourceTree = "<group>"; };
-		55F25E1117423964003EB902 /* NSDate+Nibware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Nibware.h"; sourceTree = "<group>"; };
-		55F25E1217423965003EB902 /* NSDate+Nibware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Nibware.m"; sourceTree = "<group>"; };
 		55F25E1317423965003EB902 /* NSDictionary+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Extensions.h"; path = "Extensions/NSDictionary+Extensions.h"; sourceTree = "<group>"; };
 		55F25E1417423965003EB902 /* NSDictionary+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+Extensions.m"; path = "Extensions/NSDictionary+Extensions.m"; sourceTree = "<group>"; };
 		55F25E1517423966003EB902 /* NSMutableArray+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Extensions.h"; path = "Extensions/NSMutableArray+Extensions.h"; sourceTree = "<group>"; };
@@ -1410,6 +1408,8 @@
 		55FE1C5F1782B9C600146875 /* BlockTableAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockTableAlertView.m; sourceTree = "<group>"; };
 		55FE1C601782B9C600146875 /* BlockTextPromptAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockTextPromptAlertView.h; sourceTree = "<group>"; };
 		55FE1C611782B9C600146875 /* BlockTextPromptAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockTextPromptAlertView.m; sourceTree = "<group>"; };
+		55FE4D0617C37F39005B08FA /* FloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloatView.h; path = TimVui/App/Libs/FloatView/FloatView.h; sourceTree = SOURCE_ROOT; };
+		55FE4D0717C37F39005B08FA /* FloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloatView.m; path = TimVui/App/Libs/FloatView/FloatView.m; sourceTree = SOURCE_ROOT; };
 		EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -2500,6 +2500,7 @@
 		55BAED3B1709726300CF3171 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				55FE4D0917C3813F005B08FA /* FloatView */,
 				5513C21217BF37C0004E4F5B /* InfinitePagingView */,
 				55CF453717BE060A009C4308 /* SBTableAlert */,
 				5540855A1782DDB500E07988 /* Base64 */,
@@ -2517,7 +2518,6 @@
 				5506B0A4175EF4110054D606 /* NSMutableArray+Extensions */,
 				5506B0A3175EF3E30054D606 /* NSDictionary+Extensions */,
 				5506B0A2175EF3900054D606 /* UIImage+Crop */,
-				55F25E1017423964003EB902 /* NSDate */,
 				55954F4F172A141100A8A351 /* GoogleAnalytics */,
 				55941BF817AC9FAA001F14D0 /* UILabel+DynamicHeight.h */,
 				55941BF917AC9FAA001F14D0 /* UILabel+DynamicHeight.m */,
@@ -2864,16 +2864,6 @@
 			path = Users;
 			sourceTree = "<group>";
 		};
-		55F25E1017423964003EB902 /* NSDate */ = {
-			isa = PBXGroup;
-			children = (
-				55F25E1117423964003EB902 /* NSDate+Nibware.h */,
-				55F25E1217423965003EB902 /* NSDate+Nibware.m */,
-			);
-			name = NSDate;
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		55F71980178D3FEB00C0535D /* SearchWithArrayVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -2925,6 +2915,15 @@
 				55FE1C611782B9C600146875 /* BlockTextPromptAlertView.m */,
 			);
 			path = ToAddToYourProjects;
+			sourceTree = "<group>";
+		};
+		55FE4D0917C3813F005B08FA /* FloatView */ = {
+			isa = PBXGroup;
+			children = (
+				55FE4D0617C37F39005B08FA /* FloatView.h */,
+				55FE4D0717C37F39005B08FA /* FloatView.m */,
+			);
+			name = FloatView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3556,7 +3555,6 @@
 				55F25E0D174238BF003EB902 /* TVComments.m in Sources */,
 				55F25E0E174238BF003EB902 /* GHUser.m in Sources */,
 				55F25E0F174238BF003EB902 /* GHUsers.m in Sources */,
-				55F25E1B17423969003EB902 /* NSDate+Nibware.m in Sources */,
 				55F25E1C17423969003EB902 /* NSDictionary+Extensions.m in Sources */,
 				55F25E1D17423969003EB902 /* NSMutableArray+Extensions.m in Sources */,
 				55F25E1E17423969003EB902 /* NSString+Extensions.m in Sources */,
@@ -3652,6 +3650,7 @@
 				55CF454717BE37E9009C4308 /* TVKaraoke.m in Sources */,
 				55CF454817BE37E9009C4308 /* TVKaraokes.m in Sources */,
 				5513C21517BF37C0004E4F5B /* InfinitePagingView.m in Sources */,
+				55FE4D0817C37F39005B08FA /* FloatView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3721,6 +3720,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3736,6 +3736,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3752,6 +3754,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3760,6 +3763,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

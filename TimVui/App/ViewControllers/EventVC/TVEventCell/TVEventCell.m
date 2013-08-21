@@ -29,7 +29,6 @@
 #import "TVAppDelegate.h"
 #import "UILabel+DynamicHeight.h"
 #import "TVEvent.h"
-#import "NSDate+Helper.h"
 #import "NSDate-Utilities.h"
 @implementation TVEventCell {
 }
@@ -51,12 +50,12 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     _imgCoverEvent=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 5, 310, 140)];
     _lblNameBranch=[[UILabel alloc] initWithFrame:CGRectMake(12, 105, 290, 30)];
-    _lblTime=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 12)];
+    _lblTime=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 120, 12)];
     
     _viewBgContent=[[UIView alloc] initWithFrame:CGRectMake(0, 140-45, 310, 45)];
     [_viewBgContent setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.7]];
     
-    _viewBgTime=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 110, 30)];
+    _viewBgTime=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 125, 30)];
     [_viewBgTime setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.7]];
     
     _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 105, 290, 30)];

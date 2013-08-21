@@ -26,7 +26,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Utilities.h"
 #import "TVAppDelegate.h"
-#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 @implementation ExtraMenuCell {
 }
 

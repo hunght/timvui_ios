@@ -14,7 +14,6 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "WelcomeVC.h"
 #import "TSMessage.h"
-#import "NSDate+Helper.h"
 #import "GlobalDataUser.h"
 #import "NSDate-Utilities.h"
 #import <JSONKit.h>
@@ -281,9 +280,21 @@
 //    [self.menuVC openViewController:welcomeVC];
     [self.menuVC performSelector:@selector(openViewController:) withObject:welcomeVC afterDelay:0.0];
 }
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	NSLog(@"My token is: %@", deviceToken);
+}
 
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+
     // List all fonts on iPhone
     NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
     NSArray *fontNames;

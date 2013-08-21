@@ -43,9 +43,9 @@
     [super viewDidLoad];
     _bgView.backgroundColor =[UIColor colorWithWhite:0.0 alpha:0.7];
     _btnSelectLocation.titleLabel.font=[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
-    [_btnSelectLocation setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnSelectLocation setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
     
-    [_btnSelectLocation setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    [_btnSelectLocation setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [_txvContent setPlaceholder:@"Viết đánh giá về địa điểm này"];
@@ -61,7 +61,7 @@
     [bgGenarateInfoView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
     UIView *bgGreenInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, 100-3, 320, 3)];
-    [bgGreenInfoView setBackgroundColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]];
+    [bgGreenInfoView setBackgroundColor:kCyanGreenColor];
     [bgGenarateInfoView addSubview:bgGreenInfoView];
     
     // Generate Infomation Of Branch
@@ -200,9 +200,9 @@
 - (void)backBarButtonItem {
     UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     
-    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [doneButton setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     
-    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [doneButton setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
     
     [doneButton setTitle:@"ĐÓNG" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

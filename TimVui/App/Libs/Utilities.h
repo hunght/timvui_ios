@@ -39,4 +39,7 @@ typedef enum
 + (NSURL *)getOriginalAlbumPhoto:(NSDictionary *)arrURLs;
 
 + (UIImage *) imageFromColor:(UIColor *)color;
+
+
+
 @end

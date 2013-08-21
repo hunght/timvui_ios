@@ -26,7 +26,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Utilities.h"
 #import "TVAppDelegate.h"
-#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 #import "TVManual.h"
 #import "UILabel+DynamicHeight.h"
 @implementation TVManualCell {
@@ -67,17 +67,17 @@
 
     _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(3, 0, 150, 34)];
     [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
-    [_saveButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_saveButton setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
     
-    [_saveButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    [_saveButton setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
 
     [self.contentView addSubview:_saveButton];
     
     _detailButton = [[UIButton alloc] initWithFrame:CGRectMake(150+5, 0, 150, 34)];
     [_detailButton setTitle:@"Chi tiết" forState:UIControlStateNormal];
-    [_detailButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_detailButton setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
     
-    [_detailButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    [_detailButton setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
     [self.contentView addSubview:_detailButton];
 
     

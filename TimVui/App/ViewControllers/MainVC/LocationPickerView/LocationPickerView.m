@@ -61,7 +61,7 @@
 - (void)initialize
 {
     _defaultMapHeight               = 130.0f;
-    _parallaxScrollFactor           = 0.6f;
+    _parallaxScrollFactor           = 0.1;
     _amountToScrollToFullScreenMap  = 110.0f;
     self.autoresizesSubviews        = YES;
     self.autoresizingMask           = UIViewAutoresizingFlexibleWidth |
@@ -86,6 +86,7 @@
         self.tableView.dataSource = self.tableViewDataSource;
         self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
         UIViewAutoresizingFlexibleHeight;
+        self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
         // Add scroll view KVO
         void *context = (__bridge void *)self;
         [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
@@ -124,8 +125,10 @@
         self.mapView.delegate = self.mapViewDelegate;
 //        _mapView.settings.compassButton = YES;
 //        _mapView.settings.myLocationButton = YES;
-
+//        CGRect bgViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width,self. self.defaultMapHeight);
+//        UIView* bgView=[[UIView alloc] initWithFrame:bgViewFrame];
         [self insertSubview:self.mapView belowSubview:self.tableView];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             _mapView.myLocationEnabled = YES;
         });

@@ -1,7 +1,7 @@
 #import "TVEvent.h"
 #import "NSDictionary+Extensions.h"
 #import "NSDate-Utilities.h"
-#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 @interface TVEvent ()
 @end
 

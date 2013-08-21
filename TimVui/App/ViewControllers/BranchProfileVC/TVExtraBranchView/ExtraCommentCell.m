@@ -26,7 +26,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Utilities.h"
 #import "TVAppDelegate.h"
-#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 @implementation ExtraCommentCell {
 }
 
@@ -76,9 +76,9 @@
     _fifthStar=[[UIImageView alloc] initWithFrame:CGRectMake(230+15*4, 8, 12, 12)];
     
     _btnLike=[[UIButton alloc] initWithFrame:CGRectZero];
-    [_btnLike setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnLike setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     
-    [_btnLike setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [_btnLike setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
     _btnLike.titleLabel.font=[UIFont fontWithName:@"ArialMT" size:(13)];
     [_btnLike setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnLike setTitle:@"Hữu ích" forState:UIControlStateNormal];

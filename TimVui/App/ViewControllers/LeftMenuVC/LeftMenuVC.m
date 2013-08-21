@@ -74,12 +74,12 @@ enum {
 
 #define kNumberOfRowsInSection3 6
 enum {
-    kS3Row0 = 0,
-    kS3Row1,
-    kS3Row2,
-    kS3Row3,
-    kS3Row4,
-    kS3Row5
+    kS3Introduction = 0,
+    kS3TermOfUse,
+    kS3RFacebookPage,
+    kS3Feedback,
+    kS3InviteFriends,
+    kS3Logout
 };
 @implementation LeftMenuVC
 
@@ -420,7 +420,7 @@ enum {
 	UIView *headerView = nil;
     if (section==0) {
         headerView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 3)];
-        [headerView setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]];
+        [headerView setBackgroundColor:kDeepOrangeColor];
         return  headerView;
     }
 	if (headerText != [NSNull null]) {
@@ -532,22 +532,23 @@ enum {
                 break;
             case kSection3Setting:
                 switch (row) {
-                    case kS3Row0:
+                    case kS3Introduction:
 
                         break;
-                    case kS3Row1:
+                    case kS3TermOfUse:
 
                         break;
-                    case kS3Row2:
+                    case kS3RFacebookPage:
+                        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://profile/454530917941197"]])
+                            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com/anuongfan"]];
+                        break;
+                    case kS3Feedback:
 
                         break;
-                    case kS3Row3:
-
-                        break;
-                    case kS3Row4:
+                    case kS3InviteFriends:
                         viewController = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
                         break;
-                    case kS3Row5:
+                    case kS3Logout:
                     {
                         BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Bạn muốn đăng xuất ?"];
                         [alert setCancelButtonWithTitle:@"Cancel" block:nil];
@@ -727,27 +728,27 @@ enum {
             break;
         case kSection3Setting:
             switch (row) {
-                case kS3Row0:
+                case kS3Introduction:
                     cell.textLabel.text = @"Giới thiệu";
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_intro"];
                     break;
-                case kS3Row1:
+                case kS3TermOfUse:
                     cell.textLabel.text = @"Điều khoản sử dụng";
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_termOfUse"];
                     break;
-                case kS3Row2:
+                case kS3RFacebookPage:
                     cell.textLabel.text = @"Facebook Page";
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_fanPage"];
                     break;
-                case kS3Row3:
+                case kS3Feedback:
                     cell.textLabel.text = @"Góp ý- Báo lỗi";
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_reportError"];
                     break;
-                case kS3Row4:
+                case kS3InviteFriends:
                     cell.textLabel.text = @"Mời bạn bè";
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_inviteFriends"];
                     break;
-                case kS3Row5:
+                case kS3Logout:
                     if ([GlobalDataUser sharedAccountClient].isLogin) {
                         cell.textLabel.text = @"Đăng suất";
                         cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_signOut"];

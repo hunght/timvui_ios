@@ -21,6 +21,7 @@
 #import "BranchProfileVC.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "UIImage+Crop.h"
+#import "FloatView.h"
 @interface DetailManualVC ()<GMSMapViewDelegate>
 {
 
@@ -73,6 +74,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIView* floatView=[[FloatView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height,320, 40) withScrollView:_tableView];
+    [self.view addSubview:floatView];
+    
+    
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -232,7 +237,7 @@
         [viewButtons addSubview:lblTitle];
         UIButton* btnListView = [[UIButton alloc] initWithFrame:CGRectMake(320-35,0 , 35, 35)];
         [btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
-        [btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+        [btnListView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateHighlighted];
         [btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateNormal];
         [btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateHighlighted];
         [btnListView addTarget:self action:@selector(listViewButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -240,7 +245,7 @@
         
         UIButton* btnSMS = [[UIButton alloc] initWithFrame:CGRectMake(320-35-36,0 , 35, 35)];
         [btnSMS setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
-        [btnSMS setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+        [btnSMS setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateHighlighted];
         [btnSMS setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateNormal];
         [btnSMS setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateHighlighted];
         [btnSMS addTarget:self action:@selector(mapButtonClicked) forControlEvents:UIControlEventTouchUpInside];

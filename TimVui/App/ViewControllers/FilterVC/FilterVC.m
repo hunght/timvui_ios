@@ -70,9 +70,9 @@
     self.navigationItem.leftBarButtonItem = backButtonItem;
     UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     
-    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [doneButton setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     
-    [doneButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [doneButton setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
     
     [doneButton setTitle:@"Lọc" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -90,9 +90,9 @@
     
     UIButton* _detailButton = [[UIButton alloc] initWithFrame:CGRectMake(5+5, 5, 300, 34)];
     [_detailButton  setTitle:@"LỌC LẠI DANH SÁCH" forState:UIControlStateNormal];
-    [_detailButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_detailButton setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
     
-    [_detailButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    [_detailButton setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
     [_detailButton addTarget:self action:@selector(doneButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     [bgView addSubview:_detailButton];
     bgView.autoresizingMask           = UIViewAutoresizingFlexibleTopMargin;

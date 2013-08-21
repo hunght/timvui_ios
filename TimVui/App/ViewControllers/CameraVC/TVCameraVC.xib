@@ -55,20 +55,6 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
-					<object class="IBUIPageControl" id="651046659">
-						<reference key="NSNextResponder" ref="548297266"/>
-						<int key="NSvFlags">1290</int>
-						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{0, 370}, {320, 36}}</string>
-						<reference key="NSSuperview" ref="548297266"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="577817426"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUINumberOfPages">4</int>
-					</object>
 					<object class="IBUIView" id="994811018">
 						<reference key="NSNextResponder" ref="548297266"/>
 						<int key="NSvFlags">274</int>
@@ -112,7 +98,7 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MAA</bytes>
 						</object>
-						<float key="IBUIAlpha">0.20000000298023224</float>
+						<float key="IBUIAlpha">0.5</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<object class="IBUIView" id="1012964481">
@@ -124,8 +110,22 @@
 						<reference key="NSNextKeyView" ref="651046659"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="794958045"/>
-						<float key="IBUIAlpha">0.20000000298023224</float>
+						<float key="IBUIAlpha">0.5</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+					</object>
+					<object class="IBUIPageControl" id="651046659">
+						<reference key="NSNextResponder" ref="548297266"/>
+						<int key="NSvFlags">1290</int>
+						<object class="NSPSMatrix" key="NSFrameMatrix"/>
+						<string key="NSFrame">{{0, 370}, {320, 36}}</string>
+						<reference key="NSSuperview" ref="548297266"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="577817426"/>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<int key="IBUINumberOfPages">4</int>
 					</object>
 					<object class="IBUIButton" id="392356300">
 						<reference key="NSNextResponder" ref="548297266"/>
@@ -133,7 +133,7 @@
 						<string key="NSFrame">{{266, 10}, {44, 29}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="192127188"/>
+						<reference key="NSNextKeyView" ref="1012964481"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -245,7 +245,7 @@
 								<string key="NSFrame">{{119, 6}, {83, 32}}</string>
 								<reference key="NSSuperview" ref="574301359"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="192127188"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -275,7 +275,6 @@
 						<string key="NSFrame">{{288, 424}, {21, 21}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1012964481"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -478,7 +477,6 @@
 						<int key="objectID">3</int>
 						<reference key="object" ref="548297266"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="651046659"/>
 							<reference ref="335820848"/>
 							<reference ref="392356300"/>
 							<reference ref="994811018"/>
@@ -487,6 +485,7 @@
 							<reference ref="1031229979"/>
 							<reference ref="1012964481"/>
 							<reference ref="574301359"/>
+							<reference ref="651046659"/>
 							<reference ref="192127188"/>
 						</array>
 						<reference key="parent" ref="0"/>

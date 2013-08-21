@@ -18,7 +18,7 @@
 #import "MHFacebookImageViewer.h"
 
 #import "TVPhotoBrowserVC.h"
-#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 #import "CoupBranchProfileVC.h"
 #import "TVNetworkingClient.h"
 #import <SVProgressHUD.h>

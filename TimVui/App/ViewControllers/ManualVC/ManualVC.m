@@ -15,10 +15,11 @@
 #import "TVManual.h"
 #import "TSMessage.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "NSDate+Helper.h"
+#import "NSDate-Utilities.h"
 #import "Utilities.h"
 #import "FilterVC.h"
 #import <QuartzCore/QuartzCore.h> 
+
 @interface ManualVC ()
 {
     NSMutableDictionary* params;
@@ -63,10 +64,10 @@
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
-    [_btnRecently setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
-    [_btnPopular setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnRecently setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
+    [_btnPopular setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     
-    [_btnSaved setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnSaved setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     [_btnRecently setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnPopular setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnSaved setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

@@ -327,7 +327,7 @@
 
 - (void)settingPriceCatButtons
 {
-    [_btnDistrict setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    [_btnDistrict setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
     
     [_btnPrice100 setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(2/255.0f) green:(190/255.0f) blue:(238/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
     [_btnPrice100_200 setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(2/255.0f) green:(190/255.0f) blue:(238/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
@@ -335,18 +335,18 @@
     [_btnPrice500_1000 setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(2/255.0f) green:(190/255.0f) blue:(238/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
     [_btnPrice1000 setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(2/255.0f) green:(190/255.0f) blue:(238/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
     
-    [_btnSearch setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
-    [_btnReset setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateNormal];
+    [_btnSearch setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
+    [_btnReset setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     
-    [_btnSearch setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
-    [_btnReset setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateHighlighted];
+    [_btnSearch setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
+    [_btnReset setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
     
-    [_btnRestaurant setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
-    [_btnCafe setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
-    [_btnCakeShop setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
-    [_btnEatingShop setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
-    [_btnKaraoke setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
-    [_btnBar setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]] forState:UIControlStateSelected];
+    [_btnRestaurant setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
+    [_btnCafe setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
+    [_btnCakeShop setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
+    [_btnEatingShop setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
+    [_btnKaraoke setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
+    [_btnBar setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
     
     [_btnRestaurant setImage:[UIImage imageNamed:@"img_search_restaurant_off"] forState:UIControlStateSelected];
     [_btnCafe setImage:[UIImage imageNamed:@"img_search_cafe_on"] forState:UIControlStateSelected];
@@ -513,7 +513,7 @@
 
     
     _btnCity = [[UIButton alloc] initWithFrame:CGRectMake(200,11, 57, 23)];
-    [_btnCity setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]];
+    [_btnCity setBackgroundColor:kDeepOrangeColor];
     [_btnCity addTarget:self action:@selector(buttonCityClicked:) forControlEvents:UIControlEventTouchUpInside];
     [[_btnCity layer] setCornerRadius:12.0f];
     [[_btnCity layer] setMasksToBounds:YES];
