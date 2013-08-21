@@ -10,5 +10,5 @@
 
 @interface FloatView : UIView
 @property (nonatomic, strong) UIScrollView* scrollView;
-- (id)initWithFrame:(CGRect)frame withScrollView:(UIScrollView*)scroll;
+- (id)initWithFrame:(CGRect)frame withScrollView:(id)scroll;
 @end

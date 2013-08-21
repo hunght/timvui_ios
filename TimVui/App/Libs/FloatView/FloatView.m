@@ -17,11 +17,11 @@
 
 @implementation FloatView
 
-- (id)initWithFrame:(CGRect)frame withScrollView:(UIScrollView*)scroll
+- (id)initWithFrame:(CGRect)frame withScrollView:(id)scroll
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.scrollView=scroll;
+        self.scrollView=(UIScrollView*)scroll;
         // Initialization code
         void *context = (__bridge void *)self;
         [self.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
@@ -63,9 +63,12 @@
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
 //    NSLog(@"scrollOffset = %f",scrollOffset);
-//    NSLog(@"_scrollView.contentSize.height = %f",_scrollView.contentSize.height);
+//    NSLog(@"_scrollView.contentSize.height = %f",_scrollView.frame.size.height-scrollOffset);
+    if (scrollOffset<0) {
+        return;
+    }
     if (scrollOffset< lastDragOffset){
-        if (_scrollView.contentSize.height-scrollOffset<3468.000000- 3052.000000+50) {
+        if (_scrollView.contentSize.height-scrollOffset- _scrollView.frame.size.height<50) {
             return;
         }
         if (isHiddenYES&&!isAnimating) {
