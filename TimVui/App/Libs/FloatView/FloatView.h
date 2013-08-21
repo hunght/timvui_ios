@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FloatView : UIView
-@property (nonatomic, assign) UIScrollView* scrollView;
+@property (nonatomic, strong) UIScrollView* scrollView;
 - (id)initWithFrame:(CGRect)frame withScrollView:(UIScrollView*)scroll;
 @end

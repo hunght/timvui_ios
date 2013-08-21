@@ -322,7 +322,7 @@
 - (void)displayInfoWhenGetBranch
 {
     [self showInfoView];
-    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch];
+    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
     _extraBranchView.scrollView=_scrollView;
     [self.view addSubview:_extraBranchView];
     

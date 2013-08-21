@@ -118,8 +118,15 @@
     l=_txvContent.layer;
     [l setMasksToBounds:YES];
     [l setCornerRadius:5];
-    [_btnCommentPost setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    
+
+    [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
+    [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
+    [_btnCommentPost setImage:[UIImage imageNamed:@"img_comment_postButton"] forState:UIControlStateNormal];
+    [_btnCommentPost setTitleEdgeInsets:UIEdgeInsetsMake(7, - 250.0, 5.0, 5.0)];
+    [_btnCommentPost setTitle:@"ĐĂNG ĐÁNH GIÁ" forState:UIControlStateNormal];
+    [_btnCommentPost setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _btnCommentPost.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+
     if (_branch)
         [self displayBranchInfo];
     

@@ -74,9 +74,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIView* floatView=[[FloatView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height,320, 40) withScrollView:_tableView];
+    UIView* floatView=[[FloatView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height,320, 48) withScrollView:_tableView];
     [self.view addSubview:floatView];
+    UIButton* _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 7, 300, 34)];
+    [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
+    [_saveButton setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
     
+    [_saveButton setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
+    [_saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [floatView addSubview:_saveButton];
     
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
@@ -259,6 +265,26 @@
 
 
 #pragma mark - IBActions
+-(void)saveButtonClicked:(UIButton*)sender{
+    
+    NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    _manual.manualID,@"handbook_id" ,
+                                    [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                                    nil];
+    [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Lưu cẩm nang thành công"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+        
+        [self dismissModalViewControllerAnimated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Lưu cẩm nang thất bại thất bại"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
+    }];
+}
 
 -(void)listViewButtonClicked{
     if (!mapView_||mapView_.isHidden)return;

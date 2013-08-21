@@ -24,6 +24,8 @@
 #import "TVKaraokes.h"
 #import "TVKaraoke.h"
 #import "InfinitePagingView.h"
+#import "FloatView.h"
+#import "CommentVC.h"
 #define kTableViewHeightOffset 150
 @interface TVExtraBranchView() {
 @private
@@ -44,7 +46,7 @@
     lastDragOffset = scrollView.contentOffset.y;
 }
 
-- (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch
+- (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
 {
     _branch=branch;
     self = [super initWithFrame:frame];
@@ -140,6 +142,7 @@
         self.lblMenu.text=[NSString stringWithFormat:@"(%d)",countMenu];
         
         self.lblKaraoke.text=[NSString stringWithFormat:@"(%d)",_branch.karaokes.items.count];
+        _viewController=viewController;
     }
     return self;
 }
@@ -200,6 +203,22 @@
             [self.superview addSubview:_btnBackground];
         }
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        
+        
+        UIView* floatView=[[FloatView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height,320, 48) withScrollView:_tableView];
+        [self addSubview:floatView];
+        UIButton* _btnCommentPost = [[UIButton alloc] initWithFrame:CGRectMake(10, 7, 300, 34)];
+        [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
+        [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
+        [_btnCommentPost setImage:[UIImage imageNamed:@"img_comment_postButton"] forState:UIControlStateNormal];
+        [_btnCommentPost setTitleEdgeInsets:UIEdgeInsetsMake(7, - 250.0, 5.0, 5.0)];
+        [_btnCommentPost setTitle:@"VIẾT ĐÁNH GIÁ" forState:UIControlStateNormal];
+        [_btnCommentPost setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _btnCommentPost.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+        
+        [_btnCommentPost addTarget:self action:@selector(writeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [floatView addSubview:_btnCommentPost];
+        
     }
     [self showExtraView:YES];
 }
@@ -483,6 +502,18 @@
 
 
 #pragma mark Helper
+
+-(void)writeButtonClicked{
+    CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
+    UINavigationController* navController =navController = [[UINavigationController alloc] initWithRootViewController:commentVC];
+    commentVC.branch=_branch;
+    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
+    _slidingViewController.topViewController=navController;
+    
+    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+    [_viewController presentModalViewController:_slidingViewController animated:YES];
+    commentVC.slidingViewController=_slidingViewController;
+}
 -(void)resetToUnselectedButtons{
     commentButton.selected=NO;
     karaokeButton.selected=NO;

@@ -36,9 +36,11 @@ typedef enum {
 
 @property (strong, nonatomic) UIScrollView *scrollEvent;
 @property (strong, nonatomic) UIScrollView *scrollKaraoke;
-
 @property (assign, nonatomic) BOOL isShowFullExtraYES;
+@property (assign   , nonatomic) UIViewController *viewController;
+
+
 -(void)showExtraView:(BOOL)isYES;
 -(void)eventButtonClicked:(UIButton*)sender;
-- (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch;
+- (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController;
 @end

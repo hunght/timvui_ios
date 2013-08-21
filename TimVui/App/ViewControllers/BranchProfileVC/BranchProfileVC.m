@@ -187,7 +187,7 @@
             
             UIButton* btnSMS = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 75, 25)];
             [btnSMS setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_compose"] forState:UIControlStateNormal];
-            //[btnSMS setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+            
             [btnSMS addTarget:self action:@selector(btnSMSButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [couponBranch addSubview:btnSMS];
             *height_p=btnSMS.frame.origin.y+btnSMS.frame.size.height;
@@ -291,12 +291,12 @@
             
             
             UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 300, 46)];
-            [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
-            [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-            
+            [btnPostPhoto setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
+            [btnPostPhoto setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
             [btnPostPhoto setTitle:@"XEM CHI TIẾT" forState:UIControlStateNormal];
             [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
+            
             [btnPostPhoto addTarget:self action:@selector(viewDetailCouponClicked:) forControlEvents:UIControlEventTouchUpInside];
             btnPostPhoto.tag=i;
             i++;
@@ -645,9 +645,8 @@
                 [self showInfoView];
                 
                 if (!_extraBranchView) {
-                    _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch];
+                    _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
                     _extraBranchView.scrollView=_scrollView;
-                    _extraBranchView.branch=_branch;
                     [self.view addSubview:_extraBranchView];
                 }
                 
@@ -665,9 +664,8 @@
     }else{
         [self showInfoView];
         if (!_extraBranchView) {
-            _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41)];
+            _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
             _extraBranchView.scrollView=_scrollView;
-            _extraBranchView.branch=_branch;
             [self.view addSubview:_extraBranchView];
         }
     }

@@ -28,18 +28,17 @@
         lastDragOffset = _scrollView.contentOffset.y;
         self.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         isHiddenYES=YES;
-        [self setBackgroundColor:[UIColor greenColor]];
+        [self setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.5]];
     }
     return self;
 }
 
 - (void)dealloc
 {
-//    if (self.scrollView) {
-//        void *context = (__bridge void *)self;
-//        [self.scrollView removeObserver:self forKeyPath:@"contentOffset" context:context];
-//    }
-
+    if (self.scrollView) {
+        void *context = (__bridge void *)self;
+        [self.scrollView removeObserver:self forKeyPath:@"contentOffset" context:context];
+    }
 }
 
 #pragma mark - KVO Methods
@@ -63,6 +62,7 @@
 
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
+    NSLog(@"scrollOffset = %f",scrollOffset);
     if (scrollOffset< lastDragOffset){
         if (isHiddenYES&&!isAnimating) {
             isAnimating=YES;
