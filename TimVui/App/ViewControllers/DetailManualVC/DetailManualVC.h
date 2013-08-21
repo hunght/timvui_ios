@@ -15,6 +15,8 @@
     UIView* _couponBranch;
 }
 @property(strong, nonatomic) TVBranches* branches;
+@property (nonatomic)UIButton* btnListView;
+@property (nonatomic)UIButton* btnMapView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withManual:(TVManual*)manual;
 @end

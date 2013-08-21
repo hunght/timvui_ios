@@ -385,7 +385,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 {
 	MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
 	picker.messageComposeDelegate = self;
-    picker.body = [NSString stringWithFormat:@"%@",SMS_STR];
+//    picker.body = [NSString stringWithFormat:@"%@",SMS_STR];
     NSMutableArray* arrPhone=[NSMutableArray new];
     for (NSArray* arr in [_pickedArr valueForKey:@"telephone"]) {
         [arrPhone addObjectsFromArray:arr];

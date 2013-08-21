@@ -15,7 +15,7 @@
 static GlobalDataUser *_sharedClient = nil;
 
 + (GlobalDataUser *)sharedAccountClient{
-
+    
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[GlobalDataUser alloc] init];
@@ -30,6 +30,7 @@ static GlobalDataUser *_sharedClient = nil;
         _sharedClient.dicPriceSearchParam=[[NSMutableArray alloc] init];
         _sharedClient.recentlyBranches=[[NSMutableDictionary alloc] init];
     });
+    
     return _sharedClient;
 }
 

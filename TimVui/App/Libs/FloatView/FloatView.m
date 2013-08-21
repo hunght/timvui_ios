@@ -62,8 +62,12 @@
 
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
-    NSLog(@"scrollOffset = %f",scrollOffset);
+//    NSLog(@"scrollOffset = %f",scrollOffset);
+//    NSLog(@"_scrollView.contentSize.height = %f",_scrollView.contentSize.height);
     if (scrollOffset< lastDragOffset){
+        if (_scrollView.contentSize.height-scrollOffset<3468.000000- 3052.000000+50) {
+            return;
+        }
         if (isHiddenYES&&!isAnimating) {
             isAnimating=YES;
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{

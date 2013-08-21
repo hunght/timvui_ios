@@ -32,8 +32,7 @@
 #define kNumberLimitRefresh   @"10"
 
 
-#define SMS_NUMBER @"8588"//VDC
-#define SMS_STR @"CITYOFFERS"//VDC
+#define SMS_NUMBER @"8088"//VDC
 
 #define kBranchIDs               @"kBranchIDs"
 #define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"

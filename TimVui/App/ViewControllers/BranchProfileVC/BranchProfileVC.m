@@ -16,7 +16,7 @@
 #import "TVCoupon.h"
 #import "TVExtraBranchView.h"
 #import "MHFacebookImageViewer.h"
-
+#import "TSMessage.h"
 #import "TVPhotoBrowserVC.h"
 #import "NSDate-Utilities.h"
 #import "CoupBranchProfileVC.h"
@@ -189,12 +189,13 @@
             [btnSMS setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_compose"] forState:UIControlStateNormal];
             
             [btnSMS addTarget:self action:@selector(btnSMSButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [btnSMS setTag:i];
             [couponBranch addSubview:btnSMS];
             *height_p=btnSMS.frame.origin.y+btnSMS.frame.size.height;
             
             UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, *height_p, 170, 23)];
             [self settingTextForTitle:lblTitle];
-            lblTitle.text=[NSString stringWithFormat:@"COUPON %@",coupon.code];
+            lblTitle.text=[NSString stringWithFormat:@"COUPON %@",coupon.syntax];
             [couponBranch addSubview:lblTitle];
             
             UILabel *lblSendTo = [[UILabel alloc] initWithFrame:CGRectMake(170+10.0, *height_p, 130, 23)];
@@ -265,7 +266,7 @@
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
             lblDetailInfoRow.textColor = [UIColor grayColor];
             lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-            lblDetailInfoRow.text =coupon.code;
+            lblDetailInfoRow.text =coupon.syntax;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
             UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65, 12, 13)];
@@ -846,9 +847,47 @@
     return strStyleFoody;
 }
 
-#pragma mark - IBAction
--(void)btnSMSButtonClicked:(id)sender{
+#pragma mark MFMessageComposeViewControllerDelegate
+// Dismisses the message composition interface when users tap Cancel or Send. Proceeds to update the
+// feedback message field with the result of the operation.
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result {
+	// Notifies users about errors associated with the interface
+    NSString* strAlarm;
+	switch (result)
+	{
+		case MessageComposeResultCancelled:
+            strAlarm=@"Bạn đã từ chối gửi tin nhắn nhận coupon";
+			break;
+		case MessageComposeResultSent:{
+            strAlarm= @"Bạn đã gửi tín nhắn thành công. Vui lòng đợi tin nhắn trả về của chúng tôi.";
+			break;
+        }
+		case MessageComposeResultFailed:
+            strAlarm=@"Có lỗi trong việc gửi tin nhắn. Vui lòng kiểm tra tài khoản của bạn";
+			break;
+		default:
+			strAlarm=@"Có lỗi trong việc gửi tin nhắn. Vui lòng kiểm tra tài khoản của bạn" ;
+			break;
+	}
     
+    [TSMessage showNotificationInViewController:self
+                                      withTitle:strAlarm
+                                    withMessage:nil
+                                       withType:TSMessageNotificationTypeWarning];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - IBAction
+-(void)btnSMSButtonClicked:(UIButton*)sender{
+    if([MFMessageComposeViewController canSendText]) {
+        TVCoupon* coupon=_branch.coupons.items[sender.tag];
+        MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+        picker.body = [NSString stringWithFormat:@"coupon [%@]",coupon.syntax];
+        picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+        picker.messageComposeDelegate = self;
+        [self.navigationController    presentModalViewController:picker animated:YES];
+    }
 }
 
 -(void)shareButtonClicked:(id)s{

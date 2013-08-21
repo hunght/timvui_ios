@@ -241,22 +241,23 @@
         UIView* viewButtons=[[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-35, 320, 35)];
         [viewButtons   setBackgroundColor:[UIColor colorWithRed:(72/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]];
         [viewButtons addSubview:lblTitle];
-        UIButton* btnListView = [[UIButton alloc] initWithFrame:CGRectMake(320-35,0 , 35, 35)];
-        [btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
-        [btnListView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateHighlighted];
-        [btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateNormal];
-        [btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateHighlighted];
-        [btnListView addTarget:self action:@selector(listViewButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [viewButtons addSubview:btnListView];
+        _btnListView = [[UIButton alloc] initWithFrame:CGRectMake(320-35,0 , 35, 35)];
+        [_btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+        [_btnListView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateSelected];
+        [_btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateNormal];
+        [_btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateSelected];
+        [_btnListView addTarget:self action:@selector(listViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [viewButtons addSubview:_btnListView];
         
-        UIButton* btnSMS = [[UIButton alloc] initWithFrame:CGRectMake(320-35-36,0 , 35, 35)];
-        [btnSMS setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
-        [btnSMS setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateHighlighted];
-        [btnSMS setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateNormal];
-        [btnSMS setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateHighlighted];
-        [btnSMS addTarget:self action:@selector(mapButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [viewButtons addSubview:btnSMS];
+        _btnMapView = [[UIButton alloc] initWithFrame:CGRectMake(320-35-36,0 , 35, 35)];
+        [_btnMapView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+        [_btnMapView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateSelected];
+        [_btnMapView setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateNormal];
+        [_btnMapView setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateSelected];
+        [_btnMapView addTarget:self action:@selector(mapButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [viewButtons addSubview:_btnMapView];
         [_couponBranch addSubview:viewButtons];
+        _btnListView.selected=YES;
     }
 
     self.tableView.tableHeaderView = _couponBranch;
@@ -266,7 +267,6 @@
 
 #pragma mark - IBActions
 -(void)saveButtonClicked:(UIButton*)sender{
-    
     NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
                                     _manual.manualID,@"handbook_id" ,
                                     [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
@@ -286,7 +286,9 @@
     }];
 }
 
--(void)listViewButtonClicked{
+-(void)listViewButtonClicked:(UIButton*)sender{
+    sender.selected=YES;
+    _btnMapView.selected=NO;
     if (!mapView_||mapView_.isHidden)return;
     if (mapView_) mapView_.hidden=YES;
     CGRect frame=    _couponBranch.frame;
@@ -294,10 +296,13 @@
     _couponBranch.frame=frame;
     self.tableView.tableHeaderView=_couponBranch;
     [_tableView reloadData];
+    NSIndexPath *topPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [_tableView scrollToRowAtIndexPath:topPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
--(void)mapButtonClicked{
-    
+-(void)mapButtonClicked:(UIButton*)sender{
+    sender.selected=YES;
+    _btnListView.selected=NO;
     if (!mapView_) {
         TVBranch*branch=[_branches.items objectAtIndex:0];
         GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:branch.latlng.latitude

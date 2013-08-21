@@ -17,6 +17,7 @@
 #import "MHFacebookImageViewer.h"
 #import "NSDate-Utilities.h"
 #import "TVBranches.h"
+#import "TSMessage.h"
 @interface CoupBranchProfileVC ()
 {
 @private
@@ -271,7 +272,7 @@
         lblDetailInfoRow.backgroundColor = [UIColor clearColor];
         lblDetailInfoRow.textColor = [UIColor grayColor];
         lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-        lblDetailInfoRow.text =_coupon.code;
+        lblDetailInfoRow.text =_coupon.syntax;
         [infoCouponBranch addSubview:lblDetailInfoRow];
         
         UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65, 12, 13)];
@@ -389,16 +390,50 @@
     
 }
 
+#pragma mark MFMessageComposeViewControllerDelegate
+// Dismisses the message composition interface when users tap Cancel or Send. Proceeds to update the
+// feedback message field with the result of the operation.
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result {
+	// Notifies users about errors associated with the interface
+    NSString* strAlarm;
+	switch (result)
+	{
+		case MessageComposeResultCancelled:
+            strAlarm=@"Bạn đã từ chối gửi tin nhắn nhận coupon";
+			break;
+		case MessageComposeResultSent:{
+            strAlarm= @"Bạn đã gửi tín nhắn thành công. Vui lòng đợi tin nhắn trả về của chúng tôi.";
+			break;
+        }
+		case MessageComposeResultFailed:
+            strAlarm=@"Có lỗi trong việc gửi tin nhắn. Vui lòng kiểm tra tài khoản của bạn";
+			break;
+		default:
+			strAlarm=@"Có lỗi trong việc gửi tin nhắn. Vui lòng kiểm tra tài khoản của bạn" ;
+			break;
+	}
+    
+    [TSMessage showNotificationInViewController:self
+                                      withTitle:strAlarm
+                                    withMessage:nil
+                                       withType:TSMessageNotificationTypeWarning];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - IBAction
+
 
 #pragma mark - IBAction
 -(void)getCouponCode:(id)s{
-    
+    if([MFMessageComposeViewController canSendText]) {
+        MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+        picker.body = [NSString stringWithFormat:@"coupon [%@]",_coupon.syntax];
+        picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+        picker.messageComposeDelegate = self;
+        [self.navigationController    presentModalViewController:picker animated:YES];
+    }
 }
-
--(void)specialContentButtonClicked:(id)sender{
-    
-}
-
 
 -(void)backButtonClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];

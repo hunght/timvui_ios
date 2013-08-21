@@ -8,7 +8,7 @@
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *used;
 @property(nonatomic,strong)NSString* view;
-@property(nonatomic,strong)NSString *code;
+@property(nonatomic,strong)NSString *syntax;
 @property(nonatomic,strong)NSDate *start;
 @property(nonatomic,strong)NSDate *end;
 @property(nonatomic,strong)NSString *content;

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "TVBranch.h"
 typedef enum {
     kOpenNoneTab=0,
@@ -14,7 +15,7 @@ typedef enum {
     kOpenEventTab
 }kOpenTab;
 @class TVExtraBranchView;
-@interface BranchProfileVC : UIViewController<UIWebViewDelegate>
+@interface BranchProfileVC : UIViewController<UIWebViewDelegate,MFMessageComposeViewControllerDelegate>
 @property (retain, nonatomic) TVBranch *branch;
 
 @property(assign, nonatomic) kOpenTab openTab;
