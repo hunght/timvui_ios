@@ -27,10 +27,9 @@
 #import "Utilities.h"
 #import "TVAppDelegate.h"
 #import "NSDate-Utilities.h"
+#import "UILabel+DynamicHeight.h"
 @implementation ExtraCommentCell {
 }
-
-@synthesize comment = _comment;
 
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
     [l setMasksToBounds:YES];
@@ -52,17 +51,13 @@
     
     CALayer* l = [self.bgView layer];
     [self setBorderForLayer:l radius:1];
-    self.textLabel.adjustsFontSizeToFitWidth = YES;
-    self.textLabel.textColor = [UIColor blackColor];
+    _lblNameUser.adjustsFontSizeToFitWidth = YES;
+    _lblNameUser.textColor = [UIColor blackColor];
 
-    self.textLabel.backgroundColor=[UIColor clearColor];
-    self.detailTextLabel.backgroundColor=[UIColor clearColor];
-    self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    self.detailTextLabel.numberOfLines = 0;
-    self.detailTextLabel.lineBreakMode = UILineBreakModeWordWrap;
-    
-    self.selectionStyle = UITableViewCellSelectionStyleGray;
-    
+    _lblNameUser.backgroundColor=[UIColor clearColor];
+    _lblContent.backgroundColor=[UIColor clearColor];
+    _lblContent.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+
     self.date = [[UILabel alloc] initWithFrame:CGRectZero];
     self.date.backgroundColor = [UIColor clearColor];
     
@@ -91,6 +86,15 @@
     [_lblLike setBackgroundColor:[UIColor clearColor]];
     _lblLike.textAlignment = UITextAlignmentCenter;
     
+    _imgAvatar=[[UIImageView alloc] initWithFrame:CGRectMake(7.0f, 8.0f, 50.0f, 50.0f)];
+    
+    _lblNameUser=[[UILabel alloc] initWithFrame:CGRectMake(67.0f, 8.0f, 222.0f, 15.0f)];
+    _lblContent=[[UILabel alloc] initWithFrame:CGRectMake(67.0f, 45.0f, 245.0f, 20.0f)];
+    
+    [_bgView addSubview:_imgAvatar];
+    [_bgView addSubview:_lblNameUser];
+    [_bgView addSubview:_lblContent];
+    
     [self.bgView addSubview:_firstStar];
     [self.bgView addSubview:_secondStar];
     [self.bgView addSubview:_thirdStar];
@@ -101,33 +105,32 @@
     [self.bgView addSubview:_imgLike];
     [self.bgView addSubview:_lblLike];
     
-    self.textLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+    _lblNameUser.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     self.date.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+    _lblContent.font = [UIFont fontWithName:@"ArialMT" size:(13)];
 
-     l = [self.imageView layer];
+     l = [_imgAvatar layer];
     [self setBorderForLayer:l radius:1];
     [self.bgView addSubview:_date];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
     return self;
 }
 
-- (void)setComment:(TVComment*)branch {
-    _comment = branch;
-    self.textLabel.text=_comment.user_name;
-    self.detailTextLabel.text=_comment.content;
+- (void)setComment:(TVComment*)_comment {
+    _lblNameUser.text=_comment.user_name;
+    _lblContent.text=_comment.content;
 
-    [self.detailTextLabel sizeToFit];
+    [_lblContent resizeToStretch];
 
     self.date.text=[_comment.created stringWithFormat:@"dd/mm/yy"];
-    [self.imageView setImageWithURL:[Utilities getThumbImageOfCoverBranch:_comment.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    [_imgAvatar setImageWithURL:[Utilities getThumbImageOfCoverBranch:_comment.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     _firstStar.image=[UIImage imageNamed:(_comment.rating>=1)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _secondStar.image=[UIImage imageNamed:(_comment.rating>=2)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _thirdStar.image=[UIImage imageNamed:(_comment.rating>=3)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _fourthStar.image=[UIImage imageNamed:(_comment.rating>=4)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     _fifthStar.image=[UIImage imageNamed:(_comment.rating>=5)?@"img_branch_profile_star_on":@"img_branch_profile_star"];
     
-    int height=self.detailTextLabel.frame.size.height+44;
+    int height=_lblContent.frame.size.height+_lblContent.frame.origin.y;
     _btnLike.frame=CGRectMake(216-10, height-3 , 56, 22);
     _lblLike.frame=CGRectMake(280-10, height , 28, 17);
     _imgLike.frame=CGRectMake(280-10, height , 28, 17);
@@ -138,28 +141,17 @@
     CGRect frame=_bgView.frame;
     frame.size.height=height;
     [_bgView setFrame:frame];
-    [self setNeedsLayout];
 }
 
-+ (CGFloat)heightForCellWithPost:(TVComment *)branch {
++ (CGFloat)heightForCellWithPost:(TVComment *)comment {
     CGSize maximumLabelSize = CGSizeMake(245.0f,9999);
     UIFont *cellFont = [UIFont fontWithName:@"ArialMT" size:(13)];
-    CGSize expectedLabelSize = [branch.content sizeWithFont:cellFont
+    CGSize expectedLabelSize = [comment.content sizeWithFont:cellFont
                                                constrainedToSize:maximumLabelSize
                                                    lineBreakMode:NSLineBreakByWordWrapping];
-    return expectedLabelSize.height+ 8+44+8+10;
+    return expectedLabelSize.height+ 8+44+8+10+10;
 }
 
-#pragma mark - UIView
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.imageView.frame = CGRectMake(7.0f, 8.0f, 50.0f, 50.0f);
-    self.textLabel.frame = CGRectMake(67.0f, 8.0f, 222.0f, 15.0f);
-    self.detailTextLabel.frame = CGRectMake(67.0f, 45.0f, 245.0f, 20.0f);
-    [_bgView addSubview:self.imageView];
-    [_bgView addSubview:self.textLabel];
-    [_bgView addSubview:self.detailTextLabel];
-    self.date.frame = CGRectMake(67.0f, 30.0f, 210.0f, 15.0f);
-}
+
 
 @end

@@ -23,7 +23,7 @@
     self.content = [dict safeStringForKey:@"content"];
     self.price = [dict safeArrayForKey:@"price"];
     self.count = [dict safeStringForKey:@"count"];
-    self.images= [[dict safeDictForKey:@"images"] allValues];
+    self.images= [dict safeArrayForKey:@"images"] ;
     
 }
 

@@ -26,7 +26,6 @@
 
 @interface ExtraCommentCell : UITableViewCell
 
-@property (nonatomic, strong) TVComment *comment;
 @property (nonatomic,strong) UILabel *date;
 @property (nonatomic,strong) UIButton *btnLike;
 @property (nonatomic,strong) UIImageView *imgLike;
@@ -36,7 +35,10 @@
 @property (nonatomic, strong)     UIImageView* thirdStar;
 @property (nonatomic, strong)     UIImageView* fourthStar;
 @property (nonatomic, strong)     UIImageView* fifthStar;
+@property (nonatomic, strong) UIImageView* imgAvatar;
+@property (nonatomic, strong) UILabel* lblNameUser;
+@property (nonatomic, strong) UILabel* lblContent;
 @property (nonatomic, strong) UIView* bgView;
 + (CGFloat)heightForCellWithPost:(TVComment *)branch;
-
+- (void)setComment:(TVComment*)branch;
 @end
