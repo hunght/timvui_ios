@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TVComments.h"
+#import "TVBranches.h"
 #import "TVBranch.h"
 typedef enum {
     kTVComment =0,
@@ -15,12 +16,12 @@ typedef enum {
     kTVSimilar
 } kTVTable;
 
-@interface TVExtraBranchView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,UIWebViewDelegate>
+@interface TVExtraBranchView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) UITableView *tableView;
 @property (assign, nonatomic) kTVTable currentTableType;
 @property (strong, nonatomic) TVComments* comments;
 @property (strong, nonatomic) NSArray* arrMenu;
-@property (strong, nonatomic) NSArray* arrSimilar;
+@property (strong, nonatomic) TVBranches* similarBranches;
 @property(nonatomic,strong)TVBranch *branch;
 @property (assign, nonatomic) BOOL isHiddenYES;
 @property (assign, nonatomic) BOOL isAnimating;

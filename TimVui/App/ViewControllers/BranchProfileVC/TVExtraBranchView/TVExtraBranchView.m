@@ -26,7 +26,10 @@
 #import "InfinitePagingView.h"
 #import "CommentVC.h"
 #import "CMHTMLView.h"
+
 #define kTableViewHeightOffset 150
+#define kCommentLimitCount 2
+
 @interface TVExtraBranchView() {
 @private
     double lastDragOffset;
@@ -41,7 +44,7 @@
     BOOL isFloatViewAnimating;
     UILabel* lblWriteReviewNotice;
     int countMenu;
-    
+    int pageSimilarCount;
 }
 @end
 
@@ -173,12 +176,39 @@
         dispatch_async(dispatch_get_main_queue(),^ {
             
             [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
             self.lblReview.text=[NSString stringWithFormat:@"    (%d)",weakSelf.comments.count];
             [self.tableView reloadData];
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            [self.tableView reloadData];
+        });
+    }];
+}
+
+- (void)postSimilarBranch:(NSDictionary*)params {
+    NSLog(@"%@",params);
+    if (!self.similarBranches) {
+        self.similarBranches=[[TVBranches alloc] initWithPath:@"branch/getListBranchSibling"];
+        self.similarBranches.isNotSearchAPIYES=YES;
+        pageSimilarCount=0;
+    }
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
+    [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            pageSimilarCount++;
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+//            self..text=[NSString stringWithFormat:@"    (%d)",weakSelf.similarBranches.count];
+            [self.tableView reloadData];
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
             [self.tableView reloadData];
         });
     }];
@@ -469,26 +499,6 @@
 
 
 
-#pragma mark - UIWebViewDelegate
--(void)webViewDidFinishLoad:(UIWebView *)webView {
-//    if (_scrollEvent.isHidden==NO) {
-//        [webView setAlpha:1.0];
-//        CGRect newBounds = webView.frame;
-//        newBounds.size.height = webView.scrollView.contentSize.height;
-//        webView.frame = newBounds;
-//        
-//        int height_p=webView.frame.origin.y+webView.frame.size.height+10;
-//        CGRect frame=eventView.frame;
-//        frame.size.height=height_p;
-//        eventView.frame=frame;
-//        
-//        height_p=eventView.frame.origin.y+eventView.frame.size.height+30;
-//        _scrollEvent.scrollEnabled=YES;
-//        [_scrollEvent setContentSize:CGSizeMake(320, height_p)];
-//    }
-    
-    
-}
 
 #pragma mark Actions
 
@@ -507,6 +517,9 @@
 }
 
 -(void)similarButtonClicked:(UIButton*)sender{
+    self.tableView.showsPullToRefresh=YES;
+    self.tableView.showsInfiniteScrolling=YES;
+    
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
     [self.scrollKaraoke setHidden:YES];
@@ -517,11 +530,14 @@
     
     if (_currentTableType!=kTVSimilar){
         _currentTableType=kTVSimilar;
-        [_tableView reloadData];
+        [self getBranchSimilar];
     }
 }
 
 -(void)menuButtonClicked:(UIButton*)sender{
+    self.tableView.showsPullToRefresh=NO;
+    self.tableView.showsInfiniteScrolling=NO;
+    
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
     [self.scrollKaraoke setHidden:YES];
@@ -552,6 +568,9 @@
 }
 
 -(void)commentButtonClicked:(UIButton*)sender{
+    self.tableView.showsPullToRefresh=YES;
+    self.tableView.showsInfiniteScrolling=YES;
+    
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
     [self.scrollKaraoke setHidden:YES];
@@ -628,15 +647,26 @@
     NSDictionary* params;
     if (_comments.last_id)
         params = @{@"branch_id": _branch.branchID,
-                   @"limit": kNumberLimitRefresh
+                   @"limit": @kCommentLimitCount
                    ,@"last_id": _comments.last_id
                    };
     else
         params = @{@"branch_id": _branch.branchID,
-                   @"limit": kNumberLimitRefresh
+                   @"limit": @kCommentLimitCount
                    };
     [self postCommentBranch:params];
 }
+
+- (void)getBranchSimilar{
+    NSDictionary* params;
+        params = @{@"id": _branch.branchID,
+                   @"limit": @kCommentLimitCount
+                   ,@"offset": [NSString stringWithFormat:@"%d",pageSimilarCount]
+                   };
+
+    [self postSimilarBranch:params];
+}   
+
 
 -(void)layoutSubviews{
     [super layoutSubviews];
@@ -647,15 +677,14 @@
     [self.tableView addPullToRefreshWithActionHandler:^{
         weakSelf.comments.items=nil;
         NSDictionary* params = @{@"branch_id": branchID,
-                                 @"limit": kNumberLimitRefresh
+                                 @"limit": @kCommentLimitCount
                                  };
         [weakSelf postCommentBranch:params];
     }];
     
-#warning this is what todo when get total comments
-    //    [self.tableView addInfiniteScrollingWithActionHandler:^{
-    //        [weakSelf getCommentRefresh];
-    //    }];
+        [self.tableView addInfiniteScrollingWithActionHandler:^{
+            [weakSelf getCommentRefresh];
+        }];
     
 }
 
@@ -681,8 +710,8 @@
         if (scrollOffset<0) {
             return;
         }
-        NSLog(@"scrollOffset = %f",scrollOffset);
-        NSLog(@"_scrollView.contentSize.height = %f",scrollView.contentSize.height-scrollOffset- scrollView.frame.size.height);
+//        NSLog(@"scrollOffset = %f",scrollOffset);
+//        NSLog(@"_scrollView.contentSize.height = %f",scrollView.contentSize.height-scrollOffset- scrollView.frame.size.height);
         if (scrollOffset< lastDragOffsetFloatView){
             if (scrollView.contentSize.height-scrollOffset- scrollView.frame.size.height<50) {
                 return;
@@ -830,7 +859,7 @@
             }
             break;
         case kTVSimilar:
-            count= 0;
+            count= _similarBranches.count;
             if (count==0) {
                 [self showFloatView];
                 lblWriteReviewNotice.hidden=NO;

@@ -28,7 +28,7 @@
 #import "TVAppDelegate.h"
 #import "TVCoupon.h"
 #import "TVCoupons.h"
-
+#import "TVEvent.h"
 @implementation BranchMainCell
 
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
@@ -112,11 +112,24 @@
     [self.imageView setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     
     int lineHeight=0;
-    
+    for (TVEvent* event in branch.events.items) {
+        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
+        lblAddress.backgroundColor = [UIColor clearColor];
+        lblAddress.textColor = kCyanGreenColor;
+        lblAddress.highlightedTextColor = [UIColor redColor];
+        lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblAddress.numberOfLines = 1;
+        lblAddress.text=event.title;
+        [self.utility addSubview:lblAddress];
+        UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, lineHeight, 15, 15)];
+        homeIcon.image=[UIImage imageNamed:@"img_main_event_icon"];
+        [self.utility addSubview:homeIcon];
+        lineHeight+=lblAddress.frame.size.height+5;
+    }
     for (TVCoupon* coupon in branch.coupons.items) {
         UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
         lblAddress.backgroundColor = [UIColor clearColor];
-        lblAddress.textColor = [UIColor redColor];
+        lblAddress.textColor = kDeepOrangeColor;
         lblAddress.highlightedTextColor = [UIColor redColor];
         lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblAddress.numberOfLines = 1;
@@ -127,16 +140,17 @@
         [self.utility addSubview:homeIcon];
         lineHeight+=lblAddress.frame.size.height+5;
     }
+   
     
     CGRect frame=self.utility.frame;
-    frame.size.height+=branch.coupons.items.count*30;
+    frame.size.height+=(branch.events.items.count+ branch.coupons.items.count)*20;
     [self.utility setFrame:frame];
     
     [self setNeedsLayout];
 }
 
 + (CGFloat)heightForCellWithPost:(TVBranch *)branch {
-    return (8+ 70+ 8+15+ branch.coupon_count* 18);
+    return (8+ 70+ 8+15+ (branch.events.items.count+ branch.coupons.items.count)* 20);
 }
 
 #pragma mark - UIView
