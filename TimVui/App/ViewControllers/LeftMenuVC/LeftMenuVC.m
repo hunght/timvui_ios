@@ -19,7 +19,7 @@
 #import "TVCameraVC.h"
 #import "SkinPickerTableVC.h"
 #import "CommentVC.h"
-#import "BlockAlertView.h"
+#import "SIAlertView.h"
 #import "RecentlyBranchListVC.h"
 #import "ManualVC.h"
 #import <SVProgressHUD.h>
@@ -550,16 +550,24 @@ enum {
                         break;
                     case kS3Logout:
                     {
-                        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Bạn muốn đăng xuất ?"];
-                        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
-                        [alert setDestructiveButtonWithTitle:@"Logout!" block:^{
-                            if ([GlobalDataUser sharedAccountClient].isLogin) {
-                                [[FBSession activeSession] closeAndClearTokenInformation];
-                                [[GlobalDataUser sharedAccountClient] userLogout];
-                                [tableView reloadData];
-                            }
-                        }];
-                        [alert show];
+                        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn đăng xuất ?"];
+                        
+                        [alertView addButtonWithTitle:@"Cancel"
+                                                 type:SIAlertViewButtonTypeCancel
+                                              handler:^(SIAlertView *alert) {
+                                                  NSLog(@"Cancel Clicked");
+                                              }];
+                        [alertView addButtonWithTitle:@"Logout!"
+                                                 type:SIAlertViewButtonTypeDestructive
+                                              handler:^(SIAlertView *alert) {
+                                                  if ([GlobalDataUser sharedAccountClient].isLogin) {
+                                                      [[FBSession activeSession] closeAndClearTokenInformation];
+                                                      [[GlobalDataUser sharedAccountClient] userLogout];
+                                                      [tableView reloadData];
+                                                  }
+                                                  NSLog(@"Logout! Clicked");
+                                              }];
+                        [alertView show];
                     }
                         break;
                 }

@@ -35,7 +35,7 @@
 
 @property(nonatomic,strong)NSString *holiday;
 @property(nonatomic,strong)NSString *year;
-
+@property(nonatomic,strong)NSString * url;
 @property(nonatomic,strong)NSDictionary *styleFoody;
 @property(nonatomic,strong)NSDictionary *services;
 @property(nonatomic,strong)NSDictionary *purpose;

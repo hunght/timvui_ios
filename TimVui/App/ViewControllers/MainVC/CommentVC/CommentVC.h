@@ -13,6 +13,7 @@
 #import "UIPlaceHolderTextView.h"
 @class TPKeyboardAvoidingScrollView;
 @interface CommentVC : UIViewController<UITextViewDelegate,LocationTableVCDelegate,BSKeyboardControlsDelegate>
+@property (weak, nonatomic) IBOutlet UISwitch *switchFacebook;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UIButton *btnSelectLocation;
 - (IBAction)selectLocationButtonClicked:(id)sender;

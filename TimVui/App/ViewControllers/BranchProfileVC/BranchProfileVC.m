@@ -26,7 +26,7 @@
 #import "TVBranches.h"
 #import "NSDictionary+Extensions.h"
 #import "UILabel+DynamicHeight.h"
-
+#import "SIAlertView.h"
 
 
 @interface BranchProfileVC ()
@@ -722,6 +722,28 @@
 }
 
 #pragma mark - Helper
+
+- (void)postOpenGraphAction {
+    NSMutableDictionary<FBOpenGraphObject> *object = [FBGraphObject openGraphObjectForPost];
+    object.provisionedForPost = YES;
+    object[@"type"] = @"anuongnet:nha_hang";
+    object[@"title"] = _branch.name;
+    object[@"image"] = [_branch.arrURLImages valueForKey:@"640"];
+    object[@"url"] = @"http://samples.ogp.me/421927777924531";
+    //object[@"url"] = _branch.url;
+    
+    
+    [FBRequestConnection startForPostWithGraphPath:@"anuongnet:quan_tam" graphObject:object completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if(error) {
+            NSLog(@"Error: %@", error);
+        } else {
+            NSLog(@"Success %@", result);
+            
+        }
+    }];
+}
+
+
 - (void)addSpecPointViewWithHeight:(int)height
 {
     _introducingView=[[UIView alloc] initWithFrame:CGRectMake(7,height, 310, 10)];
@@ -904,6 +926,8 @@
 }
 
 -(void)likeButtonClicked:(UIButton*)sender{
+    
+    
     if ([GlobalDataUser sharedAccountClient].isLogin){
         sender.userInteractionEnabled=NO;
         
@@ -916,7 +940,57 @@
             NSLog(@"%@",JSON);
             [SVProgressHUD showSuccessWithStatus:@"Bạn vừa thích nhà hàng này!"];
             sender.userInteractionEnabled=YES;
-            
+            if (FBSession.activeSession.isOpen == YES)
+            {
+                // post to wall else login
+                [self postOpenGraphAction];
+                
+            }else{
+                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
+                
+                [alertView addButtonWithTitle:@"Kết nối facebook"
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          if ([[FBSession activeSession]isOpen]) {
+                                              /*
+                                               * if the current session has no publish permission we need to reauthorize
+                                               */
+                                              if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
+                                                  
+                                                  [[FBSession activeSession] requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_action"] defaultAudience:FBSessionDefaultAudienceFriends
+                                                                                        completionHandler:^(FBSession *session,NSError *error){
+                                                                                            if (!error) {
+                                                                                                [self postOpenGraphAction];
+                                                                                            }
+                                                                                        }];
+                                                  
+                                              }else{
+                                                  [self postOpenGraphAction];
+                                              }
+                                          }else{
+                                              /*
+                                               * open a new session with publish permission
+                                               */
+                                              [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                                                                 defaultAudience:FBSessionDefaultAudienceOnlyMe
+                                                                                    allowLoginUI:YES
+                                                                               completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                                                                   if (!error && status == FBSessionStateOpen) {
+                                                                                       [self postOpenGraphAction];
+                                                                                   }else{
+                                                                                       NSLog(@"error");
+                                                                                   }
+                                                                               }];
+                                          }
+                                          
+                                      }];
+                [alertView addButtonWithTitle:@"Cancel"
+                                         type:SIAlertViewButtonTypeCancel
+                                      handler:^(SIAlertView *alert) {
+                                          NSLog(@"Cancel Clicked");
+                                      }];
+                [alertView show];
+            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             sender.userInteractionEnabled=YES;
             [SVProgressHUD showErrorWithStatus:@"Có lỗi khi like nhà hàng"];

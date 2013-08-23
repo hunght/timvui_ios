@@ -12,7 +12,7 @@
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
 #import "Utilities.h"
-
+#import <FacebookSDK/FacebookSDK.h>
 @interface CommentVC ()
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
 @end
@@ -36,11 +36,42 @@
     [self.keyboardControls setDelegate:self];
     [self.keyboardControls setVisibleControls:BSKeyboardControlDone];
 }
+- (void)postOpenGraphAction {
+    NSMutableDictionary<FBOpenGraphObject> *object = [FBGraphObject openGraphObjectForPost];
+    object.provisionedForPost = YES;
+    object[@"type"] = @"anuongnet:nha_hang";
+    object[@"title"] = @"Quán ăn đêm ";
+    object[@"image"] = @"https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png";
+    object[@"url"] = @"http://samples.ogp.me/421927777924531";
+    NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
+     action[@"nha_hang"] = object;
+    
+    [FBRequestConnection startForPostWithGraphPath:@"me/anuongnet:viet_danh_gia" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if(error) {
+            NSLog(@"Error: %@", error);
+        } else {
+            NSLog(@"Success %@", result);
+            
+        }
+    }];
 
+}
 - (void)viewDidLoad
 {
     
     [super viewDidLoad];
+    
+    if (FBSession.activeSession.isOpen == YES)
+    {
+        // post to wall else login
+        [_switchFacebook setOn:YES];
+        
+    }else{
+        [_switchFacebook setOn:NO];
+        
+    }
+    
+    
     _bgView.backgroundColor =[UIColor colorWithWhite:0.0 alpha:0.7];
     _btnSelectLocation.titleLabel.font=[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [_btnSelectLocation setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
@@ -118,7 +149,7 @@
     l=_txvContent.layer;
     [l setMasksToBounds:YES];
     [l setCornerRadius:5];
-
+    
     [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
     [_btnCommentPost setImage:[UIImage imageNamed:@"img_comment_postButton"] forState:UIControlStateNormal];
@@ -126,7 +157,7 @@
     [_btnCommentPost setTitle:@"ĐĂNG ĐÁNH GIÁ" forState:UIControlStateNormal];
     [_btnCommentPost setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _btnCommentPost.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
-
+    
     if (_branch)
         [self displayBranchInfo];
     
@@ -143,6 +174,7 @@
     [self setTxvContent:nil];
     [self setBgView:nil];
     [self setBtnSelectLocation:nil];
+    [self setSwitchFacebook:nil];
     [super viewDidUnload];
 }
 
@@ -168,7 +200,7 @@
     [self toggleTopView];
     _branch=_branchProfile;
     [self displayBranchInfo];
-
+    
 }
 #pragma mark UITextViewDelegate
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
@@ -236,13 +268,43 @@
 }
 
 - (IBAction)postFacebookSwitchValueChanged:(id)sender {
+    if (_switchFacebook.on) {
+        if ([[FBSession activeSession]isOpen]) {
+            /*
+             * if the current session has no publish permission we need to reauthorize
+             */
+            if ([[[FBSession activeSession]permissions]indexOfObject:@"publish_actions"] == NSNotFound) {
+                
+                [[FBSession activeSession] requestNewPublishPermissions:[NSArray arrayWithObject:@"publish_action"] defaultAudience:FBSessionDefaultAudienceFriends
+                                                      completionHandler:^(FBSession *session,NSError *error){
+                                                      }];
+                
+            }else{
+
+            }
+        }else{
+            /*
+             * open a new session with publish permission
+             */
+            [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
+                                               defaultAudience:FBSessionDefaultAudienceOnlyMe
+                                                  allowLoginUI:YES
+                                             completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                                                 if (!error && status == FBSessionStateOpen) {
+                                                     [self postOpenGraphAction];
+                                                 }else{
+                                                     NSLog(@"error");
+                                                 }
+                                             }];
+        }
+    }
     
 }
 
 - (IBAction)postCommentButtonClicked:(id)sender {
     if (_branch) {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                _branch.branchID,@"branch_id" ,
+                                //                                _branch.branchID,@"branch_id" ,
                                 @"1",@"branch_id" ,
                                 [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                 _txvContent.text,@"content" ,
@@ -253,6 +315,11 @@
                                               withTitle:@"Đăng comment thành công"
                                             withMessage:nil
                                                withType:TSMessageNotificationTypeSuccess];
+            if (_switchFacebook.on) {
+
+                  [self postOpenGraphAction];
+
+            }
             [self dismissModalViewControllerAnimated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [TSMessage showNotificationInViewController:self

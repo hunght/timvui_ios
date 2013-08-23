@@ -11,7 +11,7 @@
 #import "GlobalDataUser.h"
 #import "TVNetworkingClient.h"
 #import "AFHTTPRequestOperation.h"
-#import "BlockAlertView.h"
+#import "SIAlertView.h"
 #import "Base64.h"
 #import "TSMessage.h"
 #import <JSONKit.h>
@@ -245,14 +245,23 @@
 
 -(void)postPhotoButtonClicked:(id)s{
     if (!_branch_id) {
-        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Vui lòng chọn nhà hàng trước khí đăng ảnh"];
-        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
-        [alert setDestructiveButtonWithTitle:@"Chọn Nhà hàng" block:^{
-            if ([_delegate respondsToSelector:@selector(wantToShowLeft:)]) {
-                [_delegate wantToShowLeft:NO];
-            }
-        }];
-        [alert show];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng chọn nhà hàng trước khi đăng ảnh"];
+        
+        [alertView addButtonWithTitle:@"Chọn Nhà hàng"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  if ([_delegate respondsToSelector:@selector(wantToShowLeft:)]) {
+                                      [_delegate wantToShowLeft:NO];
+                                  }
+                                  NSLog(@"Button1 Clicked");
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
+        
         return;
     }
 

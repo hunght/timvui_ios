@@ -15,7 +15,7 @@
 #import "PageFiveView.h"
 #import "PageEightView.h"
 #import "PageTwelveView.h"
-#import "BlockAlertView.h"
+#import "SIAlertView.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -254,12 +254,20 @@ static int _numPages = 16;
 
 - (IBAction)cameraButtonClicked:(id)sender {
     if (!_branch) {
-        BlockAlertView *alert = [BlockAlertView alertWithTitle:@"Notify" message:@"Vui lòng chọn nhà hàng trước khí đăng ảnh"];
-        [alert setCancelButtonWithTitle:@"Cancel" block:nil];
-        [alert setDestructiveButtonWithTitle:@"Chọn Nhà hàng" block:^{
-            [self wantToShowLeft:NO];
-        }];
-        [alert show];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng chọn nhà hàng trước khi đăng ảnh"];
+        
+        [alertView addButtonWithTitle:@"Chọn Nhà hàng"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  [self wantToShowLeft:NO];
+                                  NSLog(@"Button1 Clicked");
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
         return;
     }
     if (self.imgImagePicked.image) {

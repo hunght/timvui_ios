@@ -235,42 +235,6 @@
                                              withPadding:50.0f];
     [mapView_ moveCamera:update];
 }
-#pragma mark - UIWebViewDelegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    NSURL* url = [request URL];
-    if ([[url scheme] isEqualToString:@"native"]) {
-        if ([[url host] isEqualToString:@"imageclick"]) {
-//            if (self.imageClick) {
-//                self.imageClick([self.imgURLforHash objectForKey:[url query]]);
-//            }
-        }
-    } else {
-        if ([[url absoluteString] isEqualToString:@"about:blank"]) {
-            return YES;
-        } else if ([[url scheme] isEqualToString:@"file"]) {
-            return YES;
-        } else if ([[url host] isEqualToString:@"www.youtube.com"]) {
-            return YES;
-        } else if ([[url host] isEqualToString:@"player.vimeo.com"]) {
-            return YES;
-        } else if ([url.absoluteString rangeOfString:@"src=http://www.youtube"].location != NSNotFound) {
-            //http://reader.googleusercontent.com/reader/embediframe?src=http://www.youtube.com/v/4OD770n60cA?version%3D3%26hl%3Dpt_BR&width=640&height=360
-            return NO;
-        } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-//            if (self.urlClick) {
-//                self.urlClick([url absoluteString]);
-//            }
-        } else if (navigationType == UIWebViewNavigationTypeOther) {
-            NSLog(@"Deny load url from UIWebView - %@", [url absoluteString]);
-            return NO;
-        }
-    }
-    
-    return NO;
-}
-
-
 
 
 #pragma mark - IBActions

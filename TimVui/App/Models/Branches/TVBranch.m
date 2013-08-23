@@ -28,6 +28,8 @@
 	self.branchID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
     
+    self.url = [dict safeStringForKey:@"url"];
+    
 	self.arrURLImages = [dict safeDictForKey:@"image"];
 	self.price_avg = [dict safeStringForKey:@"price_avg"];
     self.coupon_count=[dict safeIntegerForKey:@"coupon_count"];
