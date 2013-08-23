@@ -22,6 +22,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "UIImage+Crop.h"
 #import "FloatView.h"
+#import "CMHTMLView.h"
 @interface DetailManualVC ()<GMSMapViewDelegate>
 {
 
@@ -110,25 +111,80 @@
     
     [self.view setBackgroundColor:[UIColor grayColor]];
     
-    UIWebView* webView=[[UIWebView alloc] initWithFrame:CGRectMake(6+5, 0, 320-(6+5)*2, 25)];
-    [webView.scrollView setScrollEnabled:NO];
-    [_couponBranch addSubview:webView];
-    lblTitle.text=_manual.title;
-    [lblTitle sizeToFit];
-    int height=lblTitle.frame.origin.y+lblTitle.frame.size.height;
     
-    CGRect frame=webView.frame;
-    frame.origin.y=height+5;
-    [webView setFrame:frame];
-    [webView setDelegate:self];
-    [webView sizeToFit];
-    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
+    int height=lblTitle.frame.origin.y+lblTitle.frame.size.height;
+    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
 //        NSLog(@"%@",_manual.content);
     //continue building the string
     [html appendString:_manual.content];
     [html appendString:@"</body></html>"];
-    [webView loadHTMLString:html baseURL:nil];
     [self.view insertSubview:_couponBranch belowSubview:self.tableView];
+    
+    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(6+5, height+5, 320-(6+5)*2, 25)] ;
+    htmlView.backgroundColor = [UIColor clearColor];
+    //htmlView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin ;
+    htmlView.scrollView.scrollEnabled=NO;
+//    CGRect frame= htmlView.scrollView.frame;
+//    frame.size.width-=22;
+//    htmlView.frame=frame;
+    htmlView.alpha = 0;
+    
+    [htmlView loadHtmlBody:html competition:^(NSError *error) {
+        if (!error) {
+            [UIView animateWithDuration:0.2 animations:^{
+                self.tableView.alpha = 1;
+            }];
+            
+            CGRect newBounds = htmlView.frame;
+            newBounds.size.height = htmlView.scrollView.contentSize.height;
+            htmlView.frame = newBounds;
+            
+            int height_p=htmlView.frame.origin.y+htmlView.frame.size.height+10;
+            
+            CGRect frame=_couponBranch.frame;
+            frame.size.height=height_p;
+            _couponBranch.frame=frame;
+            
+            if (_manual.branch_ids.count>0) {
+                UILabel* lblTitle=[[UILabel alloc] initWithFrame:CGRectMake(25, 10, 300, 14)];
+                lblTitle.backgroundColor = [UIColor clearColor];
+                lblTitle.textColor = [UIColor whiteColor];
+                lblTitle.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+                lblTitle.text=@"Danh sách gợi ý";
+                
+                
+                UIView* viewButtons=[[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-35, 320, 35)];
+                [viewButtons   setBackgroundColor:[UIColor colorWithRed:(72/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]];
+                [viewButtons addSubview:lblTitle];
+                _btnListView = [[UIButton alloc] initWithFrame:CGRectMake(320-35,0 , 35, 35)];
+                [_btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+                [_btnListView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateSelected];
+                [_btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateNormal];
+                [_btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateSelected];
+                [_btnListView addTarget:self action:@selector(listViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [viewButtons addSubview:_btnListView];
+                
+                _btnMapView = [[UIButton alloc] initWithFrame:CGRectMake(320-35-36,0 , 35, 35)];
+                [_btnMapView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
+                [_btnMapView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateSelected];
+                [_btnMapView setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateNormal];
+                [_btnMapView setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateSelected];
+                [_btnMapView addTarget:self action:@selector(mapButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [viewButtons addSubview:_btnMapView];
+                [_couponBranch addSubview:viewButtons];
+                _btnListView.selected=YES;
+            }
+            
+            self.tableView.tableHeaderView = _couponBranch;
+            [self postGetBranches];
+            
+            [UIView animateWithDuration:0.2 animations:^{
+                htmlView.alpha = 1;
+            }];
+        }
+    }];
+    
+    [_couponBranch addSubview:htmlView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -214,55 +270,7 @@
     return NO;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        self.tableView.alpha = 1;
-    }];
-    
-    CGRect newBounds = webView.frame;
-    newBounds.size.height = webView.scrollView.contentSize.height+50;
-    webView.frame = newBounds;
-    
-    int height_p=webView.frame.origin.y+webView.frame.size.height+10;
-    
-    CGRect frame=_couponBranch.frame;
-    frame.size.height=height_p;
-    _couponBranch.frame=frame;
-    
-    if (_manual.branch_ids.count>0) {
-        UILabel* lblTitle=[[UILabel alloc] initWithFrame:CGRectMake(25, 10, 300, 14)];
-        lblTitle.backgroundColor = [UIColor clearColor];
-        lblTitle.textColor = [UIColor whiteColor];
-        lblTitle.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-        lblTitle.text=@"Danh sách gợi ý";
-        
 
-        UIView* viewButtons=[[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height-35, 320, 35)];
-        [viewButtons   setBackgroundColor:[UIColor colorWithRed:(72/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]];
-        [viewButtons addSubview:lblTitle];
-        _btnListView = [[UIButton alloc] initWithFrame:CGRectMake(320-35,0 , 35, 35)];
-        [_btnListView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
-        [_btnListView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateSelected];
-        [_btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateNormal];
-        [_btnListView setImage:[UIImage imageNamed:@"img_handbook_list_button"] forState:UIControlStateSelected];
-        [_btnListView addTarget:self action:@selector(listViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [viewButtons addSubview:_btnListView];
-        
-        _btnMapView = [[UIButton alloc] initWithFrame:CGRectMake(320-35-36,0 , 35, 35)];
-        [_btnMapView setBackgroundImage:[Utilities imageFromColor:[UIColor clearColor]] forState:UIControlStateNormal];
-        [_btnMapView setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateSelected];
-        [_btnMapView setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateNormal];
-        [_btnMapView setImage:[UIImage imageNamed:@"img_handbook_map_button"] forState:UIControlStateSelected];
-        [_btnMapView addTarget:self action:@selector(mapButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [viewButtons addSubview:_btnMapView];
-        [_couponBranch addSubview:viewButtons];
-        _btnListView.selected=YES;
-    }
-
-    self.tableView.tableHeaderView = _couponBranch;
-    [self postGetBranches];
-}
 
 
 #pragma mark - IBActions

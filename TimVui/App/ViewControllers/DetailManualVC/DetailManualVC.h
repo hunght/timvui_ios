@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TVBranches.h"
 @class TVManual;
-@interface DetailManualVC : UIViewController<UIWebViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface DetailManualVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     @private
     UIView* _couponBranch;
