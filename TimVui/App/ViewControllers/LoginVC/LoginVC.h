@@ -16,7 +16,6 @@
 
 #import <UIKit/UIKit.h>
 #import "BSKeyboardControls.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 @class TPKeyboardAvoidingScrollView;
 

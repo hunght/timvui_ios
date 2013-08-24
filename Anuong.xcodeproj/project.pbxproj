@@ -62,6 +62,7 @@
 		5520472F17BB351C003F0506 /* ReceivedCouponVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520472A17BB351C003F0506 /* ReceivedCouponVC.m */; };
 		5520473017BB351C003F0506 /* ReceivedCouponVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */; };
 		552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D917855A2D00DC5E68 /* Security.framework */; };
+		5530A8F317C8A261005C27F9 /* FacebookServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 5530A8F217C8A261005C27F9 /* FacebookServices.m */; };
 		5531EF1F178D473600093934 /* img_profile_branch_share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1D178D473600093934 /* img_profile_branch_share_button.png */; };
 		5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */; };
 		5531EF22178D4A3400093934 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5531EF21178D4A3400093934 /* AddressBook.framework */; };
@@ -713,6 +714,8 @@
 		5520472A17BB351C003F0506 /* ReceivedCouponVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivedCouponVC.m; sourceTree = "<group>"; };
 		5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceivedCouponVC.xib; sourceTree = "<group>"; };
 		552072D917855A2D00DC5E68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5530A8F117C8A261005C27F9 /* FacebookServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookServices.h; path = FacebookServices/FacebookServices.h; sourceTree = "<group>"; };
+		5530A8F217C8A261005C27F9 /* FacebookServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookServices.m; path = FacebookServices/FacebookServices.m; sourceTree = "<group>"; };
 		5531EF1D178D473600093934 /* img_profile_branch_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_share_button.png; sourceTree = "<group>"; };
 		5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_share_button@2x.png"; sourceTree = "<group>"; };
 		5531EF21178D4A3400093934 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -2559,6 +2562,8 @@
 				55F5F5161743A10000A0C243 /* UINavigationBar+JTDropShadow.h */,
 				55F5F5171743A10000A0C243 /* UINavigationBar+JTDropShadow.m */,
 				55BAED371709725600CF3171 /* AFNetworkingExtention */,
+				5530A8F117C8A261005C27F9 /* FacebookServices.h */,
+				5530A8F217C8A261005C27F9 /* FacebookServices.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3571,6 +3576,7 @@
 				55FE4D0817C37F39005B08FA /* FloatView.m in Sources */,
 				558287EC17C5EDDC00F15F48 /* CMHTMLView.m in Sources */,
 				55BC71F717C761D200C51312 /* SIAlertView.m in Sources */,
+				5530A8F317C8A261005C27F9 /* FacebookServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

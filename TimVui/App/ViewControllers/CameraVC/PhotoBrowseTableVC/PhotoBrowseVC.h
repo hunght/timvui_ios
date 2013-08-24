@@ -10,12 +10,13 @@
 #import "PhotoBrowseCell.h"
 @protocol PhotoBrowseVCDelegate;
 
-
+@class TVBranch;
 @interface PhotoBrowseVC : UIViewController<PhotoBrowseCellDelegate,UITableViewDataSource, UITableViewDelegate,NSURLConnectionDelegate>
+@property (weak, nonatomic) IBOutlet UISwitch *swichFacebook;
 @property(nonatomic,strong)NSMutableArray *arrPhotos;
 @property(nonatomic,strong)NSMutableArray *arrPhotosPick;
 @property (nonatomic, unsafe_unretained) id<PhotoBrowseVCDelegate> delegate;
-@property (nonatomic, strong) NSString* branch_id;
+@property (nonatomic, strong) TVBranch* branch;
 @property (nonatomic, strong) NSString* album;
 
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *bottomView;

@@ -17,6 +17,7 @@
 #import <JSONKit.h>
 #import "NSDictionary+Extensions.h"
 #import <SVProgressHUD.h>
+#import "FacebookServices.h"
 @interface PhotoBrowseVC ()
 {
     @private
@@ -43,6 +44,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [FacebookServices checkFacebookSessionIsOpen:^(bool isOpen){
+        [_swichFacebook setOn:isOpen];
+    }];
+    
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
@@ -80,6 +85,7 @@
 - (void)viewDidUnload {
     [self setTableView:nil];
     [self setBottomView:nil];
+    [self setSwichFacebook:nil];
     [super viewDidUnload];
 }
 
@@ -121,6 +127,9 @@
 //    NSLog(@"dic=%@",[dic objectForKey:@"status"]);
     
     if ([dic safeIntegerForKey:@"status"]==200){
+        if (_swichFacebook.on) {
+            [FacebookServices postImageActionWithBranch:_branch];
+        }
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Đăng ảnh thành công"
                                         withMessage:nil
@@ -163,8 +172,11 @@
 
 #pragma mark IBAction
 - (IBAction)switchChangedValue:(id)sender {
-    UISwitch *onoff = (UISwitch *) sender;
-    NSLog(@"%@", onoff.on ? @"On" : @"Off");
+    if (_swichFacebook.on) {
+        [FacebookServices loginAndTakePermissionWithHanlder:^(FBSession *session,NSError *error){
+            _swichFacebook.on=(!error);
+        }];
+    }
 }
 
 -(void)uploadImagesToServer{
@@ -244,7 +256,7 @@
 }
 
 -(void)postPhotoButtonClicked:(id)s{
-    if (!_branch_id) {
+    if (!_branch) {
         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng chọn nhà hàng trước khi đăng ảnh"];
         
         [alertView addButtonWithTitle:@"Chọn Nhà hàng"

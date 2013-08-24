@@ -233,7 +233,7 @@ static int _numPages = 16;
 -(void)didPickWithLoation:(TVBranch *)branch{
     [self.slidingViewController resetTopView];
     _branch=branch;
-    _photoBrowseTableVC.branch_id=_branch.branchID;
+    _photoBrowseTableVC.branch=_branch;
     [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
 }
 
@@ -315,7 +315,7 @@ static int _numPages = 16;
 - (IBAction)photoBrowseButtonClicked:(id)sender {
     _photoBrowseTableVC=[[PhotoBrowseVC alloc] initWithNibName:@"PhotoBrowseVC" bundle:nil];
     _photoBrowseTableVC.arrPhotos=[[NSMutableArray alloc] initWithArray:_arrImages];
-    _photoBrowseTableVC.branch_id=_branch.branchID;
+    _photoBrowseTableVC.branch=_branch;
     _photoBrowseTableVC.album=_strAlbum;
     [_photoBrowseTableVC setDelegate:self];
     [self.navigationController pushViewController:_photoBrowseTableVC animated:YES];
