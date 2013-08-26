@@ -10,12 +10,24 @@
 #import "TVBranch.h"
 @implementation FacebookServices
 
-+ (void)postWriteReviewActionWithBranch:(TVBranch*)branch {
++ (void)postWriteReviewActionWithBranch:(TVBranch*)_branch {
     if (FBSession.activeSession.isOpen ==NO)return;
     NSMutableDictionary<FBGraphObject> *object = [FBGraphObject graphObject];
     object[@"url"] = @"http://cung-sach.herokuapp.com";
     NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
     action[@"nha_hang"] = object;
+    if (_branch.arrURLImages) {
+        
+        NSMutableDictionary *image = [[NSMutableDictionary alloc] init];
+        [image setObject:[_branch.arrURLImages valueForKey:@"640"] forKey:@"url"];
+        
+        [image setObject:@"true" forKey:@"user_generated"]; // <======= ***add this line***
+        
+        NSMutableArray *images = [[NSMutableArray alloc] init];
+        [images addObject:image];
+        
+        action.image = images;
+    }
     NSLog(@"%@",action);
     [FBRequestConnection startForPostWithGraphPath:@"me/anuongnet:viet_danh_gia" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if(error) {
@@ -29,12 +41,16 @@
 }
 +(void)postFollowActionWithBranch:(TVBranch*)_branch {
     if (FBSession.activeSession.isOpen ==NO)return;
+    
     NSMutableDictionary<FBGraphObject> *object = [FBGraphObject graphObject];
     object[@"url"] = @"http://cung-sach.herokuapp.com";
+
     NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
     action[@"nha_hang"] = object;
+    
     NSLog(@"%@",action);
-    [FBRequestConnection startForPostWithGraphPath:@"anuongnet:quan_tam" graphObject:object completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+    
+    [FBRequestConnection startForPostWithGraphPath:@"me/anuongnet:quan_tam" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if(error) {
             NSLog(@"Error: %@", error);
         } else {
@@ -46,13 +62,27 @@
 
 +(void)postImageActionWithBranch:(TVBranch*)_branch {
     if (FBSession.activeSession.isOpen ==NO)return;
+    
     NSMutableDictionary<FBGraphObject> *object = [FBGraphObject graphObject];
     object[@"url"] = @"http://cung-sach.herokuapp.com";
     NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
     action[@"nha_hang"] = object;
-    NSLog(@"%@",action);
     
-    [FBRequestConnection startForPostWithGraphPath:@"anuongnet:quan_tam" graphObject:object completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+    if (_branch.arrURLImages) {
+        
+        NSMutableDictionary *image = [[NSMutableDictionary alloc] init];
+        [image setObject:[_branch.arrURLImages valueForKey:@"900"] forKey:@"url"];
+        
+        [image setObject:@"true" forKey:@"user_generated"]; // <======= ***add this line***
+        
+        NSMutableArray *images = [[NSMutableArray alloc] init];
+        [images addObject:image];
+        
+        action.image = images;
+    }
+    
+    NSLog(@"%@",action);
+    [FBRequestConnection startForPostWithGraphPath:@"me/anuongnet:dang_anh" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if(error) {
             NSLog(@"Error: %@", error);
         } else {
@@ -100,6 +130,7 @@
     if (FBSession.activeSession.isOpen == YES)
     {
         // post to wall else login
+        [FacebookServices postFollowActionWithBranch:nil];
         callback(YES);
         
     }else if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
@@ -108,6 +139,9 @@
          {
              // load user details
              if (!error && status == FBSessionStateOpen) {
+//                 [FacebookServices postFollowActionWithBranch:nil];
+//                 [FacebookServices postWriteReviewActionWithBranch:nil];
+                 
                  callback(YES);
              }else{
                  NSLog(@"error");

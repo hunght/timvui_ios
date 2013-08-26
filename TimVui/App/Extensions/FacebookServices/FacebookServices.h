@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
 @class TVBranch;
+
 @interface FacebookServices : NSObject
 
 +(void)loginAndTakePermissionWithHanlder:(FBSessionRequestPermissionResultHandler)handler;

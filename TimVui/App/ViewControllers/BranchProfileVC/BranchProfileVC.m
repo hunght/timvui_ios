@@ -325,23 +325,19 @@
     //    NSArray* imageDicArr=[_branch.images ];
     //Show Ablum images
     int i=0;
-    for (NSArray* imagesArr in [_branch.images allValues]) {
-        
-        for (NSDictionary* images in imagesArr) {
-            NSLog(@"images%@",images);
+    for (NSDictionary* imagesArr in _branch.images ) {
+
+            
             UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-            [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[images safeDictForKey:@"image"]]];
+            [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-            [imageButton setupImageViewerWithImageURL:[Utilities getLargeImageOfCoverBranch:images] onOpen:^{
+            [imageButton setupImageViewerWithImageURL:[Utilities getLargeImageOfCoverBranch:imagesArr] onOpen:^{
                 NSLog(@"OPEN!");
             } onClose:^{
                 NSLog(@"CLOSE!");
             }];
             i++;
-            if (i==3)break;
-        }
-        if (i==3)break;
     }
     
     if (i>=3) {

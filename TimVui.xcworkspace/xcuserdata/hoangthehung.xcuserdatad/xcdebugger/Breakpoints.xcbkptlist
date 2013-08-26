@@ -33,52 +33,39 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Extensions/FacebookServices/FacebookServices.m"
-         timestampString = "399033415.503243"
+         filePath = "TimVui/App/Extensions/TVAppDelegate.m"
+         timestampString = "399175121.007486"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "99"
-         endingLineNumber = "99"
-         landmarkName = "+checkFacebookSessionIsOpen:"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
+         landmarkName = "-application:openURL:sourceApplication:annotation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Extensions/FacebookServices/FacebookServices.m"
-         timestampString = "399033415.503243"
+         filePath = "TimVui/App/Extensions/TVAppDelegate.m"
+         timestampString = "399175131.42873"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "107"
-         endingLineNumber = "107"
-         landmarkName = "+checkFacebookSessionIsOpen:"
+         startingLineNumber = "77"
+         endingLineNumber = "77"
+         landmarkName = "-application:openURL:sourceApplication:annotation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Extensions/FacebookServices/FacebookServices.m"
-         timestampString = "399033415.503243"
+         filePath = "TimVui/App/Extensions/TVAppDelegate.m"
+         timestampString = "399175139.277267"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "111"
-         endingLineNumber = "111"
-         landmarkName = "+checkFacebookSessionIsOpen:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Extensions/FacebookServices/FacebookServices.m"
-         timestampString = "399033415.503243"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "110"
-         endingLineNumber = "110"
-         landmarkName = "+checkFacebookSessionIsOpen:"
+         startingLineNumber = "90"
+         endingLineNumber = "90"
+         landmarkName = "-handleAppLink:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

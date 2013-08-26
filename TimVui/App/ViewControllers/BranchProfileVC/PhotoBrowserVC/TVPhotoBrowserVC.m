@@ -44,7 +44,7 @@
 
     self.quiltView.backgroundColor = [UIColor blackColor];
     NSMutableArray* arr=[[NSMutableArray alloc] init];
-    for (NSArray* imagesArr in [_branch.images allValues]) {
+    for (NSArray* imagesArr in _branch.images ) {
         [arr addObjectsFromArray:imagesArr];
     }
     albumArr=arr;

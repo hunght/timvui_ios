@@ -130,9 +130,10 @@
     [_btnCommentPost setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _btnCommentPost.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     
-    if (_branch)
+    if (_branch){
         [self displayBranchInfo];
-    
+        [FacebookServices postImageActionWithBranch:_branch];
+    }
 }
 
 - (void)viewDidUnload {

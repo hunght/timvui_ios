@@ -13,7 +13,7 @@
 
 - (void)setValues:(id)values {
 
-    NSArray* arr=(_isNotSearchAPIYES)?values:[values valueForKey:@"items"];
+    NSArray* arr=(_isNotSearchAPIYES) ? values:[values valueForKey:@"items"];
 //    if (_isNotSearchAPIYES) {
 //        arr=values;
 //    }

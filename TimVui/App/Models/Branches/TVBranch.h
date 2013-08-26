@@ -22,7 +22,7 @@
 @property(nonatomic,assign)CLLocationCoordinate2D latlng;
 
 @property(nonatomic,assign)int image_count;
-@property(nonatomic,strong)NSDictionary *images;
+@property(nonatomic,strong)NSArray *images;
 @property(nonatomic,strong)NSString *phone;
 @property(nonatomic,strong)NSDictionary *cats;
 @property(nonatomic,strong)NSDictionary *district;
