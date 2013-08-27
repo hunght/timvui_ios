@@ -28,12 +28,7 @@ install_resource()
       ;;
   esac
 }
-install_resource 'MWPhotoBrowser/MWPhotoBrowser/MWPhotoBrowser.bundle'
 install_resource 'SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle'
-install_resource 'VPPDropDown/VPPDropDown/UITableContract.png'
-install_resource 'VPPDropDown/VPPDropDown/UITableContract@2x.png'
-install_resource 'VPPDropDown/VPPDropDown/UITableExpand.png'
-install_resource 'VPPDropDown/VPPDropDown/UITableExpand@2x.png'
 
 rsync -avr --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rm "$RESOURCES_TO_COPY"

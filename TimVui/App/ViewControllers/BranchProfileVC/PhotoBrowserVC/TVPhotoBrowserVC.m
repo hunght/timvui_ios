@@ -19,12 +19,14 @@
 
 
 #import "TVPhotoBrowserVC.h"
-#import "TMPhotoQuiltViewCell.h"
-#import "TMQuiltView.h"
 #import "TVNetworkingClient.h"
 #import "Utilities.h"
 #import "NSDictionary+Extensions.h"
-@interface TVPhotoBrowserVC (){
+#import <SVProgressHUD.h>
+#import "TVBranchPhoto.h"
+#import "TwoImageCell.h"
+#import "NSDate-Utilities.h"
+@interface TVPhotoBrowserVC ()<MHFacebookImageViewerDatasource>{
     @private
         NSArray *albumArr;
 }
@@ -32,32 +34,129 @@
 @end
 
 @implementation TVPhotoBrowserVC
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        
+    }
+    return self;
+}
 
+#pragma mark MHFacebookImageViewerDatasource
+-(void)settingCaptionView:(UIView *)captionView withIndex:(int)index{
+    NSLog(@"index=%d",index);
+    TVBranchPhoto*photo=    [albumArr objectAtIndex:index];
+    UILabel* title= (UILabel*)[captionView viewWithTag:1];
+    UILabel* content= (UILabel*)[captionView viewWithTag:2];
+    title.text=photo.user_name;
+    content.text=[NSString stringWithFormat:@"%@ %@",photo.user_name,[photo.created stringMinutesFromNowAgo] ];     
+}
+- (NSInteger) numberImagesForImageViewer:(MHFacebookImageViewer *)imageViewer {
+    return albumArr.count;
+}
 
+-  (NSURL*) imageURLAtIndex:(NSInteger)index imageViewer:(MHFacebookImageViewer *)imageViewer {
+    TVBranchPhoto*photo=    [albumArr objectAtIndex:index];
+    return [Utilities getLargeAlbumPhoto:photo.arrURLImages];
+}
 
+- (UIImage*) imageDefaultAtIndex:(NSInteger)index imageViewer:(MHFacebookImageViewer *)imageViewer{
+    return [UIImage imageNamed:@"skin_I_Love"];
+}
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden=YES;
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            _branch.branchID,@"branch_id" ,
+                            nil];
+    
+    [[TVNetworkingClient sharedClient] postPath:@"branch/getImages" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
+        NSMutableArray* arr=[[NSMutableArray alloc] init];
+        for (NSArray* imagesArr in [[JSON safeDictForKey:@"data"] allValues] ) {
+            NSLog(@"imagesArr=%@",imagesArr);
+            for (NSDictionary* imageDic in imagesArr) {
+                TVBranchPhoto* photo=[[TVBranchPhoto alloc] initWithDict:imageDic];
+                [arr addObject:photo];
+            }
+        }
+        albumArr=arr;
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
 
-    self.quiltView.backgroundColor = [UIColor blackColor];
-    NSMutableArray* arr=[[NSMutableArray alloc] init];
-    for (NSArray* imagesArr in _branch.images ) {
-        [arr addObjectsFromArray:imagesArr];
-    }
-    albumArr=arr;
-    
-    UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(15, 10, 41, 26)];
-    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_browse_close"] forState:UIControlStateNormal];
-    //    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    [btnPostPhoto addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btnPostPhoto];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-    
 }
 
+- (void)viewDidUnload {
+    [self setTableView:nil];
+    [super viewDidUnload];
+}
+
+
+#pragma mark - Table view data source
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 160;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    int i=(float)[albumArr count]/2.0+.5;
+    NSLog(@"row count=== %d",i);
+    NSLog(@"[albumArr count] count=== %d",[albumArr count]);
+    return  i;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"two_image_cell";
+    TwoImageCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[TwoImageCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    }
+    
+    NSInteger imageIndex = indexPath.row;
+    UIImageView * imgPickedOne = [cell imgPickedOne];
+    UIImageView * imgPickedTwo = [cell imgPickedTwo];
+    [self displayImage:imgPickedOne withImage:(imageIndex * 2)];
+    if ([albumArr count]==imageIndex*2+1) {
+        cell.imgPickedTwo.hidden=YES;
+    }else{
+        cell.imgPickedTwo.hidden=NO;
+
+        [self displayImage:imgPickedTwo withImage:(imageIndex * 2)+1];
+    }
+    
+    return cell;
+}
+
+- (void) displayImage:(UIImageView*)imageView withImage:(int)index  {
+    TVBranchPhoto*photo=    [albumArr objectAtIndex:index];
+//    NSLog(@"%@",[Utilities getLargeAlbumPhoto:photo.arrURLImages]);
+    [imageView setImageWithURL:[Utilities getLargeAlbumPhoto:photo.arrURLImages] placeholderImage:[UIImage imageNamed:@"skin_I_Love"]];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    [imageView setupImageViewerWithDatasource:self initialIndex:index onOpen:^{
+        NSLog(@"OPEN!");
+    } onClose:^{
+        NSLog(@"CLOSE!");
+    }];
+    
+    imageView.clipsToBounds = YES;
+}
+
+#pragma mark IBAction
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -67,75 +166,11 @@
     }
 }
 
--(void)closeButtonClicked:(id)s{
-    [self dismissModalViewControllerAnimated:YES];
-}
 
-#pragma mark - QuiltViewControllerDataSource
 
-- (NSInteger)quiltViewNumberOfCells:(TMQuiltView *)TMQuiltView {
-    return [albumArr count];
-}
 
-- (TMQuiltViewCell *)quiltView:(TMQuiltView *)quiltView cellAtIndexPath:(NSIndexPath *)indexPath {
-    TMPhotoQuiltViewCell *cell = (TMPhotoQuiltViewCell *)[quiltView dequeueReusableCellWithReuseIdentifier:@"PhotoCell"];
-    if (!cell) {
-        cell = [[TMPhotoQuiltViewCell alloc] initWithReuseIdentifier:@"PhotoCell"] ;
-    }
-    NSDictionary* dic=[[albumArr objectAtIndex:indexPath.row] safeDictForKey:@"image"] ;
-    [cell.photoView setImageWithURL:[Utilities getLargeAlbumPhoto:dic]placeholderImage:nil];
-    return cell;
-}
-
-#pragma mark - TMQuiltViewDelegate
-- (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath{
-	MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
-    browser.displayActionButton = NO;
-    browser.wantsFullScreenLayout = YES;
+- (IBAction)closeButtonClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
     
-    if (!_photos) {
-        NSMutableArray *photos = [[NSMutableArray alloc] init];
-        for (NSDictionary* dic in albumArr) {
-            [photos addObject:[MWPhoto photoWithURL:[Utilities getOriginalAlbumPhoto:[dic safeDictForKey:@"image"]]]];
-        }
-        _photos=photos;
-    }
-    
-    [browser setInitialPageIndex:indexPath.row];
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:browser];
-    nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentModalViewController:nc animated:YES];
 }
-
-- (NSInteger)quiltViewNumberOfColumns:(TMQuiltView *)quiltView {
-    if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft 
-        || [[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeRight) {
-        return 3;
-    } else {
-        return 2;
-    }
-}
-
-- (CGFloat)quiltView:(TMQuiltView *)quiltView heightForCellAtIndexPath:(NSIndexPath *)indexPath {
-    return 320 / [self quiltViewNumberOfColumns:quiltView];
-}
-
-#pragma mark - MWPhotoBrowserDelegate
-
-- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
-    return _photos.count;
-}
-
-- (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
-    if (index < _photos.count)
-        return [_photos objectAtIndex:index];
-    return nil;
-}
-
-//- (MWCaptionView *)photoBrowser:(MWPhotoBrowser *)photoBrowser captionViewForPhotoAtIndex:(NSUInteger)index {
-//    MWPhoto *photo = [self.photos objectAtIndex:index];
-//    MWCaptionView *captionView = [[MWCaptionView alloc] initWithPhoto:photo];
-//    return [captionView autorelease];
-//}
-
 @end

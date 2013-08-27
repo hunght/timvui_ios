@@ -18,10 +18,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TMQuiltViewController.h"
-#import "MWPhotoBrowser.h"
+#import "MHFacebookImageViewer.h"
 #import "TVBranch.h"
-@interface TVPhotoBrowserVC : TMQuiltViewController<MWPhotoBrowserDelegate>
+@interface TVPhotoBrowserVC : UIViewController<MHFacebookImageViewerDatasource>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) TVBranch* branch;
-@property (nonatomic, strong) NSArray * photos;
+- (IBAction)closeButtonClicked:(id)sender;
+
 @end

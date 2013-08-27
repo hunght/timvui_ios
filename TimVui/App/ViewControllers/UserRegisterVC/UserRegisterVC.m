@@ -7,7 +7,6 @@
 //
 
 #import "UserRegisterVC.h"
-#import "MBProgressHUD.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/SDImageCache.h>
 #import "TVNetworkingClient.h"

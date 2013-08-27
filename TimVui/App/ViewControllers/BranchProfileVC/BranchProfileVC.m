@@ -332,7 +332,7 @@
             [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-            [imageButton setupImageViewerWithImageURL:[Utilities getLargeImageOfCoverBranch:imagesArr] onOpen:^{
+            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^{
                 NSLog(@"OPEN!");
             } onClose:^{
                 NSLog(@"CLOSE!");
@@ -342,10 +342,9 @@
     
     if (i>=3) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-        //        [NSString stringWithFormat:@"+%d",_branch.image_count-3]
-        [imageButton setTitle:@"+" forState:UIControlStateNormal];
-        [imageButton setTitle:@"+" forState:UIControlStateSelected];
-        [imageButton setBackgroundColor:[UIColor whiteColor]];
+        
+        [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
+        [imageButton setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:.7]];
         imageButton.titleLabel.textColor=[UIColor redColor];
         [imageButton addTarget:self action:@selector(albumButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:imageButton];
@@ -355,6 +354,7 @@
     NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
     NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=160x160&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
     //    NSLog(@"strURL = %@",strURL);
+    
     NSURL* url=[NSURL URLWithString:strURL];
     UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
     [mapViewButton setImageWithURL:url];
@@ -672,6 +672,10 @@
     heightDefaultScroll=_imgBranchCover.frame.origin.y;
     sizeHeightDefaultScroll=_imgBranchCover.frame.size.height;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden=NO;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -968,16 +972,18 @@
 -(void)albumButtonClicked:(id)sender{
     TVPhotoBrowserVC* mbImagesVC;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TMViewController_iPhone" bundle:nil] ;
+        mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TVPhotoBrowserVC_iPhone" bundle:nil] ;
     } else {
-        mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TMViewController_iPad" bundle:nil] ;
+        mbImagesVC = [[TVPhotoBrowserVC alloc] initWithNibName:@"TVPhotoBrowserVC_iPad" bundle:nil] ;
     }
+    
     mbImagesVC.branch=_branch;
-    UINavigationController* navController = [[UINavigationController    alloc] initWithRootViewController:mbImagesVC];
-    navController.navigationBar.tintColor = [UIColor clearColor];
-    navController.navigationBar.alpha = 0.7f;
-    navController.navigationBar.translucent = YES;
-    [self presentModalViewController:navController animated:YES];
+//    UINavigationController* navController = [[UINavigationController    alloc] initWithRootViewController:mbImagesVC];
+//    navController.navigationBar.tintColor = [UIColor clearColor];
+//    navController.navigationBar.alpha = 0.7f;
+//    navController.navigationBar.translucent = YES;
+//    [self presentModalViewController:navController animated:YES];
+    [self.navigationController pushViewController:mbImagesVC animated:YES];
 }
 
 

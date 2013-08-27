@@ -1,5 +1,6 @@
 //
 // MHFacebookImageViewer.h
+// Version 2.0
 //
 // Copyright (c) 2013 Michael Henry Pantaleon (http://www.iamkel.net). All rights reserved.
 //
@@ -24,18 +25,27 @@
 
 #import <UIKit/UIKit.h>
 
-
 typedef void (^MHFacebookImageViewerOpeningBlock)(void);
 typedef void (^MHFacebookImageViewerClosingBlock)(void);
 
+
+@class MHFacebookImageViewer;
+@protocol MHFacebookImageViewerDatasource <NSObject>
+@required
+- (NSInteger) numberImagesForImageViewer:(MHFacebookImageViewer*) imageViewer;
+- (NSURL*) imageURLAtIndex:(NSInteger)index imageViewer:(MHFacebookImageViewer*) imageViewer;
+- (UIImage*) imageDefaultAtIndex:(NSInteger)index imageViewer:(MHFacebookImageViewer*) imageViewer;
+- (void) settingCaptionView:(UIView*)captionView withIndex:(int)index;
+@end
+
 @interface MHFacebookImageViewer : UIViewController
-
-
-@property (unsafe_unretained, readonly, nonatomic) UIViewController *rootViewController;
+@property (weak, readonly, nonatomic) UIViewController *rootViewController;
 @property (nonatomic,strong) NSURL * imageURL;
 @property (nonatomic,strong) UIImageView * senderView;
-@property (nonatomic,unsafe_unretained) MHFacebookImageViewerOpeningBlock openingBlock;
-@property (nonatomic,unsafe_unretained) MHFacebookImageViewerClosingBlock closingBlock;
+@property (nonatomic,weak) MHFacebookImageViewerOpeningBlock openingBlock;
+@property (nonatomic,weak) MHFacebookImageViewerClosingBlock closingBlock;
+@property (nonatomic,weak) id<MHFacebookImageViewerDatasource> imageDatasource;
+@property (nonatomic,assign) NSInteger initialIndex;
 
 
 - (void)presentFromRootViewController;
@@ -49,5 +59,9 @@ typedef void (^MHFacebookImageViewerClosingBlock)(void);
 - (void) setupImageViewerWithCompletionOnOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
 - (void) setupImageViewerWithImageURL:(NSURL*)url;
 - (void) setupImageViewerWithImageURL:(NSURL *)url onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
+- (void) setupImageViewerWithDatasource:(id<MHFacebookImageViewerDatasource>)imageDatasource onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
+- (void) setupImageViewerWithDatasource:(id<MHFacebookImageViewerDatasource>)imageDatasource initialIndex:(NSInteger)initialIndex onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
 @end
+
+
 

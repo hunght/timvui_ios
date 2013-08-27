@@ -35,11 +35,11 @@ static NSDateFormatter *formatter;
     int hours=ti / D_MINUTE/60;
     //    NSLog(@"hours==%d",hours);
     if (hours>=1&& hours<24) {
-        return [NSString stringWithFormat:NSLocalizedString(@"X hours ago", nil), (NSInteger) (hours)];
+        return [NSString stringWithFormat:@"%d giờ trước", (NSInteger) (hours)];
     }else if(hours>=24){
         return [self stringDaysAgo];
     }
-    return [NSString stringWithFormat:NSLocalizedString(@"X minutes ago", nil), (NSInteger) (ti / D_MINUTE)];
+    return [NSString stringWithFormat:@"%d phút trước", (NSInteger) (ti / D_MINUTE)];
 }
 
 - (BOOL) isLaterThan:(int)days
@@ -92,13 +92,13 @@ static NSDateFormatter *formatter;
 	NSString *text = nil;
 	switch (daysAgo) {
 		case 0:
-			text = NSLocalizedString(@"Today", nil);
+			text = @"Hôm nay";
 			break;
 		case 1:
-			text = NSLocalizedString(@"Tomorrow", nil);
+			text = @"Hôm qua";
 			break;
 		default:
-			text = [NSString stringWithFormat:NSLocalizedString(@"X dates ago", nil), daysAgo];
+			text = [NSString stringWithFormat:@"%d ngày trước", daysAgo];
 	}
 	return text;
 }
