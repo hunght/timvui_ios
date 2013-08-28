@@ -490,10 +490,8 @@
     int height=15;
     
     if (_branch.karaokes.items.count>0) {
-        
+        NSLog(@"_branch.karaokes.items.count=%d",_branch.karaokes.items.count);
         [self addKaraokeAtCount:0 withHeight:height];
-        
-        
     }
 }
 

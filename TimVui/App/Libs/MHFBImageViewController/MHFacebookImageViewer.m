@@ -25,6 +25,9 @@
 
 #import "MHFacebookImageViewer.h"
 #import "UIImageView+AFNetworking.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "MacroApp.h"
+#import "TSMessage.h"
 static const CGFloat kMinBlackMaskAlpha = 0.3f;
 static const CGFloat kMaxImageScale = 2.5f;
 static const CGFloat kMinImageScale = 1.0f;
@@ -350,31 +353,36 @@ static const CGFloat kMinImageScale = 1.0f;
 }
 
 #pragma mark - Showing of Done Button if ever Zoom Scale is equal to 1
+- (void)showDoneButton {
+    if(!_isDoneAnimating){
+        _isDoneAnimating = YES;
+        [self.viewController.view addSubview:_doneButton];
+        [self.viewController.view addSubview:_saveButton];
+        [self.viewController.view addSubview:_captionView];
+        _doneButton.alpha = 0.0f;
+        _saveButton.alpha=0.0;
+        _captionView.alpha=0.0;
+        [UIView animateWithDuration:0.2f animations:^{
+            _doneButton.alpha = 1.0f;
+            _saveButton.alpha=1.0;
+            _captionView.alpha=1.0;
+        } completion:^(BOOL finished) {
+            [self.viewController.view bringSubviewToFront:_doneButton];
+            [self.viewController.view bringSubviewToFront:_saveButton];
+            [self.viewController.view bringSubviewToFront:_captionView];
+            _isDoneAnimating = NO;
+        }];
+    }
+}
+
 - (void)didSingleTap:(UITapGestureRecognizer*)recognizer {
     if(_doneButton.superview){
         [self hideDoneButton];
     }else {
         if(__scrollView.zoomScale == __scrollView.minimumZoomScale){
-            if(!_isDoneAnimating){
-                _isDoneAnimating = YES;
-                [self.viewController.view addSubview:_doneButton];
-                [self.viewController.view addSubview:_saveButton];
-                [self.viewController.view addSubview:_captionView];
-                _doneButton.alpha = 0.0f;
-                _saveButton.alpha=0.0;
-                _captionView.alpha=0.0;
-                [UIView animateWithDuration:0.2f animations:^{
-                    _doneButton.alpha = 1.0f;
-                    _saveButton.alpha=1.0;
-                    _captionView.alpha=1.0;
-                } completion:^(BOOL finished) {
-                    [self.viewController.view bringSubviewToFront:_doneButton];
-                    [self.viewController.view bringSubviewToFront:_saveButton];
-                    [self.viewController.view bringSubviewToFront:_captionView];
-                    _isDoneAnimating = NO;
-                }];
-            }
+            [self showDoneButton];
         }else if(__scrollView.zoomScale == __scrollView.maximumZoomScale) {
+            [self showDoneButton];
             CGPoint pointInView = [recognizer locationInView:__imageView];
             [self zoomInZoomOut:pointInView];
         }
@@ -427,8 +435,38 @@ static const CGFloat kMinImageScale = 1.0f;
     [self dismissViewController];
 }
 - (void)save:(UIButton *)sender {
-    [sender removeFromSuperview];
-    [self dismissViewController];
+    void (^completion)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error) {
+        if (error){
+            [TSMessage showNotificationInViewController:_viewController
+                                              withTitle:@"Lưu ảnh thất bại"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeError];
+            NSLog(@"!!!ERROR,  write the image data to the assets library (camera roll): %@",
+                         [error description]);
+        }
+        else{
+            [TSMessage showNotificationInViewController:_viewController
+                                              withTitle:@"Lưu ảnh thành công"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeSuccess];
+        }
+        NSLog(@"*** URL %@ | %@ || type: %@ ***", assetURL, [assetURL absoluteString], [assetURL class]);
+    };
+    
+    void (^failure)(NSError *) = ^(NSError *error) {
+        
+        if (error == nil) return;
+        [TSMessage showNotificationInViewController:_viewController
+                                          withTitle:@"Lưu ảnh thất bại"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
+        NSLog(@"!!!ERROR, failed to add the asset to the custom photo album: %@", [error description]);
+    };
+    ALAssetsLibrary* assetsLibrary_ = [[ALAssetsLibrary alloc] init];
+    [assetsLibrary_ saveImage:__imageView.image
+                          toAlbum:kKYCustomPhotoAlbumName_
+                       completion:completion
+                          failure:failure];
 }
 @end
 

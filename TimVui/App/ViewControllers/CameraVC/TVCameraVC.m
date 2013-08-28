@@ -16,6 +16,7 @@
 #import "PageEightView.h"
 #import "PageTwelveView.h"
 #import "SIAlertView.h"
+#import "ALAssetsLibrary+CustomPhotoAlbum.h"
 @interface TVCameraVC ()
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
 @end
@@ -104,6 +105,8 @@ static int _numPages = 16;
     [_btnStoreImage setImage:[UIImage imageNamed:@"img_camera_store_photos"] forState:UIControlStateNormal];
     [_btnAlbumPicker setImage:[UIImage imageNamed:@"img_camera_album_picker"] forState:UIControlStateNormal];
     [_btnCameraSkin setBackgroundImage:[UIImage imageNamed:@"img_camera_camera_skin"] forState:UIControlStateNormal];
+    [_btnCameraSkin setBackgroundImage:[UIImage imageNamed:@"img_camera_camera_skin_on"] forState:UIControlStateHighlighted];
+    
     [_btnClose setImage:[UIImage imageNamed:@"img_camera_close"] forState:UIControlStateNormal];
     [_btnLocationPicker setImage:[UIImage imageNamed:@"img_camera_location_picker"] forState:UIControlStateNormal];
 }
@@ -125,12 +128,15 @@ static int _numPages = 16;
 
 - (void)didReceiveMemoryWarning
 {
+    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+    [imageCache clearMemory];
 	[self.pagingScrollView didReceiveMemoryWarning];
 }
 
 #pragma mark - Helper
 
 -(void)showAnimationWhenDidTakeImage{
+    
     CGRect rect= _btnStoreImage.frame;
     CGRect endRect = CGRectInset(rect, 5.0, 5.0);
     NSTimeInterval duration = 0.5;
@@ -177,13 +183,15 @@ static int _numPages = 16;
     
     if (_lblPhone.isHidden)
         _lblPhone.hidden=NO;
-    
+    NSLog(@"newImage.size.height = %f",newImage.size.height);
+    NSLog(@"newImage.size.width = %f",newImage.size.width);
     self.imgStillCamera.image=newImage;
     [self showAnimationWhenDidTakeImage];
 }
 
 -(void)getImageToAddSkin{
     if (self.captureManager.stillImage) {
+        [self.captureManager.captureSession stopRunning];
         UIImage *bottomImage = [self.captureManager.stillImage cropImageInstagramStyleWithBottomBar:44+20]; //background image
         
         [self mergeSkinWithImage:bottomImage];
@@ -214,7 +222,28 @@ static int _numPages = 16;
 
 -(void)didPickWithImages:(NSArray*)images{
     for (UIImage* image in images) {
-        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        void (^completion)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error) {
+            if (error){
+               
+                NSLog(@"!!!ERROR,  write the image data to the assets library (camera roll): %@",
+                      [error description]);
+            }
+            else{
+                            }
+            NSLog(@"*** URL %@ | %@ || type: %@ ***", assetURL, [assetURL absoluteString], [assetURL class]);
+        };
+        
+        void (^failure)(NSError *) = ^(NSError *error) {
+            
+            if (error == nil) return;
+           
+            NSLog(@"!!!ERROR, failed to add the asset to the custom photo album: %@", [error description]);
+        };
+        ALAssetsLibrary* assetsLibrary_ = [[ALAssetsLibrary alloc] init];
+        [assetsLibrary_ saveImage:image
+                          toAlbum:kKYCustomPhotoAlbumName_
+                       completion:completion
+                          failure:failure];
     }
     [_arrImages removeAllObjects];
     _lblPhone.hidden=YES;
@@ -271,6 +300,7 @@ static int _numPages = 16;
         return;
     }
     if (self.imgImagePicked.image) {
+        [self.captureManager.captureSession stopRunning];
         [self mergeSkinWithImage:self.imgImagePicked.image];
     }else
         [[self captureManager] captureStillImage];
@@ -285,7 +315,7 @@ static int _numPages = 16;
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePicker.delegate = self;
-//        [self.captureManager.captureSession stopRunning];
+
         [self presentModalViewController:imagePicker animated:YES];
     }
 }

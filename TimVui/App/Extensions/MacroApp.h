@@ -35,12 +35,12 @@
 #define SMS_NUMBER @"8088"//VDC
 
 #define kBranchIDs               @"kBranchIDs"
-#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
 #define kVatgiaClientID @"anuong-ios"
 #define kVatgiaClientSecret @"2ETkVUuMAIPmOY8liDzj0x"
 
 #define kSearchBranchLimit @"30"
-
+#define kKYCustomPhotoAlbumName_ @"Anuong.net Album"
 
 #define kCyanGreenColor [UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]
 #define kPaleCyanGreenColor [UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]

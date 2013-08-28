@@ -64,7 +64,7 @@
     if (FBSession.activeSession.isOpen ==NO)return;
     
     NSMutableDictionary<FBGraphObject> *object = [FBGraphObject graphObject];
-    object[@"url"] = @"http://cung-sach.herokuapp.com";
+    object[@"url"] = _branch.url;
     NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
     action[@"nha_hang"] = object;
     
@@ -118,9 +118,9 @@
                                              handler(session,error);
                                              
                                              if (!error && status == FBSessionStateOpen) {
-                                                 
+                                                 NSLog(@"success");
                                              }else{
-                                                 NSLog(@"error");
+                                                 NSLog(@"error=%@",error);
                                              }
                                          }];
     }
