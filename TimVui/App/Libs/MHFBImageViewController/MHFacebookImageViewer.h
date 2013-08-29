@@ -25,7 +25,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^MHFacebookImageViewerOpeningBlock)(void);
+typedef void (^MHFacebookImageViewerOpeningBlock)(UIView*);
 typedef void (^MHFacebookImageViewerClosingBlock)(void);
 
 
@@ -59,6 +59,7 @@ typedef void (^MHFacebookImageViewerClosingBlock)(void);
 - (void) setupImageViewerWithCompletionOnOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
 - (void) setupImageViewerWithImageURL:(NSURL*)url;
 - (void) setupImageViewerWithImageURL:(NSURL *)url onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
+- (void) setupImageViewerWithDatasource:(id<MHFacebookImageViewerDatasource>)imageDatasource initialIndex:(NSInteger)initialIndex;
 - (void) setupImageViewerWithDatasource:(id<MHFacebookImageViewerDatasource>)imageDatasource onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
 - (void) setupImageViewerWithDatasource:(id<MHFacebookImageViewerDatasource>)imageDatasource initialIndex:(NSInteger)initialIndex onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close;
 @end

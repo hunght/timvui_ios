@@ -326,13 +326,17 @@
     //Show Ablum images
     int i=0;
     for (NSDictionary* imagesArr in _branch.images ) {
-
+            
             
             UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
             [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^{
+            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^(UIView* captionView){
+                [(UILabel*)[captionView viewWithTag:1] setText:[imagesArr safeStringForKey:@"user_name"]];
+//                UILabel* content= (UILabel*)[captionView viewWithTag:2];
+//                title.text=[imagesArr safeStringForKey:@"user_name"];
+//                content.text=[NSString stringWithFormat:@"%@ %@",title.text,[[imagesArr safeDateForKey:@"created"] stringMinutesFromNowAgo]];
                 NSLog(@"OPEN!");
             } onClose:^{
                 NSLog(@"CLOSE!");
@@ -345,7 +349,7 @@
         
         [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
         [imageButton setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:.7]];
-        imageButton.titleLabel.textColor=[UIColor redColor];
+        [imageButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [imageButton addTarget:self action:@selector(albumButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:imageButton];
     }

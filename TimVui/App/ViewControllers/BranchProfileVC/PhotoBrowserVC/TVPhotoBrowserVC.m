@@ -147,12 +147,7 @@
 //    NSLog(@"%@",[Utilities getLargeAlbumPhoto:photo.arrURLImages]);
     [imageView setImageWithURL:[Utilities getLargeAlbumPhoto:photo.arrURLImages] placeholderImage:nil];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [imageView setupImageViewerWithDatasource:self initialIndex:index onOpen:^{
-        NSLog(@"OPEN!");
-    } onClose:^{
-        NSLog(@"CLOSE!");
-    }];
-    
+    [imageView setupImageViewerWithDatasource:self initialIndex:index];
     imageView.clipsToBounds = YES;
 }
 

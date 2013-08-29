@@ -3717,6 +3717,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thien La Duc (R56T6C93R6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thien La Duc (R56T6C93R6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
@@ -3747,6 +3749,8 @@
 					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = Anuong;
+				PROVISIONING_PROFILE = "7CCB4776-11CF-4989-8464-E2A9C0BBC5A3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7CCB4776-11CF-4989-8464-E2A9C0BBC5A3";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -3757,6 +3761,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thien La Duc (R56T6C93R6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Thien La Duc (R56T6C93R6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Documents/FacebookSDK\"",
@@ -3787,6 +3793,8 @@
 					"-lsqlite3.0",
 				);
 				PRODUCT_NAME = Anuong;
+				PROVISIONING_PROFILE = "7CCB4776-11CF-4989-8464-E2A9C0BBC5A3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7CCB4776-11CF-4989-8464-E2A9C0BBC5A3";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;

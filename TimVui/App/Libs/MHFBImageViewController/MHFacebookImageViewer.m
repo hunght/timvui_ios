@@ -24,10 +24,10 @@
 
 
 #import "MHFacebookImageViewer.h"
-#import "UIImageView+AFNetworking.h"
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import "MacroApp.h"
 #import "TSMessage.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 static const CGFloat kMinBlackMaskAlpha = 0.3f;
 static const CGFloat kMaxImageScale = 2.5f;
 static const CGFloat kMinImageScale = 1.0f;
@@ -113,13 +113,11 @@ static const CGFloat kMinImageScale = 1.0f;
         __block UIImageView * _imageViewInTheBlock = __imageView;
         __block MHFacebookImageViewerCell * _justMeInsideTheBlock = self;
         __block UIScrollView * _scrollViewInsideBlock = __scrollView;
-        
-        [__imageView setImageWithURLRequest:[NSURLRequest requestWithURL:imageURL] placeholderImage:defaultImage success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        [__imageView setImageWithURL:imageURL placeholderImage:defaultImage success:^(UIImage *image,BOOL cached){
             [_scrollViewInsideBlock setZoomScale:1.0f animated:YES];
             [_imageViewInTheBlock setImage:image];
             _imageViewInTheBlock.frame = [_justMeInsideTheBlock centerFrameFromImage:_imageViewInTheBlock.image];
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        } failure:^(NSError* error){
             NSLog(@"Image From URL Not loaded");
         }];
         
@@ -139,7 +137,7 @@ static const CGFloat kMinImageScale = 1.0f;
                     _isLoaded = YES;
                     if(_openingBlock){
                         
-                        _openingBlock();
+                        _openingBlock(_captionView);
                     }
                 }
             }];
@@ -716,7 +714,9 @@ static const CGFloat kMinImageScale = 1.0f;
     tapGesture = nil;
 }
 
-
+- (void) setupImageViewerWithDatasource:(id<MHFacebookImageViewerDatasource>)imageDatasource initialIndex:(NSInteger)initialIndex{
+    [self setupImageViewerWithDatasource:imageDatasource initialIndex:initialIndex onOpen:nil onClose:nil];
+}
 - (void) setupImageViewerWithDatasource:(id<MHFacebookImageViewerDatasource>)imageDatasource onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close {
     [self setupImageViewerWithDatasource:imageDatasource initialIndex:0 onOpen:open onClose:close];
 }
