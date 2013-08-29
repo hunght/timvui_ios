@@ -332,8 +332,8 @@
             [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^(UIView* captionView){
-                [(UILabel*)[captionView viewWithTag:1] setText:[imagesArr safeStringForKey:@"user_name"]];
+            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^{
+//                [(UILabel*)[captionView viewWithTag:1] setText:[imagesArr safeStringForKey:@"user_name"]];
 //                UILabel* content= (UILabel*)[captionView viewWithTag:2];
 //                title.text=[imagesArr safeStringForKey:@"user_name"];
 //                content.text=[NSString stringWithFormat:@"%@ %@",title.text,[[imagesArr safeDateForKey:@"created"] stringMinutesFromNowAgo]];

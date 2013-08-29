@@ -137,7 +137,7 @@ static const CGFloat kMinImageScale = 1.0f;
                     _isLoaded = YES;
                     if(_openingBlock){
                         
-                        _openingBlock(_captionView);
+                        _openingBlock();
                     }
                 }
             }];
