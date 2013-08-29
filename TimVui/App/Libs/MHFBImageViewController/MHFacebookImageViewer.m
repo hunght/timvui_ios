@@ -51,7 +51,7 @@ static const CGFloat kMinImageScale = 1.0f;
 @property(nonatomic,weak) UIView * blackMask;
 @property(nonatomic,weak) UIButton * doneButton;
 @property(nonatomic,weak) UIButton * saveButton;
-@property(nonatomic,weak) UIView * captionView;
+@property(nonatomic,strong) UIView * captionView;
 
 @property(nonatomic,weak) UIImageView * senderView;
 @property(nonatomic,assign) NSInteger imageIndex;
@@ -136,8 +136,7 @@ static const CGFloat kMinImageScale = 1.0f;
                     _isAnimating = NO;
                     _isLoaded = YES;
                     if(_openingBlock){
-                        
-                        _openingBlock();
+                        _openingBlock(_captionView);
                     }
                 }
             }];
@@ -621,24 +620,27 @@ static const CGFloat kMinImageScale = 1.0f;
     [_saveButton setImage:[UIImage imageNamed:@"img_photo_browser_download"] forState:UIControlStateNormal];
     _saveButton.frame = CGRectMake(320-41-12,18.0f, 41, 26);
     
-    _captionView=[[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-50, 320, 50)];
-    [_captionView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.4]];
-    UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
-    _lblContent.backgroundColor = [UIColor clearColor];
-    _lblContent.textColor = [UIColor whiteColor];
-    _lblContent.numberOfLines=2;
-    _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
-    
-    UILabel*_lblNameBranch= [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
-    _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
-    _lblNameBranch.backgroundColor=[UIColor clearColor];
-    _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    [_captionView addSubview:_lblContent];
-    [_captionView addSubview:_lblNameBranch];
-    _lblNameBranch.tag=1;
-    _lblContent.tag=2;
+
     if (self.imageDatasource) {
+        _captionView=[[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-50, 320, 50)];
+        [_captionView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.4]];
+        UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+        _lblContent.backgroundColor = [UIColor clearColor];
+        _lblContent.textColor = [UIColor whiteColor];
+        _lblContent.numberOfLines=2;
+        _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
+        
+        UILabel*_lblNameBranch= [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+        _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
+        _lblNameBranch.backgroundColor=[UIColor clearColor];
+        _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+        [_captionView addSubview:_lblContent];
+        [_captionView addSubview:_lblNameBranch];
+        _lblNameBranch.tag=1;
+        _lblContent.tag=2;
         [self.imageDatasource settingCaptionView:_captionView withIndex:_initialIndex];
+    }else{
+        _captionView=[[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-50, 320, 50)];
     }
 }
 
@@ -690,7 +692,7 @@ static const CGFloat kMinImageScale = 1.0f;
 @implementation UIImageView (MHFacebookImageViewer)
 
 #pragma mark - Initializer for UIImageView
-- (void) setupImageViewer {
+- (void) setupImageViewer{
     [self setupImageViewerWithCompletionOnOpen:nil onClose:nil];
 }
 
@@ -698,8 +700,15 @@ static const CGFloat kMinImageScale = 1.0f;
     [self setupImageViewerWithImageURL:nil onOpen:open onClose:close];
 }
 
-- (void) setupImageViewerWithImageURL:(NSURL*)url {
-    [self setupImageViewerWithImageURL:url onOpen:nil onClose:nil];
+- (void) setupImageViewerWithImageURL:(NSURL*)url{
+    self.userInteractionEnabled = YES;
+    MHFacebookImageViewerTapGestureRecognizer *  tapGesture = [[MHFacebookImageViewerTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
+    NSLog(@"%@",url);
+    tapGesture.imageURL = url;
+    tapGesture.openingBlock = nil;
+    tapGesture.closingBlock = nil;
+    [self addGestureRecognizer:tapGesture];
+    tapGesture = nil;
 }
 
 

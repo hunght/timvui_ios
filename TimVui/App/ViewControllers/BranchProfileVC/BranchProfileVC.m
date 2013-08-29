@@ -41,6 +41,7 @@
 
 @implementation BranchProfileVC
 
+
 #pragma mark - UIViewController
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -332,11 +333,23 @@
             [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^{
-//                [(UILabel*)[captionView viewWithTag:1] setText:[imagesArr safeStringForKey:@"user_name"]];
-//                UILabel* content= (UILabel*)[captionView viewWithTag:2];
-//                title.text=[imagesArr safeStringForKey:@"user_name"];
-//                content.text=[NSString stringWithFormat:@"%@ %@",title.text,[[imagesArr safeDateForKey:@"created"] stringMinutesFromNowAgo]];
+            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^(UIView* captionView){
+                captionView=nil;
+
+//                captionView.backgroundColor=[UIColor greenColor];
+//                [_captionView setBackgroundColor:[UIColor greenColor]];
+//                UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+//                _lblContent.backgroundColor = [UIColor clearColor];
+//                _lblContent.textColor = [UIColor whiteColor];
+//                _lblContent.numberOfLines=2;
+//                _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
+//                
+//                UILabel*_lblNameBranch= [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+//                _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
+//                _lblNameBranch.backgroundColor=[UIColor clearColor];
+//                _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+//                [_captionView addSubview:_lblContent];
+//                [_captionView addSubview:_lblNameBranch];
                 NSLog(@"OPEN!");
             } onClose:^{
                 NSLog(@"CLOSE!");
