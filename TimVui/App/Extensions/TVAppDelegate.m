@@ -210,7 +210,7 @@
     }
 }
 //Class.m
-- (BOOL)connected
+- (BOOL)isConnected
 {
     Reachability *reachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
@@ -317,7 +317,7 @@
     [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     _slidingViewController=[[ECSlidingViewController alloc] init];
     
-    if ([self connected]) {
+    if ([self isConnected]) {
         [self loadWhenInternetConnected];
     }else{
      [self.menuVC performSelector:@selector(openViewController:) withObject:[[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil] afterDelay:0.0];

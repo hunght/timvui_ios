@@ -18,6 +18,7 @@
 #import "NSDictionary+Extensions.h"
 #import <SVProgressHUD.h>
 #import "FacebookServices.h"
+#import "TVBranch.h"
 @interface PhotoBrowseVC ()
 {
     @private
@@ -128,7 +129,7 @@
     
     if ([dic safeIntegerForKey:@"status"]==200){
         if (_swichFacebook.on) {
-            [FacebookServices postImageActionWithBranch:_branch];
+            [FacebookServices postImageActionWithBranch:_branch withArrayUrl:[dic safeArrayForKey:@"data"]];
         }
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Đăng ảnh thành công"
@@ -201,7 +202,8 @@
     //Populate a dictionary with all the regular values you would like to send.
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:11];
     
-    [parameters setValue:@"1" forKey:@"branch_id"];
+//    [parameters setValue:@"1" forKey:@"branch_id"];
+    [parameters setValue:_branch.branchID forKey:@"branch_id"];
     [parameters setValue:[GlobalDataUser sharedAccountClient].user.userId forKey:@"user_id"];
     // add params (all params are strings)
     for (NSString *param in parameters) {
@@ -279,8 +281,8 @@
 
     NSDictionary* params = [NSDictionary dictionaryWithObjectsAndKeys:
                             _album,@"album",
-//                            _branch_id,@"branch_id",
-                            @"1",@"branch_id",
+                            _branch.branchID,@"branch_id",
+//                            @"1",@"branch_id",
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                             nil];
     

@@ -82,6 +82,8 @@ static const NSString* distanceMapSearch=@"100";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+    self.tableView.backgroundColor=[UIColor clearColor];
     [self postToGetBranches];
     // Do any additional setup after loading the view from its nib.
 }
@@ -120,8 +122,8 @@ static const NSString* distanceMapSearch=@"100";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TVCoupon* manual=arrCoupons[indexPath.row];
-    return 270 + [NearbyCouponCell heightForCellWithPost:manual];
+    TVCoupon* coupon    =arrCoupons[indexPath.row];
+    return [NearbyCouponCell heightForCellWithPost:coupon];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //

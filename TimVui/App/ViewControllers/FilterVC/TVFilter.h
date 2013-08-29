@@ -12,5 +12,5 @@
 @property(nonatomic, assign) BOOL isCheck;
 @property(nonatomic, strong)NSString* name;
 @property(nonatomic, strong)NSString* TVFilteID;
--(id)initWithDic:(NSDictionary*)dic;
+-(id)initWithDic:(NSDictionary*)dic isChildren:(BOOL)isChildrenYES;
 @end

@@ -23,6 +23,7 @@
 #define kGetPublicLocationData   @"kGetPublicLocationData"
 #define kGetPriceAvgData   @"kGetPriceAvgData"
 #define kGetCatData   @"kGetCatData"
+#define kReceivedCoupon   @"kReceivedCoupon"
 
 #define kDistanceSearchMapDefault   @"2"//km
 #define kTVDistanceMovingMap   5000 //m

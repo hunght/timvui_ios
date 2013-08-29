@@ -32,6 +32,6 @@
 -(void)showNotificationAboutSomething:(TVBranch*)branch;
 -(void)showSuccessAboutSomething:(NSString*)mess;
 -(void)showAlertAboutSomething:(NSString*)mess;
-- (BOOL)connected;
+- (BOOL)isConnected;
 -(void)loadWhenInternetConnected;
 @end

@@ -256,7 +256,7 @@ enum {
         loginVC.isPushNaviYES=YES;
         [nav pushViewController:loginVC animated:YES];
         [loginVC goWithDidLogin:^{
-            [self showCommentActionWithBranch:branch];
+            [self showCameraActionWithBranch:branch];
         } thenLoginFail:^{
             
         }];
@@ -449,7 +449,7 @@ enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (SharedAppDelegate.isLoadWhenConnectedYES==NO) {
-        if ([SharedAppDelegate connected])
+        if ([SharedAppDelegate isConnected])
             [SharedAppDelegate loadWhenInternetConnected];
         return;
     }

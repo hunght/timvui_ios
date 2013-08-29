@@ -16,5 +16,5 @@
 +(void)checkFacebookSessionIsOpen:(void (^)(bool))callback;
 +(void)postFollowActionWithBranch:(TVBranch*)_branch;
 + (void)postWriteReviewActionWithBranch:(TVBranch*)branch;
-+(void)postImageActionWithBranch:(TVBranch*)_branch;
++(void)postImageActionWithBranch:(TVBranch*)_branch  withArrayUrl:(NSArray*)arrUrl;
 @end

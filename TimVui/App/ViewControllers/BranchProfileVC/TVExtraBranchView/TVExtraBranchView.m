@@ -454,11 +454,13 @@
             karaokeView.frame=frame;
             
             int karaokeHeight=karaokeView.frame.origin.y+karaokeView.frame.size.height+30;
-            NSLog(@"karaokeHeight=%d",karaokeHeight);
+//            NSLog(@"karaokeHeight=%d",karaokeHeight);
             
             [UIView animateWithDuration:0.2 animations:^{
                 htmlView.alpha = 1;
             }];
+            NSLog(@"karaokeCount=%d",karaokeCount);
+             NSLog(@"_branch.karaokes.items.count-1=%d",_branch.karaokes.items.count-1);
             if (karaokeCount<_branch.karaokes.items.count-1) {
                 [self addKaraokeAtCount:karaokeCount+1 withHeight:karaokeHeight];
             }else{

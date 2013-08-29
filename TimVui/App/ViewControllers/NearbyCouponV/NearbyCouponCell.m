@@ -23,7 +23,7 @@
 
 #import "NearbyCouponCell.h"
 #import "TVBranch.h"
-#import <QuartzCore/QuartzCore.h>
+
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Utilities.h"
 #import "TVAppDelegate.h"
@@ -31,11 +31,8 @@
 #import "TVCoupon.h"
 
 @implementation NearbyCouponCell {
-@private
-    __strong TVCoupon *_coupon;
 }
 
-@synthesize coupon = _coupon;
 
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
     [l setMasksToBounds:YES];
@@ -72,7 +69,7 @@
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
     // Get the Layer of any view
     CALayer * l = [_whiteView layer];
-    [self setBorderForLayer:l radius:3];
+    [self setBorderForLayer:l radius:1];
     
     l = [_avatarBranch layer];
     [self setBorderForLayer:l radius:1];
@@ -85,14 +82,16 @@
     [self.whiteView addSubview:_lblDetailRow];
     [_whiteView addSubview:_lblAddressBranch];
     [self.contentView addSubview:_whiteView];
-    
-    
+    _border = [CAShapeLayer layer];
+    _border.strokeColor =[UIColor colorWithRed:(220/255.0f) green:(220/255.0f) blue:(220/255.0f) alpha:1.0f].CGColor;
+    _border.fillColor = nil;
+    _border.lineDashPattern = @[@4, @2];
+    [_whiteView.layer addSublayer:_border];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
     return self;
 }
 
-- (void)setCoupon:(TVCoupon *)coupon {
-    _coupon = coupon;
+- (void)setCoupon:(TVCoupon *)_coupon {
     _lblNameBranch.text=_coupon.branch.name;
     _lblAddressBranch.text =_coupon.branch.address_full;
     _lblDetailRow.text=_coupon.name;
@@ -111,11 +110,8 @@
     frame.size.width+=10;
     frame.size.height+=10;
     
-    CAShapeLayer *_border = [CAShapeLayer layer];
-    _border.strokeColor = [UIColor colorWithRed:67/255.0f green:37/255.0f blue:83/255.0f alpha:1].CGColor;
-    _border.fillColor = nil;
-    _border.lineDashPattern = @[@4, @2];
-    [_whiteView.layer addSublayer:_border];
+    
+
     // Setup the path
     _border.path = [UIBezierPath bezierPathWithRect:frame].CGPath;
     [_borderView setFrame:frame];
@@ -147,7 +143,7 @@
     CGSize expectedLabelSize = [coupon.branch.address_full sizeWithFont:cellFont
                                                constrainedToSize:maximumLabelSize
                                                    lineBreakMode:NSLineBreakByWordWrapping];
-    return expectedLabelSize.height+ 8+96+8;
+    return expectedLabelSize.height+ 8+66+8;
 }
 
 

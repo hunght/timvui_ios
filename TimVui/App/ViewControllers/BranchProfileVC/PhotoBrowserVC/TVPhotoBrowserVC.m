@@ -59,11 +59,11 @@
 
 -  (NSURL*) imageURLAtIndex:(NSInteger)index imageViewer:(MHFacebookImageViewer *)imageViewer {
     TVBranchPhoto*photo=    [albumArr objectAtIndex:index];
-    return [Utilities getLargeAlbumPhoto:photo.arrURLImages];
+    return [Utilities getOriginalAlbumPhoto:photo.arrURLImages];
 }
 
 - (UIImage*) imageDefaultAtIndex:(NSInteger)index imageViewer:(MHFacebookImageViewer *)imageViewer{
-    return [UIImage imageNamed:@"skin_I_Love"];
+    return nil;
 }
 
 #pragma mark - UIViewController
@@ -145,7 +145,7 @@
 - (void) displayImage:(UIImageView*)imageView withImage:(int)index  {
     TVBranchPhoto*photo=    [albumArr objectAtIndex:index];
 //    NSLog(@"%@",[Utilities getLargeAlbumPhoto:photo.arrURLImages]);
-    [imageView setImageWithURL:[Utilities getLargeAlbumPhoto:photo.arrURLImages] placeholderImage:[UIImage imageNamed:@"skin_I_Love"]];
+    [imageView setImageWithURL:[Utilities getLargeAlbumPhoto:photo.arrURLImages] placeholderImage:nil];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     [imageView setupImageViewerWithDatasource:self initialIndex:index onOpen:^{
         NSLog(@"OPEN!");
@@ -165,9 +165,6 @@
         return YES;
     }
 }
-
-
-
 
 - (IBAction)closeButtonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

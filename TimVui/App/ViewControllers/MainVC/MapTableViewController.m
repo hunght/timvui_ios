@@ -288,16 +288,17 @@
         melbourneMarker.title = [NSString stringWithFormat:@"%d",i];
         melbourneMarker.position =  branch.latlng;
         SDWebImageManager *manager = [SDWebImageManager sharedManager];
-        [manager downloadWithURL:[Utilities getThumbImageOfCoverBranch:branch.arrURLImages]
+        [manager downloadWithURL:[NSURL URLWithString:[branch.arrURLImages safeStringForKey:@"80"]]
                         delegate:self
                          options:0
                          success:^(UIImage *image, BOOL cached)
          {
              UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
-             image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
+//             image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
+//             CGSize size= bottomImage.size;
              UIGraphicsBeginImageContext( bottomImage.size );
              [bottomImage drawAtPoint:CGPointZero];
-             [image drawInRect:CGRectMake(6.0f,5.0f,30.0f,30.0f) blendMode:kCGBlendModeNormal alpha:1];
+             [image drawInRect:CGRectMake(6.0f,6.0f,30.0f,30.0/4*3) blendMode:kCGBlendModeNormal alpha:1];
              UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
              UIGraphicsEndImageContext();
              melbourneMarker.icon = newImage;
@@ -483,8 +484,16 @@
     TVBranch* branch= _branches[[marker.title intValue]];
     UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f+7+9, 70.0f, 52.5f)];
     imgPhoto.contentMode = UIViewContentModeScaleAspectFit;
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadWithURL:[NSURL URLWithString:[branch.arrURLImages safeStringForKey:@"80"]]
+                    delegate:self
+                     options:0
+                     success:^(UIImage *image, BOOL cached)
+     {
+         imgPhoto.image=image;
+     } failure:nil];
     
-    [imgPhoto setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]];
+//    [imgPhoto setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"160"]]];
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 110)];
     [view addSubview:imgPhoto];
     

@@ -170,7 +170,7 @@
             [borderView setBackgroundColor:[UIColor clearColor]];
             
             CAShapeLayer *_border = [CAShapeLayer layer];
-            _border.strokeColor = [UIColor colorWithRed:67/255.0f green:37/255.0f blue:83/255.0f alpha:1].CGColor;
+            _border.strokeColor =[UIColor colorWithRed:(220/255.0f) green:(220/255.0f) blue:(220/255.0f) alpha:1.0f].CGColor;
             _border.fillColor = nil;
             _border.lineDashPattern = @[@4, @2];
             [borderView.layer addSublayer:_border];
@@ -632,8 +632,8 @@
     
     
     if (!_branch) {
-        //NSDictionary *params = @{@"id": _branchID};
-        NSDictionary *params = @{@"id": @"1"};
+        NSDictionary *params = @{@"id": _branchID};
+//        NSDictionary *params = @{@"id": @"1"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
                 NSLog(@"data===%@",data);
@@ -747,7 +747,9 @@
     int lineHeight=imageLine.frame.origin.y+imageLine.frame.size.height +17;
     //    int lineHeight=50;
     [_scrollView addSubview:_introducingView];
+    _introducingView.hidden=YES;
     if (_branch.review) {
+        _introducingView.hidden=NO;
         NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
         //    NSLog(@"%@",_coupon.content);
         //continue building the string
@@ -769,6 +771,7 @@
         [_introducingView addSubview:webView];
     }else if(_branch.special_content)
     {
+        _introducingView.hidden=NO;
         for (NSString* str in _branch.special_content) {
             
             UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, lineHeight, 265, 25)];
@@ -788,8 +791,9 @@
         frame.size.height+=lineHeight;
         _introducingView.frame=frame;
         
-        [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
+
     }
+    [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
 }
 
 #pragma mark - UIWebViewDelegate

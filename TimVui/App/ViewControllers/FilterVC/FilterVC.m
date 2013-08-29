@@ -103,15 +103,20 @@
         
         NSMutableArray* temp=[[NSMutableArray alloc] init];
         for (NSDictionary *dicRow in [[dic safeDictForKey:@"cities"] allValues]) {
-            [temp addObject:[[TVFilter alloc] initWithDic:dicRow]];
+            [temp addObject:[[TVFilter alloc] initWithDic:dicRow isChildren:NO]];
         }
         
         _cityArr=temp;
         temp=[[NSMutableArray alloc] init];
         for (NSDictionary *dicRow in [[dic safeDictForKey:@"cats"] allValues]) {
-            [temp addObject:[[TVFilter alloc] initWithDic:dicRow]];
+            NSArray* arrRow=[dicRow safeArrayForKey:@"children"];
+            [temp addObject:[[TVFilter alloc] initWithDic:dicRow isChildren:NO]];
+            if (arrRow) {
+                for (NSDictionary* childrenDic in arrRow) {
+                    [temp addObject:[[TVFilter alloc] initWithDic:childrenDic isChildren:YES]];
+                }
+            }
         }
-        
         _topicArr=temp;
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

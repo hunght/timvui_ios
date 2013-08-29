@@ -15,7 +15,7 @@
 #import "TVCoupon.h"
 #import "CoupBranchProfileVC.h"
 #import "Utilities.h"
-
+#import "TVAppDelegate.h"
 static const NSString* limitCount=@"10";
 static const NSString* distanceMapSearch=@"100";
 
@@ -43,7 +43,17 @@ static const NSString* distanceMapSearch=@"100";
     }
     return self;
 }
-
+-(void)rearrangeBranchesToShowing{
+    for (TVBranch* branch in _branches.items) {
+        for (TVCoupon* coupon in branch.coupons.items) {
+            coupon.branch = branch;
+            [arrCoupons addObject:coupon];
+        }
+    }
+    [_btnActive setSelected:YES];
+    [_btnExperied setSelected:NO];
+    [self.tableView reloadData];
+}
 - (void)postToGetBranches
 {
     NSDictionary *params = nil;
@@ -62,19 +72,15 @@ static const NSString* distanceMapSearch=@"100";
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            NSDictionary* dataDic=data;
+            NSLog(@"dataDic = %@",dataDic);
+            [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedCoupon];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             if (weakSelf.branches.count==0) {
                 
             }else{
-                for (TVBranch* branch in _branches.items) {
-                    for (TVCoupon* coupon in branch.coupons.items) {
-                        coupon.branch = branch;
-                        
-                        [arrCoupons addObject:coupon];
-                        [self.tableView reloadData];
-                    }
-                }
+                [self rearrangeBranchesToShowing];
             }
-            
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
@@ -102,7 +108,18 @@ static const NSString* distanceMapSearch=@"100";
     [_btnActive.titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:(15)]] ;
     [_btnExperied.titleLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:(15)]];
     [_btnExperied setSelected:NO];
-    [self postToGetBranches];
+
+    if (![SharedAppDelegate isConnected]) {
+        NSDictionary *retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedCoupon];
+        if (retrievedDictionary) {
+//            NSLog(@"retrievedDictionary=%@",[retrievedDictionary safeDictForKey:@"data"]);
+            [_branches setValues:[retrievedDictionary safeDictForKey:@"data"]];
+            [self rearrangeBranchesToShowing];
+        }
+    }else{
+        [self postToGetBranches];
+    }
+    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -145,7 +162,7 @@ static const NSString* distanceMapSearch=@"100";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     TVCoupon* manual=(_btnActive.isSelected)?arrCoupons[indexPath.row]:arrExperiedCoupons[indexPath.row];
-    return 270 + [NearbyCouponCell heightForCellWithPost:manual];
+    return [NearbyCouponCell heightForCellWithPost:manual];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -202,7 +202,7 @@
         melbourneMarker.title = [NSString stringWithFormat:@"%d",i];
         melbourneMarker.position =  branch.latlng;
         SDWebImageManager *manager = [SDWebImageManager sharedManager];
-        [manager downloadWithURL:[Utilities getThumbImageOfCoverBranch:branch.arrURLImages]
+        [manager downloadWithURL:[branch.arrURLImages valueForKey:@"80"]
                         delegate:self
                          options:0
                          success:^(UIImage *image, BOOL cached)
@@ -210,8 +210,9 @@
              UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
              image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
              UIGraphicsBeginImageContext( bottomImage.size );
+             CGSize size=bottomImage.size;
              [bottomImage drawAtPoint:CGPointZero];
-             [image drawInRect:CGRectMake(6.0f,5.0f,30.0f,30.0f) blendMode:kCGBlendModeNormal alpha:1];
+             [image drawInRect:CGRectMake(6.0f,5.0f,40,30.0f) blendMode:kCGBlendModeNormal alpha:1];
              UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
              UIGraphicsEndImageContext();
              melbourneMarker.icon = newImage;

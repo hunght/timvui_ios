@@ -154,12 +154,7 @@
 
 - (void)showInfoView
 {
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+    
     // Generate Infomation Of Branch
     UIView *genarateInfoView = [self addGenerationInfoView];
     [_scrollView addSubview:genarateInfoView];
@@ -197,7 +192,7 @@
         [borderView setBackgroundColor:[UIColor clearColor]];
         
         CAShapeLayer *_border = [CAShapeLayer layer];
-        _border.strokeColor = [UIColor colorWithRed:67/255.0f green:37/255.0f blue:83/255.0f alpha:1].CGColor;
+    _border.strokeColor =[UIColor colorWithRed:(220/255.0f) green:(220/255.0f) blue:(220/255.0f) alpha:1.0f].CGColor;
         _border.fillColor = nil;
         _border.lineDashPattern = @[@4, @2];
         [borderView.layer addSublayer:_border];
@@ -317,7 +312,6 @@
     // assuming your self.viewer is a UIWebView
     [webView setDelegate:self];
     [_couponBranch addSubview:webView];
-    
 }
 
 - (void)displayInfoWhenGetBranch
@@ -332,12 +326,18 @@
 
 - (void)viewDidLoad
 {
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
     
     if (!_branch) {
         TVBranches* branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
         branches.isNotSearchAPIYES=YES;
-        //NSDictionary *params = @{@"id": _branchID};
-        NSDictionary *params = @{@"id": @"1"};
+        NSDictionary *params = @{@"id": _branchID};
+//        NSDictionary *params = @{@"id": @"1"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
                 _branch=branches[0];
@@ -379,7 +379,6 @@
     
     height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+10;
     
-    [_scrollView addSubview:_couponBranch];
     CGRect frame=_couponBranch.frame;
     frame.size.height=height_p;
     _couponBranch.frame=frame;

@@ -132,7 +132,6 @@
     
     if (_branch){
         [self displayBranchInfo];
-        [FacebookServices postImageActionWithBranch:_branch];
     }
 }
 
@@ -252,8 +251,8 @@
 - (IBAction)postCommentButtonClicked:(id)sender {
     if (_branch) {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                //_branch.branchID,@"branch_id" ,
-                                @"1",@"branch_id" ,
+                                _branch.branchID,@"branch_id" ,
+//                                @"1",@"branch_id" ,
                                 [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                 _txvContent.text,@"content" ,
                                 [_rating stringValue],@"rating" ,

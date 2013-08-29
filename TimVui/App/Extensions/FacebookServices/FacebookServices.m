@@ -60,26 +60,26 @@
     }];
 }
 
-+(void)postImageActionWithBranch:(TVBranch*)_branch {
++(void)postImageActionWithBranch:(TVBranch*)_branch  withArrayUrl:(NSArray*)arrUrl{
     if (FBSession.activeSession.isOpen ==NO)return;
     
     NSMutableDictionary<FBGraphObject> *object = [FBGraphObject graphObject];
     object[@"url"] = _branch.url;
     NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
     action[@"nha_hang"] = object;
-    
-    if (_branch.arrURLImages) {
-        
+    NSMutableArray *images = [[NSMutableArray alloc] init];
+    for (NSString* urlStr in arrUrl) {
         NSMutableDictionary *image = [[NSMutableDictionary alloc] init];
-        [image setObject:[_branch.arrURLImages valueForKey:@"900"] forKey:@"url"];
+        [image setObject:urlStr forKey:@"url"];
         
         [image setObject:@"true" forKey:@"user_generated"]; // <======= ***add this line***
         
-        NSMutableArray *images = [[NSMutableArray alloc] init];
+        
         [images addObject:image];
         
         action.image = images;
     }
+
     
     NSLog(@"%@",action);
     [FBRequestConnection startForPostWithGraphPath:@"me/anuongnet:dang_anh" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
