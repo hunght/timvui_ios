@@ -150,14 +150,14 @@
 }
 
 + (CGFloat)heightForCellWithPost:(TVBranch *)branch {
-    return (8+ 70+ 8+15+ (branch.events.items.count+ branch.coupons.items.count)* 20);
+    return ( 70+15+ (branch.events.items.count+ branch.coupons.items.count)* 20);
 }
 
 #pragma mark - UIView
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(5.0f, 8.0f+7+9, 70.0f, 52.5f);
+    self.imageView.frame = CGRectMake(5.0f, 8.0f+7, 70.0f, 52.5f);
     self.textLabel.frame = CGRectMake(80+10.0f, 8.0f+7, 180.0f, 20.0f);
     self.detailTextLabel.frame = CGRectMake(80+25.0f, 30.0f+7, 210.0f, 20.0f);
     self.price_avg.frame = CGRectMake(80 +25.0f, 48.0f+7, 210.0f, 20.0f);

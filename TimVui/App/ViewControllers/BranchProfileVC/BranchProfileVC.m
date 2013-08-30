@@ -36,6 +36,7 @@
     int sizeHeightDefaultScroll;
     double lastDragOffset;
     UIView *_introducingView;
+    BOOL isFirstLineYES;
 }
 @end
 
@@ -326,31 +327,35 @@
     //    NSArray* imageDicArr=[_branch.images ];
     //Show Ablum images
     int i=0;
-    for (NSDictionary* imagesArr in _branch.images ) {
+    for (NSDictionary* imagesArr_ in _branch.images ) {
             
-            
+        
             UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-            [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr safeDictForKey:@"image"]]];
+            [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr_ safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr safeDictForKey:@"image"]] onOpen:^(UIView* captionView){
-                captionView=nil;
+        __block int x = 123;
+            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr_ safeDictForKey:@"image"]] onOpen:^(UIView* _captionView){
+                UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+                _lblContent.backgroundColor = [UIColor clearColor];
+                _lblContent.textColor = [UIColor whiteColor];
+                _lblContent.numberOfLines=2;
+                _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
+                
+                UILabel*_lblNameBranch= [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+                _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
+                _lblNameBranch.backgroundColor=[UIColor clearColor];
+                _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+                
 
-//                captionView.backgroundColor=[UIColor greenColor];
-//                [_captionView setBackgroundColor:[UIColor greenColor]];
-//                UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
-//                _lblContent.backgroundColor = [UIColor clearColor];
-//                _lblContent.textColor = [UIColor whiteColor];
-//                _lblContent.numberOfLines=2;
-//                _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
-//                
-//                UILabel*_lblNameBranch= [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
-//                _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
-//                _lblNameBranch.backgroundColor=[UIColor clearColor];
-//                _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-//                [_captionView addSubview:_lblContent];
-//                [_captionView addSubview:_lblNameBranch];
-                NSLog(@"OPEN!");
+                _lblNameBranch.text=@"";
+                
+                [_captionView addSubview:_lblContent];
+                [_captionView addSubview:_lblNameBranch];
+               
+//                _lblContent.text=[NSString stringWithFormat:@"%@ %@",_lblNameBranch.text,[[imagesArr safeDateForKey:@"created"] stringMinutesFromNowAgo]];
+                
+//                NSLog(@"OPEN!=%d",x);
             } onClose:^{
                 NSLog(@"CLOSE!");
             }];
@@ -440,59 +445,49 @@
     
     int heightDetailInfo=imageLine.frame.origin.y+imageLine.frame.size.height +12;
     //Style foody
-    
-    NSString* strDetail=[_branch.cats valueForKey:@"name"];
+    NSLog(@"[_branch.cats valueForKey]=%@",[[_branch.cats allValues] valueForKey:@"name"] );
     NSString* strTiltle=@"Thể loại";
     
     
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[self getCatsStringFromDic:_branch.cats] strTiltle:strTiltle];
     
-    strDetail=[_branch.district valueForKey:@"name"];
     strTiltle=@"Khu vực";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.district valueForKey:@"name"] strTiltle:strTiltle];
     
-    strDetail=[_branch.public_locations valueForKey:@"name"];
     strTiltle=@"Ở gần";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.public_locations valueForKey:@"name"] strTiltle:strTiltle];
     
-    strDetail=_branch.direction;
     strTiltle=@"Chỉ đường";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.direction strTiltle:strTiltle];
     
-    strDetail=_branch.space;
     strTiltle=@"Sức chứa";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.space strTiltle:strTiltle];
     
-    strDetail=[self getDetailStringFrom:_branch.decoration];
     strTiltle=@"Không gian";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[self getDetailStringFrom:_branch.decoration] strTiltle:strTiltle];
     
-    strDetail=[NSString stringWithFormat:@"%@- %@",_branch.time_open,_branch.time_open];
     strTiltle=@"Thời gian hoạt động";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[NSString stringWithFormat:@"%@- %@",_branch.time_open,_branch.time_open] strTiltle:strTiltle];
     
     
-    strDetail=[NSString stringWithFormat:@"Khoảng %@- %@ phút",_branch.waiting_start,_branch.waiting_end];;
     strTiltle=@"Thời gian chuẩn bị";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[NSString stringWithFormat:@"Khoảng %@- %@ phút",_branch.waiting_start,_branch.waiting_end] strTiltle:strTiltle];
     
-    strDetail=_branch.holiday;
     strTiltle=@"Nghỉ lễ";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.holiday strTiltle:strTiltle];
     
-    strDetail=_branch.year;
+
     strTiltle=@"Năm thành lập";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.year strTiltle:strTiltle];
     
     
     strTiltle=@"Thích hợp";
-    strDetail=[self getDetailStringFrom:_branch.adaptive];
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[self getDetailStringFrom:_branch.adaptive] strTiltle:strTiltle];
     
-    strDetail=nil;
     strTiltle=@"Phong cách ẩm thực";
+    NSString* strStyleFoody=@"";
     if ([[_branch.styleFoody allValues] count]>0) {
-        NSString* strStyleFoody=@"";
+        
         BOOL isFistTime=YES;
         
         for (NSDictionary* dicStyle in [_branch.styleFoody allValues]) {
@@ -512,18 +507,15 @@
             }else
                 strStyleFoody=[strStyleFoody stringByAppendingFormat:@", %@",strStyleFoodyRow];
         }
-        strDetail=strStyleFoody;
     }
     
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strStyleFoody strTiltle:strTiltle];
     
     strTiltle=@"Phù hợp mục đích";
-    strDetail=[self getDetailStringFrom:_branch.purpose];
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[self getDetailStringFrom:_branch.purpose] strTiltle:strTiltle];
     
     strTiltle=@"Phù hợp các món";
-    strDetail=[self getDetailStringFrom:_branch.cuisine];
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:strDetail strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[self getDetailStringFrom:_branch.cuisine] strTiltle:strTiltle];
     
     CGRect frame=detailInfoBranch.frame;
     frame.size.height=heightDetailInfo + 0;
@@ -829,19 +821,24 @@
 }
 - (void)setRowWithHeight:(int *)heightDetailInfo_p detailInfoBranch:(UIView *)detailInfoBranch strDetail:(NSString *)strDetail strTiltle:(NSString *)strTiltle
 {
-    if (strDetail) {
-        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, *heightDetailInfo_p, detailInfoBranch.frame.size.width, 1.0f)];
-        grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
-        [detailInfoBranch addSubview:grayLine];
+    if (strDetail&&![strDetail isEqualToString:@""]) {
+        if (isFirstLineYES==NO) {
+            isFirstLineYES=YES;
+        }else{
+            UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(10.0f, *heightDetailInfo_p, 290, 1.0f)];
+            grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+            [detailInfoBranch addSubview:grayLine];
+        }
         
-        UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(8, grayLine.frame.origin.y+grayLine.frame.size.height+5.0, 150, 23)];
+        
+        UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(8,  *heightDetailInfo_p+5.0, 150, 23)];
         lblTitleRow.backgroundColor = [UIColor clearColor];
         lblTitleRow.textColor = [UIColor grayColor];
         lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblTitleRow.text =strTiltle;
         [detailInfoBranch addSubview:lblTitleRow];
         
-        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(138, grayLine.frame.origin.y+grayLine.frame.size.height+ 5.0, 165, 23)];
+        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(138, *heightDetailInfo_p+ 8.0, 165, 23)];
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
         lblDetailRow.textColor = [UIColor blackColor];
@@ -852,7 +849,24 @@
         *heightDetailInfo_p+=14+lblDetailRow.frame.size.height;
     }
 }
-
+- (NSString*)getCatsStringFromDic:(NSDictionary *)dic
+{
+    NSString* strStyleFoody;
+    if ([[dic allValues] count]>0) {
+        strStyleFoody=@"";
+        BOOL isFistTime=YES;
+        for (NSDictionary* dicStyle in [dic allValues]) {
+            NSString* strStyleFoodyRow=@"";
+            strStyleFoodyRow=[dicStyle valueForKey:@"name"];
+            if (isFistTime) {
+                isFistTime=NO;
+                strStyleFoody=[strStyleFoody stringByAppendingFormat:@"%@",strStyleFoodyRow];
+            }else
+                strStyleFoody=[strStyleFoody stringByAppendingFormat:@"/ %@",strStyleFoodyRow];
+        }
+    }
+    return strStyleFoody;
+}
 - (NSString*)getDetailStringFrom:(NSDictionary *)dic
 {
     NSString* strStyleFoody;

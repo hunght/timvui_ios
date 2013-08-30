@@ -641,6 +641,7 @@ static const CGFloat kMinImageScale = 1.0f;
         [self.imageDatasource settingCaptionView:_captionView withIndex:_initialIndex];
     }else{
         _captionView=[[UIView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height-50, 320, 50)];
+        [_captionView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.4]];
     }
 }
 
