@@ -530,6 +530,7 @@
     
     lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, 19, 210, 23)];
     [self settingTextForTitle:lblTitle];
+    
     lblTitle.text=@"Tiện ích";
     [utilitiesView addSubview:lblTitle];
     imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
@@ -538,25 +539,12 @@
     int heightUtilities=imageLine.frame.origin.y+imageLine.frame.size.height +27;
     int rowCount=0;
     
-    NSDictionary* params=[SharedAppDelegate getParamData];
-    NSDictionary* dicUtilities=[[[params valueForKey:@"data"] valueForKey:@"tien-ich"] valueForKey:@"params"];
-    //    NSDictionary*dicUtilities=_branch.services;
-    int heightPreRow=0;
-    for (NSDictionary* dic in [dicUtilities allValues]) {
-        UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake((rowCount%2) ?165:8,heightUtilities, 18, 18)];
-        
-        BOOL isServiceOnYES=NO;
-        for (NSDictionary *dicOn in [_branch.services allValues]) {
-            NSString* strOne=[dicOn valueForKey:@"alias"];
-            NSString* strTwo=[dic valueForKey:@"alias"];
-            if ([strOne isEqualToString:strTwo]){
-                isServiceOnYES=YES;
-                break;
-            }
-        }
+    for (NSDictionary* dic in [_branch.services allValues]) {
+        UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(8,heightUtilities, 18, 18)];
+
         [utilitiesView addSubview:iconIView];
         
-        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 130, 23)];
+        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 250, 23)];
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
         lblDetailRow.textColor = [UIColor blackColor];
@@ -566,34 +554,20 @@
         [utilitiesView addSubview:lblDetailRow];
         
         NSString * strImageName;
-        if (isServiceOnYES){
             strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
             lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
-        }else{
-            lblDetailRow.textColor = [UIColor grayColor];
-            strImageName=[dic valueForKey:@"id"];
-        }
-        
+        NSLog(@"strImageName=%@",dic);
         [iconIView setImage:[UIImage imageNamed:strImageName]];
         
         rowCount++;
-        if (rowCount>1&& !(rowCount%2)) {
-            int padRow=(lblDetailRow.frame.size.height>heightPreRow)?lblDetailRow.frame.size.height:heightPreRow;
-            heightUtilities+=padRow+ 10;
-            heightPreRow=0;
-        }else
-            heightPreRow=lblDetailRow.frame.size.height;
+        heightUtilities+=lblDetailRow.frame.size.height+5;
     }
     
     frame=utilitiesView.frame;
-    
-    if (rowCount%2)
-        frame.size.height=heightUtilities +26+ 10;
-    else
-        frame.size.height=heightUtilities + 10;
+    frame.size.height=heightUtilities + 10;
     
     [utilitiesView setFrame:frame];
-    height =utilitiesView.frame.origin.y +utilitiesView.frame.size.height+40;
+    height =utilitiesView.frame.origin.y +utilitiesView.frame.size.height+ 10;
     
     [self addSpecPointViewWithHeight:height];
 }
@@ -955,7 +929,10 @@
         NSLog(@"%@",params);
         [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
             NSLog(@"%@",JSON);
-            [SVProgressHUD showSuccessWithStatus:@"Bạn vừa thích nhà hàng này!"];
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Bạn vừa thích nhà hàng này!"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeSuccess];
             sender.userInteractionEnabled=YES;
             [FacebookServices checkFacebookSessionIsOpen:^(bool isOpen){
                 if (isOpen) {
@@ -984,7 +961,10 @@
 
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             sender.userInteractionEnabled=YES;
-            [SVProgressHUD showErrorWithStatus:@"Có lỗi khi like nhà hàng"];
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Có lỗi khi like nhà hàng"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeWarning];
             NSLog(@"%@",error);
         }];
     }else{

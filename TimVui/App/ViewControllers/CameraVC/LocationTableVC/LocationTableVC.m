@@ -9,7 +9,7 @@
 #import "LocationTableVC.h"
 #import "GlobalDataUser.h"
 #import "NSDictionary+Extensions.h"
-#import "CameraBranchCell.h"
+#import "BranchMainCell.h"
 @interface LocationTableVC ()
 
 @end
@@ -45,13 +45,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"CameraBranchCell";
+    static NSString *CellIdentifier = @"BranchMainCell";
 
-        CameraBranchCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        BranchMainCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
-            cell = [[CameraBranchCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            cell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         }
-        cell.branch = self.branches[indexPath.row];
+//        cell.branch = self.branches[indexPath.row];
+        [cell setBranch:self.branches[indexPath.row] withDistance:0];
         return cell;
 
     return nil;
@@ -60,8 +61,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return [CameraBranchCell heightForCellWithPost:self.branches[indexPath.row]];
+    return [BranchMainCell heightForCellWithPost:self.branches[indexPath.row]];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

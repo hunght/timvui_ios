@@ -4,9 +4,9 @@
 #import "ECSlidingViewController.h"
 #import "SSPhotoCropperViewController.h"
 #import "LocationTableVC.h"
-#import "SkinPickerTableVC.h"
 #import "PhotoBrowseVC.h"
-@interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate,SkinPickerTableVCDelegate,PhotoBrowseVCDelegate>
+@interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate,PhotoBrowseVCDelegate>
+@property (weak, nonatomic) IBOutlet UIView *viewNotify;
 
 @property (nonatomic, unsafe_unretained) IBOutlet TVPagingScrollView *pagingScrollView;
 @property (nonatomic, unsafe_unretained) IBOutlet UIPageControl *pageControl;

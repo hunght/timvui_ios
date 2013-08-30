@@ -1,7 +1,6 @@
 
 #import "TVCameraVC.h"
 #import "PageView.h"
-#import "CameraBranchCell.h"
 #import "MacroApp.h"
 #import "UIImage+Crop.h"
 #import "UIView+Genie.h"
@@ -118,6 +117,7 @@ static int _numPages = 16;
     [self setBtnClose:nil];
     [self setImgImagePicked:nil];
     [self setBtnCameraSkin:nil];
+    [self setViewNotify:nil];
     [super viewDidUnload];
 }
 - (void)dealloc
@@ -260,6 +260,7 @@ static int _numPages = 16;
 #pragma mark - LocationTableVCDelegate
 
 -(void)didPickWithLoation:(TVBranch *)branch{
+    if (_viewNotify) [_viewNotify removeFromSuperview];
     [self.slidingViewController resetTopView];
     _branch=branch;
     _photoBrowseTableVC.branch=_branch;
@@ -332,6 +333,7 @@ static int _numPages = 16;
 }
 
 - (IBAction)skinPickerButtonClicked:(id)sender {
+    return;
     [self.pagingScrollView selectPageAtIndex:_numPages-1 animated:NO];
     if (self.slidingViewController.underRightShowing) {
         // actually this does not get called when the top view screenshot is enabled
@@ -442,10 +444,12 @@ static int _numPages = 16;
             if (self.slidingViewController.underLeftViewController){
                 [self.slidingViewController anchorTopViewTo:ECRight];
             }
-        }else if (!self.slidingViewController.underRightShowing && scrollOffset>(_numPages-1)*320+70) {
+        }
+    /*
+        else if (!self.slidingViewController.underRightShowing && scrollOffset>(_numPages-1)*320+70) {
             [self.slidingViewController anchorTopViewTo:ECLeft];
         }
-   
+   */
 }
 
 - (void)toggleTopView {
@@ -582,6 +586,7 @@ static int _numPages = 16;
         }
         pageView.index=index;[pageView settingView];
         if (_branch) {
+            [_viewNotify removeFromSuperview];
             [pageView setName:_branch.name andAddress:_branch.address_full];
             
         }else{

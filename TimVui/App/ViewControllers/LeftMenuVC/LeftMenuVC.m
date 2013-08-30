@@ -17,7 +17,6 @@
 #import "MapTableViewController.h"
 #import "MyNavigationController.h"
 #import "TVCameraVC.h"
-#import "SkinPickerTableVC.h"
 #import "CommentVC.h"
 #import "SIAlertView.h"
 #import "RecentlyBranchListVC.h"
@@ -179,16 +178,16 @@ enum {
     LocationTableVC* tableVC=[[LocationTableVC   alloc] initWithStyle:UITableViewStylePlain];
     tableVC.branches=branches;
     [tableVC setDelegate:tvCameraVC];
-    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
-    [skinVC setDelegate:tvCameraVC];
+//    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+//    [skinVC setDelegate:tvCameraVC];
     UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
     
     ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
     _slidingViewController.topViewController=navController;
     _slidingViewController.underLeftViewController = tableVC;
     _slidingViewController.anchorRightRevealAmount = 320-44;
-    _slidingViewController.underRightViewController = skinVC;
-    _slidingViewController.anchorLeftRevealAmount = 320-44;
+//    _slidingViewController.underRightViewController = skinVC;
+//    _slidingViewController.anchorLeftRevealAmount = 320-44;
     
     [navController.view addGestureRecognizer:_slidingViewController.panGesture];
     [self presentModalViewController:_slidingViewController animated:YES];
@@ -198,14 +197,14 @@ enum {
 - (void)showCameraActionWithBranch:(TVBranch*)branch
 {
     TVCameraVC* tvCameraVC=[[TVCameraVC alloc] initWithNibName:@"TVCameraVC" bundle:nil];
-    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
-    [skinVC setDelegate:tvCameraVC];
+//    SkinPickerTableVC* skinVC=[[SkinPickerTableVC   alloc] initWithStyle:UITableViewStylePlain];
+//    [skinVC setDelegate:tvCameraVC];
     UINavigationController* navController =navController = [[MyNavigationController alloc] initWithRootViewController:tvCameraVC];
     tvCameraVC.branch=branch;
     ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
     _slidingViewController.topViewController=navController;
-    _slidingViewController.underRightViewController = skinVC;
-    _slidingViewController.anchorLeftRevealAmount = 320-44;
+//    _slidingViewController.underRightViewController = skinVC;
+//    _slidingViewController.anchorLeftRevealAmount = 320-44;
     
     [navController.view addGestureRecognizer:_slidingViewController.panGesture];
     [self presentModalViewController:_slidingViewController animated:YES];

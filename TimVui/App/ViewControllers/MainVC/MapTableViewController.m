@@ -495,6 +495,9 @@
     
 //    [imgPhoto setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"160"]]];
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 110)];
+    UIView* viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 160)];
+    [viewPad addSubview:view];
+    [viewPad setBackgroundColor:[UIColor clearColor]];
     [view addSubview:imgPhoto];
     
     UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+10.0f, 8.0f+7, 180.0f, 20.0f)];
@@ -572,7 +575,7 @@
     frame.size.height+=branch.coupons.items.count*30;
     [_utility setFrame:frame];
     [view  addSubview:_lblDistance];
-    return view;
+    return viewPad;
 }
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
