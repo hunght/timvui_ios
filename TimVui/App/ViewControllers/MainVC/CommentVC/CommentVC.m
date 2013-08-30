@@ -133,6 +133,8 @@
     if (_branch){
         [self displayBranchInfo];
     }
+    
+    [self settingStarRatingWithValue:3];
 }
 
 - (void)viewDidUnload {
@@ -226,17 +228,22 @@
     self.navigationItem.rightBarButtonItem=doneButtonItem;
 }
 
+- (void)settingStarRatingWithValue:(int)rate {
+    _rating=[NSNumber numberWithInt:rate];
+    [_firstStar setImage:[UIImage imageNamed:(rate>=1)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
+    
+    [_secondStar setImage:[UIImage imageNamed:(rate>=2)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
+    
+    [_thirdStar setImage:[UIImage imageNamed:(rate>=3)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
+    
+    [_fourthStar setImage:[UIImage imageNamed:(rate>=4)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
+    
+    [_fifthStar setImage:[UIImage imageNamed:(rate>=5)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
+}
+
 - (IBAction)starButtonClicked:(UIButton*)sender {
-    _rating=[NSNumber numberWithInt:sender.tag];
-    [_firstStar setImage:[UIImage imageNamed:(sender.tag>=1)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
-    
-    [_secondStar setImage:[UIImage imageNamed:(sender.tag>=2)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
-    
-    [_thirdStar setImage:[UIImage imageNamed:(sender.tag>=3)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
-    
-    [_fourthStar setImage:[UIImage imageNamed:(sender.tag>=4)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
-    
-    [_fifthStar setImage:[UIImage imageNamed:(sender.tag>=5)?@"img_comment_star_on":@"img_comment_star_off"] forState:UIControlStateNormal];
+    int rate=sender.tag;
+    [self settingStarRatingWithValue:rate];
 }
 
 - (IBAction)postFacebookSwitchValueChanged:(id)sender {
@@ -266,8 +273,8 @@
             if (_switchFacebook.on) {
                   [FacebookServices postWriteReviewActionWithBranch:_branch];
             }
+            [self performSelector:@selector(delayedDismissal) withObject:nil afterDelay:1];
             
-            [self dismissModalViewControllerAnimated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Đăng comment thất bại"
@@ -277,7 +284,9 @@
     }
 }
 
-
+-(void)delayedDismissal{
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 
 - (IBAction)selectLocationButtonClicked:(id)sender {
