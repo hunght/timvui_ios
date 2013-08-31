@@ -243,6 +243,8 @@
 		55954F57172A141100A8A351 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55954F55172A141100A8A351 /* libGoogleAnalytics.a */; };
 		55954F5A172A159A00A8A351 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55954F59172A159A00A8A351 /* SystemConfiguration.framework */; };
 		55954F5C172A15A900A8A351 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55954F5B172A15A800A8A351 /* CoreData.framework */; };
+		5596050817D192BA000E52BD /* UserSettingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5596050617D192BA000E52BD /* UserSettingVC.m */; };
+		5596050917D192BA000E52BD /* UserSettingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5596050717D192BA000E52BD /* UserSettingVC.xib */; };
 		55977CE91762BF6300D2CE2D /* 214_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 55977C951762BF6300D2CE2D /* 214_on.png */; };
 		55977CEA1762BF6300D2CE2D /* 214_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55977C961762BF6300D2CE2D /* 214_on@2x.png */; };
 		55977CEB1762BF6300D2CE2D /* 214.png in Resources */ = {isa = PBXBuildFile; fileRef = 55977C971762BF6300D2CE2D /* 214.png */; };
@@ -939,6 +941,9 @@
 		55954F59172A159A00A8A351 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		55954F5B172A15A800A8A351 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		55954F5E172A2A7100A8A351 /* MacroApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacroApp.h; path = Extensions/MacroApp.h; sourceTree = "<group>"; };
+		5596050517D192BA000E52BD /* UserSettingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettingVC.h; path = UserSettingVC/UserSettingVC.h; sourceTree = "<group>"; };
+		5596050617D192BA000E52BD /* UserSettingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettingVC.m; path = UserSettingVC/UserSettingVC.m; sourceTree = "<group>"; };
+		5596050717D192BA000E52BD /* UserSettingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserSettingVC.xib; path = UserSettingVC/UserSettingVC.xib; sourceTree = "<group>"; };
 		55977C951762BF6300D2CE2D /* 214_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 214_on.png; sourceTree = "<group>"; };
 		55977C961762BF6300D2CE2D /* 214_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "214_on@2x.png"; sourceTree = "<group>"; };
 		55977C971762BF6300D2CE2D /* 214.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 214.png; sourceTree = "<group>"; };
@@ -1954,6 +1959,43 @@
 			path = GoogleAnalytics;
 			sourceTree = "<group>";
 		};
+		5596050317D19181000E52BD /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				55CB8FAC178BCB5700C258BB /* RecentlyBranchListVC */,
+				55657A49174F0D62002E83EC /* WelcomeVC */,
+				559DD410174B0C14009E7344 /* Account */,
+				5520472817BB351C003F0506 /* ReceivedCouponVC */,
+				5520472217BB351C003F0506 /* NearbyCouponVC */,
+				5596050A17D192C3000E52BD /* UserSettingVC */,
+			);
+			name = Me;
+			sourceTree = "<group>";
+		};
+		5596050417D19196000E52BD /* Anuong.net */ = {
+			isa = PBXGroup;
+			children = (
+				55C8C0FE17052E4C007D8E78 /* MainVC */,
+				55F71980178D3FEB00C0535D /* SearchWithArrayVC */,
+				55ED8490170D5A0E00344215 /* SearchVC */,
+				5506B0A1175ED7D00054D606 /* BranchProfileVC */,
+				55CF087017BA31C2006556A4 /* EventVC */,
+				559984CA17900D600054003C /* DetailManualVC */,
+				55EB34F0178E68220041E481 /* ManualVC */,
+			);
+			name = Anuong.net;
+			sourceTree = "<group>";
+		};
+		5596050A17D192C3000E52BD /* UserSettingVC */ = {
+			isa = PBXGroup;
+			children = (
+				5596050517D192BA000E52BD /* UserSettingVC.h */,
+				5596050617D192BA000E52BD /* UserSettingVC.m */,
+				5596050717D192BA000E52BD /* UserSettingVC.xib */,
+			);
+			name = UserSettingVC;
+			sourceTree = "<group>";
+		};
 		5598CF6D176FF153001C0C67 /* Notification- Camera */ = {
 			isa = PBXGroup;
 			children = (
@@ -2611,19 +2653,9 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5520472217BB351C003F0506 /* NearbyCouponVC */,
-				5520472817BB351C003F0506 /* ReceivedCouponVC */,
-				55CF087017BA31C2006556A4 /* EventVC */,
-				559984CA17900D600054003C /* DetailManualVC */,
-				55EB34F0178E68220041E481 /* ManualVC */,
-				55F71980178D3FEB00C0535D /* SearchWithArrayVC */,
-				55ED8490170D5A0E00344215 /* SearchVC */,
-				55657A49174F0D62002E83EC /* WelcomeVC */,
-				559DD410174B0C14009E7344 /* Account */,
 				55BAED621709784F00CF3171 /* LeftMenuVC */,
-				55C8C0FE17052E4C007D8E78 /* MainVC */,
-				55CB8FAC178BCB5700C258BB /* RecentlyBranchListVC */,
-				5506B0A1175ED7D00054D606 /* BranchProfileVC */,
+				5596050417D19196000E52BD /* Anuong.net */,
+				5596050317D19181000E52BD /* Me */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3432,6 +3464,7 @@
 				55C3B83117CD8980000B6E9B /* img_camera_camera_skin_on@2x.png in Resources */,
 				55B4046917D0850600BDAB10 /* img_camera_notify.png in Resources */,
 				55B4046A17D0850600BDAB10 /* img_camera_notify@2x.png in Resources */,
+				5596050917D192BA000E52BD /* UserSettingVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3586,6 +3619,7 @@
 				55BD406117CC3E1F0090538B /* TVBranchPhoto.m in Sources */,
 				55BD406E17CC58C40090538B /* TwoImageCell.m in Sources */,
 				55C3B83517CD91C2000B6E9B /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
+				5596050817D192BA000E52BD /* UserSettingVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

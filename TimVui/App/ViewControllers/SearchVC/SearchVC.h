@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *switchUserLocation;
 @property (retain, nonatomic) UIButton *btnCity;
 @property (weak, nonatomic) IBOutlet UIView *viewSlide;
-- (IBAction)swithChagedValue:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UILabel *lblRestaurant;
 @property (weak, nonatomic) IBOutlet UILabel *lblEatingShop;
 @property (weak, nonatomic) IBOutlet UILabel *lblCafeKem;
@@ -59,7 +59,7 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblDictricts;
 - (IBAction)btnCancelSearchToolbarClicked:(id)sender;
 - (IBAction)btnSearchToolbarClicked:(id)sender;
-
+- (IBAction)swithChagedValue:(id)sender;
 - (IBAction)buttonBackgroundClicked:(id)sender;
 - (IBAction)buttonCityClicked:(id)sender;
 - (IBAction)buttonDistrictClicked:(id)sender;

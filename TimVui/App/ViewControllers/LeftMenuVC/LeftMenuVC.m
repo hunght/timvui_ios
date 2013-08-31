@@ -25,6 +25,7 @@
 #import "TVMenuUserCell.h"
 #import "NearbyCouponVC.h"
 #import "EventVC.h"
+#import "UserSettingVC.h"
 #import "ReceivedCouponVC.h"
 #define kNumberOfSections 3
 
@@ -488,7 +489,7 @@ enum {
                         break;
                         
                     case kS1Setting:
-
+                        viewController = [[UserSettingVC alloc] initWithNibName:@"UserSettingVC" bundle:nil];
                         break;
                     case kS1History:
 
