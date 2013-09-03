@@ -27,6 +27,7 @@
 #import "EventVC.h"
 #import "UserSettingVC.h"
 #import "ReceivedCouponVC.h"
+#import "FavoriteBranchListVC.h"
 #define kNumberOfSections 3
 
 enum {
@@ -484,8 +485,9 @@ enum {
                     case kS1ReceivedCoupon:
                         viewController = [[ReceivedCouponVC alloc] initWithNibName:@"ReceivedCouponVC" bundle:nil];
                         break;
+                        
                     case kS1Interesting:
-
+                        viewController = [[FavoriteBranchListVC   alloc] initWithNibName:@"FavoriteBranchListVC" bundle:nil];
                         break;
                         
                     case kS1Setting:

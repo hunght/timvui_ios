@@ -199,6 +199,7 @@
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            
             pageSimilarCount++;
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];

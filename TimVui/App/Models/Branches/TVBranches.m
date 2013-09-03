@@ -1,6 +1,6 @@
 #import "TVBranches.h"
 #import "TVBranch.h"
-
+#import "NSDictionary+Extensions.h"
 
 @implementation TVBranches
 
@@ -12,15 +12,16 @@
 }
 
 - (void)setValues:(id)values {
-
-    NSArray* arr=(_isNotSearchAPIYES) ? values:[values valueForKey:@"items"];
+    if (values == [NSNull null])return;
+    
+    NSArray* arr=(_isNotSearchAPIYES) ? values:[values safeArrayForKey:@"items"];
+    
 //    if (_isNotSearchAPIYES) {
 //        arr=values;
 //    }
     
 	self.items = [NSMutableArray array];
 
-    
 	for (NSDictionary *dict in arr) {
 		TVBranch *branch = [[TVBranch alloc] initWithDict:dict];
         

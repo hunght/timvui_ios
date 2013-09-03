@@ -25,7 +25,7 @@
 #define kGetCatData   @"kGetCatData"
 #define kReceivedCoupon   @"kReceivedCoupon"
 
-#define kDistanceSearchMapDefault   @"2"//km
+#define kDistanceSearchMapDefault   @"20"//km
 #define kTVDistanceMovingMap   5000 //m
 
 #define kNumberOfSkinsCamera   3

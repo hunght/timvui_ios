@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
-         timestampString = "399379282.690392"
+         timestampString = "399870752.569467"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "465"
-         endingLineNumber = "465"
+         startingLineNumber = "466"
+         endingLineNumber = "466"
          landmarkName = "-addKaraokeAtCount:withHeight:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -105,6 +105,19 @@
          startingLineNumber = "44"
          endingLineNumber = "44"
          landmarkName = "-postToGetManual"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
+         timestampString = "399873422.936255"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "932"
+         endingLineNumber = "932"
+         landmarkName = "-likeButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
