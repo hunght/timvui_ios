@@ -1569,6 +1569,16 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		55126B2B17D6D1CA00081C93 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				55657A49174F0D62002E83EC /* WelcomeVC */,
+				55BAED621709784F00CF3171 /* LeftMenuVC */,
+				5506B0A1175ED7D00054D606 /* BranchProfileVC */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		5513C21217BF37C0004E4F5B /* InfinitePagingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1989,7 +1999,6 @@
 			children = (
 				556F2B2C17D5934F00FB1A29 /* FavoriteBranchListVC */,
 				556F2B3017D5934F00FB1A29 /* RecentlyBranchListVC */,
-				55657A49174F0D62002E83EC /* WelcomeVC */,
 				559DD410174B0C14009E7344 /* Account */,
 				5520472817BB351C003F0506 /* ReceivedCouponVC */,
 				5520472217BB351C003F0506 /* NearbyCouponVC */,
@@ -2004,7 +2013,6 @@
 				55C8C0FE17052E4C007D8E78 /* MainVC */,
 				55F71980178D3FEB00C0535D /* SearchWithArrayVC */,
 				55ED8490170D5A0E00344215 /* SearchVC */,
-				5506B0A1175ED7D00054D606 /* BranchProfileVC */,
 				55CF087017BA31C2006556A4 /* EventVC */,
 				559984CA17900D600054003C /* DetailManualVC */,
 				55EB34F0178E68220041E481 /* ManualVC */,
@@ -2679,7 +2687,7 @@
 		55C8C0F917052E4C007D8E78 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				55BAED621709784F00CF3171 /* LeftMenuVC */,
+				55126B2B17D6D1CA00081C93 /* Common */,
 				5596050417D19196000E52BD /* Anuong.net */,
 				5596050317D19181000E52BD /* Me */,
 			);

@@ -21,7 +21,7 @@
 #import "Reachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "RecentlyBranchListVC.h"
-
+#import "TVNotification.h"
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -104,6 +104,14 @@
                                   //[self.loginViewController loginView:nil handleError:error];
                               }
                           }];
+}
+
+-(void)showNotificationWithBranch:(TVBranch*)branch{
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:nil goWithCamera:^{
+        [SharedAppDelegate.menuVC cameraButtonClickedWithNav:_slidingViewController.topViewController.navigationController andWithBranch:branch];
+    } withComment:^{
+        [SharedAppDelegate.menuVC commentButtonClickedWithNav:_slidingViewController.topViewController.navigationController andWithBranch:branch];
+    }];
 }
 
 -(void)showNotificationAboutSomething:(TVBranch*)_branch

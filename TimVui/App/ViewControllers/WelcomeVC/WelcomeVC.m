@@ -72,7 +72,7 @@
     [[TVNetworkingClient sharedClient] postPath:@"data/getCityByLatlng" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
         [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
-        
+        [[GlobalDataUser sharedAccountClient].locationManager startMonitoringSignificantLocationChanges];
         [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];

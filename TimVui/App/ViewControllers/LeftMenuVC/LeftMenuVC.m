@@ -28,6 +28,7 @@
 #import "UserSettingVC.h"
 #import "ReceivedCouponVC.h"
 #import "FavoriteBranchListVC.h"
+#import "TVNotification.h"
 #define kNumberOfSections 3
 
 enum {
@@ -386,7 +387,6 @@ enum {
 - (void)refreshTableViewDropdown
 {
     [self checkAndRefreshTableviewWhenUserLoginOrLogout];
-    
 }
 
 - (void)showLoginViewController

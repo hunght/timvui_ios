@@ -277,6 +277,16 @@
     lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
 }
 
+-(int)addLineToView:(UIView*)view{
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(5,19+23, 295, 1)];
+    grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+    
+    //    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+    //    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+    [view addSubview:grayLine];
+    return grayLine.frame.origin.y+grayLine.frame.size.height+15;
+}
+
 - (void)addEventAtCount:(int)eventCount height:(int)height
 {
     CALayer *l;
@@ -293,12 +303,9 @@
     lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
     lblTitle.text=@"Sự kiện";
     [eventView addSubview:lblTitle];
-    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
-    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-    [eventView addSubview:imageLine];
-    
+
     //EVENT
-    height =imageLine.frame.origin.y+imageLine.frame.size.height+15;
+    height =[self addLineToView:eventView];
     
     
     UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,height , 290, 23)];
@@ -405,12 +412,10 @@
     lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
     lblTitle.text=karaoke.name;
     [karaokeView addSubview:lblTitle];
-    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
-    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-    [karaokeView addSubview:imageLine];
+
     
     //Add Images Scrollview
-    karaokeHeight =imageLine.frame.origin.y+imageLine.frame.size.height+15;
+    karaokeHeight =[self addLineToView:karaokeView];
     
     CGRect frame=CGRectMake(0.f, karaokeHeight,320,190.f);
     // pagingView
@@ -809,9 +814,12 @@
 		textLabel.backgroundColor = [UIColor clearColor];
         [textLabel sizeToFit];
         
-        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5,44-3, 295, 3)];
-        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-		[headerView addSubview:imageLine];
+        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(5,44-3, 295, 3)];
+        grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+        
+//        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5,44-3, 295, 3)];
+//        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+		[headerView addSubview:grayLine];
 		
 		[headerView addSubview:textLabel];
         return headerView;

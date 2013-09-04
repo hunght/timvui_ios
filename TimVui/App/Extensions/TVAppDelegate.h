@@ -34,4 +34,5 @@
 -(void)showAlertAboutSomething:(NSString*)mess;
 - (BOOL)isConnected;
 -(void)loadWhenInternetConnected;
+-(void)showNotificationWithBranch:(TVBranch*)branch;
 @end

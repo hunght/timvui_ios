@@ -107,9 +107,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
-    BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
     
-    branchProfileVC.branch=_branches[indexPath.row] ;
+    BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+    if (SharedAppDelegate.isHasInternetYES){
+            branchProfileVC.branchID=[_branches[indexPath.row] branchID] ;
+    }else {
+        branchProfileVC.branch=_branches[indexPath.row] ;
+    }
+
     [self.navigationController pushViewController:branchProfileVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

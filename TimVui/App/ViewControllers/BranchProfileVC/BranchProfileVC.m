@@ -132,6 +132,15 @@
     lblTitle.textColor = [UIColor blackColor];
     lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
 }
+-(int)addLineToView:(UIView*)view{
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(5,19+23, 295, 1)];
+    grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+    
+//    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+//    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+    [view addSubview:grayLine];
+    return grayLine.frame.origin.y+grayLine.frame.size.height+15;
+}
 
 - (void)addCouponToInfoView:(int *)height_p
 {
@@ -149,11 +158,9 @@
         lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
         lblTitle.text=@"COUPON";
         [couponBranch addSubview:lblTitle];
-        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
-        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-        [couponBranch addSubview:imageLine];
+
         //COUPON
-        *height_p=imageLine.frame.origin.y+imageLine.frame.size.height+15;
+        *height_p=[self addLineToView:couponBranch];
         
         
         
@@ -385,7 +392,7 @@
     [self setConnerBorderWithLayer:l];
     [_scrollView addSubview:mapViewButton];
     
-    UIView* bgImageView=[[UIView alloc] initWithFrame:CGRectMake(0, 140-5, 320, 35+10)];
+    UIView* bgImageView=[[UIView alloc] initWithFrame:CGRectMake(0, 140-5, 320, 35+60)];
     [bgImageView setBackgroundColor:[UIColor colorWithWhite:1.0 alpha:0.7]];
     //    [_scrollView insertSubview:bgImageView belowSubview:mapViewButton];
     [_scrollView insertSubview:bgImageView atIndex:0];
@@ -439,15 +446,12 @@
     [self settingTextForTitle:lblTitle];
     lblTitle.text=@"Thông tin";
     [detailInfoBranch addSubview:lblTitle];
-    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
-    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-    [detailInfoBranch addSubview:imageLine];
     
-    int heightDetailInfo=imageLine.frame.origin.y+imageLine.frame.size.height +12;
+    int heightDetailInfo=[self addLineToView:detailInfoBranch];
+    
     //Style foody
     NSLog(@"[_branch.cats valueForKey]=%@",[[_branch.cats allValues] valueForKey:@"name"] );
     NSString* strTiltle=@"Thể loại";
-    
     
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[self getCatsStringFromDic:_branch.cats] strTiltle:strTiltle];
     
@@ -533,30 +537,27 @@
     
     lblTitle.text=@"Tiện ích";
     [utilitiesView addSubview:lblTitle];
-    imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
-    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-    [utilitiesView addSubview:imageLine];
-    int heightUtilities=imageLine.frame.origin.y+imageLine.frame.size.height +27;
+    
+    int heightUtilities=[self addLineToView:utilitiesView];
     int rowCount=0;
     
     for (NSDictionary* dic in [_branch.services allValues]) {
         UIImageView *iconIView = [[UIImageView alloc] initWithFrame:CGRectMake(8,heightUtilities, 18, 18)];
-
         [utilitiesView addSubview:iconIView];
         
         UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 250, 23)];
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
-        lblDetailRow.textColor = [UIColor blackColor];
+        lblDetailRow.textColor = [UIColor grayColor];
         lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblDetailRow.text =[dic valueForKey:@"name"];
         [lblDetailRow resizeToStretch];
         [utilitiesView addSubview:lblDetailRow];
         
         NSString * strImageName;
-            strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
-            lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
-        NSLog(@"strImageName=%@",dic);
+        strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
+//            lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
+//        NSLog(@"strImageName=%@",dic);
         [iconIView setImage:[UIImage imageNamed:strImageName]];
         
         rowCount++;
@@ -724,10 +725,8 @@
     [self settingTextForTitle:lblTitle];
     lblTitle.text=@"Giới thiệu";
     [_introducingView addSubview:lblTitle];
-    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
-    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
-    [_introducingView addSubview:imageLine];
-    int lineHeight=imageLine.frame.origin.y+imageLine.frame.size.height +17;
+    
+    int lineHeight=[self addLineToView:_introducingView];
     //    int lineHeight=50;
     [_scrollView addSubview:_introducingView];
     _introducingView.hidden=YES;
@@ -917,8 +916,6 @@
 }
 
 -(void)likeButtonClicked:(UIButton*)sender{
-    
-    
     if ([GlobalDataUser sharedAccountClient].isLogin){
         sender.userInteractionEnabled=NO;
         

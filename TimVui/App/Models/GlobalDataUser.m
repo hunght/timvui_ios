@@ -9,6 +9,8 @@
 #import "GlobalDataUser.h"
 #import "TVAppDelegate.h"
 #import <JSONKit.h>
+#import "TVBranches.h"
+#import "NSDictionary+Extensions.h"
 @implementation GlobalDataUser
 
 
@@ -24,6 +26,7 @@ static GlobalDataUser *_sharedClient = nil;
         [_sharedClient.locationManager setDelegate:_sharedClient];
         [_sharedClient.locationManager setDistanceFilter:kCLDistanceFilterNone];
         [_sharedClient.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        
         [_sharedClient checkAndGetPersistenceAccount];
         
         _sharedClient.dicCatSearchParam=[[NSMutableArray alloc] init];
@@ -94,6 +97,7 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 -(NSDictionary *)dicCity{
+    NSLog(@"SharedAppDelegate.getCityDistrictData=%@",SharedAppDelegate.getCityDistrictData);
     if (_dicCity) {
         return _dicCity;
     }else if (_user.city_id) {
@@ -123,11 +127,28 @@ static GlobalDataUser *_sharedClient = nil;
     }
     
     if(isInBackground) {
-        [_locationManager startMonitoringSignificantLocationChanges];
-        [self sendBackgroundLocationToServer:(_userLocation)];
+        [self sendBackgroundLocationToServer:_userLocation];
     }else{
-        //
-        
+       TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+        NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
+        [params setValue:@"1"  forKey:@"limit"];
+        [params setValue:@"0"  forKey:@"offset"];
+        [params setValue:@"short"  forKey:@"infoType"];
+//        NSLog(@"_dicCity= %@",[self dicCity]);
+        [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
+        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
+        [params setValue:strLatLng forKey:@"latlng"];
+        [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+            dispatch_async(dispatch_get_main_queue(),^ {
+                // View map with contain all search items
+                if (branches.count>0) {
+                    
+                }
+            });
+        } failure:^(GHResource *instance, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(),^ {
+            });
+        }];
     }
 }
 
