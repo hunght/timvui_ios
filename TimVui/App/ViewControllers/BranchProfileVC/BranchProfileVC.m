@@ -423,6 +423,7 @@
     
     UIButton* likeButton = [[UIButton alloc] initWithFrame:CGRectMake(7+101*2+5*2, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+ 15, 100, 44)];
     [likeButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_like"] forState:UIControlStateNormal];
+    [likeButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_like_selected"] forState:UIControlStateSelected];
     [likeButton setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_like_on"] forState:UIControlStateHighlighted];
     [likeButton setTitle:@"          QUAN TÂM" forState:UIControlStateNormal];
     [likeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -430,6 +431,13 @@
     
     [likeButton addTarget:self action:@selector(likeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:likeButton];
+    NSLog(@"%@",[GlobalDataUser sharedAccountClient].followBranchesDic);
+    if ([[GlobalDataUser sharedAccountClient].followBranchesDic valueForKey:_branch.branchID]) {
+        [likeButton setSelected:YES];
+    }else{
+        [likeButton setSelected:NO];
+    }
+    
     
     int height= likeButton.frame.origin.y+likeButton.frame.size.height+10;
     
@@ -915,29 +923,31 @@
     [self.navigationController pushViewController:specBranchVC animated:YES];
 }
 
--(void)likeButtonClicked:(UIButton*)sender{
-    if ([GlobalDataUser sharedAccountClient].isLogin){
-        sender.userInteractionEnabled=NO;
-        
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
-                                _branch.branchID,@"branch_id",
-                                nil];
-        NSLog(@"%@",params);
-        [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-            NSLog(@"%@",JSON);
+- (void)postFollowToServer:(UIButton *)sender {
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
+                            _branch.branchID,@"branch_id",
+                            nil];
+    NSLog(@"%@",params);
+    [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
+        int i=[JSON safeIntegerForKey:@"status"];
+        if (i==200) {
+            [sender setSelected:YES];
             [TSMessage showNotificationInViewController:self
-                                              withTitle:@"Bạn vừa thích nhà hàng này!"
+                                              withTitle:@"Bạn đã chọn quan tâm nhà hàng này thành công!"
                                             withMessage:nil
                                                withType:TSMessageNotificationTypeSuccess];
             sender.userInteractionEnabled=YES;
+            
             [FacebookServices checkFacebookSessionIsOpen:^(bool isOpen){
+                sender.userInteractionEnabled=YES;  
                 if (isOpen) {
                     [FacebookServices postFollowActionWithBranch:_branch];
                 }else{
                     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
                     
-                    [alertView addButtonWithTitle:@"Kết nối facebook"
+                    [alertView addButtonWithTitle:@"Kết nối FB"
                                              type:SIAlertViewButtonTypeDefault
                                           handler:^(SIAlertView *alert) {
                                               [FacebookServices loginAndTakePermissionWithHanlder:^(FBSession *session,NSError *error){
@@ -955,15 +965,49 @@
                     [alertView show];
                 }
             }];
-
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            sender.userInteractionEnabled=YES;
+            
+        }else if (i==201){
+            [sender setSelected:NO];
             [TSMessage showNotificationInViewController:self
-                                              withTitle:@"Có lỗi khi like nhà hàng"
+                                              withTitle:@"Bạn vừa bỏ quan tâm nhà hàng thành công!"
                                             withMessage:nil
-                                               withType:TSMessageNotificationTypeWarning];
-            NSLog(@"%@",error);
-        }];
+                                               withType:TSMessageNotificationTypeSuccess];
+            sender.userInteractionEnabled=YES;
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        sender.userInteractionEnabled=YES;
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Có lỗi khi like nhà hàng"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeWarning];
+        NSLog(@"%@",error);
+    }];
+}
+
+-(void)likeButtonClicked:(UIButton*)sender{
+    if ([GlobalDataUser sharedAccountClient].isLogin){
+        sender.userInteractionEnabled=NO;
+        if (sender.isSelected) {
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn bỏ quan tâm nhà hàng này ?"];
+            
+            [alertView addButtonWithTitle:@"Bỏ quan tâm"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+
+                                      [self postFollowToServer:sender];
+                                  }];
+            [alertView addButtonWithTitle:@"Cancel"
+                                     type:SIAlertViewButtonTypeCancel
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Cancel Clicked");
+                                  }];
+            [alertView show];
+        }else{
+            [self postFollowToServer:sender];
+        }
+        
+        
     }else{
         [SharedAppDelegate.menuVC showLoginScreenWhenUserNotLogin:self.navigationController];
     }

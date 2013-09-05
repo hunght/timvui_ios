@@ -12,6 +12,7 @@
 #import "TVBranches.h"
 #import "NSDictionary+Extensions.h"
 #import "NSDate-Utilities.h"
+
 @implementation GlobalDataUser
 
 
@@ -22,18 +23,30 @@ static GlobalDataUser *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[GlobalDataUser alloc] init];
-        _sharedClient.user=[[GHUser alloc] init];
-        _sharedClient.locationManager = [[CLLocationManager alloc] init];
-        [_sharedClient.locationManager setDelegate:_sharedClient];
-        [_sharedClient.locationManager setDistanceFilter:kCLDistanceFilterNone];
-        [_sharedClient.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-        [_sharedClient checkAndGetPersistenceAccount];
-        _sharedClient.dicCatSearchParam=[[NSMutableArray alloc] init];
-        _sharedClient.dicPriceSearchParam=[[NSMutableArray alloc] init];
-        _sharedClient.recentlyBranches=[[NSMutableDictionary alloc] init];
+        
     });
-    
     return _sharedClient;
+}
+- (id)init
+{
+    if ((self = [super init]))
+    {
+        _user=[[GHUser alloc] init];
+        _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager setDelegate:_sharedClient];
+        [_locationManager setDistanceFilter:kCLDistanceFilterNone];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        [self checkAndGetPersistenceAccount];
+        _dicCatSearchParam=[[NSMutableArray alloc] init];
+        _dicPriceSearchParam=[[NSMutableArray alloc] init];
+        _recentlyBranches=[[NSMutableDictionary alloc] init];
+        
+        _followBranches=[[TVBranches alloc] initWithPath:@"branch/getFavouriteBranchesByUser"];
+        _followBranches.isNotSearchAPIYES=YES;
+        [self setFollowBranches:nil];
+        
+    }
+    return self;
 }
 
 -(void)savePersistenceAccountWithData:(NSDictionary*)JSON{
@@ -60,11 +73,14 @@ static GlobalDataUser *_sharedClient = nil;
     
     #warning User login set default USER ID TEST
     self.user.userId=@"8878";
+    
+
 }
 
 -(void)setGlocalDataUser:(NSDictionary *)JSON{
     [self setUserWithDic:JSON];
     [self savePersistenceAccountWithData:JSON];
+    
 }
 
 -(void)userLogout{
@@ -108,6 +124,26 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 #pragma mark Helper
+
+-(void)setFollowBranches:(TVBranches *)_branches{
+    if (!_followBranches) {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys://@"short",@"infoType",
+                                [GlobalDataUser sharedAccountClient].user.userId ,@"user_id" ,
+                                nil];
+        
+        __unsafe_unretained __typeof(&*self)weakSelf = self;
+        
+        [weakSelf.followBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+            dispatch_async(dispatch_get_main_queue(),^ {
+                _followBranchesDic=[[NSMutableDictionary alloc] initWithDictionary:[data safeDictForKey:@"data"]];
+            });
+        } failure:^(GHResource *instance, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(),^ {
+                
+            });
+        }];
+    }
+}
 
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
     CLLocation* current=[[CLLocation alloc] initWithLatitude:fromAdd.latitude longitude:fromAdd.longitude];

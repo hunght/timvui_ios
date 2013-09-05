@@ -7,7 +7,7 @@
 //
 #import <CoreLocation/CoreLocation.h>
 #import "GHUser.h"
-
+@class TVBranches;
 @interface GlobalDataUser : NSObject<CLLocationManagerDelegate>
 
 @property (retain, nonatomic) CLLocationManager *locationManager;
@@ -32,6 +32,8 @@
 @property (retain, nonatomic) NSMutableDictionary* recentlyBranches;
 @property (retain, nonatomic) NSDictionary* receivedCoupons;
 @property (assign, nonatomic) int currentSearchParam;
+@property (retain, nonatomic) TVBranches* followBranches;
+@property (retain, nonatomic) NSMutableDictionary* followBranchesDic;
 enum {
     kSearchParamCity = 0,
     kSearchParamDistrict,

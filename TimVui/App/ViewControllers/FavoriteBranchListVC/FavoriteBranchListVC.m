@@ -14,6 +14,7 @@
 #import "TVCoupons.h"
 #import "BranchProfileVC.h"
 #import "GlobalDataUser.h"
+#import "NSDictionary+Extensions.h"
 @interface FavoriteBranchListVC ()
 
 @end
@@ -52,7 +53,7 @@
 
 -(void)postGetBranches{
     
-    if (SharedAppDelegate.isHasInternetYES) {
+    if (![GlobalDataUser sharedAccountClient].followBranches) {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys://@"short",@"infoType",
                                 [GlobalDataUser sharedAccountClient].user.userId ,@"user_id" ,
                                 nil];
@@ -62,20 +63,19 @@
         [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async(dispatch_get_main_queue(),^ {
                 //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
+                [GlobalDataUser sharedAccountClient].followBranches=weakSelf.branches;
+                [GlobalDataUser sharedAccountClient].followBranchesDic=[[NSMutableDictionary alloc] initWithDictionary:[data safeDictForKey:@"data"]];
                 [self.tableView reloadData];
-                
             });
         } failure:^(GHResource *instance, NSError *error) {
             dispatch_async(dispatch_get_main_queue(),^ {
                 
             });
         }];
-        
     }else{
-        [_branches setValues:[[GlobalDataUser sharedAccountClient].recentlyBranches allValues]];
+        _branches=[GlobalDataUser sharedAccountClient].followBranches;
         [self.tableView reloadData];
     }
-    
 }
 
 #pragma mark UITableViewDataSource
@@ -109,7 +109,7 @@
     //
     BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
     
-    branchProfileVC.branch=_branches[indexPath.row] ;
+    branchProfileVC.branchID=[_branches[indexPath.row] branchID] ;
     [self.navigationController pushViewController:branchProfileVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

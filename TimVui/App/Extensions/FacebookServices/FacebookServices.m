@@ -22,17 +22,17 @@
             NSLog(@"Error: %@", error);
         } else {
             NSLog(@"Success %@", result);
-            
         }
     }];
 }
 
 +(void)postFollowActionWithBranch:(TVBranch*)_branch {
-    if (FBSession.activeSession.isOpen ==NO)return;
+    if (FBSession.activeSession.isOpen ==NO ||!_branch)return;
     
     NSMutableDictionary<FBGraphObject> *object = [FBGraphObject graphObject];
+//    NSLog(@"_branch.url=%@",_branch.url);
     object[@"url"] =_branch.url;
-
+    
     NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
     action[@"nha_hang"] = object;
     NSLog(@"%@",action);
