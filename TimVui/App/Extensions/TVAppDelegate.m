@@ -17,11 +17,12 @@
 #import "GlobalDataUser.h"
 #import "NSDate-Utilities.h"
 #import <JSONKit.h>
-
+#import "CoupBranchProfileVC.h"
 #import "Reachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "RecentlyBranchListVC.h"
 #import "TVNotification.h"
+#import "TVCoupons.h"
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -117,44 +118,16 @@
     [notificationView openButtonClicked:nil];
 }
 
--(void)showNotificationAboutSomething:(TVBranch*)_branch
+-(void)showNotificationAboutNearlessBranch:(TVBranch*)branch
 {
-    NSString *notificationTitle = _branch.branchID;
-    NSString *notificationDescription = @"what";
-    
-    CGFloat duration = 2.0f;
-    
-    [TSMessage showNotificationInViewController:_slidingViewController.topViewController
-                                      withTitle:notificationTitle
-                                    withMessage:notificationDescription
-                                       withType:TSMessageNotificationTypeMessage
-                                   withDuration:duration
-                                   withCallback:nil
-                                withButtonTitle:@"Update" 
-                             withButtonCallback:^{
-                                 [TSMessage showNotificationInViewController:_slidingViewController.topViewController
-                                                                   withTitle:@"what"
-                                                                 withMessage:nil
-                                                                    withType:TSMessageNotificationTypeSuccess];
-                             }
-                                     atPosition:TSMessageNotificationPositionBottom
-                            canBeDismisedByUser:YES];
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:branch.name  goWithClickView:^(){
+        CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
+        specBranchVC.branch=branch;
+//        specBranchVC.coupon=branch.coupons.items[0];
+        [_slidingViewController.topViewController presentModalViewController:specBranchVC animated:YES];
+    }];
+    [notificationView openButtonClicked:nil];
 
-}
-
--(void)showSuccessAboutSomething:(NSString*)mess{
-   [TSMessage showNotificationInViewController:_slidingViewController.topViewController
-                                                                   withTitle:mess
-                                                                 withMessage:nil
-                                                                    withType:TSMessageNotificationTypeSuccess];
-
-}
-
--(void)showAlertAboutSomething:(NSString*)mess{
-    [TSMessage showNotificationInViewController:_slidingViewController.topViewController
-                                      withTitle:mess
-                                    withMessage:nil
-                                       withType:TSMessageNotificationTypeWarning];
 }
 
 

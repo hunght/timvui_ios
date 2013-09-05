@@ -1572,6 +1572,7 @@
 		55126B2B17D6D1CA00081C93 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				5598CF6D176FF153001C0C67 /* Notification- Camera */,
 				55657A49174F0D62002E83EC /* WelcomeVC */,
 				55BAED621709784F00CF3171 /* LeftMenuVC */,
 				5506B0A1175ED7D00054D606 /* BranchProfileVC */,
@@ -2033,11 +2034,12 @@
 		5598CF6D176FF153001C0C67 /* Notification- Camera */ = {
 			isa = PBXGroup;
 			children = (
-				55AD02A217703E7D00A84ED6 /* CameraVC */,
 				5598CF6A176FF14C001C0C67 /* TVNotification.h */,
 				5598CF6B176FF14C001C0C67 /* TVNotification.m */,
+				55AD02A217703E7D00A84ED6 /* CameraVC */,
 			);
 			name = "Notification- Camera";
+			path = MainVC;
 			sourceTree = "<group>";
 		};
 		559984CA17900D600054003C /* DetailManualVC */ = {
@@ -2698,7 +2700,6 @@
 			isa = PBXGroup;
 			children = (
 				55479282177ACD70004FE268 /* CommentVC */,
-				5598CF6D176FF153001C0C67 /* Notification- Camera */,
 				558D0DAE17695ED800C98FAB /* LocationPickerView */,
 				5566A33117718F9A0025E79C /* BranchMainCell.h */,
 				5566A33217718F9A0025E79C /* BranchMainCell.m */,

@@ -18,32 +18,38 @@
         // Drawing code
         int height=20;
         if (strTitle) {
-            UILabel *lblYouAre = [[UILabel alloc] initWithFrame:CGRectMake(3, height, 120, 23)];
+            
+            
+            UILabel *lblYouAre = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 120, 23)];
             lblYouAre.backgroundColor = [UIColor clearColor];
             lblYouAre.textColor = [UIColor grayColor];
             lblYouAre.font = [UIFont fontWithName:@"ArialMT" size:(10)];
             lblYouAre.text=@"Bạn đang ở gần nhà hàng";
             [self addSubview:lblYouAre];
             
-            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(126, height, 180, 23)];
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(139, height, 180, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
             lblDetailRow.textColor = kCyanGreenColor;
-            //            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(10)];
             lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
             lblDetailRow.text =strTitle;
             [self addSubview:lblDetailRow];
             
-            UILabel *lblPlease = [[UILabel alloc] initWithFrame:CGRectMake(3, height, 270, 23)];
+            height=lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height;
+            
+            UILabel *lblPlease = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 270, 23)];
             lblPlease.backgroundColor = [UIColor clearColor];
             lblPlease.textColor = [UIColor grayColor];
             lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(10)];
             lblPlease.text=@"Hãy Chụp ảnh hoặc Viết bình luận để chia sẻ với bạn bè";
             [self addSubview:lblPlease];
 
+            height=lblPlease.frame.origin.y+lblPlease.frame.size.height;
+            UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, 20, 320, height-20)];
+            [bgView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.95]];
+            [self insertSubview:bgView belowSubview:lblYouAre];
             
-            UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, lblDetailRow.frame.size.height+ 1, 320, 1.0f)];
-            grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
-            height=grayLine.frame.origin.y+grayLine.frame.size.height;
+            UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, height, 320, 1.0)];
+            grayLine.backgroundColor = [UIColor blackColor];
             [self addSubview:grayLine];
         }
         
@@ -54,6 +60,10 @@
         [cameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cameraButton.titleLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
         [cameraButton addTarget:self action:@selector(cameraButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(160, height, 1.0, 43)];
+        grayLine.backgroundColor = [UIColor blackColor];
+        
         
         UIButton* commentButton = [[UIButton alloc] initWithFrame:CGRectMake(161, height   , 160, 43)];
         [commentButton setBackgroundImage:[UIImage imageNamed:@"img_main_comment_on"] forState:UIControlStateNormal];
@@ -69,11 +79,17 @@
             [btnClose setBackgroundImage:[UIImage imageNamed:@"img_main_notification_close"] forState:UIControlStateNormal];
             [btnClose addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btnClose];
+        }else{
+            _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34)];
+            [_btnOpen setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
+            [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_view addSubview:_btnOpen];
+            
         }
-        
+        _isHiddenYES=YES;
         [self addSubview:cameraButton];
         [self addSubview:commentButton];
-        
+        [self addSubview:grayLine];
         
         _height=commentButton.frame.size.height+commentButton.frame.origin.y;
         CGRect _frame= CGRectMake(0, _view.frame.size.height, 320,_height );
@@ -85,11 +101,7 @@
         
         //Add open button
         
-        _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34)];
-        [_btnOpen setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
-        [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [_view addSubview:_btnOpen];
-        _isHiddenYES=YES;
+
         
         self.btnCameraCallback =cameraCall;
         self.btnCommentCallback=commentCall;
@@ -99,33 +111,120 @@
     return self;
 }
 
+-(id)initWithView:(UIView*)_view withTitle:(NSString*)strTitle withDistance:(NSString*)distance goWithClickView:(void (^)())cameraCall{
+    self=[super initWithFrame:CGRectZero];
+    if (self) {
+        
+        // Drawing code
+        int height=20;
+        if (strTitle) {
+            
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 270, 31)];
+            lblDetailRow.backgroundColor = [UIColor clearColor];
+            lblDetailRow.textColor = kCyanGreenColor;
+            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+            lblDetailRow.text =strTitle;
+
+            UILabel *lblPlease = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 270, 46)];
+            lblPlease.backgroundColor = [UIColor clearColor];
+            lblPlease.textColor = [UIColor grayColor];
+            lblPlease.numberOfLines=2;
+            lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+            lblPlease.text=[NSString stringWithFormat:@"%@ (cách %@) vừa tạo Coupon giảm giá dành cho thành viên Anuong",strTitle,distance];
+            [self addSubview:lblPlease];
+            [self addSubview:lblDetailRow];
+
+            height=lblPlease.frame.origin.y+lblPlease.frame.size.height;
+            UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, 20, 320, height+23)];
+            [bgView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.95]];
+            [self insertSubview:bgView belowSubview:lblPlease];
+        }
+        
+        UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(-25, height-5, 160, 23)];
+        
+        [cameraButton setTitle:@"Bấm để xem >" forState:UIControlStateNormal];
+        [cameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cameraButton.titleLabel.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+        [cameraButton addTarget:self action:@selector(cameraButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(160, height, 1.0, 43)];
+        grayLine.backgroundColor = [UIColor blackColor];
+
+        if (strTitle) {
+            UIButton* btnClose = [[UIButton alloc] initWithFrame:CGRectMake(320-34-3, 0, 34, 34)];
+            [btnClose setBackgroundImage:[UIImage imageNamed:@"img_main_notification_close"] forState:UIControlStateNormal];
+            [btnClose addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [self addSubview:btnClose];
+        }else{
+            _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34)];
+            [_btnOpen setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
+            [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [_view addSubview:_btnOpen];
+            
+        }
+        _isHiddenYES=YES;
+        [self addSubview:cameraButton];
+        [self addSubview:grayLine];
+        
+        _height=cameraButton.frame.size.height+cameraButton.frame.origin.y;
+        CGRect _frame= CGRectMake(0, _view.frame.size.height, 320,_height );
+        self.frame=_frame;
+        //        [self setBackgroundColor:[UIColor colorWithRed:(25/255.0f) green:(25/255.0f) blue:(16/255.0f) alpha:.90f]];
+        
+        [self setBackgroundColor:[UIColor clearColor]];
+        [_view addSubview:self];
+        
+        //Add open button
+        self.btnCameraCallback =cameraCall;
+    }
+    self.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin ;
+    _btnOpen.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin;
+    return self;
+}
+
 -(void)openButtonClicked:(id)sender{
     if (!_isHiddenYES||_isAnimating)
         return;
-    CGAffineTransform transform = CGAffineTransformMakeTranslation(50+5,0);
-    transform = CGAffineTransformRotate(transform, 360);
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        // animate it to the identity transform (100% scale)
-        _btnOpen.transform = transform;
-        self.isAnimating=YES;
-    } completion:^(BOOL finished){
+    if (sender) {
+        CGAffineTransform transform = CGAffineTransformMakeTranslation(50+5,0);
+        transform = CGAffineTransformRotate(transform, 360);
         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-
+            // animate it to the identity transform (100% scale)
+            _btnOpen.transform = transform;
+            self.isAnimating=YES;
+        } completion:^(BOOL finished){
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                
+                self.transform= CGAffineTransformMakeTranslation(0,-_height);
+            } completion:^(BOOL finished){
+                self.isAnimating=NO;
+                self.isHiddenYES=NO;
+            }];
+        }];
+    }else{
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            
             self.transform= CGAffineTransformMakeTranslation(0,-_height);
         } completion:^(BOOL finished){
             self.isAnimating=NO;
             self.isHiddenYES=NO;
         }];
-    }];
+    }
+
 }
 
 -(void)closeButtonClicked:(id)sender{
+
     if (_isHiddenYES||_isAnimating)
         return;
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.transform= CGAffineTransformIdentity;
         self.isAnimating=YES;
     } completion:^(BOOL finished){
+        if (sender) {
+            [self removeFromSuperview];
+            return;
+        }
         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             _btnOpen.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished){

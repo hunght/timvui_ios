@@ -88,10 +88,8 @@
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",newLocation.coordinate.latitude,newLocation.coordinate.longitude];
     [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=NO;
     [self didReceivePublicIPandPort:strLatLng];
-    
-    NSLog(@"%f",newLocation.coordinate.latitude);
+//    NSLog(@"%f",newLocation.coordinate.latitude);
     [_locationManager stopMonitoringSignificantLocationChanges];
-    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -103,7 +101,6 @@
     [GlobalDataUser sharedAccountClient].userLocation=location;
     [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
     [_locationManager stopMonitoringSignificantLocationChanges];
-
 }
 
 @end

@@ -11,6 +11,7 @@
 #import <JSONKit.h>
 #import "TVBranches.h"
 #import "NSDictionary+Extensions.h"
+#import "NSDate-Utilities.h"
 @implementation GlobalDataUser
 
 
@@ -127,21 +128,34 @@ static GlobalDataUser *_sharedClient = nil;
     if(isInBackground) {
         [self sendBackgroundLocationToServer:_userLocation];
     }else{
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString* strDate=[defaults valueForKey:kLastUpdatedLocationSendingToServer];
+        if (strDate) {
+            ;
+            NSTimeInterval ti = -[[NSDate dateFromString:strDate] timeIntervalSinceDate:[NSDate date]];
+            int minutes=ti / D_MINUTE;
+            if (minutes<20) {
+                return;
+            }
+        }
+
         TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
         NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
         [params setValue:@"1"  forKey:@"limit"];
         [params setValue:@"0"  forKey:@"offset"];
         [params setValue:@"short"  forKey:@"infoType"];
         [params setValue:@"20"  forKey:@"distance"];
-//        NSLog(@"_dicCity= %@",[self dicCity]);
         [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
         [params setValue:strLatLng forKey:@"latlng"];
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async(dispatch_get_main_queue(),^ {
+                
+                [defaults setValue:[[NSDate date] stringWithDefautFormat] forKey:kLastUpdatedLocationSendingToServer];
+                [defaults synchronize];
                 // View map with contain all search items
                 if (branches.count>0) {
-                    [SharedAppDelegate showNotificationWithBranch:branches[0]];
+                    [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
                 }
             });
         } failure:^(GHResource *instance, NSError *error) {

@@ -19,6 +19,7 @@
 
 -(id)initWithView:(UIView*)_view withTitle:(NSString*)strTitle goWithCamera:(void (^)())cameraCall
       withComment:(void (^)())commentCall;
+-(id)initWithView:(UIView*)_view withTitle:(NSString*)strTitle withDistance:(NSString*)distance goWithClickView:(void (^)())cameraCall;
 -(void)openButtonClicked:(id)sender;
 -(void)closeButtonClicked:(id)sender;
 @end

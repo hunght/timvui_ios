@@ -13,7 +13,7 @@
 
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"
-
+#define kLastUpdatedLocationSendingToServer                    @"kLastUpdatedLocationSendingToServer"
 
 // get params from server
 #define kGetCityDataUser                    @"kGetCityDataUser"
@@ -29,7 +29,6 @@
 #define kTVDistanceMovingMap   5000 //m
 
 #define kNumberOfSkinsCamera   3
-
 #define kNumberLimitRefresh   @"10"
 
 
