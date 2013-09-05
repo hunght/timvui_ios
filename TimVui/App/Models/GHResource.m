@@ -88,7 +88,7 @@
             NSDictionary *headers = operation.response.allHeaderFields;
             DJLog(@"\n%@: Loading %@ finished.\n\n\n", self.class, path);
         
-            DJLog(@"\nLoading data ---------------------------\n %@ \n", data);
+//            DJLog(@"\nLoading data ---------------------------\n %@ \n", data);
             [self setHeaderValues:headers];
             [self setValues:[data valueForKey:@"data"]];
             self.resourceStatus = GHResourceStatusLoaded;

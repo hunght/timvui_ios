@@ -107,11 +107,14 @@
 }
 
 -(void)showNotificationWithBranch:(TVBranch*)branch{
-    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:nil goWithCamera:^{
+
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name goWithCamera:^{
         [SharedAppDelegate.menuVC cameraButtonClickedWithNav:_slidingViewController.topViewController.navigationController andWithBranch:branch];
     } withComment:^{
         [SharedAppDelegate.menuVC commentButtonClickedWithNav:_slidingViewController.topViewController.navigationController andWithBranch:branch];
     }];
+    
+    [notificationView openButtonClicked:nil];
 }
 
 -(void)showNotificationAboutSomething:(TVBranch*)_branch
@@ -138,21 +141,20 @@
                             canBeDismisedByUser:YES];
 
 }
+
 -(void)showSuccessAboutSomething:(NSString*)mess{
    [TSMessage showNotificationInViewController:_slidingViewController.topViewController
                                                                    withTitle:mess
                                                                  withMessage:nil
                                                                     withType:TSMessageNotificationTypeSuccess];
 
-    
 }
+
 -(void)showAlertAboutSomething:(NSString*)mess{
     [TSMessage showNotificationInViewController:_slidingViewController.topViewController
                                       withTitle:mess
                                     withMessage:nil
                                        withType:TSMessageNotificationTypeWarning];
-    
-    
 }
 
 

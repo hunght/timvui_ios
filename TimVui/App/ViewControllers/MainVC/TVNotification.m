@@ -7,6 +7,7 @@
 //
 
 #import "TVNotification.h"
+#import "MacroApp.h"
 
 @implementation TVNotification
 -(id)initWithView:(UIView*)_view withTitle:(NSString*)strTitle goWithCamera:(void (^)())cameraCall
@@ -17,15 +18,29 @@
         // Drawing code
         int height=20;
         if (strTitle) {
-            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(3, height, 130, 23)];
+            UILabel *lblYouAre = [[UILabel alloc] initWithFrame:CGRectMake(3, height, 120, 23)];
+            lblYouAre.backgroundColor = [UIColor clearColor];
+            lblYouAre.textColor = [UIColor grayColor];
+            lblYouAre.font = [UIFont fontWithName:@"ArialMT" size:(10)];
+            lblYouAre.text=@"Bạn đang ở gần nhà hàng";
+            [self addSubview:lblYouAre];
+            
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(126, height, 180, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
-            lblDetailRow.textColor = [UIColor blackColor];
-            lblDetailRow.numberOfLines = 0;
-            lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
-            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailRow.textColor = kCyanGreenColor;
+            //            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(10)];
+            lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(10)];
             lblDetailRow.text =strTitle;
-            [lblDetailRow sizeToFit];
             [self addSubview:lblDetailRow];
+            
+            UILabel *lblPlease = [[UILabel alloc] initWithFrame:CGRectMake(3, height, 270, 23)];
+            lblPlease.backgroundColor = [UIColor clearColor];
+            lblPlease.textColor = [UIColor grayColor];
+            lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(10)];
+            lblPlease.text=@"Hãy Chụp ảnh hoặc Viết bình luận để chia sẻ với bạn bè";
+            [self addSubview:lblPlease];
+
+            
             UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, lblDetailRow.frame.size.height+ 1, 320, 1.0f)];
             grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
             height=grayLine.frame.origin.y+grayLine.frame.size.height;

@@ -25,5 +25,4 @@
 - (void)cameraButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch;
 
 -(void)showLoginScreenWhenUserNotLogin:(UINavigationController*)nav;
--(void)showNotificationWithBranch:(TVBranch*)branch;
 @end
