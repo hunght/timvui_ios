@@ -125,13 +125,13 @@
             [GlobalDataUser sharedAccountClient].userLocation=[dic safeLocationForKey:@"latlng"];
             [self getBranchesForView];
         }else if(([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))){
-            
+            int i=    [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] count];
+            NSLog(@"count == %d",i);
             alert	= [[SBTableAlert alloc] initWithTitle:@"Vui lòng chọn Tỉnh/TP" cancelButtonTitle:@"Cancel" messageFormat:nil];
             [alert setDelegate:self];
             [alert setDataSource:self];
-            
             [alert show];
-            //        NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
+            NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
         }
     }else
         [self getBranchesForView];
@@ -273,7 +273,7 @@
 }
 
 - (void)tableAlert:(SBTableAlert *)tableAlert didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	
+	[self getBranchesForView];
     
 }
 
@@ -368,6 +368,7 @@
     if (!self.branches) {
         self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     }
+    
     _lastPosition=_currentCameraPositionSearch;
     
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];

@@ -123,11 +123,11 @@
         [_mapView setCamera:camera];
         self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.mapView.delegate = self.mapViewDelegate;
-//        _mapView.settings.compassButton = YES;
-//        _mapView.settings.myLocationButton = YES;
-//        CGRect bgViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width,self. self.defaultMapHeight);
-//        UIView* bgView=[[UIView alloc] initWithFrame:bgViewFrame];
         [self insertSubview:self.mapView belowSubview:self.tableView];
+        void *context = (__bridge void *)self;
+        
+        // Listen to the myLocation property of GMSMapView.
+        [_mapView addObserver:self forKeyPath:@"myLocation" options:NSKeyValueObservingOptionNew context:context];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             _mapView.myLocationEnabled = YES;
@@ -401,6 +401,13 @@
         ([keyPath isEqualToString:@"contentOffset"] == YES)) {
         [self scrollViewDidScrollWithOffset:self.tableView.contentOffset.y];
         return;
+    }
+    if ((object == self.mapView) &&
+        ([keyPath isEqualToString:@"myLocation"] == YES))
+    {
+        CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
+        _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                     zoom:14];
     }
 }
 

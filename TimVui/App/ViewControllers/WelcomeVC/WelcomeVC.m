@@ -53,8 +53,12 @@
 {
     
     if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
+        [self didReceivePublicIPandPort:@"21.033333,105.850000"];
+        CLLocationCoordinate2D location;
+        location.latitude=21.033333;
+        location.longitude=105.850000;
+        [GlobalDataUser sharedAccountClient].userLocation=location;
         [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
-        [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     }else{
         // Do any additional setup after loading the view from its nib.
         self.locationManager = [[CLLocationManager alloc] init];
@@ -94,10 +98,10 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    [self didReceivePublicIPandPort:@"20.882551,105.776947"];
+    [self didReceivePublicIPandPort:@"21.033333,105.850000"];
     CLLocationCoordinate2D location;
-	location.latitude=20.882551;
-    location.longitude=105.776947;
+	location.latitude=21.033333;
+    location.longitude=105.850000;
     [GlobalDataUser sharedAccountClient].userLocation=location;
     [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
     [_locationManager stopMonitoringSignificantLocationChanges];

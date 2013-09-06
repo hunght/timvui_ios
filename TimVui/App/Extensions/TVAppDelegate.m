@@ -163,6 +163,7 @@
         if ([key isEqualToString:kGetCityDistrictData]) {
              NSLog(@"%@",dic);
             _getCityDistrictData=dic;
+            [self openWelcomeVC];
         }else if ([key isEqualToString:kDataGetParamData]) {
             _getParamData=dic;
         }else if ([key isEqualToString:kGetDistrictHasPublicLocationData]) {
@@ -184,14 +185,17 @@
 {
     if (dic) {
         NSDate* date=[NSDate dateFromString:[dic valueForKey:@"lastUpdated"]];
-        NSLog(@"date=%@",date);
+//        NSLog(@"date=%@",date);
         if ([date isLaterThan:days]) {
             [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
+        }else if ([key isEqualToString:kGetCityDistrictData]){
+             [self openWelcomeVC];
         }
     }else {
         [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
     }
 }
+
 //Class.m
 - (BOOL)isConnected
 {
@@ -203,6 +207,13 @@
 
 #pragma mark Application Events
 
+
+- (void)openWelcomeVC
+{
+    WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
+    [[GlobalDataUser sharedAccountClient] setFollowBranches];
+    [self.menuVC performSelector:@selector(openViewController:) withObject:welcomeVC afterDelay:0.0];
+}
 
 - (void)loadWhenInternetConnected
 {
@@ -259,11 +270,8 @@
     [self setupAFNetworking];
     
     [self deactivateURLCache];
-    WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
     
-    [[GlobalDataUser sharedAccountClient] setFollowBranches];
-//    [self.menuVC openViewController:welcomeVC];
-    [self.menuVC performSelector:@selector(openViewController:) withObject:welcomeVC afterDelay:0.0];
+    
 }
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
