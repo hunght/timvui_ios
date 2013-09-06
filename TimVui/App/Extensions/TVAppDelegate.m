@@ -142,16 +142,6 @@
 	[[NSURLCache sharedURLCache] setDiskCapacity:0];
 }
 
-
-
-
--(void)setData:(NSString*)key{
-    if ([key isEqualToString:kGetCityDistrictData]) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
-    }
-}
-
 - (void)getNewDataParamsFromServer:(NSString*)strPath withDic:(NSDictionary*)myDic forKey:(NSString*)key
 {
     [[TVNetworkingClient sharedClient] getPath:strPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -160,11 +150,7 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setValue:dic forKey:key];
         [defaults synchronize];
-        if ([key isEqualToString:kGetCityDistrictData]) {
-             NSLog(@"%@",dic);
-            _getCityDistrictData=dic;
-            [self openWelcomeVC];
-        }else if ([key isEqualToString:kDataGetParamData]) {
+        if ([key isEqualToString:kDataGetParamData]) {
             _getParamData=dic;
         }else if ([key isEqualToString:kGetDistrictHasPublicLocationData]) {
             _getDistrictHasPublicLocationData=dic;
@@ -185,11 +171,8 @@
 {
     if (dic) {
         NSDate* date=[NSDate dateFromString:[dic valueForKey:@"lastUpdated"]];
-//        NSLog(@"date=%@",date);
         if ([date isLaterThan:days]) {
             [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
-        }else if ([key isEqualToString:kGetCityDistrictData]){
-             [self openWelcomeVC];
         }
     }else {
         [self getNewDataParamsFromServer:strPath withDic:dic forKey:key];
@@ -240,11 +223,6 @@
     int days=7;
     [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getParamData forKey:kDataGetParamData];
     
-    _getCityDistrictData=[defaults valueForKey:kGetCityDistrictData];
-    strPath=@"data/getCityDistrictData";
-    days=7;
-    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getCityDistrictData forKey:kGetCityDistrictData];
-    
     _getDistrictHasPublicLocationData=[defaults valueForKey:kGetDistrictHasPublicLocationData];
     strPath=@"data/getDistrictHasPublicLocationData";
     days=7;
@@ -270,7 +248,7 @@
     [self setupAFNetworking];
     
     [self deactivateURLCache];
-    
+    [self openWelcomeVC];
     
 }
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken

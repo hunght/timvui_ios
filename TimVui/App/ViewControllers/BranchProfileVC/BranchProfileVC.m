@@ -28,6 +28,7 @@
 #import "UILabel+DynamicHeight.h"
 #import "SIAlertView.h"
 #import "FacebookServices.h"
+#import "MapDirectionVC.h"
 
 @interface BranchProfileVC ()
 {
@@ -381,8 +382,8 @@
     
     //Show mapView button
     NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
-    NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=160x160&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
-    //    NSLog(@"strURL = %@",strURL);
+    NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=194x144&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
+        NSLog(@"strURL = %@",strURL);
     
     NSURL* url=[NSURL URLWithString:strURL];
     UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
@@ -417,7 +418,6 @@
     [commentButton setTitle:@"          ĐÁNH GIÁ" forState:UIControlStateNormal];
     [commentButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     commentButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
-    
     [commentButton addTarget:self action:@selector(commentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:commentButton];
     
@@ -1023,7 +1023,9 @@
 }
 
 -(void)mapViewButtonClicked:(id)sender{
-    
+    MapDirectionVC* specBranchVC=[[MapDirectionVC alloc] initWithNibName:@"MapDirectionVC" bundle:nil];
+    specBranchVC.branch=_branch;
+    [self.navigationController pushViewController:specBranchVC animated:YES];
 }
 
 -(void)albumButtonClicked:(id)sender{
@@ -1035,11 +1037,6 @@
     }
     
     mbImagesVC.branch=_branch;
-//    UINavigationController* navController = [[UINavigationController    alloc] initWithRootViewController:mbImagesVC];
-//    navController.navigationBar.tintColor = [UIColor clearColor];
-//    navController.navigationBar.alpha = 0.7f;
-//    navController.navigationBar.translucent = YES;
-//    [self presentModalViewController:navController animated:YES];
     [self.navigationController pushViewController:mbImagesVC animated:YES];
 }
 

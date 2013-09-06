@@ -14,6 +14,7 @@
 #import "NSDictionary+Extensions.h"
 #import "AFJSONRequestOperation.h"
 #import "RecentlyBranchListVC.h"
+#import "NSDate-Utilities.h"
 @interface WelcomeVC ()
 @end
 
@@ -66,22 +67,63 @@
         [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
         [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         [self.locationManager startMonitoringSignificantLocationChanges];
+        [self performSelector:@selector(checkLocationServiceAvaible) withObject:nil afterDelay:1];
+    }
+}
+
+- (void)getNewDataParamsFromServer:(NSString*)strPath withDic:(NSDictionary*)myDic forKey:(NSString*)key forData:(NSString*)data
+{
+    [[TVNetworkingClient sharedClient] getPath:strPath parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:JSON] ;
+        [dic setValue:[[NSDate date] stringWithDefautFormat] forKey:@"lastUpdated"];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setValue:dic forKey:key];
+        [defaults synchronize];
+            NSLog(@"%@",dic);
+            SharedAppDelegate.getCityDistrictData=dic;
+        [self getPublicIPFromServer:data];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+- (void)getDataParamsPath:(NSString *)strPath laterThanDays:(int)days checkDictionary:(NSDictionary *)dic forKey:(NSString*)key forData:(NSString *) data
+{
+    if (dic) {
+        NSDate* date=[NSDate dateFromString:[dic valueForKey:@"lastUpdated"]];
+        //        NSLog(@"date=%@",date);
+        if ([date isLaterThan:days]) {
+            [self getNewDataParamsFromServer:strPath withDic:dic forKey:key forData:data ];
+        }else{
+            [self getPublicIPFromServer:data];
+        }
+    }else {
+        [self getNewDataParamsFromServer:strPath withDic:dic forKey:key forData:data];
     }
 }
 
 
--(void)didReceivePublicIPandPort:(NSString *) data{
+- (void)getPublicIPFromServer:(NSString *)data {
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             data,@"latlng",
                             nil];
     [[TVNetworkingClient sharedClient] postPath:@"data/getCityByLatlng" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        NSLog(@"%@",JSON);
+        //        NSLog(@"%@",JSON);
         [GlobalDataUser sharedAccountClient].dicCity=[JSON valueForKey:@"data"];
         [[GlobalDataUser sharedAccountClient].locationManager startMonitoringSignificantLocationChanges];
         [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[MapTableViewController alloc] initWithNibName:@"MapTableViewController" bundle:nil] afterDelay:0.0];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SharedAppDelegate.menuVC performSelector:@selector(openViewController:) withObject:[[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil] afterDelay:0.0];
     }];
+}
+
+-(void)didReceivePublicIPandPort:(NSString *) data{
+    SharedAppDelegate.getCityDistrictData=[[NSUserDefaults standardUserDefaults] valueForKey:kGetCityDistrictData];
+    
+    [self getDataParamsPath:@"data/getCityDistrictData" laterThanDays:7 checkDictionary:SharedAppDelegate.getCityDistrictData forKey:kGetCityDistrictData forData:data];
+    
+    
+    
 }
 
 #pragma mark CLLocationManagerDelegate
@@ -92,7 +134,7 @@
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",newLocation.coordinate.latitude,newLocation.coordinate.longitude];
     [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=NO;
     [self didReceivePublicIPandPort:strLatLng];
-//    NSLog(@"%f",newLocation.coordinate.latitude);
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkLocationServiceAvaible) object: nil];
     [_locationManager stopMonitoringSignificantLocationChanges];
 }
 
@@ -104,6 +146,7 @@
     location.longitude=105.850000;
     [GlobalDataUser sharedAccountClient].userLocation=location;
     [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkLocationServiceAvaible) object: nil];
     [_locationManager stopMonitoringSignificantLocationChanges];
 }
 

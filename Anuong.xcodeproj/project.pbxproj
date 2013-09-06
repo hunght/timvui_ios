@@ -71,6 +71,9 @@
 		5538FB05179E995C00A1722F /* img_profile_branch_scrollView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5538FB02179E995C00A1722F /* img_profile_branch_scrollView@2x.png */; };
 		553A85D917C4674300A64F04 /* img_comment_postButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 553A85D717C4674300A64F04 /* img_comment_postButton.png */; };
 		553A85DA17C4674300A64F04 /* img_comment_postButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553A85D817C4674300A64F04 /* img_comment_postButton@2x.png */; };
+		553AB68517D9D1F4006D2556 /* MapDirectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 553AB68317D9D1F4006D2556 /* MapDirectionVC.m */; };
+		553AB68617D9D1F4006D2556 /* MapDirectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 553AB68417D9D1F4006D2556 /* MapDirectionVC.xib */; };
+		553AB68A17D9DB9F006D2556 /* MDDirectionService.m in Sources */ = {isa = PBXBuildFile; fileRef = 553AB68917D9DB9F006D2556 /* MDDirectionService.m */; };
 		553B002717A6298A00E60510 /* img_menu_icon_handbook.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B002217A6298A00E60510 /* img_menu_icon_handbook.png */; };
 		553B002817A6298A00E60510 /* img_menu_icon_handbook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B002317A6298A00E60510 /* img_menu_icon_handbook@2x.png */; };
 		553B002917A6298A00E60510 /* img_menu_icon_home.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B002417A6298A00E60510 /* img_menu_icon_home.png */; };
@@ -733,6 +736,11 @@
 		5538FB02179E995C00A1722F /* img_profile_branch_scrollView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_scrollView@2x.png"; sourceTree = "<group>"; };
 		553A85D717C4674300A64F04 /* img_comment_postButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_comment_postButton.png; sourceTree = "<group>"; };
 		553A85D817C4674300A64F04 /* img_comment_postButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_comment_postButton@2x.png"; sourceTree = "<group>"; };
+		553AB68217D9D1F4006D2556 /* MapDirectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapDirectionVC.h; path = MapDirectionVC/MapDirectionVC.h; sourceTree = "<group>"; };
+		553AB68317D9D1F4006D2556 /* MapDirectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapDirectionVC.m; path = MapDirectionVC/MapDirectionVC.m; sourceTree = "<group>"; };
+		553AB68417D9D1F4006D2556 /* MapDirectionVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapDirectionVC.xib; path = MapDirectionVC/MapDirectionVC.xib; sourceTree = "<group>"; };
+		553AB68817D9DB9F006D2556 /* MDDirectionService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDDirectionService.h; path = MapDirectionVC/MDDirectionService.h; sourceTree = "<group>"; };
+		553AB68917D9DB9F006D2556 /* MDDirectionService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDDirectionService.m; path = MapDirectionVC/MDDirectionService.m; sourceTree = "<group>"; };
 		553B002217A6298A00E60510 /* img_menu_icon_handbook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_menu_icon_handbook.png; sourceTree = "<group>"; };
 		553B002317A6298A00E60510 /* img_menu_icon_handbook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_menu_icon_handbook@2x.png"; sourceTree = "<group>"; };
 		553B002417A6298A00E60510 /* img_menu_icon_home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_menu_icon_home.png; sourceTree = "<group>"; };
@@ -1452,12 +1460,12 @@
 		5506B0A1175ED7D00054D606 /* BranchProfileVC */ = {
 			isa = PBXGroup;
 			children = (
-				55F71983178D3FEB00C0535D /* SearchWithContactsVC */,
-				551BB1CF178A9D590072FD81 /* CouponBranchProfileVC */,
-				5541283D177D2B4D00A46593 /* PhotoBrowser */,
 				55C18031177C414800A57233 /* BranchProfileVC.h */,
 				55C18032177C414800A57233 /* BranchProfileVC.m */,
 				55C18033177C414800A57233 /* BranchProfileVC.xib */,
+				553AB68717D9D1FB006D2556 /* MapDirectionVC */,
+				551BB1CF178A9D590072FD81 /* CouponBranchProfileVC */,
+				5541283D177D2B4D00A46593 /* PhotoBrowser */,
 				556D444517782D3F00751F83 /* TVExtraBranchView */,
 			);
 			name = BranchProfileVC;
@@ -1576,6 +1584,7 @@
 		55126B2B17D6D1CA00081C93 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				55F71983178D3FEB00C0535D /* SearchWithContactsVC */,
 				5598CF6D176FF153001C0C67 /* Notification- Camera */,
 				55657A49174F0D62002E83EC /* WelcomeVC */,
 				55BAED621709784F00CF3171 /* LeftMenuVC */,
@@ -1662,6 +1671,18 @@
 				5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */,
 			);
 			path = ReceivedCouponVC;
+			sourceTree = "<group>";
+		};
+		553AB68717D9D1FB006D2556 /* MapDirectionVC */ = {
+			isa = PBXGroup;
+			children = (
+				553AB68817D9DB9F006D2556 /* MDDirectionService.h */,
+				553AB68917D9DB9F006D2556 /* MDDirectionService.m */,
+				553AB68217D9D1F4006D2556 /* MapDirectionVC.h */,
+				553AB68317D9D1F4006D2556 /* MapDirectionVC.m */,
+				553AB68417D9D1F4006D2556 /* MapDirectionVC.xib */,
+			);
+			name = MapDirectionVC;
 			sourceTree = "<group>";
 		};
 		554085371782BC7400E07988 /* BSKeyboardControls */ = {
@@ -3498,6 +3519,7 @@
 				556F2B3717D5934F00FB1A29 /* RecentlyBranchListVC.xib in Resources */,
 				5585EDCC17D88D6200E1CC0D /* img_profile_branch_like_selected.png in Resources */,
 				5585EDCD17D88D6200E1CC0D /* img_profile_branch_like_selected@2x.png in Resources */,
+				553AB68617D9D1F4006D2556 /* MapDirectionVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3654,6 +3676,8 @@
 				5596050817D192BA000E52BD /* UserSettingVC.m in Sources */,
 				556F2B3417D5934F00FB1A29 /* FavoriteBranchListVC.m in Sources */,
 				556F2B3617D5934F00FB1A29 /* RecentlyBranchListVC.m in Sources */,
+				553AB68517D9D1F4006D2556 /* MapDirectionVC.m in Sources */,
+				553AB68A17D9DB9F006D2556 /* MDDirectionService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

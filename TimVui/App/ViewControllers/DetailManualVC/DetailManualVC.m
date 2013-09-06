@@ -210,9 +210,8 @@
              UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
              image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
              UIGraphicsBeginImageContext( bottomImage.size );
-             CGSize size=bottomImage.size;
              [bottomImage drawAtPoint:CGPointZero];
-             [image drawInRect:CGRectMake(6.0f,5.0f,40,30.0f) blendMode:kCGBlendModeNormal alpha:1];
+             [image drawInRect:CGRectMake(4.0f,5.0f,32.0f,32/4*3) blendMode:kCGBlendModeNormal alpha:1];
              UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
              UIGraphicsEndImageContext();
              melbourneMarker.icon = newImage;
