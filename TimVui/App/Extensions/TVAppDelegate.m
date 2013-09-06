@@ -260,6 +260,8 @@
     
     [self deactivateURLCache];
     WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
+    
+    [[GlobalDataUser sharedAccountClient] setFollowBranches];
 //    [self.menuVC openViewController:welcomeVC];
     [self.menuVC performSelector:@selector(openViewController:) withObject:welcomeVC afterDelay:0.0];
 }

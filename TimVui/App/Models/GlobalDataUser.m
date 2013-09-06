@@ -9,10 +9,10 @@
 #import "GlobalDataUser.h"
 #import "TVAppDelegate.h"
 #import <JSONKit.h>
-#import "TVBranches.h"
+#import "TVNetworkingClient.h"
 #import "NSDictionary+Extensions.h"
 #import "NSDate-Utilities.h"
-
+#import "TVBranches.h"
 @implementation GlobalDataUser
 
 
@@ -25,6 +25,7 @@ static GlobalDataUser *_sharedClient = nil;
         _sharedClient = [[GlobalDataUser alloc] init];
         
     });
+
     return _sharedClient;
 }
 - (id)init
@@ -40,10 +41,7 @@ static GlobalDataUser *_sharedClient = nil;
         _dicCatSearchParam=[[NSMutableArray alloc] init];
         _dicPriceSearchParam=[[NSMutableArray alloc] init];
         _recentlyBranches=[[NSMutableDictionary alloc] init];
-        
-        _followBranches=[[TVBranches alloc] initWithPath:@"branch/getFavouriteBranchesByUser"];
-        _followBranches.isNotSearchAPIYES=YES;
-        [self setFollowBranches:nil];
+        [_locationManager startMonitoringSignificantLocationChanges];
         
     }
     return self;
@@ -62,7 +60,7 @@ static GlobalDataUser *_sharedClient = nil;
     NSLog(@"%@",[JSON objectFromJSONString]);
     if (JSON)
         [self setUserWithDic:[JSON objectFromJSONString]];
-    NSLog(@"%@",self.user);
+//    NSLog(@"%@",self.user);
 }
 
 - (void)setUserWithDic:(NSDictionary *)JSON {
@@ -125,19 +123,17 @@ static GlobalDataUser *_sharedClient = nil;
 
 #pragma mark Helper
 
--(void)setFollowBranches:(TVBranches *)_branches{
-    if (!_followBranches) {
+-(void)setFollowBranches{
+    if (!_followBranchesSet) {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys://@"short",@"infoType",
                                 [GlobalDataUser sharedAccountClient].user.userId ,@"user_id" ,
                                 nil];
         
-        __unsafe_unretained __typeof(&*self)weakSelf = self;
-        
-        [weakSelf.followBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        [[TVNetworkingClient sharedClient] postPath:@"branch/getFavouriteBranchesByUser" parameters:params success:^(AFHTTPRequestOperation *operation, id data) {
             dispatch_async(dispatch_get_main_queue(),^ {
-                _followBranchesDic=[[NSMutableDictionary alloc] initWithDictionary:[data safeDictForKey:@"data"]];
+               _followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
             });
-        } failure:^(GHResource *instance, NSError *error) {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(),^ {
                 
             });

@@ -431,8 +431,7 @@
     
     [likeButton addTarget:self action:@selector(likeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:likeButton];
-    NSLog(@"%@",[GlobalDataUser sharedAccountClient].followBranchesDic);
-    if ([[GlobalDataUser sharedAccountClient].followBranchesDic valueForKey:_branch.branchID]) {
+    if ([[GlobalDataUser sharedAccountClient].followBranchesSet containsObject:_branch.branchID]) {
         [likeButton setSelected:YES];
     }else{
         [likeButton setSelected:NO];
@@ -933,6 +932,7 @@
         NSLog(@"%@",JSON);
         int i=[JSON safeIntegerForKey:@"status"];
         if (i==200) {
+            [[GlobalDataUser sharedAccountClient].followBranchesSet addObject:_branch.branchID];
             [sender setSelected:YES];
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Bạn đã chọn quan tâm nhà hàng này thành công!"
@@ -968,6 +968,7 @@
             
         }else if (i==201){
             [sender setSelected:NO];
+            [[GlobalDataUser sharedAccountClient].followBranchesSet removeObject:_branch.branchID];
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Bạn vừa bỏ quan tâm nhà hàng thành công!"
                                             withMessage:nil

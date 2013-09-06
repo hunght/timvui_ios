@@ -35,8 +35,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self postGetBranches];
+    
     // Do any additional setup after loading the view from its nib.
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self postGetBranches];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,19 +56,14 @@
 
 
 -(void)postGetBranches{
-    
-    if (![GlobalDataUser sharedAccountClient].followBranches) {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys://@"short",@"infoType",
                                 [GlobalDataUser sharedAccountClient].user.userId ,@"user_id" ,
                                 nil];
         
         __unsafe_unretained __typeof(&*self)weakSelf = self;
-        
         [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async(dispatch_get_main_queue(),^ {
-                //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
-                [GlobalDataUser sharedAccountClient].followBranches=weakSelf.branches;
-                [GlobalDataUser sharedAccountClient].followBranchesDic=[[NSMutableDictionary alloc] initWithDictionary:[data safeDictForKey:@"data"]];
+                [GlobalDataUser sharedAccountClient].followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
                 [self.tableView reloadData];
             });
         } failure:^(GHResource *instance, NSError *error) {
@@ -72,10 +71,7 @@
                 
             });
         }];
-    }else{
-        _branches=[GlobalDataUser sharedAccountClient].followBranches;
-        [self.tableView reloadData];
-    }
+    
 }
 
 #pragma mark UITableViewDataSource
