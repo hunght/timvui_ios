@@ -161,6 +161,7 @@
         self.lblKaraoke.text=[NSString stringWithFormat:@"(%d)",_branch.karaokes.items.count];
         _viewController=viewController;
     }
+
     return self;
 }
 
@@ -691,7 +692,9 @@
         [self.tableView addInfiniteScrollingWithActionHandler:^{
             [weakSelf getCommentRefresh];
         }];
-    
+    isFloatViewHiddenYES=YES;
+    isFloatViewAnimating=NO;
+    [self showFloatView];
 }
 
 #pragma mark - UIScrollViewDelegate

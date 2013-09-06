@@ -102,7 +102,7 @@
     if (!firstLocationUpdate_) {
         // If the first location update has not yet been recieved, then jump to that
         // location.
-
+        
         firstLocationUpdate_ = YES;
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
         GMSMarker *marker = [GMSMarker markerWithPosition:location.coordinate];
@@ -128,13 +128,13 @@
                        withDelegate:self];
            
         }
-
     }else{
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
         mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
                                                          zoom:14];
     }
 }
+
 - (void)addDirections:(NSDictionary *)json {
 //    NSLog(@"addDirections == %@",json);
     if ([[json objectForKey:@"routes"] count]==0) {
@@ -154,6 +154,7 @@
     [mapView_ moveCamera:update];
     polyline.map = mapView_;
 }
+
 - (void)dealloc {
     [mapView_ removeObserver:self
                   forKeyPath:@"myLocation"
