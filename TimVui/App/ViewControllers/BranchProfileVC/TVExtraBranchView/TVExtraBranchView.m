@@ -719,8 +719,6 @@
         if (scrollOffset<0) {
             return;
         }
-//        NSLog(@"scrollOffset = %f",scrollOffset);
-//        NSLog(@"_scrollView.contentSize.height = %f",scrollView.contentSize.height-scrollOffset- scrollView.frame.size.height);
         if (scrollOffset< lastDragOffsetFloatView){
             if (scrollView.contentSize.height-scrollOffset- scrollView.frame.size.height<50) {
                 return;
