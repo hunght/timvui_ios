@@ -16,6 +16,7 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnClose;
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imgImagePicked;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCameraSkin;
+@property (weak, nonatomic) IBOutlet UIView *viewSlidePickSkin;
 
 @property (retain, nonatomic) UIImageView *imgStillCamera;
 @property (nonatomic, retain) CaptureSessionManager *captureManager;

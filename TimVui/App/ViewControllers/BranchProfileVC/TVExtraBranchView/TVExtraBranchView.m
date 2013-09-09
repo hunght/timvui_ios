@@ -54,6 +54,10 @@
     [_scrollView setDelegate:self];
     lastDragOffset = scrollView.contentOffset.y;
 }
+-(void)layoutSubviews{
+    [super layoutSubviews];
+
+}
 
 - (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
 {
@@ -160,6 +164,8 @@
         
         self.lblKaraoke.text=[NSString stringWithFormat:@"(%d)",_branch.karaokes.items.count];
         _viewController=viewController;
+        _isHiddenYES=YES;
+        [self showMenuExtraWithoutTableView];
     }
 
     return self;
@@ -257,6 +263,22 @@
         isFloatViewHiddenYES=YES;
         lastDragOffsetFloatView=_tableView.contentOffset.y;
         [self addSubview:lblWriteReviewNotice];
+        __unsafe_unretained TVExtraBranchView *weakSelf = self;
+        __block NSString*branchID=_branch.branchID;
+        
+        //
+        [self.tableView addPullToRefreshWithActionHandler:^{
+            weakSelf.comments.items=nil;
+            NSDictionary* params = @{@"branch_id": branchID,
+                                     @"limit": @kCommentLimitCount
+                                     };
+            [weakSelf postCommentBranch:params];
+        }];
+        
+        [self.tableView addInfiniteScrollingWithActionHandler:^{
+            [weakSelf getCommentRefresh];
+        }];
+
     }
     
     [self showExtraView:YES];
@@ -623,6 +645,7 @@
     if (isYES){
         if (!self.isAnimating) {
             self.isAnimating=YES;
+            
             [_btnBackground setHidden:NO];
             [self.scrollView setContentOffset:CGPointMake(0, kTableViewHeightOffset+28) animated:YES];
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
@@ -675,27 +698,7 @@
 }   
 
 
--(void)layoutSubviews{
-    [super layoutSubviews];
-    __unsafe_unretained TVExtraBranchView *weakSelf = self;
-    __block NSString*branchID=_branch.branchID;
-    
-    //
-    [self.tableView addPullToRefreshWithActionHandler:^{
-        weakSelf.comments.items=nil;
-        NSDictionary* params = @{@"branch_id": branchID,
-                                 @"limit": @kCommentLimitCount
-                                 };
-        [weakSelf postCommentBranch:params];
-    }];
-    
-        [self.tableView addInfiniteScrollingWithActionHandler:^{
-            [weakSelf getCommentRefresh];
-        }];
-    isFloatViewHiddenYES=YES;
-    isFloatViewAnimating=NO;
-    [self showFloatView];
-}
+
 
 #pragma mark - UIScrollViewDelegate
 - (void)showFloatView
@@ -707,6 +710,19 @@
         } completion:^(BOOL finished){
             isFloatViewAnimating=NO;
             isFloatViewHiddenYES=NO;
+        }];
+    }
+}
+
+- (void)showMenuExtraWithoutTableView
+{
+    if (self.isHiddenYES&&!self.isAnimating) {
+        self.isAnimating=YES;
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.transform = CGAffineTransformMakeTranslation(0, -41);
+        } completion:^(BOOL finished){
+            self.isAnimating=NO;
+            self.isHiddenYES=NO;
         }];
     }
 }
@@ -740,17 +756,13 @@
         lastDragOffsetFloatView = scrollOffset;
         return;
     }
+    if (_isShowFullExtraYES) {
+        return;
+    }
     //NSLog(@"scrollView.contentOffset.y====%f",scrollView.contentOffset.y);
     if (scrollView.contentOffset.y < lastDragOffset){
-        if (self.isHiddenYES&&!self.isAnimating) {
-            self.isAnimating=YES;
-            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                self.transform = CGAffineTransformMakeTranslation(0, -41);
-            } completion:^(BOOL finished){
-                self.isAnimating=NO;
-                self.isHiddenYES=NO;
-            }];
-        }
+
+        [self showMenuExtraWithoutTableView];
     }else{
         if (!self.isHiddenYES&&!self.isAnimating) {
             self.isAnimating=YES;

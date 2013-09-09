@@ -46,20 +46,20 @@
     [_lblAddress resizeToStretch];
     
     rect=_imagLocationIcon.frame;
-    float padHeight=_imagLocationIcon.frame.origin.y;
-    rect.size.height=_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height;
-    rect.origin.y = 320 - rect.size.height-10;
-    padHeight=rect.origin.y-padHeight;
-    _imagLocationIcon.frame=rect;
-    
-    rect= _lblAddress.frame;
-    rect.origin.y+=padHeight;
-    _lblAddress.frame=rect;
-    
-    rect= _lblBranchName.frame;
-    rect.origin.y+=padHeight;
-    _lblBranchName.frame=rect;
-    
+    float padHeight=(_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height)-rect.size.height;
+
+    if (padHeight>0) {
+        rect.origin.y -=padHeight;
+        _imagLocationIcon.frame=rect;
+        
+        rect= _lblAddress.frame;
+        rect.origin.y-=padHeight;
+        _lblAddress.frame=rect;
+        
+        rect= _lblBranchName.frame;
+        rect.origin.y-=padHeight;
+        _lblBranchName.frame=rect;
+    }
 }
 
 

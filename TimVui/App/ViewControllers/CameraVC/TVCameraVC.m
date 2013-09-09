@@ -70,6 +70,8 @@ static int _numPages = 16;
     
     if (_branch) {
         [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
+    }else{
+        [self.pagingScrollView setScrollEnabled:NO];
     }
 }
 
@@ -118,6 +120,7 @@ static int _numPages = 16;
     [self setImgImagePicked:nil];
     [self setBtnCameraSkin:nil];
     [self setViewNotify:nil];
+    [self setViewSlidePickSkin:nil];
     [super viewDidUnload];
 }
 - (void)dealloc
@@ -264,6 +267,7 @@ static int _numPages = 16;
     [self.slidingViewController resetTopView];
     _branch=branch;
     _photoBrowseTableVC.branch=_branch;
+    [self.pagingScrollView setScrollEnabled:YES];
     [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
 }
 
@@ -475,11 +479,13 @@ static int _numPages = 16;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)theScrollView
 {
-//	if ([self.pagingScrollView indexOfSelectedPage] == _numPages - 1)
-//	{
-//		[self.pagingScrollView reloadPages];
-//		self.pageControl.numberOfPages = _numPages;
-//	}
+    if (_viewSlidePickSkin.isHidden) {
+        return;
+    }
+	if ([self.pagingScrollView indexOfSelectedPage]>0)
+	{
+            _viewSlidePickSkin.hidden=YES;
+	}
 }
 
 #pragma mark - MHPagingScrollViewDelegate
@@ -491,6 +497,7 @@ static int _numPages = 16;
 - (UIView *)pagingScrollView:(TVPagingScrollView *)thePagingScrollView pageForIndex:(NSUInteger)index
 {
     PageView *pageView = (PageView *)[thePagingScrollView dequeueReusablePageAtIndex:index];
+
     
 	if (pageView == nil){
         switch (index) {
@@ -584,15 +591,13 @@ static int _numPages = 16;
             default:
                 break;
         }
+        
         pageView.index=index;[pageView settingView];
         if (_branch) {
             [_viewNotify removeFromSuperview];
             [pageView setName:_branch.name andAddress:_branch.address_full];
-            
-        }else{
-            [pageView setName:@"Chọn nhà hàng để chụp ảnh" andAddress:@"Bạn chưa có thông tin nhà hàng"];
         }
-    
+        
     }
     
     //pageView.lblCompliment.text=@"Seize the day";
