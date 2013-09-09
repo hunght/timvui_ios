@@ -11,12 +11,13 @@
 #import "SDWebImageManager.h"
 #import "UIImage+Crop.h"
 #import "MDDirectionService.h"
-
+#import "NSDictionary+Extensions.h"
 @interface MapDirectionVC (){
     GMSMapView *mapView_;
     NSMutableArray *waypoints_;
     NSMutableArray *waypointStrings_;
     BOOL firstLocationUpdate_;
+    UILabel *_lblDistance;
 }
 @end
 
@@ -33,14 +34,14 @@
     }
     return self;
 }
+
 - (void)loadView {
     waypoints_ = [[NSMutableArray alloc]init];
     waypointStrings_ = [[NSMutableArray alloc]init];
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:37.778376
-                                                            longitude:-122.409853
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:_branch.latlng.latitude
+                                                            longitude:_branch.latlng.longitude  
                                                                  zoom:13];
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-//    mapView_.delegate = self;
 
     // Listen to the myLocation property of GMSMapView.
     [mapView_ addObserver:self
@@ -54,7 +55,18 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         mapView_.myLocationEnabled = YES;
     });
+    _lblDistance=[[UILabel alloc] initWithFrame:CGRectMake(10, 416-26-5,300 , 26)];
+    _lblDistance.backgroundColor = [UIColor clearColor];
+    _lblDistance.textColor = [UIColor whiteColor];
+    _lblDistance.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
     
+    [mapView_ addSubview:_lblDistance];
+//    _lblDistance.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    _lblDistance.hidden=YES;
+    CALayer* l=_lblDistance.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:13];
+    [_lblDistance setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:.5]];
 }
 
 - (void)viewDidLoad
@@ -90,7 +102,9 @@
     NSString *positionString = [[NSString alloc] initWithFormat:@"%f,%f",
                                 _branch.latlng.latitude,_branch.latlng.longitude];
     [waypointStrings_ addObject:positionString];
+    
     // Do any additional setup after loading the view from its nib.
+    
 }
 
 #pragma mark - KVO updates
@@ -112,10 +126,10 @@
                                     location.coordinate.latitude,location.coordinate.longitude];
         [waypointStrings_ addObject:positionString];
         mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                         zoom:14];
+                                                         zoom:mapView_.camera.zoom];
         
         if([waypoints_ count]>1){
-            NSString *sensor = @"false";
+            NSString *sensor = @"true";
             NSArray *parameters = [NSArray arrayWithObjects:sensor, waypointStrings_,
                                    nil];
             NSArray *keys = [NSArray arrayWithObjects:@"sensor", @"waypoints", nil];
@@ -126,24 +140,29 @@
             [mds setDirectionsQuery:query
                        withSelector:selector
                        withDelegate:self];
-           
         }
     }else{
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
         mapView_.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                         zoom:14];
+                                                         zoom:mapView_.camera.zoom];
     }
 }
 
 - (void)addDirections:(NSDictionary *)json {
 //    NSLog(@"addDirections == %@",json);
-    if ([[json objectForKey:@"routes"] count]==0) {
+    if ([[json safeArrayForKey:@"routes"] count]==0) {
         return;
     }
-    NSDictionary *routes = [json objectForKey:@"routes"][0];
-    
+    NSDictionary *routes = [json safeArrayForKey:@"routes"][0];
+//    NSLog(@"legs = %@",[routes safeArrayForKey:@"legs"][0]);
+    NSDictionary* legs=[routes safeArrayForKey:@"legs"][0];
+    NSString* strDistance=[legs safeStringForKeyPath:@"distance.text"];
+    NSString* strTime=[legs safeStringForKeyPath:@"duration.text"];
+    _lblDistance.text=[NSString stringWithFormat:@"   Khoảng cách %@. Thời gian đi: %@",strDistance,strTime];
+    _lblDistance.hidden=NO;
     NSDictionary *route = [routes objectForKey:@"overview_polyline"];
     NSString *overview_route = [route objectForKey:@"points"];
+//    NSLog(@"overview_route = %@",overview_route);
     GMSPath *path = [GMSPath pathFromEncodedPath:overview_route];
     GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
     polyline.strokeColor = kCyanGreenColor;
@@ -167,4 +186,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [super viewDidUnload];
+}
 @end

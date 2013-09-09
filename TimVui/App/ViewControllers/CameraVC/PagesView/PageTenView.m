@@ -36,7 +36,8 @@
 }
 
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
-    
+    name=[name uppercaseString];
+    address=[address uppercaseString];
     _lblBranchName.text=name;
     [_lblBranchName resizeToStretch];
     CGRect rect=_lblBranchName.frame;
@@ -47,7 +48,7 @@
     }
     
     rect=_lblAddress.frame;
-    rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height+8;
+    rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height+6;
     _lblAddress.frame=rect;
     
     _lblAddress.text= address;
@@ -59,7 +60,7 @@
     }
     float padHeight=_lblAddress.frame.origin.y;
     rect= _lblAddress.frame;
-    rect.origin.y = 320-10-rect.size.height;
+    rect.origin.y = 320-4-rect.size.height;
     _lblAddress.frame=rect;
     padHeight=rect.origin.y-padHeight;
     
@@ -73,9 +74,9 @@
     
     rect=_lblBranchName.frame;
     rect.origin.x-=3;
-    rect.origin.y-=5;
+    rect.origin.y-=3;
     rect.size.width+=6;
-    rect.size.height+=10;
+    rect.size.height+=6;
     _bgBranchView.frame=rect;
     
     rect=_lblAddress.frame;

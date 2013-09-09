@@ -38,7 +38,8 @@ static int radius=3;
 }
 
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
-    
+    name=[name uppercaseString];
+    address=[address uppercaseString];
     _lblBranchName.text=name;
     [_lblBranchName resizeToStretchWidth:290];
     CGRect rect=_lblBranchName.frame;

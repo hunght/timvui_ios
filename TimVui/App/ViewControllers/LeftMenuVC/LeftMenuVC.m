@@ -504,7 +504,9 @@ enum {
             }else
             {
                 switch (row) {
-                        
+                    case kS1AccountInfoUser:
+                        [self showLoginViewController];
+                        break;
                     case kS1AccountRecentlyView:
                         viewController = [[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil];
                         break;

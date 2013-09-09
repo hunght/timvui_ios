@@ -26,6 +26,8 @@
 }
 
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
+    name=[name uppercaseString];
+    address=[address uppercaseString];
     _lblBranchName.text=name;
     [_lblBranchName resizeToStretch];
 

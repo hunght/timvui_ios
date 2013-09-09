@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "TVBranch.h"
 @interface MapDirectionVC : UIViewController
+
 @property (nonatomic, strong)TVBranch* branch;
 @end

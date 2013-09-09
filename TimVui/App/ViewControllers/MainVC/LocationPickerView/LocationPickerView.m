@@ -402,12 +402,13 @@
         [self scrollViewDidScrollWithOffset:self.tableView.contentOffset.y];
         return;
     }
-    if ((object == self.mapView) &&
+    if ((object == self.mapView) && !firstLocationUpdate_&&
         ([keyPath isEqualToString:@"myLocation"] == YES))
     {
+        firstLocationUpdate_=YES;
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
         _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                     zoom:14];
+                                                     zoom:_mapView.camera.zoom];
     }
 }
 

@@ -216,7 +216,6 @@
         [GlobalDataUser sharedAccountClient].recentlyBranches=dic;
     }
     
-    
     _getParamData=[defaults valueForKey:kDataGetParamData];
     
     NSString* strPath=@"data/getParamData";
@@ -241,16 +240,15 @@
     _getCatData=[defaults valueForKey:kGetCatData];
     strPath=@"data/getCatData";
     days=7;
-    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getCatData forKey:kGetCatData];
     
+    [self getDataParamsPath:strPath laterThanDays:days checkDictionary:_getCatData forKey:kGetCatData];
     [GMSServices provideAPIKey:@"AIzaSyBVb1lIZc1CwMleuqKqudR0Af3wAQJ9H0I"];
     [self setupGoogleAnalytics];
     [self setupAFNetworking];
-    
     [self deactivateURLCache];
     [self openWelcomeVC];
-    
 }
+
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
 	NSLog(@"My token is: %@", deviceToken);
@@ -332,7 +330,7 @@
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
     
-//    [FBSession.activeSession handleDidBecomeActive];
+    //[FBSession.activeSession handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

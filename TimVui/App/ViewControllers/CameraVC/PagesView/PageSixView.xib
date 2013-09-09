@@ -107,7 +107,7 @@
 							<object class="IBUILabel" id="775197523">
 								<reference key="NSNextResponder" ref="154895063"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{33, 14}, {243, 18}}</string>
+								<string key="NSFrame">{{33, 14}, {287, 18}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="589546148"/>
@@ -378,6 +378,7 @@
 						<string key="imgImagePicked">UIImageView</string>
 						<string key="pageControl">UIPageControl</string>
 						<string key="pagingScrollView">TVPagingScrollView</string>
+						<string key="viewNotify">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="btnAlbumPicker">
@@ -411,6 +412,10 @@
 						<object class="IBToOneOutletInfo" key="pagingScrollView">
 							<string key="name">pagingScrollView</string>
 							<string key="candidateClassName">TVPagingScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewNotify">
+							<string key="name">viewNotify</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

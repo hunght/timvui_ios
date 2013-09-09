@@ -39,6 +39,7 @@ static NSString *kMDDirectionsURL = @"http://maps.googleapis.com/maps/api/direct
   }
     url = [url
            stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
+    NSLog(@"url = %@",url);
     _directionsURL = [NSURL URLWithString:url];
   [self retrieveDirections:selector withDelegate:delegate];
 }

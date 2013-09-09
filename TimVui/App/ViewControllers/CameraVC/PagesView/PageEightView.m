@@ -26,6 +26,8 @@
 }
 
 -(void)setName:(NSString*)name andAddress:(NSString*)address{
+    name=[name uppercaseString];
+    address=[address uppercaseString];
     _lblBranchName.text=name;
     [_lblBranchName resizeToStretch];
     
@@ -41,7 +43,7 @@
     rect=_backgroundLocation.frame;
     float padHeight=_backgroundLocation.frame.origin.y;
     rect.size.height=_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height;
-    rect.origin.y = 320 - rect.size.height-10;
+    rect.origin.y = 320 - rect.size.height;
     padHeight=rect.origin.y-padHeight;
     _backgroundLocation.frame=rect;
     
