@@ -85,7 +85,19 @@ static NSDateFormatter *formatter;
 - (NSString *)stringDaysAgo {
 	return [self stringDaysAgoAgainstMidnight:YES];
 }
-
+- (NSString *)stringDayAhead{
+	NSUInteger daysAgo =[self daysAgo];
+	NSString *text = nil;
+	switch (daysAgo) {
+		case 0:
+			text = @"Hôm nay";
+			break;
+		case 1:
+			text = @"Ngày mai";
+			break;
+	}
+	return text;
+}
 
 - (NSString *)stringDaysAgoAgainstMidnight:(BOOL)flag {
 	NSUInteger daysAgo = (flag) ? [self daysAgoAgainstMidnight] : [self daysAgo];

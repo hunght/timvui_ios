@@ -538,7 +538,7 @@
     [self initTableView];
     
     [self addEventToInfoView ];
-    
+    floatView.hidden=YES;
     [self.tableView setHidden:YES];
     [self.scrollEvent setHidden:NO];
     [self.scrollKaraoke setHidden:YES];
@@ -558,6 +558,7 @@
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     
     if (_currentTableType!=kTVSimilar){
+        floatView.hidden=YES;
         _currentTableType=kTVSimilar;
         [self getBranchSimilar];
     }
@@ -576,6 +577,7 @@
     [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     
     if (_currentTableType!=kTVMenu){
+        floatView.hidden=YES;
         _currentTableType=kTVMenu;
         [_tableView reloadData];
     }
@@ -589,7 +591,7 @@
     
     
     [self addKaraokeToInfoView];
-    
+    floatView.hidden=YES;
     [self.tableView setHidden:YES];
     [self.scrollKaraoke setHidden:NO];
     [self.scrollEvent setHidden:YES];
@@ -611,6 +613,7 @@
     if (_currentTableType!=kTVComment)
     {
         _currentTableType=kTVComment;
+        floatView.hidden=NO;
         [self getCommentRefresh];
     }
 }
@@ -697,9 +700,6 @@
     [self postSimilarBranch:params];
 }   
 
-
-
-
 #pragma mark - UIScrollViewDelegate
 - (void)showFloatView
 {
@@ -732,7 +732,7 @@
     
     if (![scrollView isEqual:_scrollView]){
         CGFloat scrollOffset=scrollView.contentOffset.y;
-        if (scrollOffset<0) {
+        if (floatView.isHidden||scrollOffset<0) {
             return;
         }
         if (scrollOffset< lastDragOffsetFloatView){

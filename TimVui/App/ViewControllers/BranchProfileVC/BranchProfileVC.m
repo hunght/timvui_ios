@@ -342,7 +342,7 @@
             [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr_ safeDictForKey:@"image"]]];
             imageButton.tag=i;
             [_scrollView addSubview:imageButton];
-        __block int x = 123;
+//        __block int x = 123;
             [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr_ safeDictForKey:@"image"]] onOpen:^(UIView* _captionView){
                 UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
                 _lblContent.backgroundColor = [UIColor clearColor];

@@ -69,8 +69,8 @@ static GlobalDataUser *_sharedClient = nil;
     [self.user setValues:JSON ];
     self.facebookID=[JSON valueForKey:@""];
     
-    #warning User login set default USER ID TEST
-    self.user.userId=@"8878";
+//    #warning User login set default USER ID TEST
+//    self.user.userId=@"8878";
     
 
 }

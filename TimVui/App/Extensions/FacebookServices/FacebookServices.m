@@ -30,19 +30,16 @@
     if (FBSession.activeSession.isOpen ==NO ||!_branch)return;
     
     NSMutableDictionary<FBGraphObject> *object = [FBGraphObject graphObject];
-//    NSLog(@"_branch.url=%@",_branch.url);
     object[@"url"] =_branch.url;
     
     NSMutableDictionary<FBOpenGraphAction> *action = [FBGraphObject openGraphActionForPost];
     action[@"nha_hang"] = object;
     NSLog(@"%@",action);
-    
     [FBRequestConnection startForPostWithGraphPath:@"me/anuongnet:quan_tam" graphObject:action completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if(error) {
             NSLog(@"Error: %@", error);
         } else {
             NSLog(@"Success %@", result);
-            
         }
     }];
 }
@@ -58,12 +55,8 @@
     for (NSString* urlStr in arrUrl) {
         NSMutableDictionary *image = [[NSMutableDictionary alloc] init];
         [image setObject:urlStr forKey:@"url"];
-        
         [image setObject:@"true" forKey:@"user_generated"]; // <======= ***add this line***
-        
-        
         [images addObject:image];
-        
         action.image = images;
     }
 

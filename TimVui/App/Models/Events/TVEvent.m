@@ -36,11 +36,11 @@
     comps.month = todayComps.month;
     comps.year = todayComps.year;
     _start = [calendar dateFromComponents:comps];
-    
+    NSLog(@"_start = %@",_start);
 }
 
 - (void)setValues:(NSDictionary*)dict {
-    NSLog(@"tvEvent===%@",dict);
+//    NSLog(@"tvEvent===%@",dict);
     
 	self.eventID = [dict safeStringForKey:@"id"];
     self.title = [dict safeStringForKey:@"title"];
@@ -65,16 +65,16 @@
         }
         
         NSArray* sorted = [array sortedArrayUsingSelector: @selector(compare:)];
-        
+        NSLog(@"tvEvent===%@",_title);
         for (NSNumber* num in sorted) {
             int dayCount=num.intValue-[date weekday];
             if (dayCount>=0) {
                 [self getTheDayEventStart:num keyValueFre:keyValueFre date:date dayCount:dayCount];
-                continue;
+                break;
             }else if([num isEqual:[sorted lastObject]]){
                 dayCount=7-([date weekday]-[[sorted objectAtIndex:0] intValue]);
                 [self getTheDayEventStart:num keyValueFre:keyValueFre date:date dayCount:dayCount];
-                continue;
+                break;
             }
         }
     }

@@ -78,20 +78,30 @@
     [self.imgCoverEvent addSubview:_lblContent];
     [self.imgCoverEvent addSubview:_lblNameBranch];
     [self.imgCoverEvent addSubview:_lblTime];
-    _imgCoverEvent.contentMode=UIViewContentModeScaleToFill;
+    
     [self.contentView addSubview:_imgCoverEvent];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
+    _imgCoverEvent.contentMode=UIViewContentModeScaleToFill;
     return self;
 }
 
 - (void)setEvent:(TVEvent *)event{
     NSDate* date =event.start;
     int weekday=[date weekday];
-    _lblTime.text=(weekday!=8)?[NSString stringWithFormat:@"%@: T%d | %@",[date stringWithFormat:@"HH:mm"],weekday,[date stringWithFormat:@"dd/MM/yyyy"]]:[NSString stringWithFormat:@"%@: CN | %@",[date stringWithFormat:@"HH:mm"],[date stringWithFormat:@"dd/MM/yyyy"]];
+    NSString* strPresentDate=[date stringDayAhead];
+    if (strPresentDate) {
+        _lblTime.text=[NSString stringWithFormat:@"%@ %@",[date stringWithFormat:@"HH:mm"],strPresentDate];
+
+    }else{
+        _lblTime.text=(weekday!=8)?[NSString stringWithFormat:@"%@: T%d | %@",[date stringWithFormat:@"HH:mm"],weekday,[date stringWithFormat:@"dd/MM/yyyy"]]:[NSString stringWithFormat:@"%@: CN | %@",[date stringWithFormat:@"HH:mm"],[date stringWithFormat:@"dd/MM/yyyy"]];
+    }
+    [_lblTime resizeWidthToStretch];
+    CGRect frame= _viewBgTime.frame;
+    frame.size.width=_lblTime.frame.size.width+ 20;
+    _viewBgTime.frame=frame;
     
     _lblNameBranch.text=event.branch.name;
     _lblContent.text=[NSString stringWithFormat:@"%@: %@",event.branch.name, event.title];
-    //    NSLog(@"[arrCoupons count]===%@",_coupon.branch.arrURLImages);
     [_imgCoverEvent setImageWithURL:[NSURL URLWithString:event.image]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
 }
 
