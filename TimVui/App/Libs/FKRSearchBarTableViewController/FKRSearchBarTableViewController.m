@@ -35,7 +35,6 @@
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes
 {
     if ((self = [super initWithNibName:nil bundle:nil])) {
-        
         _showSectionIndexes = showSectionIndexes;
         
         [self setDataForSearchTable:nil];
@@ -70,8 +69,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    CGRect frame=self.view.bounds;
+    frame.size.height-=44;
+    self.tableView = [[UITableView alloc] initWithFrame:frame];
+
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     

@@ -1467,6 +1467,7 @@
 				55C18031177C414800A57233 /* BranchProfileVC.h */,
 				55C18032177C414800A57233 /* BranchProfileVC.m */,
 				55C18033177C414800A57233 /* BranchProfileVC.xib */,
+				55F71983178D3FEB00C0535D /* SearchWithContactsVC */,
 				553AB68717D9D1FB006D2556 /* MapDirectionVC */,
 				551BB1CF178A9D590072FD81 /* CouponBranchProfileVC */,
 				5541283D177D2B4D00A46593 /* PhotoBrowser */,
@@ -1588,7 +1589,6 @@
 		55126B2B17D6D1CA00081C93 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				55F71983178D3FEB00C0535D /* SearchWithContactsVC */,
 				5598CF6D176FF153001C0C67 /* Notification- Camera */,
 				55657A49174F0D62002E83EC /* WelcomeVC */,
 				55BAED621709784F00CF3171 /* LeftMenuVC */,

@@ -18,6 +18,7 @@
 #import "NSDate-Utilities.h"
 #import "TVBranches.h"
 #import "TSMessage.h"
+#import "SIAlertView.h"
 @interface CoupBranchProfileVC ()
 {
 @private
@@ -425,12 +426,29 @@
 
 #pragma mark - IBAction
 -(void)getCouponCode:(id)s{
+
+    
     if([MFMessageComposeViewController canSendText]) {
-        MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-        picker.body = [NSString stringWithFormat:@"coupon [%@]",_coupon.syntax];
-        picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
-        picker.messageComposeDelegate = self;
-        [self.navigationController    presentModalViewController:picker animated:YES];
+        
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
+        
+        [alertView addButtonWithTitle:@"Tùy chọn OK"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+                                  picker.body = [NSString stringWithFormat:@"coupon [%@]",_coupon.syntax];
+                                  picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+                                  picker.messageComposeDelegate = self;
+                                  [self.navigationController    presentModalViewController:picker animated:YES];
+                              }];
+        
+        [alertView addButtonWithTitle:@"Bỏ qua"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        
+        [alertView show];
     }
 }
 

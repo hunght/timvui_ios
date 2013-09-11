@@ -46,6 +46,7 @@
 								<string key="NSFrame">{{58, 268}, {242, 25}}</string>
 								<reference key="NSSuperview" ref="154895063"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="985379797">
 									<int key="NSColorSpace">3</int>
@@ -379,6 +380,7 @@
 						<string key="pageControl">UIPageControl</string>
 						<string key="pagingScrollView">TVPagingScrollView</string>
 						<string key="viewNotify">UIView</string>
+						<string key="viewSlidePickSkin">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="btnAlbumPicker">
@@ -415,6 +417,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="viewNotify">
 							<string key="name">viewNotify</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewSlidePickSkin">
+							<string key="name">viewSlidePickSkin</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
 					</dictionary>

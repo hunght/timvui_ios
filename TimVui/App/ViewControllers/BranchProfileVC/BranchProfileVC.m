@@ -900,12 +900,27 @@
 #pragma mark - IBAction
 -(void)btnSMSButtonClicked:(UIButton*)sender{
     if([MFMessageComposeViewController canSendText]) {
-        TVCoupon* coupon=_branch.coupons.items[sender.tag];
-        MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-        picker.body = [NSString stringWithFormat:@"coupon [%@]",coupon.syntax];
-        picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
-        picker.messageComposeDelegate = self;
-        [self.navigationController    presentModalViewController:picker animated:YES];
+        
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
+        
+        [alertView addButtonWithTitle:@"Tùy chọn OK"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  TVCoupon* coupon=_branch.coupons.items[sender.tag];
+                                  MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+                                  picker.body = [NSString stringWithFormat:@"coupon [%@]",coupon.syntax];
+                                  picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+                                  picker.messageComposeDelegate = self;
+                                  [self.navigationController    presentModalViewController:picker animated:YES];
+                              }];
+        
+        [alertView addButtonWithTitle:@"Bỏ qua"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        
+        [alertView show];
     }
 }
 

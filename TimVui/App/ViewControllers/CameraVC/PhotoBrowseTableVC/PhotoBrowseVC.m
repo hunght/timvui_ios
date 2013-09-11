@@ -124,8 +124,8 @@
     NSString* strJSON = [[NSString alloc] initWithData:_responseData
                                               encoding:NSUTF8StringEncoding] ;
     NSDictionary* dic=[strJSON objectFromJSONString];
-//    NSLog(@"_responseData===%@",[NSString stringWithUTF8String:[_responseData bytes]]);
-//    NSLog(@"dic=%@",[dic objectForKey:@"status"]);
+    NSLog(@"strJSON===%@",strJSON);
+    NSLog(@"dic=%@",[dic objectForKey:@"status"]);
     
     if ([dic safeIntegerForKey:@"status"]==200){
         if (_swichFacebook.on) {
@@ -146,6 +146,7 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+     NSLog(@"error =%@",error);
     [SVProgressHUD dismiss];
     [TSMessage showNotificationInViewController:self
                                       withTitle:@"Đăng ảnh thất bại"
