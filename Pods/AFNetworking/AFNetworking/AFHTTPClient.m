@@ -823,7 +823,6 @@ static inline NSString * AFMultipartFormFinalBoundary() {
 {
     NSMutableDictionary *mutableHeaders = [NSMutableDictionary dictionary];
     [mutableHeaders setValue:[NSString stringWithFormat:@"form-data; name=\"%@\"", name] forKey:@"Content-Disposition"];
-    
     [self appendPartWithHeaders:mutableHeaders body:data];
 }
 
@@ -835,7 +834,6 @@ static inline NSString * AFMultipartFormFinalBoundary() {
     NSMutableDictionary *mutableHeaders = [NSMutableDictionary dictionary];
     [mutableHeaders setValue:[NSString stringWithFormat:@"form-data; name=\"%@\"; filename=\"%@\"", name, fileName] forKey:@"Content-Disposition"];
     [mutableHeaders setValue:mimeType forKey:@"Content-Type"];
-    
     [self appendPartWithHeaders:mutableHeaders body:data];
 }
 

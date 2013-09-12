@@ -56,7 +56,8 @@
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-
+    _isHiddenYES=YES;
+    [self showMenuExtraWithoutTableView];
 }
 
 - (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
@@ -164,8 +165,8 @@
         
         self.lblKaraoke.text=[NSString stringWithFormat:@"(%d)",_branch.karaokes.items.count];
         _viewController=viewController;
-        _isHiddenYES=YES;
-        [self showMenuExtraWithoutTableView];
+        
+
     }
 
     return self;

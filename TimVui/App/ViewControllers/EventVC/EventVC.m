@@ -125,7 +125,7 @@ static const NSString* distanceMapSearch=@"100";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
     BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
-    [branchProfileVC setOpenTab:kOpenEventTab];
+    branchProfileVC.isWantToShowEvents=YES;
     branchProfileVC.branchID=[[arrEvents[indexPath.row] branch] branchID] ;
     [self.navigationController pushViewController:branchProfileVC animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

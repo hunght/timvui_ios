@@ -60,7 +60,7 @@
 #pragma mark - ViewController
 
 - (void)getBranchesForView {
-    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
+//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
     NSDictionary *params = nil;
     CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
     
@@ -83,6 +83,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.trackedViewName = @"Trang chủ";
+    
     _lastDistanceSearch=kDistanceSearchMapDefault.floatValue;
     // The LocationPickerView can be created programmatically (see below) or
     // using Storyboards/XIBs (see Storyboard file).
@@ -131,7 +133,7 @@
             [alert setDelegate:self];
             [alert setDataSource:self];
             [alert show];
-            NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
+//            NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
         }
     }else
         [self getBranchesForView];
@@ -361,7 +363,7 @@
     [params setValue:paramsForSearch  forKey:@"params"];
     [params setValue:kSearchBranchLimit  forKey:@"limit"];
     [params setValue:@"0"  forKey:@"offset"];
-    NSLog(@"%@",params);
+    NSLog(@"params == %@",params);
     
     if (!self.branches) {
         self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
@@ -387,6 +389,7 @@
                 [_locationPickerView expandMapView:nil];
                 [self alertWhenNoDataLoaded];
             }
+            
             _lastUpdate=[NSDate date];
             [_locationPickerView.tableView reloadData];
             [weakSelf showBranchOnMap];

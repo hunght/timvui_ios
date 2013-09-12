@@ -12,7 +12,8 @@
 #import "SearchVC.h"
 #import "TVBranches.h"
 #import "SBTableAlert.h"
-@interface MapTableViewController : UIViewController<LocationPickerViewDelegate,UITableViewDataSource,SBTableAlertDelegate, SBTableAlertDataSource, UITableViewDelegate,SearchVCDelegate,GMSMapViewDelegate>
+
+@interface MapTableViewController : GAITrackedViewController<LocationPickerViewDelegate,UITableViewDataSource,SBTableAlertDelegate, SBTableAlertDataSource, UITableViewDelegate,SearchVCDelegate,GMSMapViewDelegate>
 @property (nonatomic, strong) LocationPickerView *locationPickerView;
 @property(nonatomic,strong)TVBranches *branches;
 @property(nonatomic,assign)CLLocationCoordinate2D lastPosition;

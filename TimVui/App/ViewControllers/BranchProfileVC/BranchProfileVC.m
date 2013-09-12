@@ -502,11 +502,11 @@
         BOOL isFistTime=YES;
         
         for (NSDictionary* dicStyle in [_branch.styleFoody allValues]) {
-            NSLog(@"dicStyle = %@",dicStyle);
+//            NSLog(@"dicStyle = %@",dicStyle);
             NSString* strStyleFoodyRow=@"";
             if ([[dicStyle valueForKey:@"params"] count]>0) {
                 for (NSDictionary* dicStyleDeeper in [dicStyle valueForKey:@"params"] ){
-                    NSLog(@"dicStyleDeeper = %@",dicStyleDeeper);
+//                    NSLog(@"dicStyleDeeper = %@",dicStyleDeeper);
                     strStyleFoodyRow=[strStyleFoodyRow stringByAppendingFormat:@"%@-%@",[dicStyle valueForKey:@"name"],[dicStyleDeeper valueForKey:@"name"]];
                 }
             }else
@@ -579,28 +579,11 @@
     
     [self addSpecPointViewWithHeight:height];
 }
--(void)openTabNow{
-    switch (_openTab) {
-        case kOpenEventTab:
-        {
-            [_extraBranchView showExtraView:YES];
-            [_extraBranchView eventButtonClicked:nil];
-        }
-            break;
-        case kOpenCouponTab:
-        {
-            [_extraBranchView showExtraView:NO];
-            [_extraBranchView eventButtonClicked:nil];
-        }
-            break;
-        default:
-            break;
-    }
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.trackedViewName=@"Chi tiết branch";
     //Setbackground color dot line
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
@@ -627,7 +610,7 @@
 //        NSDictionary *params = @{@"id": @"1"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
-                NSLog(@"data===%@",data);
+//                NSLog(@"data===%@",data);
                 NSDictionary* dict=[[data safeArrayForKey:@"data"] objectAtIndex:0];
                 _branch=branches[0];
                 [self showInfoView];
@@ -639,10 +622,10 @@
                 }
                 
                 if(![[GlobalDataUser sharedAccountClient].recentlyBranches objectForKey:_branch.branchID])[[GlobalDataUser sharedAccountClient].recentlyBranches setObject:dict forKey:_branch.branchID];
-                
-                [self openTabNow];
-                
-                
+                if (_isWantToShowEvents) {
+                    [_extraBranchView showExtraView:YES];
+                    [_extraBranchView eventButtonClicked:nil];
+                }
             });
         } failure:^(GHResource *instance, NSError *error) {
             dispatch_async( dispatch_get_main_queue(),^ {
@@ -899,6 +882,10 @@
 
 #pragma mark - IBAction
 -(void)btnSMSButtonClicked:(UIButton*)sender{
+    [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết branch"
+                                                     withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
+                                                      withLabel:@"Chi tiết branch- Gửi SMS nhận coupon"
+                                                      withValue:[NSNumber numberWithInt:0]];
     if([MFMessageComposeViewController canSendText]) {
         
         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
@@ -942,9 +929,9 @@
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
                             _branch.branchID,@"branch_id",
                             nil];
-    NSLog(@"%@",params);
+//    NSLog(@"%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
+//        NSLog(@"%@",JSON);
         int i=[JSON safeIntegerForKey:@"status"];
         if (i==200) {
             [[GlobalDataUser sharedAccountClient].followBranchesSet addObject:_branch.branchID];

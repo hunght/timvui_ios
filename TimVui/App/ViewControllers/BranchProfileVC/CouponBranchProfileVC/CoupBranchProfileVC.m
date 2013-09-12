@@ -426,7 +426,10 @@
 
 #pragma mark - IBAction
 -(void)getCouponCode:(id)s{
-
+    [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết coupon"
+                                                     withAction:@"Chi tiết coupon- Gửi SMS nhận coupon"
+                                                      withLabel:@"Chi tiết coupon- Gửi SMS nhận coupon"
+                                                      withValue:[NSNumber numberWithInt:0]];
     
     if([MFMessageComposeViewController canSendText]) {
         

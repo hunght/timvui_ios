@@ -9,7 +9,7 @@
 #import "GAI.h"
 
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
-#define  kTrackingId @"UA-37079754-1"
+#define  kTrackingId @"UA-43969947-1"
 
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"

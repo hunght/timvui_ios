@@ -150,7 +150,7 @@
 }
 
 + (CGFloat)heightForCellWithPost:(TVBranch *)branch {
-    return ( 70+15+ (branch.events.items.count+ branch.coupons.items.count)* 20);
+    return ( 70+15+ (branch.events.items.count+ branch.coupons.items.count)* 22);
 }
 
 #pragma mark - UIView

@@ -704,7 +704,7 @@ static const CGFloat kMinImageScale = 1.0f;
 - (void) setupImageViewerWithImageURL:(NSURL*)url{
     self.userInteractionEnabled = YES;
     MHFacebookImageViewerTapGestureRecognizer *  tapGesture = [[MHFacebookImageViewerTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
-    NSLog(@"%@",url);
+//    NSLog(@"%@",url);
     tapGesture.imageURL = url;
     tapGesture.openingBlock = nil;
     tapGesture.closingBlock = nil;
@@ -716,7 +716,7 @@ static const CGFloat kMinImageScale = 1.0f;
 - (void) setupImageViewerWithImageURL:(NSURL *)url onOpen:(MHFacebookImageViewerOpeningBlock)open onClose:(MHFacebookImageViewerClosingBlock)close{
     self.userInteractionEnabled = YES;
     MHFacebookImageViewerTapGestureRecognizer *  tapGesture = [[MHFacebookImageViewerTapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap:)];
-    NSLog(@"%@",url);
+//    NSLog(@"%@",url);
     tapGesture.imageURL = url;
     tapGesture.openingBlock = open;
     tapGesture.closingBlock = close;

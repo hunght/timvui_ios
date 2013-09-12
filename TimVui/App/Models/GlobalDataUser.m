@@ -108,7 +108,7 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 -(NSDictionary *)dicCity{
-    NSLog(@"SharedAppDelegate.getCityDistrictData=%@",SharedAppDelegate.getCityDistrictData);
+//    NSLog(@"SharedAppDelegate.getCityDistrictData=%@",SharedAppDelegate.getCityDistrictData);
     if (_dicCity) {
         return _dicCity;
     }else if (_user.city_id) {

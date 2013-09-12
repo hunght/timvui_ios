@@ -65,7 +65,7 @@
         }
         
         NSArray* sorted = [array sortedArrayUsingSelector: @selector(compare:)];
-        NSLog(@"tvEvent===%@",_title);
+//        NSLog(@"tvEvent===%@",_title);
         for (NSNumber* num in sorted) {
             int dayCount=num.intValue-[date weekday];
             if (dayCount>=0) {

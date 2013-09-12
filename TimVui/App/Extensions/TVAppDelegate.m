@@ -40,7 +40,8 @@
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 120;
     // Optional: set debug to YES for extra debugging information.
-    [GAI sharedInstance].debug = NO;
+    [GAI sharedInstance].debug = YES;
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Create tracker instance.
     _tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
     [GAI sharedInstance].defaultTracker = _tracker;
@@ -263,7 +264,7 @@
     // Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-
+    /*
     // List all fonts on iPhone
     NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
     NSArray *fontNames;
@@ -279,7 +280,7 @@
             NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
         }
     }
-    
+    */
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];

@@ -9,16 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "TVBranch.h"
-typedef enum {
-    kOpenNoneTab=0,
-    kOpenCouponTab,
-    kOpenEventTab
-}kOpenTab;
-@class TVExtraBranchView;
-@interface BranchProfileVC : UIViewController<UIWebViewDelegate,MFMessageComposeViewControllerDelegate>
-@property (retain, nonatomic) TVBranch *branch;
 
-@property(assign, nonatomic) kOpenTab openTab;
+@class TVExtraBranchView;
+@interface BranchProfileVC : GAITrackedViewController<UIWebViewDelegate,MFMessageComposeViewControllerDelegate>
+@property (retain, nonatomic) TVBranch *branch;
+@property (assign, nonatomic) BOOL isWantToShowEvents;
 @property(strong, nonatomic)TVExtraBranchView *extraBranchView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imgBranchCover;

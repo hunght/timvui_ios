@@ -5,7 +5,7 @@
 @implementation TVCuisines
 
 - (void)setValues:(id)values {
-    NSLog(@"TVCuisines====%@",values);
+//    NSLog(@"TVCuisines====%@",values);
     self.count=[values safeIntegerForKey:@"count"];
     self.items = [NSMutableArray array];
 	for (NSString*key in [values allKeys]) {
