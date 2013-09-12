@@ -67,6 +67,7 @@
         [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
         [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         [self.locationManager startMonitoringSignificantLocationChanges];
+
         [self performSelector:@selector(checkLocationServiceAvaible) withObject:nil afterDelay:1];
     }
 }

@@ -14,7 +14,7 @@
 #import "Utilities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
-
+@class TVBranch;
 @interface TVAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
@@ -27,6 +27,10 @@
 @property (retain, nonatomic) NSDictionary *getPublicLocationData;
 @property (retain, nonatomic) NSDictionary *getPriceAvgData;
 @property (retain, nonatomic) NSDictionary *getCatData;
+
+@property (retain, nonatomic) TVBranch *nearlyBranch;
+@property (retain, nonatomic) TVBranch *hasCouponBranch;
+
 @property(nonatomic,assign)BOOL isLoadWhenConnectedYES;
 @property(nonatomic,assign)BOOL isHasInternetYES;
 -(void)showNotificationAboutNearlessBranch:(TVBranch*)branch;

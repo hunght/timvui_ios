@@ -40,8 +40,7 @@
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 120;
     // Optional: set debug to YES for extra debugging information.
-    [GAI sharedInstance].debug = YES;
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    [GAI sharedInstance].debug = NO;
     // Create tracker instance.
     _tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
     [GAI sharedInstance].defaultTracker = _tracker;
@@ -109,26 +108,25 @@
 }
 
 -(void)showNotificationWithBranch:(TVBranch*)branch{
-
-    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name goWithCamera:^{
-        [SharedAppDelegate.menuVC cameraButtonClickedWithNav:_slidingViewController.topViewController.navigationController andWithBranch:branch];
-    } withComment:^{
-        [SharedAppDelegate.menuVC commentButtonClickedWithNav:_slidingViewController.topViewController.navigationController andWithBranch:branch];
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:branch.name  goWithClickView:^(){
+        CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
+        specBranchVC.branch=branch;
+        
+        //        specBranchVC.coupon=branch.coupons.items[0];
+        [_slidingViewController.topViewController presentModalViewController:specBranchVC animated:YES];
     }];
-    
     [notificationView openButtonClicked:nil];
 }
 
 -(void)showNotificationAboutNearlessBranch:(TVBranch*)branch
 {
-    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:branch.name  goWithClickView:^(){
-        CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
-        specBranchVC.branch=branch;
-//        specBranchVC.coupon=branch.coupons.items[0];
-        [_slidingViewController.topViewController presentModalViewController:specBranchVC animated:YES];
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name goWithCamera:^{
+        [SharedAppDelegate.menuVC cameraButtonClickedWithNav:_slidingViewController.modalViewController.navigationController andWithBranch:branch];
+    } withComment:^{
+        [SharedAppDelegate.menuVC commentButtonClickedWithNav:_slidingViewController.navigationController andWithBranch:branch];
     }];
+    
     [notificationView openButtonClicked:nil];
-
 }
 
 
@@ -305,11 +303,11 @@
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
-    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].recentlyBranches);
+//    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].recentlyBranches);
     
     [[NSUserDefaults standardUserDefaults] setObject:[[GlobalDataUser sharedAccountClient].recentlyBranches JSONString] forKey:kBranchIDs];
+//    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kBranchIDs]);
     
-    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kBranchIDs]);
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -322,6 +320,13 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    if (_nearlyBranch) {
+        [self showNotificationAboutNearlessBranch:_nearlyBranch];
+        _nearlyBranch=nil;
+    }else if (_hasCouponBranch) {
+        [self showNotificationAboutNearlessBranch:_hasCouponBranch];
+        _hasCouponBranch=nil;
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

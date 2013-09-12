@@ -140,8 +140,7 @@
         [self.utility addSubview:homeIcon];
         lineHeight+=lblAddress.frame.size.height+5;
     }
-   
-    
+
     CGRect frame=self.utility.frame;
     frame.size.height+=(branch.events.items.count+ branch.coupons.items.count)*20;
     [self.utility setFrame:frame];

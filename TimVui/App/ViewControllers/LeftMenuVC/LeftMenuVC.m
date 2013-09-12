@@ -255,10 +255,11 @@ enum {
         } else {
             loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
         }
-        loginVC.isPushNaviYES=YES;
-        [nav pushViewController:loginVC animated:YES];
+        UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:loginVC];
+        [self presentModalViewController:navController animated:YES];
+        
         [loginVC goWithDidLogin:^{
-            [self showCameraActionWithBranch:branch];
+            [self performSelector:@selector(showCameraActionWithBranch:) withObject:branch afterDelay:1];
         } thenLoginFail:^{
             
         }];
@@ -317,10 +318,10 @@ enum {
             loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
         }
         
-        loginVC.isPushNaviYES=YES;
-        [nav pushViewController:loginVC animated:YES];
+        UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:loginVC];
+        [self presentModalViewController:navController animated:YES];
         [loginVC goWithDidLogin:^{
-            [self showCommentActionWithBranch:branch];
+            [self performSelector:@selector(showCommentActionWithBranch:) withObject:branch afterDelay:1];
         } thenLoginFail:^{
             
         }];

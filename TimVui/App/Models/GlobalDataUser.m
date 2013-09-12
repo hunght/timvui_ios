@@ -34,14 +34,14 @@ static GlobalDataUser *_sharedClient = nil;
     {
         _user=[[GHUser alloc] init];
         _locationManager = [[CLLocationManager alloc] init];
-        [_locationManager setDelegate:_sharedClient];
+        [_locationManager setDelegate:self];
         [_locationManager setDistanceFilter:kCLDistanceFilterNone];
         [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         [self checkAndGetPersistenceAccount];
         _dicCatSearchParam=[[NSMutableArray alloc] init];
         _dicPriceSearchParam=[[NSMutableArray alloc] init];
         _recentlyBranches=[[NSMutableDictionary alloc] init];
-        [_locationManager startMonitoringSignificantLocationChanges];
+        
         
     }
     return self;
@@ -100,6 +100,7 @@ static GlobalDataUser *_sharedClient = nil;
               }];
     
     DJLog(@"Background mode");
+    [self checkHasNearlyBranchIsInBackGround:YES];
     
     if(bgTask != UIBackgroundTaskInvalid) {
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
@@ -147,6 +148,52 @@ static GlobalDataUser *_sharedClient = nil;
 
 #pragma mark CLLocationManagerDelegate
 
+- (void)checkHasNearlyBranchIsInBackGround:(BOOL)isInBackground
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString* strDate=[defaults valueForKey:kLastUpdatedLocationSendingToServer];
+    if (strDate) {
+        ;
+        NSTimeInterval ti = -[[NSDate dateFromString:strDate] timeIntervalSinceDate:[NSDate date]];
+        int minutes=ti / D_MINUTE;
+        if (minutes<20) {
+#warning ignore check time to send server
+//            return;
+        }
+    }
+    
+    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+    NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
+    [params setValue:@"1"  forKey:@"limit"];
+    [params setValue:@"0"  forKey:@"offset"];
+    [params setValue:@"short"  forKey:@"infoType"];
+    [params setValue:@"20"  forKey:@"distance"];
+    NSLog(@"_dicCity=%@",_dicCity);
+    [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
+    NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
+    [params setValue:strLatLng forKey:@"latlng"];
+    [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            
+            [defaults setValue:[[NSDate date] stringWithDefautFormat] forKey:kLastUpdatedLocationSendingToServer];
+            [defaults synchronize];
+            // View map with contain all search items
+            if (branches.count>0) {
+                if (isInBackground) {
+                     SharedAppDelegate.nearlyBranch=branches[0];
+                }else{
+                    [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
+                }
+               
+                
+            }
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+        });
+    }];
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     _userLocation = newLocation.coordinate;
@@ -158,40 +205,7 @@ static GlobalDataUser *_sharedClient = nil;
     if(isInBackground) {
         [self sendBackgroundLocationToServer:_userLocation];
     }else{
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString* strDate=[defaults valueForKey:kLastUpdatedLocationSendingToServer];
-        if (strDate) {
-            ;
-            NSTimeInterval ti = -[[NSDate dateFromString:strDate] timeIntervalSinceDate:[NSDate date]];
-            int minutes=ti / D_MINUTE;
-            if (minutes<20) {
-                return;
-            }
-        }
-
-        TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
-        NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
-        [params setValue:@"1"  forKey:@"limit"];
-        [params setValue:@"0"  forKey:@"offset"];
-        [params setValue:@"short"  forKey:@"infoType"];
-        [params setValue:@"20"  forKey:@"distance"];
-        [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
-        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
-        [params setValue:strLatLng forKey:@"latlng"];
-        [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-            dispatch_async(dispatch_get_main_queue(),^ {
-                
-                [defaults setValue:[[NSDate date] stringWithDefautFormat] forKey:kLastUpdatedLocationSendingToServer];
-                [defaults synchronize];
-                // View map with contain all search items
-                if (branches.count>0) {
-                    [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
-                }
-            });
-        } failure:^(GHResource *instance, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(),^ {
-            });
-        }];
+        [self checkHasNearlyBranchIsInBackGround:NO];
     }
 }
 
