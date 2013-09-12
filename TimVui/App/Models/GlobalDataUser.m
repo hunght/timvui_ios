@@ -180,6 +180,13 @@ static GlobalDataUser *_sharedClient = nil;
             // View map with contain all search items
             if (branches.count>0) {
                 if (isInBackground) {
+                    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                    localNotif.alertBody=@"Nhà hàng ngay gần bạn !";
+                    localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
+                    localNotif.soundName = @"alarmsound.caf";
+                    localNotif.applicationIconBadgeNumber = 0;
+                    localNotif.userInfo = data;
+                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
                      SharedAppDelegate.nearlyBranch=branches[0];
                 }else{
                     [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
