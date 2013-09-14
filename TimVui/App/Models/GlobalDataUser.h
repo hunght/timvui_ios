@@ -46,4 +46,6 @@ enum {
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd;
 -(void)userLogout;
 -(void)setFollowBranches;
+-(void)startSignificationLocation;
+-(void)stopSignificationLocation;
 @end

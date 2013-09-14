@@ -69,7 +69,6 @@
     lblBranchName.text=_branch.name;
     [genarateInfoView addSubview:lblBranchName];
     
-    
     UILabel *lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,9+4, 60, 15)];
     lblDistance.backgroundColor = [UIColor clearColor];
     lblDistance.textColor = [UIColor grayColor];
@@ -296,11 +295,9 @@
             lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
             lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[coupon.start stringWithFormat:@"dd/MM/yy"], [coupon.end stringWithFormat:@"dd/MM/yy"]];
             [infoCouponBranch addSubview:lblDetailInfoRow];
-            
-            
+                        
             *height_p=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height+10;
-            
-            
+
             UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 300, 46)];
             [btnPostPhoto setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
             [btnPostPhoto setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
@@ -436,7 +433,6 @@
     }else{
         [likeButton setSelected:NO];
     }
-    
     
     int height= likeButton.frame.origin.y+likeButton.frame.size.height+10;
     

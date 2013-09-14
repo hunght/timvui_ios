@@ -86,8 +86,6 @@
     self.review = [[[dict safeArrayForKey:@"review"] lastObject] valueForKey:@"content"];
 }
 
-
-
 - (NSString *)shortenRef:(NSString *)longRef {
 	return [longRef lastPathComponent];
 }

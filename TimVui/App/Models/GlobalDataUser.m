@@ -13,6 +13,13 @@
 #import "NSDictionary+Extensions.h"
 #import "NSDate-Utilities.h"
 #import "TVBranches.h"
+
+@interface GlobalDataUser(){
+    NSTimer *myTimer;
+}
+
+@end
+
 @implementation GlobalDataUser
 
 
@@ -33,10 +40,7 @@ static GlobalDataUser *_sharedClient = nil;
     if ((self = [super init]))
     {
         _user=[[GHUser alloc] init];
-        _locationManager = [[CLLocationManager alloc] init];
-        [_locationManager setDelegate:self];
-        [_locationManager setDistanceFilter:kCLDistanceFilterNone];
-        [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        
         [self checkAndGetPersistenceAccount];
         _dicCatSearchParam=[[NSMutableArray alloc] init];
         _dicPriceSearchParam=[[NSMutableArray alloc] init];
@@ -45,6 +49,40 @@ static GlobalDataUser *_sharedClient = nil;
         
     }
     return self;
+}
+-(void)stopSignificationLocation{
+    [_locationManager stopMonitoringSignificantLocationChanges];
+    if (myTimer&& [myTimer isValid]) {
+        [myTimer invalidate];
+        myTimer = nil;
+    }
+}
+-(void)startSignificationLocation{
+    
+    UIBackgroundTaskIdentifier bgTask = 0;
+    UIApplication  *app = [UIApplication sharedApplication];
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:bgTask];
+    }];
+    if (_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager setDelegate:self];
+        [_locationManager setDistanceFilter:kCLDistanceFilterNone];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+    }
+    if (myTimer&& [myTimer isValid]) {
+        [myTimer invalidate];
+        myTimer = nil;
+    }
+    myTimer = [NSTimer scheduledTimerWithTimeInterval:LOCATION_UPDATE_TIME target:self
+                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
+    if(bgTask != UIBackgroundTaskInvalid) {
+        [[UIApplication sharedApplication] endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
+    }
+}
+-(void)locationManagerStart{
+    [_locationManager startMonitoringSignificantLocationChanges];
 }
 
 -(void)savePersistenceAccountWithData:(NSDictionary*)JSON{
@@ -92,7 +130,7 @@ static GlobalDataUser *_sharedClient = nil;
     [defaults synchronize];
 }
 
-- (void)sendBackgroundLocationToServer:(CLLocationCoordinate2D )location {
+- (void)sendBackgroundLocationToServer {
     UIBackgroundTaskIdentifier bgTask = 0;
     bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:
               ^{
@@ -150,17 +188,6 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)checkHasNearlyBranchIsInBackGround:(BOOL)isInBackground
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString* strDate=[defaults valueForKey:kLastUpdatedLocationSendingToServer];
-    if (strDate) {
-        ;
-        NSTimeInterval ti = -[[NSDate dateFromString:strDate] timeIntervalSinceDate:[NSDate date]];
-        int minutes=ti / D_MINUTE;
-        if (minutes<20) {
-#warning ignore check time to send server
-//            return;
-        }
-    }
     
     TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
@@ -174,9 +201,6 @@ static GlobalDataUser *_sharedClient = nil;
     [params setValue:strLatLng forKey:@"latlng"];
     [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            
-            [defaults setValue:[[NSDate date] stringWithDefautFormat] forKey:kLastUpdatedLocationSendingToServer];
-            [defaults synchronize];
             // View map with contain all search items
             if (branches.count>0) {
                 if (isInBackground) {
@@ -185,14 +209,12 @@ static GlobalDataUser *_sharedClient = nil;
                     localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
                     localNotif.soundName = @"alarmsound.caf";
                     localNotif.applicationIconBadgeNumber = 0;
-                    localNotif.userInfo = data;
+//                    localNotif.userInfo = data;
                     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
                      SharedAppDelegate.nearlyBranch=branches[0];
                 }else{
                     [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
                 }
-               
-                
             }
         });
     } failure:^(GHResource *instance, NSError *error) {
@@ -203,23 +225,28 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
     _userLocation = newLocation.coordinate;
     BOOL isInBackground = NO;
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
         isInBackground = YES;
     }
-    
-    if(isInBackground) {
-        [self sendBackgroundLocationToServer:_userLocation];
-    }else{
-        [self checkHasNearlyBranchIsInBackGround:NO];
+    double distance=[self distanceFromAddress:newLocation.coordinate];
+    if ( distance<100) {
+        if(isInBackground) {
+            [self sendBackgroundLocationToServer];
+        }else{
+            [self checkHasNearlyBranchIsInBackGround:NO];
+        }
     }
+    [_locationManager stopMonitoringSignificantLocationChanges];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     
     NSLog(@"%@",error);
+    [_locationManager stopMonitoringSignificantLocationChanges];
 }
 
 @end

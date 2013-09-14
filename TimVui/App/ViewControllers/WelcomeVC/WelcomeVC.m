@@ -122,9 +122,6 @@
     SharedAppDelegate.getCityDistrictData=[[NSUserDefaults standardUserDefaults] valueForKey:kGetCityDistrictData];
     
     [self getDataParamsPath:@"data/getCityDistrictData" laterThanDays:7 checkDictionary:SharedAppDelegate.getCityDistrictData forKey:kGetCityDistrictData forData:data];
-    
-    
-    
 }
 
 #pragma mark CLLocationManagerDelegate

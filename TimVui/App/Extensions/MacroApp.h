@@ -10,10 +10,9 @@
 
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
-
+#define LOCATION_UPDATE_TIME  60*5//60*15
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"
-#define kLastUpdatedLocationSendingToServer                    @"kLastUpdatedLocationSendingToServer"
 
 // get params from server
 #define kGetCityDataUser                    @"kGetCityDataUser"

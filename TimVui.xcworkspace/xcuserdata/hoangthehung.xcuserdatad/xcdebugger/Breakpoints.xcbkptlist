@@ -189,19 +189,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
-         timestampString = "400662769.811554"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "769"
-         endingLineNumber = "769"
-         landmarkName = "-scrollViewDidScroll:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/WelcomeVC/WelcomeVC.m"
          timestampString = "400663724.030929"
          startingColumnNumber = "9223372036854775807"
@@ -313,6 +300,19 @@
          startingLineNumber = "55"
          endingLineNumber = "55"
          landmarkName = "-initNotificationView"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
+         timestampString = "400729199.406259"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "122"
+         endingLineNumber = "122"
+         landmarkName = "-initWithFrame:andBranch:withViewController:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
