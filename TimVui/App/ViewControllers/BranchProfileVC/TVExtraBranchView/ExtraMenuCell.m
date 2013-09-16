@@ -30,7 +30,6 @@
 @implementation ExtraMenuCell {
 }
 
-
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
     [l setMasksToBounds:YES];
     [l setCornerRadius:radius];

@@ -28,7 +28,7 @@
 @property (retain, nonatomic) NSMutableArray *dicCatSearchParam;
 @property (retain,nonatomic) NSArray* priceArr;
 @property (retain,nonatomic) NSArray* catArr;
-@property (retain, nonatomic) NSMutableDictionary* recentlyBranches;
+@property (retain, nonatomic) NSMutableArray* recentlyBranches;
 @property (retain, nonatomic) NSDictionary* receivedCoupons;
 @property (assign, nonatomic) int currentSearchParam;
 @property (retain, nonatomic) NSMutableSet* followBranchesSet;

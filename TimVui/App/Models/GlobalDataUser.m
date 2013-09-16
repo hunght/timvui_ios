@@ -44,7 +44,7 @@ static GlobalDataUser *_sharedClient = nil;
         [self checkAndGetPersistenceAccount];
         _dicCatSearchParam=[[NSMutableArray alloc] init];
         _dicPriceSearchParam=[[NSMutableArray alloc] init];
-        _recentlyBranches=[[NSMutableDictionary alloc] init];
+        _recentlyBranches=[[NSMutableArray alloc] init];
         
         
     }
@@ -83,6 +83,10 @@ static GlobalDataUser *_sharedClient = nil;
 }
 -(void)locationManagerStart{
     [_locationManager startMonitoringSignificantLocationChanges];
+     [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
+}
+-(void)locationManagerStop{
+    [_locationManager stopMonitoringSignificantLocationChanges];
 }
 
 -(void)savePersistenceAccountWithData:(NSDictionary*)JSON{
@@ -188,7 +192,6 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)checkHasNearlyBranchIsInBackGround:(BOOL)isInBackground
 {
-    
     TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
     [params setValue:@"1"  forKey:@"limit"];
@@ -219,6 +222,17 @@ static GlobalDataUser *_sharedClient = nil;
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            if (isInBackground) {
+                UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                localNotif.alertBody=@"Lỗi rồi lỗi rồi!";
+                localNotif.alertAction = @"Lỗi rồi";
+                localNotif.soundName = @"alarmsound.caf";
+                localNotif.applicationIconBadgeNumber = 0;
+                //                    localNotif.userInfo = data;
+                [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+                SharedAppDelegate.nearlyBranch=branches[0];
+            }
+            [self stopSignificationLocation];
         });
     }];
 }

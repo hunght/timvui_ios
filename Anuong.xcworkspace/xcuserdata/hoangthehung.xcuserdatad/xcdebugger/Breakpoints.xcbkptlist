@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-         timestampString = "400820634.171211"
+         timestampString = "400998991.620167"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "331"
-         endingLineNumber = "331"
+         startingLineNumber = "332"
+         endingLineNumber = "332"
          landmarkName = "-applicationWillEnterForeground:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,50 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "400823330.033207"
+         timestampString = "400828004.271558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "228"
-         endingLineNumber = "228"
-         landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "400823330.033207"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "77"
-         endingLineNumber = "77"
-         landmarkName = "-startSignificationLocation"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "400823330.033207"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
-         landmarkName = "-locationManagerStart"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "400823330.033207"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "249"
-         endingLineNumber = "249"
+         startingLineNumber = "263"
+         endingLineNumber = "263"
          landmarkName = "-locationManager:didFailWithError:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,12 +34,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "400823293.547652"
+         timestampString = "400828004.271558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "67"
-         endingLineNumber = "67"
-         landmarkName = "-startSignificationLocation"
+         startingLineNumber = "256"
+         endingLineNumber = "256"
+         landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/WelcomeVC/WelcomeVC.m"
+         timestampString = "400994884.657321"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
+         landmarkName = "-getPublicIPFromServer:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/RecentlyBranchListVC/RecentlyBranchListVC.m"
+         timestampString = "400997792.409229"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "76"
+         endingLineNumber = "76"
+         landmarkName = "-postGetBranches"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

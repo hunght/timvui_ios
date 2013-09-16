@@ -583,7 +583,7 @@
     //Setbackground color dot line
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
-    UIButton* shareButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    UIButton*shareButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [shareButton setImage:[UIImage imageNamed:@"img_profile_branch_share_button"] forState:UIControlStateNormal];
     //    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -617,12 +617,28 @@
                     [self.view addSubview:_extraBranchView];
                 }
                 
-                if(![[GlobalDataUser sharedAccountClient].recentlyBranches objectForKey:_branch.branchID])[[GlobalDataUser sharedAccountClient].recentlyBranches setObject:dict forKey:_branch.branchID];
+                NSMutableArray* arrRecentlyBranches=[GlobalDataUser sharedAccountClient].recentlyBranches;
+                
+                for (NSDictionary* dic in arrRecentlyBranches) {
+//                    NSLog(@"dic = %@",[dic safeStringForKey:@"id"]);
+                    if ([[dic safeStringForKey:@"id"] isEqualToString:_branch.branchID]) {
+                        [arrRecentlyBranches removeObject:dic];
+                        break;
+                    }
+                }
+                
+                if (arrRecentlyBranches.count>kLimitNumRecentlyBranches) {
+                    [arrRecentlyBranches removeLastObject];
+                }
+                
+                [arrRecentlyBranches insertObject:dict atIndex:0];
+                
                 if (_isWantToShowEvents) {
                     [_extraBranchView showExtraView:YES];
                     [_extraBranchView eventButtonClicked:nil];
                 }
             });
+            
         } failure:^(GHResource *instance, NSError *error) {
             dispatch_async( dispatch_get_main_queue(),^ {
                 
@@ -641,10 +657,28 @@
     [self.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
     heightDefaultScroll=_imgBranchCover.frame.origin.y;
     sizeHeightDefaultScroll=_imgBranchCover.frame.size.height;
+    
+    UITapGestureRecognizer* mapTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                 action:@selector(scrollViewWasTap:)];
+    mapTapGesture.cancelsTouchesInView = YES;
+    mapTapGesture.delaysTouchesBegan = NO;
+    [self.scrollView addGestureRecognizer:mapTapGesture];
+    
+}
+
+- (void)scrollViewWasTap:(UITapGestureRecognizer*)sender
+{
+    if (!_viewSharing.isHidden) {
+
+            [self setViewSharingShow:NO];
+
+    }
+
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=NO;
+    _viewSharing.hidden=YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -680,6 +714,7 @@
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
     //    NSLog(@"scrollOffset=%f",scrollOffset);
+
     if (scrollOffset>0) {
         CGRect frame= _imgBranchCover.frame;
         frame.origin.y=heightDefaultScroll-scrollOffset*.8;
@@ -907,9 +942,25 @@
     }
 }
 
--(void)shareButtonClicked:(id)s{
-    SearchWithContactsVC *viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES withParam:nil];
-    [self.navigationController pushViewController:viewController animated:YES];
+- (void)setViewSharingShow:(BOOL)isSelected {
+    if (isSelected) {
+        _viewSharing.hidden=NO;
+        self.viewSharing.alpha = 0;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.viewSharing.alpha = 1;
+        }];
+    }else{
+        self.viewSharing.alpha = 1;
+        [UIView animateWithDuration:0.3 animations:^{
+            self.viewSharing.alpha = 0;
+            _viewSharing.hidden=YES;
+        }];
+    }
+}
+
+-(void)shareButtonClicked:(UIButton*)sender{
+    [self setViewSharingShow:_viewSharing.isHidden];
+    
 }
 
 -(void)viewDetailCouponClicked:(UIButton*)sender{
@@ -1047,7 +1098,29 @@
 - (void)viewDidUnload {
     [self setScrollView:nil];
     [self setImgBranchCover:nil];
+    [self setViewSharing:nil];
     [super viewDidUnload];
 }
 
+- (IBAction)smsButtonClicked:(id)sender {
+    SearchWithContactsVC *viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES withParam:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)fbButtonClicked:(id)sender {
+    NSMutableDictionary *params =
+    [NSMutableDictionary dictionaryWithObjectsAndKeys:
+     @"An example parameter", @"description",
+     @"https://developers.facebook.com/ios", @"link",
+     nil];
+    
+    [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                           parameters:params
+                                              handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {}
+     ];
+}
+
+- (IBAction)gmailButtonClicked:(id)sender {
+    
+}
 @end

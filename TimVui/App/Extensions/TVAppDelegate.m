@@ -206,13 +206,14 @@
     [Utilities iPhoneRetina];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString* jsonStr=[defaults objectForKey:kBranchIDs] ;
-    if (jsonStr) {
-        NSDictionary* dicIm=(NSDictionary*)[jsonStr objectFromJSONString];
-        //    [defaults removeObjectForKey:kBranchIDs];
-        NSMutableDictionary* dic=[[NSMutableDictionary alloc] initWithDictionary:dicIm];
-        if (!dic)
-            dic=[[NSMutableDictionary alloc] init];
-        [GlobalDataUser sharedAccountClient].recentlyBranches=dic;
+    if ([[jsonStr objectFromJSONString] isKindOfClass:[NSArray class]]) {
+        
+        NSArray* dicIm=(NSArray*)[jsonStr objectFromJSONString];
+        //[defaults removeObjectForKey:kBranchIDs];
+        NSMutableArray* dic=[[NSMutableArray alloc] initWithArray:dicIm];
+        if (dic){
+            [GlobalDataUser sharedAccountClient].recentlyBranches=dic;
+        }
     }
     
     _getParamData=[defaults valueForKey:kDataGetParamData];

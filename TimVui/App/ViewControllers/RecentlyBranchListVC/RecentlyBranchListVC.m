@@ -52,9 +52,9 @@
 
 -(void)postGetBranches{
     
-    if (SharedAppDelegate.isHasInternetYES) {
+    if (![SharedAppDelegate isConnected]) {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"short",@"infoType",
-                                [[GlobalDataUser sharedAccountClient].recentlyBranches allKeys],@"id" ,
+                                [[GlobalDataUser sharedAccountClient].recentlyBranches valueForKey:@"id"],@"id" ,
                                 nil];
         
         __unsafe_unretained __typeof(&*self)weakSelf = self;
@@ -72,7 +72,8 @@
         }];
         
     }else{
-        [_branches setValues:[[GlobalDataUser sharedAccountClient].recentlyBranches allValues]];
+        NSLog(@"[GlobalDataUser sharedAccountClient].recentlyBranches===%@",[GlobalDataUser sharedAccountClient].recentlyBranches);
+        [_branches setValues:[GlobalDataUser sharedAccountClient].recentlyBranches ];
         [self.tableView reloadData];
     }
     

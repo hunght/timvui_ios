@@ -29,9 +29,9 @@
 
 #define kNumberOfSkinsCamera   3
 #define kNumberLimitRefresh   @"10"
+#define kLimitNumRecentlyBranches   30
 
-
-#define SMS_NUMBER @"8088"//VDC
+#define SMS_NUMBER @"8188"//VDC
 
 #define kBranchIDs               @"kBranchIDs"
 #define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
