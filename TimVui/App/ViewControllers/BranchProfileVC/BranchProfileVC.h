@@ -11,7 +11,7 @@
 #import "TVBranch.h"
 
 @class TVExtraBranchView;
-@interface BranchProfileVC : GAITrackedViewController<UIWebViewDelegate,MFMessageComposeViewControllerDelegate>
+@interface BranchProfileVC : GAITrackedViewController<UIWebViewDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 @property (retain, nonatomic) TVBranch *branch;
 @property (assign, nonatomic) BOOL isWantToShowEvents;
 @property(strong, nonatomic)TVExtraBranchView *extraBranchView;

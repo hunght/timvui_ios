@@ -263,6 +263,14 @@
     // Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    UILocalNotification *localNotif = [launchOptions
+                                       objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+    if (localNotif) {
+        NSDictionary* dic=localNotif.userInfo;
+        NSLog(@" dic : %@", dic);
+    }
+    
     /*
     // List all fonts on iPhone
     NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];

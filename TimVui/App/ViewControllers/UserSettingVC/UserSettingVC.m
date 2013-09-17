@@ -9,6 +9,7 @@
 #import "UserSettingVC.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Utilities.h"
+#import "GlobalDataUser.h"
 @interface UserSettingVC ()
 
 @end
@@ -27,6 +28,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:@"isWantToOnVirateYES"]) {
+        [GlobalDataUser sharedAccountClient].isHasNearlyBranchesYES=[NSNumber numberWithBool:YES];
+        [GlobalDataUser sharedAccountClient].isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
+        [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
+        [GlobalDataUser sharedAccountClient].isWantToOnVirateYES=[NSNumber numberWithBool:YES];
+        [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
+    }else{
+        [[GlobalDataUser sharedAccountClient] getSettingNotificationUser];
+    }
+    [self updateValueForSwitch];
     CALayer* l=    _SuggestView.layer;
     [l setMasksToBounds:YES];
     [l setBorderWidth:1.0];
@@ -74,23 +86,41 @@
 }
 
 #pragma mark IBAction
+- (void)updateValueForSwitch {
+    [_swFavoriteCoupon setOn:[GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue];
+    [_swNearbyBranchCoupon setOn:[GlobalDataUser sharedAccountClient].isNearlyBranchesHasNewCouponYES.boolValue];
+    [_swSuggestImHere setOn:[GlobalDataUser sharedAccountClient].isHasNearlyBranchesYES.boolValue];
+    [_swVirate setOn:[GlobalDataUser sharedAccountClient].isWantToOnVirateYES.boolValue];
+}
+
 -(void)detaultButtonClicked:(id)s{
 
+    [GlobalDataUser sharedAccountClient].isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
+    [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
+    [GlobalDataUser sharedAccountClient].isWantToOnVirateYES=[NSNumber numberWithBool:YES];
+    [GlobalDataUser sharedAccountClient].isHasNearlyBranchesYES=[NSNumber numberWithBool:YES];
+    [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
+    
+    [self updateValueForSwitch];
 }
 
 -(void)saveButtonClicked:(id)s{
-
+    [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
 }
 
-- (IBAction)swSuggestImHereChangedValue:(id)sender {
+- (IBAction)swSuggestImHereChangedValue:(UISwitch*)sender {
+    [GlobalDataUser sharedAccountClient].isHasNearlyBranchesYES=[NSNumber numberWithBool:sender.isOn];
 }
 
-- (IBAction)swNearbyBranchCouponChangedValue:(id)sender {
+- (IBAction)swNearbyBranchCouponChangedValue:(UISwitch*)sender {
+    [GlobalDataUser sharedAccountClient].isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
 }
 
-- (IBAction)swFaveriteBranchCouponChangedValue:(id)sender {
+- (IBAction)swFaveriteBranchCouponChangedValue:(UISwitch*)sender {
+    [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
 }
 
-- (IBAction)swVibrateChangedValue:(id)sender {
+- (IBAction)swVibrateChangedValue:(UISwitch*)sender {
+    [GlobalDataUser sharedAccountClient].isWantToOnVirateYES=[NSNumber numberWithBool:sender.isOn];
 }
 @end

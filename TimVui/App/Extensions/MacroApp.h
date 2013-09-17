@@ -13,7 +13,8 @@
 #define LOCATION_UPDATE_TIME  60*5//60*15
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"
-
+#define kCheckHasCouponBranchIsInBackGround @"50"
+#define kCheckHasNearlyBranchIsInBackGround @"5"
 // get params from server
 #define kGetCityDataUser                    @"kGetCityDataUser"
 #define kDataGetParamData                    @"kDataGetParamData"

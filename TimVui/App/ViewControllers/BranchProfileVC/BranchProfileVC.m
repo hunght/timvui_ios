@@ -660,7 +660,7 @@
     
     UITapGestureRecognizer* mapTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                  action:@selector(scrollViewWasTap:)];
-    mapTapGesture.cancelsTouchesInView = YES;
+    mapTapGesture.cancelsTouchesInView = NO;
     mapTapGesture.delaysTouchesBegan = NO;
     [self.scrollView addGestureRecognizer:mapTapGesture];
     
@@ -1110,17 +1110,31 @@
 - (IBAction)fbButtonClicked:(id)sender {
     NSMutableDictionary *params =
     [NSMutableDictionary dictionaryWithObjectsAndKeys:
-     @"An example parameter", @"description",
-     @"https://developers.facebook.com/ios", @"link",
+     _branch.name, @"description",
+     _branch.url, @"link",
      nil];
     
-    [FBWebDialogs presentFeedDialogModallyWithSession:nil
+    [FBWebDialogs presentFeedDialogModallyWithSession:[FBSession activeSession]
                                            parameters:params
                                               handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {}
      ];
 }
 
 - (IBAction)gmailButtonClicked:(id)sender {
-    
+    MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+    controller.mailComposeDelegate = self;
+    [controller setSubject:@"My Subject"];
+    [controller setMessageBody:[NSString stringWithFormat:@"%@",_branch.url] isHTML:NO];
+    if (controller) [self presentModalViewController:controller animated:YES];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error;
+{
+    if (result == MFMailComposeResultSent) {
+        NSLog(@"It's away!");
+    }
+    [self dismissModalViewControllerAnimated:YES];
 }
 @end

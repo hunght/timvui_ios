@@ -32,6 +32,11 @@
 @property (retain, nonatomic) NSDictionary* receivedCoupons;
 @property (assign, nonatomic) int currentSearchParam;
 @property (retain, nonatomic) NSMutableSet* followBranchesSet;
+@property (retain, nonatomic) NSNumber* isFollowBranchesHasNewCouponYES;
+@property (retain, nonatomic) NSNumber* isNearlyBranchesHasNewCouponYES;
+@property (retain, nonatomic) NSNumber* isHasNearlyBranchesYES;
+@property (retain, nonatomic) NSNumber* isWantToOnVirateYES;
+
 enum {
     kSearchParamCity = 0,
     kSearchParamDistrict,
@@ -48,4 +53,6 @@ enum {
 -(void)setFollowBranches;
 -(void)startSignificationLocation;
 -(void)stopSignificationLocation;
+-(void)getSettingNotificationUser;
+-(void)setSettingNotificationUser;
 @end

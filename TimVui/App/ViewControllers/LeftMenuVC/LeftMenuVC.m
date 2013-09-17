@@ -515,7 +515,7 @@ enum {
                         viewController = [[ReceivedCouponVC alloc] initWithNibName:@"ReceivedCouponVC" bundle:nil];
                         break;
                     case kS1AccountSetting:
-
+                        viewController = [[UserSettingVC alloc] initWithNibName:@"UserSettingVC" bundle:nil];
                         break;
                 }
                 break;

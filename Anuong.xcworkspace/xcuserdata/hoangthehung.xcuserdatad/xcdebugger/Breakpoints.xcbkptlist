@@ -7,39 +7,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-         timestampString = "400998991.620167"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "332"
-         endingLineNumber = "332"
-         landmarkName = "-applicationWillEnterForeground:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "400828004.271558"
+         timestampString = "401102859.638191"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "263"
-         endingLineNumber = "263"
+         startingLineNumber = "324"
+         endingLineNumber = "324"
          landmarkName = "-locationManager:didFailWithError:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "400828004.271558"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "256"
-         endingLineNumber = "256"
-         landmarkName = "-locationManager:didUpdateToLocation:fromLocation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -59,13 +33,13 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/RecentlyBranchListVC/RecentlyBranchListVC.m"
-         timestampString = "400997792.409229"
+         filePath = "TimVui/App/Extensions/TVAppDelegate.m"
+         timestampString = "401096855.899182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "76"
-         endingLineNumber = "76"
-         landmarkName = "-postGetBranches"
+         startingLineNumber = "271"
+         endingLineNumber = "271"
+         landmarkName = "-application:didFinishLaunchingWithOptions:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
