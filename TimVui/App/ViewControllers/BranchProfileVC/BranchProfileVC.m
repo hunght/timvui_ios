@@ -1107,7 +1107,7 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)fbButtonClicked:(id)sender {
+- (void)sendFeedUserFacebook {
     NSMutableDictionary *params =
     [NSMutableDictionary dictionaryWithObjectsAndKeys:
      _branch.name, @"description",
@@ -1118,6 +1118,36 @@
                                            parameters:params
                                               handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {}
      ];
+}
+
+- (IBAction)fbButtonClicked:(UIButton*)sender {
+    
+    [FacebookServices checkFacebookSessionIsOpen:^(bool isOpen){
+        sender.userInteractionEnabled=YES;
+        if (isOpen) {
+            [self sendFeedUserFacebook];
+
+        }else{
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
+            
+            [alertView addButtonWithTitle:@"Kết nối FB"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [FacebookServices loginAndTakePermissionWithHanlder:^(FBSession *session,NSError *error){
+                                          if (!error) {
+                                              [self sendFeedUserFacebook];
+                                          }
+                                      }];
+                                      
+                                  }];
+            [alertView addButtonWithTitle:@"Cancel"
+                                     type:SIAlertViewButtonTypeCancel
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Cancel Clicked");
+                                  }];
+            [alertView show];
+        }
+    }];
 }
 
 - (IBAction)gmailButtonClicked:(id)sender {

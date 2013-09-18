@@ -54,18 +54,10 @@ static GlobalDataUser *_sharedClient = nil;
         }else{
             [self getSettingNotificationUser];
         }
-        if (!_locationManager) {
-            _locationManager = [[CLLocationManager alloc] init];
-            [_locationManager setDelegate:self];
-            [_locationManager setDistanceFilter:kCLDistanceFilterNone];
-            //        _locationManager.pausesLocationUpdatesAutomatically=NO;
-            [_locationManager startMonitoringSignificantLocationChanges];
-            [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-        }
-        
     }
     return self;
 }
+
 -(void)stopSignificationLocation{
     [self locationManagerStop];
     if (myTimer&& [myTimer isValid]) {
@@ -87,7 +79,6 @@ static GlobalDataUser *_sharedClient = nil;
     }
     myTimer = [NSTimer scheduledTimerWithTimeInterval:LOCATION_UPDATE_TIME target:self
                                              selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
-    [self locationManagerStart];
     if(bgTask != UIBackgroundTaskInvalid) {
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
