@@ -13,7 +13,7 @@
 #import "TVBranch.h"
 #import "Utilities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-
+//
 @class TVBranch;
 @interface TVAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -30,7 +30,8 @@
 
 @property (retain, nonatomic) TVBranch *nearlyBranch;
 @property (retain, nonatomic) TVBranch *hasCouponBranch;
-
+@property (retain, nonatomic) NSMutableDictionary *notifBranches;
+@property (retain, nonatomic) NSMutableDictionary *notifCoupons;
 @property(nonatomic,assign)BOOL isLoadWhenConnectedYES;
 @property(nonatomic,assign)BOOL isHasInternetYES;
 -(void)showNotificationAboutNearlessBranch:(TVBranch*)branch;

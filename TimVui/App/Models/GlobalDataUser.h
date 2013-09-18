@@ -36,7 +36,7 @@
 @property (retain, nonatomic) NSNumber* isNearlyBranchesHasNewCouponYES;
 @property (retain, nonatomic) NSNumber* isHasNearlyBranchesYES;
 @property (retain, nonatomic) NSNumber* isWantToOnVirateYES;
-
+@property (retain, nonatomic) NSDate *locationUpdateTime;
 enum {
     kSearchParamCity = 0,
     kSearchParamDistrict,

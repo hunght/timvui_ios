@@ -29,15 +29,8 @@
 {
     [super viewDidLoad];
     
-    if (![[NSUserDefaults standardUserDefaults] valueForKey:@"isWantToOnVirateYES"]) {
-        [GlobalDataUser sharedAccountClient].isHasNearlyBranchesYES=[NSNumber numberWithBool:YES];
-        [GlobalDataUser sharedAccountClient].isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
-        [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
-        [GlobalDataUser sharedAccountClient].isWantToOnVirateYES=[NSNumber numberWithBool:YES];
-        [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
-    }else{
-        [[GlobalDataUser sharedAccountClient] getSettingNotificationUser];
-    }
+    [[GlobalDataUser sharedAccountClient] getSettingNotificationUser];
+
     [self updateValueForSwitch];
     CALayer* l=    _SuggestView.layer;
     [l setMasksToBounds:YES];

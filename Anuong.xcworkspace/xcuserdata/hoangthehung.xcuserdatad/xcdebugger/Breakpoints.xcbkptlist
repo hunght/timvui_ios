@@ -2,45 +2,4 @@
 <Bucket
    type = "0"
    version = "1.0">
-   <FileBreakpoints>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Models/GlobalDataUser.m"
-         timestampString = "401102859.638191"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "324"
-         endingLineNumber = "324"
-         landmarkName = "-locationManager:didFailWithError:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/WelcomeVC/WelcomeVC.m"
-         timestampString = "400994884.657321"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "120"
-         endingLineNumber = "120"
-         landmarkName = "-getPublicIPFromServer:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-         timestampString = "401096855.899182"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "271"
-         endingLineNumber = "271"
-         landmarkName = "-application:didFinishLaunchingWithOptions:"
-         landmarkType = "5">
-      </FileBreakpoint>
-   </FileBreakpoints>
 </Bucket>

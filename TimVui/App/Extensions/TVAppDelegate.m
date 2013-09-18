@@ -199,12 +199,16 @@
 
 - (void)loadWhenInternetConnected
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _notifBranches= [[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kNotifBranches]];
+    _notifCoupons= [[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kNotifCoupons]];
+    
     if (self.isLoadWhenConnectedYES) {
         return;
     }
     self.isLoadWhenConnectedYES=YES;
+    
     [Utilities iPhoneRetina];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString* jsonStr=[defaults objectForKey:kBranchIDs] ;
     if ([[jsonStr objectFromJSONString] isKindOfClass:[NSArray class]]) {
         
@@ -265,7 +269,6 @@
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
     UILocalNotification *localNotif = [launchOptions
                                        objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    
     if (localNotif) {
         NSDictionary* dic=localNotif.userInfo;
         NSLog(@" dic : %@", dic);
@@ -288,6 +291,7 @@
         }
     }
     */
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
@@ -314,10 +318,7 @@
     
 //    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].recentlyBranches);
     
-    [[NSUserDefaults standardUserDefaults] setObject:[[GlobalDataUser sharedAccountClient].recentlyBranches JSONString] forKey:kBranchIDs];
-//    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:kBranchIDs]);
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -352,7 +353,12 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:_notifBranches forKey:kNotifBranches];
+    [defaults setValue:_notifCoupons forKey:kNotifCoupons];
     
+    [[NSUserDefaults standardUserDefaults] setObject:[[GlobalDataUser sharedAccountClient].recentlyBranches JSONString] forKey:kBranchIDs];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

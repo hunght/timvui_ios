@@ -13,7 +13,8 @@
 #import "NSDictionary+Extensions.h"
 #import "NSDate-Utilities.h"
 #import "TVBranches.h"
-
+#import "TVCoupons.h"
+#import "TVCoupon.h"
 @interface GlobalDataUser(){
     NSTimer *myTimer;
 }
@@ -32,7 +33,7 @@ static GlobalDataUser *_sharedClient = nil;
         _sharedClient = [[GlobalDataUser alloc] init];
         
     });
-
+    
     return _sharedClient;
 }
 - (id)init
@@ -40,18 +41,33 @@ static GlobalDataUser *_sharedClient = nil;
     if ((self = [super init]))
     {
         _user=[[GHUser alloc] init];
-        
         [self checkAndGetPersistenceAccount];
         _dicCatSearchParam=[[NSMutableArray alloc] init];
         _dicPriceSearchParam=[[NSMutableArray alloc] init];
         _recentlyBranches=[[NSMutableArray alloc] init];
-        
+        if (![[NSUserDefaults standardUserDefaults] valueForKey:@"isWantToOnVirateYES"]) {
+            _isHasNearlyBranchesYES=[NSNumber numberWithBool:YES];
+            _isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
+            _isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
+            _isWantToOnVirateYES=[NSNumber numberWithBool:YES];
+            [self setSettingNotificationUser];
+        }else{
+            [self getSettingNotificationUser];
+        }
+        if (!_locationManager) {
+            _locationManager = [[CLLocationManager alloc] init];
+            [_locationManager setDelegate:self];
+            [_locationManager setDistanceFilter:kCLDistanceFilterNone];
+            //        _locationManager.pausesLocationUpdatesAutomatically=NO;
+            [_locationManager startMonitoringSignificantLocationChanges];
+            [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        }
         
     }
     return self;
 }
 -(void)stopSignificationLocation{
-    [_locationManager stopMonitoringSignificantLocationChanges];
+    [self locationManagerStop];
     if (myTimer&& [myTimer isValid]) {
         [myTimer invalidate];
         myTimer = nil;
@@ -64,33 +80,42 @@ static GlobalDataUser *_sharedClient = nil;
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
         [app endBackgroundTask:bgTask];
     }];
-    if (_locationManager) {
-        _locationManager = [[CLLocationManager alloc] init];
-        [_locationManager setDelegate:self];
-        [_locationManager setDistanceFilter:kCLDistanceFilterNone];
-        [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-    }
+    
     if (myTimer&& [myTimer isValid]) {
         [myTimer invalidate];
         myTimer = nil;
     }
     myTimer = [NSTimer scheduledTimerWithTimeInterval:LOCATION_UPDATE_TIME target:self
-                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
+                                             selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
+    [self locationManagerStart];
     if(bgTask != UIBackgroundTaskInvalid) {
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
     }
 }
+
 -(void)locationManagerStart{
-    [_locationManager startMonitoringSignificantLocationChanges];
-     [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager setDelegate:self];
+        [_locationManager setDistanceFilter:kCLDistanceFilterNone];
+        //        _locationManager.pausesLocationUpdatesAutomatically=NO;
+        [_locationManager startMonitoringSignificantLocationChanges];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+    }
+    //    [_locationManager startMonitoringSignificantLocationChanges];
+    //  [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
+    
 }
+
 -(void)locationManagerStop{
     [_locationManager stopMonitoringSignificantLocationChanges];
+    _locationManager.delegate=nil;
+    _locationManager=nil;
 }
 
 -(void)savePersistenceAccountWithData:(NSDictionary*)JSON{
-    NSLog(@"%@",[JSON description]);
+    //    NSLog(@"%@",[JSON description]);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:[JSON JSONString] forKey:kAccountUserJSON];
     [defaults synchronize];
@@ -99,10 +124,11 @@ static GlobalDataUser *_sharedClient = nil;
 - (void)checkAndGetPersistenceAccount {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString* JSON=[defaults valueForKey:kAccountUserJSON];
-    NSLog(@"%@",[JSON objectFromJSONString]);
-    if (JSON)
+    //    NSLog(@"%@",[JSON objectFromJSONString]);
+    if (JSON){
         [self setUserWithDic:[JSON objectFromJSONString]];
-//    NSLog(@"%@",self.user);
+    }
+    //    NSLog(@"%@",self.user);
 }
 
 - (void)setUserWithDic:(NSDictionary *)JSON {
@@ -111,7 +137,7 @@ static GlobalDataUser *_sharedClient = nil;
     [self.user setValues:JSON ];
     self.facebookID=[JSON valueForKey:@""];
     
-    #warning User login set default USER ID TEST
+#warning User login set default USER ID TEST
     self.user.userId=@"8878";
 }
 
@@ -142,8 +168,8 @@ static GlobalDataUser *_sharedClient = nil;
               }];
     
     DJLog(@"Background mode");
-    if(_isHasNearlyBranchesYES)[self checkHasNearlyBranchIsInBackGround:YES];
-    if (_isNearlyBranchesHasNewCouponYES) {
+    if(_isHasNearlyBranchesYES.boolValue)[self checkHasNearlyBranchIsInBackGround:YES];
+    if (_isNearlyBranchesHasNewCouponYES.boolValue) {
         [self checkHasCouponBranchIsInBackGround:YES];
     }
     if(bgTask != UIBackgroundTaskInvalid) {
@@ -153,7 +179,7 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 -(NSDictionary *)dicCity{
-//    NSLog(@"SharedAppDelegate.getCityDistrictData=%@",SharedAppDelegate.getCityDistrictData);
+    //    NSLog(@"SharedAppDelegate.getCityDistrictData=%@",SharedAppDelegate.getCityDistrictData);
     if (_dicCity) {
         return _dicCity;
     }else if (_user.city_id) {
@@ -174,7 +200,7 @@ static GlobalDataUser *_sharedClient = nil;
         
         [[TVNetworkingClient sharedClient] postPath:@"branch/getFavouriteBranchesByUser" parameters:params success:^(AFHTTPRequestOperation *operation, id data) {
             dispatch_async(dispatch_get_main_queue(),^ {
-               _followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
+                _followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
             });
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             dispatch_async(dispatch_get_main_queue(),^ {
@@ -200,7 +226,7 @@ static GlobalDataUser *_sharedClient = nil;
     [params setValue:@"0"  forKey:@"offset"];
     [params setValue:@"short"  forKey:@"infoType"];
     [params setValue:kCheckHasNearlyBranchIsInBackGround  forKey:@"distance"];
-//    NSLog(@"_dicCity=%@",_dicCity);
+    //    NSLog(@"_dicCity=%@",_dicCity);
     [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
     [params setValue:strLatLng forKey:@"latlng"];
@@ -209,14 +235,21 @@ static GlobalDataUser *_sharedClient = nil;
             // View map with contain all search items
             if (branches.count>0) {
                 if (isInBackground) {
-                    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                    localNotif.alertBody=@"Nhà hàng ngay gần bạn !";
-                    localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
-                    localNotif.soundName = @"alarmsound.caf";
-                    localNotif.applicationIconBadgeNumber = 0;
-//                    localNotif.userInfo = data;
-                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-                     SharedAppDelegate.nearlyBranch=branches[0];
+                    TVBranch* branch=branches[0];
+                    NSDate* savedDate=[SharedAppDelegate.notifBranches objectForKey:branch.branchID];
+                    int day=(savedDate)?[savedDate daysAgo]:8;
+                    if (day>7) {
+                        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                        localNotif.alertBody=@"Nhà hàng ngay gần bạn !";
+                        localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
+                        localNotif.soundName = @"alarmsound.caf";
+                        localNotif.applicationIconBadgeNumber = 0;
+                        //                    localNotif.userInfo = data;
+                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+                        SharedAppDelegate.nearlyBranch=branch;
+                        [SharedAppDelegate.notifBranches setValue:[NSDate date] forKey:branch.branchID];
+                    }
+                    
                 }else{
                     [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
                 }
@@ -224,20 +257,59 @@ static GlobalDataUser *_sharedClient = nil;
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            if (isInBackground) {
-                UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                localNotif.alertBody=@"Lỗi rồi lỗi rồi!";
-                localNotif.alertAction = @"Lỗi rồi";
-                localNotif.soundName = @"alarmsound.caf";
-                localNotif.applicationIconBadgeNumber = 0;
-                //                    localNotif.userInfo = data;
-                [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-                SharedAppDelegate.nearlyBranch=branches[0];
-            }
             [self stopSignificationLocation];
         });
     }];
 }
+
+- (void)checkHasCouponBranchIsInBackGround:(BOOL)isInBackground
+{
+    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+    NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
+    [params setValue:@"1"  forKey:@"limit"];
+    [params setValue:@"0"  forKey:@"offset"];
+    [params setValue:@"short"  forKey:@"infoType"];
+    [params setValue:kCheckHasCouponBranchIsInBackGround  forKey:@"distance"];
+    [params setValue:@"1"  forKey:@"has_coupon"];
+    //    NSLog(@"_dicCity=%@",_dicCity);
+    [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
+    NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
+    [params setValue:strLatLng forKey:@"latlng"];
+    [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            // View map with contain all search items
+            if (branches.count>0) {
+                if (isInBackground) {
+                    TVBranch* branch=branches[0];
+                    NSDate* savedDate=[SharedAppDelegate.notifCoupons objectForKey:[branch.coupons.items[0] couponID]];
+                    int day=(savedDate)?[savedDate daysAgo]:8;
+                    if (day>7) {
+                        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                        localNotif.alertBody=@"Nhà hàng có coupon ngay gần bạn !";
+                        localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
+                        localNotif.soundName = @"alarmsound.caf";
+                        localNotif.applicationIconBadgeNumber = 0;
+                        //localNotif.userInfo = data;
+                        
+                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+                        SharedAppDelegate.hasCouponBranch=branches[0];
+                        
+                        [SharedAppDelegate.notifCoupons setValue:[NSDate date] forKey:[branch.coupons.items[0] couponID]];
+                    }
+                }else{
+                    
+                    [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
+                }
+            }
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            [self stopSignificationLocation];
+        });
+    }];
+}
+
+
 
 -(void)getSettingNotificationUser{
     NSUserDefaults* userDefaults=[NSUserDefaults standardUserDefaults];
@@ -256,45 +328,6 @@ static GlobalDataUser *_sharedClient = nil;
     [userDefaults synchronize];
 }
 
-- (void)checkHasCouponBranchIsInBackGround:(BOOL)isInBackground
-{
-    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
-    NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
-    [params setValue:@"1"  forKey:@"limit"];
-    [params setValue:@"0"  forKey:@"offset"];
-    [params setValue:@"short"  forKey:@"infoType"];
-    [params setValue:kCheckHasCouponBranchIsInBackGround  forKey:@"distance"];
-    [params setValue:@"1"  forKey:@"has_coupon"];
-//    NSLog(@"_dicCity=%@",_dicCity);
-    [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
-    NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
-    [params setValue:strLatLng forKey:@"latlng"];
-    [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            // View map with contain all search items
-            if (branches.count>0) {
-                if (isInBackground) {
-                    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                    localNotif.alertBody=@"Nhà hàng ngay gần bạn !";
-                    localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
-                    localNotif.soundName = @"alarmsound.caf";
-                    localNotif.applicationIconBadgeNumber = 0;
-                    //                    localNotif.userInfo = data;
-                    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-                    SharedAppDelegate.hasCouponBranch=branches[0];
-                }else{
-                    [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
-                }
-            }
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            [self stopSignificationLocation];
-        });
-    }];
-}
-
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
@@ -308,20 +341,19 @@ static GlobalDataUser *_sharedClient = nil;
         if(isInBackground) {
             [self sendBackgroundLocationToServer];
         }else{
-            if(_isHasNearlyBranchesYES)[self checkHasNearlyBranchIsInBackGround:YES];
-            if (_isNearlyBranchesHasNewCouponYES) {
+            if(_isHasNearlyBranchesYES.boolValue)[self checkHasNearlyBranchIsInBackGround:YES];
+            if (_isNearlyBranchesHasNewCouponYES.boolValue) {
                 [self checkHasCouponBranchIsInBackGround:YES];
             }
         }
     }
-    [_locationManager stopMonitoringSignificantLocationChanges];
+    [self locationManagerStop];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    
     NSLog(@"%@",error);
-    [_locationManager stopMonitoringSignificantLocationChanges];
+    [self locationManagerStop];
 }
 
 @end
