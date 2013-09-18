@@ -26,7 +26,7 @@
 #import "InfinitePagingView.h"
 #import "CommentVC.h"
 #import "CMHTMLView.h"
-
+#import "ExtraSuggestionMenuCell.h"
 #define kTableViewHeightOffset 150
 #define kCommentLimitCount 2
 
@@ -56,8 +56,8 @@
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-    _isHiddenYES=YES;
-    [self showMenuExtraWithoutTableView];
+//    _isHiddenYES=YES;
+//    [self showMenuExtraWithoutTableView];
 }
 
 - (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
@@ -66,6 +66,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+//#warning test without karaoke
+//        _branch.isHasKaraokeYES=NO;
+        
         int pad=(_branch.isHasKaraokeYES)?83:0;
         
         _viewScroll= [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 41)];
@@ -82,8 +85,11 @@
         [_viewScroll setBackgroundColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:1.0f]];
         [_viewScroll setShowsHorizontalScrollIndicator:NO];
         UIImageView* image=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 384+pad, 41)];
-        if (_branch.isHasKaraokeYES) image.image=[UIImage imageNamed:@"img_profile_branch_scrollView_karaoke"];
-        else image.image=[UIImage imageNamed:@"img_profile_branch_scrollView"];
+        
+        if (_branch.isHasKaraokeYES)
+            image.image=[UIImage imageNamed:@"img_profile_branch_scrollView_karaoke"];
+        else
+            image.image=[UIImage imageNamed:@"img_profile_branch_scrollView"];
         
         [_viewScroll addSubview:image];
         [_viewScroll setContentSize:CGSizeMake(384+pad, 41)];
@@ -120,7 +126,6 @@
         if (_branch.isHasKaraokeYES) {
             
             karaokeButton = [[UIButton alloc] initWithFrame:CGRectMake(199, 0, 98, 41)];
-            
             _lblKaraoke=[[UILabel alloc] initWithFrame:CGRectMake(65, 10, 40, 20)];
             [karaokeButton addSubview:_lblKaraoke];
             _lblKaraoke.textColor=[UIColor colorWithRed:(146/255.0f) green:(232/255.0f) blue:(255/255.0f) alpha:1.0f];
@@ -165,7 +170,6 @@
         
         self.lblKaraoke.text=[NSString stringWithFormat:@"(%d)",_branch.karaokes.items.count];
         _viewController=viewController;
-        
 
     }
 
@@ -442,22 +446,26 @@
     karaokeHeight =[self addLineToView:karaokeView];
     
     CGRect frame=CGRectMake(0.f, karaokeHeight,320,190.f);
-    // pagingView
-    InfinitePagingView *pagingView = [[InfinitePagingView alloc] initWithFrame:frame];
-    pagingView.backgroundColor = [UIColor whiteColor];
-    CGSize size= CGSizeMake(295, 190);
-    pagingView.pageSize =size;
-    [karaokeView addSubview:pagingView];
-    
-    for (NSDictionary*dicImage in karaoke.images)
-    {
-        UIImageView *page = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, 290, 190)];
-        [page setImageWithURL:[Utilities getLargeImageOfCoverBranch:dicImage] placeholderImage:nil];
-        page.contentMode = UIViewContentModeScaleAspectFill;
-        [pagingView addPageView:page];
+    if (karaoke.images.count>0) {
+        // pagingView
+        InfinitePagingView *pagingView = [[InfinitePagingView alloc] initWithFrame:frame];
+        pagingView.backgroundColor = [UIColor whiteColor];
+        CGSize size= CGSizeMake(295, 190);
+        pagingView.pageSize =size;
+        [karaokeView addSubview:pagingView];
+        
+        for (NSDictionary*dicImage in karaoke.images)
+        {
+            UIImageView *page = [[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, 290, 190)];
+            [page setImageWithURL:[Utilities getLargeImageOfCoverBranch:dicImage] placeholderImage:nil];
+            page.contentMode = UIViewContentModeScaleAspectFill;
+            [pagingView addPageView:page];
+        }
+        
+        karaokeHeight +=pagingView.frame.size.height+15;
     }
+
     
-    karaokeHeight +=pagingView.frame.size.height+15;
     
     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
     //continue building the string
@@ -543,7 +551,8 @@
     [self.tableView setHidden:YES];
     [self.scrollEvent setHidden:NO];
     [self.scrollKaraoke setHidden:YES];
-    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
+    CGRect frame=sender.frame;
+    [self.viewScroll setContentOffset:CGPointMake(frame.origin.x - 150, 0) animated:YES];
 }
 
 -(void)similarButtonClicked:(UIButton*)sender{
@@ -556,8 +565,9 @@
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
-    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
+
     
+    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
     if (_currentTableType!=kTVSimilar){
         floatView.hidden=YES;
         _currentTableType=kTVSimilar;
@@ -575,7 +585,8 @@
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
-    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
+    CGRect frame=sender.frame;
+    [self.viewScroll setContentOffset:CGPointMake(frame.origin.x -100, 0) animated:YES];
     
     if (_currentTableType!=kTVMenu){
         floatView.hidden=YES;
@@ -596,7 +607,8 @@
     [self.tableView setHidden:YES];
     [self.scrollKaraoke setHidden:NO];
     [self.scrollEvent setHidden:YES];
-    [self.viewScroll scrollRectToVisible:sender.frame animated:YES];
+    CGRect frame=sender.frame;
+    [self.viewScroll setContentOffset:CGPointMake(frame.origin.x-100, 0) animated:YES];
 }
 
 -(void)commentButtonClicked:(UIButton*)sender{
@@ -819,7 +831,13 @@
         UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 44.0f)];
         [headerView setBackgroundColor:[UIColor whiteColor]];
 		UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectInset(headerView.bounds, 3.0f, 5.0f)];
-        TVGroupCuisines* group=[_branch.menu.items objectAtIndex:section];
+
+        TVGroupCuisines* group;
+        if (section==0) {
+            group=_branch.menuSuggesting;
+        }else{
+            group=[_branch.menu.items objectAtIndex:section-1];
+        }
 		textLabel.text =group.name;
 		textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
 		textLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -849,7 +867,7 @@
             count= 1;
             break;
         case kTVMenu:
-            count= [self.branch.menu.items count];
+            count= [self.branch.menu.items count]+1;
             break;
         case kTVSimilar:
             count=1;
@@ -873,7 +891,12 @@
             }
             break;
         case kTVMenu:
-            count= [[[self.branch.menu.items objectAtIndex:section] items] count];
+            if (section==0) {
+                count= [[self.branch.menuSuggesting items] count];
+            }else{
+                count= [[[self.branch.menu.items objectAtIndex:section-1] items] count];
+            }
+            
             if (countMenu==0) {
                 [self showFloatView];
                 lblWriteReviewNotice.hidden=NO;
@@ -913,15 +936,30 @@
             break;
         case kTVMenu:
         {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ExtraMenuCell"];
-            if (!cell) {
-                cell = [[ExtraMenuCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ExtraMenuCell"];
-                
+            if (indexPath.section==0) {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"ExtraMenuCell"];
+                if (!cell) {
+                    cell = [[ExtraMenuCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ExtraMenuCell"];
+                    
+                }
+                TVGroupCuisines* group=_branch.menuSuggesting;
+                TVCuisine* cuisine=group.items[indexPath.row];
+                [(ExtraSuggestionMenuCell*)cell titleRow].text=cuisine.name;
+                [[(ExtraSuggestionMenuCell*)cell titleRow] sizeToFit];
+                cell.detailTextLabel.text=cuisine.price;
+
+            }else{
+                cell = [tableView dequeueReusableCellWithIdentifier:@"ExtraMenuCell"];
+                if (!cell) {
+                    cell = [[ExtraMenuCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ExtraMenuCell"];
+                    
+                }
+                TVGroupCuisines* group=[_branch.menu.items objectAtIndex:indexPath.section-1];
+                TVCuisine* cuisine=group.items[indexPath.row];
+                [(ExtraMenuCell*)cell titleRow].text=cuisine.name;[[(ExtraMenuCell*)cell titleRow] sizeToFit];
+                cell.detailTextLabel.text=cuisine.price;
+
             }
-            TVGroupCuisines* group=[_branch.menu.items objectAtIndex:indexPath.section];
-            TVCuisine* cuisine=group.items[indexPath.row];
-            [(ExtraMenuCell*)cell titleRow].text=cuisine.name;[[(ExtraMenuCell*)cell titleRow] sizeToFit];
-            cell.detailTextLabel.text=cuisine.price;
             break;
         }
         case kTVSimilar:

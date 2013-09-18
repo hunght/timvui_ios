@@ -5,6 +5,7 @@
 #import "NSDictionary+Extensions.h"
 #import "TVCoupons.h"
 #import "TVKaraokes.h"
+#import "TVGroupCuisines.h"
 @interface TVBranch ()
 @end
 
@@ -53,6 +54,11 @@
     
     self.menu = [[TVCuisines alloc] init];
 	[self.menu   setValues:[dict safeDictForKey:@"items"] ];
+    
+
+    self.menuSuggesting= [[TVGroupCuisines alloc] initWithDict:[dict safeArrayForKey:@"itemsIsSuguess"]];
+    self.menuSuggesting.name = @"Món nên thử";
+
     
 	self.special_content = [dict safeArrayForKey:@"special_content"];
 	self.address_full = [dict safeStringForKey:@"address_full"];

@@ -493,6 +493,7 @@
 		55B909601754492E0061AC33 /* img_search_price_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B909561754492C0061AC33 /* img_search_price_off@2x.png */; };
 		55B909611754492E0061AC33 /* img_search_price_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B909571754492D0061AC33 /* img_search_price_on.png */; };
 		55B909621754492E0061AC33 /* img_search_price_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55B909581754492D0061AC33 /* img_search_price_on@2x.png */; };
+		55B9655517E9B8A900C9C317 /* ExtraMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B9655417E9B8A800C9C317 /* ExtraMenuCell.m */; };
 		55BA7D3F1774405E00527F24 /* SSPhotoCropperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BA7D3D1774405E00527F24 /* SSPhotoCropperViewController.m */; };
 		55BA7D401774405E00527F24 /* SSPhotoCropperViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BA7D3E1774405E00527F24 /* SSPhotoCropperViewController.xib */; };
 		55BAED3A1709725600CF3171 /* TVNetworkingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BAED391709725600CF3171 /* TVNetworkingClient.m */; };
@@ -647,7 +648,7 @@
 		55F71987178D3FEB00C0535D /* SearchWithContactsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F71985178D3FEB00C0535D /* SearchWithContactsVC.m */; };
 		55F753C917815DC300555FCF /* img_map_coupon_event_icon_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = 55F753C717815DC300555FCF /* img_map_coupon_event_icon_cell.png */; };
 		55F753CA17815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55F753C817815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png */; };
-		55F77D32178EB88D00E0D99D /* ExtraMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F77D31178EB88D00E0D99D /* ExtraMenuCell.m */; };
+		55F77D32178EB88D00E0D99D /* ExtraSuggestionMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F77D31178EB88D00E0D99D /* ExtraSuggestionMenuCell.m */; };
 		55FE4D0817C37F39005B08FA /* FloatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FE4D0717C37F39005B08FA /* FloatView.m */; };
 		B155EF3B0CC8421F9C8DE0DE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A89DFA4254249D091202191 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -1224,6 +1225,8 @@
 		55B909561754492C0061AC33 /* img_search_price_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_search_price_off@2x.png"; sourceTree = "<group>"; };
 		55B909571754492D0061AC33 /* img_search_price_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_search_price_on.png; sourceTree = "<group>"; };
 		55B909581754492D0061AC33 /* img_search_price_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_search_price_on@2x.png"; sourceTree = "<group>"; };
+		55B9655317E9B8A800C9C317 /* ExtraMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraMenuCell.h; sourceTree = "<group>"; };
+		55B9655417E9B8A800C9C317 /* ExtraMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraMenuCell.m; sourceTree = "<group>"; };
 		55BA7D3C1774405E00527F24 /* SSPhotoCropperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSPhotoCropperViewController.h; sourceTree = "<group>"; };
 		55BA7D3D1774405E00527F24 /* SSPhotoCropperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSPhotoCropperViewController.m; sourceTree = "<group>"; };
 		55BA7D3E1774405E00527F24 /* SSPhotoCropperViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSPhotoCropperViewController.xib; sourceTree = "<group>"; };
@@ -1423,8 +1426,8 @@
 		55F71985178D3FEB00C0535D /* SearchWithContactsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWithContactsVC.m; sourceTree = "<group>"; };
 		55F753C717815DC300555FCF /* img_map_coupon_event_icon_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_map_coupon_event_icon_cell.png; sourceTree = "<group>"; };
 		55F753C817815DC300555FCF /* img_map_coupon_event_icon_cell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_map_coupon_event_icon_cell@2x.png"; sourceTree = "<group>"; };
-		55F77D30178EB88D00E0D99D /* ExtraMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraMenuCell.h; sourceTree = "<group>"; };
-		55F77D31178EB88D00E0D99D /* ExtraMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraMenuCell.m; sourceTree = "<group>"; };
+		55F77D30178EB88D00E0D99D /* ExtraSuggestionMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraSuggestionMenuCell.h; sourceTree = "<group>"; };
+		55F77D31178EB88D00E0D99D /* ExtraSuggestionMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraSuggestionMenuCell.m; sourceTree = "<group>"; };
 		55FE4D0617C37F39005B08FA /* FloatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FloatView.h; path = TimVui/App/Libs/FloatView/FloatView.h; sourceTree = SOURCE_ROOT; };
 		55FE4D0717C37F39005B08FA /* FloatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FloatView.m; path = TimVui/App/Libs/FloatView/FloatView.m; sourceTree = SOURCE_ROOT; };
 		EB9B7B13D54A4DAFB579AC08 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -1896,8 +1899,10 @@
 		556D444517782D3F00751F83 /* TVExtraBranchView */ = {
 			isa = PBXGroup;
 			children = (
-				55F77D30178EB88D00E0D99D /* ExtraMenuCell.h */,
-				55F77D31178EB88D00E0D99D /* ExtraMenuCell.m */,
+				55B9655317E9B8A800C9C317 /* ExtraMenuCell.h */,
+				55B9655417E9B8A800C9C317 /* ExtraMenuCell.m */,
+				55F77D30178EB88D00E0D99D /* ExtraSuggestionMenuCell.h */,
+				55F77D31178EB88D00E0D99D /* ExtraSuggestionMenuCell.m */,
 				551BB1ED178ACE210072FD81 /* ExtraCommentCell.h */,
 				551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */,
 				556D444617782D3F00751F83 /* TVExtraBranchView.h */,
@@ -3671,7 +3676,7 @@
 				551BB1EF178ACE210072FD81 /* ExtraCommentCell.m in Sources */,
 				55F71986178D3FEB00C0535D /* SearchWithArrayVC.m in Sources */,
 				55F71987178D3FEB00C0535D /* SearchWithContactsVC.m in Sources */,
-				55F77D32178EB88D00E0D99D /* ExtraMenuCell.m in Sources */,
+				55F77D32178EB88D00E0D99D /* ExtraSuggestionMenuCell.m in Sources */,
 				559984C817900D430054003C /* DetailManualVC.m in Sources */,
 				559984CD179013140054003C /* TVManual.m in Sources */,
 				5560E19C17A36554006F4A7C /* PageTwoView.m in Sources */,
@@ -3718,6 +3723,7 @@
 				556F2B3617D5934F00FB1A29 /* RecentlyBranchListVC.m in Sources */,
 				553AB68517D9D1F4006D2556 /* MapDirectionVC.m in Sources */,
 				553AB68A17D9DB9F006D2556 /* MDDirectionService.m in Sources */,
+				55B9655517E9B8A900C9C317 /* ExtraMenuCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

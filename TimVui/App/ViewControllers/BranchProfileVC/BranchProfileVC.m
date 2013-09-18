@@ -602,8 +602,8 @@
     
     
     if (!_branch) {
-        NSDictionary *params = @{@"id": _branchID};
-//        NSDictionary *params = @{@"id": @"1"};
+//        NSDictionary *params = @{@"id": _branchID};
+        NSDictionary *params = @{@"id": @"1"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
 //                NSLog(@"data===%@",data);
@@ -614,7 +614,8 @@
                 if (!_extraBranchView) {
                     _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
                     _extraBranchView.scrollView=_scrollView;
-                    [self.view addSubview:_extraBranchView];
+//                    [self.view addSubview:_extraBranchView];
+                    [self.view insertSubview:_extraBranchView belowSubview:_viewSharing];
                 }
                 
                 NSMutableArray* arrRecentlyBranches=[GlobalDataUser sharedAccountClient].recentlyBranches;
