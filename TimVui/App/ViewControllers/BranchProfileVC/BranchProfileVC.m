@@ -635,6 +635,7 @@
                 [arrRecentlyBranches insertObject:dict atIndex:0];
                 
                 if (_isWantToShowEvents) {
+                    _extraBranchView.isAnimating=NO;
                     [_extraBranchView showExtraView:YES];
                     [_extraBranchView eventButtonClicked:nil];
                 }
@@ -664,7 +665,6 @@
     mapTapGesture.cancelsTouchesInView = NO;
     mapTapGesture.delaysTouchesBegan = NO;
     [self.scrollView addGestureRecognizer:mapTapGesture];
-    
 }
 
 - (void)scrollViewWasTap:(UITapGestureRecognizer*)sender

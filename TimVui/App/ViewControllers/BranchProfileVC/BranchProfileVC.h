@@ -14,6 +14,7 @@
 @interface BranchProfileVC : GAITrackedViewController<UIWebViewDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 @property (retain, nonatomic) TVBranch *branch;
 @property (assign, nonatomic) BOOL isWantToShowEvents;
+
 @property(strong, nonatomic)TVExtraBranchView *extraBranchView;
 @property (weak, nonatomic) IBOutlet UIView *viewSharing;
 @property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;

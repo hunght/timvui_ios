@@ -18,6 +18,7 @@ typedef void (^LocationPickerViewCompletionBlock)(LocationPickerView *locationPi
 
 @interface LocationPickerView : UIView <UIScrollViewDelegate>
 
+@property (assign, nonatomic) BOOL firstLocationUpdate;
 /** How much of the screen the map takes up initially and the height
  it returns to after scrolling is done. By default this is set to
  "180.0f". */

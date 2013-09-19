@@ -30,7 +30,7 @@ typedef enum {
 @property (strong, nonatomic) UIButton* btnBackground;
 @property (strong, nonatomic) UILabel*lblReview;
 @property (strong, nonatomic) UILabel*lblMenu;
-
+@property (assign, nonatomic) BOOL isWantToShowEvents;
 @property (strong, nonatomic) UILabel* lblKaraoke;
 
 @property (strong, nonatomic) UIScrollView *scrollEvent;

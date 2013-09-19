@@ -10,7 +10,7 @@
 
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
-#define LOCATION_UPDATE_TIME  60//60*15
+#define LOCATION_UPDATE_TIME  60*15//60*15
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"
 #define kCheckHasCouponBranchIsInBackGround @"50"

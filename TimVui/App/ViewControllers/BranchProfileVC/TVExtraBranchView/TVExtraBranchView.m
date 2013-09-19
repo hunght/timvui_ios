@@ -10,6 +10,7 @@
 #import "ExtraCommentCell.h"
 #import "ExtraMenuCell.h"
 #import "SVPullToRefresh.h"
+#import "TSMessage.h"
 #import "TVGroupCuisines.h"
 #import "TVCuisine.h"
 #import "MacroApp.h"
@@ -27,6 +28,8 @@
 #import "CommentVC.h"
 #import "CMHTMLView.h"
 #import "ExtraSuggestionMenuCell.h"
+#import "LoginVC.h"
+#import "SIAlertView.h"
 #define kTableViewHeightOffset 150
 #define kCommentLimitCount 2
 
@@ -56,8 +59,6 @@
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-//    _isHiddenYES=YES;
-//    [self showMenuExtraWithoutTableView];
 }
 
 - (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
@@ -172,7 +173,10 @@
         _viewController=viewController;
 
     }
-
+    if (_isWantToShowEvents) {
+        _isHiddenYES=YES;
+        [self showMenuExtraWithoutTableView];
+    }
     return self;
 }
 
@@ -184,6 +188,7 @@
         self.comments=[[TVComments alloc] initWithPath:@"branch/getComments"];
     }
     __unsafe_unretained __typeof(&*self)weakSelf = self;
+    self.comments.isShowLoading=NO;
     [weakSelf.comments loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             
@@ -545,20 +550,18 @@
     [self resetToUnselectedButtons];
     [eventButton setSelected:YES];
     [self initTableView];
-    
     [self addEventToInfoView ];
     floatView.hidden=YES;
     [self.tableView setHidden:YES];
     [self.scrollEvent setHidden:NO];
     [self.scrollKaraoke setHidden:YES];
-    CGRect frame=sender.frame;
+    CGRect frame=eventButton.frame;
     [self.viewScroll setContentOffset:CGPointMake(frame.origin.x - 150, 0) animated:YES];
 }
 
 -(void)similarButtonClicked:(UIButton*)sender{
     self.tableView.showsPullToRefresh=YES;
     self.tableView.showsInfiniteScrolling=YES;
-    
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
     [self.scrollKaraoke setHidden:YES];
@@ -576,9 +579,7 @@
 }
 
 -(void)menuButtonClicked:(UIButton*)sender{
-    self.tableView.showsPullToRefresh=NO;
-    self.tableView.showsInfiniteScrolling=NO;
-    
+
     [self.tableView setHidden:NO];
     [self.scrollEvent setHidden:YES];
     [self.scrollKaraoke setHidden:YES];
@@ -593,6 +594,8 @@
         _currentTableType=kTVMenu;
         [_tableView reloadData];
     }
+    self.tableView.showsPullToRefresh=NO;
+    self.tableView.showsInfiniteScrolling=NO;
 }
 
 -(void)karaokeButtonClicked:(UIButton*)sender{
@@ -600,8 +603,6 @@
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
-    
-    
     [self addKaraokeToInfoView];
     floatView.hidden=YES;
     [self.tableView setHidden:YES];
@@ -649,6 +650,7 @@
     [_viewController presentModalViewController:_slidingViewController animated:YES];
     commentVC.slidingViewController=_slidingViewController;
 }
+
 -(void)resetToUnselectedButtons{
     commentButton.selected=NO;
     karaokeButton.selected=NO;
@@ -801,7 +803,7 @@
         return 0;
 }
 
--(void)likeCommentButtonClicked:(UIButton*)sender{
+- (void)likeCommentWithButton:(UIButton *)sender {
     sender.userInteractionEnabled=NO;
     TVComment* comment=_comments[sender.tag];
     
@@ -813,14 +815,133 @@
     
     [[TVNetworkingClient sharedClient] postPath:@"branch/userVoteComment" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
-        [SVProgressHUD showSuccessWithStatus:@"Bạn vừa thích comment này!"];
+        //        [SVProgressHUD showSuccessWithStatus:@"Bạn vừa thích comment này!"];
+        [TSMessage showNotificationInViewController:_viewController
+                                          withTitle:@"Bạn đã vote cho đánh giá thành công!"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
         sender.userInteractionEnabled=YES;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         sender.userInteractionEnabled=YES;
-        [SVProgressHUD showErrorWithStatus:@"Có lỗi khi like bình luận"];
+        //        [SVProgressHUD showErrorWithStatus:@"Có lỗi khi vote cho đánh giá về nhà hàng."];
+        [TSMessage showNotificationInViewController:_viewController
+                                          withTitle:@"Có lỗi khi vote cho đánh giá về nhà hàng."
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeWarning];
         NSLog(@"%@",error);
     }];
+}
+
+-(void)likeCommentButtonClicked:(UIButton*)sender{
+    if ([GlobalDataUser sharedAccountClient].isLogin)
+        [self likeCommentWithButton:sender];
+    else{
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho đánh giá này?"];
+        
+        [alertView addButtonWithTitle:@"Login"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  
+                                  LoginVC* loginVC=nil;
+                                  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+                                  } else {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+                                  }
+                                  
+                                  UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                                  [_viewController presentModalViewController:navController animated:YES];
+                                  [loginVC goWithDidLogin:^{
+                                      [self performSelector:@selector(likeCommentWithButton:) withObject:sender afterDelay:1];
+                                  } thenLoginFail:^{
+                                      [TSMessage showNotificationInViewController:_viewController
+                                                                        withTitle:@"Có lỗi khi đăng nhập!"
+                                                                      withMessage:nil
+                                                                         withType:TSMessageNotificationTypeWarning];
+                                  }];
+
+                                  
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
+    }
+    
+    
+}
+- (void)voteCuisineWithButton:(UIButton *)sender {
+    sender.userInteractionEnabled=NO;
+    TVGroupCuisines* group=_branch.menuSuggesting;
+    TVCuisine* cuisine=group.items[sender.tag];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
+                            cuisine.cuisineID,@"item_id",
+                            nil];
+    NSLog(@"%@",params);
+    
+    [[TVNetworkingClient sharedClient] postPath:@"item/userLikeItem" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
+        cuisine.like_count++;
+        ExtraSuggestionMenuCell*cell=(ExtraSuggestionMenuCell*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+        cell.detailTextLabel.text=[NSString stringWithFormat:@"%d votes",cuisine.like_count];
+        [TSMessage showNotificationInViewController:_viewController
+                                          withTitle:[NSString stringWithFormat:@"Bạn đã vote cho món %@ thành công!",cuisine.name]
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+        sender.userInteractionEnabled=YES;
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        sender.userInteractionEnabled=YES;
+        [TSMessage showNotificationInViewController:_viewController
+                                          withTitle:@"Có lỗi khi vote cho món ăn."
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeWarning];
+        NSLog(@"%@",error);
+    }];
+}
+
+-(void)voteCuisineButtonClicked:(UIButton*)sender{
+    
+    if ([GlobalDataUser sharedAccountClient].isLogin)
+        [self voteCuisineWithButton:sender];
+    else{
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho món ăn này?"];
+        
+        [alertView addButtonWithTitle:@"Login"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  
+                                  LoginVC* loginVC=nil;
+                                  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+                                  } else {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+                                  }
+                                  
+                                  UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                                  [_viewController presentModalViewController:navController animated:YES];
+                                  [loginVC goWithDidLogin:^{
+                                      [self performSelector:@selector(voteCuisineWithButton:) withObject:sender afterDelay:1];
+                                  } thenLoginFail:^{
+                                      [TSMessage showNotificationInViewController:_viewController
+                                                                        withTitle:@"Có lỗi khi đăng nhập!"
+                                                                      withMessage:nil
+                                                                         withType:TSMessageNotificationTypeWarning];
+                                  }];
+
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -937,17 +1058,20 @@
         case kTVMenu:
         {
             if (indexPath.section==0) {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ExtraMenuCell"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"ExtraSuggestionMenuCell"];
                 if (!cell) {
-                    cell = [[ExtraMenuCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ExtraMenuCell"];
-                    
+                    cell = [[ExtraSuggestionMenuCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ExtraSuggestionMenuCell"];
+                    [[(ExtraSuggestionMenuCell*)cell btnVote] addTarget:self action:@selector(voteCuisineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 }
+                
+                [[(ExtraSuggestionMenuCell*)cell btnVote] setTag:indexPath.row];
                 TVGroupCuisines* group=_branch.menuSuggesting;
                 TVCuisine* cuisine=group.items[indexPath.row];
                 [(ExtraSuggestionMenuCell*)cell titleRow].text=cuisine.name;
                 [[(ExtraSuggestionMenuCell*)cell titleRow] sizeToFit];
-                cell.detailTextLabel.text=cuisine.price;
-
+                cell.detailTextLabel.text=[NSString stringWithFormat:@"%d votes",cuisine.like_count];
+                
+                
             }else{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ExtraMenuCell"];
                 if (!cell) {

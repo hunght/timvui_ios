@@ -28,9 +28,10 @@
 - (void)setValues:(id)dict {
     NSLog(@"%@",dict);
 	self.name = [dict safeStringForKey:@"name"];
+    self.cuisineID = [dict safeStringForKey:@"id"];
 	self.price   = [dict safeStringForKey:@"price"];
 	self.price_old = [dict safeStringForKey:@"price_old"];
-    
+    self.like_count=[dict safeIntegerForKey:@"like_count"];
     //
 }
 

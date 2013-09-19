@@ -73,6 +73,8 @@
 		5531EF1F178D473600093934 /* img_profile_branch_share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1D178D473600093934 /* img_profile_branch_share_button.png */; };
 		5531EF20178D473600093934 /* img_profile_branch_share_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */; };
 		5531EF22178D4A3400093934 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5531EF21178D4A3400093934 /* AddressBook.framework */; };
+		55379BF917EA90650094C707 /* img_profile_branch_cuisine_thumbup.png in Resources */ = {isa = PBXBuildFile; fileRef = 55379BF717EA90650094C707 /* img_profile_branch_cuisine_thumbup.png */; };
+		55379BFA17EA90650094C707 /* img_profile_branch_cuisine_thumbup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55379BF817EA90650094C707 /* img_profile_branch_cuisine_thumbup@2x.png */; };
 		5538FAFE179E987B00A1722F /* img_profile_branch_scrollView_karaoke@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5538FAFC179E987B00A1722F /* img_profile_branch_scrollView_karaoke@2x.png */; };
 		5538FB03179E995C00A1722F /* img_profile_branch_scrollView_karaoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 5538FB00179E995C00A1722F /* img_profile_branch_scrollView_karaoke.png */; };
 		5538FB04179E995C00A1722F /* img_profile_branch_scrollView.png in Resources */ = {isa = PBXBuildFile; fileRef = 5538FB01179E995C00A1722F /* img_profile_branch_scrollView.png */; };
@@ -749,6 +751,8 @@
 		5531EF1D178D473600093934 /* img_profile_branch_share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_share_button.png; sourceTree = "<group>"; };
 		5531EF1E178D473600093934 /* img_profile_branch_share_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_share_button@2x.png"; sourceTree = "<group>"; };
 		5531EF21178D4A3400093934 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		55379BF717EA90650094C707 /* img_profile_branch_cuisine_thumbup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_cuisine_thumbup.png; sourceTree = "<group>"; };
+		55379BF817EA90650094C707 /* img_profile_branch_cuisine_thumbup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_cuisine_thumbup@2x.png"; sourceTree = "<group>"; };
 		5538FAFC179E987B00A1722F /* img_profile_branch_scrollView_karaoke@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_scrollView_karaoke@2x.png"; sourceTree = "<group>"; };
 		5538FB00179E995C00A1722F /* img_profile_branch_scrollView_karaoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_scrollView_karaoke.png; sourceTree = "<group>"; };
 		5538FB01179E995C00A1722F /* img_profile_branch_scrollView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_scrollView.png; sourceTree = "<group>"; };
@@ -2168,6 +2172,8 @@
 		55B9083E17543AC90061AC33 /* ResourcesImages */ = {
 			isa = PBXGroup;
 			children = (
+				55379BF717EA90650094C707 /* img_profile_branch_cuisine_thumbup.png */,
+				55379BF817EA90650094C707 /* img_profile_branch_cuisine_thumbup@2x.png */,
 				552F1F8E17E6E2B400F3AC64 /* img_profile_branch_share_bg.png */,
 				552F1F8F17E6E2B400F3AC64 /* img_profile_branch_share_bg@2x.png */,
 				552F1F9017E6E2B400F3AC64 /* img_profile_branch_share_fb.png */,
@@ -3565,6 +3571,8 @@
 				552F1F9B17E6E2B400F3AC64 /* img_profile_branch_share_gmail@2x.png in Resources */,
 				552F1F9C17E6E2B400F3AC64 /* img_profile_branch_share_sms.png in Resources */,
 				552F1F9D17E6E2B400F3AC64 /* img_profile_branch_share_sms@2x.png in Resources */,
+				55379BF917EA90650094C707 /* img_profile_branch_cuisine_thumbup.png in Resources */,
+				55379BFA17EA90650094C707 /* img_profile_branch_cuisine_thumbup@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

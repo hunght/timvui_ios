@@ -23,8 +23,8 @@
 #import <UIKit/UIKit.h>
 
 
-
+@class TVCuisine;
 @interface ExtraSuggestionMenuCell : UITableViewCell
 @property (nonatomic, strong)UILabel* titleRow;
-
+@property (nonatomic, strong)UIButton* btnVote;
 @end

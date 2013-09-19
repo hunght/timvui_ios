@@ -76,7 +76,6 @@
 
 - (void)loadView {
     [super loadView];
-    
 }
 
 
@@ -84,7 +83,6 @@
 {
     [super viewDidLoad];
     self.trackedViewName = @"Trang chủ";
-    
     _lastDistanceSearch=kDistanceSearchMapDefault.floatValue;
     // The LocationPickerView can be created programmatically (see below) or
     // using Storyboards/XIBs (see Storyboard file).
@@ -141,6 +139,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    _locationPickerView.firstLocationUpdate=NO;
 }
 
 -(void)viewDidUnload{

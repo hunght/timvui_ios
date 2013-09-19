@@ -12,7 +12,7 @@
 {
 @private
     double lastDragOffset;
-    BOOL firstLocationUpdate_;
+    
 
 }
 @property (nonatomic) BOOL isMapAnimating;
@@ -402,11 +402,12 @@
         [self scrollViewDidScrollWithOffset:self.tableView.contentOffset.y];
         return;
     }
-    if ((object == self.mapView) && !firstLocationUpdate_&&
+    if ((object == self.mapView) && !_firstLocationUpdate&&
         ([keyPath isEqualToString:@"myLocation"] == YES))
     {
-        firstLocationUpdate_=YES;
+        _firstLocationUpdate=YES;
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
+        [GlobalDataUser sharedAccountClient].userLocation=location.coordinate;
         _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
                                                      zoom:_mapView.camera.zoom];
     }

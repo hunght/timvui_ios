@@ -321,7 +321,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
+//    NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
     _userLocation = newLocation.coordinate;
     BOOL isInBackground = NO;
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {

@@ -43,14 +43,18 @@
     if (!self) {
         return nil;
     }
+    self.btnVote=[[UIButton alloc] initWithFrame:CGRectMake(284.0f, 5.0f, 22, 20)];
+    [self.btnVote setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_cuisine_thumbup"] forState:UIControlStateNormal];
+    [self.contentView addSubview:self.btnVote];
+    
     _titleRow=[[UILabel alloc] initWithFrame:CGRectMake(15.0f, 4.0f, 222.0f, 15.0f)];
     self.titleRow.adjustsFontSizeToFitWidth = YES;
     self.titleRow.textColor = [UIColor blackColor];
 
     self.titleRow.backgroundColor=[UIColor whiteColor];
     [self.contentView addSubview:_titleRow];
-    self.detailTextLabel.backgroundColor=[UIColor redColor];
-    self.detailTextLabel.textColor=[UIColor whiteColor];
+    self.detailTextLabel.backgroundColor=[UIColor whiteColor];
+    self.detailTextLabel.textColor=[UIColor grayColor];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     self.titleRow.numberOfLines = 1;
 //    self.titleRow.lineBreakMode = UILineBreakModeWordWrap;
@@ -59,8 +63,8 @@
     
     self.titleRow.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    self.imageView.image=[Utilities imageFromColor:[UIColor grayColor]];
-    [self.contentView insertSubview:self.detailTextLabel aboveSubview:self.imageView];
+    
+    [self.contentView insertSubview:self.detailTextLabel aboveSubview:self.btnVote];
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
     UILabel* dotLine=[[UILabel alloc] initWithFrame: CGRectMake(150.0f, 6.0f, 90, 15.0f)];
     dotLine.font=[UIFont systemFontOfSize:12];
@@ -74,8 +78,7 @@
 #pragma mark - UIView
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(254.0f, 8.0f, 56.0f, 17.0f);
-    self.detailTextLabel.frame = CGRectMake(254.0f, 8.0f, 56.0f, 17.0f);
+    self.detailTextLabel.frame = CGRectMake(224.0f, 8.0f, 56.0f, 17.0f);
 }
 
 @end
