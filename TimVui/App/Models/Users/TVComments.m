@@ -10,7 +10,7 @@
         self.items = [NSMutableArray array];
     }
     NSArray* values=[valuesJSON valueForKey:@"comments"];
-    NSLog(@"%@",values);
+//    NSLog(@"TVComments= %@",values);
     for (int i=0; i< [values count]; i++) {
         NSDictionary* dict=[values objectAtIndex:i];
         TVComment *branch = [[TVComment alloc] initWithDict:dict];

@@ -132,9 +132,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             _mapView.myLocationEnabled = YES;
         });
-        if ([self.delegate respondsToSelector:@selector(locationPicker:mapViewDidLoad:)]) {
-            [self.delegate locationPicker:self mapViewDidLoad:self.mapView];
-        }
+
         
         if (self.mapViewDidLoadBlock) {
             self.mapViewDidLoadBlock(self);
@@ -402,14 +400,21 @@
         [self scrollViewDidScrollWithOffset:self.tableView.contentOffset.y];
         return;
     }
-    if ((object == self.mapView) && !_firstLocationUpdate&&
+    if ((object == self.mapView)&&
         ([keyPath isEqualToString:@"myLocation"] == YES))
     {
-        _firstLocationUpdate=YES;
+        
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
         [GlobalDataUser sharedAccountClient].userLocation=location.coordinate;
-        _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                     zoom:_mapView.camera.zoom];
+        if (!_firstLocationUpdate) {
+            _firstLocationUpdate=YES;
+            _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
+                                                             zoom:_mapView.camera.zoom];
+            if ([self.delegate respondsToSelector:@selector(locationPicker:mapViewDidLoad:)]) {
+                [self.delegate locationPicker:self mapViewDidLoad:self.mapView];
+            }
+        }
+        
     }
 }
 

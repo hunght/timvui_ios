@@ -25,7 +25,7 @@
     self.like_count=[dict safeIntegerForKey:@"like_count"];
     self.rating=[dict safeIntegerForKey:@"rating"];
     self.created=[dict safeDateForKey:@"created"];
-    NSLog(@"%@",self.created);
+    NSLog(@"self.create %@",self.created);
 }
 
 #pragma mark Associations

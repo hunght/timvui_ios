@@ -262,13 +262,36 @@ static int _numPages = 16;
 
 #pragma mark - LocationTableVCDelegate
 
--(void)didPickWithLoation:(TVBranch *)branch{
+- (void)didPickedABranch:(TVBranch *)branch {
     if (_viewNotify) [_viewNotify removeFromSuperview];
     [self.slidingViewController resetTopView];
     _branch=branch;
     _photoBrowseTableVC.branch=_branch;
     [self.pagingScrollView setScrollEnabled:YES];
     [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
+}
+
+-(void)didPickWithLoation:(TVBranch *)branch{
+    if (_arrImages.count>0){
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Nếu chọn địa điểm khác thì các ảnh vừa chụp sẽ bị xóa"];
+    
+    [alertView addButtonWithTitle:@"OK"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              [_arrImages removeAllObjects];
+                              _lblPhone.hidden=YES;
+                              [self didPickedABranch:branch];
+                          }];
+    [alertView addButtonWithTitle:@"Hủy"
+                             type:SIAlertViewButtonTypeCancel
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Cancel Clicked");
+                          }];
+    [alertView show];
+    }else{
+        [self didPickedABranch:branch];
+    }
+    
 }
 
 #pragma mark - SkinPickerTableVCDelegate
@@ -312,7 +335,26 @@ static int _numPages = 16;
 }
 
 - (IBAction)closeButtonClicked:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+    if (_arrImages.count>0) {
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn chưa đăng ảnh! Các ảnh vừa chụp sẽ bị xóa"];
+        
+        [alertView addButtonWithTitle:@"OK"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  
+                                  [_arrImages removeAllObjects];
+                                  _lblPhone.hidden=YES;
+                                  [self dismissModalViewControllerAnimated:YES];
+                              }];
+        [alertView addButtonWithTitle:@"Hủy"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
+    }else{
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)albumPickerButtonClicked:(id)sender {

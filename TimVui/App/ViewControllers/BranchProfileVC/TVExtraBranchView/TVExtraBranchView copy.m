@@ -33,7 +33,7 @@
 #import "SIAlertView.h"
 #import "BranchProfileVC.h"
 #define kTableViewHeightOffset 150
-#define kCommentLimitCount 5
+#define kCommentLimitCount 2
 
 @interface TVExtraBranchView() {
 @private
@@ -238,7 +238,7 @@
     [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             if (preCount>0&&weakSelf.similarBranches.items.count==preCount) {
-                [tableFooter setText:@"Không còn địa điểm nào"];
+                [tableFooter setText:@"Không còn đánh giá nào"];
                 tableFooter.hidden=NO;
                 weakSelf.tableView.showsInfiniteScrolling=NO;
             }else{
@@ -304,10 +304,9 @@
         
         CGRect footerRect = CGRectMake(0, 0, 320, 40);
         tableFooter = [[UILabel alloc] initWithFrame:footerRect];
-        tableFooter.textColor = [UIColor grayColor];
-        tableFooter.textAlignment=UITextAlignmentCenter;
+        tableFooter.textColor = [UIColor blueColor];
         tableFooter.backgroundColor = [UIColor clearColor];
-        tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+        tableFooter.font = [UIFont boldSystemFontOfSize:15];
         self.tableView.tableFooterView = tableFooter;
         
         
@@ -316,7 +315,7 @@
         
         //
         [self.tableView addPullToRefreshWithActionHandler:^{
-            NSLog(@"addPullToRefreshWithActionHandler");
+
             if (weakSelf.currentTableType==kTVComment) {
                 weakSelf.comments.items=nil;
                 NSDictionary* params = @{@"branch_id": branchID,
@@ -332,7 +331,6 @@
         }];
         
         [self.tableView addInfiniteScrollingWithActionHandler:^{
-            NSLog(@"addInfiniteScrollingWithActionHandler");
             if (weakSelf.currentTableType==kTVComment) {
                 [weakSelf getCommentRefresh];
             }else if (weakSelf.currentTableType==kTVSimilar){
@@ -340,7 +338,6 @@
             }
             
         }];
-        [self.tableView reloadData];
     }
     
     [self showExtraView:YES];
@@ -722,7 +719,7 @@
     menuButton.selected=NO;
     similarButton.selected=NO;
     [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
-    tableFooter.hidden=YES;
+
 }
 
 -(void)showExtraView:(BOOL)isYES{

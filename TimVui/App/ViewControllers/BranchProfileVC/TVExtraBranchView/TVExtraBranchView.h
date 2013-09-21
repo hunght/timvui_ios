@@ -13,7 +13,9 @@
 typedef enum {
     kTVComment =0,
     kTVMenu,
-    kTVSimilar
+    kTVSimilar,
+    kTVKaraoke,
+    kTVEvent
 } kTVTable;
 
 @interface TVExtraBranchView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
@@ -38,8 +40,12 @@ typedef enum {
 @property (assign, nonatomic) BOOL isShowFullExtraYES;
 @property (assign, nonatomic) UIViewController *viewController;
 
-
 -(void)showExtraView:(BOOL)isYES;
+
 -(void)eventButtonClicked:(UIButton*)sender;
+
 - (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController;
+
+-(id)initShowEventWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController;
+
 @end

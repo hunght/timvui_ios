@@ -116,25 +116,6 @@
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     [self initNotificationView];
     
-    //Update location user and get branches
-    if ([GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSDictionary* dic=[defaults dictionaryForKey:kGetCityDataUser];
-        if (dic) {
-            [GlobalDataUser sharedAccountClient].dicCity=    dic;
-            [GlobalDataUser sharedAccountClient].userLocation=[dic safeLocationForKey:@"latlng"];
-            [self getBranchesForView];
-        }else if(([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))){
-            int i=    [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] count];
-            NSLog(@"count == %d",i);
-            alert	= [[SBTableAlert alloc] initWithTitle:@"Vui lòng chọn Tỉnh/TP" cancelButtonTitle:@"Cancel" messageFormat:nil];
-            [alert setDelegate:self];
-            [alert setDataSource:self];
-            [alert show];
-//            NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
-        }
-    }else
-        [self getBranchesForView];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -219,6 +200,27 @@
 - (void)locationPicker:(LocationPickerView *)locationPicker mapViewDidLoad:(GMSMapView *)mapView
 {
     _lastPosition=mapView.camera.target;
+    
+    
+    //Update location user and get branches
+    if ([GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary* dic=[defaults dictionaryForKey:kGetCityDataUser];
+        if (dic) {
+            [GlobalDataUser sharedAccountClient].dicCity=    dic;
+            [GlobalDataUser sharedAccountClient].userLocation=[dic safeLocationForKey:@"latlng"];
+            [self getBranchesForView];
+        }else if(([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))){
+            int i=    [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] count];
+            NSLog(@"count == %d",i);
+            alert	= [[SBTableAlert alloc] initWithTitle:@"Vui lòng chọn Tỉnh/TP" cancelButtonTitle:@"Cancel" messageFormat:nil];
+            [alert setDelegate:self];
+            [alert setDataSource:self];
+            [alert show];
+            //            NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
+        }
+    }else
+        [self getBranchesForView];
 }
 
 - (void)locationPicker:(LocationPickerView *)locationPicker tableViewDidLoad:(UITableView *)tableView

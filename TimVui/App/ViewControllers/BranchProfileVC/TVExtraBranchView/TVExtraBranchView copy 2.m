@@ -29,11 +29,9 @@
 #import "CMHTMLView.h"
 #import "ExtraSuggestionMenuCell.h"
 #import "LoginVC.h"
-#import "BranchMainCell.h"
 #import "SIAlertView.h"
-#import "BranchProfileVC.h"
 #define kTableViewHeightOffset 150
-#define kCommentLimitCount 5
+#define kCommentLimitCount 4
 
 @interface TVExtraBranchView() {
 @private
@@ -50,7 +48,6 @@
     UILabel* lblWriteReviewNotice;
     int countMenu;
     int pageSimilarCount;
-    UILabel *tableFooter;
 }
 @end
 
@@ -62,11 +59,6 @@
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-}
-
-- (id)initShowEventWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController{
-    _isWantToShowEvents=YES;
-    return [self initWithFrame:frame andBranch:branch withViewController:viewController];
 }
 
 - (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
@@ -85,7 +77,7 @@
         lblWriteReviewNotice=[[UILabel alloc] initWithFrame:CGRectMake(10, 50, 300, 30)];
         
         lblWriteReviewNotice.numberOfLines=2;
-
+        lblWriteReviewNotice.text=@"Hãy viết đánh giá về địa điểm này để chia sẻ với bạn bè của bạn";
         lblWriteReviewNotice.backgroundColor = [UIColor clearColor];
         lblWriteReviewNotice.textColor = [UIColor grayColor];
         lblWriteReviewNotice.font = [UIFont fontWithName:@"ArialMT" size:(12)];
@@ -135,7 +127,7 @@
         if (_branch.isHasKaraokeYES) {
             
             karaokeButton = [[UIButton alloc] initWithFrame:CGRectMake(199, 0, 98, 41)];
-            _lblKaraoke=[[UILabel alloc] initWithFrame:CGRectMake(75, 10, 40, 20)];
+            _lblKaraoke=[[UILabel alloc] initWithFrame:CGRectMake(65, 10, 40, 20)];
             [karaokeButton addSubview:_lblKaraoke];
             _lblKaraoke.textColor=[UIColor colorWithRed:(146/255.0f) green:(232/255.0f) blue:(255/255.0f) alpha:1.0f];
             _lblKaraoke.font=[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
@@ -151,12 +143,8 @@
             
             pad=karaokeButton.frame.size.width;
         }
-        if (_branch.isHasKaraokeYES) {
-            eventButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad,0, 73, 41)];
-        }else{
-            eventButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad,0, 82, 41)];
-        }
         
+        eventButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad,0, 82, 41)];
         [eventButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [eventButton setTitle:@"          SỰ KIỆN" forState:UIControlStateNormal];
         [eventButton addTarget:self action:@selector(eventButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -164,7 +152,7 @@
         eventButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];
         [_viewScroll addSubview:eventButton];
         
-        similarButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad+eventButton.frame.size.width,0, 94, 41)];
+        similarButton = [[UIButton alloc] initWithFrame:CGRectMake(199+82+pad,0, 94, 41)];
         [similarButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
         [similarButton setTitle:@"     SIMILAR" forState:UIControlStateNormal];
         [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -183,9 +171,9 @@
         
         self.lblKaraoke.text=[NSString stringWithFormat:@"(%d)",_branch.karaokes.items.count];
         _viewController=viewController;
+
     }
-    
-    if (!_isWantToShowEvents) {
+    if (_isWantToShowEvents) {
         _isHiddenYES=YES;
         [self showMenuExtraWithoutTableView];
     }
@@ -195,23 +183,15 @@
 #pragma TVNetworking
 
 - (void)postCommentBranch:(NSDictionary*)params {
-    NSLog(@"%@",params);
+    NSLog(@"params= %@",params);
     if (!self.comments) {
         self.comments=[[TVComments alloc] initWithPath:@"branch/getComments"];
     }
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     self.comments.isShowLoading=NO;
-    int preCount=self.comments.items.count;
     [weakSelf.comments loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            if (preCount>0&&weakSelf.comments.items.count==preCount) {
-                [tableFooter setText:@"Không còn đánh giá nào"];
-                tableFooter.hidden=NO;
-                weakSelf.tableView.showsInfiniteScrolling=NO;
-            }else{
-                tableFooter.hidden=YES;
-                weakSelf.tableView.showsInfiniteScrolling=YES;
-            }
+            
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             self.lblReview.text=[NSString stringWithFormat:@"    (%d)",weakSelf.comments.count];
@@ -227,24 +207,16 @@
 }
 
 - (void)postSimilarBranch:(NSDictionary*)params {
-    NSLog(@"%@",params);
+    NSLog(@"params= %@",params);
     if (!self.similarBranches) {
         self.similarBranches=[[TVBranches alloc] initWithPath:@"branch/getListBranchSibling"];
         self.similarBranches.isNotSearchAPIYES=YES;
         pageSimilarCount=0;
     }
-    int preCount=self.similarBranches.items.count;
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            if (preCount>0&&weakSelf.similarBranches.items.count==preCount) {
-                [tableFooter setText:@"Không còn địa điểm nào"];
-                tableFooter.hidden=NO;
-                weakSelf.tableView.showsInfiniteScrolling=NO;
-            }else{
-                tableFooter.hidden=YES;
-                weakSelf.tableView.showsInfiniteScrolling=YES;
-            }
+            
             pageSimilarCount++;
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
@@ -301,46 +273,22 @@
         isFloatViewHiddenYES=YES;
         lastDragOffsetFloatView=_tableView.contentOffset.y;
         [self addSubview:lblWriteReviewNotice];
-        
-        CGRect footerRect = CGRectMake(0, 0, 320, 40);
-        tableFooter = [[UILabel alloc] initWithFrame:footerRect];
-        tableFooter.textColor = [UIColor grayColor];
-        tableFooter.textAlignment=UITextAlignmentCenter;
-        tableFooter.backgroundColor = [UIColor clearColor];
-        tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
-        self.tableView.tableFooterView = tableFooter;
-        
-        
         __unsafe_unretained TVExtraBranchView *weakSelf = self;
         __block NSString*branchID=_branch.branchID;
         
         //
         [self.tableView addPullToRefreshWithActionHandler:^{
-            NSLog(@"addPullToRefreshWithActionHandler");
-            if (weakSelf.currentTableType==kTVComment) {
-                weakSelf.comments.items=nil;
-                NSDictionary* params = @{@"branch_id": branchID,
-                                         @"limit": @kCommentLimitCount
-                                         };
-                [weakSelf postCommentBranch:params];
-            }else if (weakSelf.currentTableType==kTVSimilar){
-                [weakSelf.similarBranches.items removeAllObjects];
-                weakSelf->pageSimilarCount=0;
-                [weakSelf getBranchSimilar];
-            }
-         
+            weakSelf.comments.items=nil;
+            NSDictionary* params = @{@"branch_id": branchID,
+                                     @"limit": @kCommentLimitCount
+                                     };
+            [weakSelf postCommentBranch:params];
         }];
         
         [self.tableView addInfiniteScrollingWithActionHandler:^{
-            NSLog(@"addInfiniteScrollingWithActionHandler");
-            if (weakSelf.currentTableType==kTVComment) {
-                [weakSelf getCommentRefresh];
-            }else if (weakSelf.currentTableType==kTVSimilar){
-                [weakSelf getBranchSimilar];
-            }
-            
+            [weakSelf getCommentRefresh];
         }];
-        [self.tableView reloadData];
+
     }
     
     [self showExtraView:YES];
@@ -459,7 +407,6 @@
     if (_branch.events.items.count>0) {
         lblWriteReviewNotice.hidden=YES;
     }else{
-        lblWriteReviewNotice.text=@"Đang cập nhật..";
         lblWriteReviewNotice.hidden=NO;
     }
     if (!_scrollEvent) {
@@ -573,7 +520,6 @@
     if (_branch.karaokes.items.count>0) {
         lblWriteReviewNotice.hidden=YES;
     }else{
-        lblWriteReviewNotice.text=@"Đang cập nhật..";
         lblWriteReviewNotice.hidden=NO;
     }
     if (!_scrollKaraoke) {
@@ -600,10 +546,7 @@
 #pragma mark Actions
 
 -(void)eventButtonClicked:(UIButton*)sender{
-    if (_currentTableType!=kTVEvent){
-        floatView.hidden=YES;
-        _currentTableType=kTVEvent;
-    }
+    
     [self resetToUnselectedButtons];
     [eventButton setSelected:YES];
     [self initTableView];
@@ -650,20 +593,13 @@
         floatView.hidden=YES;
         _currentTableType=kTVMenu;
         [_tableView reloadData];
-        if (countMenu==0) {
-            lblWriteReviewNotice.text=@"Đang cập nhật..";
-            lblWriteReviewNotice.hidden=NO;
-        }
     }
     self.tableView.showsPullToRefresh=NO;
     self.tableView.showsInfiniteScrolling=NO;
 }
 
 -(void)karaokeButtonClicked:(UIButton*)sender{
-    if (_currentTableType!=kTVKaraoke){
-        floatView.hidden=YES;
-        _currentTableType=kTVKaraoke;
-    }
+    
     [self resetToUnselectedButtons];
     [sender setSelected:YES];
     [self initTableView];
@@ -721,8 +657,6 @@
     eventButton.selected=NO;
     menuButton.selected=NO;
     similarButton.selected=NO;
-    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
-    tableFooter.hidden=YES;
 }
 
 -(void)showExtraView:(BOOL)isYES{
@@ -864,16 +798,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (_currentTableType==kTVMenu) {
-        TVGroupCuisines* group;
-        if (section==0) {
-            group=_branch.menuSuggesting;
-            if (group.items.count==0) {
-                return 0;
-            }
-        }
         return  44.0f;
-        
-        
     }else
         return 0;
 }
@@ -886,10 +811,9 @@
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
                             comment.commentID,@"comment_id",
                             nil];
-    NSLog(@"%@",params);
+    NSLog(@"params= %@",params);
     
     [[TVNetworkingClient sharedClient] postPath:@"branch/userVoteComment" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
         //        [SVProgressHUD showSuccessWithStatus:@"Bạn vừa thích comment này!"];
         [TSMessage showNotificationInViewController:_viewController
                                           withTitle:@"Bạn đã vote cho đánh giá thành công!"
@@ -957,13 +881,11 @@
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
                             cuisine.cuisineID,@"item_id",
                             nil];
-    NSLog(@"%@",params);
+    NSLog(@"params= %@",params);
     
     [[TVNetworkingClient sharedClient] postPath:@"item/userLikeItem" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
         cuisine.like_count++;
         ExtraSuggestionMenuCell*cell=(ExtraSuggestionMenuCell*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
-        
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%d votes",cuisine.like_count];
         [TSMessage showNotificationInViewController:_viewController
                                           withTitle:[NSString stringWithFormat:@"Bạn đã vote cho món %@ thành công!",cuisine.name]
@@ -1032,9 +954,6 @@
         TVGroupCuisines* group;
         if (section==0) {
             group=_branch.menuSuggesting;
-            if (group.items.count==0) {
-                return nil;
-            }
         }else{
             group=[_branch.menu.items objectAtIndex:section-1];
         }
@@ -1046,8 +965,11 @@
 		textLabel.backgroundColor = [UIColor clearColor];
         [textLabel sizeToFit];
         
-        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(5,44-3, 295, 1)];
+        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(5,44-3, 295, 3)];
         grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+        
+//        UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5,44-3, 295, 3)];
+//        [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
 		[headerView addSubview:grayLine];
 		
 		[headerView addSubview:textLabel];
@@ -1064,11 +986,7 @@
             count= 1;
             break;
         case kTVMenu:
-            if (countMenu==0) {
-                count=0;
-            }else{
-                count= [self.branch.menu.items count]+1;
-            }
+            count= [self.branch.menu.items count]+1;
             break;
         case kTVSimilar:
             count=1;
@@ -1083,48 +1001,41 @@
     int count=0;
     switch (_currentTableType) {
         case kTVComment:
-            count= [self.comments.items count];
+            count= [self.comments count];
             if (count==0) {
                 [self showFloatView];
-                self.tableView.showsPullToRefresh=NO;
-                self.tableView.showsInfiniteScrolling=NO;
-                lblWriteReviewNotice.text=@"Hãy viết đánh giá về địa điểm này để chia sẻ với bạn bè của bạn";
                 lblWriteReviewNotice.hidden=NO;
             }else{
                 lblWriteReviewNotice.hidden=YES;
             }
             break;
-            
         case kTVMenu:
+            if (section==0) {
+                count= [[self.branch.menuSuggesting items] count];
+            }else{
+                count= [[[self.branch.menu.items objectAtIndex:section-1] items] count];
+            }
+            
             if (countMenu==0) {
-                lblWriteReviewNotice.text=@"Đang cập nhật..";
+                [self showFloatView];
                 lblWriteReviewNotice.hidden=NO;
             }else{
-                if (section==0) {
-                    count= [[self.branch.menuSuggesting items] count];
-                }else{
-                    count= [[[self.branch.menu.items objectAtIndex:section-1] items] count];
-                }
                 lblWriteReviewNotice.hidden=YES;
             }
             break;
-            
         case kTVSimilar:
             count= _similarBranches.count;
             if (count==0) {
-                self.tableView.showsPullToRefresh=NO;
-                self.tableView.showsInfiniteScrolling=NO;
-                lblWriteReviewNotice.text=@"CH Tương tự";
+                [self showFloatView];
                 lblWriteReviewNotice.hidden=NO;
             }else{
                 lblWriteReviewNotice.hidden=YES;
             }
             break;
-            
         default:
             break;
     }
-    
+    NSLog(@"count table= %d",count);
     return count;
 }
 
@@ -1140,6 +1051,7 @@
                 [[(ExtraCommentCell*)cell btnLike] addTarget:self action:@selector(likeCommentButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             }
             [[(ExtraCommentCell*)cell btnLike] setTag:indexPath.row];
+            NSLog(@"count table indexPath.row= %d",indexPath.row);
             [(ExtraCommentCell*)cell setComment:_comments[indexPath.row]];
             break;
         case kTVMenu:
@@ -1158,12 +1070,13 @@
                 [[(ExtraSuggestionMenuCell*)cell titleRow] sizeToFit];
                 cell.detailTextLabel.text=[NSString stringWithFormat:@"%d votes",cuisine.like_count];
                 
+                
             }else{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ExtraMenuCell"];
                 if (!cell) {
                     cell = [[ExtraMenuCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"ExtraMenuCell"];
+                    
                 }
-                
                 TVGroupCuisines* group=[_branch.menu.items objectAtIndex:indexPath.section-1];
                 TVCuisine* cuisine=group.items[indexPath.row];
                 [(ExtraMenuCell*)cell titleRow].text=cuisine.name;[[(ExtraMenuCell*)cell titleRow] sizeToFit];
@@ -1172,18 +1085,11 @@
             }
             break;
         }
-        case kTVSimilar:{
-            BranchMainCell *branchMainCell = [tableView dequeueReusableCellWithIdentifier:@"BranchMainCell"];
-            if (!branchMainCell) {
-                branchMainCell = [[BranchMainCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"BranchMainCell"];
-            }else{
-                [[branchMainCell.utility subviews]  makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        case kTVSimilar:
+            cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+            if (!cell) {
+                cell = [[ExtraCommentCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
             }
-            
-            double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[self.similarBranches[indexPath.row]latlng]];
-            [branchMainCell setBranch:self.similarBranches[indexPath.row] withDistance:distance];
-            return branchMainCell;
-        }
             break;
         default:
             break;
@@ -1200,11 +1106,11 @@
             break;
             
         case kTVComment:
+            NSLog(@"count table indexPath.row= %d",indexPath.row);
             return [ExtraCommentCell heightForCellWithPost:self.comments[indexPath.row]];
             break;
             
         case kTVSimilar:
-            return [BranchMainCell heightForCellWithPost:self.similarBranches[indexPath.row]];
             break;
             
         default:
@@ -1215,13 +1121,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //
-    if (_currentTableType==kTVSimilar) {
-        
-        BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
-        branchProfileVC.branchID=[_similarBranches[indexPath.row] branchID];
-        [_viewController.navigationController pushViewController:branchProfileVC animated:YES];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
 }
 
 
