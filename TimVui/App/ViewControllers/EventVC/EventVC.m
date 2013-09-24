@@ -13,15 +13,17 @@
 #import "GlobalDataUser.h"
 #import "NSDictionary+Extensions.h"
 #import "TVEvent.h"
+#import "SVPullToRefresh.h"
 #import "BranchProfileVC.h"
-static const NSString* limitCount=@"10";
+static const NSString* limitCount=@"5";
 static const NSString* distanceMapSearch=@"100";
 
 @interface EventVC ()
 {
     @private
     NSMutableArray* arrEvents;
-    NSNumber* offset;
+    int offset;
+    UILabel *tableFooter;
 }
 @end
 
@@ -37,7 +39,7 @@ static const NSString* distanceMapSearch=@"100";
         _branches=[[TVBranches alloc] initWithPath:@"search/getBranchesHaveEvent"];
         _branches.isNotSearchAPIYES=NO;
         arrEvents=[[NSMutableArray alloc] init];
-        offset=[[NSNumber alloc] initWithInt:0];
+        offset=0;
     }
     return self;
 }
@@ -50,28 +52,41 @@ static const NSString* distanceMapSearch=@"100";
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
-                   @"latlng": strLatLng,@"limit":limitCount,@"offset":offset.stringValue,@"distance":distanceMapSearch};
+                   @"latlng": strLatLng,@"limit":limitCount,@"offset":[NSString stringWithFormat:@"%d",offset],@"distance":distanceMapSearch};
     }else
     {
         NSLog(@"Can't get location of user");
     }
     
-    NSLog(@"param=%@",params);
+//    NSLog(@"param=%@",params);
+    
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            
+            //NSLog(@"weakSelf.branches.count=%d",weakSelf.branches.count);
+            
             if (weakSelf.branches.count==0) {
-                
+                weakSelf.tableView.showsInfiniteScrolling=NO;
+                [tableFooter setText:@"Không còn sự kiện nào"];
+                tableFooter.hidden=NO;
             }else{
+                tableFooter.hidden=YES;
+                if (offset==0) {
+                    [arrEvents removeAllObjects];
+                }
                 for (TVBranch* branch in _branches.items) {
                     for (TVEvent* event in branch.events.items) {
                         event.branch=branch;
                         [arrEvents addObject:event];
-                        [self.tableView reloadData];
+                        
                     }
                 }
             }
-            
+            offset+=limitCount.intValue;
+            [self.tableView reloadData];
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
@@ -82,8 +97,37 @@ static const NSString* distanceMapSearch=@"100";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect footerRect = CGRectMake(0, 0, 320, 40);
+    tableFooter = [[UILabel alloc] initWithFrame:footerRect];
+    tableFooter.textColor = [UIColor grayColor];
+    tableFooter.textAlignment=UITextAlignmentCenter;
+    tableFooter.backgroundColor = [UIColor clearColor];
+    tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    tableFooter.hidden=YES;
+    self.tableView.tableFooterView = tableFooter;
+    
     [self postToGetBranches];
-    // Do any additional setup after loading the view from its nib.
+    
+    __weak EventVC *weakSelf = self;
+    
+    // setup pull-to-refresh
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.infiniteScrollingView.state=%d",weakSelf.tableView.infiniteScrollingView.state);
+        if (weakSelf.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+            weakSelf.tableView.showsInfiniteScrolling=YES;
+            offset=0;
+            [weakSelf postToGetBranches];
+        }
+    }];
+    
+    // setup infinite scrolling
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.pullToRefreshView.state=%d",weakSelf.tableView.pullToRefreshView.state);
+        if (weakSelf.tableView.pullToRefreshView.state!=SVInfiniteScrollingStateLoading) {
+            [weakSelf postToGetBranches];
+        }
+    }];
+
 }
 
 - (void)viewDidUnload {

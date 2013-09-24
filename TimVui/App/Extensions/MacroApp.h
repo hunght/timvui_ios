@@ -43,7 +43,7 @@
 #define kVatgiaClientID @"anuong-ios"
 #define kVatgiaClientSecret @"2ETkVUuMAIPmOY8liDzj0x"
 
-#define kSearchBranchLimit @"30"
+#define kSearchBranchLimit @"20"
 #define kKYCustomPhotoAlbumName_ @"Anuong.net Album"
 
 #define kCyanGreenColor [UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]

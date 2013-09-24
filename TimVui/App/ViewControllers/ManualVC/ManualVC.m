@@ -19,10 +19,13 @@
 #import "Utilities.h"
 #import "FilterVC.h"
 #import <QuartzCore/QuartzCore.h> 
-
+#import "SVPullToRefresh.h"
+static const NSString* limitCount=@"5";
 @interface ManualVC ()
 {
     NSMutableDictionary* params;
+    int offset;
+    UILabel *tableFooter;
 }
 @end
 
@@ -34,23 +37,46 @@
     if (self) {
         // Custom initialization
         _manualArr=[[NSMutableArray alloc] init];
+        offset=0;
     }
     return self;
 }
 
 - (void)postToGetManual
 {
-    NSLog(@"param=%@",params);
+//    NSLog(@"param=%@",params);
+    [params setValue:limitCount forKey:@"limit"];
+    [params setValue:[NSString stringWithFormat:@"%d",offset] forKey:@"offset"];
+     NSLog(@"params=%@",params);
+    
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"JSON=%@",JSON);
-        [_manualArr removeAllObjects];
-        for (NSDictionary* dic in [[JSON safeDictForKey:@"data"] allValues]) {
-            TVManual* munual=[[TVManual alloc] initWithDict:dic];
-            [_manualArr addObject:munual];
+        [weakSelf.tableView.pullToRefreshView stopAnimating];
+        [weakSelf.tableView.infiniteScrollingView stopAnimating];
+        
+//        NSLog(@"JSON=%@",JSON);
+        
+        if (offset==0) {
+            [_manualArr removeAllObjects];
         }
+        
+        NSArray* dicArray=[[JSON safeDictForKey:@"data"] allValues];
+        if (dicArray.count==0) {
+            weakSelf.tableView.showsInfiniteScrolling=NO;
+            [tableFooter setText:@"Không còn cẩm nang nào"];
+            tableFooter.hidden=NO;
+        }else{
+            tableFooter.hidden=YES;
+            for (NSDictionary* dic in dicArray) {
+                TVManual* munual=[[TVManual alloc] initWithDict:dic];
+                [_manualArr addObject:munual];
+            }
+        }
+
         if (_btnSaved.isSelected) {
             _lblSaveHandbookCount.text=[NSString stringWithFormat:@"%d",_manualArr.count];
         }
+        offset+=limitCount.intValue;
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -108,7 +134,37 @@
     
     params=[[NSMutableDictionary alloc] init];
     [params setValue:@"view" forKey:@"type"];
+    
+    CGRect footerRect = CGRectMake(0, 0, 320, 40);
+    tableFooter = [[UILabel alloc] initWithFrame:footerRect];
+    tableFooter.textColor = [UIColor grayColor];
+    tableFooter.textAlignment=UITextAlignmentCenter;
+    tableFooter.backgroundColor = [UIColor clearColor];
+    tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    tableFooter.hidden=YES;
+    self.tableView.tableFooterView = tableFooter;
+    
     [self postToGetManual];
+    
+    __weak ManualVC *weakSelf = self;
+    
+    // setup pull-to-refresh
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.infiniteScrollingView.state=%d",weakSelf.tableView.infiniteScrollingView.state);
+        if (weakSelf.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+            weakSelf.tableView.showsInfiniteScrolling=YES;
+            offset=0;
+            [weakSelf postToGetManual];
+        }
+    }];
+    
+    // setup infinite scrolling
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.pullToRefreshView.state=%d",weakSelf.tableView.pullToRefreshView.state);
+        if (weakSelf.tableView.pullToRefreshView.state!=SVInfiniteScrollingStateLoading) {
+            [weakSelf postToGetManual];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -145,7 +201,11 @@
     [sender setSelected:YES];
     
     [params setValue:@"new" forKey:@"type"];
-    [self postToGetManual];
+    if (self.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+        self.tableView.showsInfiniteScrolling=YES;
+        offset=0;
+        [self postToGetManual];
+    }
 }
 
 - (IBAction)popularButtonClicked:(UIButton*)sender {
@@ -154,7 +214,11 @@
     [sender setSelected:YES];
     
     [params setValue:@"view" forKey:@"type"];
-    [self postToGetManual];
+    if (self.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+        self.tableView.showsInfiniteScrolling=YES;
+        offset=0;
+        [self postToGetManual];
+    }
 }
 
 - (IBAction)savedButtonClicked:(UIButton*)sender {
@@ -164,7 +228,11 @@
     
     [params setValue:@"user" forKey:@"type"];
     [params setValue:[GlobalDataUser sharedAccountClient].user.userId forKey:@"user_id"];
-    [self postToGetManual];
+    if (self.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+        self.tableView.showsInfiniteScrolling=YES;
+        offset=0;
+        [self postToGetManual];
+    }
 }
 
 -(void)saveButtonClicked:(UIButton*)sender{

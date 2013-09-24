@@ -7,13 +7,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Models/GHResource.m"
-         timestampString = "401432423.460282"
+         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
+         timestampString = "401705142.010182"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "75"
-         endingLineNumber = "75"
-         landmarkName = "-loadWithParams:path:method:start:success:failure:"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
+         landmarkName = "-postToGetManual"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
+         timestampString = "401705473.632674"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "52"
+         endingLineNumber = "52"
+         landmarkName = "-postToGetManual"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

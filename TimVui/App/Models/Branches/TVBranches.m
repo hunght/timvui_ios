@@ -19,9 +19,11 @@
 //    if (_isNotSearchAPIYES) {
 //        arr=values;
 //    }
-    
-	self.items = [NSMutableArray array];
-
+    if (!self.items) {
+        self.items = [NSMutableArray array];
+    }
+	
+    _countAddedItems=[arr count];
 	for (NSDictionary *dict in arr) {
 		TVBranch *branch = [[TVBranch alloc] initWithDict:dict];
         

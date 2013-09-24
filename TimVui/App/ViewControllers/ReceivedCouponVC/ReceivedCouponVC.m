@@ -16,7 +16,7 @@
 #import "CoupBranchProfileVC.h"
 #import "Utilities.h"
 #import "TVAppDelegate.h"
-static const NSString* limitCount=@"10";
+static const NSString* limitCount=@"5";
 static const NSString* distanceMapSearch=@"100";
 
 @interface ReceivedCouponVC ()
@@ -43,17 +43,20 @@ static const NSString* distanceMapSearch=@"100";
     }
     return self;
 }
+
 -(void)rearrangeBranchesToShowing{
     for (TVBranch* branch in _branches.items) {
         for (TVCoupon* coupon in branch.coupons.items) {
             coupon.branch = branch;
             [arrCoupons addObject:coupon];
         }
+        
     }
     [_btnActive setSelected:YES];
     [_btnExperied setSelected:NO];
     [self.tableView reloadData];
 }
+
 - (void)postToGetBranches
 {
     NSDictionary *params = nil;
@@ -112,7 +115,7 @@ static const NSString* distanceMapSearch=@"100";
     if (![SharedAppDelegate isConnected]) {
         NSDictionary *retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedCoupon];
         if (retrievedDictionary) {
-//            NSLog(@"retrievedDictionary=%@",[retrievedDictionary safeDictForKey:@"data"]);
+
             [_branches setValues:[retrievedDictionary safeDictForKey:@"data"]];
             [self rearrangeBranchesToShowing];
         }

@@ -14,14 +14,16 @@
 #import "NSDictionary+Extensions.h"
 #import "TVCoupon.h"
 #import "CoupBranchProfileVC.h"
-static const NSString* limitCount=@"10";
+#import "SVPullToRefresh.h"
+static const NSString* limitCount=@"5";
 static const NSString* distanceMapSearch=@"100";
 
 @interface NearbyCouponVC ()
 {
     @private
     NSMutableArray* arrCoupons;
-    NSNumber* offset;
+    int offset;
+    UILabel *tableFooter;
 }
 @end
 
@@ -37,7 +39,7 @@ static const NSString* distanceMapSearch=@"100";
         _branches=[[TVBranches alloc] initWithPath:@"search/getBranchesHaveCoupon"];
         _branches.isNotSearchAPIYES=NO;
         arrCoupons=[[NSMutableArray alloc] init];
-        offset=[[NSNumber alloc] initWithInt:0];
+        offset=0;
     }
     return self;
 }
@@ -50,7 +52,7 @@ static const NSString* distanceMapSearch=@"100";
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
-                   @"latlng": strLatLng,@"limit":limitCount,@"offset":offset.stringValue,@"distance":distanceMapSearch};
+                   @"latlng": strLatLng,@"limit":limitCount,@"offset":[NSString stringWithFormat:@"%d",offset],@"distance":distanceMapSearch};
     }else
     {
         NSLog(@"Can't get location of user");
@@ -60,16 +62,26 @@ static const NSString* distanceMapSearch=@"100";
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            
             if (weakSelf.branches.count==0) {
+                weakSelf.tableView.showsInfiniteScrolling=NO;
                 
+                tableFooter.hidden=NO;
             }else{
+                tableFooter.hidden=YES;
+                if (offset==0) {
+                    [arrCoupons removeAllObjects];
+                }
                 for (TVBranch* branch in _branches.items) {
                     for (TVCoupon* coupon in branch.coupons.items) {
                         coupon.branch=branch;
                         [arrCoupons addObject:coupon];
-                        [self.tableView reloadData];
                     }
                 }
+                offset+=limitCount.intValue;
+                [self.tableView reloadData];
             }
             
         });
@@ -84,7 +96,35 @@ static const NSString* distanceMapSearch=@"100";
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     self.tableView.backgroundColor=[UIColor clearColor];
+    CGRect footerRect = CGRectMake(0, 0, 320, 40);
+    tableFooter = [[UILabel alloc] initWithFrame:footerRect];
+    tableFooter.textColor = [UIColor grayColor];
+    tableFooter.textAlignment=UITextAlignmentCenter;
+    tableFooter.backgroundColor = [UIColor clearColor];
+    tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    tableFooter.hidden=YES;
+    [tableFooter setText:@"Không còn coupon nào"];
+    self.tableView.tableFooterView = tableFooter;
+    
     [self postToGetBranches];
+    __weak NearbyCouponVC *weakSelf = self;
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.infiniteScrollingView.state=%d",weakSelf.tableView.infiniteScrollingView.state);
+        if (weakSelf.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+            weakSelf.tableView.showsInfiniteScrolling=YES;
+            offset=0;
+            [weakSelf postToGetBranches];
+        }
+    }];
+    
+    // setup infinite scrolling
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.pullToRefreshView.state=%d",weakSelf.tableView.pullToRefreshView.state);
+        if (weakSelf.tableView.pullToRefreshView.state!=SVInfiniteScrollingStateLoading) {
+            [weakSelf postToGetBranches];
+        }
+    }];
+    
     // Do any additional setup after loading the view from its nib.
 }
 

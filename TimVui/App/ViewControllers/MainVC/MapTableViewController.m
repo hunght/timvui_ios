@@ -25,11 +25,15 @@
 #import "TVCoupons.h"
 #import "MyNavigationController.h"
 #import "TSMessage.h"
-
+#import "SVPullToRefresh.h"
+static const int maxLimitBranches=100;
 @interface MapTableViewController (){
 @private
     __strong UIActivityIndicatorView *_activityIndicatorView;
     __strong  SBTableAlert *alert;
+    int offset;
+    UILabel* tableFooter;
+    NSDictionary *_params;
 }
 
 @end
@@ -61,15 +65,14 @@
 
 - (void)getBranchesForView {
 //    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
-    NSDictionary *params = nil;
     CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
-    
+    NSDictionary* params=nil;
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
         params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
                    @"latlng": strLatLng};
     }
-    
+    offset=0;
     _currentCameraPositionSearch=location;
     [self postSearchBranch:[[NSMutableDictionary alloc] initWithDictionary:params] withReturnFromSearchScreenYES:NO];
 }
@@ -116,6 +119,7 @@
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     [self initNotificationView];
     
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -225,7 +229,22 @@
 
 - (void)locationPicker:(LocationPickerView *)locationPicker tableViewDidLoad:(UITableView *)tableView
 {
+    CGRect footerRect = CGRectMake(0, 0, 320, 40);
+    tableFooter = [[UILabel alloc] initWithFrame:footerRect];
+    tableFooter.textColor = [UIColor grayColor];
+    tableFooter.textAlignment=UITextAlignmentCenter;
+    tableFooter.backgroundColor = [UIColor clearColor];
+    tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    tableFooter.hidden=YES;
+    [tableFooter setText:@"Không còn địa điểm nào"];
+    tableView.tableFooterView = tableFooter;
     
+    __weak MapTableViewController *weakSelf = self;
+    // setup infinite scrolling
+    
+    [tableView addInfiniteScrollingWithActionHandler:^{
+        [weakSelf postSearchBranch:[[NSMutableDictionary alloc] initWithDictionary:_params] withReturnFromSearchScreenYES:NO];
+    }];
 }
 
 #pragma mark - SBTableAlertDataSource
@@ -330,7 +349,15 @@
 }
 
 - (void)postSearchBranch:(NSMutableDictionary*)params withReturnFromSearchScreenYES:(BOOL)isSearchYES{
-    
+    _params=params;
+    if (offset>maxLimitBranches) {
+        _locationPickerView.tableView.showsInfiniteScrolling=NO;
+        return;
+    }
+    if (offset==0) {
+        [self.branches.items removeAllObjects];
+        _locationPickerView.tableView.showsInfiniteScrolling=YES;
+    }
     if ([GlobalDataUser sharedAccountClient].dicCatSearchParam.count>0) {
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCatSearchParam valueForKey:@"alias"] forKey:@"cat_aliases"];
     }
@@ -345,7 +372,6 @@
             [paramsForSearch addObject:[NSString stringWithFormat:@"mon-an_%@",strCuisine]];
         }
     }
-    
     
     if ([GlobalDataUser sharedAccountClient].dicPurposeSearchParam)
     {
@@ -363,7 +389,7 @@
     
     [params setValue:paramsForSearch  forKey:@"params"];
     [params setValue:kSearchBranchLimit  forKey:@"limit"];
-    [params setValue:@"0"  forKey:@"offset"];
+    [params setValue:[NSString stringWithFormat:@"%d",offset]  forKey:@"offset"];
     NSLog(@"params == %@",params);
     
     if (!self.branches) {
@@ -378,7 +404,7 @@
     
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            
+            [_locationPickerView.tableView.infiniteScrollingView stopAnimating];
             // View map with contain all search items
             if (weakSelf.branches.count>0) {
                 _locationPickerView.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -386,12 +412,21 @@
                 [self updateCameraMapPosition:branch.latlng];
             }
             
+            if (weakSelf.branches.countAddedItems==0) {
+                _locationPickerView.tableView.showsInfiniteScrolling=NO;
+                tableFooter.hidden=NO;
+            }else{
+                tableFooter.hidden=YES;
+            }
+            
             if (weakSelf.branches.count==0) {
+                
                 [_locationPickerView expandMapView:nil];
                 [self alertWhenNoDataLoaded];
             }
             
             _lastUpdate=[NSDate date];
+            offset+=kSearchBranchLimit.intValue;
             [_locationPickerView.tableView reloadData];
             [weakSelf showBranchOnMap];
         });
@@ -427,6 +462,7 @@
     _currentCameraPositionSearch=latlng;
      NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",latlng.latitude,latlng.longitude];
     [params setValue:strLatLng forKey:@"latlng"];
+    offset=0;
     [self postSearchBranch:params withReturnFromSearchScreenYES:YES];
     
 }
@@ -465,6 +501,7 @@
                            };
                 
                 _lastDistanceSearch=distance;
+                offset=0;
                 [self performSelector:@selector(postSearchBranch:withReturnFromSearchScreenYES:) withObject:[[NSMutableDictionary alloc] initWithDictionary:params] afterDelay:2];
                 _currentCameraPositionSearch=position.target;
             }
