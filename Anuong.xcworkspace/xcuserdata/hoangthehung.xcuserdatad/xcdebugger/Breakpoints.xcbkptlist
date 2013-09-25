@@ -7,26 +7,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
-         timestampString = "401705142.010182"
+         filePath = "TimVui/App/ViewControllers/FavoriteBranchListVC/FavoriteBranchListVC.m"
+         timestampString = "401775870.932677"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "60"
-         endingLineNumber = "60"
-         landmarkName = "-postToGetManual"
+         startingLineNumber = "116"
+         endingLineNumber = "116"
+         landmarkName = "-postGetBranches"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
-         timestampString = "401705473.632674"
+         filePath = "TimVui/App/ViewControllers/FavoriteBranchListVC/FavoriteBranchListVC.m"
+         timestampString = "401776634.055835"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "52"
-         endingLineNumber = "52"
-         landmarkName = "-postToGetManual"
+         startingLineNumber = "105"
+         endingLineNumber = "105"
+         landmarkName = "-postGetBranches"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

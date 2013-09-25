@@ -7,6 +7,7 @@
 //
 
 #import "GAI.h"
+#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
 
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
@@ -39,7 +40,7 @@
 #define SMS_NUMBER @"8188"//VDC
 
 #define kBranchIDs               @"kBranchIDs"
-#define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
+
 #define kVatgiaClientID @"anuong-ios"
 #define kVatgiaClientSecret @"2ETkVUuMAIPmOY8liDzj0x"
 

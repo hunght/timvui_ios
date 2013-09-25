@@ -270,6 +270,10 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
             [GlobalDataUser sharedAccountClient].dicCitySearchParam=arrResult;
             [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=nil;
             [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
+            [GlobalDataUser sharedAccountClient].dicCity=arrResult;
+            [[NSUserDefaults standardUserDefaults] setValue:[GlobalDataUser sharedAccountClient].dicCity forKey:kGetCityDataUser];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case kSearchParamDistrict:

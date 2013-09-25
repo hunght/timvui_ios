@@ -15,7 +15,14 @@
 #import "BranchProfileVC.h"
 #import "GlobalDataUser.h"
 #import "NSDictionary+Extensions.h"
-@interface FavoriteBranchListVC ()
+#import "SVPullToRefresh.h"
+
+static const NSString* limitCount=@"5";
+
+@interface FavoriteBranchListVC (){
+    int offset;
+    UILabel *tableFooter;
+}
 
 @end
 
@@ -36,11 +43,42 @@
 {
     [super viewDidLoad];
     
+    CGRect footerRect = CGRectMake(0, 0, 320, 40);
+    tableFooter = [[UILabel alloc] initWithFrame:footerRect];
+    tableFooter.textColor = [UIColor grayColor];
+    tableFooter.textAlignment=UITextAlignmentCenter;
+    tableFooter.backgroundColor = [UIColor clearColor];
+    tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    tableFooter.hidden=YES;
+    [tableFooter setText:@"Không còn địa điểm nào"];
+    self.tableView.tableFooterView = tableFooter;
+    [self postGetBranches];
+    
+    __weak FavoriteBranchListVC *weakSelf = self;
+    
+    // setup pull-to-refresh
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.infiniteScrollingView.state=%d",weakSelf.tableView.infiniteScrollingView.state);
+        if (weakSelf.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+            weakSelf.tableView.showsInfiniteScrolling=YES;
+            offset=0;
+            [weakSelf postGetBranches];
+        }
+    }];
+    
+    // setup infinite scrolling
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        NSLog(@"weakSelf.tableView.pullToRefreshView.state=%d",weakSelf.tableView.pullToRefreshView.state);
+        if (weakSelf.tableView.pullToRefreshView.state!=SVInfiniteScrollingStateLoading) {
+            [weakSelf postGetBranches];
+        }
+    }];
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self postGetBranches];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,22 +94,42 @@
 
 
 -(void)postGetBranches{
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys://@"short",@"infoType",
-                                [GlobalDataUser sharedAccountClient].user.userId ,@"user_id" ,
-                                nil];
-        
-        __unsafe_unretained __typeof(&*self)weakSelf = self;
-        [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-            dispatch_async(dispatch_get_main_queue(),^ {
-                [GlobalDataUser sharedAccountClient].followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
-                [self.tableView reloadData];
-            });
-        } failure:^(GHResource *instance, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(),^ {
-                
-            });
-        }];
     
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys://@"short",@"infoType",
+                            [GlobalDataUser sharedAccountClient].user.userId ,@"user_id" ,
+                            limitCount,@"limit",
+                            [NSString stringWithFormat:@"%d",offset],@"offset",
+                            nil];
+    
+    NSLog(@"params=%@",params);
+    if (offset==0) {
+        [self.branches.items removeAllObjects];
+    }
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
+    [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            
+            NSLog(@"weakSelf.branches.count=%d",weakSelf.branches.count);
+            NSLog(@"countAddedItems=%d",weakSelf.branches.countAddedItems);
+            if (weakSelf.branches.countAddedItems==0) {
+                weakSelf.tableView.showsInfiniteScrolling=NO;
+                
+                tableFooter.hidden=NO;
+            }else{
+                tableFooter.hidden=YES;
+            }
+
+            [GlobalDataUser sharedAccountClient].followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
+            offset+=limitCount.intValue;
+            [self.tableView reloadData];
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            
+        });
+    }];
 }
 
 #pragma mark UITableViewDataSource

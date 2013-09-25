@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Utilities.h"
 #import "GlobalDataUser.h"
+#import "TVNetworkingClient.h"
+#import "TSMessage.h"
+#import "LoginVC.h"
 @interface UserSettingVC ()
 
 @end
@@ -98,6 +101,29 @@
 }
 
 -(void)saveButtonClicked:(id)s{
+    CFUUIDRef udid = CFUUIDCreate(NULL);
+    NSString *udidString = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, udid));
+    
+    NSDictionary * userObject=[[NSDictionary alloc] initWithObjectsAndKeys:[GlobalDataUser sharedAccountClient].userID,@"user_id",udidString,@"mobile_id",@"IOS",@"mobile_os", nil];
+    NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    userObject,@"UserMobile" ,
+                                    nil];
+    [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"JSON = %@",JSON);
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Lưu cẩm nang thành công"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+        
+        [self dismissModalViewControllerAnimated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error = %@",error);
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Lưu cẩm nang thất bại thất bại"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
+    }];
+    
     [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
 }
 
@@ -110,7 +136,25 @@
 }
 
 - (IBAction)swFaveriteBranchCouponChangedValue:(UISwitch*)sender {
-    [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
+        [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
+    }else{
+        LoginVC* loginVC=nil;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+        } else {
+            loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+        }
+        UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        [self presentModalViewController:navController animated:YES];
+        
+        [loginVC goWithDidLogin:^{
+            [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
+        } thenLoginFail:^{
+            
+        }];
+    }
+    
 }
 
 - (IBAction)swVibrateChangedValue:(UISwitch*)sender {

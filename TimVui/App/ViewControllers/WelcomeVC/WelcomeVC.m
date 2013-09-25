@@ -59,7 +59,7 @@
         location.latitude=21.033333;
         location.longitude=105.850000;
         [GlobalDataUser sharedAccountClient].userLocation=location;
-        [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
+        [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=YES;
     }else{
         // Do any additional setup after loading the view from its nib.
         self.locationManager = [[CLLocationManager alloc] init];
@@ -67,8 +67,21 @@
         [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
         [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
         [self.locationManager startMonitoringSignificantLocationChanges];
+        [self settingDefaultLocationUserWhenDennied];
+    }
+    
+}
 
-        [self performSelector:@selector(checkLocationServiceAvaible) withObject:nil afterDelay:1];
+-(void)settingDefaultLocationUserWhenDennied{
+    if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
+        [self didReceivePublicIPandPort:@"21.033333,105.850000"];
+        CLLocationCoordinate2D location;
+        location.latitude=21.033333;
+        location.longitude=105.850000;
+        [GlobalDataUser sharedAccountClient].userLocation=location;
+        [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=YES;
+    }else{
+        [self performSelector:@selector(settingDefaultLocationUserWhenDennied) withObject:nil afterDelay:1];
     }
 }
 
@@ -132,9 +145,9 @@
 {
     [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",newLocation.coordinate.latitude,newLocation.coordinate.longitude];
-    [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=NO;
+    [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
     [self didReceivePublicIPandPort:strLatLng];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkLocationServiceAvaible) object: nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(settingDefaultLocationUserWhenDennied) object: nil];
     [_locationManager stopMonitoringSignificantLocationChanges];
 }
 
@@ -145,8 +158,8 @@
 	location.latitude=21.033333;
     location.longitude=105.850000;
     [GlobalDataUser sharedAccountClient].userLocation=location;
-    [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=YES;
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkLocationServiceAvaible) object: nil];
+    [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(settingDefaultLocationUserWhenDennied) object: nil];
     [_locationManager stopMonitoringSignificantLocationChanges];
 }
 

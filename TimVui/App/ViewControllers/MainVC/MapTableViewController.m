@@ -64,17 +64,21 @@ static const int maxLimitBranches=100;
 #pragma mark - ViewController
 
 - (void)getBranchesForView {
-//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
-    CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
-    NSDictionary* params=nil;
-    if (location.latitude) {
-        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
-                   @"latlng": strLatLng};
+//  NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCity);
+    if (!self.branches.isLoading) {
+        CLLocationCoordinate2D location=[GlobalDataUser sharedAccountClient].userLocation;
+        NSDictionary* params=nil;
+        if (location.latitude) {
+            NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+            params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
+                       @"latlng": strLatLng};
+        }
+        offset=0;
+        _currentCameraPositionSearch=location;
+        _locationPickerView.mapView.camera = [GMSCameraPosition cameraWithTarget:location zoom:15];
+        [self postSearchBranch:[[NSMutableDictionary alloc] initWithDictionary:params] withReturnFromSearchScreenYES:NO];
     }
-    offset=0;
-    _currentCameraPositionSearch=location;
-    [self postSearchBranch:[[NSMutableDictionary alloc] initWithDictionary:params] withReturnFromSearchScreenYES:NO];
+    
 }
 
 - (void)loadView {
@@ -163,6 +167,7 @@ static const int maxLimitBranches=100;
 - (void)locationPicker:(LocationPickerView *)locationPicker
      mapViewWillExpand:(GMSMapView *)mapView
 {
+    
 }
 
 /** Called when the mapView was expanded (made fullscreen). Use this to
@@ -207,7 +212,7 @@ static const int maxLimitBranches=100;
     
     
     //Update location user and get branches
-    if ([GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES) {
+    if ([GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES) {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSDictionary* dic=[defaults dictionaryForKey:kGetCityDataUser];
         if (dic) {
@@ -221,7 +226,7 @@ static const int maxLimitBranches=100;
             [alert setDelegate:self];
             [alert setDataSource:self];
             [alert show];
-            //            NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
+            //NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
         }
     }else
         [self getBranchesForView];
@@ -290,11 +295,16 @@ static const int maxLimitBranches=100;
     [defaults setValue:[GlobalDataUser sharedAccountClient].dicCity forKey:kGetCityDataUser];
     [defaults synchronize];
     
-    [GlobalDataUser sharedAccountClient].isCantGetLocationServiceYES=NO;
+    [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
 }
 
 - (void)tableAlert:(SBTableAlert *)tableAlert didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	[self getBranchesForView];
+    if ([GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES) {
+        [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
+        [self getBranchesForView];
+    }
+    
+	//
     
 }
 
@@ -302,7 +312,7 @@ static const int maxLimitBranches=100;
 
 -(void)showBranchOnMap{
     [_locationPickerView.mapView clear];
-    NSLog(@"_branches.count = %d",_branches.count);
+//    NSLog(@"_branches.count = %d",_branches.count);
     int i=0;
     for (TVBranch* branch in _branches.items) {
         GMSMarker *melbourneMarker = [[GMSMarker alloc] init];
@@ -496,6 +506,7 @@ static const int maxLimitBranches=100;
                 
                 NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
                 float distance=(radiusKm<kDistanceSearchMapDefault.floatValue)?radiusKm:kDistanceSearchMapDefault.floatValue;
+                
                 params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"],@"latlng": strLatLng
                            ,@"distance": [NSString stringWithFormat:@"%f",distance]
                            };

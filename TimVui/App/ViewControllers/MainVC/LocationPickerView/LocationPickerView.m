@@ -78,79 +78,84 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    if (!self.tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:self.bounds];
-        self.tableView.backgroundColor = [UIColor clearColor];
-        self.tableView.delegate = self.tableViewDelegate;
-        self.tableView.dataSource = self.tableViewDataSource;
-        self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-        UIViewAutoresizingFlexibleHeight;
-        self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-        // Add scroll view KVO
-        void *context = (__bridge void *)self;
-        [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
-        
-        [self addSubview:self.tableView];
-        
-        if ([self.delegate respondsToSelector:@selector(locationPicker:tableViewDidLoad:)]) {
-            [self.delegate locationPicker:self tableViewDidLoad:self.tableView];
+    if (_isFirstTimeRunningYES==NO) {
+        _isFirstTimeRunningYES=YES;
+        if (!self.tableView) {
+            _tableView = [[UITableView alloc] initWithFrame:self.bounds];
+            self.tableView.backgroundColor = [UIColor clearColor];
+            self.tableView.delegate = self.tableViewDelegate;
+            self.tableView.dataSource = self.tableViewDataSource;
+            self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
+            UIViewAutoresizingFlexibleHeight;
+            self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+            // Add scroll view KVO
+            void *context = (__bridge void *)self;
+            [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:context];
+            
+            [self addSubview:self.tableView];
+            
+            if ([self.delegate respondsToSelector:@selector(locationPicker:tableViewDidLoad:)]) {
+                [self.delegate locationPicker:self tableViewDidLoad:self.tableView];
+            }
+            
+            if (self.tableViewDidLoadBlock) {
+                self.tableViewDidLoadBlock(self);
+            }
         }
         
-        if (self.tableViewDidLoadBlock) {
-            self.tableViewDidLoadBlock(self);
+        if (!self.tableView.tableHeaderView) {
+            CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultMapHeight);
+            UIView *tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
+            tableHeaderView.backgroundColor = [UIColor clearColor];
+            self.tableView.tableHeaderView = tableHeaderView;
         }
-    }
-    
-    if (!self.tableView.tableHeaderView) {
-        CGRect tableHeaderViewFrame = CGRectMake(0.0, 0.0, self.tableView.frame.size.width, self.defaultMapHeight);
-        UIView *tableHeaderView = [[UIView alloc] initWithFrame:tableHeaderViewFrame];
-        tableHeaderView.backgroundColor = [UIColor clearColor];
-        self.tableView.tableHeaderView = tableHeaderView;
-    }
-    
-    if (!self.mapView) {
-        self.defaultMapViewFrame = CGRectMake(0.0,
-                                              -self.defaultMapHeight * self.parallaxScrollFactor * 2,
-                                              self.tableView.frame.size.width,
-                                              self.defaultMapHeight + (self.defaultMapHeight * self.parallaxScrollFactor * 4));
-        _mapView = [[GMSMapView alloc] initWithFrame:self.defaultMapViewFrame];
-        GMSCameraPosition *camera =
-        [[GMSCameraPosition alloc] initWithTarget:[GlobalDataUser sharedAccountClient].userLocation
-                                             zoom:15
-                                          bearing:0
-                                     viewingAngle:0];
-        [_mapView setCamera:camera];
-        self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.mapView.delegate = self.mapViewDelegate;
-        [self insertSubview:self.mapView belowSubview:self.tableView];
-        void *context = (__bridge void *)self;
         
-        // Listen to the myLocation property of GMSMapView.
-        [_mapView addObserver:self forKeyPath:@"myLocation" options:NSKeyValueObservingOptionNew context:context];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _mapView.myLocationEnabled = YES;
-        });
-
-        
-        if (self.mapViewDidLoadBlock) {
-            self.mapViewDidLoadBlock(self);
+        if (!self.mapView||[self.mapView isKindOfClass:[NSNull class]]) {
+            self.defaultMapViewFrame = CGRectMake(0.0,
+                                                  -self.defaultMapHeight * self.parallaxScrollFactor * 2,
+                                                  self.tableView.frame.size.width,
+                                                  self.defaultMapHeight + (self.defaultMapHeight * self.parallaxScrollFactor * 4));
+            _mapView = [[GMSMapView alloc] initWithFrame:self.defaultMapViewFrame];
+            GMSCameraPosition *camera =
+            [[GMSCameraPosition alloc] initWithTarget:[GlobalDataUser sharedAccountClient].userLocation
+                                                 zoom:15
+                                              bearing:0
+                                         viewingAngle:0];
+            [_mapView setCamera:camera];
+            self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            self.mapView.delegate = self.mapViewDelegate;
+            [self insertSubview:self.mapView belowSubview:self.tableView];
+            void *context = (__bridge void *)self;
+            
+            // Listen to the myLocation property of GMSMapView.
+            [_mapView addObserver:self forKeyPath:@"myLocation" options:NSKeyValueObservingOptionNew context:context];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _mapView.myLocationEnabled = YES;
+            });
+            if ([self.delegate respondsToSelector:@selector(locationPicker:mapViewDidLoad:)]) {
+                [self.delegate locationPicker:self mapViewDidLoad:self.mapView];
+            }
+            
+            if (self.mapViewDidLoadBlock) {
+                self.mapViewDidLoadBlock(self);
+            }
         }
-    }
-    // Add tap gesture to table
-    if (!self.mapTapGesture) {
-        self.mapTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                     action:@selector(mapWasTapped:)];
-        self.mapTapGesture.cancelsTouchesInView = YES;
-        self.mapTapGesture.delaysTouchesBegan = NO;
-        [self.tableView.tableHeaderView addGestureRecognizer:self.mapTapGesture];
+        // Add tap gesture to table
+        if (!self.mapTapGesture) {
+            self.mapTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                         action:@selector(mapWasTapped:)];
+            self.mapTapGesture.cancelsTouchesInView = YES;
+            self.mapTapGesture.delaysTouchesBegan = NO;
+            [self.tableView.tableHeaderView addGestureRecognizer:self.mapTapGesture];
+        }
+        
+        //    UIView* toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -50, self.tableView.bounds.size.width, 50)];
+        //    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        //    [toolbar setBackgroundColor:[UIColor redColor]];
+        //    [self.tableView addSubview:toolbar];
     }
     
-//    UIView* toolbar = [[UIView alloc] initWithFrame:CGRectMake(0, -50, self.tableView.bounds.size.width, 50)];
-//    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-//    [toolbar setBackgroundColor:[UIColor redColor]];
-//    [self.tableView addSubview:toolbar];
 }
 
 
@@ -410,9 +415,7 @@
             _firstLocationUpdate=YES;
             _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
                                                              zoom:_mapView.camera.zoom];
-            if ([self.delegate respondsToSelector:@selector(locationPicker:mapViewDidLoad:)]) {
-                [self.delegate locationPicker:self mapViewDidLoad:self.mapView];
-            }
+
         }
         
     }
