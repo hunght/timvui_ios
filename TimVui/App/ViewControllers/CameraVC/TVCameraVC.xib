@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12E55</string>
+		<string key="IBDocument.SystemVersion">12F37</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
@@ -99,7 +99,7 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MAA</bytes>
 						</object>
-						<float key="IBUIAlpha">0.5</float>
+						<float key="IBUIAlpha">0.89999997615814209</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<object class="IBUIView" id="1012964481">
@@ -111,7 +111,7 @@
 						<reference key="NSNextKeyView" ref="651046659"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="794958045"/>
-						<float key="IBUIAlpha">0.5</float>
+						<float key="IBUIAlpha">0.89999997615814209</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<object class="IBUIPageControl" id="651046659">
@@ -211,7 +211,7 @@
 							<object class="IBUIImageView" id="727151895">
 								<reference key="NSNextResponder" ref="190508359"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrameSize">{150, 35}</string>
+								<string key="NSFrameSize">{295, 43}</string>
 								<reference key="NSSuperview" ref="190508359"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="363155213"/>
@@ -226,7 +226,7 @@
 							<object class="IBUILabel" id="363155213">
 								<reference key="NSNextResponder" ref="190508359"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{5, 7}, {150, 30}}</string>
+								<string key="NSFrame">{{11, 6}, {307, 43}}</string>
 								<reference key="NSSuperview" ref="190508359"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="292776464"/>
@@ -236,7 +236,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">Bạn chưa chọn địa điểm</string>
+								<string key="IBUIText">Bạn chưa chọn địa điểm để chụp, bấm vào đây để chọn</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -246,21 +246,23 @@
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
+								<int key="IBUINumberOfLines">2</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<string key="name">ArialMT</string>
 									<string key="family">Arial</string>
 									<int key="traits">0</int>
-									<double key="pointSize">13</double>
+									<double key="pointSize">11</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">ArialMT</string>
-									<double key="NSSize">13</double>
+									<double key="NSSize">11</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+								<double key="preferredMaxLayoutWidth">307</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{22, 42}, {150, 35}}</string>
+						<string key="NSFrame">{{20, 51}, {295, 43}}</string>
 						<reference key="NSSuperview" ref="548297266"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="727151895"/>
@@ -927,7 +929,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="filter-close.png">{16, 16}</string>
-			<string key="img_camera_notify.png">{150, 35}</string>
+			<string key="img_camera_notify.png">{295, 43}</string>
 			<string key="img_camera_scroll_to_pick_skin.png">{149, 21}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

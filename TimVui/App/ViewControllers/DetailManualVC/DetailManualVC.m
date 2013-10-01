@@ -23,6 +23,8 @@
 #import "UIImage+Crop.h"
 #import "FloatView.h"
 #import "CMHTMLView.h"
+#import "SIAlertView.h"
+#import "UILabel+DynamicHeight.h"
 @interface DetailManualVC ()<GMSMapViewDelegate>
 {
 
@@ -40,6 +42,7 @@
     if (self) {
         // Custom initialization
         _manual=manual;
+        NSLog(@"manual.manualID = %@",manual.manualID);
         _branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
         _branches.isNotSearchAPIYES=YES;
     }
@@ -108,6 +111,8 @@
     lblTitle.numberOfLines = 0;
     lblTitle.lineBreakMode = UILineBreakModeWordWrap;
     [_couponBranch addSubview:lblTitle];
+    lblTitle.text=_manual.title;
+    [lblTitle resizeToStretch];
     
     [self.view setBackgroundColor:[UIColor grayColor]];
     
@@ -239,23 +244,60 @@
 
 #pragma mark - IBActions
 -(void)saveButtonClicked:(UIButton*)sender{
-    NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    _manual.manualID,@"handbook_id" ,
-                                    [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
-                                    nil];
-    [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Lưu cẩm nang thành công"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeSuccess];
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
         
-        [self dismissModalViewControllerAnimated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Lưu cẩm nang thất bại thất bại"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeError];
-    }];
+        NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        _manual.manualID,@"handbook_id" ,
+                                        [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                                        nil];
+        [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Lưu cẩm nang thành công"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeSuccess];
+            
+            [self dismissModalViewControllerAnimated:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Lưu cẩm nang thất bại thất bại"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeError];
+        }];
+
+    }else{
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho đánh giá này?"];
+        
+        [alertView addButtonWithTitle:@"Login"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  
+                                  LoginVC* loginVC=nil;
+                                  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+                                  } else {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+                                  }
+                                  
+                                  UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                                  [self presentModalViewController:navController animated:YES];
+                                  [loginVC goWithDidLogin:^{
+                                      [self performSelector:@selector(likeCommentWithButton:) withObject:sender afterDelay:1];
+                                  } thenLoginFail:^{
+                                      [TSMessage showNotificationInViewController:self
+                                                                        withTitle:@"Có lỗi khi đăng nhập!"
+                                                                      withMessage:nil
+                                                                         withType:TSMessageNotificationTypeWarning];
+                                  }];
+                                  
+                                  
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
+    }
 }
 
 -(void)listViewButtonClicked:(UIButton*)sender{

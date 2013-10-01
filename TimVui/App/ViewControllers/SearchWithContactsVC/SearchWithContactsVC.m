@@ -88,11 +88,11 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 #pragma mark - Initializer
 
-- (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic
+- (id)initWithSectionIndexes:(BOOL)showSectionIndexes isInviting:(BOOL)isInviting
 
 {
+    isInvitingFriend=isInviting;
     NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    
     if ([[vComp objectAtIndex:0] intValue] == 6) {
         
         __block SearchWithContactsVC *controller = self;
@@ -157,13 +157,16 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 - (void)viewDidLoad
 {
-    [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+    [super viewDidLoad];
+    if (!isInvitingFriend) {
+        [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
+        UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+        [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
+        [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
+        [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+        self.navigationItem.leftBarButtonItem = backButtonItem;
+    }
     
     UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 56, 29)];
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button"] forState:UIControlStateNormal];
@@ -174,7 +177,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [doneButton addTarget:self action:@selector(sendButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
     self.navigationItem.rightBarButtonItem=doneButtonItem;
-    [super viewDidLoad];
+    
     
     
     if (_mayUsePrivateAPI) {
@@ -385,7 +388,12 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 {
 	MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
 	picker.messageComposeDelegate = self;
-//    picker.body = [NSString stringWithFormat:@"%@",SMS_STR];
+    if (isInvitingFriend) {
+        picker.body =[NSString stringWithFormat:@"Ứng dụng địa điểm ăn uống, coupon giảm giá hấp dẫn: %@",kLinkAppStore];
+    }else{
+        picker.body =@"";
+    }
+
     NSMutableArray* arrPhone=[NSMutableArray new];
     for (NSArray* arr in [_pickedArr valueForKey:@"telephone"]) {
         [arrPhone addObjectsFromArray:arr];

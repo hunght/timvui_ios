@@ -33,19 +33,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/SearchWithArrayVC/SearchWithArrayVC.m"
-         timestampString = "402035994.131923"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
-         landmarkName = "-initWithSectionIndexes:withParam:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/NearbyCouponV/NearbyCouponVC.m"
          timestampString = "402052461.982967"
          startingColumnNumber = "9223372036854775807"
@@ -53,6 +40,71 @@
          startingLineNumber = "63"
          endingLineNumber = "63"
          landmarkName = "-postToGetBranches"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/SearchVC/SearchVC.m"
+         timestampString = "402307041.361014"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "187"
+         endingLineNumber = "187"
+         landmarkName = "-prepareForSettingSearchWithParams:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/SearchVC/SearchVC.m"
+         timestampString = "402307041.361014"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "190"
+         endingLineNumber = "190"
+         landmarkName = "-prepareForSettingSearchWithParams:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
+         timestampString = "402315738.166807"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "642"
+         endingLineNumber = "642"
+         landmarkName = "-pagingScrollView:pageForIndex:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
+         timestampString = "402314115.130812"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
+         landmarkName = "-initScrollPagingView"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
+         timestampString = "402319179.044269"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "298"
+         endingLineNumber = "298"
+         landmarkName = "-detailButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

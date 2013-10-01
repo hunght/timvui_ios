@@ -71,10 +71,10 @@ static int _numPages = 16;
     if (_branch) {
         [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
     }else{
+        _viewSlidePickSkin.hidden=YES;
         [self.pagingScrollView setScrollEnabled:NO];
     }
 }
-
 
 #pragma mark - ViewController
 -(void)viewWillAppear:(BOOL)animated{
@@ -123,6 +123,7 @@ static int _numPages = 16;
     [self setViewSlidePickSkin:nil];
     [super viewDidUnload];
 }
+
 - (void)dealloc
 {
     void *context = (__bridge void *)self;
@@ -239,7 +240,6 @@ static int _numPages = 16;
         void (^failure)(NSError *) = ^(NSError *error) {
             
             if (error == nil) return;
-           
             NSLog(@"!!!ERROR, failed to add the asset to the custom photo album: %@", [error description]);
         };
         ALAssetsLibrary* assetsLibrary_ = [[ALAssetsLibrary alloc] init];
@@ -263,7 +263,9 @@ static int _numPages = 16;
 #pragma mark - LocationTableVCDelegate
 
 - (void)didPickedABranch:(TVBranch *)branch {
-    if (_viewNotify) [_viewNotify removeFromSuperview];
+    if (_viewNotify){ [_viewNotify removeFromSuperview];
+        _viewSlidePickSkin.hidden=NO;
+    }
     [self.slidingViewController resetTopView];
     _branch=branch;
     _photoBrowseTableVC.branch=_branch;
@@ -637,6 +639,7 @@ static int _numPages = 16;
         pageView.index=index;[pageView settingView];
         if (_branch) {
             [_viewNotify removeFromSuperview];
+            _viewSlidePickSkin.hidden=NO;
             [pageView setName:_branch.name andAddress:_branch.address_full];
         }
         

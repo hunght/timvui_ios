@@ -20,6 +20,9 @@
 #import "FilterVC.h"
 #import <QuartzCore/QuartzCore.h> 
 #import "SVPullToRefresh.h"
+#import "SIAlertView.h"
+#import "LoginVC.h"
+
 static const NSString* limitCount=@"5";
 @interface ManualVC ()
 {
@@ -53,8 +56,6 @@ static const NSString* limitCount=@"5";
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         [weakSelf.tableView.pullToRefreshView stopAnimating];
         [weakSelf.tableView.infiniteScrollingView stopAnimating];
-        
-//        NSLog(@"JSON=%@",JSON);
         
         if (offset==0) {
             [_manualArr removeAllObjects];
@@ -236,27 +237,64 @@ static const NSString* limitCount=@"5";
 }
 
 -(void)saveButtonClicked:(UIButton*)sender{
-    TVManual* manual=_manualArr[sender.tag];
-    NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
-                            manual.manualID,@"handbook_id" ,
-                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
-                            nil];
-    [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Lưu cẩm nang thành công"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeSuccess];
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
         
-        [self dismissModalViewControllerAnimated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Lưu cẩm nang thất bại thất bại"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeError];
-    }];
+        TVManual* manual=_manualArr[sender.tag];
+        NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        manual.manualID,@"handbook_id" ,
+                                        [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                                        nil];
+        [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Lưu cẩm nang thành công"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeSuccess];
+            
+            [self dismissModalViewControllerAnimated:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Lưu cẩm nang thất bại thất bại"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeError];
+        }];
+    }else{
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho đánh giá này?"];
+        
+        [alertView addButtonWithTitle:@"Login"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  
+                                  LoginVC* loginVC=nil;
+                                  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+                                  } else {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+                                  }
+                                  
+                                  UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                                  [self presentModalViewController:navController animated:YES];
+                                  [loginVC goWithDidLogin:^{
+                                      [self performSelector:@selector(likeCommentWithButton:) withObject:sender afterDelay:1];
+                                  } thenLoginFail:^{
+                                      [TSMessage showNotificationInViewController:self
+                                                                        withTitle:@"Có lỗi khi đăng nhập!"
+                                                                      withMessage:nil
+                                                                         withType:TSMessageNotificationTypeWarning];
+                                  }];
+                                  
+                                  
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
+    }
 }
 
 -(void)detailButtonClicked:(UIButton*)sender{
+//    NSLog(@"sender.tag=%d",sender.tag);
     TVManual* manual=_manualArr[sender.tag];
     DetailManualVC* detailManual=[[DetailManualVC alloc] initWithNibName:@"DetailManualVC" bundle:nil withManual:manual];
     
@@ -278,10 +316,9 @@ static const NSString* limitCount=@"5";
         cell = [[TVManualCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:strCellIdentifier];
         [cell.saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell.detailButton addTarget:self action:@selector(detailButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        cell.saveButton.tag=indexPath.row;
-        cell.detailButton.tag=indexPath.row;
     }
-    
+    cell.saveButton.tag=indexPath.row;
+    cell.detailButton.tag=indexPath.row;
     TVManual* manual=_manualArr[indexPath.row];
     [cell setManual:manual];
     return cell;

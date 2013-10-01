@@ -157,8 +157,8 @@
 //    NSLog(@"legs = %@",[routes safeArrayForKey:@"legs"][0]);
     NSDictionary* legs=[routes safeArrayForKey:@"legs"][0];
     NSString* strDistance=[legs safeStringForKeyPath:@"distance.text"];
-    NSString* strTime=[legs safeStringForKeyPath:@"duration.text"];
-    _lblDistance.text=[NSString stringWithFormat:@"   Khoảng cách %@. Thời gian đi: %@",strDistance,strTime];
+//    NSString* strTime=[legs safeStringForKeyPath:@"duration.text"];
+    _lblDistance.text=[NSString stringWithFormat:@"   Khoảng cách %@.",strDistance];
     _lblDistance.hidden=NO;
     NSDictionary *route = [routes objectForKey:@"overview_polyline"];
     NSString *overview_route = [route objectForKey:@"points"];

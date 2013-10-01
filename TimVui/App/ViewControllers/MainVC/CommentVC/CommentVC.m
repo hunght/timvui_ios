@@ -167,7 +167,7 @@
     if (!_bgView.isHidden) _bgView.hidden=YES;
     _lblBranchName.text=_branch.name;
     _lblAddress.text=_branch.address_full;
-    _lblPrice.text=_branch.price_avg;
+    _lblPrice.text=(_branch.price_avg && ![_branch.price_avg isEqualToString:@""])?_branch.price_avg:@"Đang cập nhật";
 }
 
 -(void)didPickWithLoation:(TVBranch *)_branchProfile{

@@ -30,7 +30,7 @@
 #import "FavoriteBranchListVC.h"
 #import "TVNotification.h"
 #import "TVWebVC.h"
-
+#import "SearchWithContactsVC.h"
 #define kNumberOfSections 3
 
 enum {
@@ -467,6 +467,7 @@ enum {
             return;
         }
     }
+    
     if (lastIndexPath.section==indexPath.section&&lastIndexPath.row==indexPath.row) {
         if (lastIndexPath.section!=kSection1UserAccount) {
             [self toggleTopView];
@@ -553,25 +554,25 @@ enum {
                     }
 
                     case kS3RFacebookPage:
-                        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://profile/454530917941197"]])
+                        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://profile/326769584123598"]])
                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com/anuongfan"]];
                         break;
                     case kS3Feedback:
 
                         break;
                     case kS3InviteFriends:
-                        viewController = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+                        viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES isInviting:YES];
                         break;
                     case kS3Logout:
                     {
                         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn đăng xuất ?"];
                         
-                        [alertView addButtonWithTitle:@"Cancel"
+                        [alertView addButtonWithTitle:@"Bỏ qua"
                                                  type:SIAlertViewButtonTypeCancel
                                               handler:^(SIAlertView *alert) {
                                                   NSLog(@"Cancel Clicked");
                                               }];
-                        [alertView addButtonWithTitle:@"Logout!"
+                        [alertView addButtonWithTitle:@"Đồng ý"
                                                  type:SIAlertViewButtonTypeDestructive
                                               handler:^(SIAlertView *alert) {
                                                   if ([GlobalDataUser sharedAccountClient].isLogin) {

@@ -82,7 +82,7 @@
     lblPrice.backgroundColor = [UIColor clearColor];
     lblPrice.textColor = [UIColor grayColor];
     lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(11)];
-    lblPrice.text=_branch.price_avg;
+    lblPrice.text=(_branch.price_avg && ![_branch.price_avg isEqualToString:@""])?_branch.price_avg:@"Đang cập nhật";
     [genarateInfoView addSubview:lblPrice];
     
     UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 35.0, 11, 12)];
@@ -101,7 +101,7 @@
     lblPhone.backgroundColor = [UIColor clearColor];
     lblPhone.textColor = [UIColor grayColor];
     lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(11)];
-    lblPhone.text=_branch.phone;
+    lblPhone.text=(_branch.phone && ![_branch.phone isEqualToString:@""])?_branch.phone:@"Đang cập nhật";
     [genarateInfoView addSubview:lblPhone];
     return genarateInfoView;
     

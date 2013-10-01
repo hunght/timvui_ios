@@ -152,7 +152,7 @@ static const int maxLimitBranches=100;
     {
         [GlobalDataUser sharedAccountClient].isShowAletForLocationServicesYES=YES;
         [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Để sử dụng tốt nhất tính năng của ứng dụng này, bạn vui lòng bật tính năng Dò tìm vị trí- Location Service trong phần cài đặt của máy điện thoại."
+                                          withTitle:@"Bạn cần bật chức năng Định vị vị trí (Location services) để sử dụng tiện ích này"
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeWarning];
     }
@@ -600,7 +600,7 @@ static const int maxLimitBranches=100;
     
     textLabel.text=branch.name;
     detailTextLabel.text=branch.address_full;
-    price_avg.text=branch.price_avg;
+    price_avg.text=(branch.price_avg && ![branch.price_avg isEqualToString:@""])?branch.price_avg:@"Đang cập nhật";
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[branch latlng]];
     
     if (distance>1000.0)

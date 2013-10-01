@@ -74,10 +74,15 @@
     lblDistance.textColor = [UIColor grayColor];
     lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
-    if (distance>1000.0)
-        lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
-    else
-        lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    if (distance<0) {
+        lblDistance.hidden=YES;
+    }else{
+        lblDistance.hidden=NO;
+        if (distance>1000.0)
+            lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
+        else
+            lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    }
     
     [genarateInfoView addSubview:lblDistance];
     
@@ -92,7 +97,7 @@
     lblPrice.backgroundColor = [UIColor clearColor];
     lblPrice.textColor = [UIColor grayColor];
     lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(11)];
-    lblPrice.text=_branch.price_avg;
+    lblPrice.text=(_branch.price_avg && ![_branch.price_avg isEqualToString:@""])?_branch.price_avg:@"Đang cập nhật";
     [genarateInfoView addSubview:lblPrice];
     
     UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 35.0, 11, 12)];
@@ -111,11 +116,11 @@
     lblPhone.backgroundColor = [UIColor clearColor];
     lblPhone.textColor = [UIColor grayColor];
     lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(11)];
-    lblPhone.text=_branch.phone;
+    
+    lblPhone.text=(_branch.phone && ![_branch.phone isEqualToString:@""])?_branch.phone:@"Đang cập nhật";
+    
     [genarateInfoView addSubview:lblPhone];
     return genarateInfoView;
-    
-    
 }
 
 - (void)setConnerBorderWithLayer:(CALayer *)l
@@ -502,7 +507,6 @@
             NSString* strStyleFoodyRow=@"";
             if ([[dicStyle valueForKey:@"params"] count]>0) {
                 for (NSDictionary* dicStyleDeeper in [dicStyle valueForKey:@"params"] ){
-//                    NSLog(@"dicStyleDeeper = %@",dicStyleDeeper);
                     strStyleFoodyRow=[strStyleFoodyRow stringByAppendingFormat:@"%@-%@",[dicStyle valueForKey:@"name"],[dicStyleDeeper valueForKey:@"name"]];
                 }
             }else
@@ -1124,7 +1128,7 @@
 }
 
 - (IBAction)smsButtonClicked:(id)sender {
-    SearchWithContactsVC *viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES withParam:nil];
+    SearchWithContactsVC *viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES isInviting:NO];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

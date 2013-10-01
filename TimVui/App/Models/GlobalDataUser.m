@@ -17,6 +17,7 @@
 #import "TVCoupon.h"
 @interface GlobalDataUser(){
     NSTimer *myTimer;
+    
 }
 
 @end
@@ -228,6 +229,9 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
+    if (!_isTurnOnLocationService) {
+        return -1;
+    }
     CLLocation* current=[[CLLocation alloc] initWithLatitude:fromAdd.latitude longitude:fromAdd.longitude];
     CLLocation*userLocal=[[CLLocation alloc] initWithLatitude:_userLocation.latitude longitude:_userLocation.longitude];
     return [current distanceFromLocation:userLocal];

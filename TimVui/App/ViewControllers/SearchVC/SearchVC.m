@@ -12,6 +12,7 @@
 #import "TVAppDelegate.h"
 #import "GlobalDataUser.h"
 #import <QuartzCore/QuartzCore.h>
+#import "TSMessage.h"
 @interface SearchVC ()
 
 @end
@@ -32,22 +33,31 @@
 
 #pragma mark IBAction
 - (IBAction)swithChagedValue:(UISwitch*)sender {
-    sender.userInteractionEnabled=NO;
-    if (sender.isOn) {
-        CGAffineTransform transform = CGAffineTransformMakeTranslation(0,-70);
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            // animate it to the identity transform (100% scale)
-            _viewSlide.transform = transform;
-        } completion:^(BOOL finished){
-            sender.userInteractionEnabled=YES;
-        }];
-    }else
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            // animate it to the identity transform (100% scale)
-            _viewSlide.transform = CGAffineTransformIdentity;
-        } completion:^(BOOL finished){
-            sender.userInteractionEnabled=YES;
-        }];
+    if ([GlobalDataUser sharedAccountClient].isTurnOnLocationService) {
+        sender.userInteractionEnabled=NO;
+        if (sender.isOn) {
+            CGAffineTransform transform = CGAffineTransformMakeTranslation(0,-70);
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                // animate it to the identity transform (100% scale)
+                _viewSlide.transform = transform;
+            } completion:^(BOOL finished){
+                sender.userInteractionEnabled=YES;
+            }];
+        }else
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                // animate it to the identity transform (100% scale)
+                _viewSlide.transform = CGAffineTransformIdentity;
+            } completion:^(BOOL finished){
+                sender.userInteractionEnabled=YES;
+            }];
+    }else{
+        [sender setOn:NO];
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Bạn cần bật chức năng Định vị vị trí (Location services) để sử dụng tiện ích này"
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeWarning];
+    }
+    
 }
 
 -(void)categoryButtonClicked:(UIButton*)sender{
@@ -172,8 +182,8 @@
     CLLocationCoordinate2D location;
     
     [params setValue:kDistanceSearchMapDefault forKey:@"distance"];
-    
-    if ([GlobalDataUser sharedAccountClient].dicCitySearchParam&&!_switchUserLocation.isOn) {
+//    NSLog(@"[GlobalDataUser sharedAccountClient].dicDistrictSearchParam= %@",[GlobalDataUser sharedAccountClient].dicDistrictSearchParam);
+    if (!_switchUserLocation.isOn&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
         location=[[GlobalDataUser sharedAccountClient].dicCitySearchParam safeLocationForKey:@"latlng"];
     }else{

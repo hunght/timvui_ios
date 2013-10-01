@@ -102,12 +102,17 @@
 - (void)setBranch:(TVBranch *)branch withDistance:(double)distance {
     self.textLabel.text=branch.name;
     self.detailTextLabel.text=branch.address_full;
-    self.price_avg.text=branch.price_avg;
-    
-    if (distance>1000.0)
-        _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
-    else
-        _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    self.price_avg.text=(branch.price_avg && ![branch.price_avg isEqualToString:@""])?branch.price_avg:@"Đang cập nhật";
+    if (distance<0) {
+        _lblDistance.hidden=YES;
+    }else{
+        _lblDistance.hidden=NO;
+        if (distance>1000.0)
+            _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
+        else
+            _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    }
+
     
     [self.imageView setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     

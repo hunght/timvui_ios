@@ -16,8 +16,9 @@ MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate>{
     @private
     NSMutableArray *filteredListContent;
     IBOutlet UILabel *feedbackMsg;
+    BOOL isInvitingFriend;
 }
 @property (strong, nonatomic) NSMutableArray  *pickedArr;
 
-- (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic;
+- (id)initWithSectionIndexes:(BOOL)showSectionIndexes isInviting:(BOOL)isInviting;
 @end

@@ -39,6 +39,8 @@
 @property (retain, nonatomic) NSNumber* isWantToOnVirateYES;
 @property (retain, nonatomic) NSDate *locationUpdateTime;
 @property (retain, nonatomic) NSString *phoneNumber;
+
+@property (assign, nonatomic) BOOL isTurnOnLocationService;
 enum {
     kSearchParamCity = 0,
     kSearchParamDistrict,
