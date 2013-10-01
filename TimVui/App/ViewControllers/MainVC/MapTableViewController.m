@@ -26,6 +26,7 @@
 #import "MyNavigationController.h"
 #import "TSMessage.h"
 #import "SVPullToRefresh.h"
+#import <JSONKit.h>
 static const int maxLimitBranches=100;
 @interface MapTableViewController (){
 @private
@@ -128,7 +129,9 @@ static const int maxLimitBranches=100;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+
     _locationPickerView.firstLocationUpdate=NO;
+    [self.view addGestureRecognizer:self.slidingViewController.panGesture];
 }
 
 -(void)viewDidUnload{
@@ -328,7 +331,7 @@ static const int maxLimitBranches=100;
              image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
              UIGraphicsBeginImageContext( bottomImage.size );
              [bottomImage drawAtPoint:CGPointZero];
-             [image drawInRect:CGRectMake(4.0f,5.0f,32.0f,32/4*3) blendMode:kCGBlendModeNormal alpha:1];
+             [image drawInRect:CGRectMake(6.0f,6.0f,30,30/4*3) blendMode:kCGBlendModeNormal alpha:1];
              UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
              UIGraphicsEndImageContext();
              melbourneMarker.icon = newImage;
@@ -373,7 +376,7 @@ static const int maxLimitBranches=100;
     }
     
     if ([GlobalDataUser sharedAccountClient].dicPriceSearchParam.count>0) {
-        [params setValue:[GlobalDataUser sharedAccountClient].dicPriceSearchParam  forKey:@"prices"];
+        [params setValue:[[GlobalDataUser sharedAccountClient].dicPriceSearchParam JSONString]  forKey:@"prices"];
     }
     
     NSMutableArray* paramsForSearch=[[NSMutableArray alloc] init];

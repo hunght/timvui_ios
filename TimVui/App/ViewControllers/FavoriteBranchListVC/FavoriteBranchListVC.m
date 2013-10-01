@@ -104,15 +104,14 @@ static const NSString* limitCount=@"5";
     NSLog(@"params=%@",params);
     if (offset==0) {
         [self.branches.items removeAllObjects];
+        [self.tableView reloadData];
     }
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
-            
-            NSLog(@"weakSelf.branches.count=%d",weakSelf.branches.count);
-            NSLog(@"countAddedItems=%d",weakSelf.branches.countAddedItems);
+
             if (weakSelf.branches.countAddedItems==0) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 

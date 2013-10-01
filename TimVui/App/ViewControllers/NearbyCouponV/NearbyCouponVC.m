@@ -55,25 +55,28 @@ static const NSString* distanceMapSearch=@"100";
                    @"latlng": strLatLng,@"limit":limitCount,@"offset":[NSString stringWithFormat:@"%d",offset],@"distance":distanceMapSearch};
     }else
     {
-        NSLog(@"Can't get location of user");
+        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
+                @"limit":limitCount,@"offset":[NSString stringWithFormat:@"%d",offset],@"distance":distanceMapSearch};
     }
     
     NSLog(@"param=%@",params);
+    if (offset==0) {
+        [arrCoupons removeAllObjects];
+        [self.branches.items removeAllObjects];
+        [self.tableView reloadData];
+    }
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             
-            if (weakSelf.branches.count==0) {
+            if (weakSelf.branches.countAddedItems==0) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 
                 tableFooter.hidden=NO;
             }else{
                 tableFooter.hidden=YES;
-                if (offset==0) {
-                    [arrCoupons removeAllObjects];
-                }
                 for (TVBranch* branch in _branches.items) {
                     for (TVCoupon* coupon in branch.coupons.items) {
                         coupon.branch=branch;

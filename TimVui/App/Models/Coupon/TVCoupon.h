@@ -13,6 +13,7 @@
 @property(nonatomic,strong)NSDate *end;
 @property(nonatomic,strong)NSString *content;
 @property(nonatomic,strong)TVBranch *branch;
+@property(nonatomic,strong) NSString *status;
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;
 - (void)markAsRead;

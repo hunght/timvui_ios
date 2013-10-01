@@ -256,14 +256,41 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
 	NSLog(@"My token is: %@", deviceToken);
+    NSString *deviceTokenStr = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    deviceTokenStr = [deviceTokenStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [GlobalDataUser sharedAccountClient].deviceToken=deviceTokenStr;
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
+    [GlobalDataUser sharedAccountClient].deviceToken=[GlobalDataUser sharedAccountClient].UUID;
 	NSLog(@"Failed to get token, error: %@", error);
 }
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString *UUID;
+    if([[[UIDevice currentDevice] systemVersion]floatValue] >= 7){
+        
+    }else if([[[UIDevice currentDevice] systemVersion]floatValue] >= 6){
+        UUID = [[NSUUID UUID] UUIDString];
+    }else if([[[UIDevice currentDevice] systemVersion]floatValue] >= 5){
+        CFUUIDRef uuid = CFUUIDCreate(NULL);
+        UUID = CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+    }
+    NSLog(@"UUID =%@",UUID);
+    [GlobalDataUser sharedAccountClient].UUID=UUID;
+    
+    NSString *filePath = @"/Applications/Cydia.app";
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        // do something useful
+        NSString *commcenter = @"/private/var/wireless/Library/Preferences/com.apple.commcenter.plist";
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:commcenter];
+        NSString *PhoneNumber = [dict valueForKey:@"PhoneNumber"];
+        [GlobalDataUser sharedAccountClient].phoneNumber=PhoneNumber;
+    }
+    
     // Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -272,6 +299,7 @@
     if (localNotif) {
         NSDictionary* dic=localNotif.userInfo;
         NSLog(@" dic : %@", dic);
+        
     }
     
     /*
@@ -362,7 +390,5 @@
 {
 
 }
-
-
 
 @end

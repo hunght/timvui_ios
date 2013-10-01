@@ -6,43 +6,25 @@
 //  Copyright (c) 2013 Fabian Kreiser. All rights reserved.
 //
 
-#import "SearchWithArrayVC.h"
+#import "SearchCuisines.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/message.h>
 #import "UINavigationBar+JTDropShadow.h"
 #import "TVAppDelegate.h"
-#import "GlobalDataUser.h"
-#import "NSDictionary+Extensions.h"
+#import "TVGroupCuisines.h"
+#import "TVCuisine.h"
 static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier = @"kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier";
-@interface SearchWithArrayVC () {
+@interface SearchCuisines () {
     BOOL _mayUsePrivateAPI;
 }
 
 @end
 
-@implementation SearchWithArrayVC
+@implementation SearchCuisines
 
 #pragma mark - IBAction
 
 -(void)doneButtonClicked:(id)sender{
-    switch ([GlobalDataUser sharedAccountClient].currentSearchParam) {
-        case kSearchParamCuisine:
-            
-            [GlobalDataUser sharedAccountClient].dicCuisineSearchParam=_pickedArr;
-            break;
-            
-        case kSearchParamPurpose:
-            [GlobalDataUser sharedAccountClient].dicPurposeSearchParam=_pickedArr;
-            break;
-        case kSearchParamZone:
-            [GlobalDataUser sharedAccountClient].dicPublicLocation=_pickedArr;
-            break;
-        case kSearchParamUtilities:
-            [GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam=_pickedArr;
-            break;
-        default:
-        break;
-    }
     [self.navigationController.navigationBar setNavigationBarWithoutIcon:NO];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -76,8 +58,14 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 - (id)initWithSectionIndexes:(BOOL)showSectionIndexes withParam:(NSArray*)dic
 
 {
-    self.famousPersons=dic;
-    NSLog(@"%@",dic);
+    NSMutableArray* arr=[[NSMutableArray alloc] init];
+    for (TVGroupCuisines* group in dic) {
+        for ( TVCuisine* cuisine in group.items) {
+            [arr addObject:@{@"name": cuisine.name,@"id":cuisine.cuisineID}];
+        }
+    }
+    
+    self.famousPersons=arr;
     if ((self = [super initWithSectionIndexes:showSectionIndexes])) {
         /*
          The exact same behavior as the contacts app is only possible with using private API. Without using private API the section index control on the right of the table won't overlap the search bar.
@@ -87,34 +75,6 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         //_mayUsePrivateAPI = YES;
         _pickedArr=[[NSMutableArray alloc] init];
         
-        switch ([GlobalDataUser sharedAccountClient].currentSearchParam) {
-            case kSearchParamCuisine:
-                [self setTitle:@"Món ăn"];
-                break;
-                
-            case kSearchParamPurpose:
-                [self setTitle:@"Mục đích"];
-                break;
-            
-            case kSearchParamZone:
-                [self setTitle:@"Khu vực"];
-                break;
-            
-            case kSearchParamUtilities:
-                [self setTitle:@""];
-                break;
-            
-            case kSearchParamCity:
-                [self setTitle:@"Tỉnh/Thành Phố"];
-                break;
-            
-            case kSearchParamDistrict:
-                [self setTitle:@"Quận/Huyện"];
-                break;
-                
-            default:
-                break;
-        }
     }
     
     return self;
@@ -122,6 +82,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 - (void)viewDidLoad
 {
+    [self setTitle:@"Chọn món ăn để thêm"];
     [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
@@ -129,23 +90,6 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backButtonItem;
-    
-
-    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
-    
-    [doneButton setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
-    
-    [doneButton setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
-    
-    [doneButton setTitle:@"Xong" forState:UIControlStateNormal];
-    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
-    [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
-    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
-    [backButtonView addSubview:doneButton];
-    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
-    self.navigationItem.rightBarButtonItem=doneButtonItem;
     [super viewDidLoad];
     
     /*
@@ -266,31 +210,12 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         [_pickedArr addObject:arrResult];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
-    switch ([GlobalDataUser sharedAccountClient].currentSearchParam) {
-        case kSearchParamCity:
-            [GlobalDataUser sharedAccountClient].dicCitySearchParam=arrResult;
-            [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=nil;
-            [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
-            [GlobalDataUser sharedAccountClient].dicCity=arrResult;
-            [GlobalDataUser sharedAccountClient].userLocation=[[GlobalDataUser sharedAccountClient].dicCity safeLocationForKey:@"latlng"];
-            [[NSUserDefaults standardUserDefaults] setValue:[GlobalDataUser sharedAccountClient].dicCity forKey:kGetCityDataUser];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-
-            [self.navigationController popViewControllerAnimated:YES];
-            break;
-        case kSearchParamDistrict:
-            [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_pickedArr;
-            
-            //To do with this because mutile choose make it fail
-            [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
-            break;
-        
-        default:
-            break;
-    }
-
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    [self.navigationController popViewControllerAnimated:YES];
+    
+    if ([self.delegate respondsToSelector:@selector(didSearchWithResult:)]) {
+        [self.delegate didSearchWithResult:arrResult];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

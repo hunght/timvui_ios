@@ -425,6 +425,13 @@
 
 
 #pragma mark - IBAction
+- (void)sendSMSWIthOption:(int)optionNum {
+    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+    picker.body = [NSString stringWithFormat:@"coupon %@",_coupon.syntax];
+    picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+    picker.messageComposeDelegate = self;
+    [self.navigationController    presentModalViewController:picker animated:YES];
+}
 -(void)getCouponCode:(id)s{
     [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết coupon"
                                                      withAction:@"Chi tiết coupon- Gửi SMS nhận coupon"
@@ -435,17 +442,22 @@
         
         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
         
-        [alertView addButtonWithTitle:@"Tùy chọn OK"
+        [alertView addButtonWithTitle:@"Nhận 1 mã coupon (1 người dùng)"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
-                                  MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-                                  picker.body = [NSString stringWithFormat:@"coupon [%@]",_coupon.syntax];
-                                  picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
-                                  picker.messageComposeDelegate = self;
-                                  [self.navigationController    presentModalViewController:picker animated:YES];
+                                  [self sendSMSWIthOption:1];
                               }];
-        
-        [alertView addButtonWithTitle:@"Bỏ qua"
+        [alertView addButtonWithTitle:@"Nhận 2 mã coupon (2 người dùng)"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  [self sendSMSWIthOption:2];
+                              }];
+        [alertView addButtonWithTitle:@"Nhận 4 mã coupon (4 người dùng)"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  [self sendSMSWIthOption:4];
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");

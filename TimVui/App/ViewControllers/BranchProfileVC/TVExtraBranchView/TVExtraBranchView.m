@@ -32,6 +32,9 @@
 #import "BranchMainCell.h"
 #import "SIAlertView.h"
 #import "BranchProfileVC.h"
+#import "SearchCuisines.h"
+#import "NSDictionary+Extensions.h"
+
 #define kTableViewHeightOffset 150
 #define kCommentLimitCount 5
 
@@ -51,6 +54,9 @@
     int countMenu;
     int pageSimilarCount;
     UILabel *tableFooter;
+    
+    UIButton* _btnCommentPost;
+    UIButton* btnAddCuisine;
 }
 @end
 
@@ -226,40 +232,6 @@
     }];
 }
 
-- (void)postSimilarBranch:(NSDictionary*)params {
-    NSLog(@"%@",params);
-    if (!self.similarBranches) {
-        self.similarBranches=[[TVBranches alloc] initWithPath:@"branch/getListBranchSibling"];
-        self.similarBranches.isNotSearchAPIYES=YES;
-        pageSimilarCount=0;
-    }
-    int preCount=self.similarBranches.items.count;
-    __unsafe_unretained __typeof(&*self)weakSelf = self;
-    [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            if (preCount>0&&weakSelf.similarBranches.items.count==preCount) {
-                [tableFooter setText:@"Không còn địa điểm nào"];
-                tableFooter.hidden=NO;
-                weakSelf.tableView.showsInfiniteScrolling=NO;
-            }else{
-                tableFooter.hidden=YES;
-                weakSelf.tableView.showsInfiniteScrolling=YES;
-            }
-            pageSimilarCount++;
-            [weakSelf.tableView.pullToRefreshView stopAnimating];
-            [weakSelf.tableView.infiniteScrollingView stopAnimating];
-//            self..text=[NSString stringWithFormat:@"    (%d)",weakSelf.similarBranches.count];
-            [self.tableView reloadData];
-        });
-    } failure:^(GHResource *instance, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(),^ {
-            [weakSelf.tableView.pullToRefreshView stopAnimating];
-            [weakSelf.tableView.infiniteScrollingView stopAnimating];
-            [self.tableView reloadData];
-        });
-    }];
-}
-
 - (void)initTableView {
     
     
@@ -283,21 +255,8 @@
         [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         
         
-        floatView=[[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height,320, 48)];
-        [self addSubview:floatView];
-        UIButton* _btnCommentPost = [[UIButton alloc] initWithFrame:CGRectMake(10, 7, 300, 34)];
-        [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
-        [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
-        [_btnCommentPost setImage:[UIImage imageNamed:@"img_comment_postButton"] forState:UIControlStateNormal];
-        [_btnCommentPost setTitleEdgeInsets:UIEdgeInsetsMake(7, - 250.0, 5.0, 5.0)];
-        [_btnCommentPost setTitle:@"VIẾT ĐÁNH GIÁ" forState:UIControlStateNormal];
-        [_btnCommentPost setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _btnCommentPost.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+        [self settingFloatView];
         
-        [_btnCommentPost addTarget:self action:@selector(writeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-        [floatView addSubview:_btnCommentPost];
-        [floatView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:.5]];
-        [self insertSubview:floatView aboveSubview:_tableView];
         isFloatViewHiddenYES=YES;
         lastDragOffsetFloatView=_tableView.contentOffset.y;
         [self addSubview:lblWriteReviewNotice];
@@ -555,8 +514,9 @@
             [UIView animateWithDuration:0.2 animations:^{
                 htmlView.alpha = 1;
             }];
-            NSLog(@"karaokeCount=%d",karaokeCount);
-             NSLog(@"_branch.karaokes.items.count-1=%d",_branch.karaokes.items.count-1);
+            
+//            NSLog(@"karaokeCount=%d",karaokeCount);
+//             NSLog(@"_branch.karaokes.items.count-1=%d",_branch.karaokes.items.count-1);
             if (karaokeCount<_branch.karaokes.items.count-1) {
                 [self addKaraokeAtCount:karaokeCount+1 withHeight:karaokeHeight];
             }else{
@@ -595,9 +555,38 @@
 }
 
 
-
+#pragma mark SearchCuisinesDelegate
+- (void)didSearchWithResult:(NSDictionary*)cuisine{
+    NSLog(@"cuisine = %@",cuisine);
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
+                            [cuisine objectForKey:@"id"],@"item_id",
+                            nil];
+    NSLog(@"%@",params);
+    
+    [[TVNetworkingClient sharedClient] postPath:@"item/userAddSuggestItem" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        NSLog(@"%@",JSON);
+        
+        [TSMessage showNotificationInViewController:_viewController
+                                          withTitle:[NSString stringWithFormat:@"Bạn đã đề suất cho món %@ thành công!",[cuisine objectForKey:@"name"]]
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [TSMessage showNotificationInViewController:_viewController
+                                          withTitle:@"Có lỗi khi đề xuất cho món ăn."
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeWarning];
+        NSLog(@"%@",error);
+    }];
+}
 
 #pragma mark Actions
+-(void)addCuisineButtonClicked:(UIButton*)sender{
+    SearchCuisines *viewController = [[SearchCuisines alloc] initWithSectionIndexes:YES withParam:_branch.menu.items];
+    [viewController setDelegate:self];
+    [_viewController.navigationController pushViewController:viewController animated:YES];
+}
 
 -(void)eventButtonClicked:(UIButton*)sender{
     if (_currentTableType!=kTVEvent){
@@ -647,16 +636,21 @@
     [self.viewScroll setContentOffset:CGPointMake(frame.origin.x -100, 0) animated:YES];
     
     if (_currentTableType!=kTVMenu){
-        floatView.hidden=YES;
+        
         _currentTableType=kTVMenu;
         [_tableView reloadData];
         if (countMenu==0) {
+            floatView.hidden=YES;
             lblWriteReviewNotice.text=@"Đang cập nhật..";
             lblWriteReviewNotice.hidden=NO;
+        }else{
+            floatView.hidden=NO;
         }
     }
     self.tableView.showsPullToRefresh=NO;
     self.tableView.showsInfiniteScrolling=NO;
+    _btnCommentPost.hidden=YES;
+    btnAddCuisine.hidden=NO;
 }
 
 -(void)karaokeButtonClicked:(UIButton*)sender{
@@ -677,6 +671,8 @@
 }
 
 -(void)commentButtonClicked:(UIButton*)sender{
+
+
     self.tableView.showsPullToRefresh=YES;
     self.tableView.showsInfiniteScrolling=YES;
     
@@ -694,12 +690,89 @@
         floatView.hidden=NO;
         [self getCommentRefresh];
     }
+    _btnCommentPost.hidden=NO;
+    btnAddCuisine.hidden=YES;
 }
 
 -(void)backgroundButtonClicked:(id)sender{
     [self showExtraView:NO];
 }
 
+#pragma API Services
+- (void)postSimilarBranch:(NSDictionary*)params {
+    NSLog(@"%@",params);
+    if (!self.similarBranches) {
+        self.similarBranches=[[TVBranches alloc] initWithPath:@"branch/getListBranchSibling"];
+        self.similarBranches.isNotSearchAPIYES=YES;
+        pageSimilarCount=0;
+    }
+    int preCount=self.similarBranches.items.count;
+    __unsafe_unretained __typeof(&*self)weakSelf = self;
+    [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            if (preCount>0&&weakSelf.similarBranches.items.count==preCount) {
+                [tableFooter setText:@"Không còn địa điểm nào"];
+                tableFooter.hidden=NO;
+                weakSelf.tableView.showsInfiniteScrolling=NO;
+            }else{
+                tableFooter.hidden=YES;
+                weakSelf.tableView.showsInfiniteScrolling=YES;
+            }
+            pageSimilarCount++;
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            //            self..text=[NSString stringWithFormat:@"    (%d)",weakSelf.similarBranches.count];
+            [self.tableView reloadData];
+        });
+    } failure:^(GHResource *instance, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(),^ {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            [self.tableView reloadData];
+        });
+    }];
+}
+
+- (void)settingFloatView {
+    floatView=[[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height,320, 48)];
+    [self addSubview:floatView];
+    
+    
+    _btnCommentPost = [[UIButton alloc] initWithFrame:CGRectMake(10, 7, 300, 34)];
+    [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
+    [_btnCommentPost setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
+    [_btnCommentPost setImage:[UIImage imageNamed:@"img_comment_postButton"] forState:UIControlStateNormal];
+    [_btnCommentPost setTitleEdgeInsets:UIEdgeInsetsMake(7, - 250.0, 5.0, 5.0)];
+    [_btnCommentPost setTitle:@"VIẾT ĐÁNH GIÁ" forState:UIControlStateNormal];
+    [_btnCommentPost setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _btnCommentPost.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
+    
+    [_btnCommentPost addTarget:self action:@selector(writeButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    [floatView addSubview:_btnCommentPost];
+    
+    btnAddCuisine = [[UIButton alloc] initWithFrame:CGRectMake(5, 7, 305, 33)];
+    [btnAddCuisine setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_add_cuisine_btn"] forState:UIControlStateNormal];
+    
+    [btnAddCuisine setTitleEdgeInsets:UIEdgeInsetsMake(7, - 170, 5.0, 5.0)];
+    [btnAddCuisine setTitle:@"Nhập món nên thử" forState:UIControlStateNormal];
+    [btnAddCuisine setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [btnAddCuisine setContentMode:UIViewContentModeLeft];
+    btnAddCuisine.titleLabel.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+    
+    UILabel* lblAddCuisine=[[UILabel alloc] initWithFrame:CGRectMake(255, 10, 35, 15)];
+    [btnAddCuisine addSubview:lblAddCuisine];
+    lblAddCuisine.textColor=[UIColor whiteColor];
+    lblAddCuisine.font=[UIFont fontWithName:@"ArialMT" size:(13)];
+    lblAddCuisine.text=@"Thêm";
+    lblAddCuisine.backgroundColor=[UIColor clearColor];
+    
+    [btnAddCuisine addTarget:self action:@selector(addCuisineButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [floatView addSubview:btnAddCuisine];
+    [floatView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:.5]];
+    
+    
+    [self insertSubview:floatView aboveSubview:_tableView];
+}
 
 #pragma mark Helper
 
@@ -961,12 +1034,20 @@
     
     [[TVNetworkingClient sharedClient] postPath:@"item/userLikeItem" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         NSLog(@"%@",JSON);
-        cuisine.like_count++;
-        ExtraSuggestionMenuCell*cell=(ExtraSuggestionMenuCell*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
         
-        cell.detailTextLabel.text=[NSString stringWithFormat:@"%d votes",cuisine.like_count];
+        NSString* strMess;
+        if ([JSON safeIntegerForKey:@""]==200) {
+            cuisine.like_count++;
+            ExtraSuggestionMenuCell*cell=(ExtraSuggestionMenuCell*)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+            cell.detailTextLabel.text=[NSString stringWithFormat:@"%d votes",cuisine.like_count];
+            strMess=[NSString stringWithFormat:@"Bạn đã vote cho món %@ thành công!",cuisine.name];
+            
+        }else{
+            strMess=[NSString stringWithFormat:@"Bạn đã vote cho món %@ này rồi!",cuisine.name];
+        }
+
         [TSMessage showNotificationInViewController:_viewController
-                                          withTitle:[NSString stringWithFormat:@"Bạn đã vote cho món %@ thành công!",cuisine.name]
+                                          withTitle:strMess
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeSuccess];
         sender.userInteractionEnabled=YES;
@@ -1100,6 +1181,7 @@
                 lblWriteReviewNotice.text=@"Đang cập nhật..";
                 lblWriteReviewNotice.hidden=NO;
             }else{
+                [self showFloatView];
                 if (section==0) {
                     count= [[self.branch.menuSuggesting items] count];
                 }else{

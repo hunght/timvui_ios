@@ -246,6 +246,7 @@ YSDEkWnhu4NtIHTDtGkNxJFhbmcg4bufIMSR4bqleQ</string>
 						<string key="NSFrame">{{217, 326}, {94, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -307,7 +308,6 @@ YSDEkWnhu4NtIHTDtGkNxJFhbmcg4bufIMSR4bqleQ</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<bool key="IBUIOn">YES</bool>
 					</object>
 					<object class="IBUISwitch" id="476023995">
 						<reference key="NSNextResponder" ref="191373211"/>

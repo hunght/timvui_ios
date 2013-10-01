@@ -65,6 +65,7 @@ static GlobalDataUser *_sharedClient = nil;
         myTimer = nil;
     }
 }
+
 -(void)startSignificationLocation{
     
     UIBackgroundTaskIdentifier bgTask = 0;
@@ -94,15 +95,16 @@ static GlobalDataUser *_sharedClient = nil;
         [_locationManager startMonitoringSignificantLocationChanges];
         [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
     }
-    //    [_locationManager startMonitoringSignificantLocationChanges];
-    //  [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
+        [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
     
 }
 
 -(void)locationManagerStop{
-    [_locationManager stopMonitoringSignificantLocationChanges];
-    _locationManager.delegate=nil;
-    _locationManager=nil;
+    if (_locationManager) {
+        [_locationManager stopMonitoringSignificantLocationChanges];
+        _locationManager.delegate=nil;
+        _locationManager=nil;
+    }
 }
 
 -(void)savePersistenceAccountWithData:(NSDictionary*)JSON{
@@ -126,20 +128,44 @@ static GlobalDataUser *_sharedClient = nil;
     self.isLogin = YES;
     NSLog(@"%@",JSON);
     [self.user setValues:JSON ];
-    self.facebookID=[JSON valueForKey:@""];
     
 #warning User login set default USER ID TEST
     self.user.userId=@"8878";
 }
 
+- (void)updateNotificationSetting:(NSString*)is_notify {
+    NSDictionary * userObject=[NSDictionary dictionaryWithObjectsAndKeys:
+                               [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                               [GlobalDataUser sharedAccountClient].UUID,@"mobile_id",
+                               @"IOS",@"mobile_os",
+                               _deviceToken,@"mobile_token",
+                               is_notify,@"is_notify",
+                               nil];
+    
+    NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [userObject JSONString],@"UserMobile" ,
+                                    nil];
+//    NSLog(@"paramsHandBook = %@",paramsHandBook);
+    [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+//        NSLog(@"JSON = %@",JSON);
+        [self setSettingNotificationUser];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"error = %@",error);
+        _isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:NO];
+        [self setSettingNotificationUser];
+    }];
+}
+
 -(void)setGlocalDataUser:(NSDictionary *)JSON{
     [self setUserWithDic:JSON];
     [self savePersistenceAccountWithData:JSON];
-    
+    NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
+    [self updateNotificationSetting:isON];
 }
 
 -(void)userLogout{
     self.isLogin = NO;
+    [self updateNotificationSetting:@"0"];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:nil forKey:kAccountUserJSON];
     

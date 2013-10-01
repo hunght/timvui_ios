@@ -12,9 +12,10 @@
 @property (retain, nonatomic) CLLocationManager *locationManager;
 @property (assign, nonatomic) CLLocationCoordinate2D userLocation;
 @property (assign, nonatomic) BOOL isCanNotGetLocationServiceYES;
-@property (assign, nonatomic) NSNumber *userID;
+//@property (assign, nonatomic) NSNumber *userID;
 @property (retain, nonatomic) GHUser *user;
-@property (retain, nonatomic) NSString *facebookID;
+@property (retain, nonatomic) NSString *UUID;
+@property (retain, nonatomic) NSString *deviceToken;
 @property (retain, nonatomic) NSDictionary *dicCity;
 @property (assign, nonatomic) BOOL isLogin;
 @property (assign, nonatomic) BOOL isShowAletForLocationServicesYES;
@@ -37,7 +38,7 @@
 @property (retain, nonatomic) NSNumber* isHasNearlyBranchesYES;
 @property (retain, nonatomic) NSNumber* isWantToOnVirateYES;
 @property (retain, nonatomic) NSDate *locationUpdateTime;
-
+@property (retain, nonatomic) NSString *phoneNumber;
 enum {
     kSearchParamCity = 0,
     kSearchParamDistrict,

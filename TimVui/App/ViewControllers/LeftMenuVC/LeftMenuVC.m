@@ -29,6 +29,8 @@
 #import "ReceivedCouponVC.h"
 #import "FavoriteBranchListVC.h"
 #import "TVNotification.h"
+#import "TVWebVC.h"
+
 #define kNumberOfSections 3
 
 enum {
@@ -42,7 +44,7 @@ enum {
 /* set to 3 if you want to see how it behaves 
  when having more cells in the same section 
  */
-#define kNumberOfRowsInSection1 7
+#define kNumberOfRowsInSection1 7-2
 
 
 enum {
@@ -57,8 +59,8 @@ enum {
     kS1ReceivedCoupon,
     kS1Interesting,
     kS1Setting,
-    kS1History,
-    kS1UpdateAccount
+//    kS1History,
+//    kS1UpdateAccount
     
 };
 
@@ -97,7 +99,7 @@ enum {
     self = [super initWithStyle:style];
     if (self) {
         [self checkAndRefreshTableviewWhenUserLoginOrLogout];
-        _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ Anuong.net",@"Cài đặt", nil];
+        _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ Anuong.net",@"Sản phẩm", nil];
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
@@ -373,12 +375,14 @@ enum {
 	navController.view.layer.shadowOpacity = 0.8f;
 	navController.view.layer.shadowRadius = 5;
 	navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    
 	// give the root view controller the toggle bar button item
     [(UIViewController *)navController.viewControllers[0] navigationItem].leftBarButtonItem = self.toggleBarButtonItem;
 	// set the navigation controller as the new top view and bring it on
     [self.slidingViewController setTopViewController:navController];
 	//self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
     self.slidingViewController.anchorRightPeekAmount=40.0f;
+    self.slidingViewController.shouldAllowUserInteractionsWhenAnchored=NO;
     [[(UIViewController *)navController.viewControllers[0] view] addGestureRecognizer:self.slidingViewController.panGesture];
     [navController.navigationBar dropShadow];
     [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];
@@ -494,12 +498,12 @@ enum {
                     case kS1Setting:
                         viewController = [[UserSettingVC alloc] initWithNibName:@"UserSettingVC" bundle:nil];
                         break;
-                    case kS1History:
-
-                        break;
-                    case kS1UpdateAccount:
-
-                        break;
+//                    case kS1History:
+//
+//                        break;
+//                    case kS1UpdateAccount:
+//
+//                        break;
                         
                 }
             }else
@@ -537,12 +541,17 @@ enum {
                 break;
             case kSection3Setting:
                 switch (row) {
-                    case kS3Introduction:
-
+                    case kS3Introduction:{
+                        viewController=[[TVWebVC alloc] initWithNibName:@"TVWebVC" bundle:nil withRequest:@"view/about"];
+                        
                         break;
-                    case kS3TermOfUse:
-
+                    }
+                    case kS3TermOfUse:{
+                        viewController=[[TVWebVC alloc] initWithNibName:@"TVWebVC" bundle:nil withRequest:@"view/termOfUse"];
+                        
                         break;
+                    }
+
                     case kS3RFacebookPage:
                         if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://profile/454530917941197"]])
                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com/anuongfan"]];
@@ -690,14 +699,14 @@ enum {
                             cell.textLabel.text = @"Tuỳ chọn Gợi ý";
 
                         break;
-                    case kS1History:
-                        cell.imageView.image=[UIImage imageNamed:@"img_menu_coupon_received"];
-                        cell.textLabel.text = @"Lịch sử hoạt động";
-                        break;
-                    case kS1UpdateAccount:
-                        cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
-                        cell.textLabel.text = @"Cập nhật tài khoản";
-                        break;
+//                    case kS1History:
+//                        cell.imageView.image=[UIImage imageNamed:@"img_menu_coupon_received"];
+//                        cell.textLabel.text = @"Lịch sử hoạt động";
+//                        break;
+//                    case kS1UpdateAccount:
+//                        cell.imageView.image=[UIImage imageNamed:@"img_menu_interestedIn"];
+//                        cell.textLabel.text = @"Cập nhật tài khoản";
+//                        break;
 
                 }
             }else

@@ -182,6 +182,7 @@
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeError];
     [SVProgressHUD dismiss];
+    [SharedAppDelegate.menuVC.tableView reloadData];
     if (self.userDidLogin)
     {
         [self closeViewController];
@@ -269,6 +270,10 @@
 #pragma mark - IBAction
 
 -(void)backButtonClicked:(id)sender{
+    if (self.userLoginFail)
+    {
+        self.userLoginFail();
+    }
     [self closeViewController];
 }
 

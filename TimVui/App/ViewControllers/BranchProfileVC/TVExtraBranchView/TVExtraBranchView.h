@@ -10,6 +10,7 @@
 #import "TVComments.h"
 #import "TVBranches.h"
 #import "TVBranch.h"
+#import "SearchCuisines.h"
 typedef enum {
     kTVComment =0,
     kTVMenu,
@@ -18,7 +19,7 @@ typedef enum {
     kTVEvent
 } kTVTable;
 
-@interface TVExtraBranchView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
+@interface TVExtraBranchView : UIView <UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,SearchCuisinesDelegate>
 @property (strong, nonatomic) UITableView *tableView;
 @property (assign, nonatomic) kTVTable currentTableType;
 @property (strong, nonatomic) TVComments* comments;

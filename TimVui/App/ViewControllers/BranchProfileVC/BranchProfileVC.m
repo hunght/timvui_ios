@@ -367,7 +367,7 @@
             i++;
     }
     
-    if (i>=3) {
+    if (i>3) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         
         [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
@@ -763,7 +763,6 @@
     if (_branch.review) {
         _introducingView.hidden=NO;
         NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
-        //    NSLog(@"%@",_coupon.content);
         //continue building the string
         [html appendString:_branch.review];
         [html appendString:@"</body></html>"];
@@ -921,6 +920,15 @@
 }
 
 #pragma mark - IBAction
+- (void)sendSMSWIthButton:(UIButton *)sender andOption:(int)optionNum {
+    TVCoupon* coupon=_branch.coupons.items[sender.tag];
+    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+    picker.body = [NSString stringWithFormat:@"coupon %@",coupon.syntax];
+    picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+    picker.messageComposeDelegate = self;
+    [self.navigationController    presentModalViewController:picker animated:YES];
+}
+
 -(void)btnSMSButtonClicked:(UIButton*)sender{
     [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết branch"
                                                      withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
@@ -930,18 +938,22 @@
         
         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
         
-        [alertView addButtonWithTitle:@"Tùy chọn OK"
+        [alertView addButtonWithTitle:@"Nhận 1 mã coupon (1 người dùng)"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
-                                  TVCoupon* coupon=_branch.coupons.items[sender.tag];
-                                  MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-                                  picker.body = [NSString stringWithFormat:@"coupon [%@]",coupon.syntax];
-                                  picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
-                                  picker.messageComposeDelegate = self;
-                                  [self.navigationController    presentModalViewController:picker animated:YES];
+                                  [self sendSMSWIthButton:sender andOption:1];
                               }];
-        
-        [alertView addButtonWithTitle:@"Bỏ qua"
+        [alertView addButtonWithTitle:@"Nhận 2 mã coupon (2 người dùng)"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  [self sendSMSWIthButton:sender andOption:2];
+                              }];
+        [alertView addButtonWithTitle:@"Nhận 4 mã coupon (4 người dùng)"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  [self sendSMSWIthButton:sender andOption:4];
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");
@@ -985,7 +997,7 @@
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
                             _branch.branchID,@"branch_id",
                             nil];
-//    NSLog(@"%@",params);
+//    NSLog(@"params %@",params);
     [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
 //        NSLog(@"%@",JSON);
         int i=[JSON safeIntegerForKey:@"status"];

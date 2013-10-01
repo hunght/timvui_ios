@@ -58,25 +58,27 @@ static const NSString* distanceMapSearch=@"100";
         NSLog(@"Can't get location of user");
     }
     
-//    NSLog(@"param=%@",params);
-    
+    NSLog(@"param=%@",params);
+    if (offset==0) {
+        [arrEvents removeAllObjects];
+        [self.branches.items removeAllObjects];
+        [self.tableView reloadData];
+    }
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             
-            //NSLog(@"weakSelf.branches.count=%d",weakSelf.branches.count);
-            
-            if (weakSelf.branches.count==0) {
+//            NSLog(@"weakSelf.branches.count=%d",weakSelf.branches.count);
+//            NSLog(@"countAddedItems=%d",weakSelf.branches.countAddedItems);
+            if (weakSelf.branches.countAddedItems==0) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 [tableFooter setText:@"Không còn sự kiện nào"];
                 tableFooter.hidden=NO;
             }else{
                 tableFooter.hidden=YES;
-                if (offset==0) {
-                    [arrEvents removeAllObjects];
-                }
+
                 for (TVBranch* branch in _branches.items) {
                     for (TVEvent* event in branch.events.items) {
                         event.branch=branch;

@@ -13,6 +13,7 @@
 #import "TVNetworkingClient.h"
 #import "TSMessage.h"
 #import "LoginVC.h"
+#import <JSONKit.h>
 @interface UserSettingVC ()
 
 @end
@@ -83,48 +84,73 @@
 
 #pragma mark IBAction
 - (void)updateValueForSwitch {
+    
     [_swFavoriteCoupon setOn:[GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue];
     [_swNearbyBranchCoupon setOn:[GlobalDataUser sharedAccountClient].isNearlyBranchesHasNewCouponYES.boolValue];
     [_swSuggestImHere setOn:[GlobalDataUser sharedAccountClient].isHasNearlyBranchesYES.boolValue];
     [_swVirate setOn:[GlobalDataUser sharedAccountClient].isWantToOnVirateYES.boolValue];
+    
 }
 
 -(void)detaultButtonClicked:(id)s{
-
     [GlobalDataUser sharedAccountClient].isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
-    [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
     [GlobalDataUser sharedAccountClient].isWantToOnVirateYES=[NSNumber numberWithBool:YES];
     [GlobalDataUser sharedAccountClient].isHasNearlyBranchesYES=[NSNumber numberWithBool:YES];
-    [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
     
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
+        [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
+        [self saveUserSettingNotification];
+    }
+    
+    [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
     [self updateValueForSwitch];
+
 }
 
--(void)saveButtonClicked:(id)s{
-    CFUUIDRef udid = CFUUIDCreate(NULL);
-    NSString *udidString = (NSString *) CFBridgingRelease(CFUUIDCreateString(NULL, udid));
+- (void)saveUserSettingNotification {
+//    deviceToken=@"6006e3189eca9d547b3935c1e3b23e9104052a648145b11a301082b19c8228ce";
+    NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
+    NSDictionary * userObject=[NSDictionary dictionaryWithObjectsAndKeys:
+                               @"IOS",@"mobile_os",
+                               isON,@"is_notify",
+                               [GlobalDataUser sharedAccountClient].UUID,@"mobile_id",
+                               [GlobalDataUser sharedAccountClient].deviceToken ,@"mobile_token",
+                               [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
+                               nil];
     
-    NSDictionary * userObject=[[NSDictionary alloc] initWithObjectsAndKeys:[GlobalDataUser sharedAccountClient].userID,@"user_id",udidString,@"mobile_id",@"IOS",@"mobile_os", nil];
     NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    userObject,@"UserMobile" ,
+                                    [userObject JSONString],@"UserMobile" ,
                                     nil];
+    
+    NSLog(@"paramsHandBook = %@",paramsHandBook);
+    
     [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"JSON = %@",JSON);
+//        NSLog(@"JSON = %@",JSON);
+        
         [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Lưu cẩm nang thành công"
+                                          withTitle:@"Cập nhật thành công"
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeSuccess];
         
         [self dismissModalViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error = %@",error);
+        [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:NO];
+        [self.swFavoriteCoupon setOn:NO];
+        [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
+        
         [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Lưu cẩm nang thất bại thất bại"
+                                          withTitle:@"Cập nhật thất bại"
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeError];
     }];
-    
+}
+
+-(void)saveButtonClicked:(id)s{
     [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
+        [self saveUserSettingNotification];
+    }
 }
 
 - (IBAction)swSuggestImHereChangedValue:(UISwitch*)sender {
@@ -151,7 +177,8 @@
         [loginVC goWithDidLogin:^{
             [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
         } thenLoginFail:^{
-            
+            [sender setOn:NO];
+            [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
         }];
     }
     

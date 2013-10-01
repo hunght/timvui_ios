@@ -7,26 +7,52 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/FavoriteBranchListVC/FavoriteBranchListVC.m"
-         timestampString = "401775870.932677"
+         filePath = "TimVui/App/ViewControllers/UserSettingVC/UserSettingVC.m"
+         timestampString = "401855957.450466"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
-         landmarkName = "-postGetBranches"
+         startingLineNumber = "180"
+         endingLineNumber = "180"
+         landmarkName = "-swFaveriteBranchCouponChangedValue:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/FavoriteBranchListVC/FavoriteBranchListVC.m"
-         timestampString = "401776634.055835"
+         filePath = "TimVui/App/ViewControllers/ReceivedCouponVC/ReceivedCouponVC.m"
+         timestampString = "402049144.996735"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "105"
-         endingLineNumber = "105"
-         landmarkName = "-postGetBranches"
+         startingLineNumber = "205"
+         endingLineNumber = "205"
+         landmarkName = "-getCouponWhenHasPhoneNumber"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/SearchWithArrayVC/SearchWithArrayVC.m"
+         timestampString = "402035994.131923"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
+         landmarkName = "-initWithSectionIndexes:withParam:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/NearbyCouponV/NearbyCouponVC.m"
+         timestampString = "402052461.982967"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "63"
+         endingLineNumber = "63"
+         landmarkName = "-postToGetBranches"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
