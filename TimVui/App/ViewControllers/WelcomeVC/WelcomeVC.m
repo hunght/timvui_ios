@@ -69,7 +69,6 @@
         [self.locationManager startMonitoringSignificantLocationChanges];
         [self settingDefaultLocationUserWhenDennied];
     }
-    
 }
 
 -(void)settingDefaultLocationUserWhenDennied{

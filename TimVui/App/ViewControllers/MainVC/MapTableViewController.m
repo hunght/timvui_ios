@@ -425,7 +425,7 @@ static const int maxLimitBranches=100;
                 [self updateCameraMapPosition:branch.latlng];
             }
             
-            if (weakSelf.branches.countAddedItems==0) {
+            if (weakSelf.branches.countAddedItems<kSearchBranchLimit.intValue) {
                 _locationPickerView.tableView.showsInfiniteScrolling=NO;
                 tableFooter.hidden=NO;
             }else{

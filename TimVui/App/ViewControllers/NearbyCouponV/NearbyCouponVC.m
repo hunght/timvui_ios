@@ -29,8 +29,6 @@ static const NSString* distanceMapSearch=@"100";
 
 @implementation NearbyCouponVC
 
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -71,7 +69,7 @@ static const NSString* distanceMapSearch=@"100";
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             
-            if (weakSelf.branches.countAddedItems==0) {
+            if (weakSelf.branches.countAddedItems<limitCount.intValue) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 
                 tableFooter.hidden=NO;

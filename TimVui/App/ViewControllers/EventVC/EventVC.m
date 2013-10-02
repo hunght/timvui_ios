@@ -72,7 +72,7 @@ static const NSString* distanceMapSearch=@"100";
             
 //            NSLog(@"weakSelf.branches.count=%d",weakSelf.branches.count);
 //            NSLog(@"countAddedItems=%d",weakSelf.branches.countAddedItems);
-            if (weakSelf.branches.countAddedItems==0) {
+            if (weakSelf.branches.countAddedItems<limitCount.intValue) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 [tableFooter setText:@"Không còn sự kiện nào"];
                 tableFooter.hidden=NO;

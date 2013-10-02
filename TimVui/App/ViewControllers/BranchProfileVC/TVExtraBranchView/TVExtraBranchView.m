@@ -210,7 +210,7 @@
     int preCount=self.comments.items.count;
     [weakSelf.comments loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            if (preCount>0&&weakSelf.comments.items.count==preCount) {
+            if (preCount>0 && weakSelf.comments.items.count==preCount) {
                 [tableFooter setText:@"Không còn đánh giá nào"];
                 tableFooter.hidden=NO;
                 weakSelf.tableView.showsInfiniteScrolling=NO;
@@ -706,11 +706,10 @@
         self.similarBranches.isNotSearchAPIYES=YES;
         pageSimilarCount=0;
     }
-    int preCount=self.similarBranches.items.count;
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            if (preCount>0&&weakSelf.similarBranches.items.count==preCount) {
+            if (weakSelf.similarBranches.count>0&&weakSelf.similarBranches.countAddedItems<kCommentLimitCount) {
                 [tableFooter setText:@"Không còn địa điểm nào"];
                 tableFooter.hidden=NO;
                 weakSelf.tableView.showsInfiniteScrolling=NO;

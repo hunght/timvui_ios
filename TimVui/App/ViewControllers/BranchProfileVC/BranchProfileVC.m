@@ -467,7 +467,7 @@
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.district valueForKey:@"name"] strTiltle:strTiltle];
     
     strTiltle=@"Ở gần";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.public_locations valueForKey:@"name"] strTiltle:strTiltle];
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.public_locations valueForKey:@"name"] strTiltle:strTiltle];	
     
     strTiltle=@"Chỉ đường";
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.direction strTiltle:strTiltle];

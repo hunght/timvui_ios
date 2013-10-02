@@ -366,9 +366,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
-        [GlobalDataUser sharedAccountClient].isTurnOnLocationService=NO;
-    }
+
     if (_nearlyBranch) {
         [self showNotificationAboutNearlessBranch:_nearlyBranch];
         _nearlyBranch=nil;
@@ -387,6 +385,11 @@
      */
     
     //[FBSession.activeSession handleDidBecomeActive];
+    if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
+        [GlobalDataUser sharedAccountClient].isTurnOnLocationService=NO;
+    }else{
+        [GlobalDataUser sharedAccountClient].isTurnOnLocationService=YES;
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

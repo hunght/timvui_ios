@@ -51,18 +51,17 @@ static const NSString* limitCount=@"5";
     [params setValue:limitCount forKey:@"limit"];
     [params setValue:[NSString stringWithFormat:@"%d",offset] forKey:@"offset"];
      NSLog(@"params=%@",params);
-    
+    if (offset==0) {
+        [_manualArr removeAllObjects];
+        [_tableView reloadData];
+    }
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         [weakSelf.tableView.pullToRefreshView stopAnimating];
         [weakSelf.tableView.infiniteScrollingView stopAnimating];
         
-        if (offset==0) {
-            [_manualArr removeAllObjects];
-        }
-        
         NSArray* dicArray=[[JSON safeDictForKey:@"data"] allValues];
-        if (dicArray.count==0) {
+        if (dicArray.count<limitCount.intValue) {
             weakSelf.tableView.showsInfiniteScrolling=NO;
             [tableFooter setText:@"Không còn cẩm nang nào"];
             tableFooter.hidden=NO;
@@ -134,7 +133,7 @@ static const NSString* limitCount=@"5";
     self.navigationItem.rightBarButtonItem = searchButtonItem;
     
     params=[[NSMutableDictionary alloc] init];
-    [params setValue:@"view" forKey:@"type"];
+    [params setValue:@"new" forKey:@"type"];
     
     CGRect footerRect = CGRectMake(0, 0, 320, 40);
     tableFooter = [[UILabel alloc] initWithFrame:footerRect];

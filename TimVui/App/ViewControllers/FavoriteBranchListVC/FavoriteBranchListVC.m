@@ -112,7 +112,7 @@ static const NSString* limitCount=@"5";
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
 
-            if (weakSelf.branches.countAddedItems==0) {
+            if (weakSelf.branches.countAddedItems<limitCount.intValue) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 
                 tableFooter.hidden=NO;

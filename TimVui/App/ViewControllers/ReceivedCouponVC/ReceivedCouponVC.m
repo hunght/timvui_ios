@@ -96,7 +96,7 @@ static const NSString* limitCount=@"5";
             [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedCoupon];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            if (weakSelf.branches.countAddedItems==0) {
+            if (weakSelf.branches.countAddedItems<limitCount.intValue) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 tableFooter.hidden=NO;
             }else{
