@@ -96,6 +96,7 @@ static const NSString* distanceMapSearch=@"100";
 {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+    [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     self.tableView.backgroundColor=[UIColor clearColor];
     CGRect footerRect = CGRectMake(0, 0, 320, 40);
     tableFooter = [[UILabel alloc] initWithFrame:footerRect];

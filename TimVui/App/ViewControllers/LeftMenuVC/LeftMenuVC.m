@@ -120,6 +120,7 @@ enum {
 {
     [super viewDidLoad];
     [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }
 
 - (void)viewDidUnload
@@ -329,6 +330,18 @@ enum {
         }];
     }
 }
+
+#pragma mark MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error;
+{
+    if (result == MFMailComposeResultSent) {
+        NSLog(@"It's away!");
+    }
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark Helper
 
 - (void)toggleTopView {
@@ -459,22 +472,25 @@ enum {
             [SharedAppDelegate loadWhenInternetConnected];
         return;
     }
-    if (isNotTheFirstTimeOpenHomeYES==NO) {
-        isNotTheFirstTimeOpenHomeYES=YES;
-        if (indexPath.section==kSection2Services&&indexPath.row==kS2Home) {
-            [self toggleTopView];
-            lastIndexPath=indexPath;
-            return;
+    if (indexPath.section!=kSection3Setting){
+        if (isNotTheFirstTimeOpenHomeYES==NO) {
+            isNotTheFirstTimeOpenHomeYES=YES;
+            if (indexPath.section==kSection2Services&&indexPath.row==kS2Home) {
+                [self toggleTopView];
+                lastIndexPath=indexPath;
+                return;
+            }
+        }
+        
+        if (lastIndexPath.section==indexPath.section&&lastIndexPath.row==indexPath.row) {
+            if (lastIndexPath.section!=kSection1UserAccount) {
+                [self toggleTopView];
+                lastIndexPath=indexPath;
+                return;
+            }
         }
     }
     
-    if (lastIndexPath.section==indexPath.section&&lastIndexPath.row==indexPath.row) {
-        if (lastIndexPath.section!=kSection1UserAccount) {
-            [self toggleTopView];
-            lastIndexPath=indexPath;
-            return;
-        }
-    }
     lastIndexPath=indexPath;
 	
     UIViewController *viewController = nil;
@@ -554,11 +570,19 @@ enum {
                     }
 
                     case kS3RFacebookPage:
-                        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://profile/326769584123598"]])
+                        if (![[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb://profile/349578341842722"]])
                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.facebook.com/anuongfan"]];
                         break;
                     case kS3Feedback:
-
+                    {
+                        MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+                        controller.mailComposeDelegate = self;
+                        [controller setToRecipients:[[NSArray alloc] initWithObjects:@"homthu@anuong.net", nil]];
+                        [controller setSubject:@"My Subject"];
+                        [controller setMessageBody:@"" isHTML:NO];
+                        if (controller) [self presentModalViewController:controller animated:YES];
+                    
+                    }
                         break;
                     case kS3InviteFriends:
                         viewController = [[SearchWithContactsVC alloc] initWithSectionIndexes:YES isInviting:YES];

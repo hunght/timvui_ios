@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginVC.h"
+#import <MessageUI/MessageUI.h>
+
 @class TVBranches,TVBranch;
-@interface LeftMenuVC : UITableViewController <UIActionSheetDelegate> {
+@interface LeftMenuVC : UITableViewController <MFMailComposeViewControllerDelegate> {
 @private
     NSArray *_headers;
     NSIndexPath* lastIndexPath;

@@ -30,6 +30,7 @@
 #import "UILabel+DynamicHeight.h"
 #import "TVEvent.h"
 #import "NSDate-Utilities.h"
+#import "UIImage+Crop.h"
 @implementation TVEventCell {
 }
 
@@ -78,10 +79,10 @@
     [self.imgCoverEvent addSubview:_lblContent];
     [self.imgCoverEvent addSubview:_lblNameBranch];
     [self.imgCoverEvent addSubview:_lblTime];
-    
+    _imgCoverEvent.contentMode=UIViewContentModeScaleToFill;
     [self.contentView addSubview:_imgCoverEvent];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
-    _imgCoverEvent.contentMode=UIViewContentModeScaleToFill;
+    
     return self;
 }
 
@@ -102,7 +103,19 @@
     
     _lblNameBranch.text=event.branch.name;
     _lblContent.text=[NSString stringWithFormat:@"%@: %@",event.branch.name, event.title];
-    [_imgCoverEvent setImageWithURL:[NSURL URLWithString:event.image]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
+    
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadWithURL:[NSURL URLWithString:event.image]
+                    delegate:self
+                     options:0
+                     success:^(UIImage *image, BOOL cached)
+     {
+         image=[image imageByScalingAndCroppingForSize:CGSizeMake(310, 140)];
+         [_imgCoverEvent setImage:image];
+
+     }
+                     failure:nil];
+  
 }
 
 + (CGFloat)heightForCellWithPost:(TVEvent *)event {

@@ -37,16 +37,16 @@ NSString const *kSidebarCellImageKey = @"CellImage";
 		self.textLabel.textColor = [UIColor colorWithRed:(101.0f/255.0f) green:(96.0f/255.0f) blue:(100.0f/255.0f) alpha:1.0f];
 		self.textLabel.highlightedTextColor = [UIColor colorWithRed:(101.0f/255.0f) green:(96.0f/255.0f) blue:(100.0f/255.0f) alpha:1.0f];
 		UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:2.0f];
+		topLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:.3f];
 		[self.textLabel.superview addSubview:topLine];
 		        self.contentView.backgroundColor=[UIColor clearColor];
 //		UIView *topLine2 = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 1.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
 //		topLine2.backgroundColor = [UIColor whiteColor];
 //		[self.textLabel.superview addSubview:topLine2];
 		
-//		UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 43.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
-//		bottomLine.backgroundColor = [UIColor colorWithRed:(40.0f/255.0f) green:(47.0f/255.0f) blue:(61.0f/255.0f) alpha:1.0f];
-//		[self.textLabel.superview addSubview:bottomLine];
+		UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 49.0f, [UIScreen mainScreen].bounds.size.height, 1.0f)];
+		bottomLine.backgroundColor = [UIColor colorWithRed:(219.0f/255.0f) green:(219.0f/255.0f) blue:(219.0f/255.0f) alpha:0.3f];
+		[self.textLabel.superview addSubview:bottomLine];
         
 	}
 	return self;

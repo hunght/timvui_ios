@@ -138,9 +138,9 @@
 }
 
 + (CGFloat)heightForCellWithPost:(TVCoupon *)coupon {
-    CGSize maximumLabelSize = CGSizeMake(210.0f,9999);
-    UIFont *cellFont = [UIFont fontWithName:@"ArialMT" size:(13)];
-    CGSize expectedLabelSize = [coupon.branch.address_full sizeWithFont:cellFont
+    CGSize maximumLabelSize = CGSizeMake(290,9999);
+    UIFont *cellFont = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    CGSize expectedLabelSize = [coupon.name sizeWithFont:cellFont
                                                constrainedToSize:maximumLabelSize
                                                    lineBreakMode:NSLineBreakByWordWrapping];
     return expectedLabelSize.height+ 8+66+8;

@@ -66,9 +66,7 @@ static const NSString* limitCount=@"5";
 - (void)postToGetBranchesWithEnable:(BOOL)isYES
 {
     NSDictionary *params = nil;
-    
     NSString* isEnable=(isYES)?@"1":@"0";
-    
     NSRange range = NSMakeRange(0, 1);
     NSMutableString * strPhoneNumber=[NSMutableString stringWithString:[GlobalDataUser sharedAccountClient].phoneNumber];
     [strPhoneNumber replaceCharactersInRange:range withString:@"84"];
@@ -78,13 +76,14 @@ static const NSString* limitCount=@"5";
                @"isStatusEnable":isEnable,
                @"offset":[NSString stringWithFormat:@"%d",offset]};
     
-    
     NSLog(@"param=%@",params);
+    
     [self.branches.items removeAllObjects];
     if (offset==0) {
         [arrCoupons removeAllObjects];
         [self.tableView reloadData];
     }
+    
     __unsafe_unretained __typeof(&*self)weakSelf = self;
     [weakSelf.branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
@@ -92,7 +91,7 @@ static const NSString* limitCount=@"5";
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             
             NSDictionary* dataDic=data;
-//            NSLog(@"dataDic = %@",dataDic);
+            //            NSLog(@"dataDic = %@",dataDic);
             [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedCoupon];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
@@ -120,7 +119,7 @@ static const NSString* limitCount=@"5";
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
-    
+    [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     [_btnActive setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     [_btnExperied setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
     
@@ -138,20 +137,27 @@ static const NSString* limitCount=@"5";
     [_btnExperied setSelected:NO];
     [_btnActive setSelected:YES];
     
-
+    
     if (![GlobalDataUser sharedAccountClient].phoneNumber) {
         [GlobalDataUser sharedAccountClient].phoneNumber=[[NSUserDefaults standardUserDefaults] stringForKey:kUserPhoneNumber];
         if (![GlobalDataUser sharedAccountClient].phoneNumber) {
             
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Thông tin" message:@"Vui lòng xác nhận số điện thoại của bạn" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK",nil];
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Thông tin" message:@"Vui lòng xác nhận số điện thoại của bạn" delegate:self cancelButtonTitle:@"OK"otherButtonTitles:nil];
             alert.alertViewStyle = UIAlertViewStylePlainTextInput;
             [alert show];
         }else{
             [self getCouponWhenHasPhoneNumber];
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:[NSString stringWithFormat:@"Bạn đang sử dụng SĐT: %@, nếu không đúng SĐT của bạn vui lòng cài đặt lại tại menu Tuỳ chọn cài đặt.",[GlobalDataUser sharedAccountClient].phoneNumber]
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeSuccess];
         }
     }else{
         [self getCouponWhenHasPhoneNumber];
-    }
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:[NSString stringWithFormat:@"Bạn đang sử dụng SĐT: %@, nếu không đúng SĐT của bạn vui lòng cài đặt lại tại menu Tuỳ chọn cài đặt.",[GlobalDataUser sharedAccountClient].phoneNumber]
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];    }
     
     
     
@@ -173,6 +179,8 @@ static const NSString* limitCount=@"5";
 #pragma mark - UIAlertViewDelegate
 
 - (void)getCouponWhenHasPhoneNumber {
+    
+    
     if (![SharedAppDelegate isConnected]) {
         NSDictionary *retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedCoupon];
         if (retrievedDictionary) {
@@ -198,17 +206,16 @@ static const NSString* limitCount=@"5";
         
         // setup pull-to-refresh
         [self.tableView addPullToRefreshWithActionHandler:^{
-            NSLog(@"weakSelf.tableView.infiniteScrollingView.state=%d",weakSelf.tableView.infiniteScrollingView.state);
+//            NSLog(@"weakSelf.tableView.infiniteScrollingView.state=%d",weakSelf.tableView.infiniteScrollingView.state);
             if (weakSelf.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
                 weakSelf.tableView.showsInfiniteScrolling=YES;
                 offset=0;
                 [weakSelf postToGetBranchesWithEnable:_btnActive.isSelected];
             }
         }];
-        
         // setup infinite scrolling
         [self.tableView addInfiniteScrollingWithActionHandler:^{
-            NSLog(@"weakSelf.tableView.pullToRefreshView.state=%d",weakSelf.tableView.pullToRefreshView.state);
+//            NSLog(@"weakSelf.tableView.pullToRefreshView.state=%d",weakSelf.tableView.pullToRefreshView.state);
             if (weakSelf.tableView.pullToRefreshView.state!=SVInfiniteScrollingStateLoading) {
                 [weakSelf postToGetBranchesWithEnable:_btnActive.isSelected];
             }
@@ -218,40 +225,43 @@ static const NSString* limitCount=@"5";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
-    NSString *inputText = [[alertView textFieldAtIndex:0] text];
-    
-    NSString *phoneRegex = @"^(09\\d{8}|01\\d{9})$";
-    
-    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
-    
-    BOOL phoneValidates = [phoneTest evaluateWithObject:inputText];
-    if(phoneValidates)
-    {
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Bạn đã update số điện thoại thành công"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeSuccess];
+    NSLog(@"buttonIndex: %d",buttonIndex);
+    if (buttonIndex==0) {
+        NSString *inputText = [[alertView textFieldAtIndex:0] text];
         
-        [[NSUserDefaults standardUserDefaults] setValue:inputText forKey:kUserPhoneNumber];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [GlobalDataUser sharedAccountClient].phoneNumber=inputText;
-        [self getCouponWhenHasPhoneNumber];
+        NSString *phoneRegex = @"^(09\\d{8}|01\\d{9})$";
         
+        NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+        
+        BOOL phoneValidates = [phoneTest evaluateWithObject:inputText];
+        if(phoneValidates)
+        {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Bạn đã update số điện thoại thành công"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeSuccess];
+            
+            [[NSUserDefaults standardUserDefaults] setValue:inputText forKey:kUserPhoneNumber];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [GlobalDataUser sharedAccountClient].phoneNumber=inputText;
+            [self getCouponWhenHasPhoneNumber];
+            
+        }
+        else
+        {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Số điện thoại không đúng định dạng"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeWarning];
+            
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Thông tin" message:@"Số điện thoại của bạn chưa đúng theo định dang 09******** hoặc 01*********. Vui lòng nhập lại." delegate:self cancelButtonTitle:@"OK"  otherButtonTitles:@"Cancel",nil];
+            
+            alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+            [alert show];
+            
+        }
     }
-    else
-    {
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Số điện thoại không đúng định dạng"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeWarning];
-        
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Thông tin" message:@"Số điện thoại của bạn chưa đúng theo định dang 09******** hoặc 01*********. Vui lòng nhập lại." delegate:self cancelButtonTitle:@"Cancel"  otherButtonTitles:@"OK",nil];
-        
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        [alert show];
-        
-    }
+    
 }
 
 #pragma mark - UITableViewDataSource
