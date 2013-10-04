@@ -606,8 +606,8 @@
     
     
     if (!_branch) {
-        NSDictionary *params = @{@"id": _branchID};
-//        NSDictionary *params = @{@"id": @"1"};
+//        NSDictionary *params = @{@"id": _branchID};@"27006",@"branch_id",
+        NSDictionary *params = @{@"id": @"27006"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
 //                NSLog(@"data===%@",data);
@@ -1000,6 +1000,7 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [GlobalDataUser sharedAccountClient].user.userId,@"user_id" ,
                             _branch.branchID,@"branch_id",
+                            
                             nil];
 //    NSLog(@"params %@",params);
     [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {

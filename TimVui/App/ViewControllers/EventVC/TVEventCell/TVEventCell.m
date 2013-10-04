@@ -31,6 +31,8 @@
 #import "TVEvent.h"
 #import "NSDate-Utilities.h"
 #import "UIImage+Crop.h"
+
+
 @implementation TVEventCell {
 }
 
@@ -50,7 +52,6 @@
     }
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     _imgCoverEvent=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 5, 310, 140)];
-    _lblNameBranch=[[UILabel alloc] initWithFrame:CGRectMake(12, 105, 290, 30)];
     _lblTime=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 120, 12)];
     
     _viewBgContent=[[UIView alloc] initWithFrame:CGRectMake(0, 140-45, 310, 45)];
@@ -59,30 +60,27 @@
     _viewBgTime=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 125, 30)];
     [_viewBgTime setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.7]];
     
-    _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 105, 290, 30)];
-    _lblContent.backgroundColor = [UIColor clearColor];
+
+    _lblContent = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(12, 105, 290, 30)];
+    _lblContent.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     _lblContent.textColor = [UIColor whiteColor];
-    _lblContent.numberOfLines=2;
-    _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
+    _lblContent.lineBreakMode = UILineBreakModeWordWrap;
+    _lblContent.numberOfLines = 2;
+    _lblContent.backgroundColor=[UIColor clearColor];
     
     _lblTime.textColor = [UIColor whiteColor];
     _lblTime.backgroundColor=[UIColor clearColor];
     _lblTime.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     
-    _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
-    _lblNameBranch.backgroundColor=[UIColor clearColor];
-    _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-    
+
     // Get the Layer of any view
     [self.imgCoverEvent addSubview:_viewBgTime];
     [self.imgCoverEvent addSubview:_viewBgContent];
     [self.imgCoverEvent addSubview:_lblContent];
-    [self.imgCoverEvent addSubview:_lblNameBranch];
     [self.imgCoverEvent addSubview:_lblTime];
     _imgCoverEvent.contentMode=UIViewContentModeScaleToFill;
     [self.contentView addSubview:_imgCoverEvent];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
-    
     return self;
 }
 
@@ -101,9 +99,24 @@
     frame.size.width=_lblTime.frame.size.width+ 20;
     _viewBgTime.frame=frame;
     
-    _lblNameBranch.text=event.branch.name;
-    _lblContent.text=[NSString stringWithFormat:@"%@: %@",event.branch.name, event.title];
     
+    NSString* text = [NSString stringWithFormat:@"%@: %@",event.branch.name, event.title];
+    [_lblContent setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^(NSMutableAttributedString *mutableAttributedString) {
+        UIFont *boldSystemFont = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];;
+        NSRange whiteRange = [text rangeOfString:event.branch.name];
+        CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+        
+        if (whiteRange.location != NSNotFound) {
+            // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+            [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)[UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f].CGColor range:whiteRange];
+            [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:whiteRange];
+            CFRelease(font);
+        }
+        
+        return mutableAttributedString;
+    }];
+    
+
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager downloadWithURL:[NSURL URLWithString:event.image]
                     delegate:self
@@ -114,8 +127,7 @@
          [_imgCoverEvent setImage:image];
 
      }
-                     failure:nil];
-  
+         failure:nil];
 }
 
 + (CGFloat)heightForCellWithPost:(TVEvent *)event {

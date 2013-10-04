@@ -34,6 +34,8 @@
 #import "BranchProfileVC.h"
 #import "SearchCuisines.h"
 #import "NSDictionary+Extensions.h"
+#import "TVLabelExtension.h"
+#import "NSDate-Utilities.h"
 
 #define kTableViewHeightOffset 150
 #define kCommentLimitCount 5
@@ -335,6 +337,7 @@
 {
     CALayer *l;
     TVEvent* event = _branch.events.items[eventCount];
+    
     UIView* eventView=[[UIView alloc] initWithFrame:CGRectMake(6, height, 320-6*2, 90)];
     [eventView setBackgroundColor:[UIColor whiteColor]];
     l=eventView.layer;
@@ -347,12 +350,16 @@
     lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
     lblTitle.text=@"Sự kiện";
     [eventView addSubview:lblTitle];
-
+    
     //EVENT
     height =[self addLineToView:eventView];
     
+    UIView* viewBg=[[UIView alloc] initWithFrame:CGRectMake(8 ,height-5 , 294, 50)];
+    [viewBg setBackgroundColor:[UIColor colorWithRed:(250/255.0f) green:(250/255.0f) blue:(250/255.0f) alpha:1.0f]];
     
-    UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,height , 290, 23)];
+    [eventView addSubview:viewBg];
+    
+    UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+10 ,height , 290, 23)];
     lblDetailRow.backgroundColor = [UIColor clearColor];
     lblDetailRow.textColor = [UIColor blackColor];
     lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
@@ -361,19 +368,43 @@
     height=lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height+ 3;
     [eventView addSubview:lblDetailRow];
     for (NSString*addressStr in event.addresses) {
-        UILabel *lblAddress= [[UILabel alloc] initWithFrame:CGRectMake(10, height, 290, 23)];
+        UILabel *lblAddress= [[TVLabelExtension alloc] initWithFrame:CGRectMake(10, height, 290, 30)];
         lblAddress.backgroundColor = [UIColor clearColor];
         lblAddress.textColor = [UIColor colorWithRed:(11/255.0f) green:(154 /255.0f) blue:(227/255.0f) alpha:1.0f];
         lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
         lblAddress.text=addressStr;
-        
-        [lblDetailRow resizeToStretch];
+
+        [lblAddress resizeToStretchWithPad:8];
+        [lblAddress setBackgroundColor:([UIColor colorWithRed:(229/255.0f) green:(236 /255.0f) blue:(242/255.0f) alpha:1.0f])];
         [eventView addSubview:lblAddress];
         height=lblAddress.frame.origin.y+lblAddress.frame.size.height+ 3;
     }
     
+    UILabel *lblAddress= [[TVLabelExtension alloc] initWithFrame:CGRectMake(10, height, 290, 30)];
+    lblAddress.backgroundColor = [UIColor clearColor];
+    lblAddress.textColor = [UIColor colorWithRed:(11/255.0f) green:(154 /255.0f) blue:(227/255.0f) alpha:1.0f];
+    lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+    int weekday=[event.start weekday];
+    
+    lblAddress.text=(weekday!=8)?[NSString stringWithFormat:@"%@ Thứ %d: Ngày %@",[event.start stringWithFormat:@"HH:mm"],weekday,[event.start stringWithFormat:@"dd/MM/yyyy"]]:[NSString stringWithFormat:@"%@ CHỦ NHẬT: Ngày %@",[event.start stringWithFormat:@"HH:mm"],[event.start stringWithFormat:@"dd/MM/yyyy"]];
+    
+    [lblAddress resizeToStretchWithPad:8];
+    [lblAddress setBackgroundColor:([UIColor colorWithRed:(229/255.0f) green:(236 /255.0f) blue:(242/255.0f) alpha:1.0f])];
+    [eventView addSubview:lblAddress];
+    height=lblAddress.frame.origin.y+lblAddress.frame.size.height;
+    
+    CGRect frame=viewBg.frame;
+    frame.size.height=height-frame.origin.y;
+    viewBg.frame=frame;
+    
+    // Add a bottomBorder.
+
+    UIView* leftMargin=[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, 2.0, viewBg.frame.size.height)];
+
+    leftMargin.backgroundColor =([UIColor colorWithRed:(2/255.0f) green:(190 /255.0f) blue:(239/255.0f) alpha:1.0f]);
+    [viewBg addSubview:leftMargin];
+    
     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
-    //    NSLog(@"%@",_coupon.content);
     //continue building the string
     [html appendString:event.content];
     [html appendString:@"</body></html>"];

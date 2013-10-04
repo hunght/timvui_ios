@@ -29,13 +29,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TTTAttributedLabel.h"
 @class TVEvent;
 
 @interface TVEventCell : UITableViewCell
 
-@property(nonatomic,strong)UILabel *lblContent;
-@property(nonatomic,strong)UILabel *lblNameBranch;
+@property(nonatomic,strong)TTTAttributedLabel *lblContent;
 @property(nonatomic,strong)UILabel *lblTime;
 @property(nonatomic,strong)UIImageView *imgCoverEvent;
 @property(nonatomic,strong)UIView *viewBgTime;

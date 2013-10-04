@@ -125,8 +125,7 @@
     NSLog(@"paramsHandBook = %@",paramsHandBook);
     
     [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        NSLog(@"JSON = %@",JSON);
-        
+
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Cập nhật thành công"
                                         withMessage:nil
@@ -171,6 +170,7 @@
         } else {
             loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
         }
+        
         UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
         [self presentModalViewController:navController animated:YES];
         
@@ -181,10 +181,10 @@
             [GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:sender.isOn];
         }];
     }
-    
 }
 
 - (IBAction)swVibrateChangedValue:(UISwitch*)sender {
     [GlobalDataUser sharedAccountClient].isWantToOnVirateYES=[NSNumber numberWithBool:sender.isOn];
 }
+
 @end

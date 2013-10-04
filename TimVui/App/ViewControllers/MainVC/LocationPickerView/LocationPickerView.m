@@ -410,7 +410,7 @@
     {
         
         CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
-        [GlobalDataUser sharedAccountClient].userLocation=location.coordinate;
+//        [GlobalDataUser sharedAccountClient].userLocation=location.coordinate;
         if (!_firstLocationUpdate) {
             _firstLocationUpdate=YES;
             _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate

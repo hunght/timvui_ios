@@ -52,6 +52,7 @@
 		551BB1E9178AC34B0072FD81 /* TVGroupCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1E5178AC34B0072FD81 /* TVGroupCuisines.m */; };
 		551BB1EC178AC7AC0072FD81 /* TVCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EB178AC7AC0072FD81 /* TVCuisines.m */; };
 		551BB1EF178ACE210072FD81 /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */; };
+		551D9DF017FE6A2D00E69850 /* TVLabelExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 551D9DEF17FE6A2D00E69850 /* TVLabelExtension.m */; };
 		5520471B17BB1486003F0506 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5520471A17BB1486003F0506 /* FacebookSDK.framework */; };
 		5520471F17BB14C1003F0506 /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5520471E17BB14C1003F0506 /* GoogleMaps.framework */; };
 		5520472117BB14C8003F0506 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5520472017BB14C8003F0506 /* GoogleMaps.bundle */; };
@@ -733,6 +734,8 @@
 		551BB1EB178AC7AC0072FD81 /* TVCuisines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCuisines.m; sourceTree = "<group>"; };
 		551BB1ED178ACE210072FD81 /* ExtraCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtraCommentCell.h; sourceTree = "<group>"; };
 		551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
+		551D9DEE17FE6A2D00E69850 /* TVLabelExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVLabelExtension.h; path = TVLabelExtension/TVLabelExtension.h; sourceTree = "<group>"; };
+		551D9DEF17FE6A2D00E69850 /* TVLabelExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVLabelExtension.m; path = TVLabelExtension/TVLabelExtension.m; sourceTree = "<group>"; };
 		5520471A17BB1486003F0506 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		5520471E17BB14C1003F0506 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = "../../GoogleMaps-iOS-1.3.0/GoogleMaps.framework"; sourceTree = "<group>"; };
 		5520472017BB14C8003F0506 /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = "../../GoogleMaps-iOS-1.3.0/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle"; sourceTree = "<group>"; };
@@ -2652,6 +2655,8 @@
 				55954F4F172A141100A8A351 /* GoogleAnalytics */,
 				55941BF817AC9FAA001F14D0 /* UILabel+DynamicHeight.h */,
 				55941BF917AC9FAA001F14D0 /* UILabel+DynamicHeight.m */,
+				551D9DEE17FE6A2D00E69850 /* TVLabelExtension.h */,
+				551D9DEF17FE6A2D00E69850 /* TVLabelExtension.m */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -3789,6 +3794,7 @@
 				55B9655517E9B8A900C9C317 /* ExtraMenuCell.m in Sources */,
 				55F334C917F697BA00AB4838 /* SearchWithArrayVC.m in Sources */,
 				55F1CFD717FA72AA009A0CCC /* TVWebVC.m in Sources */,
+				551D9DF017FE6A2D00E69850 /* TVLabelExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

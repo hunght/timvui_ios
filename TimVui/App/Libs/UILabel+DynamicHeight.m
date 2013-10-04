@@ -52,6 +52,14 @@
     newFrame.size.height = height;
     [self setFrame:newFrame];
 }
+-(void)resizeToStretchWithPad:(int)pad{
+    self.numberOfLines = 0;
+    self.lineBreakMode = UILineBreakModeWordWrap;
+    float height = [self expectedHeight];
+    CGRect newFrame = [self frame];
+    newFrame.size.height = height+pad;
+    [self setFrame:newFrame];
+}
 -(void)resizeToStretchWidth:(int)width{
     self.numberOfLines = 0;
     self.lineBreakMode = UILineBreakModeWordWrap;

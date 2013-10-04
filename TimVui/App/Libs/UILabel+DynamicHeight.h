@@ -14,4 +14,5 @@
 -(void)resizeWidthToStretch;
 -(void)resizeToStretchWidth:(int)width;
 -(void)resizeWidthToStretchToCenter;
+-(void)resizeToStretchWithPad:(int)pad;
 @end

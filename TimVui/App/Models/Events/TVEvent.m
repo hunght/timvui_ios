@@ -48,7 +48,7 @@
     self.desc = [dict safeStringForKey:@"desc"];
     self.content = [dict safeStringForKey:@"content"];
     
-    self.addresses = [dict safeArrayForKey:@"addresses"];
+    self.addresses = [dict safeArrayForKey:@"address"];
     self.hot = [dict safeStringForKey:@"hot"];
 
     self.start = [dict safeDateForKey:@"start"];

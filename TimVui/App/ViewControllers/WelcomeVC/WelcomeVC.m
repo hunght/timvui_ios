@@ -15,7 +15,9 @@
 #import "AFJSONRequestOperation.h"
 #import "RecentlyBranchListVC.h"
 #import "NSDate-Utilities.h"
-@interface WelcomeVC ()
+@interface WelcomeVC (){
+    CLLocation *bestEffortAtLocation;
+}
 @end
 
 @implementation WelcomeVC
@@ -65,8 +67,8 @@
         self.locationManager = [[CLLocationManager alloc] init];
         [self.locationManager setDelegate:self];
         [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
-        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-        [self.locationManager startMonitoringSignificantLocationChanges];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+        [self.locationManager startUpdatingLocation];
         [self settingDefaultLocationUserWhenDennied];
     }
 }
@@ -142,12 +144,38 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    [GlobalDataUser sharedAccountClient].userLocation=newLocation.coordinate;
-    NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",newLocation.coordinate.latitude,newLocation.coordinate.longitude];
-    [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
-    [self didReceivePublicIPandPort:strLatLng];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(settingDefaultLocationUserWhenDennied) object: nil];
-    [_locationManager stopMonitoringSignificantLocationChanges];
+    // test the age of the location measurement to determine if the measurement is cached
+    // in most cases you will not want to rely on cached measurements
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    if (locationAge > 5.0) return;
+    // test that the horizontal accuracy does not indicate an invalid measurement
+    if (newLocation.horizontalAccuracy < 0) return;
+    // test the measurement to see if it is more accurate than the previous measurement
+    if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+        // store the location as the "best effort"
+        bestEffortAtLocation = newLocation;
+        // test the measurement to see if it meets the desired accuracy
+        //
+        // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue
+        // accuracy because it is a negative value. Instead, compare against some predetermined "real" measure of
+        // acceptable accuracy, or depend on the timeout to stop updating. This sample depends on the timeout.
+        //
+        if (newLocation.horizontalAccuracy <= _locationManager.desiredAccuracy) {
+            // we have a measurement that meets our requirements, so we can stop updating the location
+            //
+            // IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
+            //
+            [GlobalDataUser sharedAccountClient].userLocation=bestEffortAtLocation.coordinate;
+            NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",bestEffortAtLocation.coordinate.latitude,bestEffortAtLocation.coordinate.longitude];
+            [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
+            [self didReceivePublicIPandPort:strLatLng];
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(settingDefaultLocationUserWhenDennied) object: nil];
+            [_locationManager stopUpdatingLocation];
+        }
+    }
+    
+
+    
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

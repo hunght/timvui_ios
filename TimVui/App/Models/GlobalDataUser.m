@@ -17,7 +17,7 @@
 #import "TVCoupon.h"
 @interface GlobalDataUser(){
     NSTimer *myTimer;
-    
+    CLLocation *bestEffortAtLocation;
 }
 
 @end
@@ -92,17 +92,16 @@ static GlobalDataUser *_sharedClient = nil;
         _locationManager = [[CLLocationManager alloc] init];
         [_locationManager setDelegate:self];
         [_locationManager setDistanceFilter:kCLDistanceFilterNone];
-        //        _locationManager.pausesLocationUpdatesAutomatically=NO;
-        [_locationManager startMonitoringSignificantLocationChanges];
-        [_locationManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+        // _locationManager.pausesLocationUpdatesAutomatically=NO;
+        [_locationManager startUpdatingLocation];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
     }
         [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
-    
 }
 
 -(void)locationManagerStop{
     if (_locationManager) {
-        [_locationManager stopMonitoringSignificantLocationChanges];
+        [_locationManager stopUpdatingLocation];
         _locationManager.delegate=nil;
         _locationManager=nil;
     }
@@ -352,6 +351,33 @@ static GlobalDataUser *_sharedClient = nil;
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
 //    NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
+    // test the age of the location measurement to determine if the measurement is cached
+    // in most cases you will not want to rely on cached measurements
+    NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
+    if (locationAge > 5.0) return;
+    // test that the horizontal accuracy does not indicate an invalid measurement
+    if (newLocation.horizontalAccuracy < 0) return;
+    // test the measurement to see if it is more accurate than the previous measurement
+    if (bestEffortAtLocation == nil || bestEffortAtLocation.horizontalAccuracy > newLocation.horizontalAccuracy) {
+        // store the location as the "best effort"
+        bestEffortAtLocation = newLocation;
+        // test the measurement to see if it meets the desired accuracy
+        //
+        // IMPORTANT!!! kCLLocationAccuracyBest should not be used for comparison with location coordinate or altitidue
+        // accuracy because it is a negative value. Instead, compare against some predetermined "real" measure of
+        // acceptable accuracy, or depend on the timeout to stop updating. This sample depends on the timeout.
+        //
+        if (newLocation.horizontalAccuracy <= _locationManager.desiredAccuracy) {
+            // we have a measurement that meets our requirements, so we can stop updating the location
+            //
+            // IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
+            //
+            [GlobalDataUser sharedAccountClient].userLocation=bestEffortAtLocation.coordinate;
+
+            [self locationManagerStop];
+        }
+    }
+    
     _userLocation = newLocation.coordinate;
     BOOL isInBackground = NO;
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
