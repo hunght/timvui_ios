@@ -108,7 +108,6 @@
 }
 
 - (void)saveUserSettingNotification {
-//    deviceToken=@"6006e3189eca9d547b3935c1e3b23e9104052a648145b11a301082b19c8228ce";
     NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
     NSDictionary * userObject=[NSDictionary dictionaryWithObjectsAndKeys:
                                @"IOS",@"mobile_os",

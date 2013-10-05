@@ -32,7 +32,7 @@
 //    NSLog(@"%@",dict);
 	self.couponID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
-	self.view   = [dict safeStringForKey:@"view"];
+	self.view = [dict safeStringForKey:@"view"];
 	self.used = [dict safeStringForKey:@"used"];
     self.syntax  =[dict safeStringForKey:@"syntax"];
     self.start = [dict safeDateForKey:@"start"];
@@ -40,8 +40,5 @@
     self.content = [dict safeStringForKey:@"content"];
     self.status = [dict safeStringForKey:@"status"];
 }
-
-
-
 
 @end

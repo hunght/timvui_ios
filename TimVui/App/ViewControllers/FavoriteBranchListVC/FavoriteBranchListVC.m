@@ -119,8 +119,6 @@ static const NSString* limitCount=@"5";
             }else{
                 tableFooter.hidden=YES;
             }
-
-            [GlobalDataUser sharedAccountClient].followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
             offset+=limitCount.intValue;
             [self.tableView reloadData];
         });

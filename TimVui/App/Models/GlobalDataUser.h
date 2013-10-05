@@ -32,7 +32,10 @@
 @property (retain, nonatomic) NSMutableArray* recentlyBranches;
 @property (retain, nonatomic) NSDictionary* receivedCoupons;
 @property (assign, nonatomic) int currentSearchParam;
-@property (retain, nonatomic) NSMutableSet* followBranchesSet;
+@property (retain, nonatomic) NSMutableDictionary* followBranchesSet;
+
+@property (retain, nonatomic) NSMutableDictionary* receivedCouponIDs;
+
 @property (retain, nonatomic) NSNumber* isFollowBranchesHasNewCouponYES;
 @property (retain, nonatomic) NSNumber* isNearlyBranchesHasNewCouponYES;
 @property (retain, nonatomic) NSNumber* isHasNearlyBranchesYES;
@@ -55,7 +58,7 @@ enum {
 -(void)setGlocalDataUser:(NSDictionary *)attributes;
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd;
 -(void)userLogout;
--(void)setFollowBranches;
+
 -(void)startSignificationLocation;
 -(void)stopSignificationLocation;
 -(void)getSettingNotificationUser;

@@ -433,37 +433,46 @@
     [self.navigationController    presentModalViewController:picker animated:YES];
 }
 -(void)getCouponCode:(id)s{
-    [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết coupon"
-                                                     withAction:@"Chi tiết coupon- Gửi SMS nhận coupon"
-                                                      withLabel:@"Chi tiết coupon- Gửi SMS nhận coupon"
-                                                      withValue:[NSNumber numberWithInt:0]];
-    
-    if([MFMessageComposeViewController canSendText]) {
+    NSLog(@"[[GlobalDataUser sharedAccountClient].receivedCouponIDs = %@",[GlobalDataUser sharedAccountClient].receivedCouponIDs);
+    if ([[GlobalDataUser sharedAccountClient].receivedCouponIDs valueForKey:_coupon.couponID]) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Bạn đã có coupon này và sẵn sàng để sử dụng."
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+    }else{
+        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết coupon"
+                                                         withAction:@"Chi tiết coupon- Gửi SMS nhận coupon"
+                                                          withLabel:@"Chi tiết coupon- Gửi SMS nhận coupon"
+                                                          withValue:[NSNumber numberWithInt:0]];
         
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
-        
-        [alertView addButtonWithTitle:@"Nhận 1 mã coupon (1 người dùng)"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  [self sendSMSWIthOption:1];
-                              }];
-        [alertView addButtonWithTitle:@"Nhận 2 mã coupon (2 người dùng)"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  [self sendSMSWIthOption:2];
-                              }];
-        [alertView addButtonWithTitle:@"Nhận 4 mã coupon (4 người dùng)"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  [self sendSMSWIthOption:4];
-                              }];
-        [alertView addButtonWithTitle:@"Cancel"
-                                 type:SIAlertViewButtonTypeCancel
-                              handler:^(SIAlertView *alert) {
-                                  NSLog(@"Cancel Clicked");
-                              }];
-        
-        [alertView show];
+        if([MFMessageComposeViewController canSendText]) {
+            
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
+            
+            [alertView addButtonWithTitle:@"Nhận 1 mã coupon (1 người dùng)"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [self sendSMSWIthOption:1];
+                                  }];
+            [alertView addButtonWithTitle:@"Nhận 2 mã coupon (2 người dùng)"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [self sendSMSWIthOption:2];
+                                  }];
+            [alertView addButtonWithTitle:@"Nhận 4 mã coupon (4 người dùng)"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [self sendSMSWIthOption:4];
+                                  }];
+            [alertView addButtonWithTitle:@"Cancel"
+                                     type:SIAlertViewButtonTypeCancel
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Cancel Clicked");
+                                  }];
+            
+            [alertView show];
+        }
+
     }
 }
 

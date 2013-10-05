@@ -46,6 +46,7 @@ static GlobalDataUser *_sharedClient = nil;
         _dicCatSearchParam=[[NSMutableArray alloc] init];
         _dicPriceSearchParam=[[NSMutableArray alloc] init];
         _recentlyBranches=[[NSMutableArray alloc] init];
+        _receivedCouponIDs=[[NSMutableDictionary alloc] init];
         if (![[NSUserDefaults standardUserDefaults] valueForKey:@"isWantToOnVirateYES"]) {
             _isHasNearlyBranchesYES=[NSNumber numberWithBool:YES];
             _isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];
@@ -127,10 +128,24 @@ static GlobalDataUser *_sharedClient = nil;
 - (void)setUserWithDic:(NSDictionary *)JSON {
     self.isLogin = YES;
     NSLog(@"%@",JSON);
-    [self.user setValues:JSON ];
+        [self.user setValues:JSON ];
     
 #warning User login set default USER ID TEST
     self.user.userId=@"8878";
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            
+                            self.user.userId,@"user_id" ,
+                            @"1",@"isWantID" ,
+                            nil];
+    NSLog(@"params =%@",params);
+    [[TVNetworkingClient sharedClient] postPath:@"branch/getFavouriteBranchesByUser" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        _followBranchesSet=[[NSMutableDictionary alloc] initWithDictionary:[JSON safeDictForKey:@"data"]] ;
+        NSLog(@"_followBranchesSet=%@",_followBranchesSet);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
 }
 
 - (void)updateNotificationSetting:(NSString*)is_notify {
@@ -209,23 +224,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 #pragma mark Helper
 
--(void)setFollowBranches{
-    if (!_followBranchesSet) {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys://@"short",@"infoType",
-                                [GlobalDataUser sharedAccountClient].user.userId ,@"user_id" ,
-                                nil];
-        
-        [[TVNetworkingClient sharedClient] postPath:@"branch/getFavouriteBranchesByUser" parameters:params success:^(AFHTTPRequestOperation *operation, id data) {
-            dispatch_async(dispatch_get_main_queue(),^ {
-                _followBranchesSet=[NSMutableSet setWithArray:[[data safeArrayForKey:@"data"] valueForKey:@"id"]] ;
-            });
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(),^ {
-                
-            });
-        }];
-    }
-}
+
 
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
     if (!_isTurnOnLocationService) {

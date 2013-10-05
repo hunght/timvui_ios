@@ -193,7 +193,6 @@
 - (void)openWelcomeVC
 {
     WelcomeVC* welcomeVC=[[WelcomeVC alloc] initWithNibName:@"WelcomeVC" bundle:nil];
-    [[GlobalDataUser sharedAccountClient] setFollowBranches];
     [self.menuVC performSelector:@selector(openViewController:) withObject:welcomeVC afterDelay:0.0];
 }
 

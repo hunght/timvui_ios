@@ -18,7 +18,7 @@
 #import "TVAppDelegate.h"
 #import "TSMessage.h"
 #import "SVPullToRefresh.h"
-static const NSString* limitCount=@"5";
+static const NSString* limitCount=@"30";
 
 @interface ReceivedCouponVC ()
 {
@@ -49,17 +49,13 @@ static const NSString* limitCount=@"5";
 -(void)rearrangeBranchesToShowing{
     for (TVBranch* branch in _branches.items) {
         for (TVCoupon* coupon in branch.coupons.items) {
-            
+            NSLog(@"coupon.couponID= %@",coupon.couponID);
+            [[GlobalDataUser sharedAccountClient].receivedCouponIDs setValue:coupon.couponID forKey:coupon.couponID];
             coupon.branch = branch;
-            if ([coupon.status isEqualToString:@"ENABLE"]) {
-                [arrCoupons addObject:coupon];
-            }
-            
+            [arrCoupons addObject:coupon];
         }
     }
-    
-    [_btnActive setSelected:YES];
-    [_btnExperied setSelected:NO];
+
     [self.tableView reloadData];
 }
 
@@ -90,10 +86,18 @@ static const NSString* limitCount=@"5";
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             
-            NSDictionary* dataDic=data;
-            //            NSLog(@"dataDic = %@",dataDic);
-            [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedCoupon];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            if (offset==0){
+                if (isYES) {
+
+                    NSDictionary* dataDic=data;
+                    [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedEnabledCoupon];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }else{
+                    NSDictionary* dataDic=data;
+                    [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedCoupon];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+            }
             
             if (weakSelf.branches.countAddedItems<limitCount.intValue) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
@@ -101,11 +105,11 @@ static const NSString* limitCount=@"5";
             }else{
                 tableFooter.hidden=YES;
             }
-            offset+=limitCount.intValue;
             if (weakSelf.branches.count!=0) {
                 [self rearrangeBranchesToShowing];
             }else
                 [self.tableView reloadData];
+            offset+=limitCount.intValue;
         });
     } failure:^(GHResource *instance, NSError *error) {
         dispatch_async(dispatch_get_main_queue(),^ {
@@ -150,18 +154,15 @@ static const NSString* limitCount=@"5";
             [TSMessage showNotificationInViewController:self
                                               withTitle:[NSString stringWithFormat:@"Bạn đang sử dụng SĐT: %@, nếu không đúng SĐT của bạn vui lòng cài đặt lại tại menu Tuỳ chọn cài đặt.",[GlobalDataUser sharedAccountClient].phoneNumber]
                                             withMessage:nil
-                                               withType:TSMessageNotificationTypeSuccess];
+                                               withType:TSMessageNotificationTypeSuccess withDuration:3 withCallback:nil atPosition:TSMessageNotificationPositionBottom];
         }
     }else{
         [self getCouponWhenHasPhoneNumber];
         [TSMessage showNotificationInViewController:self
                                           withTitle:[NSString stringWithFormat:@"Bạn đang sử dụng SĐT: %@, nếu không đúng SĐT của bạn vui lòng cài đặt lại tại menu Tuỳ chọn cài đặt.",[GlobalDataUser sharedAccountClient].phoneNumber]
                                         withMessage:nil
-                                           withType:TSMessageNotificationTypeSuccess];    }
-    
-    
-    
-    // Do any additional setup after loading the view from its nib.
+                                           withType:TSMessageNotificationTypeSuccess];
+    }
 }
 
 - (void)viewDidUnload {
@@ -181,11 +182,17 @@ static const NSString* limitCount=@"5";
 - (void)getCouponWhenHasPhoneNumber {
     
     
-    if (![SharedAppDelegate isConnected]) {
-        NSDictionary *retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedCoupon];
+    if ([SharedAppDelegate isConnected]) {
+        NSDictionary *retrievedDictionary;
+        if (_btnActive.isSelected) {
+            retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedEnabledCoupon];
+        }else{
+            retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedCoupon];
+        }
+        
         if (retrievedDictionary) {
-            
-            [_branches setValues:[retrievedDictionary safeDictForKey:@"data"]];
+            NSLog(@"retrievedDictionary= %@",retrievedDictionary);
+            [_branches setValues:[retrievedDictionary safeArrayForKey:@"data"]];
             [self rearrangeBranchesToShowing];
         }
     }else{
@@ -225,7 +232,7 @@ static const NSString* limitCount=@"5";
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"buttonIndex: %d",buttonIndex);
+//    NSLog(@"buttonIndex: %d",buttonIndex);
     if (buttonIndex==0) {
         NSString *inputText = [[alertView textFieldAtIndex:0] text];
         
@@ -293,7 +300,6 @@ static const NSString* limitCount=@"5";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //
     
     TVCoupon* coupon=arrCoupons[indexPath.row];
     CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];

@@ -103,14 +103,11 @@
     _lblNameBranch.frame=frame;
     padHeight=frame.origin.y-padHeight;
     
-    
     frame= _lblDetailRow.frame;
     frame.origin.x-=5;
     frame.origin.y-=5;
     frame.size.width+=10;
     frame.size.height+=10;
-    
-    
 
     // Setup the path
     _border.path = [UIBezierPath bezierPathWithRect:frame].CGPath;
@@ -118,7 +115,6 @@
     _border.frame = _whiteView.bounds;
     
     [[_whiteView layer] addSublayer:_border];
-    
     
     frame= _lblAddressBranch.frame;
     frame.origin.y+=padHeight;

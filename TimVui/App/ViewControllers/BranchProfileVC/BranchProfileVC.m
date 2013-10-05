@@ -141,8 +141,8 @@
     UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(5,19+23, 295, 1)];
     grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
     
-//    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
-//    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
+    //    UIImageView* imageLine=[[UIImageView alloc] initWithFrame:CGRectMake(5, 19+23, 295, 3)];
+    //    [imageLine setImage:[UIImage imageNamed:@"img_profile_branch_line"]];
     [view addSubview:grayLine];
     return grayLine.frame.origin.y+grayLine.frame.size.height+15;
 }
@@ -163,7 +163,7 @@
         lblTitle.font = [UIFont fontWithName:@"Arial-BoldMT" size:(15)];
         lblTitle.text=@"COUPON";
         [couponBranch addSubview:lblTitle];
-
+        
         //COUPON
         *height_p=[self addLineToView:couponBranch];
         
@@ -300,9 +300,9 @@
             lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
             lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[coupon.start stringWithFormat:@"dd/MM/yy"], [coupon.end stringWithFormat:@"dd/MM/yy"]];
             [infoCouponBranch addSubview:lblDetailInfoRow];
-                        
+            
             *height_p=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height+10;
-
+            
             UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 300, 46)];
             [btnPostPhoto setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
             [btnPostPhoto setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
@@ -338,38 +338,38 @@
     //Show Ablum images
     int i=0;
     for (NSDictionary* imagesArr_ in _branch.images ) {
-            
         
-            UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
-            [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr_ safeDictForKey:@"image"]]];
-            imageButton.tag=i;
-            [_scrollView addSubview:imageButton];
-//        __block int x = 123;
-            [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr_ safeDictForKey:@"image"]] onOpen:^(UIView* _captionView){
-                UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
-                _lblContent.backgroundColor = [UIColor clearColor];
-                _lblContent.textColor = [UIColor whiteColor];
-                _lblContent.numberOfLines=2;
-                _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
-                
-                UILabel*_lblNameBranch= [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
-                _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
-                _lblNameBranch.backgroundColor=[UIColor clearColor];
-                _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
-                
-
-                _lblNameBranch.text=@"";
-                
-                [_captionView addSubview:_lblContent];
-                [_captionView addSubview:_lblNameBranch];
-               
-//                _lblContent.text=[NSString stringWithFormat:@"%@ %@",_lblNameBranch.text,[[imagesArr safeDateForKey:@"created"] stringMinutesFromNowAgo]];
-                
-//                NSLog(@"OPEN!=%d",x);
-            } onClose:^{
-                NSLog(@"CLOSE!");
-            }];
-            i++;
+        
+        UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
+        [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr_ safeDictForKey:@"image"]]];
+        imageButton.tag=i;
+        [_scrollView addSubview:imageButton];
+        //        __block int x = 123;
+        [imageButton setupImageViewerWithImageURL:[Utilities getOriginalAlbumPhoto:[imagesArr_ safeDictForKey:@"image"]] onOpen:^(UIView* _captionView){
+            UILabel* _lblContent = [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+            _lblContent.backgroundColor = [UIColor clearColor];
+            _lblContent.textColor = [UIColor whiteColor];
+            _lblContent.numberOfLines=2;
+            _lblContent.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
+            
+            UILabel*_lblNameBranch= [[UILabel alloc] initWithFrame:CGRectMake(12, 12, 290, 30)];
+            _lblNameBranch.textColor = [UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f];
+            _lblNameBranch.backgroundColor=[UIColor clearColor];
+            _lblNameBranch.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+            
+            
+            _lblNameBranch.text=@"";
+            
+            [_captionView addSubview:_lblContent];
+            [_captionView addSubview:_lblNameBranch];
+            
+            //                _lblContent.text=[NSString stringWithFormat:@"%@ %@",_lblNameBranch.text,[[imagesArr safeDateForKey:@"created"] stringMinutesFromNowAgo]];
+            
+            //                NSLog(@"OPEN!=%d",x);
+        } onClose:^{
+            NSLog(@"CLOSE!");
+        }];
+        i++;
     }
     
     if (i>3) {
@@ -385,7 +385,7 @@
     //Show mapView button
     NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
     NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=194x144&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
-        NSLog(@"strURL = %@",strURL);
+    NSLog(@"strURL = %@",strURL);
     
     NSURL* url=[NSURL URLWithString:strURL];
     UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
@@ -433,7 +433,9 @@
     
     [likeButton addTarget:self action:@selector(likeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:likeButton];
-    if ([[GlobalDataUser sharedAccountClient].followBranchesSet containsObject:_branch.branchID]) {
+    NSLog(@"_branch.branchID =%@",_branch.branchID);
+    NSLog(@"follow =%@",[[GlobalDataUser sharedAccountClient].followBranchesSet valueForKey:_branch.branchID]);
+    if ([[GlobalDataUser sharedAccountClient].followBranchesSet valueForKey:_branch.branchID]) {
         [likeButton setSelected:YES];
     }else{
         [likeButton setSelected:NO];
@@ -467,7 +469,7 @@
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.district valueForKey:@"name"] strTiltle:strTiltle];
     
     strTiltle=@"Ở gần";
-    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.public_locations valueForKey:@"name"] strTiltle:strTiltle];	
+    [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[_branch.public_locations valueForKey:@"name"] strTiltle:strTiltle];
     
     strTiltle=@"Chỉ đường";
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.direction strTiltle:strTiltle];
@@ -488,7 +490,7 @@
     strTiltle=@"Nghỉ lễ";
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.holiday strTiltle:strTiltle];
     
-
+    
     strTiltle=@"Năm thành lập";
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:_branch.year strTiltle:strTiltle];
     
@@ -503,7 +505,7 @@
         BOOL isFistTime=YES;
         
         for (NSDictionary* dicStyle in [_branch.styleFoody allValues]) {
-//            NSLog(@"dicStyle = %@",dicStyle);
+            //            NSLog(@"dicStyle = %@",dicStyle);
             NSString* strStyleFoodyRow=@"";
             if ([[dicStyle valueForKey:@"params"] count]>0) {
                 for (NSDictionary* dicStyleDeeper in [dicStyle valueForKey:@"params"] ){
@@ -563,8 +565,8 @@
         
         NSString * strImageName;
         strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
-//            lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
-//        NSLog(@"strImageName=%@",dic);
+        //            lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
+        //        NSLog(@"strImageName=%@",dic);
         [iconIView setImage:[UIImage imageNamed:strImageName]];
         
         rowCount++;
@@ -606,11 +608,11 @@
     
     
     if (!_branch) {
-//        NSDictionary *params = @{@"id": _branchID};@"27006",@"branch_id",
-        NSDictionary *params = @{@"id": @"27006"};
+        NSDictionary *params = @{@"id": _branchID};
+        //        NSDictionary *params = @{@"id": @"27006"};
         [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
             dispatch_async( dispatch_get_main_queue(),^ {
-//                NSLog(@"data===%@",data);
+                //                NSLog(@"data===%@",data);
                 NSDictionary* dict=[[data safeArrayForKey:@"data"] objectAtIndex:0];
                 _branch=branches[0];
                 [self showInfoView];
@@ -622,14 +624,14 @@
                         _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
                     }
                     _extraBranchView.scrollView=_scrollView;
-//                    [self.view addSubview:_extraBranchView];
+                    //                    [self.view addSubview:_extraBranchView];
                     [self.view insertSubview:_extraBranchView belowSubview:_viewSharing];
                 }
                 
                 NSMutableArray* arrRecentlyBranches=[GlobalDataUser sharedAccountClient].recentlyBranches;
                 
                 for (NSDictionary* dic in arrRecentlyBranches) {
-//                    NSLog(@"dic = %@",[dic safeStringForKey:@"id"]);
+                    //                    NSLog(@"dic = %@",[dic safeStringForKey:@"id"]);
                     if ([[dic safeStringForKey:@"id"] isEqualToString:_branch.branchID]) {
                         [arrRecentlyBranches removeObject:dic];
                         break;
@@ -673,7 +675,7 @@
     sizeHeightDefaultScroll=_imgBranchCover.frame.size.height;
     
     UITapGestureRecognizer* mapTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                 action:@selector(scrollViewWasTap:)];
+                                                                                    action:@selector(scrollViewWasTap:)];
     mapTapGesture.cancelsTouchesInView = NO;
     mapTapGesture.delaysTouchesBegan = NO;
     [self.scrollView addGestureRecognizer:mapTapGesture];
@@ -682,11 +684,11 @@
 - (void)scrollViewWasTap:(UITapGestureRecognizer*)sender
 {
     if (!_viewSharing.isHidden) {
-
-            [self setViewSharingShow:NO];
-
+        
+        [self setViewSharingShow:NO];
+        
     }
-
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -727,7 +729,7 @@
 - (void)scrollViewDidScrollWithOffset:(CGFloat)scrollOffset
 {
     //    NSLog(@"scrollOffset=%f",scrollOffset);
-
+    
     if (scrollOffset>0) {
         CGRect frame= _imgBranchCover.frame;
         frame.origin.y=heightDefaultScroll-scrollOffset*.8;
@@ -806,7 +808,7 @@
         frame.size.height+=lineHeight;
         _introducingView.frame=frame;
         
-
+        
     }
     [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
 }
@@ -924,8 +926,7 @@
 }
 
 #pragma mark - IBAction
-- (void)sendSMSWIthButton:(UIButton *)sender andOption:(int)optionNum {
-    TVCoupon* coupon=_branch.coupons.items[sender.tag];
+- (void)sendSMSWithCoupon:(TVCoupon *)coupon andOption:(int)optionNum {
     MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
     picker.body = [NSString stringWithFormat:@"coupon %@",coupon.syntax];
     picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
@@ -934,36 +935,44 @@
 }
 
 -(void)btnSMSButtonClicked:(UIButton*)sender{
-    [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết branch"
-                                                     withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
-                                                      withLabel:@"Chi tiết branch- Gửi SMS nhận coupon"
-                                                      withValue:[NSNumber numberWithInt:0]];
-    if([MFMessageComposeViewController canSendText]) {
-        
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
-        
-        [alertView addButtonWithTitle:@"Nhận 1 mã coupon (1 người dùng)"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  [self sendSMSWIthButton:sender andOption:1];
-                              }];
-        [alertView addButtonWithTitle:@"Nhận 2 mã coupon (2 người dùng)"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  [self sendSMSWIthButton:sender andOption:2];
-                              }];
-        [alertView addButtonWithTitle:@"Nhận 4 mã coupon (4 người dùng)"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  [self sendSMSWIthButton:sender andOption:4];
-                              }];
-        [alertView addButtonWithTitle:@"Cancel"
-                                 type:SIAlertViewButtonTypeCancel
-                              handler:^(SIAlertView *alert) {
-                                  NSLog(@"Cancel Clicked");
-                              }];
-        
-        [alertView show];
+    TVCoupon* coupon=_branch.coupons.items[sender.tag];
+    if ([[GlobalDataUser sharedAccountClient].receivedCouponIDs valueForKey:coupon.couponID]) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:@"Bạn đã có coupon này và sẵn sàng để sử dụng."
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeSuccess];
+    }else{
+        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết branch"
+                                                         withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
+                                                          withLabel:@"Chi tiết branch- Gửi SMS nhận coupon"
+                                                          withValue:[NSNumber numberWithInt:0]];
+        if([MFMessageComposeViewController canSendText]) {
+            
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
+            
+            [alertView addButtonWithTitle:@"Nhận 1 mã coupon (1 người dùng)"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [self sendSMSWithCoupon:coupon andOption:1];
+                                  }];
+            [alertView addButtonWithTitle:@"Nhận 2 mã coupon (2 người dùng)"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [self sendSMSWithCoupon:coupon andOption:2];
+                                  }];
+            [alertView addButtonWithTitle:@"Nhận 4 mã coupon (4 người dùng)"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      [self sendSMSWithCoupon:coupon andOption:4];
+                                  }];
+            [alertView addButtonWithTitle:@"Cancel"
+                                     type:SIAlertViewButtonTypeCancel
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Cancel Clicked");
+                                  }];
+            
+            [alertView show];
+        }
     }
 }
 
@@ -1002,12 +1011,12 @@
                             _branch.branchID,@"branch_id",
                             
                             nil];
-//    NSLog(@"params %@",params);
+    NSLog(@"params %@",params);
     [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        NSLog(@"%@",JSON);
+        NSLog(@"%@",JSON);
         int i=[JSON safeIntegerForKey:@"status"];
         if (i==200) {
-            [[GlobalDataUser sharedAccountClient].followBranchesSet addObject:_branch.branchID];
+            [[GlobalDataUser sharedAccountClient].followBranchesSet setValue:_branch.branchID forKey:_branch.branchID];
             [sender setSelected:YES];
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Bạn đã chọn quan tâm nhà hàng này thành công!"
@@ -1016,7 +1025,7 @@
             sender.userInteractionEnabled=YES;
             
             [FacebookServices checkFacebookSessionIsOpen:^(bool isOpen){
-                sender.userInteractionEnabled=YES;  
+                sender.userInteractionEnabled=YES;
                 if (isOpen) {
                     [FacebookServices postFollowActionWithBranch:_branch];
                 }else{
@@ -1043,7 +1052,7 @@
             
         }else if (i==201){
             [sender setSelected:NO];
-            [[GlobalDataUser sharedAccountClient].followBranchesSet removeObject:_branch.branchID];
+            [[GlobalDataUser sharedAccountClient].followBranchesSet setValue:nil forKey:_branch.branchID];
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Bạn vừa bỏ quan tâm nhà hàng thành công!"
                                             withMessage:nil
@@ -1070,7 +1079,7 @@
             [alertView addButtonWithTitle:@"Bỏ quan tâm"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
-
+                                      
                                       [self postFollowToServer:sender];
                                   }];
             [alertView addButtonWithTitle:@"Cancel"
@@ -1152,7 +1161,7 @@
         sender.userInteractionEnabled=YES;
         if (isOpen) {
             [self sendFeedUserFacebook];
-
+            
         }else{
             SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
             

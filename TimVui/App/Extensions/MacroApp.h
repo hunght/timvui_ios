@@ -8,7 +8,7 @@
 
 #import "GAI.h"
 
-#define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://local.anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
 #define LOCATION_UPDATE_TIME  60*15//60*15
@@ -33,6 +33,8 @@
 #define kGetPublicLocationData   @"kGetPublicLocationData"
 #define kGetPriceAvgData   @"kGetPriceAvgData"
 #define kGetCatData   @"kGetCatData"
+
+#define kReceivedEnabledCoupon   @"kReceivedEnabledCoupon"
 #define kReceivedCoupon   @"kReceivedCoupon"
 
 #define kDistanceSearchMapDefault   @"20"//km
@@ -49,7 +51,7 @@
 #define kVatgiaClientID @"anuong-ios"
 #define kVatgiaClientSecret @"2ETkVUuMAIPmOY8liDzj0x"
 
-#define kSearchBranchLimit @"20"
+#define kSearchBranchLimit @"30"
 #define kKYCustomPhotoAlbumName_ @"Anuong.net Album"
 
 #define kCyanGreenColor [UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]
