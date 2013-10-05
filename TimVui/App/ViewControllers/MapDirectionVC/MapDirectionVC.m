@@ -160,6 +160,7 @@
 //    NSString* strTime=[legs safeStringForKeyPath:@"duration.text"];
     _lblDistance.text=[NSString stringWithFormat:@"   Khoảng cách %@.",strDistance];
     _lblDistance.hidden=NO;
+    _lblDistance.textAlignment=UITextAlignmentCenter;
     NSDictionary *route = [routes objectForKey:@"overview_polyline"];
     NSString *overview_route = [route objectForKey:@"points"];
 //    NSLog(@"overview_route = %@",overview_route);
