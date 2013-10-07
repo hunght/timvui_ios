@@ -46,7 +46,7 @@
     [_lblAddress resizeToStretch];
     
     rect=_imagLocationIcon.frame;
-    float padHeight=(_lblBranchName.frame.size.height+5+ _lblAddress.frame.size.height)-rect.size.height;
+    float padHeight=(_lblAddress.frame.origin.y+ 5 + _lblAddress.frame.size.height)-320;
 
     if (padHeight>0) {
         rect.origin.y -=padHeight;
@@ -61,8 +61,6 @@
         _lblBranchName.frame=rect;
     }
 }
-
-
 
 
 - (UIImage*)mergeSkinWithImage:(UIImage *)bottomImage{

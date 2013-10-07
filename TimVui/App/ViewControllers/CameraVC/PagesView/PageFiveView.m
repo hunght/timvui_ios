@@ -50,7 +50,7 @@
     [_lblBranchName setFrame:rect];
     
     rect=_imagLocationIcon.frame;
-    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width-3;
+    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width+ 5;
     _imagLocationIcon.frame=rect;
     
     rect=_lblAddress.frame;
@@ -59,17 +59,15 @@
     
     _lblAddress.text= address;
     [_lblAddress resizeToStretchWidth:290];
-
+    rect= _lblAddress.frame;
     
         lineHeight = _lblAddress.font.leading;
         linesInLabel = rect.size.height/lineHeight+.5;
         if (linesInLabel==1) {
             [_lblAddress resizeWidthToStretchToCenter];
         }
-    
-    
     float padHeight=_lblAddress.frame.origin.y;
-    rect= _lblAddress.frame;
+    
     rect.origin.y = 320-10-rect.size.height;
     _lblAddress.frame=rect;
     padHeight=rect.origin.y-padHeight;
@@ -87,16 +85,22 @@
     _imagImHereIcon.frame=rect;
     
     rect=_lblBranchName.frame;
-    rect.origin.x-=20+8;
+    rect.origin.x-=15;
+    if (rect.origin.x<0) {
+        rect.origin.x=0;
+    }
     rect.origin.y-=5;
-    rect.size.width+=40;
+    rect.size.width=320- rect.origin.x*2;
     rect.size.height+=10;
     _bgBranchView.frame=rect;
     
     rect=_lblAddress.frame;
     rect.origin.x-=3;
+    if (rect.origin.x<0) {
+        rect.origin.x=0;
+    }
     rect.origin.y-=3;
-    rect.size.width+=6;
+    rect.size.width=320- rect.origin.x*2;
     rect.size.height+=6;
     _bgBranchAddress.frame=rect;
     

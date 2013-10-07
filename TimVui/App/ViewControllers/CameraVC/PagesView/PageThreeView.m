@@ -50,7 +50,7 @@ static int radius=3;
     }
     
     rect=_imagLocationIcon.frame;
-    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width-3;
+    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width+ 5;
     _imagLocationIcon.frame=rect;
     
     rect=_lblAddress.frame;
@@ -59,10 +59,12 @@ static int radius=3;
     
     _lblAddress.text= address;
     [_lblAddress resizeToStretchWidth:290];
-
+    
     if (linesInLabel==1) {
         CGFloat lineHeight = _lblAddress.font.leading;
+        rect= _lblAddress.frame;
         int linesInLabel = rect.size.height/lineHeight+.5;
+        
         if (linesInLabel==1) {
             CGPoint point=_lblAddress.center;
             [_lblAddress resizeWidthToStretchToCenter];
@@ -72,7 +74,7 @@ static int radius=3;
             CGRect rect=_bgBranchView.frame;
             point=_bgBranchView.center;
             
-            rect.size.width=320-maxWidth*2+10;
+            rect.size.width=320-maxWidth*2+ 6;
             _bgBranchView.frame=rect;
             _bgBranchView.center=point;
         }

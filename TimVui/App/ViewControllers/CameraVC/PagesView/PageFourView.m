@@ -50,7 +50,7 @@
     [_lblBranchName setFrame:rect];
     
     rect=_imagLocationIcon.frame;
-    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width-3;
+    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width+ 5;
     _imagLocationIcon.frame=rect;
     
     rect=_lblAddress.frame;
@@ -59,17 +59,15 @@
     
     _lblAddress.text= address;
     [_lblAddress resizeToStretchWidth:290];
-
-    
-        lineHeight = _lblAddress.font.leading;
-        linesInLabel = rect.size.height/lineHeight+.5;
-        if (linesInLabel==1) {
-            [_lblAddress resizeWidthToStretchToCenter];
-        }
-    
+    rect= _lblAddress.frame;
+    lineHeight = _lblAddress.font.leading;
+    linesInLabel = rect.size.height/lineHeight+.5;
+    if (linesInLabel==1) {
+        [_lblAddress resizeWidthToStretchToCenter];
+    }
     
     float padHeight=_lblAddress.frame.origin.y;
-    rect= _lblAddress.frame;
+    
     rect.origin.y = 320-10-rect.size.height;
     _lblAddress.frame=rect;
     padHeight=rect.origin.y-padHeight;
@@ -87,21 +85,25 @@
     _imagImHereIcon.frame=rect;
     
     rect=_lblBranchName.frame;
-    rect.origin.x-=20+8;
+    rect.origin.x-=15;
+    if (rect.origin.x<0) {
+        rect.origin.x=0;
+    }
     rect.origin.y-=5;
-    rect.size.width+=40;
+    rect.size.width=320- rect.origin.x*2;
     rect.size.height+=10;
     _bgBranchView.frame=rect;
     
     rect=_lblAddress.frame;
     rect.origin.x-=3;
+    if (rect.origin.x<0) {
+        rect.origin.x=0;
+    }
     rect.origin.y-=3;
-    rect.size.width+=6;
+    rect.size.width=320- rect.origin.x*2;
     rect.size.height+=6;
     _bgBranchAddress.frame=rect;
-    
-    
-    
+ 
 }
 
 
@@ -111,7 +113,7 @@
     float ratioImage=bottomImage.size.width/320;
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
-
+    
     CGRect rectView;
     [[UIColor colorWithWhite:1.0 alpha:0.7] set];
     rectView=_bgBranchView.frame;
@@ -123,13 +125,13 @@
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
     [self setTextForSkin:_lblBranchName fontText:20 sizeBottomImage:bottomImage.size];
-
+    
     [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];
     
     UIImage* imageLocation=[UIImage imageNamed:@"skin_thu_tuc_truoc_khi_an_icon"];
     
     rectView=_imagLocationIcon.frame ;
-     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
+    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
     UIImage* imgImHere=[UIImage imageNamed:@"skin_thu_tuc_truoc_khi_an_text"];

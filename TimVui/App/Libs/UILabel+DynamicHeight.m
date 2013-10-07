@@ -13,6 +13,7 @@
     newFrame.size.width = width;
     [self setFrame:newFrame];
 }
+
 -(void)resizeWidthToStretchToCenter{
     float width ;
     [self setNumberOfLines:1];

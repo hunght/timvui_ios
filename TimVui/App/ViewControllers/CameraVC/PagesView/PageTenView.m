@@ -53,6 +53,7 @@
     
     _lblAddress.text= address;
     [_lblAddress resizeToStretch];
+    rect= _lblAddress.frame;
     lineHeight = _lblAddress.font.leading;
     linesInLabel = rect.size.height/lineHeight+.5;
     if (linesInLabel==1) {
@@ -76,6 +77,9 @@
     rect.origin.x-=3;
     rect.origin.y-=3;
     rect.size.width+=6;
+    if (rect.size.width+rect.origin.x>320) {
+        rect.size.width=320- rect.origin.x;
+    }
     rect.size.height+=6;
     _bgBranchView.frame=rect;
     
@@ -83,6 +87,9 @@
     rect.origin.x-=3;
     rect.origin.y-=3;
     rect.size.width+=6;
+    if (rect.size.width+rect.origin.x>320) {
+        rect.size.width=320- rect.origin.x;
+    }
     rect.size.height+=6;
     _bgBranchAddress.frame=rect;
 }

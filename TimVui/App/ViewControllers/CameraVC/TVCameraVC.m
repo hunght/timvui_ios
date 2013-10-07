@@ -270,6 +270,10 @@ static int _numPages = 16;
     _branch=branch;
     _photoBrowseTableVC.branch=_branch;
     [self.pagingScrollView setScrollEnabled:YES];
+    
+    _branch.name=@"Cua hang ban niem vui mua nu cuoi day that tuyet voi khi thay ban o day.";
+    _branch.address_full=@"ngay thang nga tu o cho dua, nhin sang duong ton duc thang, ngay tai cai cua hang rat to nhe.";
+    
     [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
 }
 
@@ -639,7 +643,7 @@ static int _numPages = 16;
         pageView.index=index;[pageView settingView];
         if (_branch) {
             [_viewNotify removeFromSuperview];
-            _viewSlidePickSkin.hidden=NO;
+            
             [pageView setName:_branch.name andAddress:_branch.address_full];
         }
         
