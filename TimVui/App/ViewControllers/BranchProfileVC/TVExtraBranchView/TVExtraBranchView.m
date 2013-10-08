@@ -174,7 +174,7 @@
         
         similarButton = [[UIButton alloc] initWithFrame:CGRectMake(199+pad+eventButton.frame.size.width,0, 94, 41)];
         [similarButton setBackgroundImage:[Utilities imageFromColor:[UIColor colorWithRed:(51/255.0f) green:(204/255.0f) blue:(255/255.0f) alpha:.5f]] forState:UIControlStateSelected];
-        [similarButton setTitle:@"     SIMILAR" forState:UIControlStateNormal];
+        [similarButton setTitle:@"     CH Tương tự" forState:UIControlStateNormal];
         [similarButton addTarget:self action:@selector(similarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [similarButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         similarButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(12)];

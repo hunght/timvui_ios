@@ -183,7 +183,7 @@
     
     [params setValue:kDistanceSearchMapDefault forKey:@"distance"];
 //    NSLog(@"[GlobalDataUser sharedAccountClient].dicDistrictSearchParam= %@",[GlobalDataUser sharedAccountClient].dicDistrictSearchParam);
-    if (!_switchUserLocation.isOn&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
+    if (!_switchUserLocation.isOn && [GlobalDataUser sharedAccountClient].dicCitySearchParam) {
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
         location=[[GlobalDataUser sharedAccountClient].dicCitySearchParam safeLocationForKey:@"latlng"];
     }else{
@@ -196,7 +196,7 @@
         [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
     }
     
-    if ([GlobalDataUser sharedAccountClient].dicDistrictSearchParam&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
+    if (!_switchUserLocation.isOn &&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
         NSMutableArray*arr=[[NSMutableArray alloc] init];
         for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
             NSLog(@"%@",dic);
@@ -206,7 +206,7 @@
         [params setValue:arr  forKey:@"district_aliases"];
     }
     
-    if ([GlobalDataUser sharedAccountClient].dicPublicLocation)[params setValue:[[GlobalDataUser sharedAccountClient].dicPublicLocation valueForKey:@"alias"] forKey:@"public_location_aliases"];
+    if (!_switchUserLocation.isOn &&[GlobalDataUser sharedAccountClient].dicPublicLocation)[params setValue:[[GlobalDataUser sharedAccountClient].dicPublicLocation valueForKey:@"alias"] forKey:@"public_location_aliases"];
     
     if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
         [_delegate didClickedOnButtonSearch:params withLatlng:location];

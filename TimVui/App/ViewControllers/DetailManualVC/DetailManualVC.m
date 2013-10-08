@@ -265,7 +265,7 @@
         }];
 
     }else{
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho đánh giá này?"];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login ?"];
         
         [alertView addButtonWithTitle:@"Login"
                                  type:SIAlertViewButtonTypeDefault
@@ -281,7 +281,7 @@
                                   UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
                                   [self presentModalViewController:navController animated:YES];
                                   [loginVC goWithDidLogin:^{
-                                      [self performSelector:@selector(likeCommentWithButton:) withObject:sender afterDelay:1];
+                                      [self performSelector:@selector(saveButtonClicked:) withObject:sender afterDelay:1];
                                   } thenLoginFail:^{
                                       [TSMessage showNotificationInViewController:self
                                                                         withTitle:@"Có lỗi khi đăng nhập!"

@@ -18,6 +18,7 @@
 #import "NSDate-Utilities.h"
 #import "TVBranches.h"
 #import "TSMessage.h"
+#import "TVSMSVC.h"
 #import "SIAlertView.h"
 @interface CoupBranchProfileVC ()
 {
@@ -426,9 +427,8 @@
 
 #pragma mark - IBAction
 - (void)sendSMSWIthOption:(int)optionNum {
-    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-    picker.body = [NSString stringWithFormat:@"coupon %@",_coupon.syntax];
-    picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+    TVSMSVC *picker = [[TVSMSVC alloc] initWithCoupon:_coupon andOption:optionNum];
+
     picker.messageComposeDelegate = self;
     [self.navigationController    presentModalViewController:picker animated:YES];
 }

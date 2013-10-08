@@ -131,6 +131,7 @@
         [self.utility addSubview:homeIcon];
         lineHeight+=lblAddress.frame.size.height+5;
     }
+    
     for (TVCoupon* coupon in branch.coupons.items) {
         UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
         lblAddress.backgroundColor = [UIColor clearColor];

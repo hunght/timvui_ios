@@ -8,7 +8,7 @@
 
 #import "GAI.h"
 
-#define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://local.anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
 #define LOCATION_UPDATE_TIME  60*15//60*15

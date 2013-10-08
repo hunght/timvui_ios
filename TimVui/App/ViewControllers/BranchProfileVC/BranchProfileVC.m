@@ -29,7 +29,7 @@
 #import "SIAlertView.h"
 #import "FacebookServices.h"
 #import "MapDirectionVC.h"
-
+#import "TVSMSVC.h"
 @interface BranchProfileVC ()
 {
 @private
@@ -563,11 +563,7 @@
         [lblDetailRow resizeToStretch];
         [utilitiesView addSubview:lblDetailRow];
         
-        NSString * strImageName;
-        strImageName=[NSString stringWithFormat:@"%@_on",[dic valueForKey:@"id"]];
-        //            lblDetailRow.textColor = [UIColor colorWithRed:(0/255.0f) green:(180/255.0f) blue:(220/255.0f) alpha:1.0f];
-        //        NSLog(@"strImageName=%@",dic);
-        [iconIView setImage:[UIImage imageNamed:strImageName]];
+        [iconIView setImage:[UIImage imageNamed:@"img_profile_branch_ulitility"]];
         
         rowCount++;
         heightUtilities+=lblDetailRow.frame.size.height+5;
@@ -927,9 +923,9 @@
 
 #pragma mark - IBAction
 - (void)sendSMSWithCoupon:(TVCoupon *)coupon andOption:(int)optionNum {
-    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-    picker.body = [NSString stringWithFormat:@"coupon %@",coupon.syntax];
-    picker.recipients = [NSArray arrayWithObjects:SMS_NUMBER, nil];
+    
+    TVSMSVC *picker = [[TVSMSVC alloc] initWithCoupon:coupon andOption:optionNum];
+
     picker.messageComposeDelegate = self;
     [self.navigationController    presentModalViewController:picker animated:YES];
 }
@@ -946,7 +942,7 @@
                                                          withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
                                                           withLabel:@"Chi tiết branch- Gửi SMS nhận coupon"
                                                           withValue:[NSNumber numberWithInt:0]];
-        if([MFMessageComposeViewController canSendText]) {
+        if([TVSMSVC canSendText]) {
             
             SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
             

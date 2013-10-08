@@ -14,6 +14,9 @@
 @property(nonatomic,strong)NSString *content;
 @property(nonatomic,strong)TVBranch *branch;
 @property(nonatomic,strong) NSString *status;
+
+@property(nonatomic,strong) NSString *sms_type;
+
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;
 - (void)markAsRead;

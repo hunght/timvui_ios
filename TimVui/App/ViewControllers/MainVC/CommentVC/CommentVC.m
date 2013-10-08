@@ -267,7 +267,7 @@
         
         [[TVNetworkingClient sharedClient] postPath:@"branch/postComment" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
             [TSMessage showNotificationInViewController:self
-                                              withTitle:@"Đăng comment thành công"
+                                              withTitle:@"Đăng đánh giá thành công"
                                             withMessage:nil
                                                withType:TSMessageNotificationTypeSuccess];
             if (_switchFacebook.on) {

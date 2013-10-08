@@ -327,17 +327,19 @@ static const int maxLimitBranches=100;
                          options:0
                          success:^(UIImage *image, BOOL cached)
          {
-             UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
-             image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
-             UIGraphicsBeginImageContext( bottomImage.size );
-             [bottomImage drawAtPoint:CGPointZero];
-             [image drawInRect:CGRectMake(6.0f,6.0f,30,30/4*3) blendMode:kCGBlendModeNormal alpha:1];
-             UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-             UIGraphicsEndImageContext();
-             melbourneMarker.icon = newImage;
-             melbourneMarker.map = _locationPickerView.mapView;
+                 UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
+                 image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
+                 UIGraphicsBeginImageContext( bottomImage.size );
+                 [bottomImage drawAtPoint:CGPointZero];
+                 [image drawInRect:CGRectMake(6.0f,6.0f,30,30/4*3) blendMode:kCGBlendModeNormal alpha:1];
+                 UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+                 UIGraphicsEndImageContext();
+                 melbourneMarker.icon = newImage;
+                 melbourneMarker.map = _locationPickerView.mapView;
+
          }
-                         failure:nil];
+            failure:nil];
+        
         i++;
     }
 }
@@ -538,16 +540,14 @@ static const int maxLimitBranches=100;
     TVBranch* branch= _branches[[marker.title intValue]];
     UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f+7+9, 70.0f, 52.5f)];
     imgPhoto.contentMode = UIViewContentModeScaleAspectFit;
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager downloadWithURL:[NSURL URLWithString:[branch.arrURLImages safeStringForKey:@"80"]]
-                    delegate:self
-                     options:0
-                     success:^(UIImage *image, BOOL cached)
-     {
-         imgPhoto.image=image;
-     } failure:nil];
+
+    imgPhoto.image=[[SDImageCache sharedImageCache] imageFromKey:[branch.arrURLImages safeStringForKey:@"80"]];
+    if (!imgPhoto.image) {
+        NSData *myData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[branch.arrURLImages safeStringForKey:@"80"]]];
+        imgPhoto.image = [UIImage imageWithData:myData];
+
+    }
     
-//    [imgPhoto setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"160"]]];
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 110)];
     UIView* viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 160)];
     [viewPad addSubview:view];
