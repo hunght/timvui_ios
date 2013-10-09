@@ -271,9 +271,9 @@ static int _numPages = 16;
     _photoBrowseTableVC.branch=_branch;
     [self.pagingScrollView setScrollEnabled:YES];
     
-    _branch.name=@"Cua hang ban niem vui mua nu cuoi day that tuyet voi khi thay ban o day.";
-    _branch.address_full=@"ngay thang nga tu o cho dua, nhin sang duong ton duc thang, ngay tai cai cua hang rat to nhe.";
-    
+//    _branch.name=@"Cua hang ban niem vui mua nu cuoi day that tuyet voi khi thay ban o day.";
+//    _branch.address_full=@"ngay thang nga tu o cho dua, nhin sang duong ton duc thang, ngay tai cai cua hang rat to nhe.";
+//    
     [self.pagingScrollView setNameBranchForPageViewName:_branch.name andAddress:_branch.address_full];
 }
 

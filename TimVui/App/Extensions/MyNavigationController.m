@@ -17,8 +17,8 @@
     self = [super initWithRootViewController:rootViewController];
     if (self) {
         // Custom initialization
-//        [self setNavigationBarWithoutIcon:YES];
-//        [self dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
+        [self setNavigationBarWithoutIcon:YES];
+        [self dropShadowWithOffset:CGSizeMake(0, 5) radius:5 color:[UIColor blackColor] opacity:1];
     }
     return self;
 }

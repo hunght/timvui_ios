@@ -85,7 +85,7 @@
     _imagImHereIcon.frame=rect;
     
     rect=_lblBranchName.frame;
-    rect.origin.x-=25;
+    rect.origin.x-= 20;
     
     if (rect.origin.x<0) {
         rect.origin.x=0;

@@ -30,6 +30,8 @@
 #import "FacebookServices.h"
 #import "MapDirectionVC.h"
 #import "TVSMSVC.h"
+#import "UINavigationBar+JTDropShadow.h"
+
 @interface BranchProfileVC ()
 {
 @private
@@ -166,9 +168,7 @@
         
         //COUPON
         *height_p=[self addLineToView:couponBranch];
-        
-        
-        
+
         int i=0;
         for (TVCoupon* coupon in _branch.coupons.items) {
             
@@ -216,7 +216,7 @@
             lblSendTo.backgroundColor = [UIColor clearColor];
             lblSendTo.textColor = [UIColor blackColor];
             lblSendTo.font = [UIFont fontWithName:@"Arial-BoldMT" size:(20)];
-            lblSendTo.text=[NSString stringWithFormat:@"gửi tới %@",SMS_NUMBER];
+            lblSendTo.text=@"gửi tới 8x88";
             [couponBranch addSubview:lblSendTo];
             *height_p=lblSendTo.frame.origin.y+lblSendTo.frame.size.height+10;
             
@@ -652,6 +652,7 @@
                 
             });
         }];
+        
     }else{
         [self showInfoView];
         if (!_extraBranchView) {
@@ -682,14 +683,16 @@
     if (!_viewSharing.isHidden) {
         
         [self setViewSharingShow:NO];
-        
     }
-    
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=NO;
     _viewSharing.hidden=YES;
+    if (_isPresentationYES) {
+        [self.navigationController.navigationBar dropShadow];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -697,6 +700,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (void)dealloc
 {
     void *context = (__bridge void *)self;
@@ -1085,10 +1089,12 @@
     [self.navigationController pushViewController:mbImagesVC animated:YES];
 }
 
-
-
 -(void)backButtonClicked:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_isPresentationYES) {
+        [self dismissModalViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)viewDidUnload {

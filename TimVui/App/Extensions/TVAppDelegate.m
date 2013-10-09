@@ -17,12 +17,13 @@
 #import "GlobalDataUser.h"
 #import "NSDate-Utilities.h"
 #import <JSONKit.h>
-#import "CoupBranchProfileVC.h"
+#import "BranchProfileVC.h"
 #import "Reachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "RecentlyBranchListVC.h"
 #import "TVNotification.h"
 #import "TVCoupons.h"
+#import "MyNavigationController.h"
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -109,11 +110,13 @@
 
 -(void)showNotificationWithBranch:(TVBranch*)branch{
     TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:branch.name  goWithClickView:^(){
-        CoupBranchProfileVC* specBranchVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
-        specBranchVC.branch=branch;
-        
+
+        BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+        branchProfileVC.branch=branch;
+        UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:branchProfileVC];
+        branchProfileVC.isPresentationYES=YES;
         //        specBranchVC.coupon=branch.coupons.items[0];
-        [_slidingViewController.topViewController presentModalViewController:specBranchVC animated:YES];
+        [_slidingViewController.topViewController presentModalViewController:navController animated:YES];
     }];
     [notificationView openButtonClicked:nil];
 }
@@ -202,6 +205,8 @@
     _notifBranches= [[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kNotifBranches]];
     _notifCoupons= [[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kNotifCoupons]];
     
+    NSLog(@"_notifBranches= %@",_notifBranches);
+    
     if (self.isLoadWhenConnectedYES) {
         return;
     }
@@ -258,24 +263,49 @@
     NSString *deviceTokenStr = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceTokenStr = [deviceTokenStr stringByReplacingOccurrencesOfString:@" " withString:@""];
     [GlobalDataUser sharedAccountClient].deviceToken=deviceTokenStr;
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
+        NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
+        [[GlobalDataUser sharedAccountClient] performSelector:@selector(updateNotificationSetting:)withObject:isON afterDelay:1];
+    }
+
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-    [GlobalDataUser sharedAccountClient].deviceToken=[GlobalDataUser sharedAccountClient].UUID;
-	NSLog(@"Failed to get token, error: %@", error);
+    NSLog(@"Failed to get token, error: %@", error);
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if ( application.applicationState == UIApplicationStateActive ){
+        // app was already in the foreground
+        
+        NSLog(@" dic : %@", userInfo);
+    }else{
+            // app was just brought from background to foreground
+        NSLog(@" dic : %@", userInfo);
+    }
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:[userInfo valueForKey:@"branch_name"]  withDistance:nil  goWithClickView:^(){
+        
+        BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+        branchProfileVC.branchID=[userInfo valueForKey:@"branch_id"];
+        //        specBranchVC.coupon=branch.coupons.items[0];
+        [_slidingViewController.topViewController presentModalViewController:branchProfileVC animated:YES];
+    }];
+    [notificationView openButtonClicked:nil];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     NSString *UUID;
+#warning not cover on ios 7
     if([[[UIDevice currentDevice] systemVersion]floatValue] >= 7){
         
     }else if([[[UIDevice currentDevice] systemVersion]floatValue] >= 6){
-        UUID = [[NSUUID UUID] UUIDString];
+        UUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     }else if([[[UIDevice currentDevice] systemVersion]floatValue] >= 5){
-        CFUUIDRef uuid = CFUUIDCreate(NULL);
-        UUID = CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+        CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+        UUID = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
+        CFRelease(uuid);
     }
     NSLog(@"UUID =%@",UUID);
     [GlobalDataUser sharedAccountClient].UUID=UUID;
@@ -297,8 +327,7 @@
                                        objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (localNotif) {
         NSDictionary* dic=localNotif.userInfo;
-        NSLog(@" dic : %@", dic);
-        
+        NSLog(@" dic : %@", dic); 
     }
     
     /*
@@ -355,6 +384,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:_notifBranches forKey:kNotifBranches];
     [defaults setValue:_notifCoupons forKey:kNotifCoupons];
+    NSLog(@"_notifBranches= %@",_notifBranches);
     
     [[NSUserDefaults standardUserDefaults] setObject:[[GlobalDataUser sharedAccountClient].recentlyBranches JSONString] forKey:kBranchIDs];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -370,7 +400,7 @@
         [self showNotificationAboutNearlessBranch:_nearlyBranch];
         _nearlyBranch=nil;
     }else if (_hasCouponBranch) {
-        [self showNotificationAboutNearlessBranch:_hasCouponBranch];
+        [self showNotificationWithBranch:_hasCouponBranch];
         _hasCouponBranch=nil;
     }
     [[GlobalDataUser sharedAccountClient] stopSignificationLocation];

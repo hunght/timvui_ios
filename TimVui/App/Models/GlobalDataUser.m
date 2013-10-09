@@ -121,6 +121,7 @@ static GlobalDataUser *_sharedClient = nil;
     //    NSLog(@"%@",[JSON objectFromJSONString]);
     if (JSON){
         [self setUserWithDic:[JSON objectFromJSONString]];
+        
     }
     //    NSLog(@"%@",self.user);
 }
@@ -129,9 +130,8 @@ static GlobalDataUser *_sharedClient = nil;
     self.isLogin = YES;
     NSLog(@"%@",JSON);
         [self.user setValues:JSON ];
-    
-#warning User login set default USER ID TEST
-    self.user.userId=@"8878";
+//#warning User login set default USER ID TEST
+//    self.user.userId=@"8878";
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             
@@ -149,23 +149,27 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 - (void)updateNotificationSetting:(NSString*)is_notify {
+
+//    NSLog(@"userObject = %@",[GlobalDataUser sharedAccountClient].user.userId);
+//    NSLog(@"UUID = %@",[GlobalDataUser sharedAccountClient].UUID);
+//    NSLog(@"_deviceToken = %@",_deviceToken);
     NSDictionary * userObject=[NSDictionary dictionaryWithObjectsAndKeys:
                                [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                [GlobalDataUser sharedAccountClient].UUID,@"mobile_id",
                                @"IOS",@"mobile_os",
+                               
                                _deviceToken,@"mobile_token",
                                is_notify,@"is_notify",
                                nil];
-    
     NSDictionary *paramsHandBook = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [userObject JSONString],@"UserMobile" ,
                                     nil];
-//    NSLog(@"paramsHandBook = %@",paramsHandBook);
+    NSLog(@"paramsHandBook = %@",paramsHandBook);
     [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
-//        NSLog(@"JSON = %@",JSON);
+        NSLog(@"JSON = %@",JSON);
         [self setSettingNotificationUser];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"error = %@",error);
+        NSLog(@"error = %@",error);
         _isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:NO];
         [self setSettingNotificationUser];
     }];
@@ -174,8 +178,7 @@ static GlobalDataUser *_sharedClient = nil;
 -(void)setGlocalDataUser:(NSDictionary *)JSON{
     [self setUserWithDic:JSON];
     [self savePersistenceAccountWithData:JSON];
-    NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
-    [self updateNotificationSetting:isON];
+
 }
 
 -(void)userLogout{
@@ -256,10 +259,13 @@ static GlobalDataUser *_sharedClient = nil;
                 if (isInBackground) {
                     TVBranch* branch=branches[0];
                     NSDate* savedDate=[SharedAppDelegate.notifBranches objectForKey:branch.branchID];
+                    
                     int day=(savedDate)?[savedDate daysAgo]:8;
                     if (day>7) {
+                        
                         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                        localNotif.alertBody=@"Nhà hàng ngay gần bạn !";
+                        localNotif.alertBody=[NSString stringWithFormat:@"Phát hiện %@ ở gần bạn!",branch.name];
+                        
                         localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
                         localNotif.soundName = @"alarmsound.caf";
                         localNotif.applicationIconBadgeNumber = 0;
@@ -304,7 +310,7 @@ static GlobalDataUser *_sharedClient = nil;
                     int day=(savedDate)?[savedDate daysAgo]:8;
                     if (day>7) {
                         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                        localNotif.alertBody=@"Nhà hàng có coupon ngay gần bạn !";
+                        localNotif.alertBody=[NSString stringWithFormat:@"Phát hiện coupon mới tại %@!",branch.name];
                         localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
                         localNotif.soundName = @"alarmsound.caf";
                         localNotif.applicationIconBadgeNumber = 0;

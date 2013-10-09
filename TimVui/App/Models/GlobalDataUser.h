@@ -63,5 +63,5 @@ enum {
 -(void)stopSignificationLocation;
 -(void)getSettingNotificationUser;
 -(void)setSettingNotificationUser;
-
+- (void)updateNotificationSetting:(NSString*)is_notify;
 @end
