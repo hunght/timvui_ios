@@ -50,7 +50,7 @@ static int radius=3;
     }
     
     rect=_imagLocationIcon.frame;
-    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width+ 5;
+    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width ;
     _imagLocationIcon.frame=rect;
     
     rect=_lblAddress.frame;

@@ -9,5 +9,6 @@
 #import <MessageUI/MessageUI.h>
 @class TVCoupon;
 @interface TVSMSVC : MFMessageComposeViewController
--(id)initWithCoupon:(TVCoupon*)coupon andOption:(int)optionNum;
+
++(void)viewOptionSMSWithViewController:(UIViewController*)viewController andCoupon:(TVCoupon*)coupon;
 @end

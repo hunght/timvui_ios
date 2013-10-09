@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
-         timestampString = "402896216.721302"
+         timestampString = "402911220.977434"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1013"
-         endingLineNumber = "1013"
+         startingLineNumber = "978"
+         endingLineNumber = "978"
          landmarkName = "-postFollowToServer:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -280,26 +280,39 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
-         timestampString = "402896216.721302"
+         filePath = "TimVui/App/Models/Coupon/TVCoupon.m"
+         timestampString = "402910069.325202"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "927"
-         endingLineNumber = "927"
-         landmarkName = "-sendSMSWithCoupon:andOption:"
+         startingLineNumber = "31"
+         endingLineNumber = "31"
+         landmarkName = "-setValues:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/BranchProfileVC/CouponBranchProfileVC/CoupBranchProfileVC.m"
-         timestampString = "402894585.258412"
+         filePath = "TimVui/App/ViewControllers/ReceivedCouponVC/ReceivedCouponVC.m"
+         timestampString = "402915582.294144"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "430"
-         endingLineNumber = "430"
-         landmarkName = "-sendSMSWIthOption:"
+         startingLineNumber = "77"
+         endingLineNumber = "77"
+         landmarkName = "-postToGetBranchesWithEnable:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/ViewControllers/ReceivedCouponVC/ReceivedCouponVC.m"
+         timestampString = "402915735.636417"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
+         landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

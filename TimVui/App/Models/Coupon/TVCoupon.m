@@ -22,7 +22,6 @@
 }
 
 
-
 - (void)markAsRead {
 	self.read = YES;
 }
@@ -32,13 +31,13 @@
 	self.couponID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
 	self.view = [dict safeStringForKey:@"view"];
-	self.used = [dict safeStringForKey:@"used"];
+	self.used_number = [dict safeStringForKey:@"used_number"];
     self.syntax  =[dict safeStringForKey:@"syntax"];
     self.start = [dict safeDateForKey:@"start"];
 	self.end = [dict safeDateForKey:@"end"];
     self.content = [dict safeStringForKey:@"content"];
     self.status = [dict safeStringForKey:@"status"];
-    self.sms_type = [dict safeStringForKey:@"sms_type"];
+    self.sms_type = [dict safeDictForKey:@"sms_type"];
 }
 
 @end

@@ -244,7 +244,7 @@
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
             lblDetailInfoRow.textColor = [UIColor grayColor];
             lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-            lblDetailInfoRow.text =coupon.used;
+            lblDetailInfoRow.text =coupon.used_number;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
             UIImageView* viewNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 25, 12, 11)];
@@ -922,13 +922,7 @@
 }
 
 #pragma mark - IBAction
-- (void)sendSMSWithCoupon:(TVCoupon *)coupon andOption:(int)optionNum {
-    
-    TVSMSVC *picker = [[TVSMSVC alloc] initWithCoupon:coupon andOption:optionNum];
 
-    picker.messageComposeDelegate = self;
-    [self.navigationController    presentModalViewController:picker animated:YES];
-}
 
 -(void)btnSMSButtonClicked:(UIButton*)sender{
     TVCoupon* coupon=_branch.coupons.items[sender.tag];
@@ -938,37 +932,8 @@
                                         withMessage:nil
                                            withType:TSMessageNotificationTypeSuccess];
     }else{
-        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết branch"
-                                                         withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
-                                                          withLabel:@"Chi tiết branch- Gửi SMS nhận coupon"
-                                                          withValue:[NSNumber numberWithInt:0]];
-        if([TVSMSVC canSendText]) {
-            
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8xxx để nhận mã Coupon này"];
-            
-            [alertView addButtonWithTitle:@"Nhận 1 mã coupon (1 người dùng)"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      [self sendSMSWithCoupon:coupon andOption:1];
-                                  }];
-            [alertView addButtonWithTitle:@"Nhận 2 mã coupon (2 người dùng)"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      [self sendSMSWithCoupon:coupon andOption:2];
-                                  }];
-            [alertView addButtonWithTitle:@"Nhận 4 mã coupon (4 người dùng)"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      [self sendSMSWithCoupon:coupon andOption:4];
-                                  }];
-            [alertView addButtonWithTitle:@"Cancel"
-                                     type:SIAlertViewButtonTypeCancel
-                                  handler:^(SIAlertView *alert) {
-                                      NSLog(@"Cancel Clicked");
-                                  }];
-            
-            [alertView show];
-        }
+        
+        [TVSMSVC viewOptionSMSWithViewController:self andCoupon:coupon];
     }
 }
 

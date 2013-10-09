@@ -6,7 +6,7 @@
 @interface TVCoupon : NSObject
 @property(nonatomic,strong)NSString *couponID;
 @property(nonatomic,strong)NSString *name;
-@property(nonatomic,strong)NSString *used;
+@property(nonatomic,strong)NSString *used_number;
 @property(nonatomic,strong)NSString* view;
 @property(nonatomic,strong)NSString *syntax;
 @property(nonatomic,strong)NSDate *start;
@@ -15,7 +15,7 @@
 @property(nonatomic,strong)TVBranch *branch;
 @property(nonatomic,strong) NSString *status;
 
-@property(nonatomic,strong) NSString *sms_type;
+@property(nonatomic,strong) NSDictionary *sms_type;
 
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;

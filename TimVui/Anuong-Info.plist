@@ -14,11 +14,11 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>57.1.png</string>
-				<string>114.1.png</string>
-				<string>logo-red-57.png</string>
-				<string>logo-red-114.png</string>
+				<string>57.2.png</string>
+				<string>114.2.png</string>
 			</array>
+			<key>UIPrerenderedIcon</key>
+			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
@@ -74,6 +74,8 @@
 	</array>
 	<key>UIDeviceCapabilities</key>
 	<string>location-services</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

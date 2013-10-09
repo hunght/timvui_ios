@@ -182,7 +182,7 @@ static const NSString* limitCount=@"30";
 - (void)getCouponWhenHasPhoneNumber {
     
     
-    if ([SharedAppDelegate isConnected]) {
+    if (![SharedAppDelegate isConnected]) {
         NSDictionary *retrievedDictionary;
         if (_btnActive.isSelected) {
             retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedEnabledCoupon];
