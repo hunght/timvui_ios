@@ -13,6 +13,9 @@
 #import "GlobalDataUser.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TSMessage.h"
+static const NSString* distanceSearchParam=@"2000";
+
+
 @interface SearchVC ()
 
 @end
@@ -33,9 +36,18 @@
 
 #pragma mark IBAction
 - (IBAction)swithChagedValue:(UISwitch*)sender {
+    BOOL isTurnOnMess=NO;
+    if (!sender) {
+        
+        sender=_switchUserLocation;
+    }else{
+        isTurnOnMess=YES;
+    }
     if ([GlobalDataUser sharedAccountClient].isTurnOnLocationService) {
+        [GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES=sender.isOn;
         sender.userInteractionEnabled=NO;
         if (sender.isOn) {
+            [GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES=YES;
             CGAffineTransform transform = CGAffineTransformMakeTranslation(0,-70);
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // animate it to the identity transform (100% scale)
@@ -43,19 +55,24 @@
             } completion:^(BOOL finished){
                 sender.userInteractionEnabled=YES;
             }];
-        }else
+        }else{
+            [GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES=NO;
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 // animate it to the identity transform (100% scale)
                 _viewSlide.transform = CGAffineTransformIdentity;
             } completion:^(BOOL finished){
                 sender.userInteractionEnabled=YES;
             }];
+        }
     }else{
         [sender setOn:NO];
-        [TSMessage showNotificationInViewController:self
-                                          withTitle:@"Bạn cần bật chức năng Định vị vị trí (Location services) để sử dụng tiện ích này"
-                                        withMessage:nil
-                                           withType:TSMessageNotificationTypeWarning];
+        if (isTurnOnMess) {
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Bạn cần bật chức năng Định vị vị trí (Location services) để sử dụng tiện ích này"
+                                            withMessage:nil
+                                               withType:TSMessageNotificationTypeWarning];
+        }
+
     }
     
 }
@@ -178,40 +195,6 @@
     [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)prepareForSettingSearchWithParams:(NSMutableDictionary *)params {
-    CLLocationCoordinate2D location;
-    
-    [params setValue:kDistanceSearchMapDefault forKey:@"distance"];
-//    NSLog(@"[GlobalDataUser sharedAccountClient].dicDistrictSearchParam= %@",[GlobalDataUser sharedAccountClient].dicDistrictSearchParam);
-    if (!_switchUserLocation.isOn && [GlobalDataUser sharedAccountClient].dicCitySearchParam) {
-        [params setValue:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
-        location=[[GlobalDataUser sharedAccountClient].dicCitySearchParam safeLocationForKey:@"latlng"];
-    }else{
-        location=[GlobalDataUser sharedAccountClient].userLocation;
-        if (location.latitude) {
-            NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-            [params setValue:strLatLng forKey:@"latlng"];
-        }
-        
-        [params setValue:[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"] forKey:@"city_alias"];
-    }
-    
-    if (!_switchUserLocation.isOn &&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
-        NSMutableArray*arr=[[NSMutableArray alloc] init];
-        for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
-            NSLog(@"%@",dic);
-            [arr addObject:[dic valueForKey:@"alias"]];
-            
-        }
-        [params setValue:arr  forKey:@"district_aliases"];
-    }
-    
-    if (!_switchUserLocation.isOn &&[GlobalDataUser sharedAccountClient].dicPublicLocation)[params setValue:[[GlobalDataUser sharedAccountClient].dicPublicLocation valueForKey:@"alias"] forKey:@"public_location_aliases"];
-    
-    if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
-        [_delegate didClickedOnButtonSearch:params withLatlng:location];
-    }
-}
 
 - (IBAction)buttonSearchClicked:(id)sender {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
@@ -253,6 +236,43 @@
 }
 
 #pragma mark Helper
+- (void)prepareForSettingSearchWithParams:(NSMutableDictionary *)params {
+    CLLocationCoordinate2D location;
+    
+    [params setValue:distanceSearchParam forKey:@"distance"];
+    //    NSLog(@"[GlobalDataUser sharedAccountClient].dicDistrictSearchParam= %@",[GlobalDataUser sharedAccountClient].dicDistrictSearchParam);
+    if ([GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES) {
+        [params setValue:[[GlobalDataUser sharedAccountClient].homeCity valueForKey:@"alias"] forKey:@"city_alias"];
+    }else{
+        [params setValue:[[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"] forKey:@"city_alias"];
+    }
+    
+    location=[GlobalDataUser sharedAccountClient].userLocation;
+    if (location.latitude) {
+        NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
+        [params setValue:strLatLng forKey:@"latlng"];
+    }
+    
+    if (![GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES &&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam&&[GlobalDataUser sharedAccountClient].dicDistrictSearchParam.count>0) {
+        
+        NSMutableArray*arr=[[NSMutableArray alloc] init];
+        for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicDistrictSearchParam) {
+            NSLog(@"%@",dic);
+            [arr addObject:[dic valueForKey:@"alias"]];
+            
+        }
+        
+        [params setValue:arr  forKey:@"district_aliases"];
+  
+    }
+    
+    if (![GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES &&[GlobalDataUser sharedAccountClient].dicPublicLocation)[params setValue:[[GlobalDataUser sharedAccountClient].dicPublicLocation valueForKey:@"alias"] forKey:@"public_location_aliases"];
+    
+    if ([_delegate respondsToSelector:@selector(didClickedOnButtonSearch:withLatlng:)]) {
+        [_delegate didClickedOnButtonSearch:params withLatlng:location];
+    }
+}
+
 - (NSArray *)getZoneDataForSearching {
     NSArray *myFilter=nil;
     NSPredicate *filter =nil;
@@ -333,6 +353,8 @@
     
     _lblPurpose.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicPurposeSearchParam withTitle:@"Mục đích"];
     _lblDictricts.text=[self getNameParamStringFrom:[GlobalDataUser sharedAccountClient].dicDistrictSearchParam withTitle:@"Quận/Huyện"];
+    [_switchUserLocation setOn:[GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES];
+    [self swithChagedValue:nil];
 }
 
 - (void)settingPriceCatButtons
@@ -501,7 +523,7 @@
     
     NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCitySearchParam);
     if (![GlobalDataUser sharedAccountClient].dicCitySearchParam) {
-        NSString* idStr=[[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"];
+        NSString* idStr=[[GlobalDataUser sharedAccountClient].homeCity valueForKey:@"alias"];
         //    NSLog(@"%@",idStr);
         //    NSLog(@"%@",[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] );
         NSPredicate* filter = [NSPredicate predicateWithFormat:@"(alias == %@)",idStr];
@@ -511,11 +533,11 @@
    
     // Do any additional setup after loading the view from its nib.
     // Setup View and Table View
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 57, 33)];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     backButtonView.bounds = CGRectOffset(backButtonView.bounds, 10, 0);
     [backButtonView addSubview:backButton];
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];

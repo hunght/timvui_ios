@@ -16,7 +16,7 @@
 @property (retain, nonatomic) GHUser *user;
 @property (retain, nonatomic) NSString *UUID;
 @property (retain, nonatomic) NSString *deviceToken;
-@property (retain, nonatomic) NSDictionary *dicCity;
+@property (retain, nonatomic) NSDictionary *homeCity;
 @property (assign, nonatomic) BOOL isLogin;
 @property (assign, nonatomic) BOOL isShowAletForLocationServicesYES;
 @property (retain, nonatomic) NSDictionary *dicCitySearchParam;
@@ -44,6 +44,7 @@
 @property (retain, nonatomic) NSString *phoneNumber;
 
 @property (assign, nonatomic) BOOL isTurnOnLocationService;
+@property (assign, nonatomic) BOOL isUserLocationSearhParamYES;
 enum {
     kSearchParamCity = 0,
     kSearchParamDistrict,
@@ -53,7 +54,7 @@ enum {
     kSearchParamZone
 };
 
--(NSDictionary *)dicCity;
+-(NSDictionary *)homeCity;
 + (GlobalDataUser *)sharedAccountClient;
 -(void)setGlocalDataUser:(NSDictionary *)attributes;
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd;

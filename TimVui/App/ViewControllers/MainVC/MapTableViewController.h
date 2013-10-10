@@ -21,6 +21,6 @@
 @property(nonatomic,assign)CLLocationCoordinate2D currentCameraPositionSearch;
 @property(nonatomic,strong)NSDate* lastUpdate;
 @property(nonatomic, strong)TVNotification* notificationView;
-@property(nonatomic, strong)NSArray* arrDics;
+//@property(nonatomic, strong)NSArray* arrDics;
 
 @end

@@ -40,7 +40,7 @@
 }
 
 - (void)setValues:(NSDictionary*)dict {
-//    NSLog(@"tvEvent===%@",dict);
+    NSLog(@"tvEvent===%@",dict);
     
 	self.eventID = [dict safeStringForKey:@"id"];
     self.title = [dict safeStringForKey:@"title"];

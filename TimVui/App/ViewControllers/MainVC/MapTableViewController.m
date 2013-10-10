@@ -25,6 +25,7 @@
 #import "TVCoupons.h"
 #import "MyNavigationController.h"
 #import "TSMessage.h"
+#import "TVEvent.h"
 #import "SVPullToRefresh.h"
 #import <JSONKit.h>
 static const int maxLimitBranches=100;
@@ -71,7 +72,7 @@ static const int maxLimitBranches=100;
         NSDictionary* params=nil;
         if (location.latitude) {
             NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-            params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
+            params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].homeCity safeStringForKey:@"alias"],
                        @"latlng": strLatLng};
         }
         offset=0;
@@ -90,6 +91,7 @@ static const int maxLimitBranches=100;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.trackedViewName = @"Trang chủ";
     _lastDistanceSearch=kDistanceSearchMapDefault.floatValue;
     // The LocationPickerView can be created programmatically (see below) or
@@ -161,7 +163,7 @@ static const int maxLimitBranches=100;
 -(void)searchBarButtonClicked{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [searchVC setDelegate:self];
-    [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_arrDics;
+//    [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_arrDics;
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
@@ -219,7 +221,7 @@ static const int maxLimitBranches=100;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSDictionary* dic=[defaults dictionaryForKey:kGetCityDataUser];
         if (dic) {
-            [GlobalDataUser sharedAccountClient].dicCity=    dic;
+            [GlobalDataUser sharedAccountClient].homeCity=    dic;
             [GlobalDataUser sharedAccountClient].userLocation=[dic safeLocationForKey:@"latlng"];
             [self getBranchesForView];
         }else if(([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))){
@@ -291,11 +293,11 @@ static const int maxLimitBranches=100;
 
 - (void)tableAlert:(SBTableAlert *)tableAlert didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [GlobalDataUser sharedAccountClient].dicCity=     [[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:indexPath.row];
-    [GlobalDataUser sharedAccountClient].userLocation=[[GlobalDataUser sharedAccountClient].dicCity safeLocationForKey:@"latlng"];
+    [GlobalDataUser sharedAccountClient].homeCity=     [[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:indexPath.row];
+    [GlobalDataUser sharedAccountClient].userLocation=[[GlobalDataUser sharedAccountClient].homeCity safeLocationForKey:@"latlng"];
     [self getBranchesForView];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:[GlobalDataUser sharedAccountClient].dicCity forKey:kGetCityDataUser];
+    [defaults setValue:[GlobalDataUser sharedAccountClient].homeCity forKey:kGetCityDataUser];
     [defaults synchronize];
     
     [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
@@ -483,7 +485,7 @@ static const int maxLimitBranches=100;
 }
 
 -(void)didPickDistricts:(NSArray *)arrDics{
-    _arrDics=arrDics;
+//    _arrDics=arrDics;
 }
 
 #pragma mark - GMSMapViewDelegate
@@ -511,8 +513,10 @@ static const int maxLimitBranches=100;
                 
                 NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
                 float distance=(radiusKm<kDistanceSearchMapDefault.floatValue)?radiusKm:kDistanceSearchMapDefault.floatValue;
-                
-                params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity valueForKey:@"alias"],@"latlng": strLatLng
+                if (![GlobalDataUser sharedAccountClient].dicCitySearchParam) {
+                    [GlobalDataUser sharedAccountClient].dicCitySearchParam=[GlobalDataUser sharedAccountClient].homeCity;
+                }
+                params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"],@"latlng": strLatLng
                            ,@"distance": [NSString stringWithFormat:@"%f",distance]
                            };
                 
@@ -538,7 +542,7 @@ static const int maxLimitBranches=100;
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     //
     TVBranch* branch= _branches[[marker.title intValue]];
-    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f+7+9, 70.0f, 52.5f)];
+    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f +9, 70.0f, 52.5f)];
     imgPhoto.contentMode = UIViewContentModeScaleAspectFit;
 
     imgPhoto.image=[[SDImageCache sharedImageCache] imageFromKey:[branch.arrURLImages safeStringForKey:@"80"]];
@@ -548,7 +552,7 @@ static const int maxLimitBranches=100;
 
     }
     
-    UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 110)];
+    UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 90)];
     UIView* viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 160)];
     [viewPad addSubview:view];
     [viewPad setBackgroundColor:[UIColor clearColor]];
@@ -589,7 +593,7 @@ static const int maxLimitBranches=100;
     [view addSubview:homeIcon];
     [view addSubview:price_avgIcon];
     
-    UIView* _utility=[[UIView alloc] initWithFrame:CGRectMake(88,70+7, 320-88, 18)];
+    UIView* _utility=[[UIView alloc] initWithFrame:CGRectMake(88,70+7, 320-88, 0)];
     [view   addSubview:_utility];
     [view   setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
@@ -603,22 +607,42 @@ static const int maxLimitBranches=100;
     price_avg.text=(branch.price_avg && ![branch.price_avg isEqualToString:@""])?branch.price_avg:@"Đang cập nhật";
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[branch latlng]];
     
-    if (distance>1000.0)
-        _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
-    else
-        _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    if (distance<0) {
+        _lblDistance.hidden=YES;
+    }else{
+        _lblDistance.hidden=NO;
+        if (distance>1000.0)
+            _lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
+        else
+            _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    }
     
     int lineHeight=0;
+    
+    for (TVEvent* event in branch.events.items) {
+        UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
+        lblAddress.backgroundColor = [UIColor clearColor];
+        lblAddress.textColor = kCyanGreenColor;
+        lblAddress.highlightedTextColor = [UIColor redColor];
+        lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblAddress.numberOfLines = 1;
+        lblAddress.text=event.title;
+        [_utility addSubview:lblAddress];
+        UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, lineHeight, 15, 15)];
+        homeIcon.image=[UIImage imageNamed:@"img_main_event_icon"];
+        [_utility addSubview:homeIcon];
+        lineHeight+=lblAddress.frame.size.height+5;
+    }
     
     for (TVCoupon* coupon in branch.coupons.items) {
         UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(0+18, lineHeight, 210, 17)];
         lblAddress.backgroundColor = [UIColor clearColor];
-        lblAddress.textColor = [UIColor redColor];
+        lblAddress.textColor = kDeepOrangeColor;
+        lblAddress.highlightedTextColor = [UIColor redColor];
         lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblAddress.numberOfLines = 1;
         lblAddress.text=coupon.name;
         [_utility addSubview:lblAddress];
-        
         UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, lineHeight, 15, 15)];
         homeIcon.image=[UIImage imageNamed:@"img_main_coupon_icon"];
         [_utility addSubview:homeIcon];
@@ -626,9 +650,15 @@ static const int maxLimitBranches=100;
     }
     
     CGRect frame=_utility.frame;
-    frame.size.height+=branch.coupons.items.count*30;
+    frame.size.height+=(branch.events.items.count+ branch.coupons.items.count)*20;
     [_utility setFrame:frame];
+    
     [view  addSubview:_lblDistance];
+    
+    frame=view.frame;
+    frame.size.height+=_utility.frame.size.height;
+    view.frame=frame;
+    
     return viewPad;
 }
 

@@ -25,7 +25,7 @@
 #import "TVKaraokes.h"
 #import "TVKaraoke.h"
 #import "InfinitePagingView.h"
-#import "CommentVC.h"
+#import "TVAppDelegate.h"
 #import "CMHTMLView.h"
 #import "ExtraSuggestionMenuCell.h"
 #import "LoginVC.h"
@@ -614,14 +614,55 @@
 
 #pragma mark Actions
 -(void)addCuisineButtonClicked:(UIButton*)sender{
-    SearchCuisines *viewController = [[SearchCuisines alloc] initWithSectionIndexes:YES withParam:_branch.menu.items];
-    [viewController setDelegate:self];
-    [_viewController.navigationController pushViewController:viewController animated:YES];
+    
+    if ([GlobalDataUser sharedAccountClient].isLogin)
+    {
+        
+        SearchCuisines *viewController = [[SearchCuisines alloc] initWithSectionIndexes:YES withParam:_branch.menu.items];
+        [viewController setDelegate:self];
+        [_viewController.navigationController pushViewController:viewController animated:YES];
+    }
+    else{
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho đánh giá này?"];
+        
+        [alertView addButtonWithTitle:@"Login"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  
+                                  LoginVC* loginVC=nil;
+                                  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+                                  } else {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+                                  }
+                                  
+                                  UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                                  [_viewController presentModalViewController:navController animated:YES];
+                                  [loginVC goWithDidLogin:^{
+                                      
+                                      SearchCuisines *viewController = [[SearchCuisines alloc] initWithSectionIndexes:YES withParam:_branch.menu.items];
+                                      [viewController setDelegate:self];
+                                      [_viewController.navigationController pushViewController:viewController animated:YES];
+                                  } thenLoginFail:^{
+                                      [TSMessage showNotificationInViewController:_viewController
+                                                                        withTitle:@"Có lỗi khi đăng nhập!"
+                                                                      withMessage:nil
+                                                                         withType:TSMessageNotificationTypeWarning];
+                                  }];
+                                  
+                                  
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
+    }
 }
 
 -(void)eventButtonClicked:(UIButton*)sender{
     if (_currentTableType!=kTVEvent){
-        floatView.hidden=YES;
         _currentTableType=kTVEvent;
     }
     [self resetToUnselectedButtons];
@@ -686,7 +727,6 @@
 
 -(void)karaokeButtonClicked:(UIButton*)sender{
     if (_currentTableType!=kTVKaraoke){
-        floatView.hidden=YES;
         _currentTableType=kTVKaraoke;
     }
     [self resetToUnselectedButtons];
@@ -803,20 +843,12 @@
     
     [self insertSubview:floatView aboveSubview:_tableView];
 }
-
+-(void)writeButtonClicked{
+    [SharedAppDelegate.menuVC commentButtonClickedWithNav:_viewController.navigationController andWithBranch:_branch];
+}
 #pragma mark Helper
 
--(void)writeButtonClicked{
-    CommentVC* commentVC=[[CommentVC alloc] initWithNibName:@"CommentVC" bundle:nil];
-    UINavigationController* navController =navController = [[UINavigationController alloc] initWithRootViewController:commentVC];
-    commentVC.branch=_branch;
-    ECSlidingViewController *_slidingViewController=[[ECSlidingViewController alloc] init];
-    _slidingViewController.topViewController=navController;
-    
-    [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-    [_viewController presentModalViewController:_slidingViewController animated:YES];
-    commentVC.slidingViewController=_slidingViewController;
-}
+
 
 -(void)resetToUnselectedButtons{
     commentButton.selected=NO;
@@ -917,10 +949,12 @@
     if (![scrollView isEqual:_scrollView]){
         CGFloat scrollOffset=scrollView.contentOffset.y;
         if (floatView.isHidden||scrollOffset<0) {
+            lastDragOffsetFloatView = scrollOffset;
             return;
         }
         if (scrollOffset< lastDragOffsetFloatView){
             if (scrollView.contentSize.height-scrollOffset- scrollView.frame.size.height<50) {
+                lastDragOffsetFloatView = scrollOffset;
                 return;
             }
             [self showFloatView];
@@ -1195,8 +1229,9 @@
     switch (_currentTableType) {
         case kTVComment:
             count= [self.comments.items count];
+            [self showFloatView];
             if (count==0) {
-                [self showFloatView];
+                
                 self.tableView.showsPullToRefresh=NO;
                 self.tableView.showsInfiniteScrolling=NO;
                 lblWriteReviewNotice.text=@"Hãy viết đánh giá về địa điểm này để chia sẻ với bạn bè của bạn";

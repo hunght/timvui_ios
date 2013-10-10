@@ -213,16 +213,16 @@ static GlobalDataUser *_sharedClient = nil;
     }
 }
 
--(NSDictionary *)dicCity{
+-(NSDictionary *)homeCity{
     //    NSLog(@"SharedAppDelegate.getCityDistrictData=%@",SharedAppDelegate.getCityDistrictData);
-    if (_dicCity) {
-        return _dicCity;
+    if (_homeCity) {
+        return _homeCity;
     }else if (_user.city_id) {
         NSPredicate* filter = [NSPredicate predicateWithFormat:@"(city_id == %@)",_user.city_id];
         NSArray* idPublicArr = [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] filteredArrayUsingPredicate:filter];
-        _dicCity=[idPublicArr lastObject];
+        _homeCity=[idPublicArr lastObject];
     }
-    return _dicCity;
+    return _homeCity;
 }
 
 #pragma mark Helper
@@ -249,7 +249,7 @@ static GlobalDataUser *_sharedClient = nil;
     [params setValue:@"short"  forKey:@"infoType"];
     [params setValue:kCheckHasNearlyBranchIsInBackGround  forKey:@"distance"];
     //    NSLog(@"_dicCity=%@",_dicCity);
-    [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
+    [params setValue:[_homeCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
     [params setValue:strLatLng forKey:@"latlng"];
     [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
@@ -297,7 +297,7 @@ static GlobalDataUser *_sharedClient = nil;
     [params setValue:kCheckHasCouponBranchIsInBackGround  forKey:@"distance"];
     [params setValue:@"1"  forKey:@"has_coupon"];
     //    NSLog(@"_dicCity=%@",_dicCity);
-    [params setValue:[_dicCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
+    [params setValue:[_homeCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
     [params setValue:strLatLng forKey:@"latlng"];
     [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {

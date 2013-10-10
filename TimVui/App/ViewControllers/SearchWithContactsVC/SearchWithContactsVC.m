@@ -160,7 +160,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [super viewDidLoad];
     if (!isInvitingFriend) {
         [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
-        UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+        UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
         [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
         [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
         [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];

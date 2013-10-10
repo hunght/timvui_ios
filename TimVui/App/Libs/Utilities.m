@@ -137,6 +137,18 @@ static bool isRetinaYES =NO;
     UIGraphicsEndImageContext();
     return img;
 }
++ (UIImage *) imageFromColor:(UIColor *)color withSize:(CGSize)size{
+    
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    //  [[UIColor colorWithRed:222./255 green:227./255 blue: 229./255 alpha:1] CGColor]) ;
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
 
 
 + (UIImage *) imageFromColor:(UIColor *)color {

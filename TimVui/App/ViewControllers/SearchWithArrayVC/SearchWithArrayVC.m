@@ -123,7 +123,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 - (void)viewDidLoad
 {
     [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -271,10 +271,13 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
             [GlobalDataUser sharedAccountClient].dicCitySearchParam=arrResult;
             [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=nil;
             [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
-            [GlobalDataUser sharedAccountClient].dicCity=arrResult;
-            [GlobalDataUser sharedAccountClient].userLocation=[[GlobalDataUser sharedAccountClient].dicCity safeLocationForKey:@"latlng"];
-            [[NSUserDefaults standardUserDefaults] setValue:[GlobalDataUser sharedAccountClient].dicCity forKey:kGetCityDataUser];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            if ([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied)){
+                [GlobalDataUser sharedAccountClient].homeCity=arrResult;
+                [GlobalDataUser sharedAccountClient].userLocation=[[GlobalDataUser sharedAccountClient].homeCity safeLocationForKey:@"latlng"];
+                [[NSUserDefaults standardUserDefaults] setValue:[GlobalDataUser sharedAccountClient].homeCity forKey:kGetCityDataUser];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            
 
             [self.navigationController popViewControllerAnimated:YES];
             break;

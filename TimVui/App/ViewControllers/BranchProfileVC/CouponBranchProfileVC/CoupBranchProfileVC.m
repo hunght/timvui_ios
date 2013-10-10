@@ -65,10 +65,15 @@
     lblDistance.textColor = [UIColor grayColor];
     lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
-    if (distance>1000.0)
-        lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
-    else
-        lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    if (distance<0) {
+        lblDistance.hidden=YES;
+    }else{
+        lblDistance.hidden=NO;
+        if (distance>1000.0)
+            lblDistance.text=[NSString stringWithFormat:@"%.01f km",distance/1000];
+        else
+            lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
+    }
     
     [genarateInfoView addSubview:lblDistance];
     
@@ -328,7 +333,7 @@
 
 - (void)viewDidLoad
 {
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 57, 33)];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];

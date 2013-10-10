@@ -51,7 +51,7 @@ static const NSString* distanceMapSearch=@"100";
     
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
+        params = @{@"city_id": [[GlobalDataUser sharedAccountClient].homeCity safeStringForKey:@"id"],
                    @"latlng": strLatLng,@"limit":limitCount,@"offset":[NSString stringWithFormat:@"%d",offset],@"distance":distanceMapSearch};
     }else
     {
@@ -74,17 +74,19 @@ static const NSString* distanceMapSearch=@"100";
 //            NSLog(@"countAddedItems=%d",weakSelf.branches.countAddedItems);
             if (weakSelf.branches.countAddedItems<limitCount.intValue) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
-                [tableFooter setText:@"Không còn sự kiện nào"];
+                
                 tableFooter.hidden=NO;
             }else{
                 tableFooter.hidden=YES;
 
-                for (TVBranch* branch in _branches.items) {
-                    for (TVEvent* event in branch.events.items) {
-                        event.branch=branch;
-                        [arrEvents addObject:event];
-                        
-                    }
+
+            }
+            
+            for (TVBranch* branch in _branches.items) {
+                for (TVEvent* event in branch.events.items) {
+                    event.branch=branch;
+                    [arrEvents addObject:event];
+                    
                 }
             }
             offset+=limitCount.intValue;
@@ -106,6 +108,7 @@ static const NSString* distanceMapSearch=@"100";
     tableFooter.backgroundColor = [UIColor clearColor];
     tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
     tableFooter.hidden=YES;
+    [tableFooter setText:@"Không còn sự kiện nào"];
     self.tableView.tableFooterView = tableFooter;
     
     [self postToGetBranches];

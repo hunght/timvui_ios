@@ -157,7 +157,7 @@
 //        self.navigationItem.leftBarButtonItem = bi;
 //        [bi release];
 //    }else{
-//        UIButton *backButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 57, 33)] autorelease];
+//        UIButton *backButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)] autorelease];
 //        [backButton setBackgroundImage:[UIImage imageNamed:@"btn_back_egle_off.png"] forState:UIControlStateNormal];
 //        [backButton setBackgroundImage:[UIImage imageNamed:@"btn_back_egle_on.png"] forState:UIControlStateHighlighted];
 //        [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];

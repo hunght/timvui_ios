@@ -49,11 +49,11 @@ static const NSString* distanceMapSearch=@"100";
     
     if (location.latitude) {
         NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",location.latitude,location.longitude];
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
+        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].homeCity safeStringForKey:@"alias"],
                    @"latlng": strLatLng,@"limit":limitCount,@"offset":[NSString stringWithFormat:@"%d",offset],@"distance":distanceMapSearch};
     }else
     {
-        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCity safeStringForKey:@"alias"],
+        params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].homeCity safeStringForKey:@"alias"],
                 @"limit":limitCount,@"offset":[NSString stringWithFormat:@"%d",offset],@"distance":distanceMapSearch};
     }
     
@@ -75,15 +75,16 @@ static const NSString* distanceMapSearch=@"100";
                 tableFooter.hidden=NO;
             }else{
                 tableFooter.hidden=YES;
-                for (TVBranch* branch in _branches.items) {
-                    for (TVCoupon* coupon in branch.coupons.items) {
-                        coupon.branch=branch;
-                        [arrCoupons addObject:coupon];
-                    }
-                }
-                offset+=limitCount.intValue;
-                [self.tableView reloadData];
+                
             }
+            for (TVBranch* branch in _branches.items) {
+                for (TVCoupon* coupon in branch.coupons.items) {
+                    coupon.branch=branch;
+                    [arrCoupons addObject:coupon];
+                }
+            }
+            offset+=limitCount.intValue;
+            [self.tableView reloadData];
             
         });
     } failure:^(GHResource *instance, NSError *error) {
