@@ -7,6 +7,7 @@
 @property(nonatomic,strong)NSString *couponID;
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *used_number;
+@property(nonatomic,strong)NSString *use_number;
 @property(nonatomic,strong)NSString* view;
 @property(nonatomic,strong)NSString *syntax;
 @property(nonatomic,strong)NSDate *start;

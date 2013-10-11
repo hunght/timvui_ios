@@ -32,6 +32,7 @@
 	self.name = [dict safeStringForKey:@"name"];
 	self.view = [dict safeStringForKey:@"view"];
 	self.used_number = [dict safeStringForKey:@"used_number"];
+    self.use_number = [dict safeStringForKey:@"use_number"];
     self.syntax  =[dict safeStringForKey:@"syntax"];
     self.start = [dict safeDateForKey:@"start"];
 	self.end = [dict safeDateForKey:@"end"];

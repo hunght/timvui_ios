@@ -29,8 +29,11 @@
 #import "TVAppDelegate.h"
 #import "UILabel+DynamicHeight.h"
 #import "TVCoupon.h"
-
+#import "NSDate-Utilities.h"
 @implementation NearbyCouponCell {
+    UILabel *lblViewNumber ;
+    UILabel *lblUsingTime;
+    UIView* infoCouponBranch;
 }
 
 
@@ -87,19 +90,74 @@
     _border.fillColor = nil;
     _border.lineDashPattern = @[@4, @2];
     [_whiteView.layer addSublayer:_border];
+    
+    //View for info branch
+    infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(12, 0, 320-(6+5)*2, 45)];
+    [infoCouponBranch setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1.0f]];
+    
+    l=infoCouponBranch.layer;
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:5.0];
+    [l setBorderWidth:1.0];
+    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    
+    UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 5+ 3, 11, 12)];
+    quatityIcon.image=[UIImage imageNamed:@"img_profile_branch_quatity_coupon"];
+    [infoCouponBranch addSubview:quatityIcon];
+    
+    UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 5.0, 150, 23)];
+    lblTitleRow.backgroundColor = [UIColor clearColor];
+    lblTitleRow.textColor = [UIColor grayColor];
+    lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+    lblTitleRow.text =@"Lượt xem";
+    [infoCouponBranch addSubview:lblTitleRow];
+    
+    lblViewNumber = [[UILabel alloc] initWithFrame:CGRectMake(150, 5.0, 150, 23)];
+    lblViewNumber.backgroundColor = [UIColor clearColor];
+    lblViewNumber.textColor = [UIColor grayColor];
+    lblViewNumber.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+
+    [infoCouponBranch addSubview:lblViewNumber];
+    
+    UIImageView* viewNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 25+ 3, 12, 11)];
+    viewNumberIcon.image=[UIImage imageNamed:@"img_profile_branch_view_number"];
+    [infoCouponBranch addSubview:viewNumberIcon];
+    
+    lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 25.0, 150, 23)];
+    lblTitleRow.backgroundColor = [UIColor clearColor];
+    lblTitleRow.textColor = [UIColor grayColor];
+    lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+    lblTitleRow.text =@"Hạn sử dụng";
+    [infoCouponBranch addSubview:lblTitleRow];
+    
+    lblUsingTime = [[UILabel alloc] initWithFrame:CGRectMake(150, 25.0, 150, 23)];
+    lblUsingTime.backgroundColor = [UIColor clearColor];
+    lblUsingTime.textColor = [UIColor grayColor];
+    lblUsingTime.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+
+    [infoCouponBranch addSubview:lblUsingTime];
+    
+    [self.contentView addSubview:infoCouponBranch];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
     return self;
 }
 
 - (void)setCoupon:(TVCoupon *)_coupon {
+    lblViewNumber.text =_coupon.use_number;
+    lblUsingTime.text =[NSString stringWithFormat:@"%@ - %@",[_coupon.start stringWithFormat:@"dd/MM/yy"], [_coupon.end stringWithFormat:@"dd/MM/yy"]];
+    
     _lblNameBranch.text=_coupon.branch.name;
     _lblAddressBranch.text =_coupon.branch.address_full;
     _lblDetailRow.text=_coupon.name;
     [_lblDetailRow resizeToStretch];
     
-    CGRect frame=    _lblNameBranch.frame;
+    CGRect frame= infoCouponBranch.frame;
+    frame.origin.y=_lblDetailRow.frame.origin.y+_lblDetailRow.frame.size.height+ 18;
+    infoCouponBranch.frame=frame;
+    
+     frame=    _lblNameBranch.frame;
     int padHeight=    frame.origin.y;
-    frame.origin.y=_lblDetailRow.frame.origin.y+_lblDetailRow.frame.size.height+15;
+    frame.origin.y=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height;
     _lblNameBranch.frame=frame;
     padHeight=frame.origin.y-padHeight;
     
@@ -115,6 +173,8 @@
     _border.frame = _whiteView.bounds;
     
     [[_whiteView layer] addSublayer:_border];
+    
+
     
     frame= _lblAddressBranch.frame;
     frame.origin.y+=padHeight;
@@ -139,7 +199,7 @@
     CGSize expectedLabelSize = [coupon.name sizeWithFont:cellFont
                                                constrainedToSize:maximumLabelSize
                                                    lineBreakMode:NSLineBreakByWordWrapping];
-    return expectedLabelSize.height+ 8+66+8;
+    return expectedLabelSize.height+ 8+66+8 +45;
 }
 
 

@@ -404,7 +404,7 @@
     leftMargin.backgroundColor =([UIColor colorWithRed:(2/255.0f) green:(190 /255.0f) blue:(239/255.0f) alpha:1.0f]);
     [viewBg addSubview:leftMargin];
     
-    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
+    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
     //continue building the string
     [html appendString:event.content];
     [html appendString:@"</body></html>"];
@@ -515,7 +515,7 @@
 
     
     
-    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
+    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
     //continue building the string
     [html appendString:karaoke.content];
     [html appendString:@"</body></html>"];

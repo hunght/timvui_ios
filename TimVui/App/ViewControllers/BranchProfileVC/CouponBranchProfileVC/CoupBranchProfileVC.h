@@ -10,7 +10,7 @@
 #import "TVBranch.h"
 #import <MessageUI/MessageUI.h>
 @class TVCoupon;
-@interface CoupBranchProfileVC : UIViewController<UIWebViewDelegate,MFMessageComposeViewControllerDelegate>
+@interface CoupBranchProfileVC : UIViewController<MFMessageComposeViewControllerDelegate>
 @property (retain, nonatomic) TVBranch *branch;
 @property (retain, nonatomic) TVCoupon *coupon;
 @property (retain, nonatomic) UIView* couponBranch;

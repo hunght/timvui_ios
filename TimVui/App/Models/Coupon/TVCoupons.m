@@ -6,7 +6,7 @@
 
 
 - (void)setValues:(id)values {
-    NSLog(@"%@",values);
+//    NSLog(@"%@",values);
     self.items = [NSMutableArray array];
 	for (NSDictionary *dict in values) {
 		TVCoupon *event = [[TVCoupon alloc] initWithDict:dict];
