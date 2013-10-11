@@ -29,6 +29,7 @@
 #import "NSDate-Utilities.h"
 #import "TVManual.h"
 #import "UILabel+DynamicHeight.h"
+#import "GlobalDataUser.h"
 @implementation TVManualCell {
 }
 
@@ -66,7 +67,7 @@
     [self.contentView addSubview:self.lblDesc];
 
     _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(3, 0, 150, 34)];
-    [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
+    
     [_saveButton setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
     
     [_saveButton setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
@@ -126,6 +127,16 @@
 }
 
 -(void)setManual:(TVManual*)manual{
+    if ([GlobalDataUser sharedAccountClient].isLogin
+        && [GlobalDataUser sharedAccountClient].userHandBookIDs
+        && [[GlobalDataUser sharedAccountClient].userHandBookIDs valueForKey:manual.manualID]) {
+        [_saveButton setTitle:@"Đã lưu" forState:UIControlStateNormal];
+        _saveButton.userInteractionEnabled=NO;
+    }else{
+        _saveButton.userInteractionEnabled=YES;
+        [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
+    }
+    
     _lblTitle.text=manual.title;
     [_lblTitle resizeToStretch];
     
@@ -156,9 +167,7 @@
     frame=_detailButton.frame;
     frame.origin.y=height+15;
     _detailButton.frame=frame;
-    
 
-    
     _lblView.text=manual.view;
     _lblDate.text=[manual.changed stringWithFormat:@"dd/mm/yyyy"];
     
@@ -172,7 +181,7 @@
             tempStrName=[tempStrName stringByAppendingFormat:@", %@",str];
     }
     
-    tempStrName=[tempStrName stringByAppendingString:@"|"];
+    tempStrName=[tempStrName stringByAppendingString:@"| "];
     isFirst=YES;
     for (NSString* str in [manual.handbook_cat valueForKey:@"name"]) {
         if (isFirst) {
@@ -183,6 +192,7 @@
     }
     
     _lblTags.text=[NSString stringWithFormat:@"%@",tempStrName];
+    
 }
 
 

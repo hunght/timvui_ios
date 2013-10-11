@@ -81,7 +81,16 @@
     UIView* floatView=[[FloatView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height,320, 48) withScrollView:_tableView];
     [self.view addSubview:floatView];
     UIButton* _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 7, 300, 34)];
-    [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
+    if ([GlobalDataUser sharedAccountClient].isLogin
+        && [GlobalDataUser sharedAccountClient].userHandBookIDs
+        && [[GlobalDataUser sharedAccountClient].userHandBookIDs valueForKey:_manual.manualID]) {
+        [_saveButton setTitle:@"Đã lưu" forState:UIControlStateNormal];
+        _saveButton.userInteractionEnabled=NO;
+    }else{
+        _saveButton.userInteractionEnabled=YES;
+        [_saveButton setTitle:@"Lưu lại" forState:UIControlStateNormal];
+    }
+    
     [_saveButton setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
     
     [_saveButton setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
@@ -251,11 +260,12 @@
                                         [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                         nil];
         [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+            sender.userInteractionEnabled=NO;
+            [sender setTitle:@"Đã lưu" forState:UIControlStateNormal];
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Lưu cẩm nang thành công"
                                             withMessage:nil
                                                withType:TSMessageNotificationTypeSuccess];
-            
             [self dismissModalViewControllerAnimated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [TSMessage showNotificationInViewController:self

@@ -83,10 +83,31 @@ static const NSString* limitCount=@"5";
     }];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if ([GlobalDataUser sharedAccountClient].isLogin && ![GlobalDataUser sharedAccountClient].userHandBookIDs) {
+        NSDictionary* _params=@{@"user_id": [GlobalDataUser sharedAccountClient].user.userId,
+                                @"isWantIDYES":@"1" ,
+                                @"limit":@"100",
+                                @"offset":@"0",
+                                @"type": @"user"};
+        NSLog(@"_params= %@",_params);
+        [[TVNetworkingClient sharedClient] postPath:@"handbook/getHandbooks" parameters:_params success:^(AFHTTPRequestOperation *operation, id JSON) {
+            NSLog(@"gethandbook= %@",JSON);
+            [GlobalDataUser sharedAccountClient].userHandBookIDs=[[NSMutableDictionary alloc] initWithDictionary:[JSON safeDictForKey:@"data"]];
+            [self.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+    }
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
@@ -243,7 +264,10 @@ static const NSString* limitCount=@"5";
                                         manual.manualID,@"handbook_id" ,
                                         [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                         nil];
+        
         [[TVNetworkingClient sharedClient] postPath:@"handbook/userSaveHandbook" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+            sender.userInteractionEnabled=NO;
+            [sender setTitle:@"Đã lưu" forState:UIControlStateNormal];
             [TSMessage showNotificationInViewController:self
                                               withTitle:@"Lưu cẩm nang thành công"
                                             withMessage:nil

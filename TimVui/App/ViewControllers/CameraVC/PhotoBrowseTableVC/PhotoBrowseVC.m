@@ -63,7 +63,7 @@
     
     [self.view insertSubview:_bottomView aboveSubview:self.tableView];
     [_bottomView setBackgroundColor:[UIColor colorWithRed:(2/255.0f) green:(1/255.0f) blue:(1/255.0f) alpha:1.0f]];
-    UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(15, 10.0, 210, 15)];
+    UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 210, 15)];
     lblAddress.backgroundColor = [UIColor clearColor];
     lblAddress.textColor = [UIColor grayColor];
     lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(17)];

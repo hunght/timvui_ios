@@ -1261,7 +1261,7 @@
             if (count==0) {
                 self.tableView.showsPullToRefresh=NO;
                 self.tableView.showsInfiniteScrolling=NO;
-                lblWriteReviewNotice.text=@"CH Tương tự";
+                lblWriteReviewNotice.text=@"Đang cập nhật";
                 lblWriteReviewNotice.hidden=NO;
             }else{
                 lblWriteReviewNotice.hidden=YES;

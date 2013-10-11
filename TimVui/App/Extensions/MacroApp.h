@@ -8,10 +8,10 @@
 
 #import "GAI.h"
 
-#define kAFAppDotNetAPIBaseURLString  @"http://local.anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
-#define LOCATION_UPDATE_TIME  15//60*15
+#define LOCATION_UPDATE_TIME  60*15//60*15
 
 #warning not fill link store yet.
 #define kLinkAppStore               @"kLinkAppStore"
@@ -19,8 +19,9 @@
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"
 #define kUserPhoneNumber               @"kUserPhoneNumber"
-#define kCheckHasCouponBranchIsInBackGround @"50"
-#define kCheckHasNearlyBranchIsInBackGround @"5"
+#define kCheckHasCouponBranchIsInBackGround @"2"
+
+#define kCheckHasNearlyBranchIsInBackGround @".02" //20 m
 
 #define kNotifBranches                    @"kNotifBranches"
 #define kNotifCoupons                   @"kNotifCoupons"

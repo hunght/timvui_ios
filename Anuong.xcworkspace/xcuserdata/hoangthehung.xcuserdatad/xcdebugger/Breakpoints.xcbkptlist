@@ -98,39 +98,52 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/EventVC/EventVC.m"
-         timestampString = "403081540.63428"
+         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
+         timestampString = "403167765.080339"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
-         landmarkName = "-postToGetBranches"
+         startingLineNumber = "89"
+         endingLineNumber = "89"
+         landmarkName = "-viewWillAppear:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/Models/Branches/TVBranch.m"
-         timestampString = "403085693.403362"
+         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
+         timestampString = "403167772.84882"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "29"
-         endingLineNumber = "29"
-         landmarkName = "-setValues:"
+         startingLineNumber = "96"
+         endingLineNumber = "96"
+         landmarkName = "-viewWillAppear:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TimVui/App/ViewControllers/EventVC/EventVC.m"
-         timestampString = "403085806.309417"
+         filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
+         timestampString = "403167969.792076"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "75"
-         endingLineNumber = "75"
-         landmarkName = "-postToGetBranches"
+         startingLineNumber = "98"
+         endingLineNumber = "98"
+         landmarkName = "-viewWillAppear:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TimVui/App/Models/GlobalDataUser.m"
+         timestampString = "403172436.243822"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "263"
+         endingLineNumber = "263"
+         landmarkName = "-checkHasNearlyBranchIsInBackGround:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -16,10 +16,6 @@
     
     NSArray* arr=(_isNotSearchAPIYES) ? values:[values safeArrayForKey:@"items"];
     
-//    if (_isNotSearchAPIYES) {
-//        arr=values;
-//    }
-    
     if (!self.items) {
         self.items = [NSMutableArray array];
     }

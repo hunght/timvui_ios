@@ -49,9 +49,7 @@
     [_saveButton setTitle:@"LƯU LẠI" forState:UIControlStateNormal];
     _saveButton.titleLabel.font=[UIFont fontWithName:@"UVNTinTucHepThemBold" size:(20)];
     [_saveButton setBackgroundImage:[Utilities imageFromColor:kCyanGreenColor] forState:UIControlStateNormal];
-    
     [_saveButton setBackgroundImage:[Utilities imageFromColor:kPaleCyanGreenColor] forState:UIControlStateSelected];
-    
     [_saveButton addTarget:self action:@selector(saveButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _saveButton.autoresizingMask           = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:_saveButton];

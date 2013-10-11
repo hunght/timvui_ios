@@ -35,6 +35,7 @@
 @property (retain, nonatomic) NSMutableDictionary* followBranchesSet;
 
 @property (retain, nonatomic) NSMutableDictionary* receivedCouponIDs;
+@property (retain, nonatomic) NSMutableDictionary* userHandBookIDs;
 
 @property (retain, nonatomic) NSNumber* isFollowBranchesHasNewCouponYES;
 @property (retain, nonatomic) NSNumber* isNearlyBranchesHasNewCouponYES;
