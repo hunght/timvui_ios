@@ -13,6 +13,9 @@
 #import "TVAppDelegate.h"
 #import <AddressBook/AddressBook.h>
 #import "MacroApp.h"
+#import "GlobalDataUser.h"
+#import "TVNetworkingClient.h"
+#import "NSDictionary+Extensions.h"
 static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier = @"kFKRSearchBarTableViewControllerDefaultTableViewCellIdentifier";
 @interface SearchWithContactsVC () {
     BOOL _mayUsePrivateAPI;
@@ -383,23 +386,40 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 }
 
 
-// Displays an SMS composition interface inside the application.
--(void)displaySMSComposerSheet
+- (void)hasLinkAppleAndSend
 {
-	MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
 	picker.messageComposeDelegate = self;
     if (isInvitingFriend) {
-        picker.body =[NSString stringWithFormat:@"Ứng dụng địa điểm ăn uống, coupon giảm giá hấp dẫn: %@",kLinkAppStore];
+        
+        picker.body =[NSString stringWithFormat:@"Ứng dụng địa điểm ăn uống, coupon giảm giá hấp dẫn: %@",[GlobalDataUser sharedAccountClient].linkAppleStore];
     }else{
         picker.body =@"";
     }
-
+    
     NSMutableArray* arrPhone=[NSMutableArray new];
     for (NSArray* arr in [_pickedArr valueForKey:@"telephone"]) {
         [arrPhone addObjectsFromArray:arr];
     }
     picker.recipients = arrPhone;
 	[self presentModalViewController:picker animated:YES];
+}
+
+// Displays an SMS composition interface inside the application.
+-(void)displaySMSComposerSheet
+{
+    if (![GlobalDataUser sharedAccountClient].linkAppleStore) {
+        [[TVNetworkingClient sharedClient] postPath:@"user/getIOSAppInfo" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+            [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
+            NSLog(@"JSON=%@",JSON);
+            [self hasLinkAppleAndSend];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+    }else{
+        [self hasLinkAppleAndSend];
+    }
+	
 }
 
 

@@ -13,8 +13,6 @@
 #define  kTrackingId @"UA-43969947-1"
 #define LOCATION_UPDATE_TIME  60*15//60*15
 
-#warning not fill link store yet.
-#define kLinkAppStore               @"kLinkAppStore"
 
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"

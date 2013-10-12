@@ -16,6 +16,9 @@
 @property(nonatomic,strong)TVBranch *branch;
 @property(nonatomic,strong) NSString *status;
 
+@property(nonatomic,strong)NSString *special_content;
+@property(nonatomic,strong)NSString *condition_content;
+
 @property(nonatomic,strong) NSDictionary *sms_type;
 
 - (id)initWithDict:(NSDictionary *)dict;

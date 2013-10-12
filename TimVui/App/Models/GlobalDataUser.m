@@ -228,7 +228,6 @@ static GlobalDataUser *_sharedClient = nil;
 #pragma mark Helper
 
 
-
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
     if (!_isTurnOnLocationService) {
         return -1;
@@ -310,7 +309,7 @@ static GlobalDataUser *_sharedClient = nil;
                     int day=(savedDate)?[savedDate daysAgo]:8;
                     if (day>7) {
                         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                        localNotif.alertBody=[NSString stringWithFormat:@"Phát hiện coupon mới tại %@!",branch.name];
+                        localNotif.alertBody=[NSString stringWithFormat:@"%@ vừa tạo coupon mới cho thành viên Anuong.net!",branch.name];
                         localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
                         localNotif.soundName = @"alarmsound.caf";
                         localNotif.applicationIconBadgeNumber = 0;

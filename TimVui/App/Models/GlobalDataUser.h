@@ -44,6 +44,8 @@
 @property (retain, nonatomic) NSDate *locationUpdateTime;
 @property (retain, nonatomic) NSString *phoneNumber;
 
+@property (retain, nonatomic) NSString* linkAppleStore;
+
 @property (assign, nonatomic) BOOL isTurnOnLocationService;
 @property (assign, nonatomic) BOOL isUserLocationSearhParamYES;
 enum {

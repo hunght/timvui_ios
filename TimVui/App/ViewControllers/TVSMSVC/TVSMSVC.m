@@ -34,27 +34,49 @@
 
 +(void)viewOptionSMSWithViewController:(UIViewController*)viewController andCoupon:(TVCoupon*)coupon{
     if([TVSMSVC canSendText]) {
-        
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8x88 để nhận mã Coupon này"];
         NSArray *array = [coupon.sms_type allKeys];
-        array = [array sortedArrayUsingSelector: @selector(compare:)];
-        for (NSString* strSMSCode in array) {
-            NSString* strNumberUser=  [coupon.sms_type objectForKey:strSMSCode];
-            NSString* titleMess=[NSString stringWithFormat:@"Nhận %@ mã coupon (%@ người dùng)",strNumberUser,strNumberUser];
-            [alertView addButtonWithTitle:titleMess
+        if (array.count==1) {
+            NSString* strSMSCode = array.lastObject;
+//            NSString* strNumberUser=  [coupon.sms_type objectForKey:strSMSCode];
+            NSString* titleMess=[NSString stringWithFormat:@"Soạn Coupon %@ gửi 8%@88 để nhận mã Coupon này",coupon.syntax,strSMSCode];
+            
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:titleMess];
+
+            [alertView addButtonWithTitle:@"OK"
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          [TVSMSVC sendSMSWithCoupon:coupon andOption:strSMSCode andViewController:viewController];
+                                      }];
+
+            
+            [alertView addButtonWithTitle:@"Cancel"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
-                                      [TVSMSVC sendSMSWithCoupon:coupon andOption:strSMSCode andViewController:viewController];
+                                      NSLog(@"Cancel Clicked");
                                   }];
+            [alertView show];
+        }else{
+            
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8x88 để nhận mã Coupon này"];
+            array = [array sortedArrayUsingSelector: @selector(compare:)];
+            
+            for (NSString* strSMSCode in array) {
+                NSString* strNumberUser=  [coupon.sms_type objectForKey:strSMSCode];
+                NSString* titleMess=[NSString stringWithFormat:@"Nhận %@ mã coupon (%@ người dùng)",strNumberUser,strNumberUser];
+                [alertView addButtonWithTitle:titleMess
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          [TVSMSVC sendSMSWithCoupon:coupon andOption:strSMSCode andViewController:viewController];
+                                      }];
+            }
+            [alertView addButtonWithTitle:@"Cancel"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Cancel Clicked");
+                                  }];
+            [alertView show];
         }
-        [alertView addButtonWithTitle:@"Cancel"
-                                 type:SIAlertViewButtonTypeDefault
-                              handler:^(SIAlertView *alert) {
-                                  NSLog(@"Cancel Clicked");
-                              }];
-        [alertView show];
     }
-
 }
 
 - (void)viewDidLoad

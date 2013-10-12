@@ -322,22 +322,22 @@
     height_p=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height+10;
     [_couponBranch addSubview:infoCouponBranch];
     
-    UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, height_p, 210, 23)];
-    [self settingTextForTitle:lblTitle];
-    lblTitle.text=@"NỘI DUNG CHI TIẾT";
-    [_couponBranch addSubview:lblTitle];
-    height_p=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
+    if (_coupon.special_content&& ![_coupon.special_content isEqualToString:@""]) {
+        UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, height_p, 210, 23)];
+        [self settingTextForTitle:lblTitle];
+        lblTitle.text=@"ĐIỂM NỔI BẬT";
+        [_couponBranch addSubview:lblTitle];
+        height_p=lblTitle.frame.origin.y+lblTitle.frame.size.height+ 10;
+    }
     
     //create the string
     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
-//    NSLog(@"%@",_coupon.content);
-    //continue building the string
-    [html appendString:_coupon.content];
+    [html appendString:_coupon.special_content];
     [html appendString:@"</body></html>"];
     
     __block int heidhtBlock=height_p;
     
-    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, height_p, 290, 25)] ;
+    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, height_p, 290, 0)] ;
     htmlView.backgroundColor = [UIColor whiteColor];
 //    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
@@ -347,27 +347,29 @@
     [htmlView loadHtmlBody:html competition:^(NSError *error) {
         if (!error) {
             [self webViewDidFinishLoad:htmlView];
+            
             heidhtBlock=htmlView.frame.origin.y+htmlView.frame.size.height+10;
             
             [UIView animateWithDuration:0.2 animations:^{
                 htmlView.alpha = 1;
             }];
-            
-            UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, heidhtBlock, 210, 23)];
-            [self settingTextForTitle:lblTitle];
-            lblTitle.text=@"NỘI DUNG CHI TIẾT";
-            [_couponBranch addSubview:lblTitle];
-            heidhtBlock=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
-            
+            if (_coupon.condition_content&& ![_coupon.condition_content isEqualToString:@""]) {
+                UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, heidhtBlock, 210, 23)];
+                [self settingTextForTitle:lblTitle];
+                lblTitle.text=@"ĐIỀU KIỆN SỬ DỤNG";
+                [_couponBranch addSubview:lblTitle];
+                heidhtBlock=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
+            }
+
             //create the string
             NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
             
             //    NSLog(@"%@",_coupon.content);
             //continue building the string
-            [html appendString:_coupon.content];
+            [html appendString:_coupon.condition_content];
             [html appendString:@"</body></html>"];
             
-            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 25)] ;
+            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 0)] ;
             htmlView.backgroundColor = [UIColor whiteColor];
             htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             
@@ -382,12 +384,13 @@
                         htmlView.alpha = 1;
                     }];
                     
-                    UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, heidhtBlock, 210, 23)];
-                    [self settingTextForTitle:lblTitle];
-                    lblTitle.text=@"NỘI DUNG CHI TIẾT";
-                    [_couponBranch addSubview:lblTitle];
-                    heidhtBlock=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
-                    
+                    if (_coupon.content&& ![_coupon.content isEqualToString:@""]) {
+                        UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, heidhtBlock, 210, 23)];
+                        [self settingTextForTitle:lblTitle];
+                        lblTitle.text=@"NỘI DUNG CHI TIẾT";
+                        [_couponBranch addSubview:lblTitle];
+                        heidhtBlock=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
+                    }
                     //create the string
                     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
                     
@@ -396,7 +399,7 @@
                     [html appendString:_coupon.content];
                     [html appendString:@"</body></html>"];
                     
-                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 25)] ;
+                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 0)] ;
                     htmlView.backgroundColor = [UIColor whiteColor];
                     htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
                     
