@@ -39,7 +39,7 @@
 - (void)setupGoogleAnalytics
 {
     // Optional: automatically track uncaught exceptions with Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = NO;
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 120;
     // Optional: set debug to YES for extra debugging information.

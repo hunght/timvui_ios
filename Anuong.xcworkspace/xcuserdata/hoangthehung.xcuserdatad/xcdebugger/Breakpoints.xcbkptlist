@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
-         timestampString = "403181459.711982"
+         timestampString = "403443666.933446"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "997"
-         endingLineNumber = "997"
+         startingLineNumber = "993"
+         endingLineNumber = "993"
          landmarkName = "-postFollowToServer:"
          landmarkType = "5">
       </FileBreakpoint>
