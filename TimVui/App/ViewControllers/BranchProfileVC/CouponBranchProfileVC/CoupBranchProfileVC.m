@@ -333,15 +333,16 @@
     //create the string
     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
     [html appendString:_coupon.special_content];
+    NSLog(@"special_content= %@",_coupon.special_content);
     [html appendString:@"</body></html>"];
     
     __block int heidhtBlock=height_p;
     
-    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, height_p, 290, 0)] ;
+    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, height_p, 290, 25)] ;
     htmlView.backgroundColor = [UIColor whiteColor];
 //    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    
+    [_couponBranch addSubview:htmlView];
     htmlView.alpha = 0;
     [htmlView.scrollView setScrollEnabled:NO];
     [htmlView loadHtmlBody:html competition:^(NSError *error) {
@@ -364,14 +365,15 @@
             //create the string
             NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
             
-            //    NSLog(@"%@",_coupon.content);
+                NSLog(@"condition_content= %@",_coupon.condition_content);
             //continue building the string
             [html appendString:_coupon.condition_content];
             [html appendString:@"</body></html>"];
             
-            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 0)] ;
+            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 25)] ;
             htmlView.backgroundColor = [UIColor whiteColor];
-            htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            [_couponBranch addSubview:htmlView];
+//            htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             
             htmlView.alpha = 0;
             [htmlView.scrollView setScrollEnabled:NO];
@@ -394,14 +396,15 @@
                     //create the string
                     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
                     
-                    //    NSLog(@"%@",_coupon.content);
+                        NSLog(@"content= %@",_coupon.content);
                     //continue building the string
                     [html appendString:_coupon.content];
                     [html appendString:@"</body></html>"];
                     
-                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 0)] ;
+                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 25)] ;
+                    [_couponBranch addSubview:htmlView];
                     htmlView.backgroundColor = [UIColor whiteColor];
-                    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//                    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
                     
                     htmlView.alpha = 0;
                     [htmlView.scrollView setScrollEnabled:NO];
@@ -435,16 +438,16 @@
                         }
                     }];
                     
-                    [_couponBranch addSubview:htmlView];
+                    
                 }
             }];
             
-            [_couponBranch addSubview:htmlView];
+            
             
         }
     }];
     
-    [_couponBranch addSubview:htmlView];
+    
 }
 
 - (void)displayInfoWhenGetBranch
@@ -499,8 +502,6 @@
     CGRect newBounds = webView.frame;
     newBounds.size.height = webView.scrollView.contentSize.height;
     webView.frame = newBounds;
-    
-   
     
 }
 

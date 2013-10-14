@@ -15,6 +15,7 @@
 #import "TVBranches.h"
 #import "TVCoupons.h"
 #import "TVCoupon.h"
+#import "MacroApp.h"
 @interface GlobalDataUser(){
     NSTimer *myTimer;
     CLLocation *bestEffortAtLocation;
@@ -69,33 +70,43 @@ static GlobalDataUser *_sharedClient = nil;
 }
 
 -(void)startSignificationLocation{
-    
-    UIBackgroundTaskIdentifier bgTask = 0;
-    UIApplication  *app = [UIApplication sharedApplication];
-    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
-        [app endBackgroundTask:bgTask];
-    }];
-    
-    if (myTimer&& [myTimer isValid]) {
-        [myTimer invalidate];
-        myTimer = nil;
+    if ([SharedAppDelegate isConnected]&& _isTurnOffReviewYES) {
+        if (!_isNearlyBranchesHasNewCouponYES.boolValue && !_isHasNearlyBranchesYES.boolValue) {
+            return;
+        }
+        UIBackgroundTaskIdentifier bgTask = 0;
+        UIApplication  *app = [UIApplication sharedApplication];
+        bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+            [app endBackgroundTask:bgTask];
+        }];
+        
+        if (myTimer&& [myTimer isValid]) {
+            [myTimer invalidate];
+            myTimer = nil;
+        }
+        myTimer = [NSTimer scheduledTimerWithTimeInterval:LOCATION_UPDATE_TIME target:self
+                                                 selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
+        if(bgTask != UIBackgroundTaskInvalid) {
+            [[UIApplication sharedApplication] endBackgroundTask:bgTask];
+            bgTask = UIBackgroundTaskInvalid;
+        }
     }
-    myTimer = [NSTimer scheduledTimerWithTimeInterval:LOCATION_UPDATE_TIME target:self
-                                             selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
-    if(bgTask != UIBackgroundTaskInvalid) {
-        [[UIApplication sharedApplication] endBackgroundTask:bgTask];
-        bgTask = UIBackgroundTaskInvalid;
-    }
+    
+    
 }
 
 -(void)locationManagerStart{
+    if (![SharedAppDelegate isConnected]) {
+        return;
+    }
+    
     if (!_locationManager) {
         _locationManager = [[CLLocationManager alloc] init];
         [_locationManager setDelegate:self];
         [_locationManager setDistanceFilter:kCLDistanceFilterNone];
         // _locationManager.pausesLocationUpdatesAutomatically=NO;
         [_locationManager startUpdatingLocation];
-        [_locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
     }
         [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
 }

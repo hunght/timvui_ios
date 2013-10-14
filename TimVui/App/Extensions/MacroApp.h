@@ -11,7 +11,7 @@
 #define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
-#define LOCATION_UPDATE_TIME  60*15//60*15
+#define LOCATION_UPDATE_TIME  15//60*15
 
 
 // Settings
@@ -57,3 +57,6 @@
 #define kPaleCyanGreenColor [UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]
 #define kOrangeColor [UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]
 #define kDeepOrangeColor [UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]
+
+
+

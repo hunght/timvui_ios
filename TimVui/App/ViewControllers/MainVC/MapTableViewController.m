@@ -542,7 +542,7 @@ static const int maxLimitBranches=100;
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     //
     TVBranch* branch= _branches[[marker.title intValue]];
-    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f +9, 70.0f, 52.5f)];
+    UIImageView* imgPhoto=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 8.0f + 4, 70.0f, 52.5f)];
     imgPhoto.contentMode = UIViewContentModeScaleAspectFit;
 
     imgPhoto.image=[[SDImageCache sharedImageCache] imageFromKey:[branch.arrURLImages safeStringForKey:@"80"]];
@@ -552,16 +552,16 @@ static const int maxLimitBranches=100;
 
     }
     
-    UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 90)];
+    UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 80)];
     UIView* viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 160)];
     [viewPad addSubview:view];
     [viewPad setBackgroundColor:[UIColor clearColor]];
     [view addSubview:imgPhoto];
     
-    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+10.0f, 8.0f+7, 180.0f, 20.0f)];
+    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+10.0f, 8.0f+2, 180.0f, 20.0f)];
     [view  addSubview:textLabel];
     
-    UILabel* detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+25.0f, 30.0f+7, 210.0f, 20.0f)];
+    UILabel* detailTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(80+25.0f, 30.0f+2, 210.0f, 20.0f)];
     [view  addSubview:detailTextLabel];
     
     textLabel.textColor = [UIColor blackColor];
@@ -570,7 +570,7 @@ static const int maxLimitBranches=100;
     textLabel.backgroundColor=[UIColor clearColor];
     detailTextLabel.backgroundColor=[UIColor clearColor];
     
-    UILabel* price_avg = [[UILabel alloc] initWithFrame: CGRectMake(80 +25.0f, 48.0f+7, 210.0f, 20.0f)];
+    UILabel* price_avg = [[UILabel alloc] initWithFrame: CGRectMake(80 +25.0f, 48.0f+2, 210.0f, 20.0f)];
     price_avg.backgroundColor = [UIColor clearColor];
     
     price_avg.textColor = [UIColor grayColor];
@@ -580,10 +580,10 @@ static const int maxLimitBranches=100;
     price_avg.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     
-    UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 8.0, 35.0+7, 11, 12)];
+    UIImageView* homeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 8.0, 35.0+2, 11, 12)];
     homeIcon.image=[UIImage imageNamed:@"img_address_branch_icon"];
     
-    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 10.0, 53.0+7, 8, 11)];
+    UIImageView* price_avgIcon = [[UIImageView alloc] initWithFrame:CGRectMake(80+ 10.0, 53.0+2, 8, 11)];
     price_avgIcon.image=[UIImage imageNamed:@"img_price_range_branch_icon"];
     
     CALayer* l = [imgPhoto layer];
@@ -593,11 +593,11 @@ static const int maxLimitBranches=100;
     [view addSubview:homeIcon];
     [view addSubview:price_avgIcon];
     
-    UIView* _utility=[[UIView alloc] initWithFrame:CGRectMake(88,70+7, 320-88, 0)];
+    UIView* _utility=[[UIView alloc] initWithFrame:CGRectMake(88,70+2, 320-88, 0)];
     [view   addSubview:_utility];
     [view   setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
-    UILabel* _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,7+7, 60, 15)];
+    UILabel* _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,7+2, 60, 15)];
     _lblDistance.backgroundColor = [UIColor clearColor];
     _lblDistance.textColor = [UIColor grayColor];
     _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];

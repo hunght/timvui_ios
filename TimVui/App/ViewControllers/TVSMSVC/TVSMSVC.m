@@ -57,7 +57,7 @@
             [alertView show];
         }else{
             
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:@"Soạn Coupon ABCD gửi 8x88 để nhận mã Coupon này"];
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:[NSString stringWithFormat:@"Soạn Coupon %@ gửi 8x88 để nhận mã Coupon này",coupon.syntax]];
             array = [array sortedArrayUsingSelector: @selector(compare:)];
             
             for (NSString* strSMSCode in array) {

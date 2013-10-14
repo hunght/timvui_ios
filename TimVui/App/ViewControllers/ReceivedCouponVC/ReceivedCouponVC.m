@@ -55,7 +55,6 @@ static const NSString* limitCount=@"30";
             [arrCoupons addObject:coupon];
         }
     }
-
     [self.tableView reloadData];
 }
 

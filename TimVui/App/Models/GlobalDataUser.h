@@ -46,6 +46,8 @@
 
 @property (retain, nonatomic) NSString* linkAppleStore;
 
+@property (assign, nonatomic) BOOL isTurnOffReviewYES;
+
 @property (assign, nonatomic) BOOL isTurnOnLocationService;
 @property (assign, nonatomic) BOOL isUserLocationSearhParamYES;
 enum {
