@@ -394,7 +394,7 @@
                         heidhtBlock=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
                     }
                     //create the string
-                    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
+                    NSMutableString *html = [NSMutableString stringWithString: @"<html><head></head><body style=\"background:transparent;\">"];
                     
                         NSLog(@"content= %@",_coupon.content);
                     //continue building the string
@@ -502,6 +502,8 @@
     CGRect newBounds = webView.frame;
     newBounds.size.height = webView.scrollView.contentSize.height;
     webView.frame = newBounds;
+    NSString *result = [webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"];
+    NSLog(@"web height=%@",result);
     
 }
 

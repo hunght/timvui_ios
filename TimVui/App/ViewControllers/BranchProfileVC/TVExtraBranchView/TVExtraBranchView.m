@@ -410,6 +410,7 @@
     [html appendString:@"</body></html>"];
     
     CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, height, 290, 25)] ;
+    [eventView addSubview:htmlView];
     htmlView.backgroundColor = [UIColor whiteColor];
     htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
@@ -441,7 +442,7 @@
         }
     }];
     
-    [eventView addSubview:htmlView];
+   
 }
 
 - (void)addEventToInfoView
@@ -523,6 +524,7 @@
     [self.scrollKaraoke addSubview:karaokeView];
     
     CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(0, karaokeHeight, 290, 25)] ;
+    [karaokeView addSubview:htmlView];
     htmlView.backgroundColor = [UIColor whiteColor];
     htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
@@ -556,7 +558,7 @@
         }
     }];
     
-    [karaokeView addSubview:htmlView];
+    
 }
 
 - (void)addKaraokeToInfoView

@@ -84,7 +84,7 @@ static GlobalDataUser *_sharedClient = nil;
             [myTimer invalidate];
             myTimer = nil;
         }
-        myTimer = [NSTimer scheduledTimerWithTimeInterval:LOCATION_UPDATE_TIME target:self
+        myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
         if(bgTask != UIBackgroundTaskInvalid) {
             [[UIApplication sharedApplication] endBackgroundTask:bgTask];

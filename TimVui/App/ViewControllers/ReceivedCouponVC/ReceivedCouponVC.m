@@ -260,7 +260,7 @@ static const NSString* limitCount=@"30";
                                             withMessage:nil
                                                withType:TSMessageNotificationTypeWarning];
             
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Thông tin" message:@"Số điện thoại của bạn chưa đúng theo định dang 09******** hoặc 01*********. Vui lòng nhập lại." delegate:self cancelButtonTitle:@"OK"  otherButtonTitles:@"Cancel",nil];
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Thông tin" message:@"SĐT phải đúng theo định dang 09******** hoặc 01*********." delegate:self cancelButtonTitle:@"OK"  otherButtonTitles:@"Cancel",nil];
             
             alert.alertViewStyle = UIAlertViewStylePlainTextInput;
             [alert show];

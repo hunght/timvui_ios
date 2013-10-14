@@ -1215,8 +1215,8 @@
 		55D391EC177D77F200BE41B7 /* TVPhotoBrowserVC_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TVPhotoBrowserVC_iPhone.xib; path = TimVui/App/ViewControllers/BranchProfileVC/PhotoBrowserVC/TVPhotoBrowserVC_iPhone.xib; sourceTree = SOURCE_ROOT; };
 		55D391ED177D77F200BE41B7 /* TVPhotoBrowserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVPhotoBrowserVC.h; path = TimVui/App/ViewControllers/BranchProfileVC/PhotoBrowserVC/TVPhotoBrowserVC.h; sourceTree = SOURCE_ROOT; };
 		55D391EE177D77F200BE41B7 /* TVPhotoBrowserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVPhotoBrowserVC.m; path = TimVui/App/ViewControllers/BranchProfileVC/PhotoBrowserVC/TVPhotoBrowserVC.m; sourceTree = SOURCE_ROOT; };
-		55D3A8551809107F005AEA00 /* 57.3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 57.3.png; sourceTree = "<group>"; };
-		55D3A85718091083005AEA00 /* 114.3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 114.3.png; sourceTree = "<group>"; };
+		55D3A8551809107F005AEA00 /* 57.3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 57.3.png; path = ../../57.3.png; sourceTree = "<group>"; };
+		55D3A85718091083005AEA00 /* 114.3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 114.3.png; path = ../../114.3.png; sourceTree = "<group>"; };
 		55D5A8BD171E7BC90027BBFE /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		55D5A8BF171E7BCF0027BBFE /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		55D5A8C0171E7BCF0027BBFE /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -1642,8 +1642,6 @@
 		5562B17D16FC50F300E21A82 = {
 			isa = PBXGroup;
 			children = (
-				55D3A85718091083005AEA00 /* 114.3.png */,
-				55D3A8551809107F005AEA00 /* 57.3.png */,
 				5562B18F16FC50F300E21A82 /* TimVui */,
 				5562B1AD16FC50F300E21A82 /* TimVuiTests */,
 				5562B18816FC50F300E21A82 /* Frameworks */,
@@ -2580,6 +2578,8 @@
 		55C8C10417052E4C007D8E78 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				55D3A85718091083005AEA00 /* 114.3.png */,
+				55D3A8551809107F005AEA00 /* 57.3.png */,
 				55CFAF5017B5E3DC001B2E2C /* VNF Prime Regular.ttf */,
 				5511DB32179E64D30071ABCF /* UVNTinTucHepThem_R.TTF */,
 				5511DB33179E64D30071ABCF /* UVNTinTucHepThem.TTF */,

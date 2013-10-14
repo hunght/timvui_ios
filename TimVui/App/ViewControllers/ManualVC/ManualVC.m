@@ -67,14 +67,16 @@ static const NSString* limitCount=@"5";
             tableFooter.hidden=NO;
         }else{
             tableFooter.hidden=YES;
-            for (NSDictionary* dic in dicArray) {
-                TVManual* munual=[[TVManual alloc] initWithDict:dic];
-                [_manualArr addObject:munual];
-            }
-        }
 
+        }
+        
+        for (NSDictionary* dic in dicArray) {
+            TVManual* munual=[[TVManual alloc] initWithDict:dic];
+            [_manualArr addObject:munual];
+        }
+        
         if (_btnSaved.isSelected) {
-            _lblSaveHandbookCount.text=[NSString stringWithFormat:@"%d",_manualArr.count];
+            _lblSaveHandbookCount.text=[NSString stringWithFormat:@"%d",[[GlobalDataUser sharedAccountClient].userHandBookIDs allKeys].count];
         }
         offset+=limitCount.intValue;
         [self.tableView reloadData];
@@ -204,6 +206,7 @@ static const NSString* limitCount=@"5";
 
 #pragma mark TVFilterVCDelegate
 -(void)didClickedFilterButton{
+    offset=0;
     [self postToGetManual];
     
 }
@@ -243,17 +246,59 @@ static const NSString* limitCount=@"5";
 }
 
 - (IBAction)savedButtonClicked:(UIButton*)sender {
-    [_btnRecently setSelected:NO];
-    [_btnPopular setSelected:NO];
-    [sender setSelected:YES];
     
-    [params setValue:@"user" forKey:@"type"];
-    [params setValue:[GlobalDataUser sharedAccountClient].user.userId forKey:@"user_id"];
-    if (self.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
-        self.tableView.showsInfiniteScrolling=YES;
-        offset=0;
-        [self postToGetManual];
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
+        [_btnRecently setSelected:NO];
+        [_btnPopular setSelected:NO];
+        [sender setSelected:YES];
+        
+        [params setValue:@"user" forKey:@"type"];
+        [params setValue:[GlobalDataUser sharedAccountClient].user.userId forKey:@"user_id"];
+        if (self.tableView.infiniteScrollingView.state!=SVInfiniteScrollingStateLoading) {
+            self.tableView.showsInfiniteScrolling=YES;
+            offset=0;
+            [self postToGetManual];
+        }
+       
+    }else{
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login ?"];
+        
+        [alertView addButtonWithTitle:@"Login"
+                                 type:SIAlertViewButtonTypeDefault
+                              handler:^(SIAlertView *alert) {
+                                  
+                                  LoginVC* loginVC=nil;
+                                  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPhone" bundle:nil];
+                                  } else {
+                                      loginVC = [[LoginVC alloc] initWithNibName:@"LoginVC_iPad" bundle:nil];
+                                  }
+                                  
+                                  UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                                  [self presentModalViewController:navController animated:YES];
+                                  [loginVC goWithDidLogin:^{
+                                      if ([self respondsToSelector:@selector(savedButtonClicked:)]) {
+                                          [self performSelector:@selector(savedButtonClicked:) withObject:sender afterDelay:1];
+                                      }
+                                      
+                                  } thenLoginFail:^{
+                                      [TSMessage showNotificationInViewController:self
+                                                                        withTitle:@"Có lỗi khi đăng nhập!"
+                                                                      withMessage:nil
+                                                                         withType:TSMessageNotificationTypeWarning];
+                                  }];
+                                  
+                                  
+                              }];
+        [alertView addButtonWithTitle:@"Cancel"
+                                 type:SIAlertViewButtonTypeCancel
+                              handler:^(SIAlertView *alert) {
+                                  NSLog(@"Cancel Clicked");
+                              }];
+        [alertView show];
     }
+    
+    
 }
 
 -(void)saveButtonClicked:(UIButton*)sender{

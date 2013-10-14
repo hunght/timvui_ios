@@ -1,18 +1,10 @@
-//
-//  MacroCityOffers.h
-//  CityOffers
-//
-//  Created by Nguyen Mau Dat on 6/29/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+//HUNGHT
 
 #import "GAI.h"
 
-#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
-#define LOCATION_UPDATE_TIME  15//60*15
-
 
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"

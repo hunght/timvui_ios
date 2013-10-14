@@ -207,6 +207,7 @@
         [[TVNetworkingClient sharedClient] postPath:@"user/getIOSAppInfo" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
             [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
             [GlobalDataUser sharedAccountClient].isTurnOffReviewYES=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
+            [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
             NSLog(@"JSON=%@",JSON);
             
 #warning not check if it work
