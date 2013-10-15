@@ -108,7 +108,7 @@ static GlobalDataUser *_sharedClient = nil;
         [_locationManager startUpdatingLocation];
         [_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
     }
-        [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
+    [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
 }
 
 -(void)locationManagerStop{
@@ -140,9 +140,9 @@ static GlobalDataUser *_sharedClient = nil;
 - (void)setUserWithDic:(NSDictionary *)JSON {
     self.isLogin = YES;
     NSLog(@"%@",JSON);
-        [self.user setValues:JSON ];
-//#warning User login set default USER ID TEST
-//    self.user.userId=@"8878";
+    [self.user setValues:JSON ];
+    //#warning User login set default USER ID TEST
+    //    self.user.userId=@"8878";
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             
@@ -156,14 +156,14 @@ static GlobalDataUser *_sharedClient = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
-
+    
 }
 
 - (void)updateNotificationSetting:(NSString*)is_notify {
-
-//    NSLog(@"userObject = %@",[GlobalDataUser sharedAccountClient].user.userId);
-//    NSLog(@"UUID = %@",[GlobalDataUser sharedAccountClient].UUID);
-//    NSLog(@"_deviceToken = %@",_deviceToken);
+    
+    //    NSLog(@"userObject = %@",[GlobalDataUser sharedAccountClient].user.userId);
+    //    NSLog(@"UUID = %@",[GlobalDataUser sharedAccountClient].UUID);
+    //    NSLog(@"_deviceToken = %@",_deviceToken);
     NSDictionary * userObject=[NSDictionary dictionaryWithObjectsAndKeys:
                                [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                [GlobalDataUser sharedAccountClient].UUID,@"mobile_id",
@@ -189,7 +189,7 @@ static GlobalDataUser *_sharedClient = nil;
 -(void)setGlocalDataUser:(NSDictionary *)JSON{
     [self setUserWithDic:JSON];
     [self savePersistenceAccountWithData:JSON];
-
+    
 }
 
 -(void)userLogout{
@@ -365,7 +365,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-//    NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
+    //    NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
     // test the age of the location measurement to determine if the measurement is cached
     // in most cases you will not want to rely on cached measurements
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
@@ -388,7 +388,7 @@ static GlobalDataUser *_sharedClient = nil;
             // IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
             //
             [GlobalDataUser sharedAccountClient].userLocation=bestEffortAtLocation.coordinate;
-
+            
             [self locationManagerStop];
         }
     }

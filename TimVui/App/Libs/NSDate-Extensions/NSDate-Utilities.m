@@ -64,6 +64,7 @@ static NSDateFormatter *formatter;
 /*
  * This guy can be a little unreliable and produce unexpected results,
  * you're better off using daysAgoAgainstMidnight
+ * give the number of day from now to the past.
  */
 - (NSUInteger)daysAgo {
     NSCalendar *calendar = [NSCalendar currentCalendar];

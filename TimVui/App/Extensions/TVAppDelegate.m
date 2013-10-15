@@ -13,7 +13,6 @@
 #import <FacebookSDK/FBSessionTokenCachingStrategy.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import "WelcomeVC.h"
-#import "TSMessage.h"
 #import "GlobalDataUser.h"
 #import "NSDate-Utilities.h"
 #import <JSONKit.h>
@@ -25,6 +24,7 @@
 #import "TVCoupons.h"
 #import "MyNavigationController.h"
 #import "NSDictionary+Extensions.h"
+#import "NSDate-Utilities.h"
 
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
@@ -210,6 +210,21 @@
             [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
             NSLog(@"JSON=%@",JSON);
             
+            float newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
+            float currentVersion=[[[NSBundle mainBundle] infoDictionary] safeStringForKey:@"CFBundleVersion"].floatValue;
+            
+            NSDate *myDate = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:kNotifBranches];
+            if (!(myDate && [myDate daysAgo]<7)) {
+                NSDate *myDate = [NSDate date];
+                [[NSUserDefaults standardUserDefaults] setObject:myDate forKey:kNotifBranches];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                if (currentVersion<newVersion) {
+                    
+                }
+            }
+
+            
 #warning not check if it work
 
             if ([GlobalDataUser sharedAccountClient].isTurnOffReviewYES) {
@@ -223,6 +238,7 @@
                     [GlobalDataUser sharedAccountClient].phoneNumber=PhoneNumber;
                 }
             }
+            
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             

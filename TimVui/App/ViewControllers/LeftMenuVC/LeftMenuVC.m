@@ -675,8 +675,9 @@ enum {
             cellUser = [[TVMenuUserCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] ;
         }
         
-        if ([GlobalDataUser sharedAccountClient].isLogin){           
-            cellUser.textLabel.text = [GlobalDataUser sharedAccountClient].user.first_name;
+        if ([GlobalDataUser sharedAccountClient].isLogin){
+            
+            cellUser.textLabel.text = [NSString stringWithFormat:@"%@ %@",[GlobalDataUser sharedAccountClient].user.last_name,[GlobalDataUser sharedAccountClient].user.first_name];
             [cellUser.imgAvatar setImageWithURL:[[NSURL alloc] initWithString:[GlobalDataUser sharedAccountClient].user.avatar]  placeholderImage:[UIImage imageNamed:@"user"]];
         }else{
             cellUser.textLabel.text = @"Đăng nhập";

@@ -8,6 +8,7 @@
 
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"
+#define kVersionApp               @"kVersionApp"
 #define kUserPhoneNumber               @"kUserPhoneNumber"
 #define kCheckHasCouponBranchIsInBackGround @"2"
 

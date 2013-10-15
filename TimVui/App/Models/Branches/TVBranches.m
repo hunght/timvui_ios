@@ -26,7 +26,6 @@
         
 		[self addObject:branch];
 	}
-	self.lastUpdate = [NSDate date];
 }
 
 @end
