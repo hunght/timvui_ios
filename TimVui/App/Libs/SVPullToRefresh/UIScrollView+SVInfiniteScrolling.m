@@ -28,7 +28,7 @@ static CGFloat const SVInfiniteScrollingViewHeight = 60;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, readwrite) SVInfiniteScrollingState state;
 @property (nonatomic, strong) NSMutableArray *viewForState;
-@property (nonatomic, unsafe_unretained) UIScrollView *scrollView;
+@property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, readwrite) CGFloat originalBottomInset;
 @property (nonatomic, assign) BOOL wasTriggeredByUser;
 @property (nonatomic, assign) BOOL isObserving;
@@ -51,12 +51,14 @@ UIEdgeInsets scrollViewOriginalContentInsets;
 
 @dynamic infiniteScrollingView;
 
-- (void)addInfiniteScrollingWithActionHandler:(void (^)(void))actionHandler{
+- (void)addInfiniteScrollingWithActionHandler:(void (^)(void))actionHandler {
+    
     if(!self.infiniteScrollingView) {
         SVInfiniteScrollingView *view = [[SVInfiniteScrollingView alloc] initWithFrame:CGRectMake(0, self.contentSize.height, self.bounds.size.width, SVInfiniteScrollingViewHeight)];
         view.infiniteScrollingHandler = actionHandler;
         view.scrollView = self;
         [self addSubview:view];
+        
         view.originalBottomInset = self.contentInset.bottom;
         self.infiniteScrollingView = view;
         self.showsInfiniteScrolling = YES;
@@ -286,6 +288,7 @@ UIEdgeInsets scrollViewOriginalContentInsets;
                 break;
                 
             case SVInfiniteScrollingStateTriggered:
+                [self.activityIndicatorView startAnimating];
                 break;
                 
             case SVInfiniteScrollingStateLoading:

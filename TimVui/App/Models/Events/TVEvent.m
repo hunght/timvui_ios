@@ -78,7 +78,7 @@
             }
         }
     }
-    NSLog(@"self.start= %@",self.start);
+//    NSLog(@"self.start= %@",self.start);
     self.image= [[dict safeDictForKey:@"image"] safeStringForKey:@"cover"];
     self.created= [dict safeDateForKey:@"created"];
     

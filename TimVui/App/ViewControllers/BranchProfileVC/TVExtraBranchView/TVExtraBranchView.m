@@ -203,7 +203,7 @@
 #pragma TVNetworking
 
 - (void)postCommentBranch:(NSDictionary*)params {
-    NSLog(@"%@",params);
+    NSLog(@"params == %@",params);
     if (!self.comments) {
         self.comments=[[TVComments alloc] initWithPath:@"branch/getComments"];
     }
@@ -212,10 +212,17 @@
     int preCount=self.comments.items.count;
     [weakSelf.comments loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
-            if (preCount>0 && weakSelf.comments.items.count==preCount) {
-                [tableFooter setText:@"Không còn đánh giá nào"];
-                tableFooter.hidden=NO;
-                weakSelf.tableView.showsInfiniteScrolling=NO;
+            if (weakSelf.comments.items.count==preCount) {
+
+#warning remove observer from there may be leak
+//                weakSelf.tableView.showsInfiniteScrolling=NO;
+                if (weakSelf.comments.items.count==0) {
+//                    weakSelf.tableView.showsPullToRefresh=NO;
+                    
+                }else{
+                    [tableFooter setText:@"Không còn đánh giá nào"];
+                    tableFooter.hidden=NO;
+                }
             }else{
                 tableFooter.hidden=YES;
                 weakSelf.tableView.showsInfiniteScrolling=YES;
@@ -1234,8 +1241,7 @@
             [self showFloatView];
             if (count==0) {
                 
-                self.tableView.showsPullToRefresh=NO;
-                self.tableView.showsInfiniteScrolling=NO;
+
                 lblWriteReviewNotice.text=@"Hãy viết đánh giá về địa điểm này để chia sẻ với bạn bè của bạn";
                 lblWriteReviewNotice.hidden=NO;
             }else{

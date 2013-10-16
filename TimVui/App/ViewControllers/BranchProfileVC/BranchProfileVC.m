@@ -403,7 +403,7 @@
     //Show mapView button
     NSString* latlng=[NSString stringWithFormat:@"%f,%f",_branch.latlng.latitude,_branch.latlng.longitude];
     NSString* strURL=[NSString stringWithFormat:@"http://maps.google.com/maps/api/staticmap?center=%@&zoom=15&size=194x144&markers=size:mid%@color:red%@%@&sensor=false",latlng,@"%7C",@"%7C",latlng];
-    NSLog(@"strURL = %@",strURL);
+//    NSLog(@"strURL = %@",strURL);
     
     NSURL* url=[NSURL URLWithString:strURL];
     UIButton* mapViewButton = [[UIButton alloc] initWithFrame:CGRectMake(218, 106, 97, 72)];
@@ -994,9 +994,9 @@
                             _branch.branchID,@"branch_id",
                             
                             nil];
-    NSLog(@"params %@",params);
+//    NSLog(@"params %@",params);
     [[TVNetworkingClient sharedClient] postPath:@"branch/userFavouriteBranch" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-        NSLog(@"%@",JSON);
+//        NSLog(@"JSON=== %@",JSON);
         int i=[JSON safeIntegerForKey:@"status"];
         if (i==200) {
             [[GlobalDataUser sharedAccountClient].followBranchesSet setValue:_branch.branchID forKey:_branch.branchID];

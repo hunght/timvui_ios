@@ -498,10 +498,10 @@ static const int maxLimitBranches=100;
 
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    NSLog(@"_lastDistanceSearch/2=%f",_lastDistanceSearch/2);
+//    NSLog(@"_lastDistanceSearch/2=%f",_lastDistanceSearch/2);
     if (_lastPosition.latitude) {
         double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition];
-        NSLog(@"distance ==== %f",distance);
+//        NSLog(@"distance ==== %f",distance);
         if (distance>_lastDistanceSearch/2) {
             if ([_lastUpdate isLaterThanSeconds:2]) {
                 CLLocationCoordinate2D bottomLeftCoord =

@@ -333,7 +333,7 @@
     //create the string
     NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
     [html appendString:_coupon.special_content];
-    NSLog(@"special_content= %@",_coupon.special_content);
+//    NSLog(@"special_content= %@",_coupon.special_content);
     [html appendString:@"</body></html>"];
     
     __block int heidhtBlock=height_p;
@@ -365,7 +365,7 @@
             //create the string
             NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
             
-                NSLog(@"condition_content= %@",_coupon.condition_content);
+//                NSLog(@"condition_content= %@",_coupon.condition_content);
             //continue building the string
             [html appendString:_coupon.condition_content];
             [html appendString:@"</body></html>"];
@@ -396,7 +396,7 @@
                     //create the string
                     NSMutableString *html = [NSMutableString stringWithString: @"<html><head></head><body style=\"background:transparent;\">"];
                     
-                        NSLog(@"content= %@",_coupon.content);
+//                        NSLog(@"content= %@",_coupon.content);
                     //continue building the string
                     [html appendString:_coupon.content];
                     [html appendString:@"</body></html>"];

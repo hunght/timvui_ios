@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
-            timestampString = "403443666.933446"
+            filePath = "TimVui/App/Libs/SVPullToRefresh/UIScrollView+SVPullToRefresh.m"
+            timestampString = "403588859.124299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "993"
-            endingLineNumber = "993"
-            landmarkName = "-postFollowToServer:"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "-setShowsPullToRefresh:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-            timestampString = "403502454.805358"
+            filePath = "TimVui/App/Libs/SVPullToRefresh/UIScrollView+SVInfiniteScrolling.m"
+            timestampString = "403588881.580542"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "-handleAppLink:"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "-willMoveToSuperview:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/SearchVC/SearchVC.m"
-            timestampString = "403065330.882687"
+            filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
+            timestampString = "403591179.508985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "-buttonResetClicked:"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
+            landmarkName = "-postCommentBranch:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +57,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403416396.005075"
+            filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
+            timestampString = "403591179.508985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "-checkHasNearlyBranchIsInBackGround:"
+            startingLineNumber = "732"
+            endingLineNumber = "732"
+            landmarkName = "-menuButtonClicked:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,13 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
-            timestampString = "403181561.650985"
+            filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
+            timestampString = "403591179.508985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
-            landmarkName = "-addCouponToInfoView:"
+            startingLineNumber = "795"
+            endingLineNumber = "795"
+            landmarkName = "-postSimilarBranch:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,13 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/DetailManualVC/DetailManualVC.m"
-            timestampString = "403185190.185143"
+            filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
+            timestampString = "403591179.508985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "1271"
+            endingLineNumber = "1271"
+            landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -105,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/BranchProfileVC/CouponBranchProfileVC/CoupBranchProfileVC.m"
-            timestampString = "403245127.251466"
+            filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
+            timestampString = "403591319.262381"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
-            landmarkName = "-showInfoView"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
+            landmarkName = "-postCommentBranch:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -121,237 +121,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/BranchProfileVC/CouponBranchProfileVC/CoupBranchProfileVC.m"
-            timestampString = "403245127.251466"
+            filePath = "TimVui/App/Libs/SVPullToRefresh/UIScrollView+SVInfiniteScrolling.m"
+            timestampString = "403591376.577824"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
-            landmarkName = "-showInfoView"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403415016.244"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "-startSignificationLocation"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-            timestampString = "403502454.805358"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
-            landmarkName = "-loadWhenInternetConnected"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403415476.643083"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "-startSignificationLocation"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403416534.435016"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
-            landmarkName = "-checkHasNearlyBranchIsInBackGround:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403416626.421888"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "-checkHasCouponBranchIsInBackGround:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/BranchProfileVC/CouponBranchProfileVC/CoupBranchProfileVC.m"
-            timestampString = "403418710.504184"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
-            landmarkName = "-webViewDidFinishLoad:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/ManualVC/ManualVC.m"
-            timestampString = "403439768.096021"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "-didClickedFilterButton"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-            timestampString = "403504753.057923"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "-loadWhenInternetConnected"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
-            timestampString = "403521265.593288"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "724"
-            endingLineNumber = "724"
-            landmarkName = "-dealloc"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/BranchProfileVC/BranchProfileVC.m"
-            timestampString = "403521269.777438"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "688"
-            endingLineNumber = "688"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Libs/FloatView/FloatView.m"
-            timestampString = "403521302.722125"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "-initWithFrame:withScrollView:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/MainVC/LocationPickerView/LocationPickerView.m"
-            timestampString = "403521308.752048"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "-layoutSubviews"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/MainVC/LocationPickerView/LocationPickerView.m"
-            timestampString = "403521312.1236"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-layoutSubviews"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/MainVC/LocationPickerView/LocationPickerView.m"
-            timestampString = "403522042.527828"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "-dealloc"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "-setShowsInfiniteScrolling:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
