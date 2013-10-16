@@ -14,7 +14,7 @@
 
 
 - (void)setValues:(id)values {
-    NSLog(@"TVGroupCuisines======%@",values);
+//    NSLog(@"TVGroupCuisines======%@",values);
     
     self.items = [NSMutableArray array];
 	for (NSDictionary *dict in values ) {

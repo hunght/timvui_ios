@@ -25,6 +25,7 @@
 #import "MyNavigationController.h"
 #import "NSDictionary+Extensions.h"
 #import "NSDate-Utilities.h"
+#import "GAI.h"
 
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
@@ -38,12 +39,15 @@
 
 - (void)setupGoogleAnalytics
 {
+    // User must be able to opt out of tracking
+    [GAI sharedInstance].optOut =true;
+    
     // Optional: automatically track uncaught exceptions with Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 120;
-    // Optional: set debug to YES for extra debugging information.
-    [GAI sharedInstance].debug = NO;
+//    // Optional: set debug to YES for extra debugging information.
+//    [GAI sharedInstance].debug = NO;
     // Create tracker instance.
     _tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
     [GAI sharedInstance].defaultTracker = _tracker;
@@ -208,23 +212,21 @@
             [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
             [GlobalDataUser sharedAccountClient].isTurnOffReviewYES=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
             [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
-            NSLog(@"JSON=%@",JSON);
+//            NSLog(@"JSON=%@",JSON);
             
             float newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
             float currentVersion=[[[NSBundle mainBundle] infoDictionary] safeStringForKey:@"CFBundleVersion"].floatValue;
             
-            NSDate *myDate = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:kNotifBranches];
-            if (!(myDate && [myDate daysAgo]<7)) {
+            NSDate *myDate = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:kVersionAppDate];
+            if (!myDate || [myDate daysAgo]<7) {
                 NSDate *myDate = [NSDate date];
-                [[NSUserDefaults standardUserDefaults] setObject:myDate forKey:kNotifBranches];
+                [[NSUserDefaults standardUserDefaults] setObject:myDate forKey:kVersionAppDate];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 if (currentVersion<newVersion) {
                     
                 }
             }
-
-            
 #warning not check if it work
 
             if ([GlobalDataUser sharedAccountClient].isTurnOffReviewYES) {

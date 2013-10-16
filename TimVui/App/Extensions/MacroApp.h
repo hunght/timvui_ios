@@ -2,13 +2,13 @@
 
 #import "GAI.h"
 
-#define kAFAppDotNetAPIBaseURLString  @"http://local.anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
 
 // Settings
 #define kAccountUserJSON               @"accountUserJSON"
-#define kVersionApp               @"kVersionApp"
+#define kVersionAppDate               @"kVersionAppDate"
 #define kUserPhoneNumber               @"kUserPhoneNumber"
 #define kCheckHasCouponBranchIsInBackGround @"2"
 

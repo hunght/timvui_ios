@@ -72,6 +72,7 @@
 {
     void *context = (__bridge void *)self;
     [self.tableView removeObserver:self forKeyPath:@"contentOffset" context:context];
+    [self.mapView removeObserver:self forKeyPath:@"myLocation" context:context];
 }
 
 

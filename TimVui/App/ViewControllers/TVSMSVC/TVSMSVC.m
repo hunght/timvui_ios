@@ -10,6 +10,7 @@
 #import "TVCoupon.h"
 #import "MacroApp.h"
 #import "SIAlertView.h"
+#import "GAI.h"
 @interface TVSMSVC ()
 
 @end
@@ -30,6 +31,7 @@
     picker.messageComposeDelegate = viewController;
     UIViewController*vc=(UIViewController*)viewController;
     [vc.navigationController    presentModalViewController:picker animated:YES];
+    
 }
 
 +(void)viewOptionSMSWithViewController:(UIViewController*)viewController andCoupon:(TVCoupon*)coupon{
@@ -82,11 +84,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết branch"
-                                                     withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
-                                                      withLabel:@"Chi tiết branch- Gửi SMS nhận coupon"
-                                                      withValue:[NSNumber numberWithInt:0]];
-	// Do any additional setup after loading the view.
+    #warning GAI tracking not done
+    
+//    [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Chi tiết branch"
+//                                                     withAction:@"Chi tiết branch- Gửi SMS nhận coupon"
+//                                                      withLabel:@"Chi tiết branch- Gửi SMS nhận coupon"
+//                                                      withValue:[NSNumber numberWithInt:0]];
+    
 }
 
 - (void)didReceiveMemoryWarning

@@ -27,7 +27,7 @@
 }
 
 - (void)setValues:(id)dict {
-    NSLog(@"%@",dict);
+//    NSLog(@"%@",dict);
 	self.couponID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
 	self.view = [dict safeStringForKey:@"view"];

@@ -25,7 +25,7 @@
 }
 
 - (void)setValues:(NSDictionary*)dict {
-    NSLog(@"tvBranch===%@",dict);
+//    NSLog(@"tvBranch===%@",dict);
 	self.branchID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
     

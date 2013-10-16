@@ -451,8 +451,8 @@
     
     [likeButton addTarget:self action:@selector(likeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:likeButton];
-    NSLog(@"_branch.branchID =%@",_branch.branchID);
-    NSLog(@"follow =%@",[[GlobalDataUser sharedAccountClient].followBranchesSet valueForKey:_branch.branchID]);
+//    NSLog(@"_branch.branchID =%@",_branch.branchID);
+//    NSLog(@"follow =%@",[[GlobalDataUser sharedAccountClient].followBranchesSet valueForKey:_branch.branchID]);
     if ([[GlobalDataUser sharedAccountClient].followBranchesSet valueForKey:_branch.branchID]) {
         [likeButton setSelected:YES];
     }else{
@@ -478,7 +478,7 @@
     int heightDetailInfo=[self addLineToView:detailInfoBranch];
     
     //Style foody
-    NSLog(@"[_branch.cats valueForKey]=%@",[[_branch.cats allValues] valueForKey:@"name"] );
+//    NSLog(@"[_branch.cats valueForKey]=%@",[[_branch.cats allValues] valueForKey:@"name"] );
     NSString* strTiltle=@"Thể loại";
     
     [self setRowWithHeight:&heightDetailInfo detailInfoBranch:detailInfoBranch strDetail:[self getCatsStringFromDic:_branch.cats] strTiltle:strTiltle];
@@ -599,7 +599,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.trackedViewName=@"Chi tiết branch";
+    self.screenName=@"Chi tiết branch";
     //Setbackground color dot line
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
