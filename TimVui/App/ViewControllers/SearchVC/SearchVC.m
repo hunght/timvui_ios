@@ -37,12 +37,13 @@ static const NSString* distanceSearchParam=@"2000";
 #pragma mark IBAction
 - (IBAction)swithChagedValue:(UISwitch*)sender {
     BOOL isTurnOnMess=NO;
+
     if (!sender) {
-        
         sender=_switchUserLocation;
     }else{
         isTurnOnMess=YES;
     }
+    
     if ([GlobalDataUser sharedAccountClient].isTurnOnLocationService) {
         [GlobalDataUser sharedAccountClient].isUserLocationSearhParamYES=sender.isOn;
         sender.userInteractionEnabled=NO;
@@ -72,9 +73,7 @@ static const NSString* distanceSearchParam=@"2000";
                                             withMessage:nil
                                                withType:TSMessageNotificationTypeWarning];
         }
-
     }
-    
 }
 
 -(void)categoryButtonClicked:(UIButton*)sender{
@@ -204,14 +203,6 @@ static const NSString* distanceSearchParam=@"2000";
 }
 
 - (IBAction)buttonResetClicked:(id)sender {
-    [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=nil;
-    [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
-    [GlobalDataUser sharedAccountClient].dicCuisineSearchParam=nil;
-    [GlobalDataUser sharedAccountClient].dicPurposeSearchParam=nil;
-    [GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam=nil;
-    [[GlobalDataUser sharedAccountClient].dicPriceSearchParam removeAllObjects];
-    [[GlobalDataUser sharedAccountClient].dicCatSearchParam removeAllObjects];
-    
     [_btnPrice100 setSelected:NO];
     [_btnPrice1000 setSelected:NO];
     [_btnPrice100_200 setSelected:NO];
@@ -223,7 +214,24 @@ static const NSString* distanceSearchParam=@"2000";
     [_btnEatingShop setSelected:NO];
     [_btnKaraoke setSelected:NO];
     [_btnBar setSelected:NO];
+    _lblRestaurant.textColor=([_btnRestaurant isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+    _lblEatingShop.textColor=([_btnEatingShop isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+    _lblCafeKem.textColor=([_btnCafe isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+    _lblCakeShop.textColor=([_btnCakeShop isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+    _lblBarPub.textColor=([_btnBar isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+    _lblKaraoke.textColor=([_btnKaraoke isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+    
+    [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=nil;
+    [GlobalDataUser sharedAccountClient].dicPublicLocation=nil;
+    [GlobalDataUser sharedAccountClient].dicCuisineSearchParam=nil;
+    [GlobalDataUser sharedAccountClient].dicPurposeSearchParam=nil;
+    [GlobalDataUser sharedAccountClient].dicUtilitiesSearchParam=nil;
+    [[GlobalDataUser sharedAccountClient].dicPriceSearchParam removeAllObjects];
+    [[GlobalDataUser sharedAccountClient].dicCatSearchParam removeAllObjects];
+    
+
     [self settingForParamView];
+    
 }
 
 
@@ -354,6 +362,56 @@ static const NSString* distanceSearchParam=@"2000";
     [self swithChagedValue:nil];
 }
 
+- (void)settingViewCategoryBranch
+{
+    for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicCatSearchParam) {
+        switch ([dic safeIntegerForKey:@"id"]) {
+            case 1:
+                [_btnRestaurant setSelected:YES];
+                break;
+            case 2:
+                [_btnEatingShop setSelected:YES];
+                break;
+            case 3:
+                [_btnCafe setSelected:YES];
+                break;
+            case 4:
+                [_btnCakeShop setSelected:YES];
+                break;
+            case 5:
+                [_btnBar setSelected:YES];
+                break;
+            case 6:
+                [_btnKaraoke setSelected:YES];
+                break;
+            default:
+                break;
+        }
+        switch ([dic safeIntegerForKey:@"id"]) {
+            case 1:
+                _lblRestaurant.textColor=([_btnRestaurant isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+                break;
+            case 2:
+                _lblEatingShop.textColor=([_btnEatingShop isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+                break;
+            case 3:
+                _lblCafeKem.textColor=([_btnCafe isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+                break;
+            case 4:
+                _lblCakeShop.textColor=([_btnCakeShop isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+                break;
+            case 5:
+                _lblBarPub.textColor=([_btnBar isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+                break;
+            case 6:
+                _lblKaraoke.textColor=([_btnKaraoke isSelected])?[UIColor whiteColor]:[UIColor blackColor];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 - (void)settingPriceCatButtons
 {
     [_btnDistrict setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
@@ -477,30 +535,7 @@ static const NSString* distanceSearchParam=@"2000";
     }
     NSLog(@"%@",[GlobalDataUser sharedAccountClient].catArr);
     
-    for (NSDictionary* dic in [GlobalDataUser sharedAccountClient].dicCatSearchParam) {
-        switch ([dic safeIntegerForKey:@"id"]) {
-            case 1:
-                [_btnRestaurant setSelected:YES];
-                break;
-            case 2:
-                [_btnEatingShop setSelected:YES];
-                break;
-            case 3:
-                [_btnCafe setSelected:YES];
-                break;
-            case 4:
-                [_btnCakeShop setSelected:YES];
-                break;
-            case 5:
-                [_btnBar setSelected:YES];
-                break;
-            case 6:
-                [_btnKaraoke setSelected:YES];
-                break;
-            default:
-                break;
-        }
-    }
+    [self settingViewCategoryBranch];
 }
 
 - (void)setConnerBorderWithLayer:(CALayer *)l

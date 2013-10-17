@@ -91,7 +91,6 @@ static const int maxLimitBranches=100;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.screenName = @"Trang chủ";
     _lastDistanceSearch=kDistanceSearchMapDefault.floatValue;
     // The LocationPickerView can be created programmatically (see below) or

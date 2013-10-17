@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     self.navigationController.navigationBarHidden=YES;
-
+    
     [self checkLocationServiceAvaible];
     [super viewDidLoad];
 }

@@ -78,8 +78,6 @@ static const NSString* distanceMapSearch=@"100";
                 tableFooter.hidden=NO;
             }else{
                 tableFooter.hidden=YES;
-
-
             }
             
             for (TVBranch* branch in _branches.items) {
