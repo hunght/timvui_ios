@@ -18,6 +18,7 @@
     }
     return self;
 }
+
 - (UIEdgeInsets)alignmentRectInsets {
     UIEdgeInsets insets;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
