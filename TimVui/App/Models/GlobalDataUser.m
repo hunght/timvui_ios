@@ -213,7 +213,6 @@ static GlobalDataUser *_sharedClient = nil;
                   [[UIApplication sharedApplication] endBackgroundTask:bgTask];
               }];
     
-    DJLog(@"Background mode");
     if(_isHasNearlyBranchesYES.boolValue)[self checkHasNearlyBranchIsInBackGround:YES];
     if (_isNearlyBranchesHasNewCouponYES.boolValue) {
         [self checkHasCouponBranchIsInBackGround:YES];

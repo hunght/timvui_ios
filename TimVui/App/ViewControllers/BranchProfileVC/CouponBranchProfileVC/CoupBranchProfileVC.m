@@ -462,12 +462,8 @@
 
 - (void)viewDidLoad
 {
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+
+    self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
     
     if (!_branch) {
         TVBranches* branches=[[TVBranches alloc] initWithPath:@"branch/getById"];
@@ -555,9 +551,7 @@
     }
 }
 
--(void)backButtonClicked:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 - (void)viewDidUnload {
     [self setScrollView:nil];

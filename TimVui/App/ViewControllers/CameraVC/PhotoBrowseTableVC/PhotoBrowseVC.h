@@ -11,7 +11,7 @@
 @protocol PhotoBrowseVCDelegate;
 
 @class TVBranch;
-@interface PhotoBrowseVC : UIViewController<PhotoBrowseCellDelegate,UITableViewDataSource, UITableViewDelegate,NSURLConnectionDelegate>
+@interface PhotoBrowseVC : MyViewController<PhotoBrowseCellDelegate,UITableViewDataSource, UITableViewDelegate,NSURLConnectionDelegate>
 @property (weak, nonatomic) IBOutlet UISwitch *swichFacebook;
 @property(nonatomic,strong)NSMutableArray *arrPhotos;
 @property(nonatomic,strong)NSMutableArray *arrPhotosPick;

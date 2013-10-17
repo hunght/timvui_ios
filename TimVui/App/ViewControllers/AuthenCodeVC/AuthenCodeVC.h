@@ -28,7 +28,7 @@
 - (void)userFacebookDidLogout;
 
 @end
-@interface AuthenCodeVC : UIViewController<UITextFieldDelegate>
+@interface AuthenCodeVC : MyViewController<UITextFieldDelegate>
 @property (unsafe_unretained, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;
 @property (nonatomic, retain) NSObject<AuthenCodeVCDelegate>* delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdAuthenCode;

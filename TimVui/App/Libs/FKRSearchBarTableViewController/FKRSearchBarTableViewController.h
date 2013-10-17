@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FKRSearchBarTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate> {
+@interface FKRSearchBarTableViewController : MyViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate> {
     
 }
 

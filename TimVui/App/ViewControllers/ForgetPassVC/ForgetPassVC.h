@@ -28,7 +28,7 @@
 - (void)userFacebookDidLogout;
 
 @end
-@interface ForgetPassVC : UIViewController<UITextFieldDelegate>
+@interface ForgetPassVC : MyViewController<UITextFieldDelegate>
 
 @property (nonatomic, retain) NSObject<ForgetPassVCDelegate>* delegate;
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *tfdPhoneNumber;

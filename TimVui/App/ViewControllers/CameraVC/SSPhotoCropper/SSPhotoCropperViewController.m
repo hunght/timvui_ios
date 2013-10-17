@@ -101,10 +101,6 @@
     [av show];
 }
 
--(void)backButtonClicked:(id)sender{
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)scrollViewDidZoom:(UIScrollView *)_scrollView
 {
@@ -132,45 +128,9 @@
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-
-    //
-    // setup view ui
-    //
-//    UIButton *backButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 56, 33)] autorelease];
-//    [backButton setTitle:@"Done" forState:UIControlStateNormal];
-//    [backButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-//    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    backButton.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [backButton setBackgroundImage:[UIImage imageNamed:@"Button.png"] forState:UIControlStateNormal];
-//    [backButton setBackgroundImage:[UIImage imageNamed:@"Button-touch.png"] forState:UIControlStateHighlighted];
-//    [backButton addTarget:self action:@selector(saveAndClose:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-//    UIBarButtonItem *bi = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    
-//    self.navigationItem.rightBarButtonItem = bi;
-//    [bi release];
-//
-//    if (_uiMode == SSPCUIModePresentedAsModalViewController) {
-//        bi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-//                                                           target:self
-//                                                           action:@selector(cancelAndClose:)];
-//        self.navigationItem.leftBarButtonItem = bi;
-//        [bi release];
-//    }else{
-//        UIButton *backButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)] autorelease];
-//        [backButton setBackgroundImage:[UIImage imageNamed:@"btn_back_egle_off.png"] forState:UIControlStateNormal];
-//        [backButton setBackgroundImage:[UIImage imageNamed:@"btn_back_egle_on.png"] forState:UIControlStateHighlighted];
-//        [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//        [backButton setTitle:@"Back" forState:UIControlStateNormal];
-//        [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        [backButton setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-//        backButton.titleLabel.font=[UIFont systemFontOfSize:13];
-//        
-//        self.navigationController.navigationBar.tintColor = [UIColor clearColor];
-//        UIBarButtonItem *backButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:backButton] autorelease];
-//        self.navigationItem.leftBarButtonItem = backButtonItem;
-//    }
-
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
 
     self.navigationController.navigationBarHidden=YES;
     self.title = self.photoCropperTitle;

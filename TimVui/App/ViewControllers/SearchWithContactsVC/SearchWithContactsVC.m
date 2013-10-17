@@ -163,15 +163,10 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [super viewDidLoad];
     if (!isInvitingFriend) {
         [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
-        UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
-        [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-        [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-        [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-        self.navigationItem.leftBarButtonItem = backButtonItem;
+        self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
     }
     
-    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 56, 29)];
+    UIButton* doneButton = [[MyRightBarButton alloc] initWithFrame:CGRectMake(7, 7, 56, 29)];
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button"] forState:UIControlStateNormal];
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button_on"] forState:UIControlStateHighlighted];
     [doneButton setTitle:@"Xong" forState:UIControlStateNormal];

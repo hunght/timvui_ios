@@ -86,6 +86,10 @@ static int _numPages = 16;
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
     _arrImages=[[NSMutableArray alloc] init];
     _lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(5, -14, 20, 20)];
     _lblPhone.backgroundColor = [UIColor redColor];

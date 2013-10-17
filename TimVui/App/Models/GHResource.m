@@ -4,6 +4,8 @@
 #import "AFHTTPRequestOperation.h"
 #import "AFJSONRequestOperation.h"
 #import "SVProgressHUD.h"
+#import "JLog.h"
+
 @interface GHResource ()
 @property(nonatomic,strong)NSDictionary *data;
 @property(nonatomic,strong)NSMutableArray *successBlocks;

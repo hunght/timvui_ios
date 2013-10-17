@@ -226,9 +226,6 @@ static const NSString* distanceSearchParam=@"2000";
     [self settingForParamView];
 }
 
--(void)backButtonClicked:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 #pragma mark UITextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -533,15 +530,8 @@ static const NSString* distanceSearchParam=@"2000";
    
     // Do any additional setup after loading the view from its nib.
     // Setup View and Table View
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
-    backButtonView.bounds = CGRectOffset(backButtonView.bounds, 10, 0);
-    [backButtonView addSubview:backButton];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+
+    self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
 
     
     _btnCity = [[UIButton alloc] initWithFrame:CGRectMake(200,11, 57, 23)];

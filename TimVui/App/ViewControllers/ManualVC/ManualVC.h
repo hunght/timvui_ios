@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FilterVC.h"
-@interface ManualVC : UIViewController<TVFilterVCDelegate>
+@interface ManualVC : MyViewController<TVFilterVCDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *btnRecently;
 @property (weak, nonatomic) IBOutlet UIButton *btnPopular;
 @property (weak, nonatomic) IBOutlet UIButton *btnSaved;

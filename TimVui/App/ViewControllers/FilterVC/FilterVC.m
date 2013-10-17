@@ -29,9 +29,7 @@
     }
     return self;
 }
--(void)backButtonClicked{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 -(void)doneButtonClicked{
     
     NSMutableArray* arrTopic=[[NSMutableArray alloc] init];
@@ -62,27 +60,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     
-    [doneButton setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
-    
-    [doneButton setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
-    
-    [doneButton setTitle:@"Lọc" forState:UIControlStateNormal];
-    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
-    [doneButton addTarget:self action:@selector(doneButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
-    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
-    [backButtonView addSubview:doneButton];
-    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
-    self.navigationItem.rightBarButtonItem=doneButtonItem;
+    self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
+
+    self.navigationItem.rightBarButtonItem=[self barButtonWithTitle:@"Lọc"];
 
     UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, 416-44, 320, 44)];
     [bgView setBackgroundColor:[UIColor lightGrayColor]];

@@ -31,6 +31,8 @@
 #import "TVNotification.h"
 #import "TVWebVC.h"
 #import "SearchWithContactsVC.h"
+#import "MyLeftBarButton.h"
+
 #define kNumberOfSections 3
 
 enum {
@@ -358,7 +360,7 @@ enum {
 
 
 - (UIBarButtonItem *)toggleBarButtonItem {
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    UIButton* backButton = [[MyLeftBarButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateHighlighted];
     //    [backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];

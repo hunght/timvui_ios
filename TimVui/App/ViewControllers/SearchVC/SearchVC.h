@@ -17,7 +17,7 @@
 -(void)didPickDistricts:(NSArray*)arrDics;
 
 @end
-@interface SearchVC : UIViewController<UITextFieldDelegate>
+@interface SearchVC : MyViewController<UITextFieldDelegate>
 @property (nonatomic, retain) NSObject<SearchVCDelegate>* delegate;
 @property (retain, nonatomic) UITextField *tfdSearch;
 @property (retain, nonatomic) UIView *viewNavigation;

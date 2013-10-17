@@ -19,7 +19,7 @@
 
 @class TPKeyboardAvoidingScrollView;
 
-@interface LoginVC : UIViewController<UITextFieldDelegate,UIWebViewDelegate>
+@interface LoginVC : MyViewController<UITextFieldDelegate,UIWebViewDelegate>
 
 @property (copy) void (^userLoginFail)();
 @property (copy) void (^userDidLogin)();

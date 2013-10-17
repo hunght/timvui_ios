@@ -22,9 +22,7 @@
 @end
 
 @implementation MapDirectionVC
--(void)backButtonClicked:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,12 +70,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+
+    self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
     
     GMSMarker *melbourneMarker = [[GMSMarker alloc] init];
     melbourneMarker.position =  _branch.latlng;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TVBranch.h"
-@interface MapDirectionVC : UIViewController
+@interface MapDirectionVC : MyViewController
 
 @property (nonatomic, strong)TVBranch* branch;
 @end

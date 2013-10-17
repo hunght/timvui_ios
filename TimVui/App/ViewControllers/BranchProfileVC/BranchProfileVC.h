@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Hoang The Hung. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+
 #import <MessageUI/MessageUI.h>
 #import "TVBranch.h"
 
 @class TVExtraBranchView;
-@interface BranchProfileVC : GAITrackedViewController<UIWebViewDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
+@interface BranchProfileVC : MyViewController<UIWebViewDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 @property (retain, nonatomic) TVBranch *branch;
 @property (assign, nonatomic) BOOL isWantToShowEvents;
 @property (assign, nonatomic) BOOL isPresentationYES;

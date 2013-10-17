@@ -9,22 +9,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Libs/SVPullToRefresh/UIScrollView+SVPullToRefresh.m"
-            timestampString = "403588859.124299"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "-setShowsPullToRefresh:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "TimVui/App/Libs/SVPullToRefresh/UIScrollView+SVInfiniteScrolling.m"
             timestampString = "403588881.580542"
             startingColumnNumber = "9223372036854775807"
@@ -121,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Libs/SVPullToRefresh/UIScrollView+SVInfiniteScrolling.m"
-            timestampString = "403591376.577824"
+            filePath = "TimVui/App/ViewControllers/MapDirectionVC/MDDirectionService.m"
+            timestampString = "403674801.251883"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "-setShowsInfiniteScrolling:"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "-fetchedData:withSelector:withDelegate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -17,7 +17,7 @@
 
 @end
 
-@interface FilterVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface FilterVC : MyViewController<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray* cityArr;
 @property (nonatomic, strong) NSArray* topicArr;

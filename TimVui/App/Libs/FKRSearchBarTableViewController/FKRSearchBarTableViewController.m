@@ -110,6 +110,9 @@
 }
 
 #pragma mark - TableView Delegate and DataSource
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return nil;
+}
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {

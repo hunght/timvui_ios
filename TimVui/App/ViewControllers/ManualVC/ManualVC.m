@@ -144,16 +144,8 @@ static const NSString* limitCount=@"5";
     [_lblSaveHandbookCount.layer setBorderWidth:1.0];
     [_lblSaveHandbookCount.layer setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     
-    UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
-    [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_off"] forState:UIControlStateNormal];
-    [_btnSearchBar setImage:[UIImage imageNamed:@"img_handbook_filter_on"] forState:UIControlStateHighlighted];
-    [_btnSearchBar addTarget:self action:@selector(filterButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
-    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
-    [backButtonView addSubview:_btnSearchBar];
-    UIBarButtonItem *searchButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
-    self.navigationItem.rightBarButtonItem = searchButtonItem;
+
+    self.navigationItem.rightBarButtonItem = self.handbookFilterButton;
     
     params=[[NSMutableDictionary alloc] init];
     [params setValue:@"new" forKey:@"type"];

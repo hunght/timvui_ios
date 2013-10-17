@@ -83,13 +83,7 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 - (void)viewDidLoad
 {
     [self setTitle:@"Chọn món ăn để thêm"];
-    [self.navigationController.navigationBar setNavigationBarWithoutIcon:YES];
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+    self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
     [super viewDidLoad];
     
     /*

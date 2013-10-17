@@ -10,6 +10,6 @@
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
-    #import "JLog.h"
     #import "MacroApp.h"
+    #import "MyViewController.h"
 #endif

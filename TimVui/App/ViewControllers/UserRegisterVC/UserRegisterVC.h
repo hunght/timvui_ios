@@ -13,7 +13,7 @@
 #import "GAITrackedViewController.h"
 @class TPKeyboardAvoidingScrollView;
 
-@interface UserRegisterVC : GAITrackedViewController<UITextFieldDelegate,BSKeyboardControlsDelegate>{
+@interface UserRegisterVC : MyViewController<UITextFieldDelegate,BSKeyboardControlsDelegate>{
     NSString*   user_email;
     NSString*  user_firstName;
     NSString*  user_lastName;

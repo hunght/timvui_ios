@@ -1,6 +1,6 @@
 //HUNGHT
 
-#import "GAI.h"
+#import "MyViewController.h"
 
 #define kAFAppDotNetAPIBaseURLString  @"http://local.anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])

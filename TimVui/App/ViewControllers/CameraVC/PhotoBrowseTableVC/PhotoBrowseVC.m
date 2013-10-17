@@ -28,10 +28,7 @@
 @end
 
 @implementation PhotoBrowseVC
--(void)backButtonClicked:(id)sender{
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -49,12 +46,7 @@
         [_swichFacebook setOn:isOpen];
     }];
     
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
-    [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+    self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
 
     _arrPhotosPick=[[NSMutableArray alloc] init];
     for (int i=0; i<_arrPhotos.count; i++) {

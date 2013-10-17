@@ -58,7 +58,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.navigationController.navigationBar dropShadow];
     if (!_branch)  self.navigationItem.leftBarButtonItem = self.toggleBarButtonItem;
-    [self backBarButtonItem];
+    self.navigationItem.rightBarButtonItem=[self barButtonWithTitle:@"Đóng"];
     
     UIView *bgGenarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
     [bgGenarateInfoView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
@@ -197,36 +197,7 @@
     }
 }
 
-- (UIBarButtonItem *)toggleBarButtonItem {
-    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
-    [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateNormal];
-    [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateHighlighted];
-    
-    //[backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
-    [backButton addTarget:self action:@selector(toggleTopView) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    item.accessibilityLabel = NSLocalizedString(@"Menu", nil);
-    item.accessibilityHint = NSLocalizedString(@"Double-tap to reveal menu on the left. If you need to close the menu without choosing its item, find the menu button in top-right corner (slightly to the left) and double-tap it again.", nil);
-    return item;
-}
 
-- (void)backBarButtonItem {
-    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
-    
-    [doneButton setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
-    
-    [doneButton setBackgroundImage:[Utilities imageFromColor:kOrangeColor] forState:UIControlStateHighlighted];
-    
-    [doneButton setTitle:@"ĐÓNG" forState:UIControlStateNormal];
-    [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
-    [doneButton addTarget:self action:@selector(doneButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
-    backButtonView.bounds = CGRectOffset(backButtonView.bounds, -5, -0);
-    [backButtonView addSubview:doneButton];
-    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
-    self.navigationItem.rightBarButtonItem=doneButtonItem;
-}
 
 - (void)settingStarRatingWithValue:(int)rate {
     _rating=[NSNumber numberWithInt:rate];
