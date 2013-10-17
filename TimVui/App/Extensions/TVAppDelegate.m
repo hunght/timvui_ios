@@ -388,11 +388,11 @@
         }
     }
     */
-
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
-    [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+//    [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     _slidingViewController=[[ECSlidingViewController alloc] init];
     
     if ([self isConnected]) {

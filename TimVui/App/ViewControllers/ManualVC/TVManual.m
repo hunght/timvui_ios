@@ -26,7 +26,8 @@
     self.branch_ids =[dic safeArrayForKey:@"branch_ids"];
     
     self.view       =[dic safeStringForKey:@"view"];
-    self.changed    =[dic safeDateForKey:@"changed"];
+    self.created    =[dic safeDateForKey:@"created"];
+    
     self.images     =[dic safeStringForKey:@"images"];
 //    NSLog(@"branch_ids===%@",_branch_ids);
     self.handbook_cat=[dic safeArrayForKey:@"handbook_cat"];

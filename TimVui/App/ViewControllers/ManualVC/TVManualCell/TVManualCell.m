@@ -169,7 +169,7 @@
     _detailButton.frame=frame;
 
     _lblView.text=manual.view;
-    _lblDate.text=[manual.changed stringWithFormat:@"dd/mm/yyyy"];
+    _lblDate.text=[manual.created stringWithFormat:@"dd/MM/yyyy"];
     
     NSString* tempStrName=@"";
     BOOL isFirst=YES;

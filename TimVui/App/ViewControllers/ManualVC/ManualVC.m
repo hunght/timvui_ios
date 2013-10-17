@@ -60,7 +60,7 @@ static const NSString* limitCount=@"5";
         [weakSelf.tableView.pullToRefreshView stopAnimating];
         [weakSelf.tableView.infiniteScrollingView stopAnimating];
         
-        NSArray* dicArray=[[JSON safeDictForKey:@"data"] allValues];
+        NSArray* dicArray=[JSON safeArrayForKey:@"data"] ;
         if (dicArray.count<limitCount.intValue) {
             weakSelf.tableView.showsInfiniteScrolling=NO;
             [tableFooter setText:@"Không còn cẩm nang nào"];

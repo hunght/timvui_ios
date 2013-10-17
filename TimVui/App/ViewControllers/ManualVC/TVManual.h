@@ -16,7 +16,7 @@
 @property(nonatomic,strong)NSArray *branch_ids;
 
 @property(nonatomic,strong)NSString *view;
-@property(nonatomic,strong)NSDate *changed;
+@property(nonatomic,strong)NSDate *created;
 @property(nonatomic,strong)NSString *images;
 @property(nonatomic, strong)NSString *desc;
 @property(nonatomic, strong)NSArray* handbook_cat;

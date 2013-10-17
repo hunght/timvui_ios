@@ -794,8 +794,14 @@
                 tableFooter.hidden=NO;
                 weakSelf.tableView.showsInfiniteScrolling=NO;
             }else{
-                tableFooter.hidden=YES;
-                weakSelf.tableView.showsInfiniteScrolling=YES;
+                if (weakSelf.similarBranches.count ==0) {
+                    self.tableView.showsPullToRefresh=NO;
+                    self.tableView.showsInfiniteScrolling=NO;
+                }else{
+                    tableFooter.hidden=YES;
+                    weakSelf.tableView.showsInfiniteScrolling=YES;
+                }
+
             }
             pageSimilarCount++;
             [weakSelf.tableView.pullToRefreshView stopAnimating];
@@ -1267,8 +1273,7 @@
         case kTVSimilar:
             count= _similarBranches.count;
             if (count==0) {
-                self.tableView.showsPullToRefresh=NO;
-                self.tableView.showsInfiniteScrolling=NO;
+
                 lblWriteReviewNotice.text=@"Đang cập nhật";
                 lblWriteReviewNotice.hidden=NO;
             }else{

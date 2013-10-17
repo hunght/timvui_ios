@@ -118,8 +118,6 @@ static const int maxLimitBranches=100;
 
     self.navigationItem.rightBarButtonItem = [self searchButtonItem];
     [self initNotificationView];
-    
-
 }
 
 -(void)viewWillAppear:(BOOL)animated{
