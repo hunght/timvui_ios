@@ -20,4 +20,6 @@
 - (NSURL *)safeURLForKey:(NSString *)key;
 - (NSURL *)safeURLForKeyPath:(NSString *)keyPath;
 - (CLLocationCoordinate2D )safeLocationForKey:(NSString *)key;
+-(void)savePersistencyWithKey:(NSString*)key;
++(NSDictionary*)getDictionaryFromKey:(NSString*)key;
 @end

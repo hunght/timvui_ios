@@ -1,6 +1,6 @@
 #import "NSDictionary+Extensions.h"
 #import "NSURL+Extensions.h"
-
+#import <JSONKit.h>
 
 @implementation NSDictionary (Extensions)
 
@@ -119,6 +119,16 @@
 	}
 	NSDate *date = [dateFormatter dateFromString:string];
 	return date;
+}
+-(void)savePersistencyWithKey:(NSString*)key{
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[self JSONString] forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
++(NSDictionary*)getDictionaryFromKey:(NSString*)key{
+    
+    NSString* strJSON=[[NSUserDefaults standardUserDefaults] stringForKey:key];
+    return [strJSON objectFromJSONString];
 }
 
 @end

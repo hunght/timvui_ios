@@ -94,7 +94,7 @@
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setValue:dic forKey:key];
         [defaults synchronize];
-            NSLog(@"%@",dic);
+//            NSLog(@"dic=%@",dic);
             SharedAppDelegate.getCityDistrictData=dic;
         [self getPublicIPFromServer:data];
         

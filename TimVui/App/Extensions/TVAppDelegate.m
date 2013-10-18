@@ -211,8 +211,8 @@
         [[TVNetworkingClient sharedClient] postPath:@"user/getIOSAppInfo" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
             [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
             [GlobalDataUser sharedAccountClient].isTurnOffReviewYES=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
-            [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
-//            NSLog(@"JSON=%@",JSON);
+            [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[[JSON safeDictForKey:@"data"] safeIntegerForKey:@"locationUpdateTimePriod"];
+            NSLog(@"getIOSAppInfo JSON=%d",[GlobalDataUser sharedAccountClient].locationUpdateTimePriod);
             
             float newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
             float currentVersion=[[[NSBundle mainBundle] infoDictionary] safeStringForKey:@"CFBundleVersion"].floatValue;

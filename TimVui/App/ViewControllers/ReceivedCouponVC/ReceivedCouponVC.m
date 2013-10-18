@@ -89,12 +89,11 @@ static const NSString* limitCount=@"30";
                 if (isYES) {
 
                     NSDictionary* dataDic=data;
-                    [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedEnabledCoupon];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [dataDic savePersistencyWithKey:kReceivedEnabledCoupon];
+
                 }else{
                     NSDictionary* dataDic=data;
-                    [[NSUserDefaults standardUserDefaults] setObject:dataDic forKey:kReceivedCoupon];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [dataDic savePersistencyWithKey:kReceivedCoupon];
                 }
             }
             
@@ -184,9 +183,9 @@ static const NSString* limitCount=@"30";
     if (![SharedAppDelegate isConnected]) {
         NSDictionary *retrievedDictionary;
         if (_btnActive.isSelected) {
-            retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedEnabledCoupon];
+            retrievedDictionary = [NSDictionary getDictionaryFromKey:kReceivedEnabledCoupon];
         }else{
-            retrievedDictionary = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kReceivedCoupon];
+            retrievedDictionary = [NSDictionary getDictionaryFromKey:kReceivedCoupon];
         }
         
         if (retrievedDictionary) {
