@@ -338,7 +338,7 @@
     
     __block int heidhtBlock=height_p;
     
-    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, height_p, 290, 25)] ;
+    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, height_p, 300, self.view.frame.size.height)] ;
     htmlView.backgroundColor = [UIColor whiteColor];
 //    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
@@ -370,7 +370,7 @@
             [html appendString:_coupon.condition_content];
             [html appendString:@"</body></html>"];
             
-            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 25)] ;
+            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, self.view.frame.size.height)] ;
             htmlView.backgroundColor = [UIColor whiteColor];
             [_couponBranch addSubview:htmlView];
 //            htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -394,14 +394,14 @@
                         heidhtBlock=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
                     }
                     //create the string
-                    NSMutableString *html = [NSMutableString stringWithString: @"<html><head></head><body style=\"background:transparent;\">"];
+                    [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
                     
 //                        NSLog(@"content= %@",_coupon.content);
                     //continue building the string
                     [html appendString:_coupon.content];
                     [html appendString:@"</body></html>"];
                     
-                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(10, heidhtBlock, 290, 25)] ;
+                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, self.view.frame.size.height)] ;
                     [_couponBranch addSubview:htmlView];
                     htmlView.backgroundColor = [UIColor whiteColor];
 //                    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

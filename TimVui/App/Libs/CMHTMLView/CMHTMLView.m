@@ -465,8 +465,22 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView {
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+- (void)webViewDidFinishLoad:(UIWebView *)_webView {
     self.loaded = YES;
+    
+    /*
+    CGRect frame = _webView.frame;
+    frame.size.height = 1;
+    _webView.frame = frame;
+    CGSize fittingSize = [_webView sizeThatFits:CGSizeZero];
+    frame.size = fittingSize;
+    _webView.frame = frame;
+    
+    NSLog(@"size: %f, %f", fittingSize.width, fittingSize.height);
+//    NSString *output = [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"foo\").offsetHeight;"];
+    NSString *output = [webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"];
+    NSLog(@"height: %@", output);
+    */
     
     if (self.jsCode) {
         // make shure what all modifications of self.jsCode property are done

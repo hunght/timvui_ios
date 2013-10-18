@@ -126,7 +126,7 @@
     [html appendString:@"</body></html>"];
     [self.view insertSubview:_couponBranch belowSubview:self.tableView];
     
-    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(6+5, height+5, 320-(6+5)*2, 25)] ;
+    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(6+5, height+5, 320-(6+5)*2, self.view.frame.size.height)] ;
     htmlView.backgroundColor = [UIColor clearColor];
     //htmlView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin ;
     htmlView.scrollView.scrollEnabled=NO;
