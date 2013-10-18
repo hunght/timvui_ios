@@ -132,31 +132,19 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
     [super viewDidLoad];
     
     /*
-     SearchBar as header and at the top:
-     The search bar always stays at the top if the table view is scrolled down and behaves similar to a section header.
-     
-     Note: For this scrolling behavior it is *essential* that the view controller is a subclass of UIViewController instead of UITableViewController, because UISearchDisplayController adds the dimming view to the searchContentsController's view and because UITableViewController's view is the table view, the dimming view is added to the table view and is only visible when the table view is scrolled to the top. If you can't change the superclass to UIViewController, you'll have to manually set the dimming view's frame by iterating through the table view's view hierarchy when the search begins which is very ugly.
-    */
+     Default behavior:
+     The search bar scrolls along with the table view.
+     */
     
-    if (_mayUsePrivateAPI) {
-        self.tableView.tableHeaderView = self.searchBar;
-        
-        SEL setPinsTableHeaderViewSelector = NSSelectorFromString(@"_setPinsTableHeaderView:");
-        if ([self.tableView respondsToSelector:setPinsTableHeaderViewSelector]) {
-            objc_msgSend(self.tableView, setPinsTableHeaderViewSelector, YES);
-        }
-    } else {        
-        [self.tableView addSubview:self.searchBar];
-        
-        self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.searchBar.bounds), 0, 0, 0);
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGRectGetHeight(self.searchBar.bounds), 0, 0, 0);
-    }
+    self.tableView.tableHeaderView = self.searchBar;
+    
+    // The search bar is hidden when the view becomes visible the first time
+    self.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchBar.bounds));
 }
 
 - (void)scrollTableViewToSearchBarAnimated:(BOOL)animated
 {
-    // The search bar is always visible, so just scroll to the first section
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:NSNotFound inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:animated];
+    [self.tableView scrollRectToVisible:self.searchBar.frame animated:animated];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

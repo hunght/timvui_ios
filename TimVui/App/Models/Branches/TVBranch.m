@@ -65,6 +65,7 @@
 	self.latlng = [dict safeLocationForKey:@"latlng"];
     
     self.image_count=[dict safeIntegerForKey:@"image_count"];
+//     NSLog(@"image_count===%d",_image_count);
     self.images = [dict safeArrayForKey:@"images"];
     self.phone = [dict safeStringForKey:@"phone"];
     self.cats = [dict safeDictForKey:@"cats"];

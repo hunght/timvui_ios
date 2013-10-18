@@ -70,19 +70,21 @@
 {
     [super viewDidLoad];
     CGRect frame=self.view.bounds;
-    frame.size.height-=44;
+//    frame.size.height-=44;
     self.tableView = [[UITableView alloc] initWithFrame:frame];
 
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
     [self.view addSubview:self.tableView];
+    [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight)];
     
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
     self.searchBar.placeholder = @"Search";
     self.searchBar.delegate = self;
-    [self.searchBar sizeToFit];
     
+    [self.searchBar sizeToFit];
+    [self.searchBar setBackgroundColor:[UIColor redColor]];
     self.strongSearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.searchResultsDelegate = self;

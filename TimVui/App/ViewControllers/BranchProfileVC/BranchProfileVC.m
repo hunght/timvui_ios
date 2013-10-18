@@ -390,7 +390,7 @@
         i++;
     }
     
-    if (i>3) {
+    if (_branch.image_count>3) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         
         [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];

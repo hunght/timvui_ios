@@ -68,9 +68,12 @@
 
 #pragma mark - UIViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    
     self.navigationController.navigationBarHidden=YES;
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
