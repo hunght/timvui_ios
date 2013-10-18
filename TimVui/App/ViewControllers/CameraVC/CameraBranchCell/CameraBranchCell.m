@@ -108,10 +108,7 @@ int cellPad=44;
 }
 
 #pragma mark - UIView
--(void)setFrame:(CGRect)frame {
-    frame.size.width -=44;
-    [super setFrame:frame];
-}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.imageView.frame = CGRectMake(5.0f, 8.0f, 70.0f, 70.0f);

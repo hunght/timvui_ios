@@ -118,9 +118,17 @@ enum {
 
 #pragma mark - View lifecycle
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+        self.tableView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 0.0f, 0.0f);
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.extendedLayoutIncludesOpaqueBars=NO;
+        self.automaticallyAdjustsScrollViewInsets=NO;
+    }
+    
     [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 }

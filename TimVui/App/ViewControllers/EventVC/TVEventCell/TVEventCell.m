@@ -143,10 +143,7 @@
 
 
 #pragma mark - UIView
--(void)setFrame:(CGRect)frame {
-    frame.size.width -=44;
-    [super setFrame:frame];
-}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     
