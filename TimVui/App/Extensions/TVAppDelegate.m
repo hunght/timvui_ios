@@ -212,7 +212,7 @@
             [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
             [GlobalDataUser sharedAccountClient].isTurnOffReviewYES=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
             [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[[JSON safeDictForKey:@"data"] safeIntegerForKey:@"locationUpdateTimePriod"];
-            NSLog(@"getIOSAppInfo JSON=%d",[GlobalDataUser sharedAccountClient].locationUpdateTimePriod);
+//          NSLog(@"getIOSAppInfo JSON=%d",[GlobalDataUser sharedAccountClient].locationUpdateTimePriod);
             
             float newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
             float currentVersion=[[[NSBundle mainBundle] infoDictionary] safeStringForKey:@"CFBundleVersion"].floatValue;
@@ -227,6 +227,7 @@
                     
                 }
             }
+            
 #warning not check if it work
 
             if ([GlobalDataUser sharedAccountClient].isTurnOffReviewYES) {
@@ -313,7 +314,7 @@
     [GlobalDataUser sharedAccountClient].deviceToken=deviceTokenStr;
     if ([GlobalDataUser sharedAccountClient].isLogin) {
         NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
-        [[GlobalDataUser sharedAccountClient] performSelector:@selector(updateNotificationSetting:)withObject:isON afterDelay:1];
+        [[GlobalDataUser sharedAccountClient] performSelector:@selector(updateNotificationSetting:)withObject:isON afterDelay:3];
     }
 
 }

@@ -338,7 +338,7 @@
     
     __block int heidhtBlock=height_p;
     
-    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, height_p, 300, self.view.frame.size.height)] ;
+    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, height_p, 300, 25)] ;
     htmlView.backgroundColor = [UIColor whiteColor];
 //    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
@@ -370,7 +370,7 @@
             [html appendString:_coupon.condition_content];
             [html appendString:@"</body></html>"];
             
-            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, self.view.frame.size.height)] ;
+            CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, 25)] ;
             htmlView.backgroundColor = [UIColor whiteColor];
             [_couponBranch addSubview:htmlView];
 //            htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

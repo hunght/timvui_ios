@@ -40,13 +40,21 @@
 
 
 - (UIBarButtonItem *)toggleBarButtonItem {
-    UIButton* backButton = [[MyLeftBarButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-off"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_button-menu-on"] forState:UIControlStateHighlighted];
     
     //[backButton addTarget:self.viewDeckController action:@selector(toggleDownLeftView) forControlEvents:UIControlEventTouchDown];
+    
     [backButton addTarget:self action:@selector(toggleTopView) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 16, -0);
+    }else{
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 0, -0);
+    }
+    [backButtonView addSubview:backButton];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     item.accessibilityLabel = NSLocalizedString(@"Menu", nil);
     item.accessibilityHint = NSLocalizedString(@"Double-tap to reveal menu on the left. If you need to close the menu without choosing its item, find the menu button in top-right corner (slightly to the left) and double-tap it again.", nil);
     return item;
@@ -55,11 +63,20 @@
 
 - (UIBarButtonItem *)backBarButtonItem {
     
-    UIButton* backButton = [[MyLeftBarButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     [backButton setImage:[UIImage imageNamed:@"img_back-on"] forState:UIControlStateNormal];
     [backButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [backButton addTarget:self action:@selector(backButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 16, -0);
+    }else{
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 0, -0);
+    }
+    
+    [backButtonView addSubview:backButton];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     return backButtonItem;
     /*
     UIButton* backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];

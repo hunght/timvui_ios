@@ -16,6 +16,7 @@
 #import "TVCoupons.h"
 #import "TVCoupon.h"
 #import "MacroApp.h"
+#import "AFHTTPRequestOperation.h"
 @interface GlobalDataUser(){
     NSTimer *myTimer;
     CLLocation *bestEffortAtLocation;
@@ -176,11 +177,14 @@ static GlobalDataUser *_sharedClient = nil;
                                     [userObject JSONString],@"UserMobile" ,
                                     nil];
     NSLog(@"paramsHandBook = %@",paramsHandBook);
+    
     [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
         NSLog(@"JSON = %@",JSON);
         [self setSettingNotificationUser];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error = %@",error);
+        NSLog(@"error = %@",[operation request] );
         _isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:NO];
         [self setSettingNotificationUser];
     }];

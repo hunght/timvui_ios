@@ -53,7 +53,6 @@
 		551BB1EC178AC7AC0072FD81 /* TVCuisines.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EB178AC7AC0072FD81 /* TVCuisines.m */; };
 		551BB1EF178ACE210072FD81 /* ExtraCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */; };
 		551D9DF017FE6A2D00E69850 /* TVLabelExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 551D9DEF17FE6A2D00E69850 /* TVLabelExtension.m */; };
-		551FD51E180E877200D9A3BD /* MyLeftBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 551FD51D180E877200D9A3BD /* MyLeftBarButton.m */; };
 		551FD521180E8A9C00D9A3BD /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 551FD520180E8A9C00D9A3BD /* MyViewController.m */; };
 		5520472C17BB351C003F0506 /* NearbyCouponCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520472417BB351C003F0506 /* NearbyCouponCell.m */; };
 		5520472D17BB351C003F0506 /* NearbyCouponVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520472617BB351C003F0506 /* NearbyCouponVC.m */; };
@@ -534,7 +533,6 @@
 		55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5A8D4171E88220027BBFE /* GlobalDataUser.m */; };
 		55D6B305176043B100260C09 /* img_direction_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B303176043B000260C09 /* img_direction_icon.png */; };
 		55D6B306176043B100260C09 /* img_direction_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55D6B304176043B100260C09 /* img_direction_icon@2x.png */; };
-		55DB33CB180F8C9200BC39BF /* MyRightBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DB33CA180F8C9100BC39BF /* MyRightBarButton.m */; };
 		55E7E34C17B3541400F7C978 /* PageThreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E7E34B17B3541300F7C978 /* PageThreeView.m */; };
 		55E7E35317B357D500F7C978 /* skin_toi_dang_o_day_icon_screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 55E7E34D17B357D500F7C978 /* skin_toi_dang_o_day_icon_screen.png */; };
 		55E7E35417B357D500F7C978 /* skin_toi_dang_o_day_icon_screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55E7E34E17B357D500F7C978 /* skin_toi_dang_o_day_icon_screen@2x.png */; };
@@ -660,8 +658,6 @@
 		551BB1EE178ACE210072FD81 /* ExtraCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtraCommentCell.m; sourceTree = "<group>"; };
 		551D9DEE17FE6A2D00E69850 /* TVLabelExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVLabelExtension.h; path = TVLabelExtension/TVLabelExtension.h; sourceTree = "<group>"; };
 		551D9DEF17FE6A2D00E69850 /* TVLabelExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVLabelExtension.m; path = TVLabelExtension/TVLabelExtension.m; sourceTree = "<group>"; };
-		551FD51C180E877200D9A3BD /* MyLeftBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLeftBarButton.h; sourceTree = "<group>"; };
-		551FD51D180E877200D9A3BD /* MyLeftBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLeftBarButton.m; sourceTree = "<group>"; };
 		551FD51F180E8A9C00D9A3BD /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
 		551FD520180E8A9C00D9A3BD /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		5520472317BB351C003F0506 /* NearbyCouponCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyCouponCell.h; sourceTree = "<group>"; };
@@ -1232,8 +1228,6 @@
 		55D5A8D4171E88220027BBFE /* GlobalDataUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalDataUser.m; sourceTree = "<group>"; };
 		55D6B303176043B000260C09 /* img_direction_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_direction_icon.png; sourceTree = "<group>"; };
 		55D6B304176043B100260C09 /* img_direction_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_direction_icon@2x.png"; sourceTree = "<group>"; };
-		55DB33C9180F8C9100BC39BF /* MyRightBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRightBarButton.h; sourceTree = "<group>"; };
-		55DB33CA180F8C9100BC39BF /* MyRightBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRightBarButton.m; sourceTree = "<group>"; };
 		55E7E34A17B3541300F7C978 /* PageThreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageThreeView.h; sourceTree = "<group>"; };
 		55E7E34B17B3541300F7C978 /* PageThreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageThreeView.m; sourceTree = "<group>"; };
 		55E7E34D17B357D500F7C978 /* skin_toi_dang_o_day_icon_screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skin_toi_dang_o_day_icon_screen.png; sourceTree = "<group>"; };
@@ -2430,12 +2424,8 @@
 				55941BF917AC9FAA001F14D0 /* UILabel+DynamicHeight.m */,
 				551D9DEE17FE6A2D00E69850 /* TVLabelExtension.h */,
 				551D9DEF17FE6A2D00E69850 /* TVLabelExtension.m */,
-				551FD51C180E877200D9A3BD /* MyLeftBarButton.h */,
-				551FD51D180E877200D9A3BD /* MyLeftBarButton.m */,
 				551FD51F180E8A9C00D9A3BD /* MyViewController.h */,
 				551FD520180E8A9C00D9A3BD /* MyViewController.m */,
-				55DB33C9180F8C9100BC39BF /* MyRightBarButton.h */,
-				55DB33CA180F8C9100BC39BF /* MyRightBarButton.m */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -3423,9 +3413,7 @@
 				55C30FC21761E61800D04744 /* NSDate-Utilities.m in Sources */,
 				55914BA51762F0EB00A9C63D /* FKRSearchBarTableViewController.m in Sources */,
 				558D0DB317695ED800C98FAB /* LocationPickerView.m in Sources */,
-				551FD51E180E877200D9A3BD /* MyLeftBarButton.m in Sources */,
 				558D0DBB17696ECE00C98FAB /* MapTableViewController.m in Sources */,
-				55DB33CB180F8C9200BC39BF /* MyRightBarButton.m in Sources */,
 				5591DB81176EE6B70064B611 /* MHFacebookImageViewer.m in Sources */,
 				5598CF6C176FF14C001C0C67 /* TVNotification.m in Sources */,
 				55AD02AB17703E7D00A84ED6 /* TVCameraVC.m in Sources */,

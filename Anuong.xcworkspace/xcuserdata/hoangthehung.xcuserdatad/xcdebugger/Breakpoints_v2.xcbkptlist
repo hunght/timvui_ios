@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403786234.314906"
+            timestampString = "403841654.449589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "-startSignificationLocation"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403786358.461092"
+            timestampString = "403841654.449589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
             landmarkName = "-startSignificationLocation"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimVui/App/Models/GlobalDataUser.m"
-            timestampString = "403786625.276166"
+            timestampString = "403841654.449589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "-startSignificationLocation"
             landmarkType = "5">
          </BreakpointContent>
@@ -137,13 +137,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-            timestampString = "403786747.361588"
+            filePath = "TimVui/App/Libs/MyViewController.m"
+            timestampString = "403842355.618542"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "-loadWhenInternetConnected"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "-toggleBarButtonItem"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
+            timestampString = "403844425.362647"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
+            landmarkName = "-toggleBarButtonItem"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

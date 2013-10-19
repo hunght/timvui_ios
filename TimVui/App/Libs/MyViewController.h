@@ -7,8 +7,7 @@
 //
 
 #import "GAITrackedViewController.h"
-#import "MyLeftBarButton.h"
-#import "MyRightBarButton.h"
+
 
 @interface MyViewController : GAITrackedViewController
 - (UIBarButtonItem *)backBarButtonItem;

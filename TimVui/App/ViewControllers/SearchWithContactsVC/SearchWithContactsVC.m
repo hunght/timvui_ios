@@ -166,14 +166,23 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
         self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
     }
     
-    UIButton* doneButton = [[MyRightBarButton alloc] initWithFrame:CGRectMake(7, 7, 56, 29)];
+    UIButton* doneButton = [[UIButton alloc] initWithFrame:CGRectMake(7, 7, 56, 29)];
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button"] forState:UIControlStateNormal];
     [doneButton setBackgroundImage:[UIImage imageNamed:@"img_search_view_done_button_on"] forState:UIControlStateHighlighted];
     [doneButton setTitle:@"Xong" forState:UIControlStateNormal];
     [doneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     doneButton.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(15)];
     [doneButton addTarget:self action:@selector(sendButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:doneButton];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 56, 29)];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 16, -0);
+    }else{
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 0, -0);
+    }
+    [backButtonView addSubview:doneButton];
+    
+    UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     self.navigationItem.rightBarButtonItem=doneButtonItem;
     
     

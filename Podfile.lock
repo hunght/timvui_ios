@@ -12,7 +12,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 0.10.x)
-  - ECSlidingViewController (~> 0.10.0)
+  - ECSlidingViewController
   - JSONKit (~> 1.4)
   - Reachability (~> 3.0.0)
   - SDWebImage (~> 2.7.4)

@@ -603,11 +603,19 @@
     //Setbackground color dot line
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     
-    UIButton*shareButton = [[MyRightBarButton alloc] initWithFrame:CGRectMake(7, 7, 45, 31)];
+    UIButton*shareButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     [shareButton setImage:[UIImage imageNamed:@"img_profile_branch_share_button"] forState:UIControlStateNormal];
     //    [shareButton setImage:[UIImage imageNamed:@"img_back-off"] forState:UIControlStateHighlighted];
     [shareButton addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
+    UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 16, -0);
+    }else{
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 0, -0);
+    }
+    [backButtonView addSubview:shareButton];
+    UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButtonView];
     self.navigationItem.rightBarButtonItem = shareButtonItem;
     
 
@@ -782,11 +790,11 @@
     _introducingView.hidden=YES;
     if (_branch.review) {
         _introducingView.hidden=NO;
-        NSMutableString *html = [NSMutableString stringWithString: @"<html><head><title></title></head><body style=\"background:transparent;\">"];
+        NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
         //continue building the string
         [html appendString:_branch.review];
         [html appendString:@"</body></html>"];
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(5, lineHeight, 310, 25)];
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(5, lineHeight, 310, self.view.frame.size.height)];
         [webView.scrollView setScrollEnabled:NO];
         //make the background transparent
         [webView setBackgroundColor:[UIColor clearColor]];
