@@ -31,6 +31,7 @@
 #import "MapDirectionVC.h"
 #import "TVSMSVC.h"
 #import "UINavigationBar+JTDropShadow.h"
+#import "CMHTMLView.h"
 
 @interface BranchProfileVC ()
 {
@@ -766,8 +767,6 @@
 #pragma mark - Helper
 
 
-
-
 - (void)addSpecPointViewWithHeight:(int)height
 {
     _introducingView=[[UIView alloc] initWithFrame:CGRectMake(7,height, 310, 10)];
@@ -794,20 +793,36 @@
         //continue building the string
         [html appendString:_branch.review];
         [html appendString:@"</body></html>"];
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(5, lineHeight, 310, self.view.frame.size.height)];
-        [webView.scrollView setScrollEnabled:NO];
-        //make the background transparent
-        [webView setBackgroundColor:[UIColor clearColor]];
         
-        //pass the string to the webview
-        [webView loadHTMLString:[html description] baseURL:nil];
+        CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, lineHeight, 310, self.view.frame.size.height)] ;
+        htmlView.backgroundColor = [UIColor clearColor];
+//        htmlView.autoresizingMask = UIViewAutoresizingFlexibleHeight ;
+        htmlView.scrollView.scrollEnabled=NO;
+        //    CGRect frame= htmlView.scrollView.frame;
+        //    frame.size.width-=22;
+        //    htmlView.frame=frame;
+        htmlView.alpha = 0;
         
-        //add it to the subview
-        [webView sizeToFit];
-        // assuming your self.viewer is a UIWebView
-        [webView setDelegate:self];
-        [webView setAlpha:0.0];
-        [_introducingView addSubview:webView];
+        [htmlView loadHtmlBody:html competition:^(NSError *error) {
+            if (!error) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    htmlView.alpha = 1;
+                }];
+                
+                CGRect newBounds = htmlView.frame;
+                newBounds.size.height = htmlView.scrollView.contentSize.height;
+                htmlView.frame = newBounds;
+                
+                CGRect frame=_introducingView.frame;
+                frame.size.height +=newBounds.size.height;
+                _introducingView.frame=frame;
+                [_scrollView addSubview:_introducingView];
+                [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
+                
+            }
+        }];
+        [_introducingView addSubview:htmlView];
+        
     }else if(_branch.special_content)
     {
         _introducingView.hidden=NO;
@@ -829,26 +844,11 @@
         CGRect frame=_introducingView.frame;
         frame.size.height+=lineHeight;
         _introducingView.frame=frame;
-        
-        
     }
     [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
 }
 
-#pragma mark - UIWebViewDelegate
--(void)webViewDidFinishLoad:(UIWebView *)webView {
-    [webView setAlpha:1.0];
-    CGRect newBounds = webView.frame;
-    newBounds.size.height = webView.scrollView.contentSize.height;
-    webView.frame = newBounds;
-    
-    CGRect frame=_introducingView.frame;
-    frame.size.height+=newBounds.size.height;
-    _introducingView.frame=frame;
-    [_scrollView addSubview:_introducingView];
-    [_scrollView setContentSize:CGSizeMake(320,_introducingView.frame.origin.y+ _introducingView.frame.size.height+50)];
-    
-}
+
 - (void)setRowWithHeight:(int *)heightDetailInfo_p detailInfoBranch:(UIView *)detailInfoBranch strDetail:(NSString *)strDetail strTiltle:(NSString *)strTiltle
 {
     if (strDetail&&![strDetail isEqualToString:@""]) {
