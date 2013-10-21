@@ -45,6 +45,8 @@
 @property (retain, nonatomic) NSString *phoneNumber;
 
 @property (retain, nonatomic) NSString* linkAppleStore;
+@property (retain, nonatomic) NSMutableDictionary* couponImpressionArr;
+
 @property (assign, nonatomic)  int locationUpdateTimePriod;
 
 @property (assign, nonatomic) BOOL isTurnOffReviewYES;

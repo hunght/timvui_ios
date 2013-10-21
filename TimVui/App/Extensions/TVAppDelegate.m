@@ -46,8 +46,8 @@
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 120;
-//    // Optional: set debug to YES for extra debugging information.
-//    [GAI sharedInstance].debug = NO;
+    //    // Optional: set debug to YES for extra debugging information.
+    //    [GAI sharedInstance].debug = NO;
     // Create tracker instance.
     _tracker = [[GAI sharedInstance] trackerWithTrackingId:kTrackingId];
     [GAI sharedInstance].defaultTracker = _tracker;
@@ -116,7 +116,7 @@
 
 -(void)showNotificationWithBranch:(TVBranch*)branch{
     TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:branch.name  goWithClickView:^(){
-
+        
         BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
         branchProfileVC.branch=branch;
         UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:branchProfileVC];
@@ -212,7 +212,7 @@
             [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
             [GlobalDataUser sharedAccountClient].isTurnOffReviewYES=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
             [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[[JSON safeDictForKey:@"data"] safeIntegerForKey:@"locationUpdateTimePriod"];
-//          NSLog(@"getIOSAppInfo JSON=%d",[GlobalDataUser sharedAccountClient].locationUpdateTimePriod);
+            //          NSLog(@"getIOSAppInfo JSON=%d",[GlobalDataUser sharedAccountClient].locationUpdateTimePriod);
             
             float newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
             float currentVersion=[[[NSBundle mainBundle] infoDictionary] safeStringForKey:@"CFBundleVersion"].floatValue;
@@ -227,9 +227,9 @@
                     
                 }
             }
-        
+            
 #warning not check if it work
-
+            
             if ([GlobalDataUser sharedAccountClient].isTurnOffReviewYES) {
                 NSString *filePath = @"/Applications/Cydia.app";
                 if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
@@ -247,7 +247,7 @@
             
         }];
     }else{
-
+        
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -304,6 +304,7 @@
     [self setupAFNetworking];
     [self deactivateURLCache];
     [self openWelcomeVC];
+    
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -316,13 +317,14 @@
         NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
         [[GlobalDataUser sharedAccountClient] performSelector:@selector(updateNotificationSetting:)withObject:isON afterDelay:3];
     }
-
+    
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
     NSLog(@"Failed to get token, error: %@", error);
 }
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if ( application.applicationState == UIApplicationStateActive ){
@@ -330,7 +332,7 @@
         
         NSLog(@" dic : %@", userInfo);
     }else{
-            // app was just brought from background to foreground
+        // app was just brought from background to foreground
         NSLog(@" dic : %@", userInfo);
     }
     
@@ -344,23 +346,31 @@
     [notificationView openButtonClicked:nil];
 }
 
+-(NSString*)uniqID
+{
+    NSString* uniqueIdentifier = nil;
+    if( [UIDevice instancesRespondToSelector:@selector(identifierForVendor)] ) {
+        // iOS 6+
+        uniqueIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    } else {
+        // before iOS 6, so just generate an identifier and store it
+        uniqueIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"identiferForVendor"];
+        if( !uniqueIdentifier ) {
+            CFUUIDRef uuid = CFUUIDCreate(NULL);
+            uniqueIdentifier = ( NSString*)CFBridgingRelease(CFUUIDCreateString(NULL, uuid));
+            CFRelease(uuid);
+            [[NSUserDefaults standardUserDefaults] setObject:uniqueIdentifier forKey:@"identifierForVendor"];
+        }
+    }
+    NSLog(@"UUID =%@",uniqueIdentifier);
+    return uniqueIdentifier;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSString *UUID;
-#warning not cover on ios 7
-    if([[[UIDevice currentDevice] systemVersion]floatValue] >= 7){
-        
-    }else if([[[UIDevice currentDevice] systemVersion]floatValue] >= 6){
-        UUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    }else if([[[UIDevice currentDevice] systemVersion]floatValue] >= 5){
-        CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
-        UUID = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
-        CFRelease(uuid);
-    }
-    NSLog(@"UUID =%@",UUID);
-    [GlobalDataUser sharedAccountClient].UUID=UUID;
     
     
+    [GlobalDataUser sharedAccountClient].UUID=[self uniqID];
     
     // Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
@@ -369,43 +379,43 @@
                                        objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (localNotif) {
         NSDictionary* dic=localNotif.userInfo;
-        NSLog(@" dic : %@", dic); 
+        NSLog(@" dic : %@", dic);
     }
     
     /*
-    // List all fonts on iPhone
-    NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
-    NSArray *fontNames;
-    NSInteger indFamily, indFont;
-    for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
-    {
-        NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
-        fontNames = [[NSArray alloc] initWithArray:
-                     [UIFont fontNamesForFamilyName:
-                      [familyNames objectAtIndex:indFamily]]];
-        for (indFont=0; indFont<[fontNames count]; ++indFont)
-        {
-            NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
-        }
-    }
-    */
+     // List all fonts on iPhone
+     NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
+     NSArray *fontNames;
+     NSInteger indFamily, indFont;
+     for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
+     {
+     NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
+     fontNames = [[NSArray alloc] initWithArray:
+     [UIFont fontNamesForFamilyName:
+     [familyNames objectAtIndex:indFamily]]];
+     for (indFont=0; indFont<[fontNames count]; ++indFont)
+     {
+     NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
+     }
+     }
+     */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
-//    [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    //    [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         [application setStatusBarStyle:UIStatusBarStyleLightContent];
     }
     
-//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+    //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
     _slidingViewController=[[ECSlidingViewController alloc] init];
     
     if ([self isConnected]) {
         [self loadWhenInternetConnected];
     }else{
-     [self.menuVC performSelector:@selector(openViewController:) withObject:[[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil] afterDelay:0.0];
+        [self.menuVC performSelector:@selector(openViewController:) withObject:[[RecentlyBranchListVC alloc] initWithNibName:@"RecentlyBranchListVC" bundle:nil] afterDelay:0.0];
     }
     
     _slidingViewController.underLeftViewController = self.menuVC;
@@ -420,14 +430,29 @@
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
-//    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].recentlyBranches);
+    //    NSLog(@"[GlobalDataUser sharedAccountClient].branchIDs]=====%@",[GlobalDataUser sharedAccountClient].recentlyBranches);
     
+    
+}
 
+- (void)updateCouponImpression
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [GlobalDataUser sharedAccountClient].couponImpressionArr,@"coupon",
+                            nil];
+    NSLog(@"updateCouponImpression= %@",params);
+    [[TVNetworkingClient sharedClient] postPath:@"coupon/updateCouponImpression" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+        [[GlobalDataUser sharedAccountClient].couponImpressionArr removeAllObjects];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setValue:_notifBranches forKey:kNotifBranches];
@@ -438,12 +463,18 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[GlobalDataUser sharedAccountClient] startSignificationLocation];
+    
+    
+    
+    [self updateCouponImpression];
+    
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-
+    
     if (_nearlyBranch) {
         [self showNotificationAboutNearlessBranch:_nearlyBranch];
         _nearlyBranch=nil;
@@ -452,6 +483,7 @@
         _hasCouponBranch=nil;
     }
     [[GlobalDataUser sharedAccountClient] stopSignificationLocation];
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

@@ -48,7 +48,10 @@ static GlobalDataUser *_sharedClient = nil;
         _dicCatSearchParam=[[NSMutableArray alloc] init];
         _dicPriceSearchParam=[[NSMutableArray alloc] init];
         _recentlyBranches=[[NSMutableArray alloc] init];
+        
         _receivedCouponIDs=[[NSMutableDictionary alloc] init];
+        _couponImpressionArr=[[NSMutableDictionary alloc] init];
+        
         if (![[NSUserDefaults standardUserDefaults] valueForKey:@"isWantToOnVirateYES"]) {
             _isHasNearlyBranchesYES=[NSNumber numberWithBool:YES];
             _isNearlyBranchesHasNewCouponYES=[NSNumber numberWithBool:YES];

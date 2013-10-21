@@ -611,7 +611,7 @@
     UIView *backButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 45, 31)];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
-        backButtonView.bounds = CGRectOffset(backButtonView.bounds, 16, -0);
+        backButtonView.bounds = CGRectOffset(backButtonView.bounds, -16, -0);
     }else{
         backButtonView.bounds = CGRectOffset(backButtonView.bounds, 0, -0);
     }

@@ -489,15 +489,16 @@ enum {
             [SharedAppDelegate loadWhenInternetConnected];
         return;
     }
-    if (indexPath.section!=kSection3Setting){
-        if (isNotTheFirstTimeOpenHomeYES==NO) {
-            isNotTheFirstTimeOpenHomeYES=YES;
-            if (indexPath.section==kSection2Services&&indexPath.row==kS2Home) {
-                [self toggleTopView];
-                lastIndexPath=indexPath;
-                return;
-            }
+    if (isNotTheFirstTimeOpenHomeYES==NO) {
+        isNotTheFirstTimeOpenHomeYES=YES;
+        if (indexPath.section==kSection2Services&&indexPath.row==kS2Home) {
+            [self toggleTopView];
+            lastIndexPath=indexPath;
+            return;
         }
+    }
+    if (indexPath.section!=kSection3Setting){
+
         
         if (lastIndexPath.section==indexPath.section&&lastIndexPath.row==indexPath.row) {
             if (lastIndexPath.section!=kSection1UserAccount) {
@@ -507,7 +508,6 @@ enum {
             }
         }
     }
-    
     lastIndexPath=indexPath;
 	
     UIViewController *viewController = nil;
