@@ -140,7 +140,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)setUserWithDic:(NSDictionary *)JSON {
     self.isLogin = YES;
-    NSLog(@"%@",JSON);
+//    NSLog(@"setUserWithDic: %@",JSON);
     [self.user setValues:JSON ];
     //#warning User login set default USER ID TEST
     //    self.user.userId=@"8878";
@@ -150,10 +150,10 @@ static GlobalDataUser *_sharedClient = nil;
                             self.user.userId,@"user_id" ,
                             @"1",@"isWantID" ,
                             nil];
-    NSLog(@"params =%@",params);
+//    NSLog(@"params =%@",params);
     [[TVNetworkingClient sharedClient] postPath:@"branch/getFavouriteBranchesByUser" parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
         _followBranchesSet=[[NSMutableDictionary alloc] initWithDictionary:[JSON safeDictForKey:@"data"]] ;
-        NSLog(@"_followBranchesSet=%@",_followBranchesSet);
+//        NSLog(@"_followBranchesSet=%@",_followBranchesSet);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -177,14 +177,12 @@ static GlobalDataUser *_sharedClient = nil;
                                     [userObject JSONString],@"UserMobile" ,
                                     nil];
     NSLog(@"paramsHandBook = %@",paramsHandBook);
-    
     [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
-        
         NSLog(@"JSON = %@",JSON);
         [self setSettingNotificationUser];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error = %@",error);
-        NSLog(@"error = %@",[operation request] );
+//        NSLog(@"error = %@",error);
+//        NSLog(@"error = %@",[operation request] );
         _isFollowBranchesHasNewCouponYES=[NSNumber numberWithBool:NO];
         [self setSettingNotificationUser];
     }];

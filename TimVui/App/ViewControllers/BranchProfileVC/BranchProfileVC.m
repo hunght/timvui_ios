@@ -794,10 +794,10 @@
         [html appendString:_branch.review];
         [html appendString:@"</body></html>"];
         
-        CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, lineHeight, 310, self.view.frame.size.height)] ;
+        CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, lineHeight, 300, self.view.frame.size.height)] ;
         htmlView.backgroundColor = [UIColor clearColor];
 //        htmlView.autoresizingMask = UIViewAutoresizingFlexibleHeight ;
-        htmlView.scrollView.scrollEnabled=NO;
+        htmlView.scrollView.scrollEnabled=YES;
         //    CGRect frame= htmlView.scrollView.frame;
         //    frame.size.width-=22;
         //    htmlView.frame=frame;
@@ -810,7 +810,7 @@
                 }];
                 
                 CGRect newBounds = htmlView.frame;
-                newBounds.size.height = htmlView.scrollView.contentSize.height;
+                newBounds.size.height = htmlView.scrollView.contentSize.height+50;
                 htmlView.frame = newBounds;
                 
                 CGRect frame=_introducingView.frame;
