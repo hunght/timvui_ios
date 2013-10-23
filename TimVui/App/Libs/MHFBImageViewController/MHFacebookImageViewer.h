@@ -37,7 +37,7 @@ typedef void (^MHFacebookImageViewerClosingBlock)(void);
 - (void) settingCaptionView:(UIView*)captionView withIndex:(int)index;
 @end
 
-@interface MHFacebookImageViewer : UIViewController
+@interface MHFacebookImageViewer : MyViewController
 @property (weak, readonly, nonatomic) UIViewController *rootViewController;
 @property (nonatomic,strong) NSURL * imageURL;
 @property (nonatomic,strong) UIImageView * senderView;

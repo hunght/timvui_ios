@@ -132,6 +132,7 @@
         
 //        NSLog(@"error = %@",error);
     }];
+    
 }
 
 -(void)didReceivePublicIPandPort:(NSString *) data{

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TVCoupons.h"
 #import "TVBranches.h"
-@interface ReceivedCouponVC : UIViewController<UIAlertViewDelegate>
+@interface ReceivedCouponVC : MyViewController<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *btnActive;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *btnExperied;

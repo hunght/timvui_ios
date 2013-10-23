@@ -113,7 +113,6 @@
             _lblDistance.text=[NSString stringWithFormat:@"%.01f m",distance];
     }
 
-    
     [self.imageView setImageWithURL:[NSURL URLWithString:[branch.arrURLImages valueForKey:@"80"]]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     
     int lineHeight=0;

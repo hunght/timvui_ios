@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TVWebVC : UIViewController
+@interface TVWebVC : MyViewController
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withRequest:(NSString*)requestStr;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) NSString* requestStr;

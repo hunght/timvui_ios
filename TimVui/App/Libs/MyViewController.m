@@ -8,6 +8,8 @@
 
 #import "MyViewController.h"
 #import "Utilities.h"
+#import "TVAppDelegate.h"
+#import "TSMessage.h"
 @interface MyViewController ()
 
 @end
@@ -26,7 +28,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 	// Do any additional setup after loading the view.
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSString* strAlarm=@"Không có kết nối internet!";
+    if (![SharedAppDelegate isConnected]) {
+        [TSMessage showNotificationInViewController:self
+                                          withTitle:strAlarm
+                                        withMessage:nil
+                                           withType:TSMessageNotificationTypeError];
+    }
 }
 
 - (void)didReceiveMemoryWarning

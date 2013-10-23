@@ -5,7 +5,7 @@
 #import "SSPhotoCropperViewController.h"
 #import "LocationTableVC.h"
 #import "PhotoBrowseVC.h"
-@interface TVCameraVC : UIViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate,  UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate,PhotoBrowseVCDelegate>
+@interface TVCameraVC : MyViewController <MHPagingScrollViewDelegate, UIScrollViewDelegate,  UIImagePickerControllerDelegate,UINavigationControllerDelegate,SSPhotoCropperDelegate,LocationTableVCDelegate,PhotoBrowseVCDelegate>
 @property (weak, nonatomic) IBOutlet UIView *viewNotify;
 
 @property (nonatomic, unsafe_unretained) IBOutlet TVPagingScrollView *pagingScrollView;

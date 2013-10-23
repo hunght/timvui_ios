@@ -20,7 +20,7 @@
 #import <UIKit/UIKit.h>
 #import "MHFacebookImageViewer.h"
 #import "TVBranch.h"
-@interface TVPhotoBrowserVC : UIViewController<MHFacebookImageViewerDatasource>
+@interface TVPhotoBrowserVC : MyViewController<MHFacebookImageViewerDatasource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) TVBranch* branch;
 - (IBAction)closeButtonClicked:(id)sender;

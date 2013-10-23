@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TVCoupons.h"
 #import "TVBranches.h"
-@interface NearbyCouponVC : UIViewController
+@interface NearbyCouponVC : MyViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) TVBranches* branches;
 @end

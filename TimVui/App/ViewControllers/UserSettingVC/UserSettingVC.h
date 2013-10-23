@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserSettingVC : UIViewController
+@interface UserSettingVC : MyViewController
 @property (weak, nonatomic) IBOutlet UIView *SuggestView;
 @property (weak, nonatomic) IBOutlet UIView *VibrateView;
 @property (weak, nonatomic) IBOutlet UISwitch *swVirate;

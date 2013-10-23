@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TVBranches.h"
-@interface RecentlyBranchListVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface RecentlyBranchListVC : MyViewController<UITableViewDataSource,UITableViewDelegate>
 @property(strong, nonatomic) TVBranches* branches;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

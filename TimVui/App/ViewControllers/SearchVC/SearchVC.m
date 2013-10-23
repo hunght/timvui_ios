@@ -113,13 +113,13 @@ static const NSString* distanceSearchParam=@"2000";
     
 }
 
--(void)priceButtonClicked:(UIButton*)sender{
+-(void)priceButtonClicked:(MyPriceButton*)sender{
     if ([sender isSelected]){
-        [[GlobalDataUser sharedAccountClient].dicPriceSearchParam removeObject:[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:sender.tag]];
+        [[GlobalDataUser sharedAccountClient].dicPriceSearchParam removeObject:[[GlobalDataUser sharedAccountClient].priceArr valueForKey:sender.priceAlias]];
         [sender setSelected:NO];
         
     }else{
-        [[GlobalDataUser sharedAccountClient].dicPriceSearchParam addObject:[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:sender.tag]];
+        [[GlobalDataUser sharedAccountClient].dicPriceSearchParam addObject:[[GlobalDataUser sharedAccountClient].priceArr valueForKey:sender.priceAlias]];
         [sender setSelected:YES];
     }
     
@@ -412,6 +412,33 @@ static const NSString* distanceSearchParam=@"2000";
     }
 }
 
+- (void)checkButtonPriceHaveChoiced:(MyPriceButton *)button
+{
+    NSDictionary* dic=[[GlobalDataUser sharedAccountClient].priceArr valueForKey:button.priceAlias];
+    if (dic&&[[GlobalDataUser sharedAccountClient].dicPriceSearchParam containsObject:dic]) {
+        [button setSelected:YES];
+    }
+}
+
+- (void)settingPriceAliasForButton
+{
+    [_btnPrice100 setPriceAlias:@"50k-less"];
+    [_btnPrice100_200 setPriceAlias:@"50k-99k"];
+    [_btnPrice200_500 setPriceAlias:@"100k-199k"];
+    [_btnPrice500_1000 setPriceAlias:@"200k-499k"];
+    [_btnPrice1000 setPriceAlias:@"500k-999k"];
+    
+    [_btnPrice100 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr valueForKey:_btnPrice100.priceAlias] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice100_200 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr valueForKey:_btnPrice100_200.priceAlias] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice200_500 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr valueForKey:_btnPrice200_500.priceAlias] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice500_1000 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr valueForKey:_btnPrice500_1000.priceAlias] valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    [_btnPrice1000 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr valueForKey:_btnPrice1000.priceAlias] valueForKey:@"name"] forState:UIControlStateNormal];
+}
+
 - (void)settingPriceCatButtons
 {
     [_btnDistrict setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateSelected];
@@ -468,26 +495,16 @@ static const NSString* distanceSearchParam=@"2000";
     [_btnPrice200_500 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_btnPrice500_1000 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_btnPrice1000 addTarget:self action:@selector(priceButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
     //Set title for button Prices
     if (![GlobalDataUser sharedAccountClient].priceArr) {
-        [GlobalDataUser sharedAccountClient].priceArr=[[SharedAppDelegate.getPriceAvgData valueForKey:@"data"] allValues];
-        NSLog(@"%@",[GlobalDataUser sharedAccountClient].priceArr);
+        [GlobalDataUser sharedAccountClient].priceArr=[SharedAppDelegate.getPriceAvgData valueForKey:@"data"] ;
+       
     }
     
-    [_btnPrice100 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:1] valueForKey:@"name"] forState:UIControlStateNormal];
     
-    [_btnPrice100_200 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:3] valueForKey:@"name"] forState:UIControlStateNormal];
     
-    [_btnPrice200_500 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:4] valueForKey:@"name"] forState:UIControlStateNormal];
-    
-    [_btnPrice500_1000 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:2] valueForKey:@"name"] forState:UIControlStateNormal];
-    
-    [_btnPrice1000 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:0] valueForKey:@"name"] forState:UIControlStateNormal];
-    _btnPrice1000.tag=0;
-    [_btnPrice100 setTag:1];
-    _btnPrice100_200.tag=3;
-    _btnPrice200_500.tag=4;
-    _btnPrice500_1000.tag=2;
+    [self settingPriceAliasForButton];
 
     
     //Set value for button category
@@ -508,32 +525,13 @@ static const NSString* distanceSearchParam=@"2000";
     _btnKaraoke.tag=5;
     [_btnBar addTarget:self action:@selector(categoryButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _btnBar.tag=4;
-    
-    for (int i=0; i<[GlobalDataUser sharedAccountClient].priceArr.count; i++) {
-        NSDictionary* dic=[[GlobalDataUser sharedAccountClient].priceArr objectAtIndex:i];
-        if ([[GlobalDataUser sharedAccountClient].dicPriceSearchParam containsObject:dic]) {
-            switch (i) {
-                case 0:
-                    [_btnPrice1000 setSelected:YES];
-                    break;
-                case 1:
-                    [_btnPrice100 setSelected:YES];
-                    break;
-                case 2:
-                    [_btnPrice500_1000 setSelected:YES];
-                    break;
-                case 3:
-                    [_btnPrice100_200 setSelected:YES];
-                    break;
-                case 4:
-                    [_btnPrice200_500 setSelected:YES];
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-    NSLog(@"%@",[GlobalDataUser sharedAccountClient].catArr);
+    [self checkButtonPriceHaveChoiced:_btnPrice1000];
+    [self checkButtonPriceHaveChoiced:_btnPrice100];
+    [self checkButtonPriceHaveChoiced:_btnPrice500_1000];
+    [self checkButtonPriceHaveChoiced:_btnPrice100_200];
+    [self checkButtonPriceHaveChoiced:_btnPrice200_500];
+
+//    NSLog(@"catArr = %@",[GlobalDataUser sharedAccountClient].catArr);
     
     [self settingViewCategoryBranch];
 }
@@ -553,7 +551,7 @@ static const NSString* distanceSearchParam=@"2000";
     [self.tfdSearch setDelegate:self];
     [self.btnBackgournd setUserInteractionEnabled:NO];
     
-    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCitySearchParam);
+//    NSLog(@"%@",[GlobalDataUser sharedAccountClient].dicCitySearchParam);
     if (![GlobalDataUser sharedAccountClient].dicCitySearchParam) {
         NSString* idStr=[[GlobalDataUser sharedAccountClient].homeCity valueForKey:@"alias"];
         //    NSLog(@"%@",idStr);
@@ -568,7 +566,6 @@ static const NSString* distanceSearchParam=@"2000";
 
     self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
 
-    
     _btnCity = [[UIButton alloc] initWithFrame:CGRectMake(200,11, 57, 23)];
     [_btnCity setBackgroundColor:kDeepOrangeColor];
     [_btnCity addTarget:self action:@selector(buttonCityClicked:) forControlEvents:UIControlEventTouchUpInside];

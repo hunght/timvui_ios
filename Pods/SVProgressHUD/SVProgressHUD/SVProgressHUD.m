@@ -676,7 +676,7 @@ CGFloat SVProgressHUDRingThickness = 6;
 - (UIColor *)hudBackgroundColor {
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 50000
     if(_uiHudBgColor == nil) {
-        _uiHudBgColor = [[[self class] appearance] hudBackgroundColor];
+        _uiHudBgColor = [UIColor clearColor];
     }
     
     if(_uiHudBgColor != nil) {
@@ -690,7 +690,7 @@ CGFloat SVProgressHUDRingThickness = 6;
 - (UIColor *)hudForegroundColor {
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 50000
     if(_uiHudFgColor == nil) {
-        _uiHudFgColor = [[[self class] appearance] hudForegroundColor];
+        _uiHudFgColor = [UIColor grayColor];
     }
     
     if(_uiHudFgColor != nil) {

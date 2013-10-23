@@ -456,6 +456,7 @@
 		55C8C11317052E4C007D8E78 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55C8C10817052E4C007D8E78 /* Default@2x.png */; };
 		55CACFD91772EE7C00EA0685 /* LocationTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CACFD81772EE7C00EA0685 /* LocationTableVC.m */; };
 		55CACFDD1772F7AD00EA0685 /* SkinPickerTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CACFDC1772F7AD00EA0685 /* SkinPickerTableVC.m */; };
+		55CD2D0B18177162008E7F49 /* MyPriceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CD2D0A18177162008E7F49 /* MyPriceButton.m */; };
 		55CD546717608370006E3219 /* img_profile_branch_camera_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CD546117608370006E3219 /* img_profile_branch_camera_on.png */; };
 		55CD546817608370006E3219 /* img_profile_branch_camera_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CD546217608370006E3219 /* img_profile_branch_camera_on@2x.png */; };
 		55CD546917608370006E3219 /* img_profile_branch_coment_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 55CD546317608370006E3219 /* img_profile_branch_coment_on.png */; };
@@ -1137,6 +1138,8 @@
 		55CACFD81772EE7C00EA0685 /* LocationTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationTableVC.m; path = LocationTableVC/LocationTableVC.m; sourceTree = "<group>"; };
 		55CACFDB1772F7AD00EA0685 /* SkinPickerTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SkinPickerTableVC.h; path = SkinPickerTableVC/SkinPickerTableVC.h; sourceTree = "<group>"; };
 		55CACFDC1772F7AD00EA0685 /* SkinPickerTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SkinPickerTableVC.m; path = SkinPickerTableVC/SkinPickerTableVC.m; sourceTree = "<group>"; };
+		55CD2D0918177162008E7F49 /* MyPriceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPriceButton.h; path = SearchVC/MyPriceButton.h; sourceTree = "<group>"; };
+		55CD2D0A18177162008E7F49 /* MyPriceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPriceButton.m; path = SearchVC/MyPriceButton.m; sourceTree = "<group>"; };
 		55CD546117608370006E3219 /* img_profile_branch_camera_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_camera_on.png; sourceTree = "<group>"; };
 		55CD546217608370006E3219 /* img_profile_branch_camera_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_camera_on@2x.png"; sourceTree = "<group>"; };
 		55CD546317608370006E3219 /* img_profile_branch_coment_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_coment_on.png; sourceTree = "<group>"; };
@@ -2748,6 +2751,8 @@
 				55F6275517533D3500E8F8F7 /* SearchVC.h */,
 				55F6275617533D3500E8F8F7 /* SearchVC.m */,
 				55F6275717533D3600E8F8F7 /* SearchVC.xib */,
+				55CD2D0918177162008E7F49 /* MyPriceButton.h */,
+				55CD2D0A18177162008E7F49 /* MyPriceButton.m */,
 			);
 			name = SearchVC;
 			sourceTree = "<group>";
@@ -3386,6 +3391,7 @@
 				55BAED3A1709725600CF3171 /* TVNetworkingClient.m in Sources */,
 				5554483B170EBC2D00965E1E /* LeftMenuVC.m in Sources */,
 				55D5A8D5171E88220027BBFE /* GlobalDataUser.m in Sources */,
+				55CD2D0B18177162008E7F49 /* MyPriceButton.m in Sources */,
 				55A25F4F1728C56A00D5E29F /* Utilities.m in Sources */,
 				55954F4D172A132F00A8A351 /* UserRegisterVC.m in Sources */,
 				55F25DFC17423262003EB902 /* GHCollection.m in Sources */,

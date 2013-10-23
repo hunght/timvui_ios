@@ -159,7 +159,7 @@ static const NSString* limitCount=@"30";
         [TSMessage showNotificationInViewController:self
                                           withTitle:[NSString stringWithFormat:@"Bạn đang sử dụng SĐT: %@, nếu không đúng SĐT của bạn vui lòng cài đặt lại tại menu Tuỳ chọn cài đặt.",[GlobalDataUser sharedAccountClient].phoneNumber]
                                         withMessage:nil
-                                           withType:TSMessageNotificationTypeSuccess];
+                                           withType:TSMessageNotificationTypeSuccess withDuration:3 withCallback:nil atPosition:TSMessageNotificationPositionBottom];
     }
 }
 

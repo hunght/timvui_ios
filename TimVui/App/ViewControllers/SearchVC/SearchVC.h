@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import <CoreLocation/CoreLocation.h>
+#import "MyPriceButton.h"
 @protocol SearchVCDelegate
 /**
  * Sent to the delegate when sign up has completed successfully. Immediately
@@ -35,11 +37,11 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnZone;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCuisine;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPurpose;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice100;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice100_200;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice200_500;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice500_1000;
-@property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnPrice1000;
+@property (unsafe_unretained, nonatomic) IBOutlet MyPriceButton *btnPrice100;
+@property (unsafe_unretained, nonatomic) IBOutlet MyPriceButton *btnPrice100_200;
+@property (unsafe_unretained, nonatomic) IBOutlet MyPriceButton *btnPrice200_500;
+@property (unsafe_unretained, nonatomic) IBOutlet MyPriceButton *btnPrice500_1000;
+@property (unsafe_unretained, nonatomic) IBOutlet MyPriceButton *btnPrice1000;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnRestaurant;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnCafe;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *btnKaraoke;
