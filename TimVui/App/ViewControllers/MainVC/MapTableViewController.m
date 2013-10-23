@@ -320,10 +320,10 @@ static const int maxLimitBranches=100;
                          success:^(UIImage *image, BOOL cached)
          {
                  UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
-                 image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
+//                 image=[image imageByScalingAndCroppingForSize:CGSizeMake(45,45/4*3)];
                  UIGraphicsBeginImageContext( bottomImage.size );
                  [bottomImage drawAtPoint:CGPointZero];
-                 [image drawInRect:CGRectMake(6.0f,6.0f,30,30/4*3) blendMode:kCGBlendModeNormal alpha:1];
+                 [image drawInRect:CGRectMake(3.0f,3.0f,45,45/4*3) blendMode:kCGBlendModeNormal alpha:1];
                  UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
                  UIGraphicsEndImageContext();
                  melbourneMarker.icon = newImage;
@@ -543,7 +543,13 @@ static const int maxLimitBranches=100;
     }
     
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 80)];
-    UIView* viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 160)];
+    UIView* viewPad;
+    if (([[UIScreen mainScreen] bounds].size.height == 568)) {
+        viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 220)];
+    }else{
+        viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 165)];
+    }
+    
     [viewPad addSubview:view];
     [viewPad setBackgroundColor:[UIColor clearColor]];
     [view addSubview:imgPhoto];
@@ -559,11 +565,11 @@ static const int maxLimitBranches=100;
     detailTextLabel.numberOfLines = 1;
     textLabel.backgroundColor=[UIColor clearColor];
     detailTextLabel.backgroundColor=[UIColor clearColor];
-    
+    detailTextLabel.textColor=kGrayTextColor;
     UILabel* price_avg = [[UILabel alloc] initWithFrame: CGRectMake(80 +25.0f, 48.0f+2, 210.0f, 20.0f)];
     price_avg.backgroundColor = [UIColor clearColor];
     
-    price_avg.textColor = [UIColor grayColor];
+    price_avg.textColor = kGrayTextColor;
     price_avg.highlightedTextColor = [UIColor whiteColor];
     
     textLabel.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];

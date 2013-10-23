@@ -26,5 +26,5 @@
 
 @interface ExtraMenuCell : UITableViewCell
 @property (nonatomic, strong)UILabel* titleRow;
-
+@property (nonatomic, retain) UILabel* dotLine;
 @end

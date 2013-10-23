@@ -55,6 +55,7 @@
     self.textLabel.highlightedTextColor=[UIColor blackColor];
     self.textLabel.numberOfLines = 1;
     self.detailTextLabel.numberOfLines = 1;
+    self.detailTextLabel.textColor=kGrayTextColor;
     self.detailTextLabel.highlightedTextColor=self.detailTextLabel.textColor;
     self.textLabel.backgroundColor=[UIColor clearColor];
     self.detailTextLabel.backgroundColor=[UIColor clearColor];
@@ -63,7 +64,7 @@
     self.price_avg = [[UILabel alloc] initWithFrame:CGRectZero];
     self.price_avg.backgroundColor = [UIColor clearColor];
     
-    self.price_avg.textColor = [UIColor grayColor];
+    self.price_avg.textColor = kGrayTextColor;
     self.price_avg.highlightedTextColor = [UIColor grayColor];
     
     
@@ -91,7 +92,7 @@
 
     _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,7+7, 60, 15)];
     _lblDistance.backgroundColor = [UIColor clearColor];
-    _lblDistance.textColor = [UIColor grayColor];
+    _lblDistance.textColor = kGrayTextColor;
     _lblDistance.highlightedTextColor = [UIColor grayColor];
     _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];
     

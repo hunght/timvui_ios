@@ -14,8 +14,8 @@
 
 - (void)dropShadow
 {
-   CGSize offset= CGSizeMake(0,2);
-   CGFloat  radius=2.0f;
+   CGSize offset= CGSizeMake(0,1);
+   CGFloat  radius=1.0f;
    CGFloat opacity=0.6;
     UIColor* color=[UIColor blackColor];
     if ([self respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)])

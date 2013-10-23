@@ -42,7 +42,7 @@
 		
         [self.textLabel.superview addSubview:topLine];
 		
-        self.imgAvatar=[[UIImageView alloc] initWithFrame:CGRectMake(18, 12, 50, 50)];
+        self.imgAvatar=[[UIImageView alloc] initWithFrame:CGRectMake(10, 12, 50, 50)];
         [self.contentView addSubview:self.imgAvatar];
         CALayer* l=_imgAvatar.layer;
         [l setMasksToBounds:YES];

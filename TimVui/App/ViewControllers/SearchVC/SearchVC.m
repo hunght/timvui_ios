@@ -426,7 +426,7 @@ static const NSString* distanceSearchParam=@"2000";
     [_btnPrice100_200 setPriceAlias:@"50k-99k"];
     [_btnPrice200_500 setPriceAlias:@"100k-199k"];
     [_btnPrice500_1000 setPriceAlias:@"200k-499k"];
-    [_btnPrice1000 setPriceAlias:@"500k-999k"];
+    [_btnPrice1000 setPriceAlias:@"500k-more"];
     
     [_btnPrice100 setTitle:[[[GlobalDataUser sharedAccountClient].priceArr valueForKey:_btnPrice100.priceAlias] valueForKey:@"name"] forState:UIControlStateNormal];
     

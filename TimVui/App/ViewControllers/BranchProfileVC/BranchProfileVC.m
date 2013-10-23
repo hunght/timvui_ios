@@ -41,6 +41,7 @@
     double lastDragOffset;
     UIView *_introducingView;
     BOOL isFirstLineYES;
+    UIColor* graycolor;
 }
 @end
 
@@ -53,7 +54,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
+        graycolor=kGrayTextColor;
     }
     return self;
 }
@@ -74,7 +75,7 @@
     
     UILabel *lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,9+4, 60, 15)];
     lblDistance.backgroundColor = [UIColor clearColor];
-    lblDistance.textColor = [UIColor grayColor];
+    lblDistance.textColor = graycolor;
     lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
     if (distance<0) {
@@ -91,15 +92,15 @@
     
     UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 260, 12)];
     lblAddress.backgroundColor = [UIColor clearColor];
-    lblAddress.textColor = [UIColor grayColor];
-    lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+    lblAddress.textColor = graycolor;
+    lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
     lblAddress.text=_branch.address_full;
     [genarateInfoView addSubview:lblAddress];
     
     UILabel *lblPrice = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 53.0, 210, 12)];
     lblPrice.backgroundColor = [UIColor clearColor];
-    lblPrice.textColor = [UIColor grayColor];
-    lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+    lblPrice.textColor = graycolor;
+    lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
     lblPrice.text=(_branch.price_avg && ![_branch.price_avg isEqualToString:@""])?_branch.price_avg:@"Đang cập nhật";
     [genarateInfoView addSubview:lblPrice];
     
@@ -117,8 +118,8 @@
     
     UILabel *lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(10.0+15, 71.0, 210, 12)];
     lblPhone.backgroundColor = [UIColor clearColor];
-    lblPhone.textColor = [UIColor grayColor];
-    lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+    lblPhone.textColor = graycolor;
+    lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
     
     lblPhone.text=(_branch.phone && ![_branch.phone isEqualToString:@""])?_branch.phone:@"Đang cập nhật";
     
@@ -177,7 +178,7 @@
             UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,*height_p , 290, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
             lblDetailRow.textColor = [UIColor redColor];
-            lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12)];
+            lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12+1)];
             lblDetailRow.text = coupon.name;
             [lblDetailRow resizeToStretch];
             
@@ -236,15 +237,15 @@
             
             UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 5.0, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
-            lblTitleRow.textColor = [UIColor grayColor];
-            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.textColor = graycolor;
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblTitleRow.text =@"Số lượng";
             [infoCouponBranch addSubview:lblTitleRow];
             
             UILabel *lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 5.0, 150, 23)];
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-            lblDetailInfoRow.textColor = [UIColor grayColor];
-            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.textColor = graycolor;
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblDetailInfoRow.text =coupon.use_number;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
@@ -254,15 +255,15 @@
             
             lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 25.0, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
-            lblTitleRow.textColor = [UIColor grayColor];
-            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.textColor = graycolor;
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblTitleRow.text =@"Lượt xem";
             [infoCouponBranch addSubview:lblTitleRow];
             
             lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 25.0, 150, 23)];
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-            lblDetailInfoRow.textColor = [UIColor grayColor];
-            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.textColor = graycolor;
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblDetailInfoRow.text =coupon.view;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
@@ -272,15 +273,15 @@
             
             lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 45.0, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
-            lblTitleRow.textColor = [UIColor grayColor];
-            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.textColor = graycolor;
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblTitleRow.text =@"Lượt mua";
             [infoCouponBranch addSubview:lblTitleRow];
             
             lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 45.0, 150, 23)];
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-            lblDetailInfoRow.textColor = [UIColor grayColor];
-            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.textColor = graycolor;
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblDetailInfoRow.text =coupon.used_number;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
@@ -290,15 +291,15 @@
             
             lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 45.0+ 20, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
-            lblTitleRow.textColor = [UIColor grayColor];
-            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.textColor = graycolor;
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblTitleRow.text =@"Mã";
             [infoCouponBranch addSubview:lblTitleRow];
             
             lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 45.0+ 20, 150, 23)];
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-            lblDetailInfoRow.textColor = [UIColor grayColor];
-            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.textColor = graycolor;
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblDetailInfoRow.text =coupon.syntax;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
@@ -308,15 +309,15 @@
             
             lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 65.0+ 20, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
-            lblTitleRow.textColor = [UIColor grayColor];
-            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblTitleRow.textColor = graycolor;
+            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblTitleRow.text =@"Hạn sử dụng";
             [infoCouponBranch addSubview:lblTitleRow];
             
             lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 65.0+ 20, 150, 23)];
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-            lblDetailInfoRow.textColor = [UIColor grayColor];
-            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblDetailInfoRow.textColor = graycolor;
+            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[coupon.start stringWithFormat:@"dd/MM/yy"], [coupon.end stringWithFormat:@"dd/MM/yy"]];
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
@@ -576,8 +577,8 @@
         UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(iconIView.frame.origin.x+iconIView.frame.size.width+3, heightUtilities+3, 250, 23)];
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
-        lblDetailRow.textColor = [UIColor grayColor];
-        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblDetailRow.textColor = graycolor;
+        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
         lblDetailRow.text =[dic valueForKey:@"name"];
         [lblDetailRow resizeToStretch];
         [utilitiesView addSubview:lblDetailRow];
@@ -789,7 +790,7 @@
     _introducingView.hidden=YES;
     if (_branch.review) {
         _introducingView.hidden=NO;
-        NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
+        NSMutableString *html = kHTMLString;
         //continue building the string
         [html appendString:_branch.review];
         [html appendString:@"</body></html>"];
@@ -830,8 +831,8 @@
             
             UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, lineHeight, 265, 25)];
             lblAddress.backgroundColor = [UIColor clearColor];
-            lblAddress.textColor = [UIColor grayColor];
-            lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+            lblAddress.textColor = graycolor;
+            lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblAddress.text=str;
             [lblAddress resizeToStretch];
             [_introducingView addSubview:lblAddress];
@@ -863,8 +864,8 @@
         
         UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(8,  *heightDetailInfo_p+5.0, 150, 23)];
         lblTitleRow.backgroundColor = [UIColor clearColor];
-        lblTitleRow.textColor = [UIColor grayColor];
-        lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblTitleRow.textColor = graycolor;
+        lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
         lblTitleRow.text =strTiltle;
         [detailInfoBranch addSubview:lblTitleRow];
         
@@ -872,7 +873,7 @@
         
         lblDetailRow.backgroundColor = [UIColor clearColor];
         lblDetailRow.textColor = [UIColor blackColor];
-        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
         lblDetailRow.text = strDetail;
         [lblDetailRow resizeToStretch];
         [detailInfoBranch addSubview:lblDetailRow];

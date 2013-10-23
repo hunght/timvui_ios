@@ -10,8 +10,4 @@
 
 @interface MyNavigationController : UINavigationController
 -(id)initWithRootViewControllerNoIcon:(UIViewController *)rootViewController;
-- (void)dropShadowWithOffset:(CGSize)offset
-                      radius:(CGFloat)radius
-                       color:(UIColor*)color
-                     opacity:(CGFloat)opacity;
 @end

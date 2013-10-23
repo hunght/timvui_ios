@@ -116,7 +116,8 @@
 }
 
 -(void)showNotificationWithBranch:(TVBranch*)branch{
-    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:branch.name  goWithClickView:^(){
+    
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:[NSString stringWithFormat:@"%f",[[GlobalDataUser sharedAccountClient] distanceFromAddress:[branch latlng]]]  goWithClickView:^(){
         
         BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
         branchProfileVC.branch=branch;

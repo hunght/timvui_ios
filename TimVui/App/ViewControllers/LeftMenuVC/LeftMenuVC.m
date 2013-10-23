@@ -100,7 +100,7 @@ enum {
     self = [super initWithStyle:style];
     if (self) {
         [self checkAndRefreshTableviewWhenUserLoginOrLogout];
-        _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ Anuong.net",@"Sản phẩm", nil];
+        _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ ĂnUống.net",@"Sản phẩm", nil];
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
@@ -594,7 +594,7 @@ enum {
                     {
                         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
                         controller.mailComposeDelegate = self;
-                        [controller setToRecipients:[[NSArray alloc] initWithObjects:@"homthu@anuong.net", nil]];
+                        [controller setToRecipients:[[NSArray alloc] initWithObjects:@"homthu@ ĂnUống.net", nil]];
                         [controller setSubject:@"My Subject"];
                         [controller setMessageBody:@"" isHTML:NO];
                         if (controller) [self presentModalViewController:controller animated:YES];

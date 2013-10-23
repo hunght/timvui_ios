@@ -49,7 +49,7 @@
 
     self.titleRow.backgroundColor=[UIColor whiteColor];
     [self.contentView addSubview:_titleRow];
-    self.detailTextLabel.backgroundColor=[UIColor redColor];
+    self.detailTextLabel.backgroundColor=[UIColor clearColor];
     self.detailTextLabel.textColor=[UIColor whiteColor];
     self.detailTextLabel.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     self.titleRow.numberOfLines = 1;
@@ -62,12 +62,12 @@
     self.imageView.image=[Utilities imageFromColor:[UIColor grayColor]];
     [self.contentView insertSubview:self.detailTextLabel aboveSubview:self.imageView];
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
-    UILabel* dotLine=[[UILabel alloc] initWithFrame: CGRectMake(150.0f, 6.0f, 90, 15.0f)];
-    dotLine.font=[UIFont systemFontOfSize:12];
-    dotLine.text=@"................................................";
-    dotLine.textColor=[UIColor lightGrayColor];
-    dotLine.backgroundColor=[UIColor clearColor];
-    [self.contentView insertSubview:dotLine belowSubview:self.titleRow];
+    _dotLine=[[UILabel alloc] initWithFrame: CGRectMake(150.0f, 6.0f, 90, 15.0f)];
+    _dotLine.font=[UIFont systemFontOfSize:12];
+    _dotLine.text=@"................................................";
+    _dotLine.textColor=[UIColor lightGrayColor];
+    _dotLine.backgroundColor=[UIColor clearColor];
+    [self.contentView insertSubview:_dotLine belowSubview:self.titleRow];
     return self;
 }
 

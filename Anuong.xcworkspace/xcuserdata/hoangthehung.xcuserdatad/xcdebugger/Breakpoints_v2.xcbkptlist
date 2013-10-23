@@ -73,52 +73,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/Extensions/TVAppDelegate.m"
-            timestampString = "404187227.959237"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
-            landmarkName = "-updateCouponImpression"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[TVAppDelegate updateCouponImpression]"
-                  moduleName = "Anuong"
-                  urlString = "file://localhost/Users/hoangthehung/Desktop/TimVui_iOS/timvui_ios/TimVui/App/Extensions/TVAppDelegate.m"
-                  timestampString = "404190291.912619"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "445"
-                  endingLineNumber = "445"
-                  offsetFromSymbolStart = "221">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__39-[TVAppDelegate updateCouponImpression]_block_invoke"
-                  moduleName = "Anuong"
-                  urlString = "file://localhost/Users/hoangthehung/Desktop/TimVui_iOS/timvui_ios/TimVui/App/Extensions/TVAppDelegate.m"
-                  timestampString = "404190291.913106"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "445"
-                  endingLineNumber = "445"
-                  offsetFromSymbolStart = "82">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
             timestampString = "404039082.513107"
             startingColumnNumber = "9223372036854775807"
@@ -135,13 +89,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/SearchVC/SearchVC.m"
-            timestampString = "404190187.550285"
+            filePath = "TimVui/App/ViewControllers/BranchProfileVC/TVExtraBranchView/TVExtraBranchView.m"
+            timestampString = "404207893.013064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "-priceButtonClicked:"
+            startingLineNumber = "1354"
+            endingLineNumber = "1354"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

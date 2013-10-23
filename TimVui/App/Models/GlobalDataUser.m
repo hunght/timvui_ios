@@ -278,7 +278,7 @@ static GlobalDataUser *_sharedClient = nil;
                     if (day>7) {
                         
                         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                        localNotif.alertBody=[NSString stringWithFormat:@"Phát hiện %@ ở gần bạn!",branch.name];
+                        localNotif.alertBody=[NSString stringWithFormat:@"Có vẻ bạn đang ở %@.Hãy Chụp ảnh hoặc Viết đánh giá để chia sẻ với bạn bè",branch.name];
                         
                         localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
                         localNotif.soundName = @"alarmsound.caf";
@@ -324,7 +324,7 @@ static GlobalDataUser *_sharedClient = nil;
                     int day=(savedDate)?[savedDate daysAgo]:8;
                     if (day>7) {
                         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                        localNotif.alertBody=[NSString stringWithFormat:@"%@ vừa tạo coupon mới cho thành viên Anuong.net!",branch.name];
+                        localNotif.alertBody=[NSString stringWithFormat:@"%@ vừa tạo coupon mới cho thành viên ĂnUống.net!",branch.name];
                         localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
                         localNotif.soundName = @"alarmsound.caf";
                         localNotif.applicationIconBadgeNumber = 0;
@@ -337,7 +337,7 @@ static GlobalDataUser *_sharedClient = nil;
                     }
                 }else{
                     
-                    [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
+                    [SharedAppDelegate showNotificationWithBranch:branches[0]];
                 }
             }
         });

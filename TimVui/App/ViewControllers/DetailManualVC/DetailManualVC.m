@@ -119,7 +119,7 @@
     
     
     int height=lblTitle.frame.origin.y+lblTitle.frame.size.height;
-    NSMutableString *html = [NSMutableString stringWithString: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head><body style=\"background:transparent;\">"];
+    NSMutableString *html = kHTMLString;
 //        NSLog(@"%@",_manual.content);
     //continue building the string
     [html appendString:_manual.content];
@@ -214,10 +214,10 @@
                          success:^(UIImage *image, BOOL cached)
          {
              UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
-             image=[image imageByScalingAndCroppingForSize:CGSizeMake(40, 30)];
+             image=[image imageByScalingAndCroppingForSize:CGSizeMake(45,45/4*3)];
              UIGraphicsBeginImageContext( bottomImage.size );
              [bottomImage drawAtPoint:CGPointZero];
-             [image drawInRect:CGRectMake(6.0f,6.0f,30,30/4*3) blendMode:kCGBlendModeNormal alpha:1];
+             [image drawInRect:CGRectMake(1.0f,1.0f,45,45/4*3) blendMode:kCGBlendModeNormal alpha:1];
              UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
              UIGraphicsEndImageContext();
              melbourneMarker.icon = newImage;

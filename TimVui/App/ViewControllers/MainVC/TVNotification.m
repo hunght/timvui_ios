@@ -24,7 +24,7 @@
             lblYouAre.backgroundColor = [UIColor clearColor];
             lblYouAre.textColor = [UIColor grayColor];
             lblYouAre.font = [UIFont fontWithName:@"ArialMT" size:(10)];
-            lblYouAre.text=@"Bạn đang ở gần nhà hàng";
+            lblYouAre.text=@"Có vẻ bạn đang ở";
             [self addSubview:lblYouAre];
             
             UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(139, height, 180, 23)];
@@ -40,7 +40,7 @@
             lblPlease.backgroundColor = [UIColor clearColor];
             lblPlease.textColor = [UIColor grayColor];
             lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(10)];
-            lblPlease.text=@"Hãy Chụp ảnh hoặc Viết bình luận để chia sẻ với bạn bè";
+            lblPlease.text=@"Hãy Chụp ảnh hoặc Viết đánh giá để chia sẻ với bạn bè";
             [self addSubview:lblPlease];
 
             height=lblPlease.frame.origin.y+lblPlease.frame.size.height;
@@ -130,7 +130,7 @@
             lblPlease.textColor = [UIColor grayColor];
             lblPlease.numberOfLines=2;
             lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(11)];
-            lblPlease.text=[NSString stringWithFormat:@"%@ (cách %@) vừa tạo Coupon giảm giá dành cho thành viên Anuong",strTitle,distance];
+            lblPlease.text=[NSString stringWithFormat:@"%@ (cách %@) vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle,distance];
             [self addSubview:lblPlease];
             [self addSubview:lblDetailRow];
 

@@ -44,12 +44,13 @@
 #define kVatgiaClientSecret @"2ETkVUuMAIPmOY8liDzj0x"
 
 #define kSearchBranchLimit @"30"
-#define kKYCustomPhotoAlbumName_ @"Anuong.net Album"
+#define kKYCustomPhotoAlbumName_ @"ĂnUống.net Album"
 
 #define kCyanGreenColor [UIColor colorWithRed:(3/255.0f) green:(190/255.0f) blue:(239/255.0f) alpha:1.0f]
 #define kPaleCyanGreenColor [UIColor colorWithRed:(71/255.0f) green:(217/255.0f) blue:(255/255.0f) alpha:1.0f]
 #define kOrangeColor [UIColor colorWithRed:(245/255.0f) green:(110/255.0f) blue:(44/255.0f) alpha:1.0f]
 #define kDeepOrangeColor [UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]
+#define kGrayTextColor [UIColor colorWithWhite:.3 alpha:1.0]
 
-
+#define kHTMLString         [NSMutableString stringWithFormat: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head> <style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style><body style=\"background:transparent;\">",@"ArialMT", [NSNumber numberWithInt:12+1]]
 
