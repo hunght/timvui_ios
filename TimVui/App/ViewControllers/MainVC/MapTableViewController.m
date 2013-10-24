@@ -414,7 +414,7 @@ static const int maxLimitBranches=100;
             [_locationPickerView.tableView.infiniteScrollingView stopAnimating];
             // View map with contain all search items
             if (weakSelf.branches.count>0) {
-                _locationPickerView.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//                _locationPickerView.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
                 TVBranch* branch=weakSelf.branches.items.lastObject;
                 [self updateCameraMapPosition:branch.latlng];
             }
@@ -545,7 +545,7 @@ static const int maxLimitBranches=100;
     UIView* view=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 80)];
     UIView* viewPad;
     if (([[UIScreen mainScreen] bounds].size.height == 568)) {
-        viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 220)];
+        viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 210)];
     }else{
         viewPad=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 308, 165)];
     }

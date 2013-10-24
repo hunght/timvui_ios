@@ -61,7 +61,10 @@
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 }
-
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [FBSession.activeSession handleOpenURL:url];
+}
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
@@ -342,8 +345,10 @@
         
         BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
         branchProfileVC.branchID=[userInfo valueForKey:@"branch_id"];
+        UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:branchProfileVC];
+        branchProfileVC.isPresentationYES=YES;
         //        specBranchVC.coupon=branch.coupons.items[0];
-        [_slidingViewController.topViewController presentModalViewController:branchProfileVC animated:YES];
+        [_slidingViewController.topViewController presentModalViewController:navController animated:YES];
     }];
     [notificationView openButtonClicked:nil];
 }

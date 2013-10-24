@@ -103,6 +103,7 @@
 }
 
 +(void)loginAndTakePermissionWithHanlder:(FBSessionRequestPermissionResultHandler)handler{
+    
     if ([[FBSession activeSession]isOpen]) {
         /*
          * if the current session has no publish permission we need to reauthorize
@@ -118,22 +119,21 @@
             
         }
     }else{
-        /*
-         * open a new session with publish permission
-         */
-        [FBSession openActiveSessionWithPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]
-                                           defaultAudience:FBSessionDefaultAudienceOnlyMe
-                                              allowLoginUI:YES
-                                         completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                                             handler(session,error);
-                                             
-                                             if (!error && status == FBSessionStateOpen) {
-                                                 NSLog(@"success");
-                                                 
-                                             }else{
-                                                 NSLog(@"error=%@",error);
-                                             }
-                                         }];
+        [FBSession setActiveSession:[[FBSession alloc] initWithPermissions:[NSArray arrayWithObject:@"publish_actions"]]];
+        
+        // if the session isn't open, let's open it now and present the login UX to the user
+        [[FBSession activeSession] openWithCompletionHandler:^(FBSession *session,
+                                                         FBSessionState status,
+                                                         NSError *error) {
+            // and here we make sure to update our UX according to the new session state
+            if (!error && status == FBSessionStateOpen) {
+                NSLog(@"success");
+                
+            }else{
+                NSLog(@"error=%@",error);
+            }
+        }];
+
     }
 }
 

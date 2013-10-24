@@ -135,7 +135,12 @@
             lblPlease.textColor = [UIColor grayColor];
             lblPlease.numberOfLines=2;
             lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(11)];
-            lblPlease.text=[NSString stringWithFormat:@"%@ (cách %@) vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle,distance];
+            if (distance) {
+                lblPlease.text=[NSString stringWithFormat:@"%@ (cách %@) vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle,distance];
+            }else{
+                lblPlease.text=[NSString stringWithFormat:@"%@ vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle];
+            }
+
             [self addSubview:lblPlease];
             [self addSubview:lblDetailRow];
 

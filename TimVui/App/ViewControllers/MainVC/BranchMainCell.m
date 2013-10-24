@@ -97,6 +97,10 @@
     _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];
     
     [self.contentView addSubview:_lblDistance];
+    
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 1)];
+    grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+    [self.contentView addSubview:grayLine];
     return self;
 }
 
