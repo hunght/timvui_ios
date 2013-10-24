@@ -401,7 +401,6 @@ enum {
     } else {
         navController = [[MyNavigationController alloc] initWithRootViewController:viewController];
     }
-    [navController.navigationBar dropShadow];
 	navController.view.layer.shadowOpacity = 0.8f;
 	navController.view.layer.shadowRadius = 5;
 	navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -412,7 +411,7 @@ enum {
     [self.slidingViewController setTopViewController:navController];
 	//self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
     self.slidingViewController.anchorRightPeekAmount=40.0f;
-    self.slidingViewController.shouldAllowUserInteractionsWhenAnchored=NO;
+//    self.slidingViewController.shouldAllowUserInteractionsWhenAnchored=YES;
     [[(UIViewController *)navController.viewControllers[0] view] addGestureRecognizer:self.slidingViewController.panGesture];
     [navController.navigationBar dropShadow];
     [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];

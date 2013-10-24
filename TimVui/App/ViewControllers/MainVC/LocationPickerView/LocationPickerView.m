@@ -245,7 +245,7 @@
 {
     if (!self.currentLocation) {
         
-        self.currentLocation = [[UIButton alloc] initWithFrame:CGRectMake(8, 180+30+5, 30, 30)];
+        self.currentLocation = [[UIButton alloc] initWithFrame:CGRectMake(320-30-5, 180+5, 30, 30)];
         [self.currentLocation setImage:[UIImage imageNamed:@"img_map_view_user_current_location"] forState:UIControlStateNormal];
         [self.currentLocation addTarget:self action:@selector(currentLocationBarButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self insertSubview:self.currentLocation aboveSubview:self.mapView];

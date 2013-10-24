@@ -80,7 +80,7 @@
             [btnClose addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btnClose];
         }else{
-            _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34)];
+            _btnOpen = [[UIButton alloc] initWithFrame:CGRectZero];
             [_btnOpen setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
             [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_view addSubview:_btnOpen];
@@ -107,7 +107,12 @@
         self.btnCommentCallback=commentCall;
     }
     self.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin ;
-    _btnOpen.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin;
+//    _btnOpen.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin;
+    if (([[UIScreen mainScreen] bounds].size.height == 568)) {
+        _btnOpen.frame= CGRectMake(320-32-18,568 -32-5- 44- 22, 34, 34);
+    }else{
+        _btnOpen.frame= CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34);
+    }
     return self;
 }
 
@@ -156,7 +161,7 @@
             [btnClose addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btnClose];
         }else{
-            _btnOpen = [[UIButton alloc] initWithFrame:CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34)];
+            _btnOpen = [[UIButton alloc] initWithFrame:CGRectZero];
             [_btnOpen setBackgroundImage:[UIImage imageNamed:@"img_main_open_button"] forState:UIControlStateNormal];
             [_btnOpen addTarget:self action:@selector(openButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [_view addSubview:_btnOpen];

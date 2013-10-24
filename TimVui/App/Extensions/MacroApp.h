@@ -2,7 +2,7 @@
 
 #import "MyViewController.h"
 
-#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
 

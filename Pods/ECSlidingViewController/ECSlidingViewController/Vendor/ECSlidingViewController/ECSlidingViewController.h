@@ -35,36 +35,36 @@ extern NSString *const ECSlidingViewTopDidReset;
 
 /** @constant ECViewWidthLayout width of under views */
 typedef enum {
-  /** Under view will take up the full width of the screen */
-  ECFullWidth,
-  /** Under view will have a fixed width equal to anchorRightRevealAmount or anchorLeftRevealAmount. */
-  ECFixedRevealWidth,
-  /** Under view will have a variable width depending on rotation equal to the screen's width - anchorRightPeekAmount or anchorLeftPeekAmount. */
-  ECVariableRevealWidth
+    /** Under view will take up the full width of the screen */
+    ECFullWidth,
+    /** Under view will have a fixed width equal to anchorRightRevealAmount or anchorLeftRevealAmount. */
+    ECFixedRevealWidth,
+    /** Under view will have a variable width depending on rotation equal to the screen's width - anchorRightPeekAmount or anchorLeftPeekAmount. */
+    ECVariableRevealWidth
 } ECViewWidthLayout;
 
 /** @constant ECSide side of screen */
 typedef enum {
-  /** Left side of screen */
-  ECLeft,
-  /** Right side of screen */
-  ECRight
+    /** Left side of screen */
+    ECLeft,
+    /** Right side of screen */
+    ECRight
 } ECSide;
 
 /** @constant ECResetStrategy top view behavior while anchored. */
 typedef enum {
-  /** No reset strategy will be used */
-  ECNone = 0,
-  /** Tapping the top view will reset it */
-  ECTapping = 1 << 0,
-  /** Panning will be enabled on the top view. If it is panned and released towards the reset position it will reset, otherwise it will slide towards the anchored position. */
-  ECPanning = 1 << 1
+    /** No reset strategy will be used */
+    ECNone = 0,
+    /** Tapping the top view will reset it */
+    ECTapping = 1 << 0,
+    /** Panning will be enabled on the top view. If it is panned and released towards the reset position it will reset, otherwise it will slide towards the anchored position. */
+    ECPanning = 1 << 1
 } ECResetStrategy;
 
 /** ECSlidingViewController is a view controller container that presents its child view controllers in two layers. The top layer can be panned to reveal the layers below it. */
 @interface ECSlidingViewController : UIViewController{
-  CGPoint startTouchPosition;
-  BOOL topViewHasFocus;
+    CGPoint startTouchPosition;
+    BOOL topViewHasFocus;
 }
 
 /** Returns the view controller that will be visible when the top view is slide to the right.
@@ -139,6 +139,12 @@ typedef enum {
  */
 @property (nonatomic, assign) BOOL shouldAddPanGestureRecognizerToTopViewSnapshot;
 
+/** Specifies if the the child views should be shortened to accomodate the status bar.
+ 
+ By default, this is set to NO
+ */
+@property (nonatomic, assign) BOOL shouldAdjustChildViewHeightForStatusBar;
+
 /** Specifies the behavior for the under left width
  
  By default, this is set to ECFullWidth
@@ -160,7 +166,7 @@ typedef enum {
 @property (nonatomic, assign) ECResetStrategy resetStrategy;
 
 /** Returns the magnitude of the X-axis velocity threshold used for determining whether or not to process a pan to the left or right
-
+ 
  By default, this is set to 100
  */
 @property (nonatomic, assign) NSUInteger panningVelocityXThreshold;
@@ -171,6 +177,13 @@ typedef enum {
  
  */
 @property (nonatomic,copy) void (^topViewCenterMoved)(float xPos);
+
+/** A view that is the same size and position as the status bar
+ 
+ It is guaranteed to always be on top of the top and under views.
+ 
+ */
+@property (nonatomic, strong) UIView *statusBarBackgroundView;
 
 /** Returns a horizontal panning gesture for moving the top view.
  
@@ -214,7 +227,7 @@ typedef enum {
 - (void)resetTopView;
 
 /** Slides the top view back to the center.
-
+ 
  @param animations Perform changes to properties that will be animated while top view is moved back to the center of the screen. Can be nil.
  @param onComplete Executed after the animation is completed. Can be nil.
  */
