@@ -11,15 +11,16 @@
 #import <MessageUI/MessageUI.h>
 
 @class TVBranches,TVBranch;
-@interface LeftMenuVC : UITableViewController <MFMailComposeViewControllerDelegate> {
+@interface LeftMenuVC : MyViewController <MFMailComposeViewControllerDelegate,UITableViewDataSource,UITableViewDelegate> {
 @private
     NSArray *_headers;
     NSIndexPath* lastIndexPath;
     BOOL _lastStatusLogin;
     BOOL isRotatedYES;
     BOOL isNotTheFirstTimeOpenHomeYES;
+    
 }
-
+@property (nonatomic, retain) UITableView* tableView;
 - (void)openViewController:(UIViewController *)viewController;
 - (void)commentButtonClickedWithNav:(UINavigationController*)nav andWithBranches:(TVBranches*)branches;
 - (void)commentButtonClickedWithNav:(UINavigationController*)nav andWithBranch:(TVBranch*)branch;

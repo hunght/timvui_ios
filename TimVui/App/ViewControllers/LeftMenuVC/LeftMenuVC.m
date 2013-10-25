@@ -94,18 +94,33 @@ enum {
         return;
     }
 }
-
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self checkAndRefreshTableviewWhenUserLoginOrLogout];
         _headers=[[NSArray alloc] initWithObjects:@"Tài khoản",@"Từ ĂnUống.net",@"Sản phẩm", nil];
+        CGRect frame=self.view.bounds;
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+            frame.origin.y+=20;
+            frame.size.height-=20;
+        }
+        self.tableView=[[UITableView alloc]initWithFrame:frame style:UITableViewStylePlain];
+        _tableView.userInteractionEnabled = YES;
+        _tableView.bounces = YES;
+        
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        
+        [self.view addSubview:self.tableView];
+        [self.view setBackgroundColor:[UIColor blackColor]];
+        self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -130,6 +145,7 @@ enum {
     
     [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+
 }
 
 - (void)viewDidUnload
@@ -411,7 +427,7 @@ enum {
     [self.slidingViewController setTopViewController:navController];
 	//self.slidingViewController.underLeftWidthLayout = ECFixedRevealWidth;
     self.slidingViewController.anchorRightPeekAmount=40.0f;
-//    self.slidingViewController.shouldAllowUserInteractionsWhenAnchored=YES;
+    self.slidingViewController.shouldAddPanGestureRecognizerToTopViewSnapshot=YES;
     [[(UIViewController *)navController.viewControllers[0] view] addGestureRecognizer:self.slidingViewController.panGesture];
     [navController.navigationBar dropShadow];
     [self.slidingViewController resetTopViewWithAnimations:nil onComplete:nil];

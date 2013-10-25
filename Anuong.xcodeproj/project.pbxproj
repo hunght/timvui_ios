@@ -470,7 +470,6 @@
 		55CF087D17BA31C2006556A4 /* EventVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF087217BA31C2006556A4 /* EventVC.m */; };
 		55CF087E17BA31C2006556A4 /* EventVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CF087317BA31C2006556A4 /* EventVC.xib */; };
 		55CF087F17BA31C2006556A4 /* TVEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF087617BA31C2006556A4 /* TVEventCell.m */; };
-		55CF453A17BE060A009C4308 /* SBTableAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF453917BE060A009C4308 /* SBTableAlert.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		55CF454517BE37E9009C4308 /* TVEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF453D17BE37E9009C4308 /* TVEvent.m */; };
 		55CF454617BE37E9009C4308 /* TVEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF453F17BE37E9009C4308 /* TVEvents.m */; };
 		55CF454717BE37E9009C4308 /* TVKaraoke.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CF454217BE37E9009C4308 /* TVKaraoke.m */; };
@@ -1155,8 +1154,6 @@
 		55CF087317BA31C2006556A4 /* EventVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventVC.xib; sourceTree = "<group>"; };
 		55CF087517BA31C2006556A4 /* TVEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEventCell.h; sourceTree = "<group>"; };
 		55CF087617BA31C2006556A4 /* TVEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEventCell.m; sourceTree = "<group>"; };
-		55CF453817BE060A009C4308 /* SBTableAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTableAlert.h; sourceTree = "<group>"; };
-		55CF453917BE060A009C4308 /* SBTableAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTableAlert.m; sourceTree = "<group>"; };
 		55CF453C17BE37E9009C4308 /* TVEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEvent.h; sourceTree = "<group>"; };
 		55CF453D17BE37E9009C4308 /* TVEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVEvent.m; sourceTree = "<group>"; };
 		55CF453E17BE37E9009C4308 /* TVEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVEvents.h; sourceTree = "<group>"; };
@@ -2408,7 +2405,6 @@
 				558287E917C5EDDC00F15F48 /* CMHTMLView */,
 				55FE4D0917C3813F005B08FA /* FloatView */,
 				5513C21217BF37C0004E4F5B /* InfinitePagingView */,
-				55CF453717BE060A009C4308 /* SBTableAlert */,
 				5540855A1782DDB500E07988 /* Base64 */,
 				554085371782BC7400E07988 /* BSKeyboardControls */,
 				55AEAD031779A4FF0010638F /* SVPullToRefresh */,
@@ -2649,15 +2645,6 @@
 				55CF087617BA31C2006556A4 /* TVEventCell.m */,
 			);
 			path = TVEventCell;
-			sourceTree = "<group>";
-		};
-		55CF453717BE060A009C4308 /* SBTableAlert */ = {
-			isa = PBXGroup;
-			children = (
-				55CF453817BE060A009C4308 /* SBTableAlert.h */,
-				55CF453917BE060A009C4308 /* SBTableAlert.m */,
-			);
-			path = SBTableAlert;
 			sourceTree = "<group>";
 		};
 		55CF453B17BE37E8009C4308 /* Events */ = {
@@ -3480,7 +3467,6 @@
 				5520472C17BB351C003F0506 /* NearbyCouponCell.m in Sources */,
 				5520472D17BB351C003F0506 /* NearbyCouponVC.m in Sources */,
 				5520472F17BB351C003F0506 /* ReceivedCouponVC.m in Sources */,
-				55CF453A17BE060A009C4308 /* SBTableAlert.m in Sources */,
 				55CF454517BE37E9009C4308 /* TVEvent.m in Sources */,
 				55CF454617BE37E9009C4308 /* TVEvents.m in Sources */,
 				55CF454717BE37E9009C4308 /* TVKaraoke.m in Sources */,

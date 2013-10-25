@@ -29,13 +29,14 @@
 #import "SVPullToRefresh.h"
 #import <JSONKit.h>
 static const int maxLimitBranches=100;
+
 @interface MapTableViewController (){
 @private
     __strong UIActivityIndicatorView *_activityIndicatorView;
-    __strong  SBTableAlert *alert;
     int offset;
     UILabel* tableFooter;
     NSDictionary *_params;
+    int rowPickerView;
 }
 
 @end
@@ -201,6 +202,8 @@ static const int maxLimitBranches=100;
     
 }
 
+
+
 - (void)locationPicker:(LocationPickerView *)locationPicker mapViewDidLoad:(GMSMapView *)mapView
 {
     _lastPosition=mapView.camera.target;
@@ -216,15 +219,58 @@ static const int maxLimitBranches=100;
             [self getBranchesForView];
         }else if(([CLLocationManager locationServicesEnabled]==NO||([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied))){
             int i=    [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] count];
-            NSLog(@"count == %d",i);
-            alert	= [[SBTableAlert alloc] initWithTitle:@"Vui lòng chọn Tỉnh/TP" cancelButtonTitle:@"Cancel" messageFormat:nil];
-            [alert setDelegate:self];
-            [alert setDataSource:self];
-            [alert show];
+            NSLog(@"actionSheet count == %d",i);
+            
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                     delegate:nil
+                                                            cancelButtonTitle:nil
+                                                       destructiveButtonTitle:nil
+                                                            otherButtonTitles:nil];
+            
+            [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+//            [actionSheet setTitle:@"Vui lòng chọn Tỉnh/TP"];
+            CGRect pickerFrame = CGRectMake(0, 40, 0, 0);
+            
+            UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:pickerFrame];
+            pickerView.showsSelectionIndicator = YES;
+            pickerView.dataSource = self;
+            pickerView.delegate = self;
+            
+            [actionSheet addSubview:pickerView];
+            
+            UISegmentedControl *choiceButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Chọn"]];
+            choiceButton.momentary = YES;
+            choiceButton.frame = CGRectMake(5, 7.0f, 50.0f, 30.0f);
+            choiceButton.segmentedControlStyle = UISegmentedControlStyleBar;
+            choiceButton.tintColor = [UIColor blackColor];
+            [choiceButton addTarget:self action:@selector(choiceActionSheet:) forControlEvents:UIControlEventValueChanged];
+            [actionSheet addSubview:choiceButton];
+            
+            UISegmentedControl *closeButton = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObject:@"Close"]];
+            closeButton.momentary = YES;
+            closeButton.frame = CGRectMake(260, 7.0f, 50.0f, 30.0f);
+            closeButton.segmentedControlStyle = UISegmentedControlStyleBar;
+            closeButton.tintColor = [UIColor blackColor];
+            [closeButton addTarget:self action:@selector(dismissActionSheet:) forControlEvents:UIControlEventValueChanged];
+            
+            [actionSheet addSubview:closeButton];
+            UILabel  * label = [[UILabel alloc] initWithFrame:CGRectMake(45, 12, 200, 20)];
+            label.backgroundColor = [UIColor clearColor];
+            label.textAlignment = UITextAlignmentCenter; // UITextAlignmentCenter, UITextAlignmentLeft
+            label.font=[UIFont fontWithName:@"Arial-BoldMT" size:(15)];
+            label.textColor=[UIColor blackColor];
+            label.text = @"Vui lòng chọn Tỉnh/TP";
+            [actionSheet addSubview:label];
+            
+            [actionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
+            
+            [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
+            
             //NSLog(@"%@",SharedAppDelegate.getCityDistrictData);
         }
-    }else
+    }else{
         [self getBranchesForView];
+    }
 }
 
 - (void)locationPicker:(LocationPickerView *)locationPicker tableViewDidLoad:(UITableView *)tableView
@@ -246,44 +292,32 @@ static const int maxLimitBranches=100;
         [weakSelf postSearchBranch:[[NSMutableDictionary alloc] initWithDictionary:_params] withReturnFromSearchScreenYES:NO];
     }];
 }
-
-#pragma mark - SBTableAlertDataSource
-
-- (UITableViewCell *)tableAlert:(SBTableAlert *)tableAlert cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell;
-	
-	if (tableAlert.view.tag == 0 || tableAlert.view.tag == 1) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] ;
-	} else {
-		// Note: SBTableAlertCell
-		cell = [[SBTableAlertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil] ;
-	}
-	
-	[cell.textLabel setText:[[[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:indexPath.row] safeStringForKey:@"name"]];
-	
-	return cell;
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
+    rowPickerView=row;
+    
 }
 
-- (NSInteger)tableAlert:(SBTableAlert *)tableAlert numberOfRowsInSection:(NSInteger)section {
+// tell the picker how many rows are available for a given component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    
     return [[SharedAppDelegate.getCityDistrictData valueForKey:@"data"] count];
 }
 
-- (NSInteger)numberOfSectionsInTableAlert:(SBTableAlert *)tableAlert {
+// tell the picker how many components it will have
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
 
-//- (NSString *)tableAlert:(SBTableAlert *)tableAlert titleForHeaderInSection:(NSInteger)section {
-//	if (tableAlert.view.tag == 3)
-//		return [NSString stringWithFormat:@"Section Header %d", section];
-//	else
-//		return nil;
-//}
-
-#pragma mark - SBTableAlertDelegate
-
-- (void)tableAlert:(SBTableAlert *)tableAlert didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+// tell the picker the title for a given component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSString *title;
+    title =[[[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:row] safeStringForKey:@"name"];
     
-    [GlobalDataUser sharedAccountClient].homeCity=     [[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:indexPath.row];
+    return title;
+}
+
+-(void)choiceActionSheet:(UISegmentedControl*)sender{
+    [GlobalDataUser sharedAccountClient].homeCity=     [[SharedAppDelegate.getCityDistrictData safeArrayForKey:@"data"] objectAtIndex:rowPickerView];
     [GlobalDataUser sharedAccountClient].userLocation=[[GlobalDataUser sharedAccountClient].homeCity safeLocationForKey:@"latlng"];
     [self getBranchesForView];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -291,16 +325,25 @@ static const int maxLimitBranches=100;
     [defaults synchronize];
     
     [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
+    UIActionSheet *actionSheet = (UIActionSheet*)[sender superview];
+    [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
 }
 
-- (void)tableAlert:(SBTableAlert *)tableAlert didDismissWithButtonIndex:(NSInteger)buttonIndex {
+- (void)dismissActionSheet:(UISegmentedControl*)sender{
+ 
     if ([GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES) {
         [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;
         [self getBranchesForView];
     }
+    UIActionSheet *actionSheet = (UIActionSheet*)[sender superview];
+    [actionSheet dismissWithClickedButtonIndex:0 animated:YES];
+}
+
+// tell the picker the width of each row for a given component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    int sectionWidth = 300;
     
-	//
-    
+    return sectionWidth;
 }
 
 #pragma mark - Helper
@@ -356,6 +399,10 @@ static const int maxLimitBranches=100;
 }
 
 - (void)postSearchBranch:(NSMutableDictionary*)params withReturnFromSearchScreenYES:(BOOL)isSearchYES{
+    NSLog(@"isloadning=%d",_branches.isLoading);
+    if (_branches.isLoading) {
+        return;
+    }
     _params=params;
     if (offset>maxLimitBranches) {
         _locationPickerView.tableView.showsInfiniteScrolling=NO;
@@ -363,6 +410,7 @@ static const int maxLimitBranches=100;
     }
     if (offset==0) {
         [self.branches.items removeAllObjects];
+        [_locationPickerView.tableView reloadData];
         _locationPickerView.tableView.showsInfiniteScrolling=YES;
     }
     if ([GlobalDataUser sharedAccountClient].dicCatSearchParam.count>0) {

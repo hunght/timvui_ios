@@ -38,6 +38,9 @@
     
     [self checkLocationServiceAvaible];
     [super viewDidLoad];
+    if (([[UIScreen mainScreen] bounds].size.height == 568)){
+        
+    }
 }
 -(void)viewDidUnload{
     [super viewDidUnload];

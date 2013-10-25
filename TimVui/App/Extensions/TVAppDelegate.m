@@ -409,11 +409,11 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    self.menuVC = [[LeftMenuVC alloc] initWithStyle:UITableViewStylePlain];
+    self.menuVC = [[LeftMenuVC alloc] initWithNibName:nil bundle:nil];
     //    [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-        [application setStatusBarStyle:UIStatusBarStyleLightContent];
+        [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     }
     
     //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];

@@ -59,12 +59,12 @@
             [alertView show];
         }else{
             
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:[NSString stringWithFormat:@"Soạn Coupon %@ gửi 8x88 để nhận mã Coupon này",coupon.syntax]];
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Nhận mã coupon" andMessage:nil];
             array = [array sortedArrayUsingSelector: @selector(compare:)];
             
             for (NSString* strSMSCode in array) {
                 NSString* strNumberUser=  [coupon.sms_type objectForKey:strSMSCode];
-                NSString* titleMess=[NSString stringWithFormat:@"Nhận %@ mã coupon (%@ người dùng)",strNumberUser,strNumberUser];
+                NSString* titleMess=[NSString stringWithFormat:@"%@ mã coupon (%@ người dùng)",strNumberUser,strNumberUser];
                 [alertView addButtonWithTitle:titleMess
                                          type:SIAlertViewButtonTypeDefault
                                       handler:^(SIAlertView *alert) {

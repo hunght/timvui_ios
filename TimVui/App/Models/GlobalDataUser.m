@@ -146,7 +146,7 @@ static GlobalDataUser *_sharedClient = nil;
 //    NSLog(@"setUserWithDic: %@",JSON);
     [self.user setValues:JSON ];
     //#warning User login set default USER ID TEST
-    //    self.user.userId=@"8878";
+//        self.user.userId=@"211669";
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             

@@ -11,9 +11,8 @@
 #import "UINavigationBar+JTDropShadow.h"
 #import "SearchVC.h"
 #import "TVBranches.h"
-#import "SBTableAlert.h"
 
-@interface MapTableViewController : MyViewController<LocationPickerViewDelegate,UITableViewDataSource,SBTableAlertDelegate, SBTableAlertDataSource, UITableViewDelegate,SearchVCDelegate,GMSMapViewDelegate>
+@interface MapTableViewController : MyViewController<UIPickerViewDelegate,LocationPickerViewDelegate,UITableViewDataSource,UIPickerViewDataSource,  UITableViewDelegate,SearchVCDelegate,GMSMapViewDelegate>
 @property (nonatomic, strong) LocationPickerView *locationPickerView;
 @property(nonatomic,strong)TVBranches *branches;
 @property(nonatomic,assign)CLLocationCoordinate2D lastPosition;
