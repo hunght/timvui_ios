@@ -60,6 +60,10 @@
 		5520472F17BB351C003F0506 /* ReceivedCouponVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5520472A17BB351C003F0506 /* ReceivedCouponVC.m */; };
 		5520473017BB351C003F0506 /* ReceivedCouponVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */; };
 		552072DA17855A2D00DC5E68 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552072D917855A2D00DC5E68 /* Security.framework */; };
+		5527B050181A8BAC00A3D6DA /* img_coupon_gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 5527B04B181A8BAC00A3D6DA /* img_coupon_gradient.png */; };
+		5527B051181A8BAC00A3D6DA /* img_coupon_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5527B04C181A8BAC00A3D6DA /* img_coupon_gradient@2x.png */; };
+		5527B052181A8BAC00A3D6DA /* img_coupon_hot.png in Resources */ = {isa = PBXBuildFile; fileRef = 5527B04D181A8BAC00A3D6DA /* img_coupon_hot.png */; };
+		5527B053181A8BAC00A3D6DA /* img_coupon_hot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5527B04E181A8BAC00A3D6DA /* img_coupon_hot@2x.png */; };
 		552F1F9617E6E2B400F3AC64 /* img_profile_branch_share_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 552F1F8E17E6E2B400F3AC64 /* img_profile_branch_share_bg.png */; };
 		552F1F9717E6E2B400F3AC64 /* img_profile_branch_share_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 552F1F8F17E6E2B400F3AC64 /* img_profile_branch_share_bg@2x.png */; };
 		552F1F9817E6E2B400F3AC64 /* img_profile_branch_share_fb.png in Resources */ = {isa = PBXBuildFile; fileRef = 552F1F9017E6E2B400F3AC64 /* img_profile_branch_share_fb.png */; };
@@ -669,6 +673,10 @@
 		5520472A17BB351C003F0506 /* ReceivedCouponVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivedCouponVC.m; sourceTree = "<group>"; };
 		5520472B17BB351C003F0506 /* ReceivedCouponVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceivedCouponVC.xib; sourceTree = "<group>"; };
 		552072D917855A2D00DC5E68 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5527B04B181A8BAC00A3D6DA /* img_coupon_gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_coupon_gradient.png; sourceTree = "<group>"; };
+		5527B04C181A8BAC00A3D6DA /* img_coupon_gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_coupon_gradient@2x.png"; sourceTree = "<group>"; };
+		5527B04D181A8BAC00A3D6DA /* img_coupon_hot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_coupon_hot.png; sourceTree = "<group>"; };
+		5527B04E181A8BAC00A3D6DA /* img_coupon_hot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_coupon_hot@2x.png"; sourceTree = "<group>"; };
 		552F1F8E17E6E2B400F3AC64 /* img_profile_branch_share_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_share_bg.png; sourceTree = "<group>"; };
 		552F1F8F17E6E2B400F3AC64 /* img_profile_branch_share_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img_profile_branch_share_bg@2x.png"; sourceTree = "<group>"; };
 		552F1F9017E6E2B400F3AC64 /* img_profile_branch_share_fb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img_profile_branch_share_fb.png; sourceTree = "<group>"; };
@@ -2041,6 +2049,10 @@
 		55B9083E17543AC90061AC33 /* ResourcesImages */ = {
 			isa = PBXGroup;
 			children = (
+				5527B04B181A8BAC00A3D6DA /* img_coupon_gradient.png */,
+				5527B04C181A8BAC00A3D6DA /* img_coupon_gradient@2x.png */,
+				5527B04D181A8BAC00A3D6DA /* img_coupon_hot.png */,
+				5527B04E181A8BAC00A3D6DA /* img_coupon_hot@2x.png */,
 				55F634211803AFD7005D6367 /* img_profile_branch_ulitility.png */,
 				55F634221803AFD7005D6367 /* img_profile_branch_ulitility@2x.png */,
 				55CE6A9B17FA6AE400C351FE /* img_welcome.png */,
@@ -2974,6 +2986,7 @@
 				55B9095C1754492E0061AC33 /* img_search_button_on@2x.png in Resources */,
 				55B9095D1754492E0061AC33 /* img_search_line_background.png in Resources */,
 				55B9095E1754492E0061AC33 /* img_search_line_background@2x.png in Resources */,
+				5527B053181A8BAC00A3D6DA /* img_coupon_hot@2x.png in Resources */,
 				55B9095F1754492E0061AC33 /* img_search_price_off.png in Resources */,
 				55B909601754492E0061AC33 /* img_search_price_off@2x.png in Resources */,
 				55B909611754492E0061AC33 /* img_search_price_on.png in Resources */,
@@ -3227,9 +3240,11 @@
 				5575F8A417B4E3EC0091D74D /* skin_thu_tuc_truoc_khi_an_icon_mobile@2x.png in Resources */,
 				5575F8A517B4E3EC0091D74D /* skin_thu_tuc_truoc_khi_an_text_mobile.png in Resources */,
 				5575F8A617B4E3EC0091D74D /* skin_thu_tuc_truoc_khi_an_text_mobile@2x.png in Resources */,
+				5527B050181A8BAC00A3D6DA /* img_coupon_gradient.png in Resources */,
 				5575F8AB17B4FBB00091D74D /* PageFiveView.xib in Resources */,
 				5575F8AE17B4FCF30091D74D /* skin_tu_tap_tai_icon.png in Resources */,
 				5575F8AF17B4FCF30091D74D /* skin_tu_tap_tai_text.png in Resources */,
+				5527B052181A8BAC00A3D6DA /* img_coupon_hot.png in Resources */,
 				5575F8B217B4FCFA0091D74D /* skin_tu_tap_tai_icon_mobile.png in Resources */,
 				5575F8B317B4FCFA0091D74D /* skin_tu_tap_tai_icon_mobile@2x.png in Resources */,
 				5575F8B617B4FD2D0091D74D /* skin_tu_tap_tai_text_mobile.png in Resources */,
@@ -3308,6 +3323,7 @@
 				558AA5B817DDC0EE00692E87 /* img_camera_scroll_to_pick_skin@2x.png in Resources */,
 				552F1F9617E6E2B400F3AC64 /* img_profile_branch_share_bg.png in Resources */,
 				552F1F9717E6E2B400F3AC64 /* img_profile_branch_share_bg@2x.png in Resources */,
+				5527B051181A8BAC00A3D6DA /* img_coupon_gradient@2x.png in Resources */,
 				552F1F9817E6E2B400F3AC64 /* img_profile_branch_share_fb.png in Resources */,
 				552F1F9917E6E2B400F3AC64 /* img_profile_branch_share_fb@2x.png in Resources */,
 				552F1F9A17E6E2B400F3AC64 /* img_profile_branch_share_gmail.png in Resources */,

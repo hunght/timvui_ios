@@ -17,8 +17,5 @@
 @property(nonatomic,strong)UILabel *lblNameBranch;
 @property(nonatomic,strong)UILabel *lblAddressBranch;
 @property(nonatomic,strong)UIImageView *avatarBranch;
-@property(nonatomic,strong)UIView *borderView;
-@property(nonatomic,strong)CAShapeLayer *border;
-+ (CGFloat)heightForCellWithPost:(TVCoupon *)coupon;
 - (void)setCoupon:(TVCoupon *)coupon;
 @end

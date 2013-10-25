@@ -111,6 +111,7 @@ static const int maxLimitBranches=100;
     self.locationPickerView.mapViewDidLoadBlock = ^(LocationPickerView *locationPicker) {
         //        locationPicker.mapView.mapType = MKMapTypeStandard;
     };
+    
     self.locationPickerView.tableViewDidLoadBlock = ^(LocationPickerView *locationPicker) {
         
     };

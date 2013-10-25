@@ -293,8 +293,7 @@ static const NSString* limitCount=@"30";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TVCoupon* manual=arrCoupons[indexPath.row];
-    return [NearbyCouponCell heightForCellWithPost:manual];
+    return 210;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

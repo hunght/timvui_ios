@@ -165,8 +165,8 @@ static const NSString* distanceMapSearch=@"100";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TVCoupon* coupon    =arrCoupons[indexPath.row];
-    return [NearbyCouponCell heightForCellWithPost:coupon];
+
+    return 210;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //

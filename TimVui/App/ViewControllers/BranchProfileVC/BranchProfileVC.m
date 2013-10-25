@@ -175,31 +175,27 @@
         for (TVCoupon* coupon in _branch.coupons.items) {
             
             
-            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,*height_p , 290, 23)];
+            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(70 ,10 , 220, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
-            lblDetailRow.textColor = [UIColor redColor];
+            lblDetailRow.textColor = [UIColor whiteColor];
             lblDetailRow.font = [UIFont fontWithName:@"Arial-BoldMT" size:(12+1)];
             lblDetailRow.text = coupon.name;
             [lblDetailRow resizeToStretch];
             
-            UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(5 ,*height_p-5 , 297, lblDetailRow.frame.size.height+10)];
-            [borderView setBackgroundColor:[UIColor clearColor]];
+            UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(10 ,*height_p-5 , 290, 144)];
+            [borderView setBackgroundColor:[UIColor grayColor]];
+            UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
+            img_coupon_gradient.image=[UIImage imageNamed:@"img_coupon_gradient"];
             
-            CAShapeLayer *_border = [CAShapeLayer layer];
-            _border.strokeColor =[UIColor colorWithRed:(220/255.0f) green:(220/255.0f) blue:(220/255.0f) alpha:1.0f].CGColor;
-            _border.fillColor = nil;
-            _border.lineDashPattern = @[@4, @2];
-            [borderView.layer addSublayer:_border];
+            UIImageView* img_coupon_hot=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 57, 56)];
+            img_coupon_hot.image=[UIImage imageNamed:@"img_coupon_hot"];
+            [borderView addSubview:img_coupon_gradient];
+            [borderView addSubview:img_coupon_hot];
             
-            // Setup the path
-            _border.path = [UIBezierPath bezierPathWithRect:borderView.bounds].CGPath;
-            _border.frame = borderView.bounds;
-            
-            [[borderView layer] addSublayer:_border];
+            [borderView addSubview:lblDetailRow];
             [couponBranch addSubview:borderView];
-            [couponBranch addSubview:lblDetailRow];
             
-            *height_p=lblDetailRow.frame.origin.y+lblDetailRow.frame.size.height+20;
+            *height_p=borderView.frame.origin.y+borderView.frame.size.height+20;
             
             UIButton* btnSMS = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 75, 25)];
             [btnSMS setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_compose"] forState:UIControlStateNormal];
@@ -224,7 +220,7 @@
             
             //View for info coupon
             UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(5, *height_p, 320-(6+5)*2, 85+ 20)];
-            [infoCouponBranch setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1.0f]];
+            [infoCouponBranch setBackgroundColor:[UIColor clearColor]];
             
             l=infoCouponBranch.layer;
             //            [self setConnerBorderWithLayer:l];
@@ -285,36 +281,18 @@
             lblDetailInfoRow.text =coupon.used_number;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
-            UIImageView* codeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0,45+ 20+ 3, 12, 13)];
-            codeIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_code"];
-            [infoCouponBranch addSubview:codeIcon];
-            
-            lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 45.0+ 20, 150, 23)];
-            lblTitleRow.backgroundColor = [UIColor clearColor];
-            lblTitleRow.textColor = graycolor;
-            lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
-            lblTitleRow.text =@"Mã";
-            [infoCouponBranch addSubview:lblTitleRow];
-            
-            lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 45.0+ 20, 150, 23)];
-            lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-            lblDetailInfoRow.textColor = graycolor;
-            lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
-            lblDetailInfoRow.text =coupon.syntax;
-            [infoCouponBranch addSubview:lblDetailInfoRow];
-            
-            UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65+ 20+ 3, 12, 13)];
+            UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65+ 3, 12, 13)];
             clockIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_clock"];
             [infoCouponBranch addSubview:clockIcon];
             
-            lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 65.0+ 20, 150, 23)];
+            lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 65.0, 150, 23)];
             lblTitleRow.backgroundColor = [UIColor clearColor];
             lblTitleRow.textColor = graycolor;
             lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];
             lblTitleRow.text =@"Hạn sử dụng";
             [infoCouponBranch addSubview:lblTitleRow];
             
-            lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 65.0+ 20, 150, 23)];
+            lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 65.0, 150, 23)];
             lblDetailInfoRow.backgroundColor = [UIColor clearColor];
             lblDetailInfoRow.textColor = graycolor;
             lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12+1)];

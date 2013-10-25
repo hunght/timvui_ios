@@ -20,6 +20,7 @@
 @property(nonatomic,strong)NSString *condition_content;
 
 @property(nonatomic,strong) NSDictionary *sms_type;
+@property(nonatomic,strong)NSDictionary *image;
 
 - (id)initWithDict:(NSDictionary *)dict;
 - (void)setValues:(id)dict;

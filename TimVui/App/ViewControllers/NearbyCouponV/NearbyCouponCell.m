@@ -33,7 +33,6 @@
 @implementation NearbyCouponCell {
     UILabel *lblViewNumber ;
     UILabel *lblUsingTime;
-    UIView* infoCouponBranch;
 }
 
 
@@ -68,7 +67,7 @@
     _lblNameBranch.backgroundColor=[UIColor clearColor];
     _lblNameBranch.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
     
-    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(5, 8.0, 310, 96)];
+    _whiteView = [[UIView alloc] initWithFrame:CGRectMake(5, 150, 310, 96)];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
     // Get the Layer of any view
     CALayer * l = [_whiteView layer];
@@ -77,22 +76,28 @@
     l = [_avatarBranch layer];
     [self setBorderForLayer:l radius:1];
     
-    _borderView=[[UIView alloc] initWithFrame:CGRectZero];
-    [_borderView setBackgroundColor:[UIColor clearColor]];
-    [self.whiteView addSubview:_borderView];
+    UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(10 ,5 , 290, 144)];
+    [borderView setBackgroundColor:[UIColor grayColor]];
+    UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
+    img_coupon_gradient.image=[UIImage imageNamed:@"img_coupon_gradient"];
+    
+    UIImageView* img_coupon_hot=[[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 57, 56)];
+    img_coupon_hot.image=[UIImage imageNamed:@"img_coupon_hot"];
+    [borderView addSubview:img_coupon_gradient];
+    [borderView addSubview:img_coupon_hot];
+    
+    [borderView addSubview:_lblDetailRow];
+
+    [self.whiteView addSubview:borderView];
     [_whiteView addSubview:_lblNameBranch];
     [_whiteView addSubview:_avatarBranch];
     [self.whiteView addSubview:_lblDetailRow];
     [_whiteView addSubview:_lblAddressBranch];
     [self.contentView addSubview:_whiteView];
-    _border = [CAShapeLayer layer];
-    _border.strokeColor =[UIColor colorWithRed:(220/255.0f) green:(220/255.0f) blue:(220/255.0f) alpha:1.0f].CGColor;
-    _border.fillColor = nil;
-    _border.lineDashPattern = @[@4, @2];
-    [_whiteView.layer addSublayer:_border];
+
     
     //View for info branch
-    infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(12, 0, 320-(6+5)*2, 45)];
+    UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(12, 0, 320-(6+5)*2, 45)];
     [infoCouponBranch setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1.0f]];
     
     l=infoCouponBranch.layer;
@@ -151,29 +156,11 @@
     _lblDetailRow.text=_coupon.name;
     [_lblDetailRow resizeToStretch];
     
-    CGRect frame= infoCouponBranch.frame;
-    frame.origin.y=_lblDetailRow.frame.origin.y+_lblDetailRow.frame.size.height+ 18;
-    infoCouponBranch.frame=frame;
-    
-     frame=    _lblNameBranch.frame;
+    CGRect  frame=    _lblNameBranch.frame;
     int padHeight=    frame.origin.y;
-    frame.origin.y=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height;
+    frame.origin.y=150;
     _lblNameBranch.frame=frame;
     padHeight=frame.origin.y-padHeight;
-    
-    frame= _lblDetailRow.frame;
-    frame.origin.x-=5;
-    frame.origin.y-=5;
-    frame.size.width+=10;
-    frame.size.height+=10;
-
-    // Setup the path
-    _border.path = [UIBezierPath bezierPathWithRect:frame].CGPath;
-    [_borderView setFrame:frame];
-    _border.frame = _whiteView.bounds;
-    
-    [[_whiteView layer] addSublayer:_border];
-    
 
     
     frame= _lblAddressBranch.frame;
@@ -193,23 +180,13 @@
     [self setNeedsLayout];
 }
 
-+ (CGFloat)heightForCellWithPost:(TVCoupon *)coupon {
-    CGSize maximumLabelSize = CGSizeMake(290,9999);
-    UIFont *cellFont = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
-    CGSize expectedLabelSize = [coupon.name sizeWithFont:cellFont
-                                               constrainedToSize:maximumLabelSize
-                                                   lineBreakMode:NSLineBreakByWordWrapping];
-    return expectedLabelSize.height+ 8+66+8 +45;
-}
-
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
     [super setHighlighted:highlighted animated:animated];
     if (highlighted) {
-        [_borderView setBackgroundColor:[UIColor colorWithRed:(1/255.0f) green:(144/255.0f) blue:(218/255.0f) alpha:1.0f]];
+
         [_lblDetailRow setTextColor:[UIColor whiteColor]];
     }else{
-        [_borderView setBackgroundColor:[UIColor clearColor]];
         [_lblDetailRow setTextColor:[UIColor blackColor]];
     }
     
