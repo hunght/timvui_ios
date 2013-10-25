@@ -96,7 +96,7 @@
     
     self.navigationItem.leftBarButtonItem = [self backBarButtonItem];
     
-    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, 6, 320-6*2, 200)];
+    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, 6, 320-6*2, 600)];
     [_couponBranch setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=_couponBranch.layer;
     [l setMasksToBounds:YES];

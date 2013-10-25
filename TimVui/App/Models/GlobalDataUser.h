@@ -47,10 +47,12 @@
 @property (retain, nonatomic) NSString* linkAppleStore;
 @property (retain, nonatomic) NSMutableDictionary* couponImpressionArr;
 
+@property (retain, nonatomic) NSString* strVersionNotify;
+
 @property (assign, nonatomic)  int locationUpdateTimePriod;
+@property (assign, nonatomic)  float newVersion;
 
 @property (assign, nonatomic) BOOL isTurnOffReviewYES;
-
 @property (assign, nonatomic) BOOL isTurnOnLocationService;
 @property (assign, nonatomic) BOOL isUserLocationSearhParamYES;
 enum {

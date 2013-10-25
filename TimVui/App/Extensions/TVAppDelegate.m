@@ -217,21 +217,9 @@
             [GlobalDataUser sharedAccountClient].linkAppleStore=[JSON safeStringForKeyPath:@"data.link"] ;
             [GlobalDataUser sharedAccountClient].isTurnOffReviewYES=[JSON safeBoolForKeyPath:@"data.turnOffWhenReview"];
             [GlobalDataUser sharedAccountClient].locationUpdateTimePriod=[[JSON safeDictForKey:@"data"] safeIntegerForKey:@"locationUpdateTimePriod"];
-            //          NSLog(@"getIOSAppInfo JSON=%d",[GlobalDataUser sharedAccountClient].locationUpdateTimePriod);
-            
-            float newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
-            float currentVersion=[[[NSBundle mainBundle] infoDictionary] safeStringForKey:@"CFBundleVersion"].floatValue;
-            
-            NSDate *myDate = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:kVersionAppDate];
-            if (!myDate || [myDate daysAgo]<7) {
-                NSDate *myDate = [NSDate date];
-                [[NSUserDefaults standardUserDefaults] setObject:myDate forKey:kVersionAppDate];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                if (currentVersion<newVersion) {
-                    
-                }
-            }
+                      NSLog(@"getIOSAppInfo JSON=%@",JSON);
+            [GlobalDataUser sharedAccountClient].strVersionNotify=[JSON safeStringForKeyPath:@"data.strVersionNotify"] ;
+            [GlobalDataUser sharedAccountClient].newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
             
 #warning not check if it work
             

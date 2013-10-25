@@ -28,6 +28,7 @@
 #import "TVEvent.h"
 #import "SVPullToRefresh.h"
 #import <JSONKit.h>
+#import "SIAlertView.h"
 static const int maxLimitBranches=100;
 
 @interface MapTableViewController (){
@@ -118,6 +119,40 @@ static const int maxLimitBranches=100;
 
     self.navigationItem.rightBarButtonItem = [self searchButtonItem];
     [self initNotificationView];
+    
+    if ([GlobalDataUser sharedAccountClient].strVersionNotify) {
+        float currentVersion=[[[NSBundle mainBundle] infoDictionary] safeStringForKey:@"CFBundleVersion"].floatValue;
+        
+        NSDate *myDate = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:kVersionAppDate];
+        if (!myDate || [myDate daysAgo]>7) {
+            NSDate *myDate = [NSDate date];
+            NSLog(@"[GlobalDataUser sharedAccountClient].newVersion= %f",[GlobalDataUser sharedAccountClient].newVersion);
+            
+            if (currentVersion<[GlobalDataUser sharedAccountClient].newVersion) {
+                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"Phiên bản mới đã có trên Appstore" andMessage:[GlobalDataUser sharedAccountClient].strVersionNotify];
+                [GlobalDataUser sharedAccountClient].strVersionNotify=nil;
+                [alertView addButtonWithTitle:@"Cập nhật"
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[GlobalDataUser sharedAccountClient].linkAppleStore]];
+                                      }];
+                [alertView addButtonWithTitle:@"Nhắc nhở sau"
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          
+                                      }];
+                [alertView addButtonWithTitle:@"Bỏ qua"
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          
+                                          [[NSUserDefaults standardUserDefaults] setObject:myDate forKey:kVersionAppDate];
+                                          [[NSUserDefaults standardUserDefaults] synchronize];
+                                      }];
+                [alertView show];
+            }
+        }
+    }
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{

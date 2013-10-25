@@ -173,7 +173,7 @@
     UIView *genarateInfoView = [self addGenerationInfoView];
     [_scrollView addSubview:genarateInfoView];
     
-    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+10, 320-6*2, 90)];
+    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+10, 320-6*2, 600)];
     [_couponBranch setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=_couponBranch.layer;
     [l setMasksToBounds:YES];

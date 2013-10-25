@@ -272,23 +272,24 @@ static GlobalDataUser *_sharedClient = nil;
             if (branches.count>0) {
                 if (isInBackground) {
                     TVBranch* branch=branches[0];
-                    NSDate* savedDate=[SharedAppDelegate.notifBranches objectForKey:branch.branchID];
-                    
-                    int day=(savedDate)?[savedDate daysAgo]:8;
-                    if (day>7) {
+                    if ([self distanceFromAddress:branch.latlng]<10) {
+                        NSDate* savedDate=[SharedAppDelegate.notifBranches objectForKey:branch.branchID];
                         
-                        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-                        localNotif.alertBody=[NSString stringWithFormat:@"Có vẻ bạn đang ở %@.Hãy Chụp ảnh hoặc Viết đánh giá để chia sẻ với bạn bè",branch.name];
-                        
-                        localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
-                        localNotif.soundName = @"alarmsound.caf";
-                        localNotif.applicationIconBadgeNumber = 0;
-                        //                    localNotif.userInfo = data;
-                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-                        SharedAppDelegate.nearlyBranch=branch;
-                        [SharedAppDelegate.notifBranches setValue:[NSDate date] forKey:branch.branchID];
+                        int day=(savedDate)?[savedDate daysAgo]:8;
+                        if (day>7) {
+                            
+                            UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                            localNotif.alertBody=[NSString stringWithFormat:@"Có vẻ bạn đang ở %@.Hãy Chụp ảnh hoặc Viết đánh giá để chia sẻ với bạn bè",branch.name];
+                            
+                            localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
+                            localNotif.soundName = @"alarmsound.caf";
+                            localNotif.applicationIconBadgeNumber = 0;
+                            //                    localNotif.userInfo = data;
+                            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+                            SharedAppDelegate.nearlyBranch=branch;
+                            [SharedAppDelegate.notifBranches setValue:[NSDate date] forKey:branch.branchID];
+                        }
                     }
-                    
                 }else{
                     [SharedAppDelegate showNotificationAboutNearlessBranch:branches[0]];
                 }
@@ -403,7 +404,7 @@ static GlobalDataUser *_sharedClient = nil;
         isInBackground = YES;
     }
     double distance=[self distanceFromAddress:newLocation.coordinate];
-    if ( distance<100) {
+    if ( distance<10) {
         if(isInBackground) {
             [self sendBackgroundLocationToServer];
         }else{
