@@ -21,6 +21,7 @@
 #import "TVSMSVC.h"
 #import "SIAlertView.h"
 #import "CMHTMLView.h"
+#import "UILabel+DynamicHeight.h"
 @interface CoupBranchProfileVC ()
 {
 @private
@@ -173,7 +174,7 @@
     UIView *genarateInfoView = [self addGenerationInfoView];
     [_scrollView addSubview:genarateInfoView];
     
-    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+10, 320-6*2, 600)];
+    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+10, 320-6*2, 300)];
     [_couponBranch setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=_couponBranch.layer;
     [l setMasksToBounds:YES];
@@ -193,16 +194,20 @@
     
     //COUPON
     int height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+15;
-        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(5+5 ,height_p , 290, 23)];
+        UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(70 ,10 , 220, 23)];
         lblDetailRow.backgroundColor = [UIColor clearColor];
-        lblDetailRow.textColor = [UIColor blackColor];
-        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
+        lblDetailRow.textColor = [UIColor whiteColor];
+        lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(13)];
         lblDetailRow.text = _coupon.name;
         lblDetailRow.numberOfLines = 0;
         lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
-        [lblDetailRow sizeToFit];
+        [lblDetailRow resizeToStretch];
     UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(10 ,height_p-5 , 290, 144)];
     [borderView setBackgroundColor:[UIColor grayColor]];
+    UIImageView* coverImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 144)];
+    [borderView addSubview:coverImage];
+    [coverImage setImageWithURL:[NSURL URLWithString:_coupon.image]];
+    
     UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
     img_coupon_gradient.image=[UIImage imageNamed:@"img_coupon_gradient"];
     
@@ -218,7 +223,7 @@
         UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(5, borderView.frame.origin.y+borderView.frame.size.height+10, 320-(6+5)*2, 85+ 20)];
         [infoCouponBranch setBackgroundColor:[UIColor clearColor]];
         
-        UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 5+ 3, 11, 12)];
+        UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 5+ 3, 14, 12)];
         quatityIcon.image=[UIImage imageNamed:@"img_profile_branch_quatity_coupon"];
         [infoCouponBranch addSubview:quatityIcon];
         
@@ -236,7 +241,7 @@
         lblDetailInfoRow.text =_coupon.use_number;
         [infoCouponBranch addSubview:lblDetailInfoRow];
         
-        UIImageView* viewNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 25+ 3, 12, 11)];
+        UIImageView* viewNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 25+ 3, 14, 10)];
         viewNumberIcon.image=[UIImage imageNamed:@"img_profile_branch_view_number"];
         [infoCouponBranch addSubview:viewNumberIcon];
         
@@ -254,7 +259,7 @@
         lblDetailInfoRow.text =_coupon.view;
         [infoCouponBranch addSubview:lblDetailInfoRow];
         
-    UIImageView* viewedNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0,45+ 3, 12, 13)];
+    UIImageView* viewedNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0,45+ 3, 14, 11)];
     viewedNumberIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_code"];
     [infoCouponBranch addSubview:viewedNumberIcon];
     
@@ -273,7 +278,7 @@
     [infoCouponBranch addSubview:lblDetailInfoRow];
     
     
-    UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65+ 3, 12, 13)];
+    UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65+ 3, 12, 11)];
     clockIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_clock"];
     [infoCouponBranch addSubview:clockIcon];
     
@@ -366,12 +371,13 @@
                         heidhtBlock=lblTitle.frame.origin.y+lblTitle.frame.size.height+10;
                     }
                     //create the string
-                    NSMutableString* html =kHTMLString;//                        NSLog(@"content= %@",_coupon.content);
+                    NSMutableString* html =kHTMLString;
+                      NSLog(@"content= %@",_coupon.content);
                     //continue building the string
                     [html appendString:_coupon.content];
                     [html appendString:@"</body></html>"];
                     
-                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, self.view.frame.size.height)] ;
+                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, 10)] ;
                     [_couponBranch addSubview:htmlView];
                     htmlView.backgroundColor = [UIColor whiteColor];
 //                    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

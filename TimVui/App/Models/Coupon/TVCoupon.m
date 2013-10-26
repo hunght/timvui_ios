@@ -27,7 +27,7 @@
 }
 
 - (void)setValues:(id)dict {
-//    NSLog(@"%@",dict);
+//    Log(@"%@",dict);
     
 	self.couponID = [dict safeStringForKey:@"id"];
 	self.name = [dict safeStringForKey:@"name"];
@@ -44,7 +44,7 @@
     self.special_content = [dict safeStringForKey:@"special_content"];
     self.condition_content = [dict safeStringForKey:@"condition_content"];
     
-    self.image=[dict safeDictForKey:@"image"];
+    self.image=[dict safeStringForKey:@"image"];
     int count=[[GlobalDataUser sharedAccountClient].couponImpressionArr safeIntegerForKey:self.couponID];
     
     [[GlobalDataUser sharedAccountClient].couponImpressionArr setValue:[NSString stringWithFormat:@"%d",count+1] forKey:self.couponID];

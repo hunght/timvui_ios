@@ -12,7 +12,6 @@
 
 @interface NearbyCouponCell : UITableViewCell
 
-@property(nonatomic,strong)UIView *whiteView;
 @property(nonatomic,strong)UILabel *lblDetailRow;
 @property(nonatomic,strong)UILabel *lblNameBranch;
 @property(nonatomic,strong)UILabel *lblAddressBranch;

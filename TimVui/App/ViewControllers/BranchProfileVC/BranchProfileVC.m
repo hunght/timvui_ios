@@ -173,8 +173,7 @@
 
         int i=0;
         for (TVCoupon* coupon in _branch.coupons.items) {
-            
-            
+
             UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(70 ,10 , 220, 23)];
             lblDetailRow.backgroundColor = [UIColor clearColor];
             lblDetailRow.textColor = [UIColor whiteColor];
@@ -184,6 +183,10 @@
             
             UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(10 ,*height_p-5 , 290, 144)];
             [borderView setBackgroundColor:[UIColor grayColor]];
+            UIImageView* coverImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 144)];
+            [borderView addSubview:coverImage];
+            [coverImage setImageWithURL:[NSURL URLWithString:coupon.image]];
+            
             UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
             img_coupon_gradient.image=[UIImage imageNamed:@"img_coupon_gradient"];
             
@@ -227,7 +230,7 @@
             [l setMasksToBounds:YES];
             [l setCornerRadius:1.0];
             
-            UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 5+ 3, 11, 12)];
+            UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 5+ 3, 14, 12)];
             quatityIcon.image=[UIImage imageNamed:@"img_profile_branch_quatity_coupon"];
             [infoCouponBranch addSubview:quatityIcon];
             
@@ -245,7 +248,7 @@
             lblDetailInfoRow.text =coupon.use_number;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
-            UIImageView* viewNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 25+ 3, 12, 11)];
+            UIImageView* viewNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 25+ 3, 14, 10)];
             viewNumberIcon.image=[UIImage imageNamed:@"img_profile_branch_view_number"];
             [infoCouponBranch addSubview:viewNumberIcon];
             
@@ -263,7 +266,7 @@
             lblDetailInfoRow.text =coupon.view;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
-            UIImageView* viewedNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0,45+ 3, 12, 13)];
+            UIImageView* viewedNumberIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0,45+ 3, 14, 11)];
             viewedNumberIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_code"];
             [infoCouponBranch addSubview:viewedNumberIcon];
             
@@ -281,7 +284,7 @@
             lblDetailInfoRow.text =coupon.used_number;
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
-            UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65+ 3, 12, 13)];
+            UIImageView* clockIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0, 65+ 3, 12, 11)];
             clockIcon.image=[UIImage imageNamed:@"img_profile_branch_coupon_clock"];
             [infoCouponBranch addSubview:clockIcon];
             
@@ -336,7 +339,11 @@
     //Show Ablum images
     int i=0;
     for (NSDictionary* imagesArr_ in _branch.images ) {
-        
+        if (i==3) {
+            if (_branch.image_count>4) {
+                break;
+            }
+        }
         
         UIImageView* imageButton = [[UIImageView alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         [imageButton setImageWithURL:[Utilities getThumbImageOfCoverBranch:[imagesArr_ safeDictForKey:@"image"]]];
@@ -370,7 +377,7 @@
         i++;
     }
     
-    if (_branch.image_count>3) {
+    if (_branch.image_count>4) {
         UIButton* imageButton = [[UIButton alloc] initWithFrame:CGRectMake(6+52*i, 140, 50, 35)];
         
         [imageButton setTitle:[NSString stringWithFormat:@"+%d",_branch.image_count-3] forState:UIControlStateNormal];
