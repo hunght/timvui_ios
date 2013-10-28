@@ -26,7 +26,7 @@
 #import "NSDictionary+Extensions.h"
 #import "NSDate-Utilities.h"
 #import "GAI.h"
-
+#import "AudioToolbox/AudioToolbox.h"
 
 @interface TVAppDelegate () <UIApplicationDelegate>
 @property(nonatomic,strong)ECSlidingViewController *slidingViewController;
@@ -322,11 +322,14 @@
 {
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground
-        
+//        if ([GlobalDataUser sharedAccountClient].isWantToOnVirateYES.boolValue) {
+//            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+//        }
         NSLog(@" dic : %@", userInfo);
     }else{
         // app was just brought from background to foreground
         NSLog(@" dic : %@", userInfo);
+        
     }
     
     TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:[userInfo valueForKey:@"branch_name"]  withDistance:nil  goWithClickView:^(){
@@ -339,6 +342,7 @@
         [_slidingViewController.topViewController presentModalViewController:navController animated:YES];
     }];
     [notificationView openButtonClicked:nil];
+
 }
 
 -(NSString*)uniqID
@@ -367,15 +371,6 @@
     
     [GlobalDataUser sharedAccountClient].UUID=[self uniqID];
     
-    // Let the device know we want to receive push notifications
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    UILocalNotification *localNotif = [launchOptions
-                                       objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (localNotif) {
-        NSDictionary* dic=localNotif.userInfo;
-        NSLog(@" dic : %@", dic);
-    }
     
     /*
      // List all fonts on iPhone
@@ -398,8 +393,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.menuVC = [[LeftMenuVC alloc] initWithNibName:nil bundle:nil];
-    //    [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
         [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     }

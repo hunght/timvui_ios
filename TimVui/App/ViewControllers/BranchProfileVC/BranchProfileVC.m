@@ -587,6 +587,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden=NO;
     self.screenName=@"Chi tiết branch";
     //Setbackground color dot line
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
@@ -698,7 +699,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden=NO;
+    
     _viewSharing.hidden=YES;
     if (_isPresentationYES) {
         [self.navigationController.navigationBar dropShadow];

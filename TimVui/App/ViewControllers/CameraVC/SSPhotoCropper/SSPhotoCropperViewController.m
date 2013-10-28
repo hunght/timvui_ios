@@ -249,7 +249,7 @@
     CGFloat cy = (oy + self.cropRectangleButton.frame.origin.y) * 2.0f / zoomScale;
     CGFloat cw = 640.0f / zoomScale;
     CGFloat ch = 640.0f / zoomScale;
-    CGRect cropRect = CGRectMake(cx, cy, cw, ch);
+    CGRect cropRect = CGRectMake(cy, cx, cw, ch);
     
     NSLog(@"---------- cropRect: %@", NSStringFromCGRect(cropRect));
     NSLog(@"--- self.photo.size: %@", NSStringFromCGSize(self.photo.size));

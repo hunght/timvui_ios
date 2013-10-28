@@ -17,6 +17,7 @@
 #import "TVCoupon.h"
 #import "MacroApp.h"
 #import "AFHTTPRequestOperation.h"
+#import "AudioToolbox/AudioToolbox.h"
 @interface GlobalDataUser(){
     NSTimer *myTimer;
     CLLocation *bestEffortAtLocation;
@@ -76,6 +77,7 @@ static GlobalDataUser *_sharedClient = nil;
 -(void)startSignificationLocation{
     if ([SharedAppDelegate isConnected]&& _isTurnOffReviewYES) {
         if (!_isNearlyBranchesHasNewCouponYES.boolValue && !_isHasNearlyBranchesYES.boolValue) {
+            NSLog(@"Not turn on GPS");
             return;
         }
         UIBackgroundTaskIdentifier bgTask = 0;
@@ -88,6 +90,9 @@ static GlobalDataUser *_sharedClient = nil;
             [myTimer invalidate];
             myTimer = nil;
         }
+        
+         NSLog(@"_locationUpdateTimePriod = %d",_locationUpdateTimePriod);
+        _locationUpdateTimePriod=15;
         myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
         if(bgTask != UIBackgroundTaskInvalid) {
@@ -280,9 +285,11 @@ static GlobalDataUser *_sharedClient = nil;
                             
                             UILocalNotification *localNotif = [[UILocalNotification alloc] init];
                             localNotif.alertBody=[NSString stringWithFormat:@"Có vẻ bạn đang ở %@.Hãy Chụp ảnh hoặc Viết đánh giá để chia sẻ với bạn bè",branch.name];
-                            
-                            localNotif.alertAction = NSLocalizedString(@"View Detail", nil);
-                            localNotif.soundName = @"alarmsound.caf";
+                            if ([GlobalDataUser sharedAccountClient].isWantToOnVirateYES.boolValue) {
+                                AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+                                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+                            }
+//                            localNotif.soundName = @"alarmsound.caf";
                             localNotif.applicationIconBadgeNumber = 0;
                             //                    localNotif.userInfo = data;
                             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
@@ -324,6 +331,9 @@ static GlobalDataUser *_sharedClient = nil;
                     NSDate* savedDate=[SharedAppDelegate.notifCoupons objectForKey:[branch.coupons.items[0] couponID]];
                     int day=(savedDate)?[savedDate daysAgo]:8;
                     if (day>7) {
+                        if ([GlobalDataUser sharedAccountClient].isWantToOnVirateYES.boolValue) {
+                            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+                        }
                         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
                         localNotif.alertBody=[NSString stringWithFormat:@"%@ vừa tạo coupon mới cho thành viên ĂnUống.net!",branch.name];
                         localNotif.alertAction = NSLocalizedString(@"View Detail", nil);

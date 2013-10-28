@@ -78,7 +78,10 @@ static int _numPages = 16;
 
 #pragma mark - ViewController
 -(void)viewWillAppear:(BOOL)animated{
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    }
+    
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=YES;
     [self.navigationController.navigationBar dropShadow];
@@ -86,7 +89,10 @@ static int _numPages = 16;
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    }
 }
 
 
