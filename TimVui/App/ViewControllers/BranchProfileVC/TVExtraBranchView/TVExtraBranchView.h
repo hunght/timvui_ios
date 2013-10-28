@@ -45,7 +45,7 @@ typedef enum {
 
 -(void)eventButtonClicked:(UIButton*)sender;
 
-- (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController;
+- (id)initWithBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController;
 
 -(id)initShowEventWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController;
 

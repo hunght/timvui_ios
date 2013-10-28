@@ -185,6 +185,7 @@
             [borderView setBackgroundColor:[UIColor grayColor]];
             UIImageView* coverImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 144)];
             [borderView addSubview:coverImage];
+        
             [coverImage setImageWithURL:[NSURL URLWithString:coupon.image]];
             
             UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
@@ -626,7 +627,7 @@
                     if (_isWantToShowEvents) {
                         _extraBranchView=[[TVExtraBranchView alloc] initShowEventWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
                     }else{
-                        _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
+                        _extraBranchView=[[TVExtraBranchView alloc] initWithBranch:_branch withViewController:self];
                     }
                     _extraBranchView.scrollView=_scrollView;
                     //                    [self.view addSubview:_extraBranchView];
@@ -668,7 +669,7 @@
             if (_isWantToShowEvents) {
                 _extraBranchView=[[TVExtraBranchView alloc] initShowEventWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
             }else{
-                _extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
+                _extraBranchView=[[TVExtraBranchView alloc] initWithBranch:_branch withViewController:self];
             }
             _extraBranchView.scrollView=_scrollView;
             [self.view addSubview:_extraBranchView];

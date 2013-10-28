@@ -22,6 +22,7 @@
 #import "SIAlertView.h"
 #import "CMHTMLView.h"
 #import "UILabel+DynamicHeight.h"
+
 @interface CoupBranchProfileVC ()
 {
 @private
@@ -112,11 +113,7 @@
     lblPhone.text=(_branch.phone && ![_branch.phone isEqualToString:@""])?_branch.phone:@"Đang cập nhật";
     [genarateInfoView addSubview:lblPhone];
     return genarateInfoView;
-    
-    
 }
-
-
 
 - (UIView *)addSpecPointViewWithHeight:(int)height
 {
@@ -174,7 +171,7 @@
     UIView *genarateInfoView = [self addGenerationInfoView];
     [_scrollView addSubview:genarateInfoView];
     
-    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+10, 320-6*2, 300)];
+    _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+10, 320-6*2, 600)];
     [_couponBranch setBackgroundColor:[UIColor whiteColor]];
     CALayer* l=_couponBranch.layer;
     [l setMasksToBounds:YES];
@@ -324,7 +321,9 @@
     [htmlView.scrollView setScrollEnabled:NO];
     [htmlView loadHtmlBody:html competition:^(NSError *error) {
         if (!error) {
-            [self webViewDidFinishLoad:htmlView];
+            CGRect newBounds = htmlView.frame;
+            newBounds.size.height = htmlView.scrollView.contentSize.height;
+            htmlView.frame = newBounds;
             
             heidhtBlock=htmlView.frame.origin.y+htmlView.frame.size.height+10;
             
@@ -356,7 +355,10 @@
             [htmlView.scrollView setScrollEnabled:NO];
             [htmlView loadHtmlBody:html competition:^(NSError *error) {
                 if (!error) {
-                    [self webViewDidFinishLoad:htmlView];
+                    CGRect newBounds = htmlView.frame;
+                    newBounds.size.height = htmlView.scrollView.contentSize.height;
+                    htmlView.frame = newBounds;
+                    
                     heidhtBlock=htmlView.frame.origin.y+htmlView.frame.size.height+10;
                     
                     [UIView animateWithDuration:0.2 animations:^{
@@ -372,15 +374,16 @@
                     }
                     //create the string
                     NSMutableString* html =kHTMLString;
-                      NSLog(@"content= %@",_coupon.content);
+//                      NSLog(@"content= %@",_coupon.content);
                     //continue building the string
                     [html appendString:_coupon.content];
                     [html appendString:@"</body></html>"];
                     
-                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, 10)] ;
+                    CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, self.view.frame.size.height)] ;
                     [_couponBranch addSubview:htmlView];
+                    htmlView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
                     htmlView.backgroundColor = [UIColor whiteColor];
-//                    htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
                     
                     htmlView.alpha = 0;
                     [htmlView.scrollView setScrollEnabled:NO];
@@ -389,7 +392,9 @@
                             [UIView animateWithDuration:0.2 animations:^{
                                 htmlView.alpha = 1;
                             }];
-                            [self webViewDidFinishLoad:htmlView];
+                            CGRect newBounds = htmlView.frame;
+                            newBounds.size.height = htmlView.scrollView.contentSize.height;
+                            htmlView.frame = newBounds;
                             
                             int height_p=htmlView.frame.origin.y+htmlView.frame.size.height+10;
                             
@@ -429,7 +434,8 @@
 - (void)displayInfoWhenGetBranch
 {
     [self showInfoView];
-    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height, 320, 41) andBranch:_branch withViewController:self];
+   
+    TVExtraBranchView *_extraBranchView=[[TVExtraBranchView alloc] initWithBranch:_branch withViewController:self];
     _extraBranchView.scrollView=_scrollView;
     [self.view addSubview:_extraBranchView];
     
@@ -470,14 +476,6 @@
 
 #pragma mark - Helper
 
--(void)webViewDidFinishLoad:(CMHTMLView *)webView {
-    CGRect newBounds = webView.frame;
-    newBounds.size.height = webView.scrollView.contentSize.height;
-    webView.frame = newBounds;
-    NSString *result = [webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight;"];
-    NSLog(@"web height=%@",result);
-    
-}
 
 #pragma mark MFMessageComposeViewControllerDelegate
 // Dismisses the message composition interface when users tap Cancel or Send. Proceeds to update the

@@ -103,7 +103,7 @@
     
     //View for info branch
     UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(0, 120, 290, 24)];
-    [infoCouponBranch setBackgroundColor:[UIColor colorWithRed:(245/255.0f) green:(245/255.0f) blue:(245/255.0f) alpha:1.0f]];
+    [infoCouponBranch setBackgroundColor:[UIColor colorWithWhite:1 alpha:.5]];
     
     UIImageView* quatityIcon = [[UIImageView alloc] initWithFrame:CGRectMake(18.0, 5+ 3, 14, 12)];
     quatityIcon.image=[UIImage imageNamed:@"img_profile_branch_quatity_coupon"];
@@ -159,7 +159,7 @@
     [coverImage setImageWithURL:[NSURL URLWithString:_coupon.image]];
     
     
-//    NSLog(@"[arrCoupons count]===%@",_coupon.branch.arrURLImages);
+    NSLog(@"[arrCoupons count]===%@",_coupon.image);
     [_avatarBranch setImageWithURL:[Utilities getThumbImageOfCoverBranch:_coupon.branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];
     [self setNeedsLayout];
 }

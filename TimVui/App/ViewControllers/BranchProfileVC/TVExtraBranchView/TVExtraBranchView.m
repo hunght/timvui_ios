@@ -68,24 +68,23 @@
     [_scrollView setDelegate:self];
     lastDragOffset = scrollView.contentOffset.y;
 }
+
 -(void)layoutSubviews{
     [super layoutSubviews];
 }
 
+
 - (id)initShowEventWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController{
     _isWantToShowEvents=YES;
-    return [self initWithFrame:frame andBranch:branch withViewController:viewController];
+    return [self initWithBranch:branch withViewController:viewController];
 }
 
-- (id)initWithFrame:(CGRect)frame andBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
+
+- (id)initWithBranch:(TVBranch*)branch withViewController:(UIViewController*)viewController
 {
     _branch=branch;
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height-44-20, 320, 41)];
     if (self) {
-        // Initialization code
-//#warning test without karaoke
-//        _branch.isHasKaraokeYES=NO;
-        
         int pad=(_branch.isHasKaraokeYES)?83:0;
         
         _viewScroll= [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 41)];
@@ -197,6 +196,7 @@
         _isHiddenYES=YES;
         [self showMenuExtraWithoutTableView];
     }
+    self.autoresizingMask = UIViewAutoresizingNone;
     return self;
 }
 

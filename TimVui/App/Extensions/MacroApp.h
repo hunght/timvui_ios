@@ -52,5 +52,5 @@
 #define kDeepOrangeColor [UIColor colorWithRed:(245/255.0f) green:(77/255.0f) blue:(44/255.0f) alpha:1.0f]
 #define kGrayTextColor [UIColor colorWithWhite:.3 alpha:1.0]
 
-#define kHTMLString         [NSMutableString stringWithFormat: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=200, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head> <style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style><body style=\"background:transparent;\">",@"ArialMT", [NSNumber numberWithInt:12+1]]
+#define kHTMLString         [NSMutableString stringWithFormat: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=300, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head> <style type=\"text/css\">body {font-family: \"%@\"; font-size: %@;}</style><body style=\"background:transparent;\">",@"ArialMT", [NSNumber numberWithInt:12+1]]
 
