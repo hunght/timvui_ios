@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="img_welcome.png" id="9">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="9">
                     <rect key="frame" x="0.0" y="-31" width="320" height="482"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -24,7 +24,4 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
-    <resources>
-        <image name="img_welcome.png" width="320" height="482"/>
-    </resources>
 </document>

@@ -329,7 +329,7 @@
             i++;
             [couponBranch addSubview:btnPostPhoto];
             
-            *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+50;
+            *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+ 20;
             [couponBranch addSubview:infoCouponBranch];
         }
         
