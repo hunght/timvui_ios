@@ -82,7 +82,6 @@
                      success:^(UIImage *image, BOOL cached)
      {
          UIImage *bottomImage = [UIImage imageNamed:@"imgMapMakerBackground"]; //background image
-//         image=[image imageByScalingAndCroppingForSize:CGSizeMake(45,45/4*3)];
          UIGraphicsBeginImageContext( bottomImage.size );
          [bottomImage drawAtPoint:CGPointZero];
          [image drawInRect:CGRectMake(3.0f,3.0f,45,45/4*3) blendMode:kCGBlendModeNormal alpha:1];

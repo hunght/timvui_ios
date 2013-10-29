@@ -22,7 +22,7 @@
             
             UILabel *lblYouAre = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 120, 23)];
             lblYouAre.backgroundColor = [UIColor clearColor];
-            lblYouAre.textColor = [UIColor grayColor];
+            lblYouAre.textColor = kGrayTextColor;
             lblYouAre.font = [UIFont fontWithName:@"ArialMT" size:(10)];
             lblYouAre.text=@"Có vẻ bạn đang ở";
             [self addSubview:lblYouAre];
@@ -38,7 +38,7 @@
             
             UILabel *lblPlease = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 270, 23)];
             lblPlease.backgroundColor = [UIColor clearColor];
-            lblPlease.textColor = [UIColor grayColor];
+            lblPlease.textColor = kGrayTextColor;
             lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(10)];
             lblPlease.text=@"Hãy Chụp ảnh hoặc Viết đánh giá để chia sẻ với bạn bè";
             [self addSubview:lblPlease];
@@ -132,7 +132,7 @@
 
             UILabel *lblPlease = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 270, 46)];
             lblPlease.backgroundColor = [UIColor clearColor];
-            lblPlease.textColor = [UIColor grayColor];
+            lblPlease.textColor = kGrayTextColor;
             lblPlease.numberOfLines=2;
             lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(11)];
             if (distance) {

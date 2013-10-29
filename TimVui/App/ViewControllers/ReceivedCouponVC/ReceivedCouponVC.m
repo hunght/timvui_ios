@@ -42,6 +42,7 @@ static const NSString* limitCount=@"30";
         _branches.isNotSearchAPIYES=YES;
         arrCoupons=[[NSMutableArray alloc] init];
         offset=0;
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     }
     return self;
 }
@@ -197,7 +198,7 @@ static const NSString* limitCount=@"30";
         
         CGRect footerRect = CGRectMake(0, 0, 320, 40);
         tableFooter = [[UILabel alloc] initWithFrame:footerRect];
-        tableFooter.textColor = [UIColor grayColor];
+        tableFooter.textColor = kGrayTextColor;
         tableFooter.textAlignment=UITextAlignmentCenter;
         tableFooter.backgroundColor = [UIColor clearColor];
         tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
@@ -293,7 +294,7 @@ static const NSString* limitCount=@"30";
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 210;
+    return 220;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

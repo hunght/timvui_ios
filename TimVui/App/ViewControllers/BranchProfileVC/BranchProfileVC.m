@@ -32,6 +32,7 @@
 #import "TVSMSVC.h"
 #import "UINavigationBar+JTDropShadow.h"
 #import "CMHTMLView.h"
+#import "UIImage+Crop.h"
 
 @interface BranchProfileVC ()
 {
@@ -185,8 +186,19 @@
             [borderView setBackgroundColor:[UIColor grayColor]];
             UIImageView* coverImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 144)];
             [borderView addSubview:coverImage];
-        
-            [coverImage setImageWithURL:[NSURL URLWithString:coupon.image]];
+            coverImage.contentMode = UIViewContentModeScaleAspectFill;
+            SDWebImageManager *manager = [SDWebImageManager sharedManager];
+            [manager downloadWithURL:[NSURL URLWithString:coupon.image]
+                            delegate:self
+                             options:0
+                             success:^(UIImage *image, BOOL cached)
+             {
+                 image=[image  imageByScalingAndCroppingForSize:CGSizeMake(290, 144)];
+                 NSLog(@"image.size.height= %f",image.size.height);
+                 [coverImage setImage:image];
+                 
+             }
+                             failure:nil];
             
             UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
             img_coupon_gradient.image=[UIImage imageNamed:@"img_coupon_gradient"];
@@ -587,7 +599,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden=NO;
+    
     self.screenName=@"Chi tiết branch";
     //Setbackground color dot line
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"img_main_cell_pattern"]]];
@@ -699,7 +711,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    self.navigationController.navigationBarHidden=NO;
     _viewSharing.hidden=YES;
     if (_isPresentationYES) {
         [self.navigationController.navigationBar dropShadow];
@@ -781,7 +793,7 @@
         //continue building the string
         [html appendString:_branch.review];
         [html appendString:@"</body></html>"];
-        
+        NSLog(@"content= %@",_branch.review);
         CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, lineHeight, 300, self.view.frame.size.height)] ;
         htmlView.backgroundColor = [UIColor clearColor];
 //        htmlView.autoresizingMask = UIViewAutoresizingFlexibleHeight ;

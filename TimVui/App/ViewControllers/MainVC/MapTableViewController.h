@@ -21,5 +21,4 @@
 @property(nonatomic,strong)NSDate* lastUpdate;
 @property(nonatomic, strong)TVNotification* notificationView;
 //@property(nonatomic, strong)NSArray* arrDics;
-
 @end

@@ -61,7 +61,7 @@
     self.date = [[UILabel alloc] initWithFrame:CGRectZero];
     self.date.backgroundColor = [UIColor clearColor];
     
-    self.date.textColor = [UIColor grayColor];
+    self.date.textColor = kGrayTextColor;
     self.date.highlightedTextColor = [UIColor whiteColor];
     
     _firstStar=[[UIImageView alloc] initWithFrame:CGRectMake(230, 8, 12, 12)];

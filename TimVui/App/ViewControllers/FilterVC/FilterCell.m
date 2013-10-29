@@ -30,7 +30,7 @@
         [self.contentView setBackgroundColor:[UIColor clearColor]];
         [self.textLabel setBackgroundColor:[UIColor whiteColor]];
         self.textLabel.font = [UIFont fontWithName:@"ArialMT" size:(12)];
-        self.textLabel.textColor = [UIColor grayColor];
+        self.textLabel.textColor = kGrayTextColor;
     }
     return self;
 }

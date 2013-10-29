@@ -22,7 +22,7 @@
 #import "SIAlertView.h"
 #import "CMHTMLView.h"
 #import "UILabel+DynamicHeight.h"
-
+#import "UIImage+Crop.h"
 @interface CoupBranchProfileVC ()
 {
 @private
@@ -65,7 +65,7 @@
     
     UILabel *lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,9+4, 60, 15)];
     lblDistance.backgroundColor = [UIColor clearColor];
-    lblDistance.textColor = [UIColor grayColor];
+    lblDistance.textColor = kGrayTextColor;
     lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(10)];
     double distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:_branch.latlng];
     if (distance<0) {
@@ -82,14 +82,14 @@
     
     UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 260, 12)];
     lblAddress.backgroundColor = [UIColor clearColor];
-    lblAddress.textColor = [UIColor grayColor];
+    lblAddress.textColor = kGrayTextColor;
     lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblAddress.text=_branch.address_full;
     [genarateInfoView addSubview:lblAddress];
     
     UILabel *lblPrice = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 53.0, 210, 12)];
     lblPrice.backgroundColor = [UIColor clearColor];
-    lblPrice.textColor = [UIColor grayColor];
+    lblPrice.textColor = kGrayTextColor;
     lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblPrice.text=(_branch.price_avg && ![_branch.price_avg isEqualToString:@""])?_branch.price_avg:@"Đang cập nhật";
     [genarateInfoView addSubview:lblPrice];
@@ -108,7 +108,7 @@
     
     UILabel *lblPhone = [[UILabel alloc] initWithFrame:CGRectMake(10.0+15, 71.0, 210, 12)];
     lblPhone.backgroundColor = [UIColor clearColor];
-    lblPhone.textColor = [UIColor grayColor];
+    lblPhone.textColor = kGrayTextColor;
     lblPhone.font = [UIFont fontWithName:@"ArialMT" size:(11)];
     lblPhone.text=(_branch.phone && ![_branch.phone isEqualToString:@""])?_branch.phone:@"Đang cập nhật";
     [genarateInfoView addSubview:lblPhone];
@@ -138,7 +138,7 @@
     
         UILabel *lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+25, lineHeight, 265, 25)];
         lblAddress.backgroundColor = [UIColor clearColor];
-        lblAddress.textColor = [UIColor grayColor];
+        lblAddress.textColor = kGrayTextColor;
         lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(15)];
         lblAddress.numberOfLines = 0;
         lblAddress.lineBreakMode = UILineBreakModeWordWrap;
@@ -180,17 +180,9 @@
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
     [_scrollView addSubview:_couponBranch];
     
-    UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, 7, 300, 46)];
-    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
-    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    [btnPostPhoto setTitle:@"NHẬN MÃ CODE" forState:UIControlStateNormal];
-    [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
-    [btnPostPhoto addTarget:self action:@selector(getCouponCode:) forControlEvents:UIControlEventTouchUpInside];
-    [_couponBranch addSubview:btnPostPhoto];
     
     //COUPON
-    int height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+15;
+    int height_p=10;
         UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(70 ,10 , 220, 23)];
         lblDetailRow.backgroundColor = [UIColor clearColor];
         lblDetailRow.textColor = [UIColor whiteColor];
@@ -199,11 +191,25 @@
         lblDetailRow.numberOfLines = 0;
         lblDetailRow.lineBreakMode = UILineBreakModeWordWrap;
         [lblDetailRow resizeToStretch];
-    UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(10 ,height_p-5 , 290, 144)];
+    
+    UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(10 ,height_p , 290, 144)];
     [borderView setBackgroundColor:[UIColor grayColor]];
-    UIImageView* coverImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 144)];
+    __block UIImageView* coverImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 144)];
     [borderView addSubview:coverImage];
-    [coverImage setImageWithURL:[NSURL URLWithString:_coupon.image]];
+    coverImage.contentMode = UIViewContentModeScaleAspectFill;
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadWithURL:[NSURL URLWithString:_coupon.image]
+                    delegate:self
+                     options:0
+                     success:^(UIImage *image, BOOL cached)
+     {
+         image=[image  imageByScalingAndCroppingForSize:CGSizeMake(290, 144)];
+         NSLog(@"image.size.height= %f",image.size.height);
+         [coverImage setImage:image];
+         
+     }
+                     failure:nil];
+    
     
     UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
     img_coupon_gradient.image=[UIImage imageNamed:@"img_coupon_gradient"];
@@ -226,14 +232,14 @@
         
         UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 5.0, 150, 23)];
         lblTitleRow.backgroundColor = [UIColor clearColor];
-        lblTitleRow.textColor = [UIColor grayColor];
+        lblTitleRow.textColor = kGrayTextColor;
         lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblTitleRow.text =@"Số lượng";
         [infoCouponBranch addSubview:lblTitleRow];
         
         UILabel *lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 5.0, 150, 23)];
         lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-        lblDetailInfoRow.textColor = [UIColor grayColor];
+        lblDetailInfoRow.textColor = kGrayTextColor;
         lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblDetailInfoRow.text =_coupon.use_number;
         [infoCouponBranch addSubview:lblDetailInfoRow];
@@ -244,14 +250,14 @@
         
         lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 25.0, 150, 23)];
         lblTitleRow.backgroundColor = [UIColor clearColor];
-        lblTitleRow.textColor = [UIColor grayColor];
+        lblTitleRow.textColor = kGrayTextColor;
         lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblTitleRow.text =@"Lượt xem";
         [infoCouponBranch addSubview:lblTitleRow];
         
         lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 25.0, 150, 23)];
         lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-        lblDetailInfoRow.textColor = [UIColor grayColor];
+        lblDetailInfoRow.textColor = kGrayTextColor;
         lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblDetailInfoRow.text =_coupon.view;
         [infoCouponBranch addSubview:lblDetailInfoRow];
@@ -262,14 +268,14 @@
     
     lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 45.0, 150, 23)];
     lblTitleRow.backgroundColor = [UIColor clearColor];
-    lblTitleRow.textColor = [UIColor grayColor];
+    lblTitleRow.textColor = kGrayTextColor;
     lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     lblTitleRow.text =@"Lượt mua";
     [infoCouponBranch addSubview:lblTitleRow];
     
     lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 45.0, 150, 23)];
     lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-    lblDetailInfoRow.textColor = [UIColor grayColor];
+    lblDetailInfoRow.textColor = kGrayTextColor;
     lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     lblDetailInfoRow.text =_coupon.used_number;
     [infoCouponBranch addSubview:lblDetailInfoRow];
@@ -281,20 +287,30 @@
     
     lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(50, 65.0, 150, 23)];
     lblTitleRow.backgroundColor = [UIColor clearColor];
-    lblTitleRow.textColor = [UIColor grayColor];
+    lblTitleRow.textColor = kGrayTextColor;
     lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     lblTitleRow.text =@"Hạn sử dụng";
     [infoCouponBranch addSubview:lblTitleRow];
     
     lblDetailInfoRow = [[UILabel alloc] initWithFrame:CGRectMake(150, 65.0, 150, 23)];
     lblDetailInfoRow.backgroundColor = [UIColor clearColor];
-    lblDetailInfoRow.textColor = [UIColor grayColor];
+    lblDetailInfoRow.textColor = kGrayTextColor;
     lblDetailInfoRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[_coupon.start stringWithFormat:@"dd/MM/yy"], [_coupon.end stringWithFormat:@"dd/MM/yy"]];
     [infoCouponBranch addSubview:lblDetailInfoRow];
 
     height_p=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height+10;
     [_couponBranch addSubview:infoCouponBranch];
+    UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, height_p, 300, 46)];
+    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
+    [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
+    [btnPostPhoto setTitle:@"NHẬN MÃ CODE" forState:UIControlStateNormal];
+    [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
+    [btnPostPhoto addTarget:self action:@selector(getCouponCode:) forControlEvents:UIControlEventTouchUpInside];
+    [_couponBranch addSubview:btnPostPhoto];
+
+    height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+10;
     
     if (_coupon.special_content&& ![_coupon.special_content isEqualToString:@""]) {
         UILabel* lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, height_p, 210, 23)];

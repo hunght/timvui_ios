@@ -97,14 +97,14 @@
     
     _lblAddress = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 35.0, 270, 12)];
     _lblAddress.backgroundColor = [UIColor clearColor];
-    _lblAddress.textColor = [UIColor grayColor];
+    _lblAddress.textColor = kGrayTextColor;
     _lblAddress.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     
     [genarateInfoView addSubview:_lblAddress];
     
     _lblPrice = [[UILabel alloc] initWithFrame:CGRectMake(8.0+15, 53.0, 210, 12)];
     _lblPrice.backgroundColor = [UIColor clearColor];
-    _lblPrice.textColor = [UIColor grayColor];
+    _lblPrice.textColor = kGrayTextColor;
     _lblPrice.font = [UIFont fontWithName:@"ArialMT" size:(13)];
     
     [genarateInfoView addSubview:_lblPrice];

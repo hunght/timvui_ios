@@ -91,8 +91,9 @@ static GlobalDataUser *_sharedClient = nil;
             myTimer = nil;
         }
         
-         NSLog(@"_locationUpdateTimePriod = %d",_locationUpdateTimePriod);
-        _locationUpdateTimePriod=15;
+//#warning Testing change location update timer
+//       _locationUpdateTimePriod=15;
+        
         myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
         if(bgTask != UIBackgroundTaskInvalid) {
@@ -286,7 +287,6 @@ static GlobalDataUser *_sharedClient = nil;
                             UILocalNotification *localNotif = [[UILocalNotification alloc] init];
                             localNotif.alertBody=[NSString stringWithFormat:@"Có vẻ bạn đang ở %@.Hãy Chụp ảnh hoặc Viết đánh giá để chia sẻ với bạn bè",branch.name];
                             if ([GlobalDataUser sharedAccountClient].isWantToOnVirateYES.boolValue) {
-                                AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
                                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
                             }
 //                            localNotif.soundName = @"alarmsound.caf";

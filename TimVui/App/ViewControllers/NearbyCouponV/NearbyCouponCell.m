@@ -23,7 +23,7 @@
 
 #import "NearbyCouponCell.h"
 #import "TVBranch.h"
-
+#import "UIImage+Crop.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Utilities.h"
 #import "TVAppDelegate.h"
@@ -53,8 +53,8 @@
         return nil;
     }
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 1)];
-    grayLine.backgroundColor = [UIColor colorWithRed:(243/255.0f) green:(243/255.0f) blue:(243/255.0f) alpha:1.0f];
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0,210, 320, 1)];
+    grayLine.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
     [self.contentView addSubview:grayLine];
     
     _avatarBranch=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 5, 40, 40)];
@@ -66,7 +66,7 @@
     _lblDetailRow.textColor = [UIColor whiteColor];
     _lblDetailRow.font =  [UIFont fontWithName:@"ArialMT" size:(13)];
 
-    _lblAddressBranch.textColor = [UIColor colorWithRed:(149/255.0f) green:(149/255.0f) blue:(149/255.0f) alpha:1.0f];
+    _lblAddressBranch.textColor = kGrayTextColor;
     _lblAddressBranch.backgroundColor=[UIColor clearColor];
     _lblAddressBranch.font = [UIFont fontWithName:@"ArialMT" size:(11)];
 
@@ -77,11 +77,11 @@
     UIView* _whiteView = [[UIView alloc] initWithFrame:CGRectMake(15, 150, 290, 45)];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
 
-    UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(10 ,5 , 290, 144)];
+    UIView* borderView=[[UIView alloc] initWithFrame:CGRectMake(15 ,5 , 290, 144)];
     [borderView setBackgroundColor:[UIColor grayColor]];
     coverImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 144)];
     [borderView addSubview:coverImage];
-    
+//    coverImage.contentMode=UIViewContentModeScaleAspectFill;
     
     UIImageView* img_coupon_gradient=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 290, 83)];
     img_coupon_gradient.image=[UIImage imageNamed:@"img_coupon_gradient"];
@@ -111,7 +111,7 @@
     
     UILabel *lblTitleRow = [[UILabel alloc] initWithFrame:CGRectMake(35, 5.0, 60, 16)];
     lblTitleRow.backgroundColor = [UIColor clearColor];
-    lblTitleRow.textColor = [UIColor grayColor];
+    lblTitleRow.textColor = kGrayTextColor;
     lblTitleRow.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     lblTitleRow.text =@"Số lượng";
     [infoCouponBranch addSubview:lblTitleRow];
@@ -119,7 +119,7 @@
     
     lblNumOfCoupon = [[UILabel alloc] initWithFrame:CGRectMake(90, 5.0, 150, 16)];
     lblNumOfCoupon.backgroundColor = [UIColor clearColor];
-    lblNumOfCoupon.textColor = [UIColor grayColor];
+    lblNumOfCoupon.textColor = kGrayTextColor;
     lblNumOfCoupon.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     
     [infoCouponBranch addSubview:lblNumOfCoupon];
@@ -137,7 +137,7 @@
     
     lblViewNumber = [[UILabel alloc] initWithFrame:CGRectMake(230, 5.0, 150, 16)];
     lblViewNumber.backgroundColor = [UIColor clearColor];
-    lblViewNumber.textColor = [UIColor grayColor];
+    lblViewNumber.textColor = kGrayTextColor;
     lblViewNumber.font = [UIFont fontWithName:@"ArialMT" size:(12)];
     
     [infoCouponBranch addSubview:lblViewNumber];
@@ -156,8 +156,18 @@
     _lblAddressBranch.text =_coupon.branch.address_full;
     _lblDetailRow.text=_coupon.name;
     [_lblDetailRow resizeToStretch];
-    [coverImage setImageWithURL:[NSURL URLWithString:_coupon.image]];
-    
+
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadWithURL:[NSURL URLWithString:_coupon.image]
+                    delegate:self
+                     options:0
+                     success:^(UIImage *image, BOOL cached)
+     {
+         image=[image imageByScalingAndCroppingForSize:CGSizeMake(290, 144)];
+         [coverImage setImage:image];
+         
+     }
+                     failure:nil];
     
 //    NSLog(@"[arrCoupons count]===%@",_coupon.image);
     [_avatarBranch setImageWithURL:[Utilities getThumbImageOfCoverBranch:_coupon.branch.arrURLImages]placeholderImage:[UIImage imageNamed:@"branch_placeholder"]];

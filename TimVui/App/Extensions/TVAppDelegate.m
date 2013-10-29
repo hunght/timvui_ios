@@ -367,8 +367,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    
+
     [GlobalDataUser sharedAccountClient].UUID=[self uniqID];
     
     

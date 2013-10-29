@@ -313,7 +313,7 @@ static const int maxLimitBranches=100;
 {
     CGRect footerRect = CGRectMake(0, 0, 320, 40);
     tableFooter = [[UILabel alloc] initWithFrame:footerRect];
-    tableFooter.textColor = [UIColor grayColor];
+    tableFooter.textColor = kGrayTextColor;
     tableFooter.textAlignment=UITextAlignmentCenter;
     tableFooter.backgroundColor = [UIColor clearColor];
     tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
@@ -679,7 +679,7 @@ static const int maxLimitBranches=100;
     
     UILabel* _lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,7+2, 60, 15)];
     _lblDistance.backgroundColor = [UIColor clearColor];
-    _lblDistance.textColor = [UIColor grayColor];
+    _lblDistance.textColor = kGrayTextColor;
     _lblDistance.font = [UIFont fontWithName:@"Arial-ItalicMT" size:(10)];
     
     textLabel.text=branch.name;

@@ -94,7 +94,7 @@
         lblWriteReviewNotice.numberOfLines=2;
 
         lblWriteReviewNotice.backgroundColor = [UIColor clearColor];
-        lblWriteReviewNotice.textColor = [UIColor grayColor];
+        lblWriteReviewNotice.textColor = kGrayTextColor;
         lblWriteReviewNotice.font = [UIFont fontWithName:@"ArialMT" size:(12)];
         lblWriteReviewNotice.hidden=YES;
         //[viewScroll setPagingEnabled:YES];
@@ -272,7 +272,7 @@
         
         CGRect footerRect = CGRectMake(0, 0, 320, 40);
         tableFooter = [[UILabel alloc] initWithFrame:footerRect];
-        tableFooter.textColor = [UIColor grayColor];
+        tableFooter.textColor = kGrayTextColor;
         tableFooter.textAlignment=UITextAlignmentCenter;
         tableFooter.backgroundColor = [UIColor clearColor];
         tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];

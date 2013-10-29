@@ -62,6 +62,9 @@
     _detailButton.autoresizingMask           = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:_detailButton];
     // Do any additional setup after loading the view from its nib.
+    if ([GlobalDataUser sharedAccountClient].isLogin) {
+        [self.swFavoriteCoupon setOn:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning

@@ -45,7 +45,7 @@ static const NSString* limitCount=@"5";
     
     CGRect footerRect = CGRectMake(0, 0, 320, 40);
     tableFooter = [[UILabel alloc] initWithFrame:footerRect];
-    tableFooter.textColor = [UIColor grayColor];
+    tableFooter.textColor = kGrayTextColor;
     tableFooter.textAlignment=UITextAlignmentCenter;
     tableFooter.backgroundColor = [UIColor clearColor];
     tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
