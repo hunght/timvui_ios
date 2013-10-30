@@ -62,7 +62,7 @@
     _detailButton.autoresizingMask           = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:_detailButton];
     // Do any additional setup after loading the view from its nib.
-    if ([GlobalDataUser sharedAccountClient].isLogin) {
+    if (![GlobalDataUser sharedAccountClient].isLogin) {
         [self.swFavoriteCoupon setOn:NO];
     }
 }
@@ -109,6 +109,11 @@
 }
 
 - (void)saveUserSettingNotification {
+    if (![GlobalDataUser sharedAccountClient].deviceToken) {
+        [self.swFavoriteCoupon setOn:NO];
+        return;
+    }
+    NSLog(@"_deviceToken = %@",[GlobalDataUser sharedAccountClient].deviceToken);
     NSString* isON=([GlobalDataUser sharedAccountClient].isFollowBranchesHasNewCouponYES.boolValue)?@"1":@"0";
     NSDictionary * userObject=[NSDictionary dictionaryWithObjectsAndKeys:
                                @"IOS",@"mobile_os",
@@ -125,7 +130,7 @@
     NSLog(@"paramsHandBook = %@",paramsHandBook);
     
     [[TVNetworkingClient sharedClient] postPath:@"user/userMobileSave" parameters:paramsHandBook success:^(AFHTTPRequestOperation *operation, id JSON) {
-
+        [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
         [TSMessage showNotificationInViewController:self
                                           withTitle:@"Cập nhật thành công"
                                         withMessage:nil
@@ -146,7 +151,6 @@
 }
 
 -(void)saveButtonClicked:(id)s{
-    [[GlobalDataUser sharedAccountClient] setSettingNotificationUser];
     if ([GlobalDataUser sharedAccountClient].isLogin) {
         [self saveUserSettingNotification];
     }

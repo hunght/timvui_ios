@@ -16,7 +16,7 @@
 #import "GlobalDataUser.h"
 #import "NSDate-Utilities.h"
 #import <JSONKit.h>
-#import "BranchProfileVC.h"
+#import "CoupBranchProfileVC.h"
 #import "Reachability.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "RecentlyBranchListVC.h"
@@ -134,8 +134,9 @@
 
     TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:distanceStr  goWithClickView:^(){
         
-        BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+        CoupBranchProfileVC* branchProfileVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
         branchProfileVC.branch=branch;
+        branchProfileVC.coupon=branch.coupons.items[0];
         UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:branchProfileVC];
         branchProfileVC.isPresentationYES=YES;
         //        specBranchVC.coupon=branch.coupons.items[0];
@@ -334,20 +335,17 @@
 {
     if ( application.applicationState == UIApplicationStateActive ){
         // app was already in the foreground
-//        if ([GlobalDataUser sharedAccountClient].isWantToOnVirateYES.boolValue) {
-//            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-//        }
         NSLog(@" dic : %@", userInfo);
     }else{
         // app was just brought from background to foreground
         NSLog(@" dic : %@", userInfo);
-        
     }
     
     TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:[userInfo valueForKey:@"branch_name"]  withDistance:nil  goWithClickView:^(){
         
-        CouponBranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+        CoupBranchProfileVC* branchProfileVC=[[CoupBranchProfileVC alloc] initWithNibName:@"CoupBranchProfileVC" bundle:nil];
         branchProfileVC.branchID=[userInfo valueForKey:@"branch_id"];
+        branchProfileVC.couponID=[userInfo valueForKey:@"coupon_id"];
         UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:branchProfileVC];
         branchProfileVC.isPresentationYES=YES;
         //        specBranchVC.coupon=branch.coupons.items[0];
@@ -373,13 +371,13 @@
             [[NSUserDefaults standardUserDefaults] setObject:uniqueIdentifier forKey:@"identifierForVendor"];
         }
     }
-    NSLog(@"UUID =%@",uniqueIdentifier);
+//    NSLog(@"UUID =%@",uniqueIdentifier);
     return uniqueIdentifier;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
+    [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
     [GlobalDataUser sharedAccountClient].UUID=[self uniqID];
     
     

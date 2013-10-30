@@ -14,7 +14,7 @@
 @interface BranchProfileVC : MyViewController<UIWebViewDelegate,MFMailComposeViewControllerDelegate,MFMessageComposeViewControllerDelegate>
 @property (retain, nonatomic) TVBranch *branch;
 @property (assign, nonatomic) BOOL isWantToShowEvents;
-@property (assign, nonatomic) BOOL isPresentationYES;
+
 @property(strong, nonatomic)TVExtraBranchView *extraBranchView;
 @property (weak, nonatomic) IBOutlet UIView *viewSharing;
 @property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;

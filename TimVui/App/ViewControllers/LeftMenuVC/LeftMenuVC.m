@@ -500,10 +500,13 @@ enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (SharedAppDelegate.isLoadWhenConnectedYES==NO) {
-        if ([SharedAppDelegate isConnected])
+        if ([SharedAppDelegate isConnected]){
             [SharedAppDelegate loadWhenInternetConnected];
-        return;
+        }else{
+            if (indexPath.section!=kSection1UserAccount)return;
+        }
     }
+    
     if (isNotTheFirstTimeOpenHomeYES==NO) {
         isNotTheFirstTimeOpenHomeYES=YES;
         if (indexPath.section==kSection2Services&&indexPath.row==kS2Home) {

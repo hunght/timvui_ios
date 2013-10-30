@@ -713,9 +713,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=NO;
     _viewSharing.hidden=YES;
-    if (_isPresentationYES) {
-        [self.navigationController.navigationBar dropShadow];
-    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -1016,24 +1014,28 @@
                 if (isOpen) {
                     [FacebookServices postFollowActionWithBranch:_branch];
                 }else{
-                    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
-                    
-                    [alertView addButtonWithTitle:@"Kết nối FB"
-                                             type:SIAlertViewButtonTypeDefault
-                                          handler:^(SIAlertView *alert) {
-                                              [FacebookServices loginAndTakePermissionWithHanlder:^(FBSession *session,NSError *error){
-                                                  if (!error) {
-                                                      [FacebookServices postFollowActionWithBranch:_branch];
-                                                  }
+                    if (![GlobalDataUser sharedAccountClient].isNotWantToAskConnectFacebook) {
+                        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
+                        
+                        [alertView addButtonWithTitle:@"Kết nối FB"
+                                                 type:SIAlertViewButtonTypeDefault
+                                              handler:^(SIAlertView *alert) {
+                                                  [FacebookServices loginAndTakePermissionWithHanlder:^(FBSession *session,NSError *error){
+                                                      if (!error) {
+                                                          [FacebookServices postFollowActionWithBranch:_branch];
+                                                      }
+                                                  }];
+                                                  
                                               }];
-                                              
-                                          }];
-                    [alertView addButtonWithTitle:@"Bỏ qua"
-                                             type:SIAlertViewButtonTypeCancel
-                                          handler:^(SIAlertView *alert) {
-                                              NSLog(@"Cancel Clicked");
-                                          }];
-                    [alertView show];
+                        [alertView addButtonWithTitle:@"Bỏ qua"
+                                                 type:SIAlertViewButtonTypeCancel
+                                              handler:^(SIAlertView *alert) {
+                                                  [GlobalDataUser sharedAccountClient].isNotWantToAskConnectFacebook=YES;
+                                                  NSLog(@"Cancel Clicked");
+                                              }];
+                        [alertView show];
+                    }
+                    
                 }
             }];
             
@@ -1112,11 +1114,7 @@
 }
 
 -(void)backButtonClicked:(id)sender{
-    if (_isPresentationYES) {
-        [self dismissModalViewControllerAnimated:YES];
-    }else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload {
@@ -1152,24 +1150,28 @@
             [self sendFeedUserFacebook];
             
         }else{
-            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
-            
-            [alertView addButtonWithTitle:@"Kết nối FB"
-                                     type:SIAlertViewButtonTypeDefault
-                                  handler:^(SIAlertView *alert) {
-                                      [FacebookServices loginAndTakePermissionWithHanlder:^(FBSession *session,NSError *error){
-                                          if (!error) {
-                                              [self sendFeedUserFacebook];
-                                          }
+            if (![GlobalDataUser sharedAccountClient].isNotWantToAskConnectFacebook) {
+                SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn kết nối với facebook để chia sẻ địa điểm này với mọi người"];
+                
+                [alertView addButtonWithTitle:@"Kết nối FB"
+                                         type:SIAlertViewButtonTypeDefault
+                                      handler:^(SIAlertView *alert) {
+                                          [FacebookServices loginAndTakePermissionWithHanlder:^(FBSession *session,NSError *error){
+                                              if (!error) {
+                                                  [self sendFeedUserFacebook];
+                                              }
+                                          }];
+                                          
                                       }];
-                                      
-                                  }];
-            [alertView addButtonWithTitle:@"Bỏ qua"
-                                     type:SIAlertViewButtonTypeCancel
-                                  handler:^(SIAlertView *alert) {
-                                      NSLog(@"Cancel Clicked");
-                                  }];
-            [alertView show];
+                [alertView addButtonWithTitle:@"Bỏ qua"
+                                         type:SIAlertViewButtonTypeCancel
+                                      handler:^(SIAlertView *alert) {
+                                          NSLog(@"Cancel Clicked");
+                                          [GlobalDataUser sharedAccountClient].isNotWantToAskConnectFacebook=YES;
+                                      }];
+                [alertView show];
+            }
+
         }
     }];
 }

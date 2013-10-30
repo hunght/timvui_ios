@@ -15,7 +15,8 @@
 @property (retain, nonatomic) TVCoupon *coupon;
 @property (retain, nonatomic) UIView* couponBranch;
 @property (retain, nonatomic) NSString *branchID;
-
+@property (retain, nonatomic) NSString *couponID;
+@property (assign, nonatomic) BOOL isPresentationYES;
 @property (unsafe_unretained, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imgBranchCover;
 

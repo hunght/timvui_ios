@@ -91,8 +91,8 @@ static GlobalDataUser *_sharedClient = nil;
             myTimer = nil;
         }
         
-#warning Testing change location update timer
-       _locationUpdateTimePriod=15;
+//#warning Testing change location update timer
+//       _locationUpdateTimePriod=15;
         
         myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
@@ -173,7 +173,10 @@ static GlobalDataUser *_sharedClient = nil;
     
     //    NSLog(@"userObject = %@",[GlobalDataUser sharedAccountClient].user.userId);
     //    NSLog(@"UUID = %@",[GlobalDataUser sharedAccountClient].UUID);
-    //    NSLog(@"_deviceToken = %@",_deviceToken);
+        NSLog(@"_deviceToken = %@",_deviceToken);
+    if (!_deviceToken) {
+        return;
+    }
     NSDictionary * userObject=[NSDictionary dictionaryWithObjectsAndKeys:
                                [GlobalDataUser sharedAccountClient].user.userId,@"user_id",
                                [GlobalDataUser sharedAccountClient].UUID,@"mobile_id",

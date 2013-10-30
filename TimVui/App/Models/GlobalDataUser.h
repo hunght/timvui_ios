@@ -55,6 +55,8 @@
 @property (assign, nonatomic) BOOL isTurnOffReviewYES;
 @property (assign, nonatomic) BOOL isTurnOnLocationService;
 @property (assign, nonatomic) BOOL isUserLocationSearhParamYES;
+@property (assign, nonatomic) BOOL isNotWantToAskConnectFacebook;
+
 enum {
     kSearchParamCity = 0,
     kSearchParamDistrict,

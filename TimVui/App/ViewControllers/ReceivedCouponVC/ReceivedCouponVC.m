@@ -179,8 +179,6 @@ static const NSString* limitCount=@"30";
 #pragma mark - UIAlertViewDelegate
 
 - (void)getCouponWhenHasPhoneNumber {
-    
-    
     if (![SharedAppDelegate isConnected]) {
         NSDictionary *retrievedDictionary;
         if (_btnActive.isSelected) {
@@ -313,13 +311,48 @@ static const NSString* limitCount=@"30";
     [_btnExperied setSelected:NO];
     [sender setSelected:YES];
     offset=0;
-    [self postToGetBranchesWithEnable:_btnActive.isSelected];
+    if (![SharedAppDelegate isConnected]) {
+        NSDictionary *retrievedDictionary;
+
+            retrievedDictionary = [NSDictionary getDictionaryFromKey:kReceivedEnabledCoupon];
+
+        if (retrievedDictionary) {
+//            NSLog(@"retrievedDictionary= %@",retrievedDictionary);
+            if (offset==0) {
+                [arrCoupons removeAllObjects];
+                [self.branches.items removeAllObjects];
+            }
+            [_branches setValues:[retrievedDictionary safeArrayForKey:@"data"]];
+            [self rearrangeBranchesToShowing];
+        }
+    }else{
+        [self postToGetBranchesWithEnable:_btnActive.isSelected];
+    }
+    
 }
 
 - (IBAction)expriedButtonClicked:(id)sender {
     [_btnActive setSelected:NO];
     [sender setSelected:YES];
     offset=0;
-    [self postToGetBranchesWithEnable:_btnActive.isSelected];
+    if (![SharedAppDelegate isConnected]) {
+        NSDictionary *retrievedDictionary;
+
+            retrievedDictionary = [NSDictionary getDictionaryFromKey:kReceivedCoupon];
+
+        if (offset==0) {
+            [self.branches.items removeAllObjects];
+            [arrCoupons removeAllObjects];
+
+        }
+        if (retrievedDictionary) {
+//            NSLog(@"retrievedDictionary= %@",retrievedDictionary);
+            [_branches setValues:[retrievedDictionary safeArrayForKey:@"data"]];
+            [self rearrangeBranchesToShowing];
+        }
+    }else{
+        [self postToGetBranchesWithEnable:_btnActive.isSelected];
+    }
+    
 }
 @end
