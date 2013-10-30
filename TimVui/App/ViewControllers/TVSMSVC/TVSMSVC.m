@@ -51,7 +51,7 @@
                                       }];
 
             
-            [alertView addButtonWithTitle:@"Cancel"
+            [alertView addButtonWithTitle:@"Bỏ qua"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
                                       NSLog(@"Cancel Clicked");
@@ -71,7 +71,7 @@
                                           [TVSMSVC sendSMSWithCoupon:coupon andOption:strSMSCode andViewController:viewController];
                                       }];
             }
-            [alertView addButtonWithTitle:@"Cancel"
+            [alertView addButtonWithTitle:@"Bỏ qua"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
                                       NSLog(@"Cancel Clicked");

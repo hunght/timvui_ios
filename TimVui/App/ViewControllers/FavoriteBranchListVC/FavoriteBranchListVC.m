@@ -115,7 +115,7 @@ static const NSString* limitCount=@"5";
             if (weakSelf.branches.countAddedItems<limitCount.intValue) {
                 weakSelf.tableView.showsInfiniteScrolling=NO;
                 
-                tableFooter.hidden=NO;
+                if(weakSelf.branches.count==0)tableFooter.hidden=NO;
             }else{
                 tableFooter.hidden=YES;
             }

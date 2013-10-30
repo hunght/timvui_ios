@@ -53,8 +53,8 @@
         return nil;
     }
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0,210, 320, 1)];
-    grayLine.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(15,210, 290, 1)];
+    grayLine.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0];
     [self.contentView addSubview:grayLine];
     
     _avatarBranch=[[UIImageView alloc] initWithFrame:CGRectMake(5.0f, 5, 40, 40)];

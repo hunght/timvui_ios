@@ -23,6 +23,7 @@
 #import "CMHTMLView.h"
 #import "UILabel+DynamicHeight.h"
 #import "UIImage+Crop.h"
+#import "BranchProfileVC.h"
 @interface CoupBranchProfileVC ()
 {
 @private
@@ -50,10 +51,10 @@
 }
 - (UIView *)addGenerationInfoView
 {
-    UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7, 7, 310, 90)];
+    UIButton *genarateInfoView=[[UIButton alloc] initWithFrame:CGRectMake(7, 7, 306, 90)];
+    [genarateInfoView addTarget:self action:@selector(actionInfoBranchButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
-    CALayer* l=genarateInfoView.layer;
-    [self setConnerBorderWithLayer:l];
+    [self setConnerBorderWithLayer:genarateInfoView.layer];
     
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 20)];
     lblBranchName.backgroundColor = [UIColor clearColor];
@@ -63,7 +64,7 @@
     [genarateInfoView addSubview:lblBranchName];
     
     
-    UILabel *lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(270,9+4, 60, 15)];
+    UILabel *lblDistance = [[UILabel alloc] initWithFrame:CGRectMake(265,9+4, 60, 15)];
     lblDistance.backgroundColor = [UIColor clearColor];
     lblDistance.textColor = kGrayTextColor;
     lblDistance.font = [UIFont fontWithName:@"ArialMT" size:(10)];
@@ -119,12 +120,7 @@
 {
     UIView *genarateInfoView=[[UIView alloc] initWithFrame:CGRectMake(7,height, 310, 10)];
     [genarateInfoView setBackgroundColor:[UIColor whiteColor]];
-    CALayer* l=genarateInfoView.layer;
-    [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
-    // You can even add a border
-    [l setBorderWidth:1.0];
-    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    [self setConnerBorderWithLayer:genarateInfoView.layer];
 
     UILabel *lblBranchName = [[UILabel alloc] initWithFrame:CGRectMake(9, 9, 230, 30)];
     lblBranchName.backgroundColor = [UIColor clearColor];
@@ -173,11 +169,7 @@
     
     _couponBranch=[[UIView alloc] initWithFrame:CGRectMake(6, genarateInfoView.frame.origin.y+genarateInfoView.frame.size.height+10, 320-6*2, 600)];
     [_couponBranch setBackgroundColor:[UIColor whiteColor]];
-    CALayer* l=_couponBranch.layer;
-    [l setMasksToBounds:YES];
-    [l setCornerRadius:5.0];
-    [l setBorderWidth:1.0];
-    [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
+    [self setConnerBorderWithLayer:_couponBranch.layer];
     [_scrollView addSubview:_couponBranch];
     
     
@@ -528,7 +520,12 @@
 
 
 #pragma mark - IBAction
-
+-(void)actionInfoBranchButtonClicked:(id)s{
+    BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+    
+    branchProfileVC.branch=_branch;
+    [self.navigationController pushViewController:branchProfileVC animated:YES];
+}
 -(void)getCouponCode:(id)s{
     NSLog(@"[[GlobalDataUser sharedAccountClient].receivedCouponIDs = %@",[GlobalDataUser sharedAccountClient].receivedCouponIDs);
     if ([[GlobalDataUser sharedAccountClient].receivedCouponIDs valueForKey:_coupon.couponID]) {

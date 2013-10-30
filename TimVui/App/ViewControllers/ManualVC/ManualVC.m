@@ -63,8 +63,8 @@ static const NSString* limitCount=@"5";
         NSArray* dicArray=[JSON safeArrayForKey:@"data"] ;
         if (dicArray.count<limitCount.intValue) {
             weakSelf.tableView.showsInfiniteScrolling=NO;
-            [tableFooter setText:@"Không còn cẩm nang nào"];
-            tableFooter.hidden=NO;
+            
+            if(dicArray.count==0)tableFooter.hidden=NO;
         }else{
             tableFooter.hidden=YES;
 
@@ -157,6 +157,7 @@ static const NSString* limitCount=@"5";
     tableFooter.backgroundColor = [UIColor clearColor];
     tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
     tableFooter.hidden=YES;
+    [tableFooter setText:@"Không còn cẩm nang nào"];
     self.tableView.tableFooterView = tableFooter;
     
     [self postToGetManual];
@@ -253,9 +254,9 @@ static const NSString* limitCount=@"5";
         }
        
     }else{
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login ?"];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng đăng nhập"];
         
-        [alertView addButtonWithTitle:@"Login"
+        [alertView addButtonWithTitle:@"Đăng nhập"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
                                   
@@ -282,7 +283,7 @@ static const NSString* limitCount=@"5";
                                   
                                   
                               }];
-        [alertView addButtonWithTitle:@"Cancel"
+        [alertView addButtonWithTitle:@"Bỏ qua"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");
@@ -318,9 +319,9 @@ static const NSString* limitCount=@"5";
                                                withType:TSMessageNotificationTypeError];
         }];
     }else{
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login ?"];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng đăng nhập"];
         
-        [alertView addButtonWithTitle:@"Login"
+        [alertView addButtonWithTitle:@"Đăng nhập"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
                                   
@@ -347,7 +348,7 @@ static const NSString* limitCount=@"5";
                                   
                                   
                               }];
-        [alertView addButtonWithTitle:@"Cancel"
+        [alertView addButtonWithTitle:@"Bỏ qua"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");

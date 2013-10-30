@@ -262,7 +262,7 @@
                                   }
                                   NSLog(@"Button1 Clicked");
                               }];
-        [alertView addButtonWithTitle:@"Cancel"
+        [alertView addButtonWithTitle:@"Bỏ qua"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");

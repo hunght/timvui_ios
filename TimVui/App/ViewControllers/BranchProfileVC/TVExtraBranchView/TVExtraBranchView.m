@@ -220,8 +220,8 @@
 //                    weakSelf.tableView.showsPullToRefresh=NO;
                     
                 }else{
-                    [tableFooter setText:@"Không còn đánh giá nào"];
-                    tableFooter.hidden=NO;
+//                    [tableFooter setText:@"Không còn đánh giá nào"];
+//                    tableFooter.hidden=NO;
                 }
             }else{
                 tableFooter.hidden=YES;
@@ -632,9 +632,9 @@
         [_viewController.navigationController pushViewController:viewController animated:YES];
     }
     else{
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho đánh giá này?"];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng đăng nhập"];
         
-        [alertView addButtonWithTitle:@"Login"
+        [alertView addButtonWithTitle:@"Đăng nhập"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
                                   
@@ -661,7 +661,7 @@
                                   
                                   
                               }];
-        [alertView addButtonWithTitle:@"Cancel"
+        [alertView addButtonWithTitle:@"Bỏ qua"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");
@@ -790,8 +790,8 @@
     [weakSelf.similarBranches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             if (weakSelf.similarBranches.count>0&&weakSelf.similarBranches.countAddedItems<kCommentLimitCount) {
-                [tableFooter setText:@"Không còn địa điểm nào"];
-                tableFooter.hidden=NO;
+//                [tableFooter setText:@"Không còn địa điểm nào"];
+//                tableFooter.hidden=NO;
                 weakSelf.tableView.showsInfiniteScrolling=NO;
             }else{
                 if (weakSelf.similarBranches.count ==0) {
@@ -1064,9 +1064,9 @@
     if ([GlobalDataUser sharedAccountClient].isLogin)
         [self likeCommentWithButton:sender];
     else{
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho đánh giá này?"];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng đăng nhập"];
         
-        [alertView addButtonWithTitle:@"Login"
+        [alertView addButtonWithTitle:@"Đăng nhập"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
                                   
@@ -1090,7 +1090,7 @@
 
                                   
                               }];
-        [alertView addButtonWithTitle:@"Cancel"
+        [alertView addButtonWithTitle:@"Bỏ qua"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");
@@ -1146,9 +1146,9 @@
     if ([GlobalDataUser sharedAccountClient].isLogin)
         [self voteCuisineWithButton:sender];
     else{
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login để vote cho món ăn này?"];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng đăng nhập"];
         
-        [alertView addButtonWithTitle:@"Login"
+        [alertView addButtonWithTitle:@"Đăng nhập"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
                                   
@@ -1171,7 +1171,7 @@
                                   }];
 
                               }];
-        [alertView addButtonWithTitle:@"Cancel"
+        [alertView addButtonWithTitle:@"Bỏ qua"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");

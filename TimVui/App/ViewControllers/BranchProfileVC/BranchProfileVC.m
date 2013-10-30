@@ -1028,7 +1028,7 @@
                                               }];
                                               
                                           }];
-                    [alertView addButtonWithTitle:@"Cancel"
+                    [alertView addButtonWithTitle:@"Bỏ qua"
                                              type:SIAlertViewButtonTypeCancel
                                           handler:^(SIAlertView *alert) {
                                               NSLog(@"Cancel Clicked");
@@ -1069,7 +1069,7 @@
                                       
                                       [self postFollowToServer:sender];
                                   }];
-            [alertView addButtonWithTitle:@"Cancel"
+            [alertView addButtonWithTitle:@"Bỏ qua"
                                      type:SIAlertViewButtonTypeCancel
                                   handler:^(SIAlertView *alert) {
                                       NSLog(@"Cancel Clicked");
@@ -1164,7 +1164,7 @@
                                       }];
                                       
                                   }];
-            [alertView addButtonWithTitle:@"Cancel"
+            [alertView addButtonWithTitle:@"Bỏ qua"
                                      type:SIAlertViewButtonTypeCancel
                                   handler:^(SIAlertView *alert) {
                                       NSLog(@"Cancel Clicked");

@@ -505,7 +505,7 @@ static const int maxLimitBranches=100;
             
             if (weakSelf.branches.countAddedItems<kSearchBranchLimit.intValue) {
                 _locationPickerView.tableView.showsInfiniteScrolling=NO;
-                tableFooter.hidden=NO;
+                 if (weakSelf.branches.count==0)tableFooter.hidden=NO;
             }else{
                 tableFooter.hidden=YES;
             }

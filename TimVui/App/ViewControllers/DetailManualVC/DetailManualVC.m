@@ -267,9 +267,9 @@
         }];
 
     }else{
-        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn login ?"];
+        SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Vui lòng đăng nhập"];
         
-        [alertView addButtonWithTitle:@"Login"
+        [alertView addButtonWithTitle:@"Đăng nhập"
                                  type:SIAlertViewButtonTypeDefault
                               handler:^(SIAlertView *alert) {
                                   
@@ -293,7 +293,7 @@
                                   
                                   
                               }];
-        [alertView addButtonWithTitle:@"Cancel"
+        [alertView addButtonWithTitle:@"Bỏ qua"
                                  type:SIAlertViewButtonTypeCancel
                               handler:^(SIAlertView *alert) {
                                   NSLog(@"Cancel Clicked");

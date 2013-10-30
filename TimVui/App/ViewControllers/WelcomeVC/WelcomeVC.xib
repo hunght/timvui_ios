@@ -15,13 +15,36 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="9">
-                    <rect key="frame" x="0.0" y="-31" width="320" height="482"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="img_welcome_logo.png" id="9" userLabel="logo">
+                    <rect key="frame" x="78" y="71" width="165" height="63"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                 </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="img_welcome_main_view.png" id="9YH-Mi-YMj" userLabel="main">
+                    <rect key="frame" x="10" y="147" width="300" height="219"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                </imageView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ywl-Sf-Hvr">
+                    <rect key="frame" x="32" y="380" width="257" height="47"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <string key="text">Cổng thông tin địa điểm ăn uống,Coupon giảm giá</string>
+                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="www.anuong.net" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d3z-Yz-lJE">
+                    <rect key="frame" x="95" y="439" width="130" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="12"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>
+    <resources>
+        <image name="img_welcome_logo.png" width="165" height="63"/>
+        <image name="img_welcome_main_view.png" width="300" height="219"/>
+    </resources>
 </document>
