@@ -8,7 +8,7 @@
 
 #import "TVNotification.h"
 #import "MacroApp.h"
-
+#import "TTTAttributedLabel.h"
 @implementation TVNotification
 -(id)initWithView:(UIView*)_view withTitle:(NSString*)strTitle goWithCamera:(void (^)())cameraCall
       withComment:(void (^)())commentCall{
@@ -123,31 +123,40 @@
         // Drawing code
         int height=20;
         if (strTitle) {
-            
-            UILabel *lblDetailRow = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 270, 31)];
-            lblDetailRow.backgroundColor = [UIColor clearColor];
-            lblDetailRow.textColor = kCyanGreenColor;
-            lblDetailRow.font = [UIFont fontWithName:@"ArialMT" size:(11)];
-            lblDetailRow.text =strTitle;
-
-            UILabel *lblPlease = [[UILabel alloc] initWithFrame:CGRectMake(17, height, 270, 46)];
-            lblPlease.backgroundColor = [UIColor clearColor];
-            lblPlease.textColor = kGrayTextColor;
-            lblPlease.numberOfLines=2;
-            lblPlease.font = [UIFont fontWithName:@"ArialMT" size:(11)];
+            NSString* text;
             if (distance) {
-                lblPlease.text=[NSString stringWithFormat:@"%@ (cách %@) vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle,distance];
+                text=[NSString stringWithFormat:@"%@ (cách %@) vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle,distance];
             }else{
-                lblPlease.text=[NSString stringWithFormat:@"%@ vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle];
+                text=[NSString stringWithFormat:@"%@ vừa tạo Coupon giảm giá dành cho thành viên ĂnUống.net",strTitle];
             }
+            TTTAttributedLabel* _lblContent = [[TTTAttributedLabel alloc] initWithFrame:CGRectMake(17, height+5, 270, 46)];
+            _lblContent.font = [UIFont fontWithName:@"ArialMT" size:(13)];
+            _lblContent.textColor = [UIColor whiteColor];
+            _lblContent.lineBreakMode = UILineBreakModeWordWrap;
+            _lblContent.numberOfLines = 2;
+            _lblContent.backgroundColor=[UIColor clearColor];
+            [_lblContent setText:text afterInheritingLabelAttributesAndConfiguringWithBlock:^(NSMutableAttributedString *mutableAttributedString) {
+                UIFont *boldSystemFont = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];;
+                NSRange whiteRange = [text rangeOfString:strTitle];
+                CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)boldSystemFont.fontName, boldSystemFont.pointSize, NULL);
+                
+                if (whiteRange.location != NSNotFound) {
+                    // Core Text APIs use C functions without a direct bridge to UIFont. See Apple's "Core Text Programming Guide" to learn how to configure string attributes.
+                    [mutableAttributedString addAttribute:(NSString *)kCTForegroundColorAttributeName value:(id)kCyanGreenColor.CGColor range:whiteRange];
+                    [mutableAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:whiteRange];
+                    CFRelease(font);
+                }
+                
+                return mutableAttributedString;
+            }];
+            
 
-            [self addSubview:lblPlease];
-            [self addSubview:lblDetailRow];
+            [self addSubview:_lblContent];
 
-            height=lblPlease.frame.origin.y+lblPlease.frame.size.height;
+            height=_lblContent.frame.origin.y+_lblContent.frame.size.height;
             UIView* bgView=[[UIView alloc] initWithFrame:CGRectMake(0, 20, 320, height+23)];
             [bgView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.95]];
-            [self insertSubview:bgView belowSubview:lblPlease];
+            [self insertSubview:bgView belowSubview:_lblContent];
         }
         
         UIButton* cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(-25, height-5, 160, 23)];

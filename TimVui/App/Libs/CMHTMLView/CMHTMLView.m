@@ -6,7 +6,7 @@
 //
 
 #import "CMHTMLView.h"
-
+#import <SVProgressHUD.h>
 #define kNativeShame                @"native"
 
 #define kDefaultDocumentMeta        @"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0; user-scalable=0; minimum-scale=1.0; maximum-scale=1.0\"/><meta name=\"apple-mobile-web-app-capable\" content=\"yes\"/>"
@@ -115,6 +115,7 @@
 }
 
 - (void)loadHtmlBody:(NSString*)html competition:(CompetitionBlock)competition {
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     self.competitionBlock = competition;
     [self clean];
     
@@ -467,7 +468,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)_webView {
     self.loaded = YES;
-    
+    [SVProgressHUD dismiss];
     /*
     CGRect frame = _webView.frame;
     frame.size.height = 1;
@@ -498,6 +499,7 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [SVProgressHUD dismiss];
     if (self.competitionBlock) {
         self.competitionBlock(error);
     }

@@ -10,7 +10,7 @@
 #define kAccountUserJSON               @"accountUserJSON"
 #define kVersionAppDate               @"kVersionAppDate"
 #define kUserPhoneNumber               @"kUserPhoneNumber"
-#define kCheckHasCouponBranchIsInBackGround @"2"
+#define kCheckHasCouponBranchIsInBackGround @"20"
 
 #define kCheckHasNearlyBranchIsInBackGround @".02" //20 m
 

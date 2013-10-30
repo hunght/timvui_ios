@@ -112,15 +112,27 @@
                           completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                               // Forward any errors to the FBLoginView delegate.
                               if (error) {
-                                  NSLog(@"%@",error);
+                                  NSLog(@"error%@",error);
                                   //[self.loginViewController loginView:nil handleError:error];
                               }
                           }];
 }
 
 -(void)showNotificationWithBranch:(TVBranch*)branch{
+    NSLog(@"branch.latlng%f",branch.latlng.latitude);
+    float distance=[[GlobalDataUser sharedAccountClient] distanceFromAddress:[branch latlng]];
+    NSString* distanceStr;
+    if (distance<0) {
+        distanceStr=@"0";
+    }else{
+        if (distance>1000.0)
+            distanceStr=[NSString stringWithFormat:@"%.01f km",distance/1000];
+        else
+            distanceStr=[NSString stringWithFormat:@"%.01f m",distance];
+    }
     
-    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:[NSString stringWithFormat:@"%f",[[GlobalDataUser sharedAccountClient] distanceFromAddress:[branch latlng]]]  goWithClickView:^(){
+
+    TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:branch.name  withDistance:distanceStr  goWithClickView:^(){
         
         BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
         branchProfileVC.branch=branch;
@@ -334,7 +346,7 @@
     
     TVNotification* notificationView=[[TVNotification alloc] initWithView:_slidingViewController.topViewController.view withTitle:[userInfo valueForKey:@"branch_name"]  withDistance:nil  goWithClickView:^(){
         
-        BranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
+        CouponBranchProfileVC* branchProfileVC=[[BranchProfileVC alloc] initWithNibName:@"BranchProfileVC" bundle:nil];
         branchProfileVC.branchID=[userInfo valueForKey:@"branch_id"];
         UINavigationController* navController = [[MyNavigationController alloc] initWithRootViewController:branchProfileVC];
         branchProfileVC.isPresentationYES=YES;

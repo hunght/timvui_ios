@@ -91,8 +91,8 @@ static GlobalDataUser *_sharedClient = nil;
             myTimer = nil;
         }
         
-//#warning Testing change location update timer
-//       _locationUpdateTimePriod=15;
+#warning Testing change location update timer
+       _locationUpdateTimePriod=15;
         
         myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
