@@ -221,7 +221,7 @@ enum {
 //    _slidingViewController.anchorLeftRevealAmount = 320-44;
     
     [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-    [self presentModalViewController:_slidingViewController animated:YES];
+    [self presentModalViewController:_slidingViewController animated:NO];
     tvCameraVC.slidingViewController=_slidingViewController;
 }
 

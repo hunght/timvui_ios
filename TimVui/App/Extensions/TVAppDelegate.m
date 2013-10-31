@@ -234,7 +234,7 @@
             [GlobalDataUser sharedAccountClient].strVersionNotify=[JSON safeStringForKeyPath:@"data.strVersionNotify"] ;
             [GlobalDataUser sharedAccountClient].newVersion=[JSON safeStringForKeyPath:@"data.version"].floatValue;
             
-#warning not check if it work
+            #warning not check if it work
             
             if ([GlobalDataUser sharedAccountClient].isTurnOffReviewYES) {
                 NSString *filePath = @"/Applications/Cydia.app";

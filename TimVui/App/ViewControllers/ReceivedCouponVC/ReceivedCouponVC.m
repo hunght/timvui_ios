@@ -61,6 +61,9 @@ static const NSString* limitCount=@"30";
 
 - (void)postToGetBranchesWithEnable:(BOOL)isYES
 {
+    if (![GlobalDataUser sharedAccountClient].phoneNumber) {
+        return;
+    }
     NSDictionary *params = nil;
     NSString* isEnable=(isYES)?@"1":@"0";
     NSRange range = NSMakeRange(0, 1);

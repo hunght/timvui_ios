@@ -91,7 +91,7 @@ static GlobalDataUser *_sharedClient = nil;
             myTimer = nil;
         }
         
-#warning Testing change location update timer
+        #warning Testing change location update timer
 //       _locationUpdateTimePriod=15;
         myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
@@ -284,7 +284,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)checkHasNearlyBranchIsInBackGround:(BOOL)isInBackground
 {
-    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/getCouponNotify"];
+    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
     [params setValue:@"1"  forKey:@"limit"];
     [params setValue:@"0"  forKey:@"offset"];
@@ -337,7 +337,7 @@ static GlobalDataUser *_sharedClient = nil;
     if (!date) {
         date=[[NSDate date] dateByAddingDays:-7];
     }
-    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/getCouponNotify"];
     NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
     [params setValue:@"1"  forKey:@"limit"];
     [params setValue:@"0"  forKey:@"offset"];
