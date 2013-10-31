@@ -422,7 +422,7 @@
     htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     htmlView.alpha = 0;
-    [htmlView.scrollView setScrollEnabled:NO];
+    [htmlView.scrollView setScrollEnabled:YES];
     [htmlView loadHtmlBody:html competition:^(NSError *error) {
         if (!error) {
             CGRect newBounds = htmlView.frame;
@@ -536,7 +536,7 @@
     htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     htmlView.alpha = 0;
-    [htmlView.scrollView setScrollEnabled:NO];
+    [htmlView.scrollView setScrollEnabled:YES];
     [htmlView loadHtmlBody:html competition:^(NSError *error) {
         if (!error) {
             CGRect newBounds = htmlView.frame;

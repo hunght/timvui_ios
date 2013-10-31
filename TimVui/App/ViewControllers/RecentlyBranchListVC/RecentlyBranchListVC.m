@@ -35,6 +35,7 @@
 {
     [super viewDidLoad];
     [self postGetBranches];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     // Do any additional setup after loading the view from its nib.
 }
 

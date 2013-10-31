@@ -333,7 +333,7 @@
     
     [_couponBranch addSubview:htmlView];
     htmlView.alpha = 0;
-    [htmlView.scrollView setScrollEnabled:NO];
+    [htmlView.scrollView setScrollEnabled:YES];
     [htmlView loadHtmlBody:html competition:^(NSError *error) {
         if (!error) {
             CGRect newBounds = htmlView.frame;
@@ -367,7 +367,7 @@
             //            htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
             
             htmlView.alpha = 0;
-            [htmlView.scrollView setScrollEnabled:NO];
+            [htmlView.scrollView setScrollEnabled:YES];
             [htmlView loadHtmlBody:html competition:^(NSError *error) {
                 if (!error) {
                     CGRect newBounds = htmlView.frame;
@@ -401,7 +401,7 @@
                     
                     
                     htmlView.alpha = 0;
-                    [htmlView.scrollView setScrollEnabled:NO];
+                    [htmlView.scrollView setScrollEnabled:YES];
                     [htmlView loadHtmlBody:html competition:^(NSError *error) {
                         if (!error) {
                             [UIView animateWithDuration:0.2 animations:^{

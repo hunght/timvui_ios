@@ -60,6 +60,10 @@ static const NSString* distanceMapSearch=@"100";
     
     NSLog(@"param=%@",params);
     if (offset==0) {
+
+        // This is the 1st run of the app
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kLastTimeUpdateListCoupon];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [arrCoupons removeAllObjects];
         [self.branches.items removeAllObjects];
         [self.tableView reloadData];

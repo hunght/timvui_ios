@@ -91,8 +91,8 @@ static GlobalDataUser *_sharedClient = nil;
             myTimer = nil;
         }
         
-//#warning Testing change location update timer
-//       _locationUpdateTimePriod=15;
+#warning Testing change location update timer
+       _locationUpdateTimePriod=15;
         
         myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
@@ -109,19 +109,38 @@ static GlobalDataUser *_sharedClient = nil;
     if (![SharedAppDelegate isConnected]) {
         return;
     }
-    
+    bestEffortAtLocation=nil;
     if (!_locationManager) {
         _locationManager = [[CLLocationManager alloc] init];
         [_locationManager setDelegate:self];
         [_locationManager setDistanceFilter:kCLDistanceFilterNone];
         // _locationManager.pausesLocationUpdatesAutomatically=NO;
         [_locationManager startUpdatingLocation];
-        [_locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     }
     [self performSelector:@selector(locationManagerStop) withObject:nil afterDelay:10];
 }
 
 -(void)locationManagerStop{
+    if (bestEffortAtLocation) {
+        BOOL isInBackground = NO;
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+            isInBackground = YES;
+        }
+        double distance=[self distanceFromAddress:bestEffortAtLocation.coordinate];
+        if ( distance<10) {
+            if(isInBackground) {
+                [self sendBackgroundLocationToServer];
+            }
+            ////        else{
+            ////            if(_isHasNearlyBranchesYES.boolValue)[self checkHasNearlyBranchIsInBackGround:YES];
+            ////            if (_isNearlyBranchesHasNewCouponYES.boolValue) {
+            ////                [self checkHasCouponBranchIsInBackGround:YES];
+            ////            }
+            //        }
+        }
+        bestEffortAtLocation=nil;
+    }
     if (_locationManager) {
         [_locationManager stopUpdatingLocation];
         _locationManager.delegate=nil;
@@ -226,11 +245,13 @@ static GlobalDataUser *_sharedClient = nil;
               ^{
                   [[UIApplication sharedApplication] endBackgroundTask:bgTask];
               }];
-    
-    if(_isHasNearlyBranchesYES.boolValue)[self checkHasNearlyBranchIsInBackGround:YES];
-    if (_isNearlyBranchesHasNewCouponYES.boolValue) {
-        [self checkHasCouponBranchIsInBackGround:YES];
+    if (bestEffortAtLocation) {
+        if(_isHasNearlyBranchesYES.boolValue&&bestEffortAtLocation.horizontalAccuracy<10)[self checkHasNearlyBranchIsInBackGround:YES];
+        if (_isNearlyBranchesHasNewCouponYES.boolValue&&bestEffortAtLocation.horizontalAccuracy<100) {
+            [self checkHasCouponBranchIsInBackGround:YES];
+        }
     }
+
     if(bgTask != UIBackgroundTaskInvalid) {
         [[UIApplication sharedApplication] endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
@@ -251,7 +272,6 @@ static GlobalDataUser *_sharedClient = nil;
 
 #pragma mark Helper
 
-
 -(CLLocationDistance)distanceFromAddress:(CLLocationCoordinate2D)fromAdd{
     if (!_isTurnOnLocationService) {
         return -1;
@@ -265,7 +285,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)checkHasNearlyBranchIsInBackGround:(BOOL)isInBackground
 {
-    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
+    TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/getCouponNotify"];
     NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
     [params setValue:@"1"  forKey:@"limit"];
     [params setValue:@"0"  forKey:@"offset"];
@@ -314,6 +334,10 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)checkHasCouponBranchIsInBackGround:(BOOL)isInBackground
 {
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:kLastTimeUpdateListCoupon];
+    if (!date) {
+        date=[[NSDate date] dateByAddingDays:-7];
+    }
     TVBranches*  branches=[[TVBranches alloc] initWithPath:@"search/branch"];
     NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
     [params setValue:@"1"  forKey:@"limit"];
@@ -321,10 +345,15 @@ static GlobalDataUser *_sharedClient = nil;
     [params setValue:@"short"  forKey:@"infoType"];
     [params setValue:kCheckHasCouponBranchIsInBackGround  forKey:@"distance"];
     [params setValue:@"1"  forKey:@"has_coupon"];
-    //    NSLog(@"_dicCity=%@",_dicCity);
+    
+
+    [params setValue:[date stringWithDefautFormat]  forKey:@"lastTime"];
+    
     [params setValue:[_homeCity safeStringForKey:@"alias"]  forKey:@"city_alias"];
     NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",_userLocation.latitude,_userLocation.longitude];
     [params setValue:strLatLng forKey:@"latlng"];
+    
+    NSLog(@"params=%@",params);
     [branches loadWithParams:params start:nil success:^(GHResource *instance, id data) {
         dispatch_async(dispatch_get_main_queue(),^ {
             // View map with contain all search items
@@ -383,6 +412,7 @@ static GlobalDataUser *_sharedClient = nil;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    NSLog(@"newLocation.horizontalAccuracy= %f",newLocation.horizontalAccuracy);
     //    NSLog(@"_userLocation lat=%f, lon=%f",_userLocation.latitude, _userLocation.longitude);
     // test the age of the location measurement to determine if the measurement is cached
     // in most cases you will not want to rely on cached measurements
@@ -400,34 +430,19 @@ static GlobalDataUser *_sharedClient = nil;
         // accuracy because it is a negative value. Instead, compare against some predetermined "real" measure of
         // acceptable accuracy, or depend on the timeout to stop updating. This sample depends on the timeout.
         //
-        if (newLocation.horizontalAccuracy <= _locationManager.desiredAccuracy) {
+        if (newLocation.horizontalAccuracy <= 10) {
             // we have a measurement that meets our requirements, so we can stop updating the location
             //
             // IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
             //
-            [GlobalDataUser sharedAccountClient].userLocation=bestEffortAtLocation.coordinate;
+            NSLog(@"newLocation.horizontalAccuracy= %f",newLocation.horizontalAccuracy);
+            _userLocation=bestEffortAtLocation.coordinate;
             
             [self locationManagerStop];
+            
         }
     }
-    
-    _userLocation = newLocation.coordinate;
-    BOOL isInBackground = NO;
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-        isInBackground = YES;
-    }
-    double distance=[self distanceFromAddress:newLocation.coordinate];
-    if ( distance<10) {
-        if(isInBackground) {
-            [self sendBackgroundLocationToServer];
-        }else{
-            if(_isHasNearlyBranchesYES.boolValue)[self checkHasNearlyBranchIsInBackGround:YES];
-            if (_isNearlyBranchesHasNewCouponYES.boolValue) {
-                [self checkHasCouponBranchIsInBackGround:YES];
-            }
-        }
-    }
-    [self locationManagerStop];
+
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

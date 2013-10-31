@@ -84,7 +84,6 @@ static int _numPages = 16;
     
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden=YES;
-    [self.navigationController.navigationBar dropShadow];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

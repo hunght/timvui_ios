@@ -824,7 +824,7 @@ enum {
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_fanPage"];
                     break;
                 case kS3Feedback:
-                    cell.textLabel.text = @"Góp ý- Báo lỗi";
+                    cell.textLabel.text = @"Góp ý - Báo lỗi";
                     cell.imageView.image=[UIImage imageNamed:@"img_menu_icon_reportError"];
                     break;
                 case kS3InviteFriends:

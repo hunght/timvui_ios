@@ -129,7 +129,7 @@
     CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(6+5, height+5, 320-(6+5)*2, self.view.frame.size.height)] ;
     htmlView.backgroundColor = [UIColor clearColor];
     //htmlView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin ;
-    htmlView.scrollView.scrollEnabled=NO;
+    htmlView.scrollView.scrollEnabled=YES;
 //    CGRect frame= htmlView.scrollView.frame;
 //    frame.size.width-=22;
 //    htmlView.frame=frame;

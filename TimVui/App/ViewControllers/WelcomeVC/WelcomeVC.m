@@ -148,6 +148,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
+    NSLog(@"newLocation.horizontalAccuracy= %f",newLocation.horizontalAccuracy);
     // test the age of the location measurement to determine if the measurement is cached
     // in most cases you will not want to rely on cached measurements
     NSTimeInterval locationAge = -[newLocation.timestamp timeIntervalSinceNow];
@@ -169,6 +170,7 @@
             //
             // IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
             //
+            NSLog(@"newLocation.horizontalAccuracy= %f",newLocation.horizontalAccuracy);
             [GlobalDataUser sharedAccountClient].userLocation=bestEffortAtLocation.coordinate;
             NSString* strLatLng=[NSString   stringWithFormat:@"%f,%f",bestEffortAtLocation.coordinate.latitude,bestEffortAtLocation.coordinate.longitude];
             [GlobalDataUser sharedAccountClient].isCanNotGetLocationServiceYES=NO;

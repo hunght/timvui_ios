@@ -42,7 +42,7 @@ static const NSString* limitCount=@"5";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     CGRect footerRect = CGRectMake(0, 0, 320, 40);
     tableFooter = [[UILabel alloc] initWithFrame:footerRect];
     tableFooter.textColor = kGrayTextColor;
@@ -64,7 +64,7 @@ static const NSString* limitCount=@"5";
             offset=0;
             [weakSelf postGetBranches];
         }
-    }];
+    }]; 
     
     // setup infinite scrolling
     [self.tableView addInfiniteScrollingWithActionHandler:^{

@@ -481,7 +481,7 @@ static const int maxLimitBranches=100;
     [params setValue:paramsForSearch  forKey:@"params"];
     [params setValue:kSearchBranchLimit  forKey:@"limit"];
     [params setValue:[NSString stringWithFormat:@"%d",offset]  forKey:@"offset"];
-    NSLog(@"params == %@",params);
+//    NSLog(@"params == %@",params);
     
     if (!self.branches) {
         self.branches=[[TVBranches alloc] initWithPath:@"search/branch"];
@@ -572,7 +572,7 @@ static const int maxLimitBranches=100;
 
 - (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-//    NSLog(@"_lastDistanceSearch/2=%f",_lastDistanceSearch/2);
+   
     if (_lastPosition.latitude) {
         double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition];
 //        NSLog(@"distance ==== %f",distance);
@@ -591,9 +591,10 @@ static const int maxLimitBranches=100;
                     [GlobalDataUser sharedAccountClient].dicCitySearchParam=[GlobalDataUser sharedAccountClient].homeCity;
                 }
                 params = @{@"city_alias": [[GlobalDataUser sharedAccountClient].dicCitySearchParam valueForKey:@"alias"],@"latlng": strLatLng
-                           ,@"distance": [NSString stringWithFormat:@"%f",distance]
+                           ,@"distance": kTVDistanceMovingMap
                            };
-                
+                 NSLog(@"distance=%f",distance);
+                 NSLog(@"_lastDistanceSearch/2=%f",_lastDistanceSearch/2);
                 _lastDistanceSearch=distance;
                 offset=0;
                 [self performSelector:@selector(postSearchBranch:withReturnFromSearchScreenYES:) withObject:[[NSMutableDictionary alloc] initWithDictionary:params] afterDelay:2];
