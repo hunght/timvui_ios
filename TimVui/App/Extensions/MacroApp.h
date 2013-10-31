@@ -2,7 +2,7 @@
 
 #import "MyViewController.h"
 
-#define kAFAppDotNetAPIBaseURLString  @"http://dev.anuong.net/api/"
+#define kAFAppDotNetAPIBaseURLString  @"http://anuong.net/api/"
 #define SharedAppDelegate ((TVAppDelegate*)[[UIApplication sharedApplication] delegate])
 #define  kTrackingId @"UA-43969947-1"
 #define kLastTimeUpdateListCoupon @"kLastTimeUpdateListCoupon"
@@ -30,8 +30,7 @@
 #define kReceivedCoupon   @"kReceivedCoupon"
 
 #define kDistanceSearchMapDefault   @"5"//km
-#define kTVDistanceMovingMap   @"60
-" //m
+#define kTVDistanceMovingMap   @"60" //m
 
 #define kNumberOfSkinsCamera   3
 #define kNumberLimitRefresh   @"10"

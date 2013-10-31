@@ -92,8 +92,7 @@ static GlobalDataUser *_sharedClient = nil;
         }
         
 #warning Testing change location update timer
-       _locationUpdateTimePriod=15;
-        
+//       _locationUpdateTimePriod=15;
         myTimer = [NSTimer scheduledTimerWithTimeInterval:_locationUpdateTimePriod target:self
                                                  selector:@selector(locationManagerStart) userInfo:nil repeats:YES];
         if(bgTask != UIBackgroundTaskInvalid) {
@@ -108,7 +107,7 @@ static GlobalDataUser *_sharedClient = nil;
 -(void)locationManagerStart{
     if (![SharedAppDelegate isConnected]) {
         return;
-    }
+    } 
     bestEffortAtLocation=nil;
     if (!_locationManager) {
         _locationManager = [[CLLocationManager alloc] init];

@@ -252,8 +252,6 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
         }];
-    }else{
-        
     }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

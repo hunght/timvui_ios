@@ -576,7 +576,7 @@ static const int maxLimitBranches=100;
     if (_lastPosition.latitude) {
         double distance=[self getDistanceMetresFrom:position.target toLocation:_lastPosition];
 //        NSLog(@"distance ==== %f",distance);
-        if (distance>_lastDistanceSearch/2) {
+        if (distance>_lastDistanceSearch/3) {
             if ([_lastUpdate isLaterThanSeconds:2]) {
                 CLLocationCoordinate2D bottomLeftCoord =
                 mapView.projection.visibleRegion.nearLeft;
@@ -594,7 +594,7 @@ static const int maxLimitBranches=100;
                            ,@"distance": kTVDistanceMovingMap
                            };
                  NSLog(@"distance=%f",distance);
-                 NSLog(@"_lastDistanceSearch/2=%f",_lastDistanceSearch/2);
+                 NSLog(@"_lastDistanceSearch/3=%f",_lastDistanceSearch/3);
                 _lastDistanceSearch=distance;
                 offset=0;
                 [self performSelector:@selector(postSearchBranch:withReturnFromSearchScreenYES:) withObject:[[NSMutableDictionary alloc] initWithDictionary:params] afterDelay:2];
@@ -608,7 +608,7 @@ static const int maxLimitBranches=100;
 - (void)setBorderForLayer:(CALayer *)l radius:(float)radius {
     [l setMasksToBounds:YES];
     [l setCornerRadius:radius];
-    // You can even add a border
+    // You can even add a border/2
     [l setBorderWidth:1.0];
     [l setBorderColor:[UIColor colorWithRed:(214/255.0f) green:(214/255.0f) blue:(214/255.0f) alpha:1.0f].CGColor];
 }
