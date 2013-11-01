@@ -93,6 +93,7 @@ static const int maxLimitBranches=100;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.screenName = @"Trang chủ";
     _lastDistanceSearch=kDistanceSearchMapDefault.floatValue;
     // The LocationPickerView can be created programmatically (see below) or
@@ -118,7 +119,8 @@ static const int maxLimitBranches=100;
     
     [self.view addSubview:self.locationPickerView];
 
-    self.navigationItem.rightBarButtonItem = [self searchButtonItem];
+    self.navigationItem.rightBarButtonItem = [self barButtonWithTitle:@"LỌC"];
+;
     [self initNotificationView];
     
     if ([GlobalDataUser sharedAccountClient].strVersionNotify) {
@@ -158,7 +160,7 @@ static const int maxLimitBranches=100;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    [self statusBar:NO];
     _locationPickerView.firstLocationUpdate=NO;
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
 }
@@ -187,7 +189,7 @@ static const int maxLimitBranches=100;
     }
 }
 
--(void)searchBarButtonClicked{
+-(void)doneButtonClicked:(id)s{
     SearchVC* searchVC=[[SearchVC alloc] initWithNibName:@"SearchVC" bundle:nil];
     [searchVC setDelegate:self];
 //    [GlobalDataUser sharedAccountClient].dicDistrictSearchParam=_arrDics;

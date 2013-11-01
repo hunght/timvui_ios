@@ -17,7 +17,7 @@
 {
     _lblBranchName.backgroundColor = [UIColor clearColor];
     _lblBranchName.textColor = [UIColor whiteColor];
-    _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(20)];
+    _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(25)];
     _lblBranchName.textAlignment = UITextAlignmentLeft;
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor whiteColor];
@@ -68,7 +68,7 @@
     UIGraphicsBeginImageContext(bottomImage.size);
     [bottomImage drawInRect:CGRectMake(0,0,bottomImage.size.width,bottomImage.size.height)];
     CGRect rectView;
-    [self setTextForSkin:_lblBranchName fontText:20 sizeBottomImage:bottomImage.size];
+    [self setTextForSkin:_lblBranchName fontText:25 sizeBottomImage:bottomImage.size];
     
     
     [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];

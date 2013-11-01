@@ -103,6 +103,14 @@
     */
 }
 
+-(void)statusBar:(BOOL)status {
+
+    // Hide/Unhide the status bar
+//    [[UIApplication sharedApplication] setStatusBarHidden:status]; // BOOL : YES or NO
+//    NSLog(@"[[UIScreen mainScreen] applicationFrame]%f",[[UIScreen mainScreen] applicationFrame].origin.y);
+//    self.view.frame = [[UIScreen mainScreen] applicationFrame];
+}
+
 - (UIBarButtonItem *)searchButtonItem{
     UIButton* _btnSearchBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 53, 44)];
     [_btnSearchBar setImage:[UIImage imageNamed:@"img_search_bar_off"] forState:UIControlStateNormal];

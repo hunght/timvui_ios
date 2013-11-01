@@ -20,7 +20,7 @@ static int radius=3;
 - (void)settingView
 {
     _lblBranchName.backgroundColor = [UIColor clearColor];
-    _lblBranchName.textColor = [UIColor whiteColor];
+    _lblBranchName.textColor = kOrangeTextColor;
     _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(20)];
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor whiteColor];
@@ -49,10 +49,6 @@ static int radius=3;
         [_lblBranchName resizeWidthToStretchToCenter];
     }
     
-    rect=_imagLocationIcon.frame;
-    rect.origin.x=_lblBranchName.frame.origin.x-_imagLocationIcon.frame.size.width ;
-    _imagLocationIcon.frame=rect;
-    
     rect=_lblAddress.frame;
     rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height-2;
     _lblAddress.frame=rect;
@@ -70,7 +66,7 @@ static int radius=3;
             [_lblAddress resizeWidthToStretchToCenter];
             _lblAddress.center=point;
             
-            float maxWidth=(_lblAddress.frame.origin.x<_imagLocationIcon.frame.origin.x)?_lblAddress.frame.origin.x:_imagLocationIcon.frame.origin.x;
+            float maxWidth=(_lblAddress.frame.origin.x<_lblBranchName.frame.origin.x)?_lblAddress.frame.origin.x:_lblBranchName.frame.origin.x;
             CGRect rect=_bgBranchView.frame;
             point=_bgBranchView.center;
             
@@ -87,10 +83,7 @@ static int radius=3;
     padHeight=rect.origin.y-padHeight;
     _bgBranchView.frame=rect;
     
-    rect= _imagLocationIcon.frame;
-    rect.origin.y+=padHeight;
-    _imagLocationIcon.frame=rect;
-    
+
     rect= _lblAddress.frame;
     rect.origin.y+=padHeight;
     _lblAddress.frame=rect;
@@ -117,12 +110,6 @@ static int radius=3;
     
     [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];
 
-    UIImage* imageLocation=[UIImage imageNamed:@"skin_toi_dang_o_day_icon"];
-    
-    rectView=_imagLocationIcon.frame;
-     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
-    [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
-    
     UIImage* imgImHere=[UIImage imageNamed:@"skin_toi_dang_o_day"];
     rectView=_imagImHereIcon.frame ;
     rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);

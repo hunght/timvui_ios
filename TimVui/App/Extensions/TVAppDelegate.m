@@ -377,8 +377,7 @@
 {
     [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
     [GlobalDataUser sharedAccountClient].UUID=[self uniqID];
-    
-    
+    [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     /*
      // List all fonts on iPhone
      NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];

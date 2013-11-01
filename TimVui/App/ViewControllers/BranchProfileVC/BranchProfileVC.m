@@ -1065,7 +1065,7 @@
         if (sender.isSelected) {
             SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn muốn bỏ quan tâm nhà hàng này ?"];
             
-            [alertView addButtonWithTitle:@"Bỏ quan tâm"
+            [alertView addButtonWithTitle:@"Đồng ý"
                                      type:SIAlertViewButtonTypeDefault
                                   handler:^(SIAlertView *alert) {
                                       
@@ -1078,7 +1078,22 @@
                                   }];
             [alertView show];
         }else{
-            [self postFollowToServer:sender];
+            SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Quan tâm địa điểm này để nhận thông báo khi có coupon mới."];
+            
+            [alertView addButtonWithTitle:@"Đồng ý"
+                                     type:SIAlertViewButtonTypeDefault
+                                  handler:^(SIAlertView *alert) {
+                                      
+                                      [self postFollowToServer:sender];
+                                  }];
+            [alertView addButtonWithTitle:@"Bỏ qua"
+                                     type:SIAlertViewButtonTypeCancel
+                                  handler:^(SIAlertView *alert) {
+                                      NSLog(@"Cancel Clicked");
+                                  }];
+            [alertView show];
+            
+            
         }
         
         

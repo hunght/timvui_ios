@@ -78,27 +78,22 @@ static int _numPages = 16;
 
 #pragma mark - ViewController
 -(void)viewWillAppear:(BOOL)animated{
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
-        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    }
-    
     [super viewWillAppear:animated];
+    [self statusBar:YES];
     self.navigationController.navigationBarHidden=YES;
     [self.navigationController.navigationBar dropShadow];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    }
+
 }
 
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
@@ -367,6 +362,7 @@ static int _numPages = 16;
                                   
                                   [_arrImages removeAllObjects];
                                   _lblPhone.hidden=YES;
+
                                   [self dismissModalViewControllerAnimated:YES];
                               }];
         [alertView addButtonWithTitle:@"Hủy"
@@ -376,6 +372,7 @@ static int _numPages = 16;
                               }];
         [alertView show];
     }else{
+
         [self dismissModalViewControllerAnimated:YES];
     }
 }

@@ -18,7 +18,6 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *viewSkin;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *lblAddress;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *backgroundLocation;
-@property (unsafe_unretained, nonatomic) IBOutlet UIImageView *imagLocationIcon;
 
 -(void)setName:(NSString*)name andAddress:(NSString*)address;
 @end

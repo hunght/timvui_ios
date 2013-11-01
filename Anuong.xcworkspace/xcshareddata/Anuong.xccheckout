@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>244C3924-41F6-4DBD-B552-A84E7ACA0A40</string>
+	<string>86829449-3B77-4E9E-9157-4AB72ED80FF8</string>
 	<key>IDESourceControlProjectName</key>
-	<string>TimVui</string>
+	<string>Anuong</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>0254A0FB-36A5-4503-BE2F-B0AF64D1127A</key>
+		<key>9C7748D5-5BA9-452F-BCAA-5207B1563B5C</key>
 		<string>https://github.com/hunght/timvui_ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TimVui.xcworkspace</string>
+	<string>Anuong.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>0254A0FB-36A5-4503-BE2F-B0AF64D1127A</key>
+		<key>9C7748D5-5BA9-452F-BCAA-5207B1563B5C</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>0254A0FB-36A5-4503-BE2F-B0AF64D1127A</string>
+	<string>9C7748D5-5BA9-452F-BCAA-5207B1563B5C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>0254A0FB-36A5-4503-BE2F-B0AF64D1127A</string>
+			<string>9C7748D5-5BA9-452F-BCAA-5207B1563B5C</string>
 			<key>IDESourceControlWCCName</key>
 			<string>timvui_ios</string>
 		</dict>

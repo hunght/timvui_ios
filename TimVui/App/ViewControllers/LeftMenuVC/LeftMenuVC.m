@@ -217,11 +217,8 @@ enum {
     _slidingViewController.topViewController=navController;
     _slidingViewController.underLeftViewController = tableVC;
     _slidingViewController.anchorRightRevealAmount = 320-44;
-//    _slidingViewController.underRightViewController = skinVC;
-//    _slidingViewController.anchorLeftRevealAmount = 320-44;
-    
     [navController.view addGestureRecognizer:_slidingViewController.panGesture];
-    [self presentModalViewController:_slidingViewController animated:NO];
+    [self presentModalViewController:_slidingViewController animated:YES];
     tvCameraVC.slidingViewController=_slidingViewController;
 }
 
@@ -238,6 +235,7 @@ enum {
 //    _slidingViewController.anchorLeftRevealAmount = 320-44;
     
     [navController.view addGestureRecognizer:_slidingViewController.panGesture];
+
     [self presentModalViewController:_slidingViewController animated:YES];
     tvCameraVC.slidingViewController=_slidingViewController;
 }

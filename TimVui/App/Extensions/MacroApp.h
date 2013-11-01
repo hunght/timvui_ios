@@ -54,3 +54,5 @@
 
 #define kHTMLString         [NSMutableString stringWithFormat: @"<html><head><meta name=\"viewport\" content=\"user-scalable=no, width=300, initial-scale=.7, maximum-scale=.7\"/> <meta name=\"apple-mobile-web-app-capable\" content=\"yes\" /><title></title></head> <style type=\"text/css\">body  a, p, span {font-family: \"%@\"; font-size: %@px !important;} </style><body style=\"background:transparent;\">",@"ArialMT", [NSNumber numberWithInt:12+1]]
 
+#define kOrangeTextColor [UIColor orangeColor]
+#define kRedTextColor [UIColor redColor]

@@ -16,8 +16,8 @@
 - (void)settingView
 {
     _lblBranchName.backgroundColor = [UIColor clearColor];
-    _lblBranchName.textColor = [UIColor whiteColor];
-    _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(20)];
+    _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(25)];
+    _lblBranchName.textColor=kOrangeTextColor;
     _lblBranchName.textAlignment = UITextAlignmentLeft;
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor whiteColor];
@@ -32,7 +32,7 @@
     [_lblBranchName resizeToStretch];
     
     CGRect rect=_lblAddress.frame;
-    rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height-5;
+    rect.origin.y=_lblBranchName.frame.origin.y+_lblBranchName.frame.size.height -3;
     _lblAddress.frame=rect;
     _lblAddress.text= address;
     [_lblAddress resizeToStretch];
@@ -46,10 +46,6 @@
     rect.origin.y = 320 - rect.size.height;
     padHeight=rect.origin.y-padHeight;
     _backgroundLocation.frame=rect;
-    
-    rect= _imagLocationIcon.frame;
-    rect.origin.y+=padHeight;
-    _imagLocationIcon.frame=rect;
     
     rect= _lblAddress.frame;
     rect.origin.y+=padHeight;
@@ -73,16 +69,11 @@
     CGRect  rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     
     CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
-    [self setTextForSkin:_lblBranchName fontText:20 sizeBottomImage:bottomImage.size];
+    [self setTextForSkin:_lblBranchName fontText:25 sizeBottomImage:bottomImage.size];
     
     
     [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];
     
-    UIImage* imageLocation=[UIImage imageNamed:@"img_skin_common_location"];
-    rectView=_imagLocationIcon.frame;
-    rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
-    [imageLocation drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
-
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
