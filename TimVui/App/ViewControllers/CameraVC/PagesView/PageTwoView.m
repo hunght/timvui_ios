@@ -17,7 +17,7 @@
 {
     _lblBranchName.backgroundColor = [UIColor clearColor];
     _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(30)];
-    _lblBranchName.textColor=[UIColor blackColor];
+    _lblBranchName.textColor=[UIColor whiteColor];
     _lblBranchName.textAlignment = UITextAlignmentLeft;
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor whiteColor];

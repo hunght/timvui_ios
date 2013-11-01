@@ -213,27 +213,6 @@
             
             *height_p=borderView.frame.origin.y+borderView.frame.size.height+20;
             
-            UIButton* btnSMS = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 75, 25)];
-            [btnSMS setBackgroundImage:[UIImage imageNamed:@"img_profile_branch_compose"] forState:UIControlStateNormal];
-            
-            [btnSMS addTarget:self action:@selector(btnSMSButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            [btnSMS setTag:i];
-            [couponBranch addSubview:btnSMS];
-            *height_p=btnSMS.frame.origin.y+btnSMS.frame.size.height;
-            
-            UILabel *lblTitle = [[UILabel alloc] initWithFrame:CGRectMake(10.0, *height_p, 170, 23)];
-            [self settingTextForTitle:lblTitle];
-            lblTitle.text=[NSString stringWithFormat:@"COUPON %@",coupon.syntax];
-            [couponBranch addSubview:lblTitle];
-            
-            UILabel *lblSendTo = [[UILabel alloc] initWithFrame:CGRectMake(170+10.0, *height_p, 130, 23)];
-            lblSendTo.backgroundColor = [UIColor clearColor];
-            lblSendTo.textColor = [UIColor blackColor];
-            lblSendTo.font = [UIFont fontWithName:@"Arial-BoldMT" size:(20)];
-            lblSendTo.text=@"gửi tới 8x88";
-            [couponBranch addSubview:lblSendTo];
-            *height_p=lblSendTo.frame.origin.y+lblSendTo.frame.size.height+10;
-            
             //View for info coupon
             UIView* infoCouponBranch=[[UIView alloc] initWithFrame:CGRectMake(5, *height_p, 320-(6+5)*2, 85+ 20)];
             [infoCouponBranch setBackgroundColor:[UIColor clearColor]];

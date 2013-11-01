@@ -303,7 +303,7 @@
     UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, height_p, 300, 46)];
     [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
     [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-    [btnPostPhoto setTitle:@"NHẬN MÃ CODE" forState:UIControlStateNormal];
+    [btnPostPhoto setTitle:@"NHẬN MÃ COUPON" forState:UIControlStateNormal];
     [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
     [btnPostPhoto addTarget:self action:@selector(getCouponCode:) forControlEvents:UIControlEventTouchUpInside];
@@ -416,7 +416,7 @@
                             UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, height_p, 300, 46)];
                             [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_buttom-big-off"] forState:UIControlStateNormal];
                             [btnPostPhoto setBackgroundImage:[UIImage imageNamed:@"img_button_big_on"] forState:UIControlStateHighlighted];
-                            [btnPostPhoto setTitle:@"NHẬN MÃ CODE" forState:UIControlStateNormal];
+                            [btnPostPhoto setTitle:@"NHẬN MÃ COUPON" forState:UIControlStateNormal];
                             [btnPostPhoto setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                             btnPostPhoto.titleLabel.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(17)];
                             [btnPostPhoto addTarget:self action:@selector(getCouponCode:) forControlEvents:UIControlEventTouchUpInside];
