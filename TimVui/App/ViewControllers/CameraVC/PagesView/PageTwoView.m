@@ -16,8 +16,8 @@
 - (void)settingView
 {
     _lblBranchName.backgroundColor = [UIColor clearColor];
-    _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(25)];
-    _lblBranchName.textColor=kOrangeTextColor;
+    _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(30)];
+    _lblBranchName.textColor=[UIColor blackColor];
     _lblBranchName.textAlignment = UITextAlignmentLeft;
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor whiteColor];
@@ -69,7 +69,7 @@
     CGRect  rect = CGRectMake(rectView.origin.x*ratioImage, rectView.origin.y*ratioImage, rectView.size.width*ratioImage, rectView.size.height*ratioImage);
     
     CGContextFillRect(UIGraphicsGetCurrentContext(), rect);
-    [self setTextForSkin:_lblBranchName fontText:25 sizeBottomImage:bottomImage.size];
+    [self setTextForSkin:_lblBranchName fontText:30 sizeBottomImage:bottomImage.size];
     
     
     [self setTextForSkin:_lblAddress fontText:13 sizeBottomImage:bottomImage.size];

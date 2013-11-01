@@ -196,7 +196,7 @@
         _isHiddenYES=YES;
         [self showMenuExtraWithoutTableView];
     }
-    self.autoresizingMask = UIViewAutoresizingNone;
+//    self.autoresizingMask = UIViewAutoresizingNone;
     return self;
 }
 

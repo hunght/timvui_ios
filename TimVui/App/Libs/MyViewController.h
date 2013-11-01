@@ -15,5 +15,5 @@
 - (UIBarButtonItem *)searchButtonItem;
 -(UIBarButtonItem*)handbookFilterButton;
 -(UIBarButtonItem*)barButtonWithTitle:(NSString*)strTitle;
--(void)statusBar:(BOOL)status ;
+//-(void)statusBar:(BOOL)status ;
 @end

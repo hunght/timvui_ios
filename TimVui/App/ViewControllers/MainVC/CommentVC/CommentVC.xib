@@ -41,7 +41,7 @@
                             </connections>
                         </textView>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="22">
-                            <rect key="frame" x="14" y="379" width="24" height="24"/>
+                            <rect key="frame" x="14" y="364" width="24" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Button" image="img_comment_star_off.png">
@@ -56,7 +56,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="23">
-                            <rect key="frame" x="46" y="379" width="24" height="24"/>
+                            <rect key="frame" x="46" y="364" width="24" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Button" image="img_comment_star_off.png">
@@ -71,7 +71,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="24">
-                            <rect key="frame" x="78" y="379" width="24" height="24"/>
+                            <rect key="frame" x="78" y="364" width="24" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Button" image="img_comment_star_off.png">
@@ -86,7 +86,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="25">
-                            <rect key="frame" x="110" y="379" width="24" height="24"/>
+                            <rect key="frame" x="110" y="364" width="24" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Button" image="img_comment_star_off.png">
@@ -101,7 +101,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="26">
-                            <rect key="frame" x="142" y="379" width="24" height="24"/>
+                            <rect key="frame" x="142" y="364" width="24" height="24"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Button" image="img_comment_star_off.png">
@@ -116,14 +116,14 @@
                             </connections>
                         </button>
                         <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="38">
-                            <rect key="frame" x="241" y="375" width="51" height="31"/>
+                            <rect key="frame" x="241" y="360" width="51" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <connections>
                                 <action selector="postFacebookSwitchValueChanged:" destination="-1" eventType="valueChanged" id="41"/>
                             </connections>
                         </switch>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="39" userLabel="Button - Dang binh luan">
-                            <rect key="frame" x="10" y="416" width="300" height="46"/>
+                            <rect key="frame" x="10" y="401" width="300" height="46"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="17"/>
                             <state key="normal" backgroundImage="img_comment_postButton.png">

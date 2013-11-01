@@ -79,14 +79,19 @@ static int _numPages = 16;
 #pragma mark - ViewController
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self statusBar:YES];
+    
     self.navigationController.navigationBarHidden=YES;
     [self.navigationController.navigationBar dropShadow];
 }
+-(void)viewDidAppear:(BOOL)animated{
 
+    [super viewDidAppear:animated];
+    
+}
 -(void)viewWillDisappear:(BOOL)animated{
+    
     [super viewWillDisappear:animated];
-
+    
 }
 
 
@@ -353,6 +358,7 @@ static int _numPages = 16;
 }
 
 - (IBAction)closeButtonClicked:(id)sender {
+    
     if (_arrImages.count>0) {
         SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:nil andMessage:@"Bạn chưa đăng ảnh! Các ảnh vừa chụp sẽ bị xóa"];
         
@@ -362,7 +368,7 @@ static int _numPages = 16;
                                   
                                   [_arrImages removeAllObjects];
                                   _lblPhone.hidden=YES;
-
+                                  [[UIApplication sharedApplication] setStatusBarHidden:NO];
                                   [self dismissModalViewControllerAnimated:YES];
                               }];
         [alertView addButtonWithTitle:@"Hủy"
@@ -372,7 +378,7 @@ static int _numPages = 16;
                               }];
         [alertView show];
     }else{
-
+        [[UIApplication sharedApplication] setStatusBarHidden:NO];
         [self dismissModalViewControllerAnimated:YES];
     }
 }

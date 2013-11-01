@@ -106,13 +106,18 @@
         self.btnCameraCallback =cameraCall;
         self.btnCommentCallback=commentCall;
     }
-    self.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin ;
+//    self.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin ;
 //    _btnOpen.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin;
     if (([[UIScreen mainScreen] bounds].size.height == 568)) {
         _btnOpen.frame= CGRectMake(320-32-18,568 -32-5- 44- 22, 34, 34);
+        CGRect frame= self.frame;
+        frame.origin.y+=88;
+        self.frame=frame;
     }else{
         _btnOpen.frame= CGRectMake(320-32-18, _view.frame.size.height-32-5, 34, 34);
     }
+    
+    
     return self;
 }
 
@@ -196,8 +201,8 @@
         //Add open button
         self.btnCameraCallback =cameraCall;
     }
-    self.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin ;
-    _btnOpen.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin;
+//    self.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin ;
+//    _btnOpen.autoresizingMask =  UIViewAutoresizingFlexibleTopMargin;
     return self;
 }
 

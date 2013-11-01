@@ -291,13 +291,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/LeftMenuVC/LeftMenuVC.m"
-            timestampString = "404983745.267983"
+            filePath = "TimVui/App/Libs/MHFBImageViewController/MHFacebookImageViewer.m"
+            timestampString = "404990156.882016"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "-dismissViewController"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -307,13 +307,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimVui/App/ViewControllers/CameraVC/TVCameraVC.m"
-            timestampString = "404983751.64292"
+            filePath = "TimVui/App/Libs/MHFBImageViewController/MHFacebookImageViewer.m"
+            timestampString = "404990164.747305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "593"
+            endingLineNumber = "593"
+            landmarkName = "-loadView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

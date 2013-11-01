@@ -14,7 +14,9 @@
 #import "TVCoupons.h"
 #import "BranchProfileVC.h"
 #import "GlobalDataUser.h"
-@interface RecentlyBranchListVC ()
+@interface RecentlyBranchListVC (){
+    UILabel *tableFooter;
+}
 
 @end
 
@@ -34,6 +36,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGRect footerRect = CGRectMake(0, 0, 320, 40);
+    tableFooter = [[UILabel alloc] initWithFrame:footerRect];
+    tableFooter.textColor = kGrayTextColor;
+    tableFooter.textAlignment=UITextAlignmentCenter;
+    tableFooter.backgroundColor = [UIColor clearColor];
+    tableFooter.font = [UIFont fontWithName:@"Arial-BoldMT" size:(13)];
+    tableFooter.hidden=YES;
+    [tableFooter setText:@"Không còn địa điểm nào"];
+    self.tableView.tableFooterView = tableFooter;
     [self postGetBranches];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     // Do any additional setup after loading the view from its nib.
@@ -54,6 +65,10 @@
 -(void)postGetBranches{
     
     if ([SharedAppDelegate isConnected]) {
+        if([[[GlobalDataUser sharedAccountClient].recentlyBranches valueForKey:@"id"]count]==0){
+            tableFooter.hidden=NO;
+            return;
+        };
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:@"short",@"infoType",
                                 [[GlobalDataUser sharedAccountClient].recentlyBranches valueForKey:@"id"],@"id" ,
                                 nil];
@@ -64,7 +79,10 @@
             dispatch_async(dispatch_get_main_queue(),^ {
                 //NSLog(@"weakSelf.branches.count===%@",[weakSelf.branches[0] name]);
                 [self.tableView reloadData];
-                
+
+                if(weakSelf.branches.count==0)tableFooter.hidden=NO;
+                else tableFooter.hidden=YES;
+
             });
         } failure:^(GHResource *instance, NSError *error) {
             dispatch_async(dispatch_get_main_queue(),^ {

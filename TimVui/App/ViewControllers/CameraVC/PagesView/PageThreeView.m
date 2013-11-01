@@ -20,7 +20,7 @@ static int radius=3;
 - (void)settingView
 {
     _lblBranchName.backgroundColor = [UIColor clearColor];
-    _lblBranchName.textColor = kOrangeTextColor;
+    _lblBranchName.textColor = [UIColor blackColor];
     _lblBranchName.font = [UIFont fontWithName:@"UVNTinTucHepThemBold" size:(20)];
     _lblAddress.backgroundColor = [UIColor clearColor];
     _lblAddress.textColor = [UIColor whiteColor];

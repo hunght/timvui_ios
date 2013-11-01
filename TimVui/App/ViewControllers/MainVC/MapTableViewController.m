@@ -160,7 +160,6 @@ static const int maxLimitBranches=100;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self statusBar:NO];
     _locationPickerView.firstLocationUpdate=NO;
     [self.view addGestureRecognizer:self.slidingViewController.panGesture];
 }
