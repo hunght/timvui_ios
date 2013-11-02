@@ -396,7 +396,7 @@
                     
                     CMHTMLView* htmlView = [[CMHTMLView alloc] initWithFrame:CGRectMake(5, heidhtBlock, 300, self.view.frame.size.height)] ;
                     [_couponBranch addSubview:htmlView];
-                    htmlView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+                    htmlView.autoresizingMask = UIViewAutoresizingNone;
                     htmlView.backgroundColor = [UIColor whiteColor];
                     
                     

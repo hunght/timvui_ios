@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5501AF021823D1A0001A8595 /* icon-120_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 5501AF011823D1A0001A8595 /* icon-120_120.png */; };
 		5506B0B2175EF65A0054D606 /* TSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506B0AA175EF65A0054D606 /* TSMessage.m */; };
 		5506B0B3175EF65A0054D606 /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5506B0AC175EF65A0054D606 /* TSMessageView.m */; };
 		5506B0B4175EF65A0054D606 /* LICENCE in Resources */ = {isa = PBXBuildFile; fileRef = 5506B0AE175EF65A0054D606 /* LICENCE */; };
@@ -600,6 +601,7 @@
 
 /* Begin PBXFileReference section */
 		2A89DFA4254249D091202191 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5501AF011823D1A0001A8595 /* icon-120_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-120_120.png"; path = "../icon-120_120.png"; sourceTree = "<group>"; };
 		5506B0A9175EF65A0054D606 /* TSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessage.h; sourceTree = "<group>"; };
 		5506B0AA175EF65A0054D606 /* TSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessage.m; sourceTree = "<group>"; };
 		5506B0AB175EF65A0054D606 /* TSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessageView.h; sourceTree = "<group>"; };
@@ -2594,6 +2596,7 @@
 		55C8C10417052E4C007D8E78 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
+				5501AF011823D1A0001A8595 /* icon-120_120.png */,
 				55D3A85718091083005AEA00 /* 114.3.png */,
 				55D3A8551809107F005AEA00 /* 57.3.png */,
 				55CFAF5017B5E3DC001B2E2C /* VNF Prime Regular.ttf */,
@@ -3160,6 +3163,7 @@
 				5594E5C3179D1C07003E9DC0 /* img_menu_recently_views.png in Resources */,
 				5594E5C4179D1C07003E9DC0 /* img_menu_recently_views@2x.png in Resources */,
 				5594E5C7179D1E34003E9DC0 /* img_menu_user_option.png in Resources */,
+				5501AF021823D1A0001A8595 /* icon-120_120.png in Resources */,
 				5594E5C8179D1E34003E9DC0 /* img_menu_user_option@2x.png in Resources */,
 				5594E5CB179D1F08003E9DC0 /* img_menu_interestedIn.png in Resources */,
 				5594E5CC179D1F08003E9DC0 /* img_menu_interestedIn@2x.png in Resources */,

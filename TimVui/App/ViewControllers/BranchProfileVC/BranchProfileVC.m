@@ -294,7 +294,7 @@
             lblDetailInfoRow.text =[NSString stringWithFormat:@"%@ - %@",[coupon.start stringWithFormat:@"dd/MM/yy"], [coupon.end stringWithFormat:@"dd/MM/yy"]];
             [infoCouponBranch addSubview:lblDetailInfoRow];
             
-            *height_p=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height+10;
+            *height_p=infoCouponBranch.frame.origin.y+infoCouponBranch.frame.size.height-10;
             
             UIButton* btnPostPhoto = [[UIButton alloc] initWithFrame:CGRectMake(5, *height_p, 300, 46)];
             [btnPostPhoto setBackgroundImage:[Utilities imageFromColor:kDeepOrangeColor] forState:UIControlStateNormal];
@@ -307,8 +307,12 @@
             btnPostPhoto.tag=i;
             i++;
             [couponBranch addSubview:btnPostPhoto];
-            
             *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height+ 20;
+            UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(10.0f, *height_p, 290, 1.0f)];
+            grayLine.backgroundColor = [UIColor colorWithWhite:.7 alpha:1.0];
+            [couponBranch addSubview:grayLine];
+            *height_p=btnPostPhoto.frame.origin.y+btnPostPhoto.frame.size.height + 45;
+            
             [couponBranch addSubview:infoCouponBranch];
         }
         
